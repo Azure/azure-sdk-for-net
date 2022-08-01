@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Drill server linked service.
     /// Serialized Name: DrillLinkedService
     /// </summary>
-    public partial class DrillLinkedService : LinkedService
+    public partial class DrillLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DrillLinkedService. </summary>
         public DrillLinkedService()

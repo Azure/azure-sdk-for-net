@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Office365 linked service.
     /// Serialized Name: Office365LinkedService
     /// </summary>
-    public partial class Office365LinkedService : LinkedService
+    public partial class Office365LinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of Office365LinkedService. </summary>
         /// <param name="office365TenantId">

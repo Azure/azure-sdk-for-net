@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Smartsheet.
     /// Serialized Name: SmartsheetLinkedService
     /// </summary>
-    public partial class SmartsheetLinkedService : LinkedService
+    public partial class SmartsheetLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SmartsheetLinkedService. </summary>
         /// <param name="apiToken">

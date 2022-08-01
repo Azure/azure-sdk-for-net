@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for AppFigures.
     /// Serialized Name: AppFiguresLinkedService
     /// </summary>
-    public partial class AppFiguresLinkedService : LinkedService
+    public partial class AppFiguresLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
         /// <param name="userName">

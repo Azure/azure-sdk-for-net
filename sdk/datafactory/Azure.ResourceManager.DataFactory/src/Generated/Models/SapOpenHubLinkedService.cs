@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP Business Warehouse Open Hub Destination Linked Service.
     /// Serialized Name: SapOpenHubLinkedService
     /// </summary>
-    public partial class SapOpenHubLinkedService : LinkedService
+    public partial class SapOpenHubLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
         public SapOpenHubLinkedService()

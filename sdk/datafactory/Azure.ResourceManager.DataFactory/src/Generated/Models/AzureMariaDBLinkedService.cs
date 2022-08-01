@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Database for MariaDB linked service.
     /// Serialized Name: AzureMariaDBLinkedService
     /// </summary>
-    public partial class AzureMariaDBLinkedService : LinkedService
+    public partial class AzureMariaDBLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureMariaDBLinkedService. </summary>
         public AzureMariaDBLinkedService()

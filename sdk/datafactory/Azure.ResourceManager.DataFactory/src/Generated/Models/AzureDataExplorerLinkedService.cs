@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Explorer (Kusto) linked service.
     /// Serialized Name: AzureDataExplorerLinkedService
     /// </summary>
-    public partial class AzureDataExplorerLinkedService : LinkedService
+    public partial class AzureDataExplorerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureDataExplorerLinkedService. </summary>
         /// <param name="endpoint">

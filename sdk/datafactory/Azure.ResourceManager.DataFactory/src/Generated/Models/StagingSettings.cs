@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: StagingSettings.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public StagingSettings(LinkedServiceReference linkedServiceName)
+        public StagingSettings(FactoryLinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: StagingSettings.enableCompression
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StagingSettings(LinkedServiceReference linkedServiceName, BinaryData path, BinaryData enableCompression, IDictionary<string, BinaryData> additionalProperties)
+        internal StagingSettings(FactoryLinkedServiceReference linkedServiceName, BinaryData path, BinaryData enableCompression, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Staging linked service reference.
         /// Serialized Name: StagingSettings.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// The path to storage for storing the interim data. Type: string (or Expression with resultType string).
         /// Serialized Name: StagingSettings.path

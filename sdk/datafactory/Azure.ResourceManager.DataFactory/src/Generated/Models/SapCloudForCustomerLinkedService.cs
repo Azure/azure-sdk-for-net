@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for SAP Cloud for Customer.
     /// Serialized Name: SapCloudForCustomerLinkedService
     /// </summary>
-    public partial class SapCloudForCustomerLinkedService : LinkedService
+    public partial class SapCloudForCustomerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapCloudForCustomerLinkedService. </summary>
         /// <param name="uri">

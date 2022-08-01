@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Custom linked service.
     /// Serialized Name: CustomDataSourceLinkedService
     /// </summary>
-    public partial class CustomDataSourceLinkedService : LinkedService
+    public partial class CustomDataSourceLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
         /// <param name="typeProperties">

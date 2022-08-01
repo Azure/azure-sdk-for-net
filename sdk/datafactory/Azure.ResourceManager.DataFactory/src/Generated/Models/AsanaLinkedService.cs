@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Asana.
     /// Serialized Name: AsanaLinkedService
     /// </summary>
-    public partial class AsanaLinkedService : LinkedService
+    public partial class AsanaLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AsanaLinkedService. </summary>
         /// <param name="apiToken">

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Dataset.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public CustomDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public CustomDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Custom dataset properties.
         /// Serialized Name: CustomDataset.typeProperties
         /// </param>
-        internal CustomDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CustomDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
             DatasetType = datasetType ?? "CustomDataset";

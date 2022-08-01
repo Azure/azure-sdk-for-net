@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Open Database Connectivity (ODBC) linked service.
     /// Serialized Name: OdbcLinkedService
     /// </summary>
-    public partial class OdbcLinkedService : LinkedService
+    public partial class OdbcLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of OdbcLinkedService. </summary>
         /// <param name="connectionString">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Jira Service linked service.
     /// Serialized Name: JiraLinkedService
     /// </summary>
-    public partial class JiraLinkedService : LinkedService
+    public partial class JiraLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of JiraLinkedService. </summary>
         /// <param name="host">

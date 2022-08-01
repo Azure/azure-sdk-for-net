@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Activity policy.
         /// Serialized Name: ExecutionActivity.policy
         /// </param>
-        internal ExecutionActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecutionActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Policy = policy;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Linked service reference.
         /// Serialized Name: ExecutionActivity.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// Activity policy.
         /// Serialized Name: ExecutionActivity.policy

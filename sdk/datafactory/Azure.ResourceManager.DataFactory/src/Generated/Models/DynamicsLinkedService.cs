@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Dynamics linked service.
     /// Serialized Name: DynamicsLinkedService
     /// </summary>
-    public partial class DynamicsLinkedService : LinkedService
+    public partial class DynamicsLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DynamicsLinkedService. </summary>
         /// <param name="deploymentType">

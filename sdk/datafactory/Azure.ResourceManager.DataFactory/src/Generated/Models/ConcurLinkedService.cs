@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Concur Service linked service.
     /// Serialized Name: ConcurLinkedService
     /// </summary>
-    public partial class ConcurLinkedService : LinkedService
+    public partial class ConcurLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ConcurLinkedService. </summary>
         /// <param name="clientId">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP Business Warehouse Linked Service.
     /// Serialized Name: SapBWLinkedService
     /// </summary>
-    public partial class SapBWLinkedService : LinkedService
+    public partial class SapBWLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapBWLinkedService. </summary>
         /// <param name="server">

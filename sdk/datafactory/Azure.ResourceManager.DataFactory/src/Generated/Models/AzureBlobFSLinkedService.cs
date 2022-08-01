@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Lake Storage Gen2 linked service.
     /// Serialized Name: AzureBlobFSLinkedService
     /// </summary>
-    public partial class AzureBlobFSLinkedService : LinkedService
+    public partial class AzureBlobFSLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
         /// <param name="uri">

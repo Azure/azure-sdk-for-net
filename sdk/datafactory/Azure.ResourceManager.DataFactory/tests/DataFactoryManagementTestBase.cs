@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
         {
-            string storageAccountName = Recording.GenerateAssetName($"{DateTime.Now.ToString("yyMMdd")}datafactory");
+            string storageAccountName = Recording.GenerateAssetName("datafactory");
             StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, resourceGroup.Data.Location)
             {
                 AccessTier = StorageAccountAccessTier.Hot,

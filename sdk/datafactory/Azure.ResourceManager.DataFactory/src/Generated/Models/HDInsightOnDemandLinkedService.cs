@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// HDInsight ondemand linked service.
     /// Serialized Name: HDInsightOnDemandLinkedService
     /// </summary>
-    public partial class HDInsightOnDemandLinkedService : LinkedService
+    public partial class HDInsightOnDemandLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HDInsightOnDemandLinkedService. </summary>
         /// <param name="clusterSize">
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterResourceGroup
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData timeToLive, BinaryData version, LinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
+        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData timeToLive, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
         {
             if (clusterSize == null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             HostSubscriptionId = hostSubscriptionId;
             Tenant = tenant;
             ClusterResourceGroup = clusterResourceGroup;
-            AdditionalLinkedServiceNames = new ChangeTrackingList<LinkedServiceReference>();
+            AdditionalLinkedServiceNames = new ChangeTrackingList<FactoryLinkedServiceReference>();
             ScriptActions = new ChangeTrackingList<ScriptAction>();
             LinkedServiceType = "HDInsightOnDemand";
         }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.credential
         /// </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData timeToLive, BinaryData version, LinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, SecretBase clusterPassword, BinaryData clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData timeToLive, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, SecretBase clusterPassword, BinaryData clusterSshUserName, SecretBase clusterSshPassword, IList<FactoryLinkedServiceReference> additionalLinkedServiceNames, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hostSubscriptionId
@@ -373,12 +373,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.additionalLinkedServiceNames
         /// </summary>
-        public IList<LinkedServiceReference> AdditionalLinkedServiceNames { get; }
+        public IList<FactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; }
         /// <summary>
         /// The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hcatalogLinkedServiceName
         /// </summary>
-        public LinkedServiceReference HcatalogLinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary>
         /// The cluster type. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterType

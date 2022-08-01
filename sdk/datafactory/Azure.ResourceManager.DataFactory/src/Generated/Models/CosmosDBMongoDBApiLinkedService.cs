@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for CosmosDB (MongoDB API) data source.
     /// Serialized Name: CosmosDbMongoDbApiLinkedService
     /// </summary>
-    public partial class CosmosDBMongoDBApiLinkedService : LinkedService
+    public partial class CosmosDBMongoDBApiLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiLinkedService. </summary>
         /// <param name="connectionString">

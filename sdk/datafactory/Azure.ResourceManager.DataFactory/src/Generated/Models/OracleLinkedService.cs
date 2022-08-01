@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Oracle database.
     /// Serialized Name: OracleLinkedService
     /// </summary>
-    public partial class OracleLinkedService : LinkedService
+    public partial class OracleLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of OracleLinkedService. </summary>
         /// <param name="connectionString">

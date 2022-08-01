@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: DynamicsAXResourceDataset.typeProperties.path
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
-        public DynamicsAXResourceDataset(LinkedServiceReference linkedServiceName, BinaryData path) : base(linkedServiceName)
+        public DynamicsAXResourceDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData path) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string).
         /// Serialized Name: DynamicsAXResourceDataset.typeProperties.path
         /// </param>
-        internal DynamicsAXResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DynamicsAXResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData path) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Path = path;
             DatasetType = datasetType ?? "DynamicsAXResource";

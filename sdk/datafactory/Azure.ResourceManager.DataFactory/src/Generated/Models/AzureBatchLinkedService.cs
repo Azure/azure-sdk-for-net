@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Batch linked service.
     /// Serialized Name: AzureBatchLinkedService
     /// </summary>
-    public partial class AzureBatchLinkedService : LinkedService
+    public partial class AzureBatchLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
         /// <param name="accountName">
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: AzureBatchLinkedService.typeProperties.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureBatchLinkedService(BinaryData accountName, BinaryData batchUri, BinaryData poolName, LinkedServiceReference linkedServiceName)
+        public AzureBatchLinkedService(BinaryData accountName, BinaryData batchUri, BinaryData poolName, FactoryLinkedServiceReference linkedServiceName)
         {
             if (accountName == null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: AzureBatchLinkedService.typeProperties.credential
         /// </param>
-        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accountName, SecretBase accessKey, BinaryData batchUri, BinaryData poolName, LinkedServiceReference linkedServiceName, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accountName, SecretBase accessKey, BinaryData batchUri, BinaryData poolName, FactoryLinkedServiceReference linkedServiceName, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             AccessKey = accessKey;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The Azure Storage linked service reference.
         /// Serialized Name: AzureBatchLinkedService.typeProperties.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureBatchLinkedService.typeProperties.encryptedCredential

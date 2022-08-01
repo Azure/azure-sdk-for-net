@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Zendesk.
     /// Serialized Name: ZendeskLinkedService
     /// </summary>
-    public partial class ZendeskLinkedService : LinkedService
+    public partial class ZendeskLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ZendeskLinkedService. </summary>
         /// <param name="authenticationType">

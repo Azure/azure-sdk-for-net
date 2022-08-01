@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
-            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             Defines = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightPig";
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Allows user to specify defines for Pig job request.
         /// Serialized Name: HDInsightPigActivity.typeProperties.defines
         /// </param>
-        internal HDInsightPigActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IList<LinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightPigActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IList<FactoryLinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Storage linked service references.
         /// Serialized Name: HDInsightPigActivity.typeProperties.storageLinkedServices
         /// </summary>
-        public IList<LinkedServiceReference> StorageLinkedServices { get; }
+        public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
         /// Serialized Name: HDInsightPigActivity.typeProperties.arguments
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Script linked service reference.
         /// Serialized Name: HDInsightPigActivity.typeProperties.scriptLinkedService
         /// </summary>
-        public LinkedServiceReference ScriptLinkedService { get; set; }
+        public FactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// Allows user to specify defines for Pig job request.
         /// Serialized Name: HDInsightPigActivity.typeProperties.defines

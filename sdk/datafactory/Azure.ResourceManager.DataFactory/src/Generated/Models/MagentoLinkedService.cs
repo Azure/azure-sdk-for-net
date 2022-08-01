@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Magento server linked service.
     /// Serialized Name: MagentoLinkedService
     /// </summary>
-    public partial class MagentoLinkedService : LinkedService
+    public partial class MagentoLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
         /// <param name="host">

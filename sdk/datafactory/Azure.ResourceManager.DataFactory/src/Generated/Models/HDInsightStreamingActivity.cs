@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new ArgumentNullException(nameof(filePaths));
             }
 
-            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             Mapper = mapper;
             Reducer = reducer;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Allows user to specify defines for streaming job request.
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.defines
         /// </param>
-        internal HDInsightStreamingActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IList<LinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IList<BinaryData> filePaths, LinkedServiceReference fileLinkedService, BinaryData combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightStreamingActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IList<BinaryData> filePaths, FactoryLinkedServiceReference fileLinkedService, BinaryData combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Storage linked service references.
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.storageLinkedServices
         /// </summary>
-        public IList<LinkedServiceReference> StorageLinkedServices { get; }
+        public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.arguments
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Linked service reference where the files are located.
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.fileLinkedService
         /// </summary>
-        public LinkedServiceReference FileLinkedService { get; set; }
+        public FactoryLinkedServiceReference FileLinkedService { get; set; }
         /// <summary>
         /// Combiner executable name. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.combiner

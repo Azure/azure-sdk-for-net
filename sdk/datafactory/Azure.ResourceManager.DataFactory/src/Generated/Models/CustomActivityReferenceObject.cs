@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
         public CustomActivityReferenceObject()
         {
-            LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            LinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             Datasets = new ChangeTrackingList<DatasetReference>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Dataset references.
         /// Serialized Name: CustomActivityReferenceObject.datasets
         /// </param>
-        internal CustomActivityReferenceObject(IList<LinkedServiceReference> linkedServices, IList<DatasetReference> datasets)
+        internal CustomActivityReferenceObject(IList<FactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets)
         {
             LinkedServices = linkedServices;
             Datasets = datasets;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Linked service references.
         /// Serialized Name: CustomActivityReferenceObject.linkedServices
         /// </summary>
-        public IList<LinkedServiceReference> LinkedServices { get; }
+        public IList<FactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary>
         /// Dataset references.
         /// Serialized Name: CustomActivityReferenceObject.datasets

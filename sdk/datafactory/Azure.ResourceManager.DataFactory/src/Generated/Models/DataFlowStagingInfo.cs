@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Folder path for staging blob. Type: string (or Expression with resultType string)
         /// Serialized Name: DataFlowStagingInfo.folderPath
         /// </param>
-        internal DataFlowStagingInfo(LinkedServiceReference linkedService, BinaryData folderPath)
+        internal DataFlowStagingInfo(FactoryLinkedServiceReference linkedService, BinaryData folderPath)
         {
             LinkedService = linkedService;
             FolderPath = folderPath;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Staging linked service reference.
         /// Serialized Name: DataFlowStagingInfo.linkedService
         /// </summary>
-        public LinkedServiceReference LinkedService { get; set; }
+        public FactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary>
         /// Folder path for staging blob. Type: string (or Expression with resultType string)
         /// Serialized Name: DataFlowStagingInfo.folderPath

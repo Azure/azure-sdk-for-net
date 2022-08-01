@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP Table Linked Service.
     /// Serialized Name: SapTableLinkedService
     /// </summary>
-    public partial class SapTableLinkedService : LinkedService
+    public partial class SapTableLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapTableLinkedService. </summary>
         public SapTableLinkedService()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure PostgreSQL linked service.
     /// Serialized Name: AzurePostgreSqlLinkedService
     /// </summary>
-    public partial class AzurePostgreSqlLinkedService : LinkedService
+    public partial class AzurePostgreSqlLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzurePostgreSqlLinkedService. </summary>
         public AzurePostgreSqlLinkedService()

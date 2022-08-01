@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryLinkedServiceData DeserializeDataFactoryLinkedServiceData(JsonElement element)
         {
-            LinkedService properties = default;
+            FactoryLinkedServiceDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = LinkedService.DeserializeLinkedService(property.Value);
+                    properties = FactoryLinkedServiceDefinition.DeserializeFactoryLinkedServiceDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

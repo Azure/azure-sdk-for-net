@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// QuickBooks server linked service.
     /// Serialized Name: QuickBooksLinkedService
     /// </summary>
-    public partial class QuickBooksLinkedService : LinkedService
+    public partial class QuickBooksLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of QuickBooksLinkedService. </summary>
         public QuickBooksLinkedService()

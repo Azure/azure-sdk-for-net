@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: AzureSearchIndexDataset.typeProperties.indexName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="indexName"/> is null. </exception>
-        public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, BinaryData indexName) : base(linkedServiceName)
+        public AzureSearchIndexDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData indexName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The name of the Azure Search Index. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureSearchIndexDataset.typeProperties.indexName
         /// </param>
-        internal AzureSearchIndexDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData indexName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureSearchIndexDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData indexName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             IndexName = indexName;
             DatasetType = datasetType ?? "AzureSearchIndex";

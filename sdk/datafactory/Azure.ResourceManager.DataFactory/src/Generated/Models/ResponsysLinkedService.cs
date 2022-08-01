@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Responsys linked service.
     /// Serialized Name: ResponsysLinkedService
     /// </summary>
-    public partial class ResponsysLinkedService : LinkedService
+    public partial class ResponsysLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ResponsysLinkedService. </summary>
         /// <param name="endpoint">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Common Data Service for Apps linked service.
     /// Serialized Name: CommonDataServiceForAppsLinkedService
     /// </summary>
-    public partial class CommonDataServiceForAppsLinkedService : LinkedService
+    public partial class CommonDataServiceForAppsLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CommonDataServiceForAppsLinkedService. </summary>
         /// <param name="deploymentType">

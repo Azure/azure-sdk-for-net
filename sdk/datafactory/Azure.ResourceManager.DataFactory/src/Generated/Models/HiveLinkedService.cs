@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Hive Server linked service.
     /// Serialized Name: HiveLinkedService
     /// </summary>
-    public partial class HiveLinkedService : LinkedService
+    public partial class HiveLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HiveLinkedService. </summary>
         /// <param name="host">

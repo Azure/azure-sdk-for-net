@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Dataset.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public RelationalTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public RelationalTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The relational table name. Type: string (or Expression with resultType string).
         /// Serialized Name: RelationalTableDataset.typeProperties.tableName
         /// </param>
-        internal RelationalTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal RelationalTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             DatasetType = datasetType ?? "RelationalTable";

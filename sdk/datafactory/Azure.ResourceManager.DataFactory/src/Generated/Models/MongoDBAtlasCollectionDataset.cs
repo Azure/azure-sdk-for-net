@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: MongoDbAtlasCollectionDataset.typeProperties.collection
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
-        public MongoDBAtlasCollectionDataset(LinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
+        public MongoDBAtlasCollectionDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbAtlasCollectionDataset.typeProperties.collection
         /// </param>
-        internal MongoDBAtlasCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBAtlasCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "MongoDbAtlasCollection";

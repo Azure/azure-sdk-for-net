@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean).
         /// Serialized Name: LookupActivity.typeProperties.firstRowOnly
         /// </param>
-        internal LookupActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, CopyActivitySource source, DatasetReference dataset, BinaryData firstRowOnly) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal LookupActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, CopyActivitySource source, DatasetReference dataset, BinaryData firstRowOnly) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Source = source;
             Dataset = dataset;

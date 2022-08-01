@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Flowlet Reference
         /// Serialized Name: Transformation.flowlet
         /// </param>
-        internal Transformation(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet)
+        internal Transformation(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet)
         {
             Name = name;
             Description = description;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Linked service reference.
         /// Serialized Name: Transformation.linkedService
         /// </summary>
-        public LinkedServiceReference LinkedService { get; set; }
+        public FactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary>
         /// Flowlet Reference
         /// Serialized Name: Transformation.flowlet

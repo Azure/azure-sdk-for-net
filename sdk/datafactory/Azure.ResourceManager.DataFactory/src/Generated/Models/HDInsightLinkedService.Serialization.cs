@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData clusterUri = default;
             Optional<BinaryData> userName = default;
             Optional<SecretBase> password = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<BinaryData> isEspEnabled = default;
             Optional<BinaryData> fileSystem = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hcatalogLinkedServiceName"))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hcatalogLinkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            hcatalogLinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

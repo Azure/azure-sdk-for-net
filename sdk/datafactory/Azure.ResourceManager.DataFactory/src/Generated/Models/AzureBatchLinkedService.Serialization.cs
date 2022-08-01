@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<SecretBase> accessKey = default;
             BinaryData batchUri = default;
             BinaryData poolName = default;
-            LinkedServiceReference linkedServiceName = default;
+            FactoryLinkedServiceReference linkedServiceName = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<CredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"))
                         {
-                            linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

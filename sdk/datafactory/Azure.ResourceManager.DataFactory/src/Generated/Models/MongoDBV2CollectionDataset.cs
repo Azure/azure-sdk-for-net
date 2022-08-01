@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: MongoDbV2CollectionDataset.typeProperties.collection
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
-        public MongoDBV2CollectionDataset(LinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
+        public MongoDBV2CollectionDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The collection name of the MongoDB database. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbV2CollectionDataset.typeProperties.collection
         /// </param>
-        internal MongoDBV2CollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBV2CollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "MongoDbV2Collection";

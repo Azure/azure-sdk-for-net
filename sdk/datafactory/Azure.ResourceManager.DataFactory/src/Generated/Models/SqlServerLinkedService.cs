@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SQL Server linked service.
     /// Serialized Name: SqlServerLinkedService
     /// </summary>
-    public partial class SqlServerLinkedService : LinkedService
+    public partial class SqlServerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SqlServerLinkedService. </summary>
         /// <param name="connectionString">

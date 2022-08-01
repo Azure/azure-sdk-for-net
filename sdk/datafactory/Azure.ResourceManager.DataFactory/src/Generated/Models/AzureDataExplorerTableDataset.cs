@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Dataset.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureDataExplorerTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AzureDataExplorerTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDataExplorerTableDataset.typeProperties.table
         /// </param>
-        internal AzureDataExplorerTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureDataExplorerTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Table = table;
             DatasetType = datasetType ?? "AzureDataExplorerTable";

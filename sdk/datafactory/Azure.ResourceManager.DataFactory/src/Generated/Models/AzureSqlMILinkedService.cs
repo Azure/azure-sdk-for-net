@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure SQL Managed Instance linked service.
     /// Serialized Name: AzureSqlMILinkedService
     /// </summary>
-    public partial class AzureSqlMILinkedService : LinkedService
+    public partial class AzureSqlMILinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureSqlMILinkedService. </summary>
         /// <param name="connectionString">

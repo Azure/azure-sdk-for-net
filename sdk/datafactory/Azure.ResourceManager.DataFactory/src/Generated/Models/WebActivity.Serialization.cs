@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebActivity DeserializeWebActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicyInfo> policy = default;
             string name = default;
             string type = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<WebActivityAuthentication> authentication = default;
             Optional<bool> disableCertValidation = default;
             Optional<IList<DatasetReference>> datasets = default;
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
+            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                             }
                             linkedServices = array;
                             continue;

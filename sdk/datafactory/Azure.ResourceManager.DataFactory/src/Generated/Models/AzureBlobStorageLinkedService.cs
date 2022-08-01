@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The azure blob storage linked service.
     /// Serialized Name: AzureBlobStorageLinkedService
     /// </summary>
-    public partial class AzureBlobStorageLinkedService : LinkedService
+    public partial class AzureBlobStorageLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
         public AzureBlobStorageLinkedService()

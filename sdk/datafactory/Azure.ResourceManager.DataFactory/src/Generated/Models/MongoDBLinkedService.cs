@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for MongoDb data source.
     /// Serialized Name: MongoDbLinkedService
     /// </summary>
-    public partial class MongoDBLinkedService : LinkedService
+    public partial class MongoDBLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MongoDBLinkedService. </summary>
         /// <param name="server">

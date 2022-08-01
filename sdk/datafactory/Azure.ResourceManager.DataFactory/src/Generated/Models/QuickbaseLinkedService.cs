@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Quickbase.
     /// Serialized Name: QuickbaseLinkedService
     /// </summary>
-    public partial class QuickbaseLinkedService : LinkedService
+    public partial class QuickbaseLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
         /// <param name="uri">

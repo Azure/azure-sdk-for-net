@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Square Service linked service.
     /// Serialized Name: SquareLinkedService
     /// </summary>
-    public partial class SquareLinkedService : LinkedService
+    public partial class SquareLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SquareLinkedService. </summary>
         public SquareLinkedService()

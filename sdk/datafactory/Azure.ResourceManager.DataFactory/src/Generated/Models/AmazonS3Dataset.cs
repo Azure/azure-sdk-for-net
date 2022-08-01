@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: AmazonS3Dataset.typeProperties.bucketName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, BinaryData bucketName) : base(linkedServiceName)
+        public AmazonS3Dataset(FactoryLinkedServiceReference linkedServiceName, BinaryData bucketName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The data compression method used for the Amazon S3 object.
         /// Serialized Name: AmazonS3Dataset.typeProperties.compression
         /// </param>
-        internal AmazonS3Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData key, BinaryData prefix, BinaryData version, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonS3Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData key, BinaryData prefix, BinaryData version, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             BucketName = bucketName;
             Key = key;

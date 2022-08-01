@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// File system linked service.
     /// Serialized Name: FileServerLinkedService
     /// </summary>
-    public partial class FileServerLinkedService : LinkedService
+    public partial class FileServerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of FileServerLinkedService. </summary>
         /// <param name="host">

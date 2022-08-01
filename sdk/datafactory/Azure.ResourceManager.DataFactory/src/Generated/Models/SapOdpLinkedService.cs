@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP ODP Linked Service.
     /// Serialized Name: SapOdpLinkedService
     /// </summary>
-    public partial class SapOdpLinkedService : LinkedService
+    public partial class SapOdpLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapOdpLinkedService. </summary>
         public SapOdpLinkedService()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Sybase data source.
     /// Serialized Name: SybaseLinkedService
     /// </summary>
-    public partial class SybaseLinkedService : LinkedService
+    public partial class SybaseLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SybaseLinkedService. </summary>
         /// <param name="server">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The storage account linked service.
     /// Serialized Name: AzureStorageLinkedService
     /// </summary>
-    public partial class AzureStorageLinkedService : LinkedService
+    public partial class AzureStorageLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureStorageLinkedService. </summary>
         public AzureStorageLinkedService()

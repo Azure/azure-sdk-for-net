@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Lake Store linked service.
     /// Serialized Name: AzureDataLakeStoreLinkedService
     /// </summary>
-    public partial class AzureDataLakeStoreLinkedService : LinkedService
+    public partial class AzureDataLakeStoreLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreLinkedService. </summary>
         /// <param name="dataLakeStoreUri">

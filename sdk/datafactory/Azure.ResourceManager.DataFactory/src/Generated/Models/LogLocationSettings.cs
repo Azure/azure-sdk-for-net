@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: LogLocationSettings.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public LogLocationSettings(LinkedServiceReference linkedServiceName)
+        public LogLocationSettings(FactoryLinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
         /// Serialized Name: LogLocationSettings.path
         /// </param>
-        internal LogLocationSettings(LinkedServiceReference linkedServiceName, BinaryData path)
+        internal LogLocationSettings(FactoryLinkedServiceReference linkedServiceName, BinaryData path)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Log storage linked service reference.
         /// Serialized Name: LogLocationSettings.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
         /// Serialized Name: LogLocationSettings.path

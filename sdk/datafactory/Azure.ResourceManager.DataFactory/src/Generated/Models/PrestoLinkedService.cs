@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Presto server linked service.
     /// Serialized Name: PrestoLinkedService
     /// </summary>
-    public partial class PrestoLinkedService : LinkedService
+    public partial class PrestoLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of PrestoLinkedService. </summary>
         /// <param name="host">

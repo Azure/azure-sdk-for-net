@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Paypal Service linked service.
     /// Serialized Name: PaypalLinkedService
     /// </summary>
-    public partial class PaypalLinkedService : LinkedService
+    public partial class PaypalLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of PaypalLinkedService. </summary>
         /// <param name="host">

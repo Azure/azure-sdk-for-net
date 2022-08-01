@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The azure table storage linked service.
     /// Serialized Name: AzureTableStorageLinkedService
     /// </summary>
-    public partial class AzureTableStorageLinkedService : LinkedService
+    public partial class AzureTableStorageLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureTableStorageLinkedService. </summary>
         public AzureTableStorageLinkedService()

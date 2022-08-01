@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// ServiceNow server linked service.
     /// Serialized Name: ServiceNowLinkedService
     /// </summary>
-    public partial class ServiceNowLinkedService : LinkedService
+    public partial class ServiceNowLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ServiceNowLinkedService. </summary>
         /// <param name="endpoint">

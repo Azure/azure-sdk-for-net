@@ -68,7 +68,6 @@ rename-mapping:
   Factory: DataFactory
   GitHubAccessTokenResponse: GitHubAccessTokenResult
   IntegrationRuntimeResource: DataFactoryIntegrationRuntime
-  LinkedServiceResource: DataFactoryLinkedService
   ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
   ManagedVirtualNetworkResource: DataFactoryVirtualNetwork
   PipelineResource: DataFactoryPipeline
@@ -112,6 +111,12 @@ rename-mapping:
   GlobalParameterType: FactoryGlobalParameterType
   # IntegrationRuntime
   IntegrationRuntime: IntegrationRuntimeDefinition
+  # LinkedService
+  LinkedService: FactoryLinkedServiceDefinition
+  LinkedServiceReference: FactoryLinkedServiceReference
+  LinkedServiceReferenceType: FactoryLinkedServiceReferenceType
+  LinkedServiceResource: DataFactoryLinkedService
+
   
 # prepend-rp-prefix:
 #  - DataFlowDefinition

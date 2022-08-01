@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.DataFactory
     }
     public partial class DataFactoryLinkedServiceData : Azure.ResourceManager.Models.ResourceData
     {
-        public DataFactoryLinkedServiceData(Azure.ResourceManager.DataFactory.Models.LinkedService properties) { }
+        public DataFactoryLinkedServiceData(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition properties) { }
         public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedService Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition Properties { get { throw null; } set { } }
     }
     public partial class DataFactoryLinkedServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.DataFactory
 }
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonMwsLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AmazonMwsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AmazonMwsLinkedService(System.BinaryData endpoint, System.BinaryData marketplaceId, System.BinaryData sellerId, System.BinaryData accessKeyId) { }
         public System.BinaryData AccessKeyId { get { throw null; } set { } }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonMwsObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AmazonMwsObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AmazonMwsObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class AmazonMwsSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AmazonMwsSource() { }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class AmazonRdsForOracleLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AmazonRdsForOracleLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AmazonRdsForOracleLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -597,11 +597,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonRdsForOracleTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AmazonRdsForOracleTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AmazonRdsForOracleTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
-    public partial class AmazonRdsForSqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AmazonRdsForSqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AmazonRdsForSqlServerLinkedService(System.BinaryData connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
@@ -622,11 +622,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonRdsForSqlServerTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AmazonRdsForSqlServerTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AmazonRdsForSqlServerTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
-    public partial class AmazonRedshiftLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AmazonRedshiftLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AmazonRedshiftLinkedService(System.BinaryData server, System.BinaryData database) { }
         public System.BinaryData Database { get { throw null; } set { } }
@@ -644,12 +644,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonRedshiftTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AmazonRedshiftTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AmazonRedshiftTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class AmazonS3CompatibleLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AmazonS3CompatibleLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AmazonS3CompatibleLinkedService() { }
         public System.BinaryData AccessKeyId { get { throw null; } set { } }
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonS3Dataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AmazonS3Dataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData bucketName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AmazonS3Dataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData bucketName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData BucketName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Prefix { get { throw null; } set { } }
         public System.BinaryData Version { get { throw null; } set { } }
     }
-    public partial class AmazonS3LinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AmazonS3LinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AmazonS3LinkedService() { }
         public System.BinaryData AccessKeyId { get { throw null; } set { } }
@@ -720,14 +720,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData WildcardFileName { get { throw null; } set { } }
         public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
     }
-    public partial class AppFiguresLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AppFiguresLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AppFiguresLinkedService(System.BinaryData userName, Azure.ResourceManager.DataFactory.Models.SecretBase password, Azure.ResourceManager.DataFactory.Models.SecretBase clientKey) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ClientKey { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
         public System.BinaryData UserName { get { throw null; } set { } }
     }
-    public partial class AsanaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AsanaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AsanaLinkedService(Azure.ResourceManager.DataFactory.Models.SecretBase apiToken) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ApiToken { get { throw null; } set { } }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AvroDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AvroDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AvroDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData AvroCompressionCodec { get { throw null; } set { } }
         public int? AvroCompressionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
@@ -769,20 +769,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzPowerShellSetup(string version) { }
         public string Version { get { throw null; } set { } }
     }
-    public partial class AzureBatchLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureBatchLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
-        public AzureBatchLinkedService(System.BinaryData accountName, System.BinaryData batchUri, System.BinaryData poolName, Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) { }
+        public AzureBatchLinkedService(System.BinaryData accountName, System.BinaryData batchUri, System.BinaryData poolName, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessKey { get { throw null; } set { } }
         public System.BinaryData AccountName { get { throw null; } set { } }
         public System.BinaryData BatchUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.BinaryData PoolName { get { throw null; } set { } }
     }
     public partial class AzureBlobDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureBlobDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureBlobDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FileName { get { throw null; } set { } }
         public System.BinaryData FolderPath { get { throw null; } set { } }
@@ -793,13 +793,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureBlobFSDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureBlobFSDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureBlobFSDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FileName { get { throw null; } set { } }
         public System.BinaryData FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
     }
-    public partial class AzureBlobFSLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureBlobFSLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureBlobFSLinkedService(System.BinaryData uri) { }
         public System.BinaryData AccountKey { get { throw null; } set { } }
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureBlobFSWriteSettings() { }
         public System.BinaryData BlockSizeInMB { get { throw null; } set { } }
     }
-    public partial class AzureBlobStorageLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureBlobStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureBlobStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureDatabricksDeltaLakeDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureDatabricksDeltaLakeDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureDatabricksDeltaLakeDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Database { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData DateFormat { get { throw null; } set { } }
         public System.BinaryData TimestampFormat { get { throw null; } set { } }
     }
-    public partial class AzureDatabricksDeltaLakeLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureDatabricksDeltaLakeLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureDatabricksDeltaLakeLinkedService(System.BinaryData domain) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.AzureDatabricksDeltaLakeExportCommand ExportSettings { get { throw null; } set { } }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class AzureDatabricksLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureDatabricksLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureDatabricksLinkedService(System.BinaryData domain) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Command { get { throw null; } set { } }
         public System.BinaryData CommandTimeout { get { throw null; } set { } }
     }
-    public partial class AzureDataExplorerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureDataExplorerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureDataExplorerLinkedService(System.BinaryData endpoint, System.BinaryData database) { }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
@@ -985,10 +985,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureDataExplorerTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureDataExplorerTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureDataExplorerTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Table { get { throw null; } set { } }
     }
-    public partial class AzureDataLakeAnalyticsLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureDataLakeAnalyticsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureDataLakeAnalyticsLinkedService(System.BinaryData accountName, System.BinaryData tenant) { }
         public System.BinaryData AccountName { get { throw null; } set { } }
@@ -1002,13 +1002,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureDataLakeStoreDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureDataLakeStoreDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureDataLakeStoreDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FileName { get { throw null; } set { } }
         public System.BinaryData FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
     }
-    public partial class AzureDataLakeStoreLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureDataLakeStoreLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureDataLakeStoreLinkedService(System.BinaryData dataLakeStoreUri) { }
         public System.BinaryData AccountName { get { throw null; } set { } }
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureDataLakeStoreWriteSettings() { }
         public System.BinaryData ExpiryDateTime { get { throw null; } set { } }
     }
-    public partial class AzureFileStorageLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureFileStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureFileStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod left, Azure.ResourceManager.DataFactory.Models.AzureFunctionActivityMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureFunctionLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureFunctionLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureFunctionLinkedService(System.BinaryData functionAppUri) { }
         public System.BinaryData Authentication { get { throw null; } set { } }
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.SecretBase FunctionKey { get { throw null; } set { } }
         public System.BinaryData ResourceId { get { throw null; } set { } }
     }
-    public partial class AzureKeyVaultLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureKeyVaultLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureKeyVaultLinkedService(System.BinaryData baseUri) { }
         public System.BinaryData BaseUri { get { throw null; } set { } }
@@ -1142,12 +1142,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureKeyVaultSecretReference : Azure.ResourceManager.DataFactory.Models.SecretBase
     {
-        public AzureKeyVaultSecretReference(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference store, System.BinaryData secretName) { }
+        public AzureKeyVaultSecretReference(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference store, System.BinaryData secretName) { }
         public System.BinaryData SecretName { get { throw null; } set { } }
         public System.BinaryData SecretVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference Store { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference Store { get { throw null; } set { } }
     }
-    public partial class AzureMariaDBLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureMariaDBLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureMariaDBLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -1161,7 +1161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureMariaDBTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureMariaDBTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureMariaDBTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class AzureMLBatchExecutionActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData MlPipelineParameters { get { throw null; } set { } }
         public System.BinaryData Version { get { throw null; } set { } }
     }
-    public partial class AzureMLLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureMLLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureMLLinkedService(System.BinaryData mlEndpoint, Azure.ResourceManager.DataFactory.Models.SecretBase apiKey) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ApiKey { get { throw null; } set { } }
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Tenant { get { throw null; } set { } }
         public System.BinaryData UpdateResourceEndpoint { get { throw null; } set { } }
     }
-    public partial class AzureMLServiceLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureMLServiceLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureMLServiceLinkedService(System.BinaryData subscriptionId, System.BinaryData resourceGroupName, System.BinaryData mlWorkspaceName) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -1208,18 +1208,18 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureMLUpdateResourceActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
-        public AzureMLUpdateResourceActivity(string name, System.BinaryData trainedModelName, Azure.ResourceManager.DataFactory.Models.LinkedServiceReference trainedModelLinkedServiceName, System.BinaryData trainedModelFilePath) : base (default(string)) { }
+        public AzureMLUpdateResourceActivity(string name, System.BinaryData trainedModelName, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference trainedModelLinkedServiceName, System.BinaryData trainedModelFilePath) : base (default(string)) { }
         public System.BinaryData TrainedModelFilePath { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference TrainedModelLinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference TrainedModelLinkedServiceName { get { throw null; } set { } }
         public System.BinaryData TrainedModelName { get { throw null; } set { } }
     }
     public partial class AzureMLWebServiceFile
     {
-        public AzureMLWebServiceFile(System.BinaryData filePath, Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) { }
+        public AzureMLWebServiceFile(System.BinaryData filePath, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) { }
         public System.BinaryData FilePath { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
     }
-    public partial class AzureMySqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureMySqlLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureMySqlLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -1238,11 +1238,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureMySqlTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureMySqlTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureMySqlTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class AzurePostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzurePostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzurePostgreSqlLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzurePostgreSqlTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzurePostgreSqlTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzurePostgreSqlTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSearchIndexDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureSearchIndexDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData indexName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureSearchIndexDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData indexName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData IndexName { get { throw null; } set { } }
     }
     public partial class AzureSearchIndexSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -1298,14 +1298,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType left, Azure.ResourceManager.DataFactory.Models.AzureSearchIndexWriteBehaviorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureSearchLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureSearchLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureSearchLinkedService(System.BinaryData uri) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Key { get { throw null; } set { } }
         public System.BinaryData Uri { get { throw null; } set { } }
     }
-    public partial class AzureSqlDatabaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureSqlDatabaseLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureSqlDatabaseLinkedService(System.BinaryData connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
@@ -1318,7 +1318,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.SecretBase ServicePrincipalKey { get { throw null; } set { } }
         public System.BinaryData Tenant { get { throw null; } set { } }
     }
-    public partial class AzureSqlDWLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureSqlDWLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureSqlDWLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData AzureCloudType { get { throw null; } set { } }
@@ -1332,12 +1332,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSqlDWTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureSqlDWTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureSqlDWTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class AzureSqlMILinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureSqlMILinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureSqlMILinkedService(System.BinaryData connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSqlMITableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureSqlMITableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureSqlMITableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -1382,12 +1382,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSqlTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureSqlTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureSqlTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class AzureStorageLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public AzureTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData tableName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public AzureTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData tableName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class AzureTableSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData AzureTableSourceIgnoreTableNotFound { get { throw null; } set { } }
         public System.BinaryData AzureTableSourceQuery { get { throw null; } set { } }
     }
-    public partial class AzureTableStorageLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class AzureTableStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureTableStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class BinaryDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public BinaryDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public BinaryDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
     }
@@ -1491,12 +1491,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class BlobTrigger : Azure.ResourceManager.DataFactory.Models.MultiplePipelineTrigger
     {
-        public BlobTrigger(string folderPath, int maxConcurrency, Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedService) { }
+        public BlobTrigger(string folderPath, int maxConcurrency, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedService) { }
         public string FolderPath { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
         public int MaxConcurrency { get { throw null; } set { } }
     }
-    public partial class CassandraLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class CassandraLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CassandraLinkedService(System.BinaryData host) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class CassandraTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public CassandraTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public CassandraTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Keyspace { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
@@ -1560,10 +1560,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class CommonDataServiceForAppsEntityDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public CommonDataServiceForAppsEntityDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public CommonDataServiceForAppsEntityDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData EntityName { get { throw null; } set { } }
     }
-    public partial class CommonDataServiceForAppsLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class CommonDataServiceForAppsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CommonDataServiceForAppsLinkedService(System.BinaryData deploymentType, System.BinaryData authenticationType) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -1603,7 +1603,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public CompressionReadSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
-    public partial class ConcurLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ConcurLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ConcurLinkedService(System.BinaryData clientId, System.BinaryData username) { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ConcurObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ConcurObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ConcurObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class ConcurSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -1701,7 +1701,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode left, Azure.ResourceManager.DataFactory.Models.CosmosDBConnectionMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CosmosDBLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class CosmosDBLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CosmosDBLinkedService() { }
         public System.BinaryData AccountEndpoint { get { throw null; } set { } }
@@ -1719,10 +1719,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class CosmosDBMongoDBApiCollectionDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public CosmosDBMongoDBApiCollectionDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData collection) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public CosmosDBMongoDBApiCollectionDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData collection) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Collection { get { throw null; } set { } }
     }
-    public partial class CosmosDBMongoDBApiLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class CosmosDBMongoDBApiLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CosmosDBMongoDBApiLinkedService(System.BinaryData connectionString, System.BinaryData database) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class CosmosDBSqlApiCollectionDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public CosmosDBSqlApiCollectionDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData collectionName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public CosmosDBSqlApiCollectionDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData collectionName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData CollectionName { get { throw null; } set { } }
     }
     public partial class CosmosDBSqlApiSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData PreferredRegions { get { throw null; } set { } }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class CouchbaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class CouchbaseLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CouchbaseLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -1794,7 +1794,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class CouchbaseTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public CouchbaseTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public CouchbaseTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class CreateLinkedIntegrationRuntimeContent
@@ -1842,21 +1842,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ExtendedProperties { get { throw null; } }
         public System.BinaryData FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CustomActivityReferenceObject ReferenceObjects { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference ResourceLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ResourceLinkedService { get { throw null; } set { } }
         public System.BinaryData RetentionTimeInDays { get { throw null; } set { } }
     }
     public partial class CustomActivityReferenceObject
     {
         public CustomActivityReferenceObject() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DatasetReference> Datasets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> LinkedServices { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> LinkedServices { get { throw null; } }
     }
     public partial class CustomDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public CustomDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public CustomDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TypeProperties { get { throw null; } set { } }
     }
-    public partial class CustomDataSourceLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class CustomDataSourceLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CustomDataSourceLinkedService(System.BinaryData typeProperties) { }
         public System.BinaryData TypeProperties { get { throw null; } set { } }
@@ -2037,13 +2037,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFlowSink : Azure.ResourceManager.DataFactory.Models.Transformation
     {
         public DataFlowSink(string name) : base (default(string)) { }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference RejectedDataLinkedService { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference RejectedDataLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
     }
     public partial class DataFlowSource : Azure.ResourceManager.DataFactory.Models.Transformation
     {
         public DataFlowSource(string name) : base (default(string)) { }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
     }
     public partial class DataFlowSourceSetting
     {
@@ -2056,17 +2056,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public DataFlowStagingInfo() { }
         public System.BinaryData FolderPath { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
     }
     public partial class DataLakeAnalyticsUsqlActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
-        public DataLakeAnalyticsUsqlActivity(string name, System.BinaryData scriptPath, Azure.ResourceManager.DataFactory.Models.LinkedServiceReference scriptLinkedService) : base (default(string)) { }
+        public DataLakeAnalyticsUsqlActivity(string name, System.BinaryData scriptPath, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference scriptLinkedService) : base (default(string)) { }
         public System.BinaryData CompilationMode { get { throw null; } set { } }
         public System.BinaryData DegreeOfParallelism { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Parameters { get { throw null; } }
         public System.BinaryData Priority { get { throw null; } set { } }
         public System.BinaryData RuntimeVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
         public System.BinaryData ScriptPath { get { throw null; } set { } }
     }
     public partial class DatasetCompression
@@ -2114,7 +2114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Deserializer { get { throw null; } set { } }
         public System.BinaryData Serializer { get { throw null; } set { } }
     }
-    public partial class DataworldLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class DataworldLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public DataworldLinkedService(Azure.ResourceManager.DataFactory.Models.SecretBase apiToken) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ApiToken { get { throw null; } set { } }
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType left, Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Db2LinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class Db2LinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public Db2LinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -2177,7 +2177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class Db2TableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public Db2TableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public Db2TableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -2199,7 +2199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class DelimitedTextDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public DelimitedTextDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public DelimitedTextDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData ColumnDelimiter { get { throw null; } set { } }
         public System.BinaryData CompressionCodec { get { throw null; } set { } }
         public System.BinaryData CompressionLevel { get { throw null; } set { } }
@@ -2271,7 +2271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class DocumentDBCollectionDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public DocumentDBCollectionDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData collectionName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public DocumentDBCollectionDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData collectionName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData CollectionName { get { throw null; } set { } }
     }
     public partial class DocumentDBCollectionSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -2288,7 +2288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Query { get { throw null; } set { } }
         public System.BinaryData QueryTimeout { get { throw null; } set { } }
     }
-    public partial class DrillLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class DrillLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public DrillLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -2302,7 +2302,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class DrillTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public DrillTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public DrillTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -2319,7 +2319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, string> AdditionalOptions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DWCopyCommandDefaultValue> DefaultValues { get { throw null; } }
     }
-    public partial class DynamicsAXLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class DynamicsAXLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public DynamicsAXLinkedService(System.BinaryData uri, System.BinaryData servicePrincipalId, Azure.ResourceManager.DataFactory.Models.SecretBase servicePrincipalKey, System.BinaryData tenant, System.BinaryData aadResourceId) { }
         public System.BinaryData AadResourceId { get { throw null; } set { } }
@@ -2331,7 +2331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class DynamicsAXResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public DynamicsAXResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData path) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public DynamicsAXResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData path) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Path { get { throw null; } set { } }
     }
     public partial class DynamicsAXSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -2342,10 +2342,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class DynamicsCrmEntityDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public DynamicsCrmEntityDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public DynamicsCrmEntityDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData EntityName { get { throw null; } set { } }
     }
-    public partial class DynamicsCrmLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class DynamicsCrmLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public DynamicsCrmLinkedService(System.BinaryData deploymentType, System.BinaryData authenticationType) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -2376,10 +2376,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class DynamicsEntityDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public DynamicsEntityDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public DynamicsEntityDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData EntityName { get { throw null; } set { } }
     }
-    public partial class DynamicsLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class DynamicsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public DynamicsLinkedService(System.BinaryData deploymentType, System.BinaryData authenticationType) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -2426,7 +2426,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData AdditionalColumns { get { throw null; } set { } }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class EloquaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class EloquaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public EloquaLinkedService(System.BinaryData endpoint, System.BinaryData username) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -2439,7 +2439,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class EloquaObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public EloquaObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public EloquaObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class EloquaSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -2482,7 +2482,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ExcelDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ExcelDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ExcelDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FirstRowAsHeader { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
@@ -2563,7 +2563,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ExecutionActivity : Azure.ResourceManager.DataFactory.Models.PipelineActivityInfo
     {
         public ExecutionActivity(string name) : base (default(string)) { }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.PipelineActivityPolicyInfo Policy { get { throw null; } set { } }
     }
     public partial class ExportSettings
@@ -2679,12 +2679,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class FactoryDatasetDefinition
     {
-        public FactoryDatasetDefinition(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) { }
+        public FactoryDatasetDefinition(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string FolderName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
         public System.BinaryData Schema { get { throw null; } set { } }
         public System.BinaryData Structure { get { throw null; } set { } }
@@ -2780,8 +2780,41 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class FactoryLinkedServiceDebugInfo : Azure.ResourceManager.DataFactory.Models.FactoryDebugInfo
     {
-        public FactoryLinkedServiceDebugInfo(Azure.ResourceManager.DataFactory.Models.LinkedService properties) { }
-        public Azure.ResourceManager.DataFactory.Models.LinkedService Properties { get { throw null; } }
+        public FactoryLinkedServiceDebugInfo(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition properties) { }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition Properties { get { throw null; } }
+    }
+    public partial class FactoryLinkedServiceDefinition
+    {
+        public FactoryLinkedServiceDefinition() { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReference ConnectVia { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
+    }
+    public partial class FactoryLinkedServiceReference
+    {
+        public FactoryLinkedServiceReference(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType referenceType, string referenceName) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Parameters { get { throw null; } }
+        public string ReferenceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType ReferenceType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FactoryLinkedServiceReferenceType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FactoryLinkedServiceReferenceType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType LinkedServiceReference { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReferenceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FactoryMappingDataFlowDefinition : Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDefinition
     {
@@ -2844,7 +2877,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData ErrorCode { get { throw null; } set { } }
         public System.BinaryData Message { get { throw null; } set { } }
     }
-    public partial class FileServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class FileServerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public FileServerLinkedService(System.BinaryData host) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -2876,7 +2909,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class FileShareDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public FileShareDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public FileShareDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FileFilter { get { throw null; } set { } }
         public System.BinaryData FileName { get { throw null; } set { } }
@@ -2951,7 +2984,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData WildcardFileName { get { throw null; } set { } }
         public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
     }
-    public partial class FtpServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class FtpServerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public FtpServerLinkedService(System.BinaryData host) { }
         public Azure.ResourceManager.DataFactory.Models.FtpAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -3017,7 +3050,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GoogleAdWordsLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class GoogleAdWordsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public GoogleAdWordsLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.GoogleAdWordsAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -3035,7 +3068,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class GoogleAdWordsObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public GoogleAdWordsObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public GoogleAdWordsObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class GoogleAdWordsSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -3061,7 +3094,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GoogleBigQueryLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class GoogleBigQueryLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public GoogleBigQueryLinkedService(System.BinaryData project, Azure.ResourceManager.DataFactory.Models.GoogleBigQueryAuthenticationType authenticationType) { }
         public System.BinaryData AdditionalProjects { get { throw null; } set { } }
@@ -3079,7 +3112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class GoogleBigQueryObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public GoogleBigQueryObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public GoogleBigQueryObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Dataset { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -3089,7 +3122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public GoogleBigQuerySource() { }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class GoogleCloudStorageLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class GoogleCloudStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public GoogleCloudStorageLinkedService() { }
         public System.BinaryData AccessKeyId { get { throw null; } set { } }
@@ -3117,7 +3150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData WildcardFileName { get { throw null; } set { } }
         public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
     }
-    public partial class GreenplumLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class GreenplumLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public GreenplumLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -3131,7 +3164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class GreenplumTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public GreenplumTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public GreenplumTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -3154,7 +3187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HBaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HBaseLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HBaseLinkedService(System.BinaryData host, Azure.ResourceManager.DataFactory.Models.HBaseAuthenticationType authenticationType) { }
         public System.BinaryData AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -3171,7 +3204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class HBaseObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public HBaseObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public HBaseObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class HBaseSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -3179,7 +3212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public HBaseSource() { }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class HdfsLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HdfsLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HdfsLinkedService(System.BinaryData uri) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -3238,20 +3271,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
         public int? QueryTimeout { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
         public System.BinaryData ScriptPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> StorageLinkedServices { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> StorageLinkedServices { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Variables { get { throw null; } }
     }
-    public partial class HDInsightLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HDInsightLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HDInsightLinkedService(System.BinaryData clusterUri) { }
         public System.BinaryData ClusterUri { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public System.BinaryData FileSystem { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference HcatalogLinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference HcatalogLinkedServiceName { get { throw null; } set { } }
         public System.BinaryData IsEspEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
         public System.BinaryData UserName { get { throw null; } set { } }
     }
@@ -3264,13 +3297,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
         public System.BinaryData JarFilePath { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> JarLibs { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference JarLinkedService { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> StorageLinkedServices { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference JarLinkedService { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> StorageLinkedServices { get { throw null; } }
     }
-    public partial class HDInsightOnDemandLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HDInsightOnDemandLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
-        public HDInsightOnDemandLinkedService(System.BinaryData clusterSize, System.BinaryData timeToLive, System.BinaryData version, Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData hostSubscriptionId, System.BinaryData tenant, System.BinaryData clusterResourceGroup) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> AdditionalLinkedServiceNames { get { throw null; } }
+        public HDInsightOnDemandLinkedService(System.BinaryData clusterSize, System.BinaryData timeToLive, System.BinaryData version, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData hostSubscriptionId, System.BinaryData tenant, System.BinaryData clusterResourceGroup) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> AdditionalLinkedServiceNames { get { throw null; } }
         public System.BinaryData ClusterNamePrefix { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ClusterPassword { get { throw null; } set { } }
         public System.BinaryData ClusterResourceGroup { get { throw null; } set { } }
@@ -3284,12 +3317,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData DataNodeSize { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public System.BinaryData HBaseConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference HcatalogLinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference HcatalogLinkedServiceName { get { throw null; } set { } }
         public System.BinaryData HdfsConfiguration { get { throw null; } set { } }
         public System.BinaryData HeadNodeSize { get { throw null; } set { } }
         public System.BinaryData HiveConfiguration { get { throw null; } set { } }
         public System.BinaryData HostSubscriptionId { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.BinaryData MapReduceConfiguration { get { throw null; } set { } }
         public System.BinaryData OozieConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ScriptAction> ScriptActions { get { throw null; } }
@@ -3311,9 +3344,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Arguments { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
         public System.BinaryData ScriptPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> StorageLinkedServices { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> StorageLinkedServices { get { throw null; } }
     }
     public partial class HDInsightSparkActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
@@ -3325,7 +3358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData ProxyUser { get { throw null; } set { } }
         public System.BinaryData RootPath { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> SparkConfig { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference SparkJobLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference SparkJobLinkedService { get { throw null; } set { } }
     }
     public partial class HDInsightStreamingActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
@@ -3334,14 +3367,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Combiner { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> CommandEnvironment { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference FileLinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference FileLinkedService { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> FilePaths { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
         public System.BinaryData Input { get { throw null; } set { } }
         public System.BinaryData Mapper { get { throw null; } set { } }
         public System.BinaryData Output { get { throw null; } set { } }
         public System.BinaryData Reducer { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> StorageLinkedServices { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> StorageLinkedServices { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HiveAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType>
@@ -3363,7 +3396,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType left, Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HiveLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HiveLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HiveLinkedService(System.BinaryData host, Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType authenticationType) { }
         public System.BinaryData AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -3386,7 +3419,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class HiveObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public HiveObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public HiveObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -3457,7 +3490,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class HttpFileDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public HttpFileDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public HttpFileDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData AdditionalHeaders { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
@@ -3465,7 +3498,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData RequestBody { get { throw null; } set { } }
         public System.BinaryData RequestMethod { get { throw null; } set { } }
     }
-    public partial class HttpLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HttpLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HttpLinkedService(System.BinaryData uri) { }
         public Azure.ResourceManager.DataFactory.Models.HttpAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -3498,7 +3531,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public HttpSource() { }
         public System.BinaryData HttpRequestTimeout { get { throw null; } set { } }
     }
-    public partial class HubspotLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class HubspotLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HubspotLinkedService(System.BinaryData clientId) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -3512,7 +3545,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class HubspotObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public HubspotObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public HubspotObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class HubspotSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -3546,7 +3579,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ImpalaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ImpalaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ImpalaLinkedService(System.BinaryData host, Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType authenticationType) { }
         public System.BinaryData AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -3563,7 +3596,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ImpalaObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ImpalaObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ImpalaObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -3578,7 +3611,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ImportSettings() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
-    public partial class InformixLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class InformixLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public InformixLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -3600,7 +3633,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class InformixTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public InformixTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public InformixTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3948,7 +3981,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string SubnetId { get { throw null; } set { } }
         public string VNetId { get { throw null; } set { } }
     }
-    public partial class JiraLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class JiraLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public JiraLinkedService(System.BinaryData host, System.BinaryData username) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -3962,7 +3995,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class JiraObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public JiraObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public JiraObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class JiraSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -3972,7 +4005,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class JsonDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public JsonDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public JsonDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData EncodingName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
@@ -4038,43 +4071,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public LinkedIntegrationRuntimeType() { }
     }
-    public partial class LinkedService
-    {
-        public LinkedService() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReference ConnectVia { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
-    }
-    public partial class LinkedServiceReference
-    {
-        public LinkedServiceReference(Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType referenceType, string referenceName) { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> Parameters { get { throw null; } }
-        public string ReferenceName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType ReferenceType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LinkedServiceReferenceType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LinkedServiceReferenceType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType LinkedServiceReference { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType left, Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType left, Azure.ResourceManager.DataFactory.Models.LinkedServiceReferenceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LogLocationSettings
     {
-        public LogLocationSettings(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) { }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public LogLocationSettings(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) { }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.BinaryData Path { get { throw null; } set { } }
     }
     public partial class LogSettings
@@ -4086,10 +4086,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class LogStorageSettings
     {
-        public LogStorageSettings(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) { }
+        public LogStorageSettings(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.BinaryData EnableReliableLogging { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.BinaryData LogLevel { get { throw null; } set { } }
         public System.BinaryData Path { get { throw null; } set { } }
     }
@@ -4100,7 +4100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData FirstRowOnly { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CopyActivitySource Source { get { throw null; } set { } }
     }
-    public partial class MagentoLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MagentoLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MagentoLinkedService(System.BinaryData host) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -4112,7 +4112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MagentoObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MagentoObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MagentoObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class MagentoSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -4226,7 +4226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType left, Azure.ResourceManager.DataFactory.Models.ManagedVirtualNetworkReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MariaDBLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MariaDBLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MariaDBLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4240,10 +4240,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MariaDBTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MariaDBTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MariaDBTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class MarketoLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MarketoLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MarketoLinkedService(System.BinaryData endpoint, System.BinaryData clientId) { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -4256,7 +4256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MarketoObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MarketoObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MarketoObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class MarketoSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -4270,7 +4270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Name { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
     }
-    public partial class MicrosoftAccessLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MicrosoftAccessLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MicrosoftAccessLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -4293,15 +4293,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MicrosoftAccessTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MicrosoftAccessTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MicrosoftAccessTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class MongoDBAtlasCollectionDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MongoDBAtlasCollectionDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData collection) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MongoDBAtlasCollectionDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData collection) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Collection { get { throw null; } set { } }
     }
-    public partial class MongoDBAtlasLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MongoDBAtlasLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MongoDBAtlasLinkedService(System.BinaryData connectionString, System.BinaryData database) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4341,7 +4341,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MongoDBCollectionDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MongoDBCollectionDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData collectionName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MongoDBCollectionDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData collectionName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData CollectionName { get { throw null; } set { } }
     }
     public partial class MongoDBCursorMethodsProperties
@@ -4353,7 +4353,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Skip { get { throw null; } set { } }
         public System.BinaryData Sort { get { throw null; } set { } }
     }
-    public partial class MongoDBLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MongoDBLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MongoDBLinkedService(System.BinaryData server, System.BinaryData databaseName) { }
         public System.BinaryData AllowSelfSignedServerCert { get { throw null; } set { } }
@@ -4375,10 +4375,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MongoDBV2CollectionDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MongoDBV2CollectionDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData collection) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MongoDBV2CollectionDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData collection) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Collection { get { throw null; } set { } }
     }
-    public partial class MongoDBV2LinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MongoDBV2LinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MongoDBV2LinkedService(System.BinaryData connectionString, System.BinaryData database) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4403,7 +4403,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public MultiplePipelineTrigger() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.TriggerPipelineReference> Pipelines { get { throw null; } }
     }
-    public partial class MySqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class MySqlLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public MySqlLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4417,10 +4417,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MySqlTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public MySqlTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public MySqlTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class NetezzaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class NetezzaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public NetezzaLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4443,7 +4443,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class NetezzaTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public NetezzaTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public NetezzaTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -4487,7 +4487,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ODataAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ODataLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ODataLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ODataLinkedService(System.BinaryData uri) { }
         public System.BinaryData AadResourceId { get { throw null; } set { } }
@@ -4507,7 +4507,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ODataResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ODataResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ODataResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Path { get { throw null; } set { } }
     }
     public partial class ODataSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
@@ -4517,7 +4517,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData HttpRequestTimeout { get { throw null; } set { } }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class OdbcLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class OdbcLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public OdbcLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
@@ -4539,16 +4539,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class OdbcTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public OdbcTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public OdbcTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class Office365Dataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public Office365Dataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData tableName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public Office365Dataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData tableName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Predicate { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
-    public partial class Office365LinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class Office365LinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public Office365LinkedService(System.BinaryData office365TenantId, System.BinaryData servicePrincipalTenantId, System.BinaryData servicePrincipalId, Azure.ResourceManager.DataFactory.Models.SecretBase servicePrincipalKey) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -4567,7 +4567,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData StartTime { get { throw null; } set { } }
         public System.BinaryData UserScopeFilterUri { get { throw null; } set { } }
     }
-    public partial class OracleCloudStorageLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class OracleCloudStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public OracleCloudStorageLinkedService() { }
         public System.BinaryData AccessKeyId { get { throw null; } set { } }
@@ -4595,7 +4595,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData WildcardFileName { get { throw null; } set { } }
         public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
     }
-    public partial class OracleLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class OracleLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public OracleLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4610,7 +4610,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData PartitionNames { get { throw null; } set { } }
         public System.BinaryData PartitionUpperBound { get { throw null; } set { } }
     }
-    public partial class OracleServiceCloudLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class OracleServiceCloudLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public OracleServiceCloudLinkedService(System.BinaryData host, System.BinaryData username, Azure.ResourceManager.DataFactory.Models.SecretBase password) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -4623,7 +4623,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class OracleServiceCloudObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public OracleServiceCloudObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public OracleServiceCloudObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class OracleServiceCloudSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -4647,14 +4647,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class OracleTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public OracleTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public OracleTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class OrcDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public OrcDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public OrcDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
         public System.BinaryData OrcCompressionCodec { get { throw null; } set { } }
     }
@@ -4717,7 +4717,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ParquetDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ParquetDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ParquetDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData CompressionCodec { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
     }
@@ -4743,7 +4743,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData FileNamePrefix { get { throw null; } set { } }
         public System.BinaryData MaxRowsPerFile { get { throw null; } set { } }
     }
-    public partial class PaypalLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class PaypalLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public PaypalLinkedService(System.BinaryData host, System.BinaryData clientId) { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -4756,7 +4756,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PaypalObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public PaypalObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public PaypalObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class PaypalSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -4783,7 +4783,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType left, Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PhoenixLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class PhoenixLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public PhoenixLinkedService(System.BinaryData host, Azure.ResourceManager.DataFactory.Models.PhoenixAuthenticationType authenticationType) { }
         public System.BinaryData AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -4801,7 +4801,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PhoenixObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public PhoenixObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public PhoenixObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -4939,7 +4939,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType left, Azure.ResourceManager.DataFactory.Models.PolybaseSettingsRejectType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class PostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public PostgreSqlLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -4953,7 +4953,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PostgreSqlTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public PostgreSqlTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public PostgreSqlTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -4992,7 +4992,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType left, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PrestoLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class PrestoLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public PrestoLinkedService(System.BinaryData host, System.BinaryData serverVersion, System.BinaryData catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
         public System.BinaryData AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -5012,7 +5012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PrestoObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public PrestoObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public PrestoObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -5035,14 +5035,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
     }
-    public partial class QuickbaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class QuickbaseLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public QuickbaseLinkedService(System.BinaryData uri, Azure.ResourceManager.DataFactory.Models.SecretBase userToken) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public System.BinaryData Uri { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase UserToken { get { throw null; } set { } }
     }
-    public partial class QuickBooksLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class QuickBooksLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public QuickBooksLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -5057,7 +5057,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class QuickBooksObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public QuickBooksObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public QuickBooksObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class QuickBooksSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -5114,9 +5114,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class RedshiftUnloadSettings
     {
-        public RedshiftUnloadSettings(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference s3LinkedServiceName, System.BinaryData bucketName) { }
+        public RedshiftUnloadSettings(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference s3LinkedServiceName, System.BinaryData bucketName) { }
         public System.BinaryData BucketName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference S3LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference S3LinkedServiceName { get { throw null; } set { } }
     }
     public partial class RelationalSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
     {
@@ -5126,7 +5126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class RelationalTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public RelationalTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public RelationalTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class RemotePrivateEndpointConnection
@@ -5144,7 +5144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.DateTimeOffset RequestedStartOn { get { throw null; } set { } }
         public int RerunConcurrency { get { throw null; } set { } }
     }
-    public partial class ResponsysLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ResponsysLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ResponsysLinkedService(System.BinaryData endpoint, System.BinaryData clientId) { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -5157,7 +5157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ResponsysObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ResponsysObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ResponsysObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class ResponsysSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -5167,7 +5167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class RestResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public RestResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public RestResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData AdditionalHeaders { get { throw null; } set { } }
         public System.BinaryData PaginationRules { get { throw null; } set { } }
         public System.BinaryData RelativeUri { get { throw null; } set { } }
@@ -5195,7 +5195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType left, Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RestServiceLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class RestServiceLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public RestServiceLinkedService(System.BinaryData uri, Azure.ResourceManager.DataFactory.Models.RestServiceAuthenticationType authenticationType) { }
         public System.BinaryData AadResourceId { get { throw null; } set { } }
@@ -5356,7 +5356,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField left, Azure.ResourceManager.DataFactory.Models.RunQueryOrderByField right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SalesforceLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SalesforceLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SalesforceLinkedService() { }
         public System.BinaryData ApiVersion { get { throw null; } set { } }
@@ -5366,7 +5366,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.SecretBase SecurityToken { get { throw null; } set { } }
         public System.BinaryData Username { get { throw null; } set { } }
     }
-    public partial class SalesforceMarketingCloudLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SalesforceMarketingCloudLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SalesforceMarketingCloudLinkedService() { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -5379,7 +5379,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SalesforceMarketingCloudObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SalesforceMarketingCloudObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SalesforceMarketingCloudObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class SalesforceMarketingCloudSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -5389,10 +5389,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SalesforceObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SalesforceObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SalesforceObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData ObjectApiName { get { throw null; } set { } }
     }
-    public partial class SalesforceServiceCloudLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SalesforceServiceCloudLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SalesforceServiceCloudLinkedService() { }
         public System.BinaryData ApiVersion { get { throw null; } set { } }
@@ -5405,7 +5405,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SalesforceServiceCloudObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SalesforceServiceCloudObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SalesforceServiceCloudObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData ObjectApiName { get { throw null; } set { } }
     }
     public partial class SalesforceServiceCloudSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -5473,9 +5473,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapBwCubeDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapBwCubeDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapBwCubeDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
     }
-    public partial class SapBWLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapBWLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapBWLinkedService(System.BinaryData server, System.BinaryData systemNumber, System.BinaryData clientId) { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -5490,7 +5490,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SapBwSource() { }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class SapCloudForCustomerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapCloudForCustomerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapCloudForCustomerLinkedService(System.BinaryData uri) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -5500,7 +5500,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapCloudForCustomerResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapCloudForCustomerResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData path) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapCloudForCustomerResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData path) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Path { get { throw null; } set { } }
     }
     public partial class SapCloudForCustomerSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -5533,7 +5533,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData HttpRequestTimeout { get { throw null; } set { } }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class SapEccLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapEccLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapEccLinkedService(System.Uri uri) { }
         public string EncryptedCredential { get { throw null; } set { } }
@@ -5543,7 +5543,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapEccResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapEccResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData path) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapEccResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData path) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Path { get { throw null; } set { } }
     }
     public partial class SapEccSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -5570,7 +5570,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SapHanaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapHanaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapHanaLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -5590,11 +5590,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapHanaTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapHanaTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapHanaTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
-    public partial class SapOdpLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapOdpLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapOdpLinkedService() { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -5618,7 +5618,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapOdpResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapOdpResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData context, System.BinaryData objectName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapOdpResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData context, System.BinaryData objectName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Context { get { throw null; } set { } }
         public System.BinaryData ObjectName { get { throw null; } set { } }
     }
@@ -5630,7 +5630,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Selection { get { throw null; } set { } }
         public System.BinaryData SubscriberProcess { get { throw null; } set { } }
     }
-    public partial class SapOpenHubLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapOpenHubLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapOpenHubLinkedService() { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -5655,12 +5655,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapOpenHubTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapOpenHubTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData openHubDestinationName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapOpenHubTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData openHubDestinationName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData BaseRequestId { get { throw null; } set { } }
         public System.BinaryData ExcludeLastRequest { get { throw null; } set { } }
         public System.BinaryData OpenHubDestinationName { get { throw null; } set { } }
     }
-    public partial class SapTableLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SapTableLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SapTableLinkedService() { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -5690,7 +5690,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SapTableResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SapTableResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData tableName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SapTableResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData tableName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class SapTableSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -5945,7 +5945,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceNowLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ServiceNowLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ServiceNowLinkedService(System.BinaryData endpoint, Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType authenticationType) { }
         public Azure.ResourceManager.DataFactory.Models.ServiceNowAuthenticationType AuthenticationType { get { throw null; } set { } }
@@ -5961,7 +5961,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ServiceNowObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ServiceNowObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ServiceNowObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class ServiceNowSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -6012,7 +6012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData WildcardFileName { get { throw null; } set { } }
         public System.BinaryData WildcardFolderPath { get { throw null; } set { } }
     }
-    public partial class SftpServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SftpServerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SftpServerLinkedService(System.BinaryData host) { }
         public Azure.ResourceManager.DataFactory.Models.SftpAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -6033,7 +6033,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData OperationTimeout { get { throw null; } set { } }
         public System.BinaryData UseTempFileRename { get { throw null; } set { } }
     }
-    public partial class SharePointOnlineListLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SharePointOnlineListLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SharePointOnlineListLinkedService(System.BinaryData siteUri, System.BinaryData tenantId, System.BinaryData servicePrincipalId, Azure.ResourceManager.DataFactory.Models.SecretBase servicePrincipalKey) { }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -6044,7 +6044,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SharePointOnlineListResourceDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SharePointOnlineListResourceDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SharePointOnlineListResourceDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData ListName { get { throw null; } set { } }
     }
     public partial class SharePointOnlineListSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
@@ -6053,7 +6053,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData HttpRequestTimeout { get { throw null; } set { } }
         public System.BinaryData Query { get { throw null; } set { } }
     }
-    public partial class ShopifyLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ShopifyLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ShopifyLinkedService(System.BinaryData host) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -6065,7 +6065,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ShopifyObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ShopifyObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ShopifyObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class ShopifySource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -6079,7 +6079,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData DataInconsistency { get { throw null; } set { } }
         public System.BinaryData FileMissing { get { throw null; } set { } }
     }
-    public partial class SmartsheetLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SmartsheetLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SmartsheetLinkedService(Azure.ResourceManager.DataFactory.Models.SecretBase apiToken) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ApiToken { get { throw null; } set { } }
@@ -6087,7 +6087,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SnowflakeDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SnowflakeDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SnowflakeDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
@@ -6103,7 +6103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalCopyOptions { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalFormatOptions { get { throw null; } }
     }
-    public partial class SnowflakeLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SnowflakeLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SnowflakeLinkedService(System.BinaryData connectionString) { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -6142,7 +6142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SparkLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SparkLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SparkLinkedService(System.BinaryData host, System.BinaryData port, Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType authenticationType) { }
         public System.BinaryData AllowHostNameCNMismatch { get { throw null; } set { } }
@@ -6162,7 +6162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SparkObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SparkObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SparkObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -6295,7 +6295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData PartitionLowerBound { get { throw null; } set { } }
         public System.BinaryData PartitionUpperBound { get { throw null; } set { } }
     }
-    public partial class SqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SqlServerLinkedService(System.BinaryData connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
@@ -6335,7 +6335,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SqlServerTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SqlServerTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SqlServerTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -6370,7 +6370,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Keys { get { throw null; } set { } }
         public System.BinaryData UseTempDB { get { throw null; } set { } }
     }
-    public partial class SquareLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SquareLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SquareLinkedService() { }
         public System.BinaryData ClientId { get { throw null; } set { } }
@@ -6385,7 +6385,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SquareObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SquareObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SquareObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class SquareSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -6563,10 +6563,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class StagingSettings
     {
-        public StagingSettings(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) { }
+        public StagingSettings(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.BinaryData EnableCompression { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedServiceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
         public System.BinaryData Path { get { throw null; } set { } }
     }
     public partial class StoredProcedureParameter
@@ -6644,7 +6644,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType left, Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SybaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class SybaseLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public SybaseLinkedService(System.BinaryData server, System.BinaryData database) { }
         public Azure.ResourceManager.DataFactory.Models.SybaseAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -6662,7 +6662,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SybaseTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public SybaseTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public SybaseTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class TabularSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
@@ -6699,7 +6699,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType left, Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TeamDeskLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class TeamDeskLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public TeamDeskLinkedService(Azure.ResourceManager.DataFactory.Models.TeamDeskAuthenticationType authenticationType, System.BinaryData uri) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ApiToken { get { throw null; } set { } }
@@ -6727,7 +6727,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType left, Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TeradataLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class TeradataLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public TeradataLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -6753,7 +6753,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class TeradataTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public TeradataTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public TeradataTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Database { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
@@ -6776,7 +6776,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.DatasetReference Dataset { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DataFlowReference Flowlet { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.LinkedServiceReference LinkedService { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     public partial class TriggerDependencyReference : Azure.ResourceManager.DataFactory.Models.DependencyReference
@@ -6916,7 +6916,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Offset { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
     }
-    public partial class TwilioLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class TwilioLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public TwilioLinkedService(System.BinaryData userName, Azure.ResourceManager.DataFactory.Models.SecretBase password) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
@@ -6983,7 +6983,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.VariableType left, Azure.ResourceManager.DataFactory.Models.VariableType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VerticaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class VerticaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public VerticaLinkedService() { }
         public System.BinaryData ConnectionString { get { throw null; } set { } }
@@ -6997,7 +6997,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class VerticaTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public VerticaTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public VerticaTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData SchemaTypePropertiesSchema { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
         public System.BinaryData TableName { get { throw null; } set { } }
@@ -7016,7 +7016,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DatasetReference> Datasets { get { throw null; } }
         public bool? DisableCertValidation { get { throw null; } set { } }
         public System.BinaryData Headers { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.LinkedServiceReference> LinkedServices { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> LinkedServices { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.WebActivityMethod Method { get { throw null; } set { } }
         public System.BinaryData Uri { get { throw null; } set { } }
     }
@@ -7095,7 +7095,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod left, Azure.ResourceManager.DataFactory.Models.WebHookActivityMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class WebLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public WebLinkedService(Azure.ResourceManager.DataFactory.Models.WebLinkedServiceTypeProperties typeProperties) { }
         public Azure.ResourceManager.DataFactory.Models.WebLinkedServiceTypeProperties TypeProperties { get { throw null; } set { } }
@@ -7112,11 +7112,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class WebTableDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public WebTableDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName, System.BinaryData index) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public WebTableDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData index) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData Index { get { throw null; } set { } }
         public System.BinaryData Path { get { throw null; } set { } }
     }
-    public partial class XeroLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class XeroLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public XeroLinkedService() { }
         public System.BinaryData ConnectionProperties { get { throw null; } set { } }
@@ -7130,7 +7130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class XeroObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public XeroObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public XeroObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class XeroSource : Azure.ResourceManager.DataFactory.Models.TabularSource
@@ -7140,7 +7140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class XmlDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public XmlDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public XmlDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData EncodingName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
@@ -7180,7 +7180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType left, Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ZendeskLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ZendeskLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ZendeskLinkedService(Azure.ResourceManager.DataFactory.Models.ZendeskAuthenticationType authenticationType, System.BinaryData uri) { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase ApiToken { get { throw null; } set { } }
@@ -7195,7 +7195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public ZipDeflateReadSettings() { }
         public System.BinaryData PreserveZipFileNameAsFolder { get { throw null; } set { } }
     }
-    public partial class ZohoLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
+    public partial class ZohoLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public ZohoLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccessToken { get { throw null; } set { } }
@@ -7208,7 +7208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ZohoObjectDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
-        public ZohoObjectDataset(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.LinkedServiceReference)) { }
+        public ZohoObjectDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData TableName { get { throw null; } set { } }
     }
     public partial class ZohoSource : Azure.ResourceManager.DataFactory.Models.TabularSource

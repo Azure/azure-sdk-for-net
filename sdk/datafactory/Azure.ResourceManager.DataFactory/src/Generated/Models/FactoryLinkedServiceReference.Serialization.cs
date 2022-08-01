@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedServiceReference : IUtf8JsonSerializable
+    public partial class FactoryLinkedServiceReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static LinkedServiceReference DeserializeLinkedServiceReference(JsonElement element)
+        internal static FactoryLinkedServiceReference DeserializeFactoryLinkedServiceReference(JsonElement element)
         {
-            LinkedServiceReferenceType type = default;
+            FactoryLinkedServiceReferenceType type = default;
             string referenceName = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new LinkedServiceReferenceType(property.Value.GetString());
+                    type = new FactoryLinkedServiceReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new LinkedServiceReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new FactoryLinkedServiceReference(type, referenceName, Optional.ToDictionary(parameters));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Amazon Redshift.
     /// Serialized Name: AmazonRedshiftLinkedService
     /// </summary>
-    public partial class AmazonRedshiftLinkedService : LinkedService
+    public partial class AmazonRedshiftLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AmazonRedshiftLinkedService. </summary>
         /// <param name="server">

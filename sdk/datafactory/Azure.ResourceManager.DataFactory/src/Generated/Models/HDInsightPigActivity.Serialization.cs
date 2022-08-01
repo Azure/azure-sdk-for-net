@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightPigActivity DeserializeHDInsightPigActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicyInfo> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
+            Optional<IList<FactoryLinkedServiceReference>> storageLinkedServices = default;
             Optional<BinaryData> arguments = default;
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             Optional<BinaryData> scriptPath = default;
-            Optional<LinkedServiceReference> scriptLinkedService = default;
+            Optional<FactoryLinkedServiceReference> scriptLinkedService = default;
             Optional<IDictionary<string, BinaryData>> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            scriptLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            scriptLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defines"))

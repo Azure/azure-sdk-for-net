@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// source script.
         /// Serialized Name: PowerQuerySource.script
         /// </param>
-        internal PowerQuerySource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
+        internal PowerQuerySource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
         {
             Script = script;
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Function linked service.
     /// Serialized Name: AzureFunctionLinkedService
     /// </summary>
-    public partial class AzureFunctionLinkedService : LinkedService
+    public partial class AzureFunctionLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureFunctionLinkedService. </summary>
         /// <param name="functionAppUri">

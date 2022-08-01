@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Hubspot Service linked service.
     /// Serialized Name: HubspotLinkedService
     /// </summary>
-    public partial class HubspotLinkedService : LinkedService
+    public partial class HubspotLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HubspotLinkedService. </summary>
         /// <param name="clientId">

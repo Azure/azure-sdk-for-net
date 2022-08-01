@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Snowflake linked service.
     /// Serialized Name: SnowflakeLinkedService
     /// </summary>
-    public partial class SnowflakeLinkedService : LinkedService
+    public partial class SnowflakeLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SnowflakeLinkedService. </summary>
         /// <param name="connectionString">

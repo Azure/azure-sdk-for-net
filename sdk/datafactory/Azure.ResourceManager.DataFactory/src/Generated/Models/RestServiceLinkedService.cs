@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Rest Service linked service.
     /// Serialized Name: RestServiceLinkedService
     /// </summary>
-    public partial class RestServiceLinkedService : LinkedService
+    public partial class RestServiceLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
         /// <param name="uri">

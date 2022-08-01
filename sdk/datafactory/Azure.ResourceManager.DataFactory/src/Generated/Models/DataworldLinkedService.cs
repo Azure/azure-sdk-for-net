@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Dataworld.
     /// Serialized Name: DataworldLinkedService
     /// </summary>
-    public partial class DataworldLinkedService : LinkedService
+    public partial class DataworldLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DataworldLinkedService. </summary>
         /// <param name="apiToken">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A linked service for an SSH File Transfer Protocol (SFTP) server. 
     /// Serialized Name: SftpServerLinkedService
     /// </summary>
-    public partial class SftpServerLinkedService : LinkedService
+    public partial class SftpServerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SftpServerLinkedService. </summary>
         /// <param name="host">

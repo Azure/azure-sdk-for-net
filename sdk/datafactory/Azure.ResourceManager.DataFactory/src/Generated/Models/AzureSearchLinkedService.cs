@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Windows Azure Search Service.
     /// Serialized Name: AzureSearchLinkedService
     /// </summary>
-    public partial class AzureSearchLinkedService : LinkedService
+    public partial class AzureSearchLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureSearchLinkedService. </summary>
         /// <param name="uri">

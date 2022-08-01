@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData clusterSize = default;
             BinaryData timeToLive = default;
             BinaryData version = default;
-            LinkedServiceReference linkedServiceName = default;
+            FactoryLinkedServiceReference linkedServiceName = default;
             BinaryData hostSubscriptionId = default;
             Optional<BinaryData> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
@@ -353,8 +353,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<SecretBase> clusterPassword = default;
             Optional<BinaryData> clusterSshUserName = default;
             Optional<SecretBase> clusterSshPassword = default;
-            Optional<IList<LinkedServiceReference>> additionalLinkedServiceNames = default;
-            Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
+            Optional<IList<FactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
+            Optional<FactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
             Optional<BinaryData> clusterType = default;
             Optional<BinaryData> sparkVersion = default;
             Optional<BinaryData> coreConfiguration = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"))
                         {
-                            linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hostSubscriptionId"))
@@ -548,10 +548,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                            List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                                array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                             }
                             additionalLinkedServiceNames = array;
                             continue;
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hcatalogLinkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            hcatalogLinkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterType"))

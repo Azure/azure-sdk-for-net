@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CustomActivity DeserializeCustomActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicyInfo> policy = default;
             string name = default;
             string type = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             BinaryData command = default;
-            Optional<LinkedServiceReference> resourceLinkedService = default;
+            Optional<FactoryLinkedServiceReference> resourceLinkedService = default;
             Optional<BinaryData> folderPath = default;
             Optional<CustomActivityReferenceObject> referenceObjects = default;
             Optional<IDictionary<string, BinaryData>> extendedProperties = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            resourceLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("folderPath"))

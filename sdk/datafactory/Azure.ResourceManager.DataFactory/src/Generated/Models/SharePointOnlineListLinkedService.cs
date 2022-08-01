@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SharePoint Online List linked service.
     /// Serialized Name: SharePointOnlineListLinkedService
     /// </summary>
-    public partial class SharePointOnlineListLinkedService : LinkedService
+    public partial class SharePointOnlineListLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
         /// <param name="siteUri">

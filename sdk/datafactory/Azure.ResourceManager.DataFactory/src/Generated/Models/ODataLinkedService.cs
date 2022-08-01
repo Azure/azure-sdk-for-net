@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Open Data Protocol (OData) linked service.
     /// Serialized Name: ODataLinkedService
     /// </summary>
-    public partial class ODataLinkedService : LinkedService
+    public partial class ODataLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ODataLinkedService. </summary>
         /// <param name="uri">

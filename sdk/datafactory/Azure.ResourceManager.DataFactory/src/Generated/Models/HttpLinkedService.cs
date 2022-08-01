@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for an HTTP source.
     /// Serialized Name: HttpLinkedService
     /// </summary>
-    public partial class HttpLinkedService : LinkedService
+    public partial class HttpLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HttpLinkedService. </summary>
         /// <param name="uri">

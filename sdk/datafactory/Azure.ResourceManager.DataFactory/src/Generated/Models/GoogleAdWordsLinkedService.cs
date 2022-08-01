@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Google AdWords service linked service.
     /// Serialized Name: GoogleAdWordsLinkedService
     /// </summary>
-    public partial class GoogleAdWordsLinkedService : LinkedService
+    public partial class GoogleAdWordsLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
         public GoogleAdWordsLinkedService()

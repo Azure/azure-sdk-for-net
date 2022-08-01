@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Microsoft Access linked service.
     /// Serialized Name: MicrosoftAccessLinkedService
     /// </summary>
-    public partial class MicrosoftAccessLinkedService : LinkedService
+    public partial class MicrosoftAccessLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MicrosoftAccessLinkedService. </summary>
         /// <param name="connectionString">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Xero Service linked service.
     /// Serialized Name: XeroLinkedService
     /// </summary>
-    public partial class XeroLinkedService : LinkedService
+    public partial class XeroLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of XeroLinkedService. </summary>
         public XeroLinkedService()

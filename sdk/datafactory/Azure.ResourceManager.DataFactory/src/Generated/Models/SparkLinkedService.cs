@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Spark Server linked service.
     /// Serialized Name: SparkLinkedService
     /// </summary>
-    public partial class SparkLinkedService : LinkedService
+    public partial class SparkLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SparkLinkedService. </summary>
         /// <param name="host">

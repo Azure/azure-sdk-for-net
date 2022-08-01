@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Rejected data linked service reference.
         /// Serialized Name: DataFlowSink.rejectedDataLinkedService
         /// </param>
-        internal DataFlowSink(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService, LinkedServiceReference rejectedDataLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSink(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, FactoryLinkedServiceReference rejectedDataLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
             RejectedDataLinkedService = rejectedDataLinkedService;
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Schema linked service reference.
         /// Serialized Name: DataFlowSink.schemaLinkedService
         /// </summary>
-        public LinkedServiceReference SchemaLinkedService { get; set; }
+        public FactoryLinkedServiceReference SchemaLinkedService { get; set; }
         /// <summary>
         /// Rejected data linked service reference.
         /// Serialized Name: DataFlowSink.rejectedDataLinkedService
         /// </summary>
-        public LinkedServiceReference RejectedDataLinkedService { get; set; }
+        public FactoryLinkedServiceReference RejectedDataLinkedService { get; set; }
     }
 }

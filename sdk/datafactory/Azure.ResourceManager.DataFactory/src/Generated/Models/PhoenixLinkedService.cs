@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Phoenix server linked service.
     /// Serialized Name: PhoenixLinkedService
     /// </summary>
-    public partial class PhoenixLinkedService : LinkedService
+    public partial class PhoenixLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of PhoenixLinkedService. </summary>
         /// <param name="host">

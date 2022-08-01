@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Google Cloud Storage.
     /// Serialized Name: GoogleCloudStorageLinkedService
     /// </summary>
-    public partial class GoogleCloudStorageLinkedService : LinkedService
+    public partial class GoogleCloudStorageLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of GoogleCloudStorageLinkedService. </summary>
         public GoogleCloudStorageLinkedService()

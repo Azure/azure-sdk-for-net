@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Oracle Cloud Storage.
     /// Serialized Name: OracleCloudStorageLinkedService
     /// </summary>
-    public partial class OracleCloudStorageLinkedService : LinkedService
+    public partial class OracleCloudStorageLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of OracleCloudStorageLinkedService. </summary>
         public OracleCloudStorageLinkedService()

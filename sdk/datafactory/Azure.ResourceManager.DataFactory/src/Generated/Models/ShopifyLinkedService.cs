@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Shopify Service linked service.
     /// Serialized Name: ShopifyLinkedService
     /// </summary>
-    public partial class ShopifyLinkedService : LinkedService
+    public partial class ShopifyLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ShopifyLinkedService. </summary>
         /// <param name="host">

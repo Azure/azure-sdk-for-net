@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Lake Analytics linked service.
     /// Serialized Name: AzureDataLakeAnalyticsLinkedService
     /// </summary>
-    public partial class AzureDataLakeAnalyticsLinkedService : LinkedService
+    public partial class AzureDataLakeAnalyticsLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
         /// <param name="accountName">

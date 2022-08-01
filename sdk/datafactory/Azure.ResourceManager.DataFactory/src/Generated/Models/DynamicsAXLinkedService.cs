@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Dynamics AX linked service.
     /// Serialized Name: DynamicsAXLinkedService
     /// </summary>
-    public partial class DynamicsAXLinkedService : LinkedService
+    public partial class DynamicsAXLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DynamicsAXLinkedService. </summary>
         /// <param name="uri">

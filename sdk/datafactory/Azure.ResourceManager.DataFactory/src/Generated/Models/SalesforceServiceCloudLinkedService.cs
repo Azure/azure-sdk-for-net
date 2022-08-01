@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Salesforce Service Cloud.
     /// Serialized Name: SalesforceServiceCloudLinkedService
     /// </summary>
-    public partial class SalesforceServiceCloudLinkedService : LinkedService
+    public partial class SalesforceServiceCloudLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudLinkedService. </summary>
         public SalesforceServiceCloudLinkedService()

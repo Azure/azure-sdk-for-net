@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A FTP server Linked Service.
     /// Serialized Name: FtpServerLinkedService
     /// </summary>
-    public partial class FtpServerLinkedService : LinkedService
+    public partial class FtpServerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of FtpServerLinkedService. </summary>
         /// <param name="host">

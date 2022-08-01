@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Cassandra data source.
     /// Serialized Name: CassandraLinkedService
     /// </summary>
-    public partial class CassandraLinkedService : LinkedService
+    public partial class CassandraLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CassandraLinkedService. </summary>
         /// <param name="host">

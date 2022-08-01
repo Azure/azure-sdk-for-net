@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Method = method;
             Uri = uri;
             Datasets = new ChangeTrackingList<DatasetReference>();
-            LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            LinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             ActivityType = "WebActivity";
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The integration runtime reference.
         /// Serialized Name: WebActivity.typeProperties.connectVia
         /// </param>
-        internal WebActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<FactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of linked services passed to web endpoint.
         /// Serialized Name: WebActivity.typeProperties.linkedServices
         /// </summary>
-        public IList<LinkedServiceReference> LinkedServices { get; }
+        public IList<FactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary>
         /// The integration runtime reference.
         /// Serialized Name: WebActivity.typeProperties.connectVia

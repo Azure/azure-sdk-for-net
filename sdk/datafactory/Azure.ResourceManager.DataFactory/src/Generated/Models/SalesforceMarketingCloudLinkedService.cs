@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Salesforce Marketing Cloud linked service.
     /// Serialized Name: SalesforceMarketingCloudLinkedService
     /// </summary>
-    public partial class SalesforceMarketingCloudLinkedService : LinkedService
+    public partial class SalesforceMarketingCloudLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SalesforceMarketingCloudLinkedService. </summary>
         public SalesforceMarketingCloudLinkedService()

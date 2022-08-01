@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Couchbase server linked service.
     /// Serialized Name: CouchbaseLinkedService
     /// </summary>
-    public partial class CouchbaseLinkedService : LinkedService
+    public partial class CouchbaseLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CouchbaseLinkedService. </summary>
         public CouchbaseLinkedService()

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptLinkedService
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
-        public DataLakeAnalyticsUsqlActivity(string name, BinaryData scriptPath, LinkedServiceReference scriptLinkedService) : base(name)
+        public DataLakeAnalyticsUsqlActivity(string name, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService) : base(name)
         {
             if (name == null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
         /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.compilationMode
         /// </param>
-        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, BinaryData degreeOfParallelism, BinaryData priority, IDictionary<string, BinaryData> parameters, BinaryData runtimeVersion, BinaryData compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, BinaryData degreeOfParallelism, BinaryData priority, IDictionary<string, BinaryData> parameters, BinaryData runtimeVersion, BinaryData compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Script linked service reference.
         /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptLinkedService
         /// </summary>
-        public LinkedServiceReference ScriptLinkedService { get; set; }
+        public FactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1.
         /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.degreeOfParallelism

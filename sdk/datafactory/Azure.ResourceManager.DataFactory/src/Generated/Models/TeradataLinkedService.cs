@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Teradata data source.
     /// Serialized Name: TeradataLinkedService
     /// </summary>
-    public partial class TeradataLinkedService : LinkedService
+    public partial class TeradataLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of TeradataLinkedService. </summary>
         public TeradataLinkedService()

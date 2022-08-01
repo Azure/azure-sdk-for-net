@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Marketo server linked service.
     /// Serialized Name: MarketoLinkedService
     /// </summary>
-    public partial class MarketoLinkedService : LinkedService
+    public partial class MarketoLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MarketoLinkedService. </summary>
         /// <param name="endpoint">

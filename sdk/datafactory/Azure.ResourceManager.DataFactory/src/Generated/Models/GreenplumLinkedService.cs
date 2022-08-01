@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Greenplum Database linked service.
     /// Serialized Name: GreenplumLinkedService
     /// </summary>
-    public partial class GreenplumLinkedService : LinkedService
+    public partial class GreenplumLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of GreenplumLinkedService. </summary>
         public GreenplumLinkedService()

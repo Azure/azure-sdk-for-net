@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedService : IUtf8JsonSerializable
+    public partial class FactoryLinkedServiceDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static LinkedService DeserializeLinkedService(JsonElement element)
+        internal static FactoryLinkedServiceDefinition DeserializeFactoryLinkedServiceDefinition(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties);
+            return new FactoryLinkedServiceDefinition(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties);
         }
     }
 }

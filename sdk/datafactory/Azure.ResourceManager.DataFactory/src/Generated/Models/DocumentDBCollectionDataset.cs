@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: DocumentDbCollectionDataset.typeProperties.collectionName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
-        public DocumentDBCollectionDataset(LinkedServiceReference linkedServiceName, BinaryData collectionName) : base(linkedServiceName)
+        public DocumentDBCollectionDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData collectionName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Document Database collection name. Type: string (or Expression with resultType string).
         /// Serialized Name: DocumentDbCollectionDataset.typeProperties.collectionName
         /// </param>
-        internal DocumentDBCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DocumentDBCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             CollectionName = collectionName;
             DatasetType = datasetType ?? "DocumentDbCollection";

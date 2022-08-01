@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: BlobTrigger.typeProperties.linkedService
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
-        public BlobTrigger(string folderPath, int maxConcurrency, LinkedServiceReference linkedService)
+        public BlobTrigger(string folderPath, int maxConcurrency, FactoryLinkedServiceReference linkedService)
         {
             if (folderPath == null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The Azure Storage linked service reference.
         /// Serialized Name: BlobTrigger.typeProperties.linkedService
         /// </param>
-        internal BlobTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, LinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal BlobTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, FactoryLinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
@@ -103,6 +103,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The Azure Storage linked service reference.
         /// Serialized Name: BlobTrigger.typeProperties.linkedService
         /// </summary>
-        public LinkedServiceReference LinkedService { get; set; }
+        public FactoryLinkedServiceReference LinkedService { get; set; }
     }
 }

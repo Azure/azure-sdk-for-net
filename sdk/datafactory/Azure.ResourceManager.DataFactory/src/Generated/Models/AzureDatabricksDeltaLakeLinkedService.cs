@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Databricks Delta Lake linked service.
     /// Serialized Name: AzureDatabricksDeltaLakeLinkedService
     /// </summary>
-    public partial class AzureDatabricksDeltaLakeLinkedService : LinkedService
+    public partial class AzureDatabricksDeltaLakeLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
         /// <param name="domain">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Vertica linked service.
     /// Serialized Name: VerticaLinkedService
     /// </summary>
-    public partial class VerticaLinkedService : LinkedService
+    public partial class VerticaLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of VerticaLinkedService. </summary>
         public VerticaLinkedService()

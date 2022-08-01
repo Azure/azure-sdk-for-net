@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Dynamics CRM linked service.
     /// Serialized Name: DynamicsCrmLinkedService
     /// </summary>
-    public partial class DynamicsCrmLinkedService : LinkedService
+    public partial class DynamicsCrmLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DynamicsCrmLinkedService. </summary>
         /// <param name="deploymentType">

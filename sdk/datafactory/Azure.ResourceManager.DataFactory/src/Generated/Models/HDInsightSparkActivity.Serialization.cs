@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightSparkActivity DeserializeHDInsightSparkActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicyInfo> policy = default;
             string name = default;
             string type = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData entryFilePath = default;
             Optional<IList<BinaryData>> arguments = default;
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
-            Optional<LinkedServiceReference> sparkJobLinkedService = default;
+            Optional<FactoryLinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
             Optional<BinaryData> proxyUser = default;
             Optional<IDictionary<string, BinaryData>> sparkConfig = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sparkJobLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            sparkJobLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("className"))

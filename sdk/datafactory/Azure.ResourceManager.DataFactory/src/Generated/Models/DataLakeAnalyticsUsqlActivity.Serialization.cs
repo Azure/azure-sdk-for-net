@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataLakeAnalyticsUsqlActivity DeserializeDataLakeAnalyticsUsqlActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<PipelineActivityPolicyInfo> policy = default;
             string name = default;
             string type = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             BinaryData scriptPath = default;
-            LinkedServiceReference scriptLinkedService = default;
+            FactoryLinkedServiceReference scriptLinkedService = default;
             Optional<BinaryData> degreeOfParallelism = default;
             Optional<BinaryData> priority = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("scriptLinkedService"))
                         {
-                            scriptLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            scriptLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("degreeOfParallelism"))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: SapOpenHubTableDataset.typeProperties.openHubDestinationName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
-        public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, BinaryData openHubDestinationName) : base(linkedServiceName)
+        public SapOpenHubTableDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData openHubDestinationName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
         /// Serialized Name: SapOpenHubTableDataset.typeProperties.baseRequestId
         /// </param>
-        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             OpenHubDestinationName = openHubDestinationName;
             ExcludeLastRequest = excludeLastRequest;

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// HBase server linked service.
     /// Serialized Name: HBaseLinkedService
     /// </summary>
-    public partial class HBaseLinkedService : LinkedService
+    public partial class HBaseLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HBaseLinkedService. </summary>
         /// <param name="host">

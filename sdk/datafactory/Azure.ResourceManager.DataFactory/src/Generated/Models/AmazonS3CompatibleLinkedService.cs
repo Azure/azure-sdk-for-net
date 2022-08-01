@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Amazon S3 Compatible.
     /// Serialized Name: AmazonS3CompatibleLinkedService
     /// </summary>
-    public partial class AmazonS3CompatibleLinkedService : LinkedService
+    public partial class AmazonS3CompatibleLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AmazonS3CompatibleLinkedService. </summary>
         public AmazonS3CompatibleLinkedService()

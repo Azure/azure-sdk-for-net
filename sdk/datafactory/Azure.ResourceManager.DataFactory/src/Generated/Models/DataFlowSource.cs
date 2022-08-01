@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Schema linked service reference.
         /// Serialized Name: DataFlowSource.schemaLinkedService
         /// </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
         }
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Schema linked service reference.
         /// Serialized Name: DataFlowSource.schemaLinkedService
         /// </summary>
-        public LinkedServiceReference SchemaLinkedService { get; set; }
+        public FactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

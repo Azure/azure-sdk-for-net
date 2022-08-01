@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// HDInsight linked service.
     /// Serialized Name: HDInsightLinkedService
     /// </summary>
-    public partial class HDInsightLinkedService : LinkedService
+    public partial class HDInsightLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
         /// <param name="clusterUri">
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightLinkedService.typeProperties.fileSystem
         /// </param>
-        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, SecretBase password, LinkedServiceReference linkedServiceName, LinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, SecretBase password, FactoryLinkedServiceReference linkedServiceName, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterUri = clusterUri;
             UserName = userName;
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The Azure Storage linked service reference.
         /// Serialized Name: HDInsightLinkedService.typeProperties.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// A reference to the Azure SQL linked service that points to the HCatalog database.
         /// Serialized Name: HDInsightLinkedService.typeProperties.hcatalogLinkedServiceName
         /// </summary>
-        public LinkedServiceReference HcatalogLinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightLinkedService.typeProperties.encryptedCredential

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for MongoDB Atlas data source.
     /// Serialized Name: MongoDbAtlasLinkedService
     /// </summary>
-    public partial class MongoDBAtlasLinkedService : LinkedService
+    public partial class MongoDBAtlasLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MongoDBAtlasLinkedService. </summary>
         /// <param name="connectionString">

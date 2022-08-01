@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Zoho server linked service.
     /// Serialized Name: ZohoLinkedService
     /// </summary>
-    public partial class ZohoLinkedService : LinkedService
+    public partial class ZohoLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ZohoLinkedService. </summary>
         public ZohoLinkedService()

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Databricks linked service.
     /// Serialized Name: AzureDatabricksLinkedService
     /// </summary>
-    public partial class AzureDatabricksLinkedService : LinkedService
+    public partial class AzureDatabricksLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureDatabricksLinkedService. </summary>
         /// <param name="domain">

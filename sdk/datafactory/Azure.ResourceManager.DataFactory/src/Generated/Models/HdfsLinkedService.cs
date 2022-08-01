@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Hadoop Distributed File System (HDFS) linked service.
     /// Serialized Name: HdfsLinkedService
     /// </summary>
-    public partial class HdfsLinkedService : LinkedService
+    public partial class HdfsLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HdfsLinkedService. </summary>
         /// <param name="uri">

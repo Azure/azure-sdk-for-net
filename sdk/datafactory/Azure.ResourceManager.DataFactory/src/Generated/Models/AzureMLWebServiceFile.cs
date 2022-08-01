@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: AzureMLWebServiceFile.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureMLWebServiceFile(BinaryData filePath, LinkedServiceReference linkedServiceName)
+        public AzureMLWebServiceFile(BinaryData filePath, FactoryLinkedServiceReference linkedServiceName)
         {
             if (filePath == null)
             {
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located.
         /// Serialized Name: AzureMLWebServiceFile.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
     }
 }

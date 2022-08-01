@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Impala server linked service.
     /// Serialized Name: ImpalaLinkedService
     /// </summary>
-    public partial class ImpalaLinkedService : LinkedService
+    public partial class ImpalaLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ImpalaLinkedService. </summary>
         /// <param name="host">

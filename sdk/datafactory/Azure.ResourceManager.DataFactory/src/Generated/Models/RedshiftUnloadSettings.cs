@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: RedshiftUnloadSettings.bucketName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public RedshiftUnloadSettings(LinkedServiceReference s3LinkedServiceName, BinaryData bucketName)
+        public RedshiftUnloadSettings(FactoryLinkedServiceReference s3LinkedServiceName, BinaryData bucketName)
         {
             if (s3LinkedServiceName == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source.
         /// Serialized Name: RedshiftUnloadSettings.s3LinkedServiceName
         /// </summary>
-        public LinkedServiceReference S3LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference S3LinkedServiceName { get; set; }
         /// <summary>
         /// The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string).
         /// Serialized Name: RedshiftUnloadSettings.bucketName

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Web linked service.
     /// Serialized Name: WebLinkedService
     /// </summary>
-    public partial class WebLinkedService : LinkedService
+    public partial class WebLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of WebLinkedService. </summary>
         /// <param name="typeProperties">

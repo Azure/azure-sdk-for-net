@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Key Vault linked service.
     /// Serialized Name: AzureKeyVaultLinkedService
     /// </summary>
-    public partial class AzureKeyVaultLinkedService : LinkedService
+    public partial class AzureKeyVaultLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
         /// <param name="baseUri">

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Spark configuration property.
         /// Serialized Name: HDInsightSparkActivity.typeProperties.sparkConfig
         /// </param>
-        internal HDInsightSparkActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData rootPath, BinaryData entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, LinkedServiceReference sparkJobLinkedService, string className, BinaryData proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightSparkActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData rootPath, BinaryData entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, FactoryLinkedServiceReference sparkJobLinkedService, string className, BinaryData proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The storage linked service for uploading the entry file and dependencies, and for receiving logs.
         /// Serialized Name: HDInsightSparkActivity.typeProperties.sparkJobLinkedService
         /// </summary>
-        public LinkedServiceReference SparkJobLinkedService { get; set; }
+        public FactoryLinkedServiceReference SparkJobLinkedService { get; set; }
         /// <summary>
         /// The application&apos;s Java/Spark main class.
         /// Serialized Name: HDInsightSparkActivity.typeProperties.className

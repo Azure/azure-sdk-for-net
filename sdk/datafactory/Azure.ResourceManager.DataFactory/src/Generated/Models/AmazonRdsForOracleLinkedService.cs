@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// AmazonRdsForOracle database.
     /// Serialized Name: AmazonRdsForOracleLinkedService
     /// </summary>
-    public partial class AmazonRdsForOracleLinkedService : LinkedService
+    public partial class AmazonRdsForOracleLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AmazonRdsForOracleLinkedService. </summary>
         /// <param name="connectionString">

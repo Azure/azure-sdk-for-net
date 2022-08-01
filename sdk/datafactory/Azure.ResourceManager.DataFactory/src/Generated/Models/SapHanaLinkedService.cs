@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP HANA Linked Service.
     /// Serialized Name: SapHanaLinkedService
     /// </summary>
-    public partial class SapHanaLinkedService : LinkedService
+    public partial class SapHanaLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapHanaLinkedService. </summary>
         public SapHanaLinkedService()

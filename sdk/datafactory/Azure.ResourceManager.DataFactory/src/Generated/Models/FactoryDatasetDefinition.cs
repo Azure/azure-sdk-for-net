@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Dataset.linkedServiceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public FactoryDatasetDefinition(LinkedServiceReference linkedServiceName)
+        public FactoryDatasetDefinition(FactoryLinkedServiceReference linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Dataset.folder
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryDatasetDefinition(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties)
+        internal FactoryDatasetDefinition(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties)
         {
             DatasetType = datasetType;
             Description = description;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Linked service reference.
         /// Serialized Name: Dataset.linkedServiceName
         /// </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary>
         /// Parameters for dataset.
         /// Serialized Name: Dataset.parameters

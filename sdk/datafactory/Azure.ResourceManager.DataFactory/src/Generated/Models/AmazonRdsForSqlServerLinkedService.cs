@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Amazon RDS for SQL Server linked service.
     /// Serialized Name: AmazonRdsForSqlServerLinkedService
     /// </summary>
-    public partial class AmazonRdsForSqlServerLinkedService : LinkedService
+    public partial class AmazonRdsForSqlServerLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerLinkedService. </summary>
         /// <param name="connectionString">

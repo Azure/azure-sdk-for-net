@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for SAP ERP Central Component(SAP ECC).
     /// Serialized Name: SapEccLinkedService
     /// </summary>
-    public partial class SapEccLinkedService : LinkedService
+    public partial class SapEccLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapEccLinkedService. </summary>
         /// <param name="uri">

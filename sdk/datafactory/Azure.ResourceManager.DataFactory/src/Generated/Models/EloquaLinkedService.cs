@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Eloqua server linked service.
     /// Serialized Name: EloquaLinkedService
     /// </summary>
-    public partial class EloquaLinkedService : LinkedService
+    public partial class EloquaLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of EloquaLinkedService. </summary>
         /// <param name="endpoint">

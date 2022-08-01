@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Microsoft Azure Cosmos Database (CosmosDB) linked service.
     /// Serialized Name: CosmosDbLinkedService
     /// </summary>
-    public partial class CosmosDBLinkedService : LinkedService
+    public partial class CosmosDBLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CosmosDBLinkedService. </summary>
         public CosmosDBLinkedService()

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: CosmosDbMongoDbApiCollectionDataset.typeProperties.collection
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
-        public CosmosDBMongoDBApiCollectionDataset(LinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
+        public CosmosDBMongoDBApiCollectionDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string).
         /// Serialized Name: CosmosDbMongoDbApiCollectionDataset.typeProperties.collection
         /// </param>
-        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "CosmosDbMongoDbApiCollection";

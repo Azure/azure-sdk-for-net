@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for MySQL data source.
     /// Serialized Name: MySqlLinkedService
     /// </summary>
-    public partial class MySqlLinkedService : LinkedService
+    public partial class MySqlLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of MySqlLinkedService. </summary>
         /// <param name="connectionString">

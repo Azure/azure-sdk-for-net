@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Google BigQuery service linked service.
     /// Serialized Name: GoogleBigQueryLinkedService
     /// </summary>
-    public partial class GoogleBigQueryLinkedService : LinkedService
+    public partial class GoogleBigQueryLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
         /// <param name="project">

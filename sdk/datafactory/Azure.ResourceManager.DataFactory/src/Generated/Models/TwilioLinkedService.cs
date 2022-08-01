@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for Twilio.
     /// Serialized Name: TwilioLinkedService
     /// </summary>
-    public partial class TwilioLinkedService : LinkedService
+    public partial class TwilioLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
         /// <param name="userName">

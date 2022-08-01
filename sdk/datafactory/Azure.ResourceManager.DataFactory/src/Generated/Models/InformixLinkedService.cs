@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Informix linked service.
     /// Serialized Name: InformixLinkedService
     /// </summary>
-    public partial class InformixLinkedService : LinkedService
+    public partial class InformixLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of InformixLinkedService. </summary>
         /// <param name="connectionString">

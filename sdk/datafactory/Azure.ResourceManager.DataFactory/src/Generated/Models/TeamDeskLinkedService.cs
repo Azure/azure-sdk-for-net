@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for TeamDesk.
     /// Serialized Name: TeamDeskLinkedService
     /// </summary>
-    public partial class TeamDeskLinkedService : LinkedService
+    public partial class TeamDeskLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of TeamDeskLinkedService. </summary>
         /// <param name="authenticationType">

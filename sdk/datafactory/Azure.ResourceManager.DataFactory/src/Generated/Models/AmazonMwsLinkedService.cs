@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Amazon Marketplace Web Service linked service.
     /// Serialized Name: AmazonMWSLinkedService
     /// </summary>
-    public partial class AmazonMwsLinkedService : LinkedService
+    public partial class AmazonMwsLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AmazonMwsLinkedService. </summary>
         /// <param name="endpoint">

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: AzureKeyVaultSecretReference.secretName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
-        public AzureKeyVaultSecretReference(LinkedServiceReference store, BinaryData secretName)
+        public AzureKeyVaultSecretReference(FactoryLinkedServiceReference store, BinaryData secretName)
         {
             if (store == null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The version of the secret in Azure Key Vault. The default value is the latest version of the secret. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureKeyVaultSecretReference.secretVersion
         /// </param>
-        internal AzureKeyVaultSecretReference(string secretBaseType, LinkedServiceReference store, BinaryData secretName, BinaryData secretVersion) : base(secretBaseType)
+        internal AzureKeyVaultSecretReference(string secretBaseType, FactoryLinkedServiceReference store, BinaryData secretName, BinaryData secretVersion) : base(secretBaseType)
         {
             Store = store;
             SecretName = secretName;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The Azure Key Vault linked service reference.
         /// Serialized Name: AzureKeyVaultSecretReference.store
         /// </summary>
-        public LinkedServiceReference Store { get; set; }
+        public FactoryLinkedServiceReference Store { get; set; }
         /// <summary>
         /// The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureKeyVaultSecretReference.secretName

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             string folderPath = default;
             int maxConcurrency = default;
-            LinkedServiceReference linkedService = default;
+            FactoryLinkedServiceReference linkedService = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedService"))
                         {
-                            linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                     }

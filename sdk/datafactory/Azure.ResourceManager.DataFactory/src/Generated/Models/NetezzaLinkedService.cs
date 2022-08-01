@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Netezza linked service.
     /// Serialized Name: NetezzaLinkedService
     /// </summary>
-    public partial class NetezzaLinkedService : LinkedService
+    public partial class NetezzaLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of NetezzaLinkedService. </summary>
         public NetezzaLinkedService()

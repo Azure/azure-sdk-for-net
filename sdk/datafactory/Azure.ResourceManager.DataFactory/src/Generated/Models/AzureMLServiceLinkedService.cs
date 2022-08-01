@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure ML Service linked service.
     /// Serialized Name: AzureMLServiceLinkedService
     /// </summary>
-    public partial class AzureMLServiceLinkedService : LinkedService
+    public partial class AzureMLServiceLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureMLServiceLinkedService. </summary>
         /// <param name="subscriptionId">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Linked service for DB2 data source.
     /// Serialized Name: Db2LinkedService
     /// </summary>
-    public partial class Db2LinkedService : LinkedService
+    public partial class Db2LinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of Db2LinkedService. </summary>
         public Db2LinkedService()
