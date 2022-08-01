@@ -288,6 +288,52 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
+        /// Retrieves information about the latest image version in the Gallery Image.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/latestVersionName
+        /// Operation Id: GalleryImages_GetLatestVersionName
+        /// </summary>
+        /// <param name="location"> The location to query for the latest version name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LatestGalleryImageVersion>> GetLatestVersionNameAsync(AzureLocation? location = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.GetLatestVersionName");
+            scope.Start();
+            try
+            {
+                var response = await _galleryImageRestClient.GetLatestVersionNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, location, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves information about the latest image version in the Gallery Image.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/latestVersionName
+        /// Operation Id: GalleryImages_GetLatestVersionName
+        /// </summary>
+        /// <param name="location"> The location to query for the latest version name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<LatestGalleryImageVersion> GetLatestVersionName(AzureLocation? location = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageResource.GetLatestVersionName");
+            scope.Start();
+            try
+            {
+                var response = _galleryImageRestClient.GetLatestVersionName(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, location, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}
         /// Operation Id: GalleryImages_Get

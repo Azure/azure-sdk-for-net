@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
         public GalleryImageVersionStorageProfile StorageProfile { get; set; }
+        /// <summary> This is the safety profile of the Gallery Image Version. </summary>
+        public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
         /// <summary> Resource tags. </summary>

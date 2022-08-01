@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> A list of gallery image features. </summary>
         public IList<GalleryImageFeature> Features { get; }
-        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+        /// <summary> CPU architecture supported by an OS disk. </summary>
         public ArchitectureType? Architecture { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

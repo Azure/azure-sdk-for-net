@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-03";
+            _apiVersion = apiVersion ?? "2022-03-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -366,6 +366,97 @@ namespace Azure.ResourceManager.Compute
                 case 202:
                 case 204:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetLatestVersionNameRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, AzureLocation? location)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(galleryImageName, true);
+            uri.AppendPath("/latestVersionName", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (location != null)
+            {
+                uri.AppendQuery("location", location.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieves information about the latest image version in the Gallery Image. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery from which the Image Definitions are to be retrieved. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
+        /// <param name="location"> The location to query for the latest version name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<LatestGalleryImageVersion>> GetLatestVersionNameAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, AzureLocation? location = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            using var message = CreateGetLatestVersionNameRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName, location);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LatestGalleryImageVersion value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = LatestGalleryImageVersion.DeserializeLatestGalleryImageVersion(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves information about the latest image version in the Gallery Image. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="galleryName"> The name of the Shared Image Gallery from which the Image Definitions are to be retrieved. </param>
+        /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
+        /// <param name="location"> The location to query for the latest version name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<LatestGalleryImageVersion> GetLatestVersionName(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, AzureLocation? location = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+            Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
+
+            using var message = CreateGetLatestVersionNameRequest(subscriptionId, resourceGroupName, galleryName, galleryImageName, location);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        LatestGalleryImageVersion value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = LatestGalleryImageVersion.DeserializeLatestGalleryImageVersion(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("publishingProfile");
                 writer.WriteObjectValue(PublishingProfile);
             }
+            if (Optional.IsDefined(SafetyProfile))
+            {
+                writer.WritePropertyName("safetyProfile");
+                writer.WriteObjectValue(SafetyProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -51,6 +56,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<GalleryApplicationVersionPublishingProfile> publishingProfile = default;
+            Optional<GalleryApplicationVersionSafetyProfile> safetyProfile = default;
             Optional<GalleryProvisioningState> provisioningState = default;
             Optional<ReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())
@@ -119,6 +125,16 @@ namespace Azure.ResourceManager.Compute
                             publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("safetyProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -143,7 +159,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryApplicationVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value);
+            return new GalleryApplicationVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, safetyProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             int lun = default;
             Optional<int> sizeInGB = default;
             Optional<HostCaching> hostCaching = default;
-            Optional<GalleryArtifactVersionSource> source = default;
+            Optional<GalleryDiskImageSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
+                    source = GalleryDiskImageSource.DeserializeGalleryDiskImageSource(property.Value);
                     continue;
                 }
             }

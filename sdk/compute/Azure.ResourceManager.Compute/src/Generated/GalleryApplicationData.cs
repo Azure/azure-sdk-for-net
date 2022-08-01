@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public GalleryApplicationData(AzureLocation location) : base(location)
         {
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="releaseNoteUri"> The release note uri. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, SupportedOperatingSystemType? supportedOSType) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
+        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, SupportedOperatingSystemType? supportedOSType, IList<GalleryApplicationCustomAction> customActions) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Eula = eula;
@@ -43,6 +45,7 @@ namespace Azure.ResourceManager.Compute
             ReleaseNoteUri = releaseNoteUri;
             EndOfLifeOn = endOfLifeOn;
             SupportedOSType = supportedOSType;
+            CustomActions = customActions;
         }
 
         /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>
@@ -57,5 +60,7 @@ namespace Azure.ResourceManager.Compute
         public DateTimeOffset? EndOfLifeOn { get; set; }
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
         public SupportedOperatingSystemType? SupportedOSType { get; set; }
+        /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
+        public IList<GalleryApplicationCustomAction> CustomActions { get; }
     }
 }
