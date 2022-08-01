@@ -70,7 +70,7 @@ namespace Azure.Messaging.WebPubSub
             CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            return GetClientAccessUri(expiresAfter, userId, roles, cancellationToken);
+            return GetClientAccessUriInternal(expiresAfter, userId, roles, false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Azure.Messaging.WebPubSub
             CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
-            return await GetClientAccessUriAsync(expiresAfter, userId, roles, cancellationToken).ConfigureAwait(false);
+            return await GetClientAccessUriInternal(expiresAfter, userId, roles, true, cancellationToken).ConfigureAwait(false);
         }
 
         internal static int GetMinutesToExpire(TimeSpan expiresAfter) => Math.Max((int)expiresAfter.TotalMinutes, 1);
