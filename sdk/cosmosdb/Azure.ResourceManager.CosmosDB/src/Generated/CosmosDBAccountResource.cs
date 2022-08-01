@@ -466,6 +466,43 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCosmosDBPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ServiceResources in the CosmosDBAccount. </summary>
+        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
+        public virtual ServiceResourceCollection GetServiceResources()
+        {
+            return GetCachedClient(Client => new ServiceResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the status of service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}
+        /// Operation Id: Service_Get
+        /// </summary>
+        /// <param name="serviceName"> Cosmos DB service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceResource>> GetServiceResourceAsync(string serviceName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceResources().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the status of service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}
+        /// Operation Id: Service_Get
+        /// </summary>
+        /// <param name="serviceName"> Cosmos DB service name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceResource> GetServiceResource(string serviceName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceResources().Get(serviceName, cancellationToken);
+        }
+
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
