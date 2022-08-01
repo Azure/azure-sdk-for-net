@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of DnsPtrRecord. </summary>
-        /// <param name="ptrdName"> The PTR target domain name for this PTR record. </param>
-        internal DnsPtrRecord(string ptrdName)
+        /// <param name="dnsPtrdName"> The PTR target domain name for this PTR record. </param>
+        internal DnsPtrRecord(string dnsPtrdName)
         {
-            PtrdName = ptrdName;
+            DnsPtrdName = dnsPtrdName;
         }
 
         /// <summary> The PTR target domain name for this PTR record. </summary>
-        public string PtrdName { get; set; }
+        public string DnsPtrdName { get; set; }
     }
 }
