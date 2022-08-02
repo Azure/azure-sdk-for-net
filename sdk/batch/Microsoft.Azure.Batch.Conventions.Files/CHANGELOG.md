@@ -4,6 +4,13 @@
 
 The changes incorporated in this version are the product of migrating from the deprecated WindowsAzure .NET Storage SDK to the current Azure.Storage SDK. As a result, all the changes included in this version are **Breaking**:
 
+- Support of the following target frameworks has been dropped as they are not supported by the current Azure.Storage SDK.
+  - netstandard1.4,
+  - netstandard1.5,
+  - netstandard1.6,
+  - net452,
+  - net46
+
 - Replaced the following WindowsAzure SDK class references with the following Azure.Storage counterparts:
 
 | v11 | v12 |
