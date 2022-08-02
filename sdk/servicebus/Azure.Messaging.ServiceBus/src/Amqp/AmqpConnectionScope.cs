@@ -294,20 +294,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             try
             {
                 Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var stopWatch = ValueStopwatch.StartNew();
                 var connection = await ActiveConnection.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var link = await CreateManagementLinkAsync(
                     entityPath,
                     identifier,
                     connection,
-                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                    cancellationToken).ConfigureAwait(false);
 
-                await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken, entityPath).ConfigureAwait(false);
+                await OpenAmqpObjectAsync(link, entityPath, cancellationToken: cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 ServiceBusEventSource.Log.CreateManagementLinkComplete(identifier);
                 return link;
@@ -365,8 +363,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken, entityPath).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            await OpenAmqpObjectAsync(link, entityPath, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
             return link;
         }
 
@@ -402,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await OpenAmqpObjectAsync(link, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken, entityPath).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(link, entityPath, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             return link;
@@ -476,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 connection.UsageMeter = new AmqpUsageMeter(metrics);
             }
 
-            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), CancellationToken.None).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(connection, timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
             // Create the CBS link that will be used for authorization.  The act of creating the link will associate
             // it with the connection.
@@ -535,7 +532,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
                 session = connection.CreateSession(sessionSettings);
 
-                await OpenAmqpObjectAsync(session, timeout, cancellationToken, entityPath).ConfigureAwait(false);
+                await OpenAmqpObjectAsync(session, entityPath, timeout, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.
@@ -752,7 +749,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             session = connection.CreateSession(sessionSettings);
 
-            await OpenAmqpObjectAsync(session, timeout, CancellationToken.None).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(session, timeout: timeout).ConfigureAwait(false);
             return session;
         }
 
@@ -1118,20 +1115,29 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Performs the actions needed to open an AMQP object, such
         ///   as a session or link for use.
         /// </summary>
-        ///
         /// <param name="target">The target AMQP object to open.</param>
+        /// <param name="entityPath">The path of the entity associated with the AMQP object being opened, if any.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
         /// <param name="cancellationToken">Token to signal cancellation of the operation.</param>
-        /// <param name="entityPath">The path of the entity associated with the AMQP object being opened, if any.</param>
         protected virtual async Task OpenAmqpObjectAsync(
             AmqpObject target,
-            TimeSpan timeout,
-            CancellationToken cancellationToken,
-            string entityPath = default)
+            string entityPath = default,
+            TimeSpan? timeout = default,
+            CancellationToken cancellationToken = default)
         {
             try
             {
-                await target.OpenAsync(cancellationToken).ConfigureAwait(false);
+                // Prefer the cancellation token, falling back to the timeout only when
+                // no cancellation token was provided.
+
+                if (cancellationToken != default || timeout == null)
+                {
+                    await target.OpenAsync(cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    await target.OpenAsync(timeout.Value).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
