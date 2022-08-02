@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// Serialized Name: DiagnosticsStorageAccountConfig.tableEndpoint
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/>, <paramref name="protectedAccountKeyName"/>, <paramref name="blobEndpoint"/>, <paramref name="queueEndpoint"/> or <paramref name="tableEndpoint"/> is null. </exception>
-        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint)
+        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
         {
             if (storageAccountName == null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The table endpoint of the azure storage account.
         /// Serialized Name: DiagnosticsStorageAccountConfig.tableEndpoint
         /// </param>
-        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, string blobEndpoint, string queueEndpoint, string tableEndpoint)
+        internal DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string protectedAccountKeyName2, Uri blobEndpoint, Uri queueEndpoint, Uri tableEndpoint)
         {
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The blob endpoint of the azure storage account.
         /// Serialized Name: DiagnosticsStorageAccountConfig.blobEndpoint
         /// </summary>
-        public string BlobEndpoint { get; set; }
+        public Uri BlobEndpoint { get; set; }
         /// <summary>
         /// The queue endpoint of the azure storage account.
         /// Serialized Name: DiagnosticsStorageAccountConfig.queueEndpoint
         /// </summary>
-        public string QueueEndpoint { get; set; }
+        public Uri QueueEndpoint { get; set; }
         /// <summary>
         /// The table endpoint of the azure storage account.
         /// Serialized Name: DiagnosticsStorageAccountConfig.tableEndpoint
         /// </summary>
-        public string TableEndpoint { get; set; }
+        public Uri TableEndpoint { get; set; }
     }
 }

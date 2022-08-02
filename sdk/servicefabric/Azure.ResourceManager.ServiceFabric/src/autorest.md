@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -25,9 +28,6 @@ format-by-name-rules:
   'clusterId': 'uuid'
   'principalId': 'uuid'
   '*Thumbprint': 'any'
-
-mgmt-debug: 
-  show-serialized-names: true
 
 rename-mapping:
   Cluster.properties.eventStoreServiceEnabled: IsEventStoreServiceEnabled
@@ -39,6 +39,16 @@ rename-mapping:
   ClusterCodeVersionsResult.properties.supportExpiryUtc: SupportExpireOn
   ClusterVersionDetails.supportExpiryUtc: SupportExpireOn
   NodeTypeDescription.multipleAvailabilityZones: IsMultipleAvailabilityZonesSupported
+  Cluster.properties.sfZonalUpgradeMode: ServiceFabricZonalUpgradeMode
+  Cluster.properties.clusterEndpoint: -|uri
+  Cluster.properties.managementEndpoint: -|uri
+  Cluster.properties.upgradePauseEndTimestampUtc: upgradePauseEndOn
+  Cluster.properties.upgradePauseStartTimestampUtc: upgradePauseStartOn
+  ClusterUpdateParameters.properties.upgradePauseEndTimestampUtc: upgradePauseEndOn
+  ClusterUpdateParameters.properties.upgradePauseStartTimestampUtc: upgradePauseStartOn
+  DiagnosticsStorageAccountConfig.blobEndpoint: -|uri
+  DiagnosticsStorageAccountConfig.queueEndpoint: -|uri
+  DiagnosticsStorageAccountConfig.tableEndpoint: -|uri
   AddOnFeatures: ClusterAddOnFeatures
   ApplicationResource: ServiceFabricApplication
   ApplicationResourceList: ServiceFabricApplicationList

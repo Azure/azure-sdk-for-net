@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The start timestamp to pause runtime version upgrades on the cluster (UTC).
         /// Serialized Name: ClusterUpdateParameters.properties.upgradePauseStartTimestampUtc
         /// </summary>
-        public DateTimeOffset? UpgradePauseStartTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseStartOn { get; set; }
         /// <summary>
         /// The end timestamp of pause runtime version upgrades on the cluster (UTC).
         /// Serialized Name: ClusterUpdateParameters.properties.upgradePauseEndTimestampUtc
         /// </summary>
-        public DateTimeOffset? UpgradePauseEndTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseEndOn { get; set; }
         /// <summary>
         /// Boolean to pause automatic runtime version upgrades to the cluster.
         /// Serialized Name: ClusterUpdateParameters.properties.waveUpgradePaused

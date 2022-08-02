@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used.
         /// Serialized Name: Cluster.properties.vmImage
         /// </param>
-        /// <param name="sfZonalUpgradeMode">
+        /// <param name="serviceFabricZonalUpgradeMode">
         /// This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster.
         /// Serialized Name: Cluster.properties.sfZonalUpgradeMode
         /// </param>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to &apos;Automatic&apos;.
         /// Serialized Name: Cluster.properties.upgradeWave
         /// </param>
-        /// <param name="upgradePauseStartTimestampUtc">
+        /// <param name="upgradePauseStartOn">
         /// Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC).
         /// Serialized Name: Cluster.properties.upgradePauseStartTimestampUtc
         /// </param>
-        /// <param name="upgradePauseEndTimestampUtc">
+        /// <param name="upgradePauseEndOn">
         /// Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC).
         /// Serialized Name: Cluster.properties.upgradePauseEndTimestampUtc
         /// </param>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Azure resource etag.
         /// Serialized Name: Resource.etag
         /// </param>
-        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<ClusterAddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, string clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, string managementEndpoint, IList<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartTimestampUtc, DateTimeOffset? upgradePauseEndTimestampUtc, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<ClusterAddOnFeature> addOnFeatures, IReadOnlyList<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IList<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             AddOnFeatures = addOnFeatures;
             AvailableClusterVersions = availableClusterVersions;
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.ServiceFabric
             UpgradeMode = upgradeMode;
             ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
             VmImage = vmImage;
-            SfZonalUpgradeMode = sfZonalUpgradeMode;
+            ServiceFabricZonalUpgradeMode = serviceFabricZonalUpgradeMode;
             VmssZonalUpgradeMode = vmssZonalUpgradeMode;
             IsInfrastructureServiceManagerEnabled = isInfrastructureServiceManagerEnabled;
             UpgradeWave = upgradeWave;
-            UpgradePauseStartTimestampUtc = upgradePauseStartTimestampUtc;
-            UpgradePauseEndTimestampUtc = upgradePauseEndTimestampUtc;
+            UpgradePauseStartOn = upgradePauseStartOn;
+            UpgradePauseEndOn = upgradePauseEndOn;
             IsWaveUpgradePaused = isWaveUpgradePaused;
             Notifications = notifications;
             ETag = etag;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint.
         /// Serialized Name: Cluster.properties.clusterEndpoint
         /// </summary>
-        public string ClusterEndpoint { get; }
+        public Uri ClusterEndpoint { get; }
         /// <summary>
         /// A service generated unique identifier for the cluster resource.
         /// Serialized Name: Cluster.properties.clusterId
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// The http management endpoint of the cluster.
         /// Serialized Name: Cluster.properties.managementEndpoint
         /// </summary>
-        public string ManagementEndpoint { get; set; }
+        public Uri ManagementEndpoint { get; set; }
         /// <summary>
         /// The list of node types in the cluster.
         /// Serialized Name: Cluster.properties.nodeTypes
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster.
         /// Serialized Name: Cluster.properties.sfZonalUpgradeMode
         /// </summary>
-        public SfZonalUpgradeMode? SfZonalUpgradeMode { get; set; }
+        public SfZonalUpgradeMode? ServiceFabricZonalUpgradeMode { get; set; }
         /// <summary>
         /// This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added.
         /// Serialized Name: Cluster.properties.vmssZonalUpgradeMode
@@ -401,12 +401,12 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC).
         /// Serialized Name: Cluster.properties.upgradePauseStartTimestampUtc
         /// </summary>
-        public DateTimeOffset? UpgradePauseStartTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseStartOn { get; set; }
         /// <summary>
         /// Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC).
         /// Serialized Name: Cluster.properties.upgradePauseEndTimestampUtc
         /// </summary>
-        public DateTimeOffset? UpgradePauseEndTimestampUtc { get; set; }
+        public DateTimeOffset? UpgradePauseEndOn { get; set; }
         /// <summary>
         /// Boolean to pause automatic runtime version upgrades to the cluster.
         /// Serialized Name: Cluster.properties.waveUpgradePaused
