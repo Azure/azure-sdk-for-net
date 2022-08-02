@@ -107,6 +107,99 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Combinatorial]
+        public void BlobUriBuilder_TrailingSlash_ConstructorTest(
+            [Values(true, false)] bool preservesSlash,
+            [Values(true, false)] bool hasSlash
+        )
+        {
+            // Arrange
+            string blobName = hasSlash ? "blob/" : "blob";
+            var uriString = "https://account.blob.core.windows.net/container/" + blobName;
+            var originalUri = new UriBuilder(uriString);
+            var noSlashUri = new UriBuilder(hasSlash
+                ? uriString.Substring(0, uriString.Length - 1)
+                : uriString);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveTrailingSlash: preservesSlash);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            if (preservesSlash)
+            {
+                Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            }
+            else
+            {
+                Assert.AreEqual("blob", blobUriBuilder.BlobName);
+            }
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            if (preservesSlash)
+            {
+                Assert.AreEqual(originalUri, newUri);
+            }
+            else
+            {
+                Assert.AreEqual(noSlashUri, newUri);
+            }
+        }
+
+        [RecordedTest]
+        [Combinatorial]
+        public void BlobUriBuilder_TrailingSlash_PropertyTest(
+            [Values(true, false)] bool preservesSlash,
+            [Values(true, false)] bool hasSlash
+        )
+        {
+            // Arrange
+            string blobName = hasSlash ? "blob/" : "blob";
+            var containerUriString = "https://account.blob.core.windows.net/container/";
+            var originalUri = new UriBuilder(containerUriString + blobName);
+            var noSlashUri = new UriBuilder(containerUriString + "blob");
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveTrailingSlash: preservesSlash)
+            {
+                BlobName = blobName
+            };
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            if (preservesSlash)
+            {
+                Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            }
+            else
+            {
+                Assert.AreEqual("blob", blobUriBuilder.BlobName);
+            }
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            if (preservesSlash)
+            {
+                Assert.AreEqual(originalUri, newUri);
+            }
+            else
+            {
+                Assert.AreEqual(noSlashUri, newUri);
+            }
+        }
+
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_PortTest()
         {
             // Arrange

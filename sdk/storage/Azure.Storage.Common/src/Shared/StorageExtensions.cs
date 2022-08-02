@@ -9,12 +9,16 @@ namespace Azure.Storage.Shared
 {
     internal static class StorageExtensions
     {
-        public static string EscapePath(this string path)
+        public static string EscapePath(this string path, bool preserveTrailingSlash = false)
         {
             if (path == null)
             {
                 return null;
             }
+
+            string trailer = preserveTrailingSlash && path.EndsWith("/", StringComparison.InvariantCulture)
+                ? "/"
+                : "";
 
             path = path.Trim('/');
             string[] split = path.Split('/');
@@ -24,15 +28,19 @@ namespace Azure.Storage.Shared
                 split[i] = Uri.EscapeDataString(split[i]);
             }
 
-            return string.Join("/", split);
+            return string.Join("/", split) + trailer;
         }
 
-        public static string UnescapePath(this string path)
+        public static string UnescapePath(this string path, bool preserveTrailingSlash = false)
         {
             if (path == null)
             {
                 return null;
             }
+
+            string trailer = preserveTrailingSlash && path.EndsWith("/", StringComparison.InvariantCulture)
+                ? "/"
+                : "";
 
             path = path.Trim('/');
             string[] split = path.Split('/');
@@ -42,7 +50,7 @@ namespace Azure.Storage.Shared
                 split[i] = Uri.UnescapeDataString(split[i]);
             }
 
-            return string.Join("/", split);
+            return string.Join("/", split) + trailer;
         }
 
         public static string GenerateBlockId(long offset)
