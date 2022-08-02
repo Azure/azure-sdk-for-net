@@ -167,7 +167,7 @@
           "description": "Optional readonly model.",
           "readOnly": true
         },
-        "readonlyStringList": {
+        "requiredReadonlyStringList": {
           "type": "array",
           "items": {
             "type": "string"
@@ -176,7 +176,7 @@
           "description": "Required readonly string collection.",
           "readOnly": true
         },
-        "readonlyIntList": {
+        "requiredReadonlyIntList": {
           "type": "array",
           "items": {
             "type": "integer",
@@ -211,8 +211,8 @@
         "requiredReadonlyString",
         "requiredReadonlyInt",
         "requiredReadonlyModel",
-        "readonlyStringList",
-        "readonlyIntList"
+        "requiredReadonlyStringList",
+        "requiredReadonlyIntList"
       ]
     },
     "ReadonlyModel": {
@@ -263,7 +263,7 @@
           "description": "Optional readonly model.",
           "readOnly": true
         },
-        "readonlyStringList": {
+        "requiredReadonlyStringList": {
           "type": "array",
           "items": {
             "type": "string"
@@ -272,7 +272,7 @@
           "description": "Required readonly string collection.",
           "readOnly": true
         },
-        "readonlyIntList": {
+        "requiredReadonlyIntList": {
           "type": "array",
           "items": {
             "type": "integer",
@@ -307,8 +307,8 @@
         "requiredReadonlyString",
         "requiredReadonlyInt",
         "requiredReadonlyModel",
-        "readonlyStringList",
-        "readonlyIntList"
+        "requiredReadonlyStringList",
+        "requiredReadonlyIntList"
       ]
     }
   },

@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.Template.Models
 {
@@ -16,26 +13,12 @@ namespace Azure.Template.Models
     public partial class RoundTripModel
     {
         /// <summary> Initializes a new instance of RoundTripModel. </summary>
-        /// <param name="requiredReadonlyString"> Required string, illustrating a readonly reference type property. </param>
-        /// <param name="requiredReadonlyInt"> Required int, illustrating a readonly value type property. </param>
-        /// <param name="requiredReadonlyModel"> Required readonly model. </param>
-        /// <param name="readonlyStringList"> Required readonly string collection. </param>
-        /// <param name="readonlyIntList"> Required readonly int collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredReadonlyString"/>, <paramref name="requiredReadonlyModel"/>, <paramref name="readonlyStringList"/> or <paramref name="readonlyIntList"/> is null. </exception>
-        public RoundTripModel(string requiredReadonlyString, int requiredReadonlyInt, ReadonlyModel requiredReadonlyModel, IEnumerable<string> readonlyStringList, IEnumerable<int> readonlyIntList)
+        public RoundTripModel()
         {
-            Argument.AssertNotNull(requiredReadonlyString, nameof(requiredReadonlyString));
-            Argument.AssertNotNull(requiredReadonlyModel, nameof(requiredReadonlyModel));
-            Argument.AssertNotNull(readonlyStringList, nameof(readonlyStringList));
-            Argument.AssertNotNull(readonlyIntList, nameof(readonlyIntList));
-
-            RequiredReadonlyString = requiredReadonlyString;
-            RequiredReadonlyInt = requiredReadonlyInt;
-            RequiredReadonlyModel = requiredReadonlyModel;
-            ReadonlyStringList = readonlyStringList.ToList();
-            ReadonlyIntList = readonlyIntList.ToList();
-            OptionalReadonlyStringList = new ChangeTrackingList<string>();
-            OptionalReadonlyIntList = new ChangeTrackingList<int>();
+            RequiredReadonlyStringList = new List<string>(0).AsReadOnly();
+            RequiredReadonlyIntList = new List<int>(0).AsReadOnly();
+            OptionalReadonlyStringList = new List<string>(0).AsReadOnly();
+            OptionalReadonlyIntList = new List<int>(0).AsReadOnly();
         }
 
         /// <summary> Initializes a new instance of RoundTripModel. </summary>
@@ -45,11 +28,11 @@ namespace Azure.Template.Models
         /// <param name="optionalReadonlyInt"> Optional int, illustrating a readonly value type property. </param>
         /// <param name="requiredReadonlyModel"> Required readonly model. </param>
         /// <param name="optionalReadonlyModel"> Optional readonly model. </param>
-        /// <param name="readonlyStringList"> Required readonly string collection. </param>
-        /// <param name="readonlyIntList"> Required readonly int collection. </param>
+        /// <param name="requiredReadonlyStringList"> Required readonly string collection. </param>
+        /// <param name="requiredReadonlyIntList"> Required readonly int collection. </param>
         /// <param name="optionalReadonlyStringList"> Optional readonly string collection. </param>
         /// <param name="optionalReadonlyIntList"> Optional readonly int collection. </param>
-        internal RoundTripModel(string requiredReadonlyString, int requiredReadonlyInt, string optionalReadonlyString, int? optionalReadonlyInt, ReadonlyModel requiredReadonlyModel, ReadonlyModel optionalReadonlyModel, IReadOnlyList<string> readonlyStringList, IReadOnlyList<int> readonlyIntList, IReadOnlyList<string> optionalReadonlyStringList, IReadOnlyList<int> optionalReadonlyIntList)
+        internal RoundTripModel(string requiredReadonlyString, int requiredReadonlyInt, string optionalReadonlyString, int? optionalReadonlyInt, ReadonlyModel requiredReadonlyModel, ReadonlyModel optionalReadonlyModel, IReadOnlyList<string> requiredReadonlyStringList, IReadOnlyList<int> requiredReadonlyIntList, IReadOnlyList<string> optionalReadonlyStringList, IReadOnlyList<int> optionalReadonlyIntList)
         {
             RequiredReadonlyString = requiredReadonlyString;
             RequiredReadonlyInt = requiredReadonlyInt;
@@ -57,8 +40,8 @@ namespace Azure.Template.Models
             OptionalReadonlyInt = optionalReadonlyInt;
             RequiredReadonlyModel = requiredReadonlyModel;
             OptionalReadonlyModel = optionalReadonlyModel;
-            ReadonlyStringList = readonlyStringList;
-            ReadonlyIntList = readonlyIntList;
+            RequiredReadonlyStringList = requiredReadonlyStringList;
+            RequiredReadonlyIntList = requiredReadonlyIntList;
             OptionalReadonlyStringList = optionalReadonlyStringList;
             OptionalReadonlyIntList = optionalReadonlyIntList;
         }
@@ -76,9 +59,9 @@ namespace Azure.Template.Models
         /// <summary> Optional readonly model. </summary>
         public ReadonlyModel OptionalReadonlyModel { get; }
         /// <summary> Required readonly string collection. </summary>
-        public IReadOnlyList<string> ReadonlyStringList { get; }
+        public IReadOnlyList<string> RequiredReadonlyStringList { get; }
         /// <summary> Required readonly int collection. </summary>
-        public IReadOnlyList<int> ReadonlyIntList { get; }
+        public IReadOnlyList<int> RequiredReadonlyIntList { get; }
         /// <summary> Optional readonly string collection. </summary>
         public IReadOnlyList<string> OptionalReadonlyStringList { get; }
         /// <summary> Optional readonly int collection. </summary>

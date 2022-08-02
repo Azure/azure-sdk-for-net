@@ -20,19 +20,19 @@ namespace Azure.Template.Models
         /// <param name="optionalReadonlyInt"> Optional int, illustrating a readonly value type property. </param>
         /// <param name="requiredReadonlyModel"> Required readonly model. </param>
         /// <param name="optionalReadonlyModel"> Optional readonly model. </param>
-        /// <param name="readonlyStringList"> Required readonly string collection. </param>
-        /// <param name="readonlyIntList"> Required readonly int collection. </param>
+        /// <param name="requiredReadonlyStringList"> Required readonly string collection. </param>
+        /// <param name="requiredReadonlyIntList"> Required readonly int collection. </param>
         /// <param name="optionalReadonlyStringList"> Optional readonly string collection. </param>
         /// <param name="optionalReadonlyIntList"> Optional readonly int collection. </param>
         /// <returns> A new <see cref="Models.OutputModel"/> instance for mocking. </returns>
-        public static OutputModel OutputModel(string requiredReadonlyString = null, int requiredReadonlyInt = default, string optionalReadonlyString = null, int? optionalReadonlyInt = null, ReadonlyModel requiredReadonlyModel = null, ReadonlyModel optionalReadonlyModel = null, IEnumerable<string> readonlyStringList = null, IEnumerable<int> readonlyIntList = null, IEnumerable<string> optionalReadonlyStringList = null, IEnumerable<int> optionalReadonlyIntList = null)
+        public static OutputModel OutputModel(string requiredReadonlyString = null, int requiredReadonlyInt = default, string optionalReadonlyString = null, int? optionalReadonlyInt = null, ReadonlyModel requiredReadonlyModel = null, ReadonlyModel optionalReadonlyModel = null, IEnumerable<string> requiredReadonlyStringList = null, IEnumerable<int> requiredReadonlyIntList = null, IEnumerable<string> optionalReadonlyStringList = null, IEnumerable<int> optionalReadonlyIntList = null)
         {
-            readonlyStringList ??= new List<string>();
-            readonlyIntList ??= new List<int>();
+            requiredReadonlyStringList ??= new List<string>();
+            requiredReadonlyIntList ??= new List<int>();
             optionalReadonlyStringList ??= new List<string>();
             optionalReadonlyIntList ??= new List<int>();
 
-            return new OutputModel(requiredReadonlyString, requiredReadonlyInt, optionalReadonlyString, optionalReadonlyInt, requiredReadonlyModel, optionalReadonlyModel, readonlyStringList?.ToList(), readonlyIntList?.ToList(), optionalReadonlyStringList?.ToList(), optionalReadonlyIntList?.ToList());
+            return new OutputModel(requiredReadonlyString, requiredReadonlyInt, optionalReadonlyString, optionalReadonlyInt, requiredReadonlyModel, optionalReadonlyModel, requiredReadonlyStringList?.ToList(), requiredReadonlyIntList?.ToList(), optionalReadonlyStringList?.ToList(), optionalReadonlyIntList?.ToList());
         }
 
         /// <summary> Initializes a new instance of ReadonlyModel. </summary>
@@ -50,19 +50,19 @@ namespace Azure.Template.Models
         /// <param name="optionalReadonlyInt"> Optional int, illustrating a readonly value type property. </param>
         /// <param name="requiredReadonlyModel"> Required readonly model. </param>
         /// <param name="optionalReadonlyModel"> Optional readonly model. </param>
-        /// <param name="readonlyStringList"> Required readonly string collection. </param>
-        /// <param name="readonlyIntList"> Required readonly int collection. </param>
+        /// <param name="requiredReadonlyStringList"> Required readonly string collection. </param>
+        /// <param name="requiredReadonlyIntList"> Required readonly int collection. </param>
         /// <param name="optionalReadonlyStringList"> Optional readonly string collection. </param>
         /// <param name="optionalReadonlyIntList"> Optional readonly int collection. </param>
         /// <returns> A new <see cref="Models.RoundTripModel"/> instance for mocking. </returns>
-        public static RoundTripModel RoundTripModel(string requiredReadonlyString = null, int requiredReadonlyInt = default, string optionalReadonlyString = null, int? optionalReadonlyInt = null, ReadonlyModel requiredReadonlyModel = null, ReadonlyModel optionalReadonlyModel = null, IEnumerable<string> readonlyStringList = null, IEnumerable<int> readonlyIntList = null, IEnumerable<string> optionalReadonlyStringList = null, IEnumerable<int> optionalReadonlyIntList = null)
+        public static RoundTripModel RoundTripModel(string requiredReadonlyString = null, int requiredReadonlyInt = default, string optionalReadonlyString = null, int? optionalReadonlyInt = null, ReadonlyModel requiredReadonlyModel = null, ReadonlyModel optionalReadonlyModel = null, IEnumerable<string> requiredReadonlyStringList = null, IEnumerable<int> requiredReadonlyIntList = null, IEnumerable<string> optionalReadonlyStringList = null, IEnumerable<int> optionalReadonlyIntList = null)
         {
-            readonlyStringList ??= new List<string>();
-            readonlyIntList ??= new List<int>();
+            requiredReadonlyStringList ??= new List<string>();
+            requiredReadonlyIntList ??= new List<int>();
             optionalReadonlyStringList ??= new List<string>();
             optionalReadonlyIntList ??= new List<int>();
 
-            return new RoundTripModel(requiredReadonlyString, requiredReadonlyInt, optionalReadonlyString, optionalReadonlyInt, requiredReadonlyModel, optionalReadonlyModel, readonlyStringList?.ToList(), readonlyIntList?.ToList(), optionalReadonlyStringList?.ToList(), optionalReadonlyIntList?.ToList());
+            return new RoundTripModel(requiredReadonlyString, requiredReadonlyInt, optionalReadonlyString, optionalReadonlyInt, requiredReadonlyModel, optionalReadonlyModel, requiredReadonlyStringList?.ToList(), requiredReadonlyIntList?.ToList(), optionalReadonlyStringList?.ToList(), optionalReadonlyIntList?.ToList());
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.Template.Models
             Optional<int> optionalReadonlyInt = default;
             ReadonlyModel requiredReadonlyModel = default;
             Optional<ReadonlyModel> optionalReadonlyModel = default;
-            IReadOnlyList<string> readonlyStringList = default;
-            IReadOnlyList<int> readonlyIntList = default;
+            IReadOnlyList<string> requiredReadonlyStringList = default;
+            IReadOnlyList<int> requiredReadonlyIntList = default;
             Optional<IReadOnlyList<string>> optionalReadonlyStringList = default;
             Optional<IReadOnlyList<int>> optionalReadonlyIntList = default;
             foreach (var property in element.EnumerateObject())
@@ -67,24 +67,24 @@ namespace Azure.Template.Models
                     optionalReadonlyModel = ReadonlyModel.DeserializeReadonlyModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("readonlyStringList"))
+                if (property.NameEquals("requiredReadonlyStringList"))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetString());
                     }
-                    readonlyStringList = array;
+                    requiredReadonlyStringList = array;
                     continue;
                 }
-                if (property.NameEquals("readonlyIntList"))
+                if (property.NameEquals("requiredReadonlyIntList"))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32());
                     }
-                    readonlyIntList = array;
+                    requiredReadonlyIntList = array;
                     continue;
                 }
                 if (property.NameEquals("optionalReadonlyStringList"))
@@ -118,7 +118,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new OutputModel(requiredReadonlyString, requiredReadonlyInt, optionalReadonlyString.Value, Optional.ToNullable(optionalReadonlyInt), requiredReadonlyModel, optionalReadonlyModel.Value, readonlyStringList, readonlyIntList, Optional.ToList(optionalReadonlyStringList), Optional.ToList(optionalReadonlyIntList));
+            return new OutputModel(requiredReadonlyString, requiredReadonlyInt, optionalReadonlyString.Value, Optional.ToNullable(optionalReadonlyInt), requiredReadonlyModel, optionalReadonlyModel.Value, requiredReadonlyStringList, requiredReadonlyIntList, Optional.ToList(optionalReadonlyStringList), Optional.ToList(optionalReadonlyIntList));
         }
     }
 }
