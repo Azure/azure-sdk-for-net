@@ -8,10 +8,10 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeOptions. </summary>
-    public partial class RecognizeOptions
+    internal partial class RecognizeOptionsInternal
     {
-        /// <summary> Initializes a new instance of RecognizeOptions. </summary>
-        public RecognizeOptions()
+        /// <summary> Initializes a new instance of RecognizeOptionsInternal. </summary>
+        public RecognizeOptionsInternal()
         {
         }
 

@@ -195,5 +195,113 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// <summary>
+        /// Recognize tones.
+        /// </summary>
+        /// <param name="recognizeAttributes">Different attibutes to recognize.</param>
+        /// <param name="recognizeOptions">Optional attributes for recognize.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> RecognizeAsync(RecognizeAttributes recognizeAttributes, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            scope.Start();
+            try
+            {
+                RecognizeOptionsInternal attributes = new RecognizeOptionsInternal()
+                {
+                    DtmfOptions = new DtmfOptionsInternal()
+                    {
+                        CollectTones = recognizeAttributes.DtmfOptions.CollectTones,
+                        DtfmToneProducer = CommunicationIdentifierSerializer.Serialize(recognizeAttributes.DtmfOptions.DtfmToneProducer),
+                    },
+                    PausePlayOnResponse = recognizeAttributes.PausePlayOnResponse,
+                    InitialSilenceTimeoutInSeconds = recognizeAttributes.InitialSilenceTimeoutInSeconds,
+                };
+                RecognizeRequestInternal request = new RecognizeRequestInternal(attributes);
+
+                if (recognizeOptions != null)
+                {
+                    if (recognizeOptions.PlaySourceInfo != null && recognizeOptions.PlaySourceInfo is FileSource fileSource)
+                    {
+                        PlaySourceInternal sourceInternal;
+                        sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                        sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                        sourceInternal.PlaySourceId = recognizeOptions.PlaySourceInfo.PlaySourceId;
+
+                        request.PlaySourceInfo = sourceInternal;
+                    }
+                    else if (recognizeOptions.PlaySourceInfo != null)
+                    {
+                        throw new NotSupportedException(recognizeOptions.PlaySourceInfo.GetType().Name);
+                    }
+
+                    request.RecognizeInputType = recognizeOptions.RecognizeInputType;
+                    request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+                    request.OperationContext = recognizeOptions.OperationContext;
+                }
+                return await ContentRestClient.RecognizeAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognize tones.
+        /// </summary>
+        /// <param name="recognizeAttributes">Different attibutes to recognize.</param>
+        /// <param name="recognizeOptions">Optional attributes for recognize.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response Recognize(RecognizeAttributes recognizeAttributes, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(Recognize)}");
+            scope.Start();
+            try
+            {
+                RecognizeOptionsInternal attributes = new RecognizeOptionsInternal()
+                {
+                    DtmfOptions = new DtmfOptionsInternal()
+                    {
+                        CollectTones = recognizeAttributes.DtmfOptions.CollectTones,
+                        DtfmToneProducer = CommunicationIdentifierSerializer.Serialize(recognizeAttributes.DtmfOptions.DtfmToneProducer),
+                    },
+                    PausePlayOnResponse = recognizeAttributes.PausePlayOnResponse,
+                    InitialSilenceTimeoutInSeconds = recognizeAttributes.InitialSilenceTimeoutInSeconds,
+                };
+                RecognizeRequestInternal request = new RecognizeRequestInternal(attributes);
+
+                if (recognizeOptions != null)
+                {
+                    if (recognizeOptions.PlaySourceInfo != null && recognizeOptions.PlaySourceInfo is FileSource fileSource)
+                    {
+                        PlaySourceInternal sourceInternal;
+                        sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.File);
+                        sourceInternal.FileSource = new FileSourceInternal(fileSource.FileUri.AbsoluteUri);
+                        sourceInternal.PlaySourceId = recognizeOptions.PlaySourceInfo.PlaySourceId;
+
+                        request.PlaySourceInfo = sourceInternal;
+                    }
+                    else if (recognizeOptions.PlaySourceInfo != null)
+                    {
+                        throw new NotSupportedException(recognizeOptions.PlaySourceInfo.GetType().Name);
+                    }
+
+                    request.RecognizeInputType = recognizeOptions.RecognizeInputType;
+                    request.StopCurrentOperations = recognizeOptions.StopCurrentOperations;
+                    request.OperationContext = recognizeOptions.OperationContext;
+                }
+                return ContentRestClient.Recognize(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

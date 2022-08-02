@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
-        public RecognizeRequestInternal(RecognizeOptions recognizeOptions)
+        public RecognizeRequestInternal(RecognizeOptionsInternal recognizeOptions)
         {
             if (recognizeOptions == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
         public bool? StopCurrentOperations { get; set; }
         /// <summary> Defines options for recognition. </summary>
-        public RecognizeOptions RecognizeOptions { get; }
+        public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

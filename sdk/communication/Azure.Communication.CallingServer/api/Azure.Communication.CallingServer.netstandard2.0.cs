@@ -143,8 +143,8 @@ namespace Azure.Communication.CallingServer
         public CallingServerClient(string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options) { }
         public CallingServerClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallingServer.CallingServerClientOptions options = null) { }
         public CallingServerClient(System.Uri pmaEndpoint, string connectionString, Azure.Communication.CallingServer.CallingServerClientOptions options = null) { }
-        public virtual Azure.Response<Azure.Communication.CallingServer.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.AnswerCallResult>> AnswerCallAsync(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallingServer.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, Azure.Communication.CallingServer.MediaStreamingConfiguration mediaStreamingConfiguration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.AnswerCallResult>> AnswerCallAsync(string incomingCallContext, System.Uri callbackUri, Azure.Communication.CallingServer.MediaStreamingConfiguration mediaStreamingConfiguration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallingServer.CreateCallResult> CreateCall(Azure.Communication.CallingServer.CallSource source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri, string subject = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallingServer.CreateCallResult>> CreateCallAsync(Azure.Communication.CallingServer.CallSource source, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri, string subject = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Communication.CallingServer.CallConnection GetCallConnection(string callConnectionId) { throw null; }
@@ -185,6 +185,8 @@ namespace Azure.Communication.CallingServer
         public virtual System.Threading.Tasks.Task<Azure.Response> PlayAsync(Azure.Communication.CallingServer.PlaySource playSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> playTo, Azure.Communication.CallingServer.PlayOptions playOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PlayToAll(Azure.Communication.CallingServer.PlaySource playSource, Azure.Communication.CallingServer.PlayOptions playOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PlayToAllAsync(Azure.Communication.CallingServer.PlaySource playSource, Azure.Communication.CallingServer.PlayOptions playOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Recognize(Azure.Communication.CallingServer.RecognizeAttributes recognizeAttributes, Azure.Communication.CallingServer.RecognizeOptions recognizeOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RecognizeAsync(Azure.Communication.CallingServer.RecognizeAttributes recognizeAttributes, Azure.Communication.CallingServer.RecognizeOptions recognizeOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CallParticipant
     {
@@ -259,6 +261,13 @@ namespace Azure.Communication.CallingServer
         public string ServerCallId { get { throw null; } }
         public static Azure.Communication.CallingServer.CallTransferFailed Deserialize(string content) { throw null; }
     }
+    public partial class CollectTones
+    {
+        public CollectTones() { }
+        public int? InterToneTimeoutInSeconds { get { throw null; } set { } }
+        public int? MaxTonesToCollect { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> StopTones { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallingServer.ContentTransferOptions>
     {
@@ -282,6 +291,12 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionProperties CallProperties { get { throw null; } }
     }
+    public partial class DtmfOptions
+    {
+        public DtmfOptions() { }
+        public Azure.Communication.CallingServer.CollectTones CollectTones { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier DtfmToneProducer { get { throw null; } set { } }
+    }
     public static partial class EventParser
     {
         public static Azure.Communication.CallingServer.CallingServerEventBase Parse(string content) { throw null; }
@@ -296,6 +311,66 @@ namespace Azure.Communication.CallingServer
         public GroupCallLocator(string id) { }
         public override bool Equals(Azure.Communication.CallingServer.CallLocator other) { throw null; }
         public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaStreamingAudioChannelType : System.IEquatable<Azure.Communication.CallingServer.MediaStreamingAudioChannelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaStreamingAudioChannelType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.MediaStreamingAudioChannelType Mixed { get { throw null; } }
+        public static Azure.Communication.CallingServer.MediaStreamingAudioChannelType Unmixed { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.MediaStreamingAudioChannelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.MediaStreamingAudioChannelType left, Azure.Communication.CallingServer.MediaStreamingAudioChannelType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.MediaStreamingAudioChannelType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.MediaStreamingAudioChannelType left, Azure.Communication.CallingServer.MediaStreamingAudioChannelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MediaStreamingConfiguration
+    {
+        public MediaStreamingConfiguration() { }
+        public Azure.Communication.CallingServer.MediaStreamingAudioChannelType? AudioChannelType { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.MediaStreamingContentType? ContentType { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.MediaStreamingTransportType? TransportType { get { throw null; } set { } }
+        public string TransportUrl { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaStreamingContentType : System.IEquatable<Azure.Communication.CallingServer.MediaStreamingContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaStreamingContentType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.MediaStreamingContentType Audio { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.MediaStreamingContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.MediaStreamingContentType left, Azure.Communication.CallingServer.MediaStreamingContentType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.MediaStreamingContentType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.MediaStreamingContentType left, Azure.Communication.CallingServer.MediaStreamingContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaStreamingTransportType : System.IEquatable<Azure.Communication.CallingServer.MediaStreamingTransportType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaStreamingTransportType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.MediaStreamingTransportType Websocket { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.MediaStreamingTransportType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.MediaStreamingTransportType left, Azure.Communication.CallingServer.MediaStreamingTransportType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.MediaStreamingTransportType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.MediaStreamingTransportType left, Azure.Communication.CallingServer.MediaStreamingTransportType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ParticipantsUpdated : Azure.Communication.CallingServer.CallingServerEventBase
@@ -317,6 +392,38 @@ namespace Azure.Communication.CallingServer
     {
         protected PlaySource() { }
         public string PlaySourceId { get { throw null; } set { } }
+    }
+    public partial class RecognizeAttributes
+    {
+        public RecognizeAttributes() { }
+        public Azure.Communication.CallingServer.DtmfOptions DtmfOptions { get { throw null; } set { } }
+        public int? InitialSilenceTimeoutInSeconds { get { throw null; } set { } }
+        public bool? PausePlayOnResponse { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecognizeInputType : System.IEquatable<Azure.Communication.CallingServer.RecognizeInputType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecognizeInputType(string value) { throw null; }
+        public static Azure.Communication.CallingServer.RecognizeInputType DTMF { get { throw null; } }
+        public bool Equals(Azure.Communication.CallingServer.RecognizeInputType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallingServer.RecognizeInputType left, Azure.Communication.CallingServer.RecognizeInputType right) { throw null; }
+        public static implicit operator Azure.Communication.CallingServer.RecognizeInputType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallingServer.RecognizeInputType left, Azure.Communication.CallingServer.RecognizeInputType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RecognizeOptions
+    {
+        public RecognizeOptions() { }
+        public string OperationContext { get { throw null; } }
+        public Azure.Communication.CallingServer.PlaySource PlaySourceInfo { get { throw null; } set { } }
+        public Azure.Communication.CallingServer.RecognizeInputType? RecognizeInputType { get { throw null; } }
+        public bool? StopCurrentOperations { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingChannel : System.IEquatable<Azure.Communication.CallingServer.RecordingChannel>
