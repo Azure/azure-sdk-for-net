@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
         /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
-        /// <param name="linkType"> Link type (GEO, NAMED). </param>
+        /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). </param>
         internal SqlServerDatabaseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string partnerServer, string partnerDatabase, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType) : base(id, name, resourceType, systemData)
         {
             PartnerServer = partnerServer;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
         public ReplicationLinkState? ReplicationState { get; }
         /// <summary> Whether the user is currently allowed to terminate the link. </summary>
         public bool? IsTerminationAllowed { get; }
-        /// <summary> Link type (GEO, NAMED). </summary>
+        /// <summary> Link type (GEO, NAMED, STANDBY). </summary>
         public ReplicationLinkType? LinkType { get; }
     }
 }
