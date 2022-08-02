@@ -19,11 +19,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
         {
         }
 
-        public CreateSentShare(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task CreateSentShareSample()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_CreateSentShare
@@ -31,12 +27,13 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #if SNIPPET
             var credential = new DefaultAzureCredential();
             var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var sentShareClient = new SentSharesClient(endPoint, credential);
 #else
             var credential = TestEnvironment.Credential;
             var endPoint = TestEnvironment.Endpoint.ToString();
+            var sentShareClient = GetSentSharesClient();
 #endif
 
-            var sentShareClient = new SentSharesClient(endPoint, credential);
             #endregion Snippet:Azure_Analytics_Purview_Share_Authenticate_The_Client
             // Create sent share
             var sentShareName = "sample-Share";
@@ -50,7 +47,11 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                     collection = new
                     {
                         // for root collection else name of any accessible child collection in the Purview account.
-                        referenceName = "<reference>",
+#if SNIPPET
+                        referenceName = "<purivewAccountName>",
+#else
+                        referenceName = "w95gh9ze",
+#endif
                         type = "CollectionReference"
                     }
                 }

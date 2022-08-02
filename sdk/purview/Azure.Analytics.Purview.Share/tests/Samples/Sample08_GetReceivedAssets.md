@@ -13,13 +13,13 @@ using Azure.Identity;
 ## Get received assets
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
+var receivedShareName = "sample-share";
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
 
 // Get received assets
-var receivedShareName = "fabrikam-received-share";
-var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
-var receivedAssets = receivedAssetsClient.GetReceivedAssets(receivedShareName);
+var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
 var receivedAssetName = JsonDocument.Parse(receivedAssets.First()).RootElement.GetProperty("name").GetString();
 
 string assetMappingName = "receiver-asset-mapping";

@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Linq;
 using System.Text.Json;
 using Azure.Identity;
+using System.Threading.Tasks;
 #endregion Snippet:Azure_Analytics_Purview_Share_Samples_04_Namespaces
 
 namespace Azure.Analytics.Purview.Share.Tests.Samples
@@ -15,30 +16,27 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
     internal class ViewSentShareInvitationsSample : ShareClientTestBase
     {
-        public ViewSentShareInvitationsSample() : base(false)
+        public ViewSentShareInvitationsSample() : base(true)
         {
         }
 
-        public ViewSentShareInvitationsSample(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
-        public void ViewSentShareInvitations()
+        [RecordedTest]
+        public async Task ViewSentShareInvitations()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_ViewSentShareInvitations
+            var sentShareName = "sample-Share";
 #if SNIPPET
             var credential = new DefaultAzureCredential();
             var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
 #else
             var credential = TestEnvironment.Credential;
             var endPoint = TestEnvironment.Endpoint.ToString();
+            var sentShareInvitationsClient = GetSentShareInvitationsClient();
 #endif
-            var sentShareName = "sample-Share";
 
             // View sent share invitations. (Pending/Rejected)
-            var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
-            var sentShareInvitations = sentShareInvitationsClient.GetSentShareInvitations(sentShareName);
+            var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName).ToEnumerableAsync();
             var responseInvitation = sentShareInvitations.FirstOrDefault();
 
             if (responseInvitation == null)

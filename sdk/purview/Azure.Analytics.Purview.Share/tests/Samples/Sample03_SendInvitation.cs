@@ -19,11 +19,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
         {
         }
 
-        public SendInvitationSample(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task SendInvitation()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_SendInvitation
@@ -44,7 +40,11 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                 invitationKind = "User",
                 properties = new
                 {
+#if SNIPPET
                     targetEmail = "user@domain.com"
+#else
+                    targetEmail = "yamanwahsheh@microsoft.com"
+#endif
                 }
             };
 
@@ -60,9 +60,13 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
             //    }
             //};
 
+#if SNIPPET
             var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
+#else
+            var sentShareInvitationsClient = GetSentShareInvitationsClient();
+#endif
             await sentShareInvitationsClient.CreateOrUpdateAsync(sentShareName, invitationName, RequestContent.Create(invitationData));
-            #endregion Snippet:Azure_Analytics_Purview_Share_Samples_SendInvitation
+#endregion Snippet:Azure_Analytics_Purview_Share_Samples_SendInvitation
         }
     }
 }

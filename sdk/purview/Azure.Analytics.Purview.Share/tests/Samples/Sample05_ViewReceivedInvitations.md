@@ -3,7 +3,9 @@
 ## Import the namespaces
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_05_Namespaces
+using Azure.Core;
 using Azure.Identity;
+using System.Threading.Tasks;
 ```
 
 ## View received invitations
@@ -11,8 +13,8 @@ using Azure.Identity;
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewReceivedInvitations
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 
 // View received invitations
-var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
-var receivedInvitations = receivedInvitationsClient.GetReceivedInvitations();
+var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
 ```

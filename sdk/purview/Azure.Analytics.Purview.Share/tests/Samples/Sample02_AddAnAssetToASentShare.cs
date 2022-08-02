@@ -19,11 +19,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
         {
         }
 
-        public AddAnAssetToASentShareSample(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task AddAnAssetToASentShare()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_AddAnAssetToASentShare
@@ -39,7 +35,11 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
             var sentShareName = "sample-Share";
             var assetName = "fabrikam-blob-asset";
             var assetNameForReceiver = "receiver-visible-asset-name";
+#if SNIPPET
             var senderStorageResourceId = "<SENDER_STORAGE_ACCOUNT_RESOURCE_ID>";
+#else
+            var senderStorageResourceId = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage";
+#endif
             var senderStorageContainer = "fabrikamcontainer";
             var senderPathToShare = "folder/sample.txt";
             var pathNameForReceiver = "from-fabrikam";
@@ -63,10 +63,13 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                     }
                 }
             };
-
+#if SNIPPET
             var assetsClient = new AssetsClient(endPoint, credential);
+#else
+            var assetsClient = GetAssetsClient();
+#endif
             await assetsClient.CreateAsync(WaitUntil.Started, sentShareName, assetName, RequestContent.Create(assetData));
-            #endregion Snippet:Azure_Analytics_Purview_Share_Samples_AddAnAssetToASentShare
+#endregion Snippet:Azure_Analytics_Purview_Share_Samples_AddAnAssetToASentShare
         }
     }
 }

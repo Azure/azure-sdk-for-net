@@ -6,18 +6,19 @@
 using System.Linq;
 using System.Text.Json;
 using Azure.Identity;
+using System.Threading.Tasks;
 ```
 
 ## View sent share invitations
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewSentShareInvitations
+var sentShareName = "sample-Share";
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
-var sentShareName = "sample-Share";
+var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
 
 // View sent share invitations. (Pending/Rejected)
-var sentShareInvitationsClient = new SentShareInvitationsClient(endPoint, credential);
-var sentShareInvitations = sentShareInvitationsClient.GetSentShareInvitations(sentShareName);
+var sentShareInvitations = await sentShareInvitationsClient.GetSentShareInvitationsAsync(sentShareName).ToEnumerableAsync();
 var responseInvitation = sentShareInvitations.FirstOrDefault();
 
 if (responseInvitation == null)

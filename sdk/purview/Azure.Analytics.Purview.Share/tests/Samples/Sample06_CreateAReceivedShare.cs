@@ -17,15 +17,11 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
     internal class CreateAReceivedShareSample : ShareClientTestBase
     {
-        public CreateAReceivedShareSample() : base(false)
+        public CreateAReceivedShareSample() : base(true)
         {
         }
 
-        public CreateAReceivedShareSample(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task CreateAReceivedShare()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
@@ -39,7 +35,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 
             // Create received share
             var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
-            var receivedInvitations = receivedInvitationsClient.GetReceivedInvitations();
+            var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
             var receivedShareName = "fabrikam-received-share";
             var receivedInvitation = receivedInvitations.LastOrDefault();
 
@@ -62,15 +58,23 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                     collection = new
                     {
                         // for root collection else name of any accessible child collection in the Purview account.
+#if SNIPPET
                         referenceName = "<purivewAccountName>",
+#else
+                        referenceName = "w95gh9ze",
+#endif
                         type = "CollectionReference"
                     }
                 }
             };
 
+#if SNIPPET
             var receivedShareClient = new ReceivedSharesClient(endPoint, credential);
+#else
+            var receivedShareClient = GetReceivedSharesClient();
+#endif
             var receivedShare = await receivedShareClient.CreateAsync(receivedShareName, RequestContent.Create(receivedShareData));
-            #endregion Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
+#endregion Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
         }
     }
 }

@@ -18,38 +18,38 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
     internal class GetReceivedAssetsSample : ShareClientTestBase
     {
-        public GetReceivedAssetsSample() : base(false)
+        public GetReceivedAssetsSample() : base(true)
         {
         }
 
-        public GetReceivedAssetsSample(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
+        [RecordedTest]
         public async Task GetReceivedShares()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
+            var receivedShareName = "sample-share";
 #if SNIPPET
             var credential = new DefaultAzureCredential();
             var endPoint = "https://<my-account-name>.purview.azure.com/share";
-
+            var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
 #else
             var credential = TestEnvironment.Credential;
             var endPoint = TestEnvironment.Endpoint.ToString();
-
+            var receivedAssetsClient = GetReceivedAssetsClient();
 #endif
+
             // Get received assets
-            var receivedShareName = "fabrikam-received-share";
-            var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
-            var receivedAssets = receivedAssetsClient.GetReceivedAssets(receivedShareName);
+            var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
             var receivedAssetName = JsonDocument.Parse(receivedAssets.First()).RootElement.GetProperty("name").GetString();
 
             string assetMappingName = "receiver-asset-mapping";
             string receiverContainerName = "receivedcontainer";
             string receiverFolderName = "receivedfolder";
             string receiverMountPath = "receivedmountpath";
+#if SNIPPET
             string receiverStorageResourceId = "<RECEIVER_STORAGE_ACCOUNT_RESOURCE_ID>";
+#else
+            string receiverStorageResourceId = "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage";
+#endif
 
             var assetMappingData = new
             {
@@ -65,9 +65,13 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
                 }
             };
 
+#if SNIPPET
             var assetMappingsClient = new AssetMappingsClient(endPoint, credential);
+#else
+            var assetMappingsClient = GetAssetMappingsClient();
+#endif
             var assetMapping = await assetMappingsClient.CreateAsync(WaitUntil.Completed, receivedShareName, assetMappingName, RequestContent.Create(assetMappingData));
-            #endregion Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
+#endregion Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
         }
     }
 }

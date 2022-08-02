@@ -6,6 +6,7 @@ using NUnit.Framework;
 #region Snippet:Azure_Analytics_Purview_Share_Samples_07_Namespaces
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Identity;
 #endregion Snippet:Azure_Analytics_Purview_Share_Samples_07_Namespaces
 
@@ -19,26 +20,23 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
         {
         }
 
-        public ViewAcceptedSharesSample(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
-        public void ViewAcceptedShares()
+        [RecordedTest]
+        public async Task ViewAcceptedShares()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_ViewAcceptedShares
+            var sentShareName = "sample-Share";
 #if SNIPPET
             var credential = new DefaultAzureCredential();
             var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var acceptedSentSharesClient = new AcceptedSentSharesClient(endPoint, credential);
 #else
             var credential = TestEnvironment.Credential;
             var endPoint = TestEnvironment.Endpoint.ToString();
+            var acceptedSentSharesClient = GetAcceptedSentSharesClient();
 #endif
-            var sentShareName = "sample-Share";
 
             // View accepted shares
-            var acceptedSentSharesClient = new AcceptedSentSharesClient(endPoint, credential);
-            var acceptedSentShares = acceptedSentSharesClient.GetAcceptedSentShares(sentShareName);
+            var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName).ToEnumerableAsync();
 
             var acceptedSentShare = acceptedSentShares.FirstOrDefault();
 

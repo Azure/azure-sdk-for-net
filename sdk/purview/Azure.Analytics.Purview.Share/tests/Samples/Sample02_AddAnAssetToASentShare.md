@@ -41,7 +41,6 @@ var assetData = new
         }
     }
 };
-
 var assetsClient = new AssetsClient(endPoint, credential);
 await assetsClient.CreateAsync(WaitUntil.Started, sentShareName, assetName, RequestContent.Create(assetData));
 ```
