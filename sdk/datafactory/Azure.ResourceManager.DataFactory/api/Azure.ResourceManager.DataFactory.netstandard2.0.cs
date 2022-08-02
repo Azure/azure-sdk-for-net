@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataFactory
     }
     public static partial class DataFactoryExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepo(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> ConfigureFactoryRepoAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepoInformation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.ResourceIdentifier locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataFactory.DataFactoryCollection GetDataFactories(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataFactory.DataFactoryResource> GetDataFactories(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataFactory.DataFactoryResource> GetDataFactoriesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -59,31 +59,33 @@ namespace Azure.ResourceManager.DataFactory
         protected DataFactoryResource() { }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionStartResult> AddDataFlowDataFlowDebugSession(Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionStartResult>> AddDataFlowDataFlowDebugSessionAsync(Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowStartDebugSessionResult> AddDataFlowToDebugSession(Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowStartDebugSessionResult>> AddDataFlowToDebugSessionAsync(Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugPackageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CancelPipelineRun(string runId, bool? isRecursive = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelPipelineRunAsync(string runId, bool? isRecursive = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionCreateResult> CreateDataFlowDebugSession(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionCreateResult>> CreateDataFlowDebugSessionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowCreateDebugSessionResult> CreateDataFlowDebugSession(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowCreateDebugSessionResult>> CreateDataFlowDebugSessionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugSessionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDataFlowDebugSession(Azure.ResourceManager.DataFactory.Models.DeleteDataFlowDebugSessionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDataFlowDebugSessionAsync(Azure.ResourceManager.DataFactory.Models.DeleteDataFlowDebugSessionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugCommandResult> ExecuteCommandDataFlowDebugSession(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugCommandResult>> ExecuteCommandDataFlowDebugSessionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugCommandResult> ExecuteDataFlowDebugSessionCommand(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDebugCommandResult>> ExecuteDataFlowDebugSessionCommandAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.Models.DataFlowDebugCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> Get(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.ActivityRunInfo> GetActivityRunsByPipelineRun(string runId, Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.ActivityRunInfo> GetActivityRunsByPipelineRunAsync(string runId, Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.ActivityRunInfo> GetActivityRun(string runId, Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.ActivityRunInfo> GetActivityRunAsync(string runId, Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> GetAsync(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.DataFlowDebugSessionInfo> GetDataFlowDebugSessions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.DataFlowDebugSessionInfo> GetDataFlowDebugSessionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneAccessPolicyResult> GetDataPlaneAccess(Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneUserAccessPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneAccessPolicyResult>> GetDataPlaneAccessAsync(Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneUserAccessPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlBatchResult> GetExposureControlFeatureValues(Azure.ResourceManager.DataFactory.Models.ExposureControlBatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlBatchResult>> GetExposureControlFeatureValuesAsync(Azure.ResourceManager.DataFactory.Models.ExposureControlBatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult> GetExposureControlFeature(Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>> GetExposureControlFeatureAsync(Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlBatchResult> GetExposureControlFeatures(Azure.ResourceManager.DataFactory.Models.ExposureControlBatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlBatchResult>> GetExposureControlFeaturesAsync(Azure.ResourceManager.DataFactory.Models.ExposureControlBatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.FactoryDataFlowResource> GetFactoryDataFlow(string dataFlowName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.FactoryDataFlowResource>> GetFactoryDataFlowAsync(string dataFlowName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.FactoryDataFlowCollection GetFactoryDataFlows() { throw null; }
@@ -111,8 +113,6 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.FactoryVirtualNetworkResource> GetFactoryVirtualNetwork(string managedVirtualNetworkName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.FactoryVirtualNetworkResource>> GetFactoryVirtualNetworkAsync(string managedVirtualNetworkName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.FactoryVirtualNetworkCollection GetFactoryVirtualNetworks() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult> GetFeatureValueByFactoryExposureControl(Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>> GetFeatureValueByFactoryExposureControlAsync(Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenResult> GetGitHubAccessToken(Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenResult>> GetGitHubAccessTokenAsync(Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryPipelineRunInfo> GetPipelineRun(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -285,8 +285,8 @@ namespace Azure.ResourceManager.DataFactory
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeNodeIPAddress>> GetIPAddressIntegrationRuntimeNodeAsync(string nodeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeMonitoringData> GetMonitoringData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeMonitoringData>> GetMonitoringDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeStatusResult> GetStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeStatusResult>> GetStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.SsisObjectMetadataStatusResult> RefreshIntegrationRuntimeObjectMetadata(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -558,10 +558,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public ActivityPolicy() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public bool? EnableSecureInput { get { throw null; } set { } }
+        public bool? EnableSecureOutput { get { throw null; } set { } }
         public System.BinaryData Retry { get { throw null; } set { } }
         public int? RetryIntervalInSeconds { get { throw null; } set { } }
-        public bool? SecureInput { get { throw null; } set { } }
-        public bool? SecureOutput { get { throw null; } set { } }
         public System.BinaryData Timeout { get { throw null; } set { } }
     }
     public partial class ActivityRunInfo
@@ -1987,7 +1987,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int? NodeCount { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
         public string StartOn { get { throw null; } }
-        public int? TtlInMinutes { get { throw null; } }
+        public int? TimeToLiveInMinutes { get { throw null; } }
     }
     public partial class DataFlowReference
     {
@@ -2580,7 +2580,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public ExecutePipelineActivityPolicy() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public bool? SecureInput { get { throw null; } set { } }
+        public bool? EnableSecureInput { get { throw null; } set { } }
     }
     public partial class ExecuteSsisPackageActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
@@ -2670,6 +2670,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryCredentialReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryCredentialReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class FactoryDataFlowCreateDebugSessionResult
+    {
+        internal FactoryDataFlowCreateDebugSessionResult() { }
+        public System.Guid? SessionId { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
     public partial class FactoryDataFlowDebugCommandResult
     {
         internal FactoryDataFlowDebugCommandResult() { }
@@ -2699,18 +2705,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string ComputeType { get { throw null; } set { } }
         public int? CoreCount { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryIntegrationRuntimeDebugInfo IntegrationRuntime { get { throw null; } set { } }
-        public int? TtlInMinutes { get { throw null; } set { } }
-    }
-    public partial class FactoryDataFlowDebugSessionCreateResult
-    {
-        internal FactoryDataFlowDebugSessionCreateResult() { }
-        public System.Guid? SessionId { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public partial class FactoryDataFlowDebugSessionStartResult
-    {
-        internal FactoryDataFlowDebugSessionStartResult() { }
-        public string JobVersion { get { throw null; } }
+        public int? TimeToLiveInMinutes { get { throw null; } set { } }
     }
     public partial class FactoryDataFlowDefinition
     {
@@ -2718,6 +2713,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string FolderName { get { throw null; } set { } }
+    }
+    public partial class FactoryDataFlowStartDebugSessionResult
+    {
+        internal FactoryDataFlowStartDebugSessionResult() { }
+        public string JobVersion { get { throw null; } }
     }
     public partial class FactoryDataPlaneAccessPolicyResult
     {
@@ -3576,7 +3576,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class HDInsightOnDemandLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
-        public HDInsightOnDemandLinkedService(System.BinaryData clusterSize, System.BinaryData ttlExpression, System.BinaryData version, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData hostSubscriptionId, System.BinaryData tenant, System.BinaryData clusterResourceGroup) { }
+        public HDInsightOnDemandLinkedService(System.BinaryData clusterSize, System.BinaryData timeToLiveExpression, System.BinaryData version, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName, System.BinaryData hostSubscriptionId, System.BinaryData tenant, System.BinaryData clusterResourceGroup) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> AdditionalLinkedServiceNames { get { throw null; } }
         public System.BinaryData ClusterNamePrefix { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactorySecretBaseDefinition ClusterPassword { get { throw null; } set { } }
@@ -3606,7 +3606,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData StormConfiguration { get { throw null; } set { } }
         public System.BinaryData SubnetName { get { throw null; } set { } }
         public System.BinaryData Tenant { get { throw null; } set { } }
-        public System.BinaryData TtlExpression { get { throw null; } set { } }
+        public System.BinaryData TimeToLiveExpression { get { throw null; } set { } }
         public System.BinaryData Version { get { throw null; } set { } }
         public System.BinaryData VirtualNetworkId { get { throw null; } set { } }
         public System.BinaryData YarnConfiguration { get { throw null; } set { } }
@@ -3987,7 +3987,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public bool? Cleanup { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DataFlowComputeType? ComputeType { get { throw null; } set { } }
         public int? CoreCount { get { throw null; } set { } }
-        public int? TtlInMinutes { get { throw null; } set { } }
+        public int? TimeToLiveInMinutes { get { throw null; } set { } }
     }
     public partial class IntegrationRuntimeDataProxyProperties
     {
@@ -6671,12 +6671,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string DefaultValue { get { throw null; } }
         public string Description { get { throw null; } }
         public string DesignDefaultValue { get { throw null; } }
+        public bool? HasValueSet { get { throw null; } }
         public long? Id { get { throw null; } }
+        public bool? IsRequired { get { throw null; } }
+        public bool? IsSensitive { get { throw null; } }
         public string Name { get { throw null; } }
-        public bool? Required { get { throw null; } }
-        public bool? Sensitive { get { throw null; } }
         public string SensitiveDefaultValue { get { throw null; } }
-        public bool? ValueSet { get { throw null; } }
         public string ValueType { get { throw null; } }
         public string Variable { get { throw null; } }
     }
@@ -6700,8 +6700,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string DataType { get { throw null; } }
         public string Description { get { throw null; } }
         public long? Id { get { throw null; } }
+        public bool? IsSensitive { get { throw null; } }
         public string Name { get { throw null; } }
-        public bool? Sensitive { get { throw null; } }
         public string SensitiveValue { get { throw null; } }
         public string Value { get { throw null; } }
     }

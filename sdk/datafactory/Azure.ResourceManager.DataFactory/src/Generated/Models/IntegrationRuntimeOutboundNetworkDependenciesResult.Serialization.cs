@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse
+    internal partial class IntegrationRuntimeOutboundNetworkDependenciesResult
     {
-        internal static IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse(JsonElement element)
+        internal static IntegrationRuntimeOutboundNetworkDependenciesResult DeserializeIntegrationRuntimeOutboundNetworkDependenciesResult(JsonElement element)
         {
             Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse(Optional.ToList(value));
+            return new IntegrationRuntimeOutboundNetworkDependenciesResult(Optional.ToList(value));
         }
     }
 }

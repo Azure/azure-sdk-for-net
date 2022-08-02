@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryDataFlowDebugSessionStartResult>> AddDataFlowAsync(string subscriptionId, string resourceGroupName, string factoryName, FactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryDataFlowStartDebugSessionResult>> AddDataFlowAsync(string subscriptionId, string resourceGroupName, string factoryName, FactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryDataFlowDebugSessionStartResult value = default;
+                        FactoryDataFlowStartDebugSessionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryDataFlowDebugSessionStartResult.DeserializeFactoryDataFlowDebugSessionStartResult(document.RootElement);
+                        value = FactoryDataFlowStartDebugSessionResult.DeserializeFactoryDataFlowStartDebugSessionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryDataFlowDebugSessionStartResult> AddDataFlow(string subscriptionId, string resourceGroupName, string factoryName, FactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
+        public Response<FactoryDataFlowStartDebugSessionResult> AddDataFlow(string subscriptionId, string resourceGroupName, string factoryName, FactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryDataFlowDebugSessionStartResult value = default;
+                        FactoryDataFlowStartDebugSessionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryDataFlowDebugSessionStartResult.DeserializeFactoryDataFlowDebugSessionStartResult(document.RootElement);
+                        value = FactoryDataFlowStartDebugSessionResult.DeserializeFactoryDataFlowStartDebugSessionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

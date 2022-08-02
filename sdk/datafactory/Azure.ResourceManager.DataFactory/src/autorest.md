@@ -66,9 +66,9 @@ rename-mapping:
   CassandraSourceReadConsistencyLevels.ONE: One
   CassandraSourceReadConsistencyLevels.TWO: Two
   CassandraSourceReadConsistencyLevels.LOCAL_ONE: LocalOne
-  CreateDataFlowDebugSessionRequest.timeToLive: TtlInMinutes
+  CreateDataFlowDebugSessionRequest.timeToLive: TimeToLiveInMinutes
   DataFlowDebugSessionInfo.startTime: StartOn
-  DataFlowDebugSessionInfo.timeToLiveInMinutes: TtlInMinutes
+  DataFlowDebugSessionInfo.timeToLiveInMinutes: TimeToLiveInMinutes
   DataFlowDebugSessionInfo.lastActivityTime: LastActivityOn
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
@@ -77,9 +77,9 @@ rename-mapping:
   DatasetCompression.type: datasetCompressionType
   ExposureControlBatchResponse.exposureControlResponses: ExposureControlResults
   FactoryRepoUpdate.factoryResourceId: -|arm-id
-  HDInsightOnDemandLinkedService.typeProperties.timeToLive: TtlExpression
+  HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
   IntegrationRuntimeCustomerVirtualNetwork.subnetId: SubnetId|arm-id
-  IntegrationRuntimeDataFlowProperties.timeToLive: TtlInMinutes
+  IntegrationRuntimeDataFlowProperties.timeToLive: TimeToLiveInMinutes
   IntegrationRuntimeNodeIpAddress.ipAddress: IPAddress|ip-address
   IntegrationRuntimeVNetProperties.vNetId: VnetId|uuid
   IntegrationRuntimeVNetProperties.subnetId: SubnetId|arm-id
@@ -95,6 +95,13 @@ rename-mapping:
   SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
   SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
   SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: serviceUris
+  ActivityPolicy.secureInput: EnableSecureInput
+  ActivityPolicy.secureOutput: EnableSecureOutput
+  ExecutePipelineActivityPolicy.secureInput: EnableSecureInput
+  SsisParameter.required: IsRequired
+  SsisParameter.sensitive: IsSensitive
+  SsisParameter.valueSet: HasValueSet
+  SsisVariable.sensitive: IsSensitive
   # Factory
   Factory: DataFactory
   FactoryListResponse: FactoryListResult
@@ -118,9 +125,9 @@ rename-mapping:
   BlobSink: AzureBlobSink
   BlobSource: AzureBlobSource
   # Debug resource
-  AddDataFlowToDebugSessionResponse: FactoryDataFlowDebugSessionStartResult
+  AddDataFlowToDebugSessionResponse: FactoryDataFlowStartDebugSessionResult
   CreateDataFlowDebugSessionRequest: FactoryDataFlowDebugSessionContent
-  CreateDataFlowDebugSessionResponse: FactoryDataFlowDebugSessionCreateResult
+  CreateDataFlowDebugSessionResponse: FactoryDataFlowCreateDebugSessionResult
   DataFlowDebugResource: FactoryDataFlowDebugInfo
   DataFlowDebugCommandResponse: FactoryDataFlowDebugCommandResult
   DataFlowDebugPackage: FactoryDataFlowDebugPackageContent
@@ -209,15 +216,20 @@ rename-mapping:
   SecureString: FactorySecretString
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
+  IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: IntegrationRuntimeOutboundNetworkDependenciesResult
   
 override-operation-name:
-  ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun
+  ActivityRuns_QueryByPipelineRun: GetActivityRun
   PipelineRuns_QueryByFactory: GetPipelineRuns
   TriggerRuns_QueryByFactory: GetTriggerRuns
   DataFlowDebugSession_QueryByFactory: GetDataFlowDebugSessions
-  ExposureControl_QueryFeatureValuesByFactory: GetExposureControlFeatureValues
   Triggers_QueryByFactory: GetTriggers
-  Factories_ConfigureFactoryRepo: ConfigureFactoryRepo
+  Factories_ConfigureFactoryRepo: ConfigureFactoryRepoInformation
+  DataFlowDebugSession_AddDataFlow: AddDataFlowToDebugSession
+  DataFlowDebugSession_ExecuteCommand: ExecuteDataFlowDebugSessionCommand
+  ExposureControl_GetFeatureValueByFactory: GetExposureControlFeature
+  ExposureControl_QueryFeatureValuesByFactory: GetExposureControlFeatures
+  IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints: GetOutboundNetworkDependencies
 
 directive:
   - from: datafactory.json

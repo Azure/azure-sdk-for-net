@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
+                using var scope = _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
                 scope.Start();
                 try
                 {
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             Page<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
+                using var scope = _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
                 scope.Start();
                 try
                 {

@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             writer.WritePropertyName("timeToLive");
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(TtlExpression);
+				writer.WriteRawValue(TimeToLiveExpression);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TtlExpression.ToString()).RootElement);
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TimeToLiveExpression.ToString()).RootElement);
 #endif
             writer.WritePropertyName("version");
 #if NET6_0_OR_GREATER

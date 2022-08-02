@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Response body structure for starting data flow debug session. </summary>
-    public partial class FactoryDataFlowDebugSessionStartResult
+    public partial class FactoryDataFlowStartDebugSessionResult
     {
-        /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionStartResult. </summary>
-        internal FactoryDataFlowDebugSessionStartResult()
+        /// <summary> Initializes a new instance of FactoryDataFlowStartDebugSessionResult. </summary>
+        internal FactoryDataFlowStartDebugSessionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionStartResult. </summary>
+        /// <summary> Initializes a new instance of FactoryDataFlowStartDebugSessionResult. </summary>
         /// <param name="jobVersion"> The ID of data flow debug job version. </param>
-        internal FactoryDataFlowDebugSessionStartResult(string jobVersion)
+        internal FactoryDataFlowStartDebugSessionResult(string jobVersion)
         {
             JobVersion = jobVersion;
         }

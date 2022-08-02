@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Response body structure for creating data flow debug session. </summary>
-    public partial class FactoryDataFlowDebugSessionCreateResult
+    public partial class FactoryDataFlowCreateDebugSessionResult
     {
-        /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionCreateResult. </summary>
-        internal FactoryDataFlowDebugSessionCreateResult()
+        /// <summary> Initializes a new instance of FactoryDataFlowCreateDebugSessionResult. </summary>
+        internal FactoryDataFlowCreateDebugSessionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionCreateResult. </summary>
+        /// <summary> Initializes a new instance of FactoryDataFlowCreateDebugSessionResult. </summary>
         /// <param name="status"> The state of the debug session. </param>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
-        internal FactoryDataFlowDebugSessionCreateResult(string status, Guid? sessionId)
+        internal FactoryDataFlowCreateDebugSessionResult(string status, Guid? sessionId)
         {
             Status = status;
             SessionId = sessionId;

@@ -16,22 +16,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of HDInsightOnDemandLinkedService. </summary>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
-        /// <param name="ttlExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
+        /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="ttlExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData ttlExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLiveExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
+        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData timeToLiveExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
         {
             if (clusterSize == null)
             {
                 throw new ArgumentNullException(nameof(clusterSize));
             }
-            if (ttlExpression == null)
+            if (timeToLiveExpression == null)
             {
-                throw new ArgumentNullException(nameof(ttlExpression));
+                throw new ArgumentNullException(nameof(timeToLiveExpression));
             }
             if (version == null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             ClusterSize = clusterSize;
-            TtlExpression = ttlExpression;
+            TimeToLiveExpression = timeToLiveExpression;
             Version = version;
             LinkedServiceName = linkedServiceName;
             HostSubscriptionId = hostSubscriptionId;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
-        /// <param name="ttlExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
+        /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
         /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
         /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData ttlExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, FactorySecretBaseDefinition clusterPassword, BinaryData clusterSshUserName, FactorySecretBaseDefinition clusterSshPassword, IList<FactoryLinkedServiceReference> additionalLinkedServiceNames, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData timeToLiveExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, FactorySecretBaseDefinition clusterPassword, BinaryData clusterSshUserName, FactorySecretBaseDefinition clusterSshPassword, IList<FactoryLinkedServiceReference> additionalLinkedServiceNames, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
-            TtlExpression = ttlExpression;
+            TimeToLiveExpression = timeToLiveExpression;
             Version = version;
             LinkedServiceName = linkedServiceName;
             HostSubscriptionId = hostSubscriptionId;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterSize { get; set; }
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
-        public BinaryData TtlExpression { get; set; }
+        public BinaryData TimeToLiveExpression { get; set; }
         /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
         public BinaryData Version { get; set; }
         /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>

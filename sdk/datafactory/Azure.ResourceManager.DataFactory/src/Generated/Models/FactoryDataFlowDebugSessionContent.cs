@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
         public int? CoreCount { get; set; }
         /// <summary> Time to live setting of the cluster in minutes. </summary>
-        public int? TtlInMinutes { get; set; }
+        public int? TimeToLiveInMinutes { get; set; }
         /// <summary> Set to use integration runtime setting for data flow debug session. </summary>
         public FactoryIntegrationRuntimeDebugInfo IntegrationRuntime { get; set; }
     }

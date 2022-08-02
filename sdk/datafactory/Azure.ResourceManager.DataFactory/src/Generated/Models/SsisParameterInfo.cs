@@ -20,27 +20,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
         /// <param name="dataType"> Parameter type. </param>
-        /// <param name="required"> Whether parameter is required. </param>
-        /// <param name="sensitive"> Whether parameter is sensitive. </param>
+        /// <param name="isRequired"> Whether parameter is required. </param>
+        /// <param name="isSensitive"> Whether parameter is sensitive. </param>
         /// <param name="designDefaultValue"> Design default value of parameter. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
         /// <param name="sensitiveDefaultValue"> Default sensitive value of parameter. </param>
         /// <param name="valueType"> Parameter value type. </param>
-        /// <param name="valueSet"> Parameter value set. </param>
+        /// <param name="hasValueSet"> Parameter value set. </param>
         /// <param name="variable"> Parameter reference variable. </param>
-        internal SsisParameterInfo(long? id, string name, string description, string dataType, bool? required, bool? sensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? valueSet, string variable)
+        internal SsisParameterInfo(long? id, string name, string description, string dataType, bool? isRequired, bool? isSensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? hasValueSet, string variable)
         {
             Id = id;
             Name = name;
             Description = description;
             DataType = dataType;
-            Required = required;
-            Sensitive = sensitive;
+            IsRequired = isRequired;
+            IsSensitive = isSensitive;
             DesignDefaultValue = designDefaultValue;
             DefaultValue = defaultValue;
             SensitiveDefaultValue = sensitiveDefaultValue;
             ValueType = valueType;
-            ValueSet = valueSet;
+            HasValueSet = hasValueSet;
             Variable = variable;
         }
 
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Parameter type. </summary>
         public string DataType { get; }
         /// <summary> Whether parameter is required. </summary>
-        public bool? Required { get; }
+        public bool? IsRequired { get; }
         /// <summary> Whether parameter is sensitive. </summary>
-        public bool? Sensitive { get; }
+        public bool? IsSensitive { get; }
         /// <summary> Design default value of parameter. </summary>
         public string DesignDefaultValue { get; }
         /// <summary> Default value of parameter. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Parameter value type. </summary>
         public string ValueType { get; }
         /// <summary> Parameter value set. </summary>
-        public bool? ValueSet { get; }
+        public bool? HasValueSet { get; }
         /// <summary> Parameter reference variable. </summary>
         public string Variable { get; }
     }

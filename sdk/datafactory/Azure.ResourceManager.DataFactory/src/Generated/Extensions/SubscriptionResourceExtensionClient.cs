@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoAsync(ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepo");
+            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepoInformation");
             scope.Start();
             try
             {
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="locationId"> The location identifier. </param>
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataFactoryResource> ConfigureFactoryRepo(ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryResource> ConfigureFactoryRepoInformation(ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
-            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepo");
+            using var scope = DataFactoryFactoriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ConfigureFactoryRepoInformation");
             scope.Start();
             try
             {

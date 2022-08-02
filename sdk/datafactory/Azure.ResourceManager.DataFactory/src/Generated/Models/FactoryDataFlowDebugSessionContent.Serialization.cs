@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("coreCount");
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(TtlInMinutes))
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLive");
-                writer.WriteNumberValue(TtlInMinutes.Value);
+                writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {

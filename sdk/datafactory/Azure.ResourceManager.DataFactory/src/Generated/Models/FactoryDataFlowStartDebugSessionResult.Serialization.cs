@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryDataFlowDebugSessionStartResult
+    public partial class FactoryDataFlowStartDebugSessionResult
     {
-        internal static FactoryDataFlowDebugSessionStartResult DeserializeFactoryDataFlowDebugSessionStartResult(JsonElement element)
+        internal static FactoryDataFlowStartDebugSessionResult DeserializeFactoryDataFlowStartDebugSessionResult(JsonElement element)
         {
             Optional<string> jobVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactoryDataFlowDebugSessionStartResult(jobVersion.Value);
+            return new FactoryDataFlowStartDebugSessionResult(jobVersion.Value);
         }
     }
 }

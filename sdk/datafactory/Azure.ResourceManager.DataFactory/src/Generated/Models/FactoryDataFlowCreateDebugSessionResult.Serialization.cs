@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryDataFlowDebugSessionCreateResult
+    public partial class FactoryDataFlowCreateDebugSessionResult
     {
-        internal static FactoryDataFlowDebugSessionCreateResult DeserializeFactoryDataFlowDebugSessionCreateResult(JsonElement element)
+        internal static FactoryDataFlowCreateDebugSessionResult DeserializeFactoryDataFlowCreateDebugSessionResult(JsonElement element)
         {
             Optional<string> status = default;
             Optional<Guid> sessionId = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new FactoryDataFlowDebugSessionCreateResult(status.Value, Optional.ToNullable(sessionId));
+            return new FactoryDataFlowCreateDebugSessionResult(status.Value, Optional.ToNullable(sessionId));
         }
     }
 }
