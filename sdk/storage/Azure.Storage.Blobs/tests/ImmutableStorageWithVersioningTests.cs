@@ -557,7 +557,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
             // Arrange
