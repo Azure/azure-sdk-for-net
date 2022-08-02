@@ -1,8 +1,8 @@
 # Release History
 
-## 3.6.0
+## 4.0.0
 
-The changes incorporated in this version are the product of migrating from the deprecated WindowsAzure .NET Storage SDK to the current Azure.Storage SDK. As a result, all the changes included in this version are **Breaking**:
+The changes incorporated in this version are the product of migrating from the deprecated WindowsAzure .NET Storage SDK to the current Azure.Storage SDK. As a result, all the changes included in this version are **Breaking**. More information about migrating to Azure.Storage can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/AzureStorageNetMigrationV12.md).
 
 - Support of the following target frameworks has been dropped as they are not supported by the current Azure.Storage SDK.
   - netstandard1.4,
