@@ -138,18 +138,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightSparkActivity DeserializeHDInsightSparkActivity(JsonElement element)
         {
-            Optional<LinkedServiceReference> linkedServiceName = default;
+            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
             BinaryData rootPath = default;
             BinaryData entryFilePath = default;
             Optional<IList<BinaryData>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
-            Optional<LinkedServiceReference> sparkJobLinkedService = default;
+            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
+            Optional<FactoryLinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
             Optional<BinaryData> proxyUser = default;
             Optional<IDictionary<string, BinaryData>> sparkConfig = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("policy"))
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            getDebugInfo = new HDInsightActivityDebugInfoOption(property0.Value.GetString());
+                            getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sparkJobLinkedService"))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sparkJobLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
+                            sparkJobLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("className"))

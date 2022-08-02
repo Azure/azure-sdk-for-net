@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Office365 linked service. </summary>
-    public partial class Office365LinkedService : LinkedService
+    public partial class Office365LinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of Office365LinkedService. </summary>
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application&apos;s key.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
-        public Office365LinkedService(BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey)
+        public Office365LinkedService(BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey)
         {
             if (office365TenantId == null)
             {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application&apos;s key.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal Office365LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData office365TenantId, BinaryData servicePrincipalTenantId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// Specify the application&apos;s key.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ServicePrincipalKey { get; set; }
+        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }

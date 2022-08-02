@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A single Amazon Simple Storage Service (S3) object or a set of S3 objects. </summary>
-    public partial class AmazonS3Dataset : Dataset
+    public partial class AmazonS3Dataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonS3Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
-        public AmazonS3Dataset(LinkedServiceReference linkedServiceName, BinaryData bucketName) : base(linkedServiceName)
+        public AmazonS3Dataset(FactoryLinkedServiceReference linkedServiceName, BinaryData bucketName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="format">
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </param>
         /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
-        internal AmazonS3Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData key, BinaryData prefix, BinaryData version, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonS3Dataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData key, BinaryData prefix, BinaryData version, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             BucketName = bucketName;
             Key = key;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the Amazon S3 object. </summary>

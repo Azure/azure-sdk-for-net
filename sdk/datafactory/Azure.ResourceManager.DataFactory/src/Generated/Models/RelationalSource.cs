@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity source for various relational databases. </summary>
-    public partial class RelationalSource : CopySource
+    public partial class RelationalSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of RelationalSource. </summary>
         public RelationalSource()

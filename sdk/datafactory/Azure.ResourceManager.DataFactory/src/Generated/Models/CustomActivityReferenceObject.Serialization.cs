@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element)
         {
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
+            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
             Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LinkedServiceReference> array = new List<LinkedServiceReference>();
+                    List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceReference.DeserializeLinkedServiceReference(item));
+                        array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
                     }
                     linkedServices = array;
                     continue;

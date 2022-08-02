@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureKeyVaultSecretReference DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
-            LinkedServiceReference store = default;
+            FactoryLinkedServiceReference store = default;
             BinaryData secretName = default;
             Optional<BinaryData> secretVersion = default;
             string type = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("store"))
                 {
-                    store = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    store = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secretName"))

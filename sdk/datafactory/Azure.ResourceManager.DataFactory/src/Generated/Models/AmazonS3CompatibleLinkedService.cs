@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Amazon S3 Compatible. </summary>
-    public partial class AmazonS3CompatibleLinkedService : LinkedService
+    public partial class AmazonS3CompatibleLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AmazonS3CompatibleLinkedService. </summary>
         public AmazonS3CompatibleLinkedService()
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accessKeyId"> The access key identifier of the Amazon S3 Compatible Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
         /// <param name="secretAccessKey">
         /// The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="forcePathStyle"> If true, use S3 path-style access instead of virtual hosted-style access. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AmazonS3CompatibleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accessKeyId, SecretBase secretAccessKey, BinaryData serviceUri, BinaryData forcePathStyle, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3CompatibleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accessKeyId, FactorySecretBaseDefinition secretAccessKey, BinaryData serviceUri, BinaryData forcePathStyle, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData AccessKeyId { get; set; }
         /// <summary>
         /// The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase SecretAccessKey { get; set; }
+        public FactorySecretBaseDefinition SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServiceUri { get; set; }
         /// <summary> If true, use S3 path-style access instead of virtual hosted-style access. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
