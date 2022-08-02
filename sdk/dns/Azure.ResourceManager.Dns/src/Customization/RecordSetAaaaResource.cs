@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Dns
 {
     /// <summary>
     /// A Class representing a RecordSetAaaa along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecordSetAaaaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecordSetAaaaResource method.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="AaaaRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAaaaRecordResource method.
     /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetAaaa method.
     /// </summary>
-    public partial class RecordSetAaaaResource : ArmResource
+    public partial class AaaaRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecordSetAaaaResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AaaaRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{relativeRecordSetName}";
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.Dns
         private readonly RecordSetsRestOperations _recordSetAaaaRecordSetsRestClient;
         private readonly AaaaRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetAaaaResource"/> class for mocking. </summary>
-        protected RecordSetAaaaResource()
+        /// <summary> Initializes a new instance of the <see cref="AaaaRecordResource"/> class for mocking. </summary>
+        protected AaaaRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecordSetAaaaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AaaaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetAaaaResource(ArmClient client, AaaaRecordData data) : this(client, data.Id)
+        internal AaaaRecordResource(ArmClient client, AaaaRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetAaaaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AaaaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RecordSetAaaaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AaaaRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recordSetAaaaRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string recordSetAaaaRecordSetsApiVersion);
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecordSetAaaaResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AaaaRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("RecordSetAaaaResource.Get");
+            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("AaaaRecordResource.Get");
             scope.Start();
             try
             {
                 var response = await _recordSetAaaaRecordSetsRestClient.GetAaaaRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AaaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecordSetAaaaResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AaaaRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("RecordSetAaaaResource.Get");
+            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("AaaaRecordResource.Get");
             scope.Start();
             try
             {
                 var response = _recordSetAaaaRecordSetsRestClient.GetAaaaRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AaaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("RecordSetAaaaResource.Delete");
+            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("AaaaRecordResource.Delete");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("RecordSetAaaaResource.Delete");
+            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("AaaaRecordResource.Delete");
             scope.Start();
             try
             {
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RecordSetAaaaResource>> UpdateAsync(AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AaaaRecordResource>> UpdateAsync(AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("RecordSetAaaaResource.Update");
+            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("AaaaRecordResource.Update");
             scope.Start();
             try
             {
                 var response = await _recordSetAaaaRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AaaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RecordSetAaaaResource> Update(AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<AaaaRecordResource> Update(AaaaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("RecordSetAaaaResource.Update");
+            using var scope = _recordSetAaaaRecordSetsClientDiagnostics.CreateScope("AaaaRecordResource.Update");
             scope.Start();
             try
             {
                 var response = _recordSetAaaaRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new RecordSetAaaaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AaaaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

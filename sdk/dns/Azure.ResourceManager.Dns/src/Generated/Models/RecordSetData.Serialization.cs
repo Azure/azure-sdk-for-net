@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CnameRecord))
+            if (Optional.IsDefined(CnameRecordInfo))
             {
                 writer.WritePropertyName("CNAMERecord");
-                writer.WriteObjectValue(CnameRecord);
+                writer.WriteObjectValue(CnameRecordInfo);
             }
-            if (Optional.IsDefined(SoaRecord))
+            if (Optional.IsDefined(SoaRecordInfo))
             {
                 writer.WritePropertyName("SOARecord");
-                writer.WriteObjectValue(SoaRecord);
+                writer.WriteObjectValue(SoaRecordInfo);
             }
             if (Optional.IsCollectionDefined(CaaRecords))
             {

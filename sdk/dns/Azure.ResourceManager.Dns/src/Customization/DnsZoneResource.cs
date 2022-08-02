@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.Dns
             return GetRecordSetACollection().Get(relativeRecordSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RecordSetAaaaResources in the DnsZone. </summary>
-        /// <returns> An object representing collection of RecordSetAaaaResources and their operations over a RecordSetAaaaResource. </returns>
+        /// <summary> Gets a collection of AaaaRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of AaaaRecordResources and their operations over a AaaaRecordResource. </returns>
         public virtual RecordSetAaaaCollection GetRecordSetAaaas()
         {
             return GetCachedClient(Client => new RecordSetAaaaCollection(Client, Id));
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RecordSetAaaaResource>> GetRecordSetAaaaAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AaaaRecordResource>> GetRecordSetAaaaAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             return await GetRecordSetAaaas().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RecordSetAaaaResource> GetRecordSetAaaa(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual Response<AaaaRecordResource> GetRecordSetAaaa(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             return GetRecordSetAaaas().Get(relativeRecordSetName, cancellationToken);
         }

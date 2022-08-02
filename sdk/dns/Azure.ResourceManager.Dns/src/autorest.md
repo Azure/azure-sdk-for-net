@@ -59,6 +59,16 @@ rename-rules:
   GET: Get
   PUT: Put
   RecordType: DnsRecordType
+  ARecord: ARecordInfo
+  AaaaRecord: AaaaRecordInfo
+  MxRecord: MXRecordInfo
+  NsRecord: NSRecordInfo
+  PtrRecord: PtrRecordInfo
+  SrvRecord: SrvRecordInfo
+  TxtRecord: TxtRecordInfo
+  CnameRecord: CnameRecordInfo
+  SoaRecord: SoaRecordInfo
+  CaaRecord: CaaRecordInfo
 
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
@@ -79,13 +89,11 @@ request-path-to-resource-name:
 directive:
   - from: swagger-document
     where: $.definitions.ZoneProperties
-    transform: >
-      $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+    transform: $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
 # Rename models
   - from: swagger-document
     where: $.definitions.ZoneUpdate
-    transform: >
-      $["x-ms-client-name"] = "ZoneUpdateOptions";
+    transform: $["x-ms-client-name"] = "ZoneUpdateOptions";
 
   - from: swagger-document
     where: $.definitions.NsRecord.properties.nsdname
@@ -124,38 +132,6 @@ directive:
   - from: swagger-document
     where: $.definitions.ZoneListResult
     transform: $["x-ms-client-name"] = "DnsZoneListResult";
-
-# Models: FooRecord => FooRecordInfo
-  - from: swagger-document
-    where: $.definitions.ARecord
-    transform: $["x-ms-client-name"] = "ARecordInfo";
-  - from: swagger-document
-    where: $.definitions.AaaaRecord
-    transform: $["x-ms-client-name"] = "AaaaRecordInfo";
-  - from: swagger-document
-    where: $.definitions.MxRecord
-    transform: $["x-ms-client-name"] = "MXRecordInfo";
-  - from: swagger-document
-    where: $.definitions.NsRecord
-    transform: $["x-ms-client-name"] = "NSRecordInfo";
-  - from: swagger-document
-    where: $.definitions.PtrRecord
-    transform: $["x-ms-client-name"] = "PtrRecordInfo";
-  - from: swagger-document
-    where: $.definitions.SrvRecord
-    transform: $["x-ms-client-name"] = "SrvRecordInfo";
-  - from: swagger-document
-    where: $.definitions.TxtRecord
-    transform: $["x-ms-client-name"] = "TxtRecordInfo";
-  - from: swagger-document
-    where: $.definitions.CnameRecord
-    transform: $["x-ms-client-name"] = "CnameRecordInfo";
-  - from: swagger-document
-    where: $.definitions.SoaRecord
-    transform: $["x-ms-client-name"] = "SoaRecordInfo";
-  - from: swagger-document
-    where: $.definitions.CaaRecord
-    transform: $["x-ms-client-name"] = "CaaRecordInfo";
 
 # Mx Ns => MX NS
   - from: swagger-document
