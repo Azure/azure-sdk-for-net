@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("typeHandlerVersion");
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion");
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(Settings))
             {

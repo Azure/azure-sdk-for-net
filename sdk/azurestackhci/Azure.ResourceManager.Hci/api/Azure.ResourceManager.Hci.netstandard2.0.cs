@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Hci
     {
         public ArcExtensionData() { }
         public Azure.ResourceManager.Hci.Models.ExtensionAggregateState? AggregateState { get { throw null; } }
-        public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeExtensionState> PerNodeExtensionDetails { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
         public System.BinaryData Settings { get { throw null; } set { } }
+        public bool? ShouldAutoUpgradeMinorVersion { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesExtensionParametersType { get { throw null; } set { } }
     }
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Hci.Models
     public partial class ArcIdentityResponse
     {
         internal ArcIdentityResponse() { }
-        public string ArcApplicationClientId { get { throw null; } }
-        public string ArcApplicationObjectId { get { throw null; } }
-        public string ArcApplicationTenantId { get { throw null; } }
-        public string ArcServicePrincipalObjectId { get { throw null; } }
+        public System.Guid? ArcApplicationClientId { get { throw null; } }
+        public System.Guid? ArcApplicationObjectId { get { throw null; } }
+        public System.Guid? ArcApplicationTenantId { get { throw null; } }
+        public System.Guid? ArcServicePrincipalObjectId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArcSettingAggregateState : System.IEquatable<Azure.ResourceManager.Hci.Models.ArcSettingAggregateState>
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Hci.Models
     public partial class ClusterIdentityResponse
     {
         internal ClusterIdentityResponse() { }
-        public string AadApplicationObjectId { get { throw null; } }
-        public string AadClientId { get { throw null; } }
-        public string AadServicePrincipalObjectId { get { throw null; } }
-        public string AadTenantId { get { throw null; } }
+        public System.Guid? AadApplicationObjectId { get { throw null; } }
+        public System.Guid? AadClientId { get { throw null; } }
+        public System.Guid? AadServicePrincipalObjectId { get { throw null; } }
+        public System.Guid? AadTenantId { get { throw null; } }
     }
     public partial class ClusterNode
     {

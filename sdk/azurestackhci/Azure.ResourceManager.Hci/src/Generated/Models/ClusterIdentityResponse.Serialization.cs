@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,10 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ClusterIdentityResponse DeserializeClusterIdentityResponse(JsonElement element)
         {
-            Optional<string> aadClientId = default;
-            Optional<string> aadTenantId = default;
-            Optional<string> aadServicePrincipalObjectId = default;
-            Optional<string> aadApplicationObjectId = default;
+            Optional<Guid> aadClientId = default;
+            Optional<Guid> aadTenantId = default;
+            Optional<Guid> aadServicePrincipalObjectId = default;
+            Optional<Guid> aadApplicationObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -31,29 +32,49 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         if (property0.NameEquals("aadClientId"))
                         {
-                            aadClientId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadClientId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("aadTenantId"))
                         {
-                            aadTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("aadServicePrincipalObjectId"))
                         {
-                            aadServicePrincipalObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("aadApplicationObjectId"))
                         {
-                            aadApplicationObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ClusterIdentityResponse(aadClientId.Value, aadTenantId.Value, aadServicePrincipalObjectId.Value, aadApplicationObjectId.Value);
+            return new ClusterIdentityResponse(Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadServicePrincipalObjectId), Optional.ToNullable(aadApplicationObjectId));
         }
     }
 }

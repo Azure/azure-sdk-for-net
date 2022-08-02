@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> ArcIdentity details. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="arcApplicationTenantId"></param>
         /// <param name="arcServicePrincipalObjectId"></param>
         /// <param name="arcApplicationObjectId"></param>
-        internal ArcIdentityResponse(string arcApplicationClientId, string arcApplicationTenantId, string arcServicePrincipalObjectId, string arcApplicationObjectId)
+        internal ArcIdentityResponse(Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId)
         {
             ArcApplicationClientId = arcApplicationClientId;
             ArcApplicationTenantId = arcApplicationTenantId;
@@ -29,12 +31,12 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the arc application client id. </summary>
-        public string ArcApplicationClientId { get; }
+        public Guid? ArcApplicationClientId { get; }
         /// <summary> Gets the arc application tenant id. </summary>
-        public string ArcApplicationTenantId { get; }
+        public Guid? ArcApplicationTenantId { get; }
         /// <summary> Gets the arc service principal object id. </summary>
-        public string ArcServicePrincipalObjectId { get; }
+        public Guid? ArcServicePrincipalObjectId { get; }
         /// <summary> Gets the arc application object id. </summary>
-        public string ArcApplicationObjectId { get; }
+        public Guid? ArcApplicationObjectId { get; }
     }
 }

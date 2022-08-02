@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,10 +15,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static ArcIdentityResponse DeserializeArcIdentityResponse(JsonElement element)
         {
-            Optional<string> arcApplicationClientId = default;
-            Optional<string> arcApplicationTenantId = default;
-            Optional<string> arcServicePrincipalObjectId = default;
-            Optional<string> arcApplicationObjectId = default;
+            Optional<Guid> arcApplicationClientId = default;
+            Optional<Guid> arcApplicationTenantId = default;
+            Optional<Guid> arcServicePrincipalObjectId = default;
+            Optional<Guid> arcApplicationObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -31,29 +32,49 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         if (property0.NameEquals("arcApplicationClientId"))
                         {
-                            arcApplicationClientId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationClientId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("arcApplicationTenantId"))
                         {
-                            arcApplicationTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("arcServicePrincipalObjectId"))
                         {
-                            arcServicePrincipalObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("arcApplicationObjectId"))
                         {
-                            arcApplicationObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ArcIdentityResponse(arcApplicationClientId.Value, arcApplicationTenantId.Value, arcServicePrincipalObjectId.Value, arcApplicationObjectId.Value);
+            return new ArcIdentityResponse(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId));
         }
     }
 }
