@@ -13,19 +13,19 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("RecordSetSoaResource")]
+[assembly: CodeGenSuppressType("SoaRecordResource")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
     /// A Class representing a RecordSetSoa along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecordSetSoaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecordSetSoaResource method.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SoaRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSoaRecordResource method.
     /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetSoa method.
     /// </summary>
-    public partial class RecordSetSoaResource : ArmResource
+    public partial class SoaRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecordSetSoaResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SoaRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/SOA/{relativeRecordSetName}";
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.Dns
         private readonly RecordSetsRestOperations _recordSetSoaRecordSetsRestClient;
         private readonly SoaRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetSoaResource"/> class for mocking. </summary>
-        protected RecordSetSoaResource()
+        /// <summary> Initializes a new instance of the <see cref="SoaRecordResource"/> class for mocking. </summary>
+        protected SoaRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecordSetSoaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SoaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetSoaResource(ArmClient client, SoaRecordData data) : this(client, data.Id)
+        internal SoaRecordResource(ArmClient client, SoaRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetSoaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SoaRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RecordSetSoaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SoaRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recordSetSoaRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string recordSetSoaRecordSetsApiVersion);
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecordSetSoaResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoaRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("RecordSetSoaResource.Get");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Get");
             scope.Start();
             try
             {
                 var response = await _recordSetSoaRecordSetsRestClient.GetSoaRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetSoaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecordSetSoaResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SoaRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("RecordSetSoaResource.Get");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Get");
             scope.Start();
             try
             {
                 var response = _recordSetSoaRecordSetsRestClient.GetSoaRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetSoaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("RecordSetSoaResource.Delete");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Delete");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("RecordSetSoaResource.Delete");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Delete");
             scope.Start();
             try
             {
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RecordSetSoaResource>> UpdateAsync(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoaRecordResource>> UpdateAsync(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("RecordSetSoaResource.Update");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Update");
             scope.Start();
             try
             {
                 var response = await _recordSetSoaRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RecordSetSoaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RecordSetSoaResource> Update(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<SoaRecordResource> Update(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("RecordSetSoaResource.Update");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordResource.Update");
             scope.Start();
             try
             {
                 var response = _recordSetSoaRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new RecordSetSoaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

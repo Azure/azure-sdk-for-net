@@ -21,11 +21,11 @@ using Azure.ResourceManager.Dns.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RecordSetNSResource" /> and their operations.
-    /// Each <see cref="RecordSetNSResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
+    /// A class representing a collection of <see cref="NSRecordResource" /> and their operations.
+    /// Each <see cref="NSRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
     /// To get a <see cref="RecordSetNSCollection" /> instance call the GetRecordSetNS method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
-    public partial class RecordSetNSCollection : ArmCollection, IEnumerable<RecordSetNSResource>, IAsyncEnumerable<RecordSetNSResource>
+    public partial class RecordSetNSCollection : ArmCollection, IEnumerable<NSRecordResource>, IAsyncEnumerable<NSRecordResource>
     {
         private readonly ClientDiagnostics _recordSetNSRecordSetsClientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetNSRecordSetsRestClient;
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Dns
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RecordSetNSCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetNSRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", RecordSetNSResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RecordSetNSResource.ResourceType, out string recordSetNSRecordSetsApiVersion);
+            _recordSetNSRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", NSRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NSRecordResource.ResourceType, out string recordSetNSRecordSetsApiVersion);
             _recordSetNSRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetNSRecordSetsApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RecordSetNSResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Dns
             try
             {
                 var response = await _recordSetNSRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<RecordSetNSResource>(Response.FromValue(new RecordSetNSResource(Client, response), response.GetRawResponse()));
+                var operation = new DnsArmOperation<NSRecordResource>(Response.FromValue(new NSRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RecordSetNSResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, NSRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dns
             try
             {
                 var response = _recordSetNSRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<RecordSetNSResource>(Response.FromValue(new RecordSetNSResource(Client, response), response.GetRawResponse()));
+                var operation = new DnsArmOperation<NSRecordResource>(Response.FromValue(new NSRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<RecordSetNSResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NSRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Dns
                 var response = await _recordSetNSRecordSetsRestClient.GetNSRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetNSResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<RecordSetNSResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual Response<NSRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Dns
                 var response = _recordSetNSRecordSetsRestClient.GetNSRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetNSResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecordSetNSResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecordSetNSResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NSRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NSRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecordSetNSResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NSRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("RecordSetNSCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _recordSetNSRecordSetsRestClient.ListNSRecordByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetNSResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NSRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<RecordSetNSResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NSRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("RecordSetNSCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _recordSetNSRecordSetsRestClient.ListNSRecordByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetNSResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NSRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecordSetNSResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecordSetNSResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NSRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NSRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<RecordSetNSResource> FirstPageFunc(int? pageSizeHint)
+            Page<NSRecordResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("RecordSetNSCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _recordSetNSRecordSetsRestClient.ListNSRecordByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetNSResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NSRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<RecordSetNSResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NSRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("RecordSetNSCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _recordSetNSRecordSetsRestClient.ListNSRecordByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetNSResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NSRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<RecordSetNSResource> IEnumerable<RecordSetNSResource>.GetEnumerator()
+        IEnumerator<NSRecordResource> IEnumerable<NSRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RecordSetNSResource> IAsyncEnumerable<RecordSetNSResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NSRecordResource> IAsyncEnumerable<NSRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

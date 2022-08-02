@@ -13,65 +13,65 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("RecordSetMXResource")]
+[assembly: CodeGenSuppressType("NSRecordResource")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A Class representing a RecordSetMX along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecordSetMXResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecordSetMXResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetMX method.
+    /// A Class representing a RecordSetNS along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NSRecordResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetNSRecordResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetRecordSetNS method.
     /// </summary>
-    public partial class RecordSetMXResource : ArmResource
+    public partial class NSRecordResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecordSetMXResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NSRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/MX/{relativeRecordSetName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/NS/{relativeRecordSetName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _recordSetMXRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetMXRecordSetsRestClient;
-        private readonly MXRecordData _data;
+        private readonly ClientDiagnostics _recordSetNSRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _recordSetNSRecordSetsRestClient;
+        private readonly NSRecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetMXResource"/> class for mocking. </summary>
-        protected RecordSetMXResource()
+        /// <summary> Initializes a new instance of the <see cref="NSRecordResource"/> class for mocking. </summary>
+        protected NSRecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecordSetMXResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "NSRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetMXResource(ArmClient client, MXRecordData data) : this(client, data.Id)
+        internal NSRecordResource(ArmClient client, NSRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetMXResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NSRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RecordSetMXResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NSRecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetMXRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recordSetMXRecordSetsApiVersion);
-            _recordSetMXRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetMXRecordSetsApiVersion);
+            _recordSetNSRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string recordSetNSRecordSetsApiVersion);
+            _recordSetNSRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetNSRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsZones/MX";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsZones/NS";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MXRecordData Data
+        public virtual NSRecordData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecordSetMXResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NSRecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("RecordSetMXResource.Get");
+            using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetMXRecordSetsRestClient.GetMXRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetNSRecordSetsRestClient.GetNSRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetMXResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Dns
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecordSetMXResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NSRecordResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("RecordSetMXResource.Get");
+            using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _recordSetMXRecordSetsRestClient.GetMXRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _recordSetNSRecordSetsRestClient.GetNSRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecordSetMXResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("RecordSetMXResource.Delete");
+            using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _recordSetMXRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetNSRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("RecordSetMXResource.Delete");
+            using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _recordSetMXRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
+                var response = _recordSetNSRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RecordSetMXResource>> UpdateAsync(MXRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NSRecordResource>> UpdateAsync(NSRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("RecordSetMXResource.Update");
+            using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _recordSetMXRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name,  Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new RecordSetMXResource(Client, response.Value), response.GetRawResponse());
+                var response = await _recordSetNSRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RecordSetMXResource> Update(MXRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<NSRecordResource> Update(NSRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetMXRecordSetsClientDiagnostics.CreateScope("RecordSetMXResource.Update");
+            using var scope = _recordSetNSRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _recordSetMXRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                return Response.FromValue(new RecordSetMXResource(Client, response.Value), response.GetRawResponse());
+                var response = _recordSetNSRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                return Response.FromValue(new NSRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
