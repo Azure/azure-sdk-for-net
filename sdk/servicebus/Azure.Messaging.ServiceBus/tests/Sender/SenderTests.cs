@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task SendEmptyListShouldNotThrow()
         {
-            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object)
+            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task SendSingleDelegatesToSendList()
         {
-           var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object)
+           var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };
@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task ScheduleEmptyListShouldNotThrow()
         {
-            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object)
+            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };
@@ -170,7 +170,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", mockConnection.Object);
+            var sender = new ServiceBusSender("dummy", mockConnection.Object, new ServiceBusSenderOptions());
             var sendTask = sender.SendMessagesAsync(batch);
 
             Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
@@ -279,9 +279,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                         It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
-            var sender = new ServiceBusSender("fake", mockConnection.Object);
+            var sender = new ServiceBusSender("fake", mockConnection.Object, new ServiceBusSenderOptions());
             await sender.CloseAsync(cts.Token);
             mockTransportSender.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
+
+        [Test]
+        public async Task CreatingSenderWithoutOptionsGeneratesIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var sender = client.CreateSender("fake");
+
+            var identifier = sender.Identifier;
+            Assert.That(identifier, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task CreatingSenderWithIdentifierSetsIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            var setIdentifier = "UniqueIdentifier-abcedefg";
+
+            var options = new ServiceBusSenderOptions
+            {
+                Identifier = setIdentifier
+            };
+
+            await using var sender = client.CreateSender("fake", options);
+
+            var identifier = sender.Identifier;
+            Assert.AreEqual(setIdentifier, identifier);
         }
     }
 }

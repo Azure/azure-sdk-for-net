@@ -10,23 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The storage profile. </summary>
+    /// <summary>
+    /// The storage profile.
+    /// Serialized Name: StorageProfile
+    /// </summary>
     internal partial class StorageProfile
     {
         /// <summary> Initializes a new instance of StorageProfile. </summary>
         public StorageProfile()
         {
-            Storageaccounts = new ChangeTrackingList<StorageAccount>();
+            StorageAccounts = new ChangeTrackingList<HDInsightStorageAccountInfo>();
         }
 
         /// <summary> Initializes a new instance of StorageProfile. </summary>
-        /// <param name="storageaccounts"> The list of storage accounts in the cluster. </param>
-        internal StorageProfile(IList<StorageAccount> storageaccounts)
+        /// <param name="storageAccounts">
+        /// The list of storage accounts in the cluster.
+        /// Serialized Name: StorageProfile.storageaccounts
+        /// </param>
+        internal StorageProfile(IList<HDInsightStorageAccountInfo> storageAccounts)
         {
-            Storageaccounts = storageaccounts;
+            StorageAccounts = storageAccounts;
         }
 
-        /// <summary> The list of storage accounts in the cluster. </summary>
-        public IList<StorageAccount> Storageaccounts { get; }
+        /// <summary>
+        /// The list of storage accounts in the cluster.
+        /// Serialized Name: StorageProfile.storageaccounts
+        /// </summary>
+        public IList<HDInsightStorageAccountInfo> StorageAccounts { get; }
     }
 }

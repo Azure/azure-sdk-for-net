@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static LogAnalytics DeserializeLogAnalytics(JsonElement element)
         {
-            ResourceIdentifier workspaceId = default;
+            string workspaceId = default;
             string workspaceKey = default;
             Optional<LogAnalyticsLogType> logType = default;
             Optional<IDictionary<string, string>> metadata = default;
-            Optional<string> workspaceResourceId = default;
+            Optional<ResourceIdentifier> workspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"))
                 {
-                    workspaceId = new ResourceIdentifier(property.Value.GetString());
+                    workspaceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("workspaceKey"))
@@ -90,7 +90,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (property.NameEquals("workspaceResourceId"))
                 {
-                    workspaceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

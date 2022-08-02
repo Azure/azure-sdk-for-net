@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -22,8 +23,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> The user-specified tags associated with the account. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; set; }
+        /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The properties related to the auto-storage account. </summary>
         public AutoStorageBaseProperties AutoStorage { get; set; }
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The execution summary of a script action. </summary>
+    /// <summary>
+    /// The execution summary of a script action.
+    /// Serialized Name: ScriptActionExecutionSummary
+    /// </summary>
     public partial class ScriptActionExecutionSummary
     {
         /// <summary> Initializes a new instance of ScriptActionExecutionSummary. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActionExecutionSummary. </summary>
-        /// <param name="status"> The status of script action execution. </param>
-        /// <param name="instanceCount"> The instance count for a given script action execution status. </param>
+        /// <param name="status">
+        /// The status of script action execution.
+        /// Serialized Name: ScriptActionExecutionSummary.status
+        /// </param>
+        /// <param name="instanceCount">
+        /// The instance count for a given script action execution status.
+        /// Serialized Name: ScriptActionExecutionSummary.instanceCount
+        /// </param>
         internal ScriptActionExecutionSummary(string status, int? instanceCount)
         {
             Status = status;
             InstanceCount = instanceCount;
         }
 
-        /// <summary> The status of script action execution. </summary>
+        /// <summary>
+        /// The status of script action execution.
+        /// Serialized Name: ScriptActionExecutionSummary.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The instance count for a given script action execution status. </summary>
+        /// <summary>
+        /// The instance count for a given script action execution status.
+        /// Serialized Name: ScriptActionExecutionSummary.instanceCount
+        /// </summary>
         public int? InstanceCount { get; }
     }
 }

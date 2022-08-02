@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
             Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
             Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
-            Optional<SQLInstanceSettings> sqlInstanceSettings = default;
+            Optional<SqlInstanceSettings> sqlInstanceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlConnectivityUpdateSettings"))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlInstanceSettings = SQLInstanceSettings.DeserializeSQLInstanceSettings(property.Value);
+                    sqlInstanceSettings = SqlInstanceSettings.DeserializeSqlInstanceSettings(property.Value);
                     continue;
                 }
             }

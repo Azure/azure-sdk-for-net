@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotCentral
         internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element)
         {
             IotCentralAppSkuInfo sku = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotCentral
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))

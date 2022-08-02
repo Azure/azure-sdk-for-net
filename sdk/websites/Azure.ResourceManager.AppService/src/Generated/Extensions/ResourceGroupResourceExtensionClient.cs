@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.AppService
             return GetCachedClient(Client => new KubeEnvironmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of StaticSiteARMResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSiteARMCollection GetStaticSiteARMs()
+        /// <summary> Gets a collection of StaticSiteResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
+        public virtual StaticSiteCollection GetStaticSites()
         {
-            return GetCachedClient(Client => new StaticSiteARMCollection(Client, Id));
+            return GetCachedClient(Client => new StaticSiteCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>

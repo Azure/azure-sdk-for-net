@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("blobName");
                 writer.WriteStringValue(BlobName);
             }
-            if (Optional.IsDefined(IsOverwrite))
+            if (Optional.IsDefined(Overwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(IsOverwrite.Value);
+                writer.WriteBooleanValue(Overwrite.Value);
             }
             if (Optional.IsDefined(SiteName))
             {
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsIgnoreConflictingHostNames))
+            if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
                 writer.WritePropertyName("ignoreConflictingHostNames");
-                writer.WriteBooleanValue(IsIgnoreConflictingHostNames.Value);
+                writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (Optional.IsDefined(IsIgnoreDatabases))
+            if (Optional.IsDefined(IgnoreDatabases))
             {
                 writer.WritePropertyName("ignoreDatabases");
-                writer.WriteBooleanValue(IsIgnoreDatabases.Value);
+                writer.WriteBooleanValue(IgnoreDatabases.Value);
             }
             if (Optional.IsDefined(AppServicePlan))
             {
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("operationType");
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsAdjustConnectionStrings))
+            if (Optional.IsDefined(AdjustConnectionStrings))
             {
                 writer.WritePropertyName("adjustConnectionStrings");
-                writer.WriteBooleanValue(IsAdjustConnectionStrings.Value);
+                writer.WriteBooleanValue(AdjustConnectionStrings.Value);
             }
             if (Optional.IsDefined(HostingEnvironment))
             {

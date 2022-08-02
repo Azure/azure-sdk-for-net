@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -18,13 +19,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="fileNameTemplate"> The template for file name. </param>
         /// <param name="suspendMessageOnFileNameGenerationError"> The value indicating whether to suspend message on file name generation error. </param>
         /// <param name="autogenerateFileName"> The value indicating whether to auto generate file name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageContentType"/> or <paramref name="fileNameTemplate"/> is null. </exception>
-        public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileNameTemplate"/> is null. </exception>
+        public AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName)
         {
-            if (messageContentType == null)
-            {
-                throw new ArgumentNullException(nameof(messageContentType));
-            }
             if (fileNameTemplate == null)
             {
                 throw new ArgumentNullException(nameof(fileNameTemplate));
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The message content type. </summary>
-        public string MessageContentType { get; set; }
+        public ContentType MessageContentType { get; set; }
         /// <summary> The value indicating whether to transmit file name in mime header. </summary>
         public bool TransmitFileNameInMimeHeader { get; set; }
         /// <summary> The template for file name. </summary>

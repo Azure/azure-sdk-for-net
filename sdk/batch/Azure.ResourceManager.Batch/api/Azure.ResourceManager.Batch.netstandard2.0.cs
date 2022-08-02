@@ -3,8 +3,8 @@ namespace Azure.ResourceManager.Batch
     public partial class ApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.ApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.ApplicationResource>, System.Collections.IEnumerable
     {
         protected ApplicationCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.ApplicationData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.ApplicationData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.ApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Batch.ApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationResource> Get(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Batch
     public partial class ApplicationPackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.ApplicationPackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.ApplicationPackageResource>, System.Collections.IEnumerable
     {
         protected ApplicationPackageCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.ApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string versionName, Azure.ResourceManager.Batch.ApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource> Get(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Batch
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.ApplicationPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.ApplicationPackageData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.ApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Batch.ApplicationPackageResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Batch.ApplicationPackageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ApplicationResource : Azure.ResourceManager.ArmResource
     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Batch
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.VirtualMachineFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
         public bool? DedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? LowPriorityCoreQuota { get { throw null; } }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Batch
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ApplicationPackageReference> ApplicationPackages { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.AutoScaleRun AutoScaleRun { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.CertificateReference> Certificates { get { throw null; } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? CurrentDedicatedNodes { get { throw null; } }
         public int? CurrentLowPriorityNodes { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.DeploymentConfiguration DeploymentConfiguration { get { throw null; } set { } }
@@ -500,21 +500,13 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.KeyVaultReference KeyVaultReference { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PoolAllocationMode? PoolAllocationMode { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class BatchAccountIdentity
-    {
-        public BatchAccountIdentity(Azure.ResourceManager.Batch.Models.ResourceIdentityType resourceIdentityType) { }
-        public string PrincipalId { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.ResourceIdentityType ResourceIdentityType { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     public partial class BatchAccountKeys
     {
@@ -529,7 +521,7 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.AuthenticationMode> AllowedAuthenticationModes { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.AutoStorageBaseProperties AutoStorage { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.EncryptionProperties Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchAccountIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchVirtualMachineNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1002,12 +994,6 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Uri HttpUri { get { throw null; } set { } }
         public string IdentityReferenceResourceId { get { throw null; } set { } }
         public System.Uri StorageContainerUri { get { throw null; } set { } }
-    }
-    public enum ResourceIdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceType : System.IEquatable<Azure.ResourceManager.Batch.Models.ResourceType>

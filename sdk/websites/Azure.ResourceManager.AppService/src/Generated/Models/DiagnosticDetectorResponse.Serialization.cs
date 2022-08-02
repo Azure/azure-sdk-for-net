@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("endTime");
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(IsIssueDetected))
+            if (Optional.IsDefined(IssueDetected))
             {
                 writer.WritePropertyName("issueDetected");
-                writer.WriteBooleanValue(IsIssueDetected.Value);
+                writer.WriteBooleanValue(IssueDetected.Value);
             }
             if (Optional.IsDefined(DetectorDefinition))
             {

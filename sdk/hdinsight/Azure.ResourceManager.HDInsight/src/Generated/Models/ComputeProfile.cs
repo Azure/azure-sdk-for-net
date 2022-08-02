@@ -10,23 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> Describes the compute profile. </summary>
+    /// <summary>
+    /// Describes the compute profile.
+    /// Serialized Name: ComputeProfile
+    /// </summary>
     internal partial class ComputeProfile
     {
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
         public ComputeProfile()
         {
-            Roles = new ChangeTrackingList<Role>();
+            Roles = new ChangeTrackingList<HDInsightClusterRole>();
         }
 
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
-        /// <param name="roles"> The list of roles in the cluster. </param>
-        internal ComputeProfile(IList<Role> roles)
+        /// <param name="roles">
+        /// The list of roles in the cluster.
+        /// Serialized Name: ComputeProfile.roles
+        /// </param>
+        internal ComputeProfile(IList<HDInsightClusterRole> roles)
         {
             Roles = roles;
         }
 
-        /// <summary> The list of roles in the cluster. </summary>
-        public IList<Role> Roles { get; }
+        /// <summary>
+        /// The list of roles in the cluster.
+        /// Serialized Name: ComputeProfile.roles
+        /// </summary>
+        public IList<HDInsightClusterRole> Roles { get; }
     }
 }
