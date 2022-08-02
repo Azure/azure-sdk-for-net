@@ -182,9 +182,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<string>(),
                     ItExpr.IsAny<TimeSpan>(),
-                    ItExpr.IsAny<CancellationToken>(),
-                    ItExpr.IsAny<string>())
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
@@ -244,9 +244,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<string>(),
                     ItExpr.IsAny<TimeSpan>(),
-                    ItExpr.IsAny<CancellationToken>(),
-                    ItExpr.IsAny<string>())
+                    ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
