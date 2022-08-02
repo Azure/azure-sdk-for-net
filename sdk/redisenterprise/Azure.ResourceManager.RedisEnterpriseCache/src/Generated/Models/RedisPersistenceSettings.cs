@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.RedisEnterpriseCache.Models
 {
     /// <summary> Persistence-related configuration for the RedisEnterprise database. </summary>
-    public partial class PersistenceSettings
+    public partial class RedisPersistenceSettings
     {
-        /// <summary> Initializes a new instance of PersistenceSettings. </summary>
-        public PersistenceSettings()
+        /// <summary> Initializes a new instance of RedisPersistenceSettings. </summary>
+        public RedisPersistenceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PersistenceSettings. </summary>
+        /// <summary> Initializes a new instance of RedisPersistenceSettings. </summary>
         /// <param name="isAofEnabled"> Sets whether AOF is enabled. </param>
         /// <param name="isRdbEnabled"> Sets whether RDB is enabled. </param>
         /// <param name="aofFrequency"> Sets the frequency at which data is written to disk. </param>
         /// <param name="rdbFrequency"> Sets the frequency at which a snapshot of the database is created. </param>
-        internal PersistenceSettings(bool? isAofEnabled, bool? isRdbEnabled, PersistenceSettingAofFrequency? aofFrequency, PersistenceSettingRdbFrequency? rdbFrequency)
+        internal RedisPersistenceSettings(bool? isAofEnabled, bool? isRdbEnabled, PersistenceSettingAofFrequency? aofFrequency, PersistenceSettingRdbFrequency? rdbFrequency)
         {
             IsAofEnabled = isAofEnabled;
             IsRdbEnabled = isRdbEnabled;
