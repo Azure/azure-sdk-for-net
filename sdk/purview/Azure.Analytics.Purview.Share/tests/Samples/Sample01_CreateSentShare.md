@@ -11,10 +11,9 @@ using Azure.Identity;
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 var sentShareClient = new SentSharesClient(endPoint, credential);
-
 // Create sent share
 var sentShareName = "sample-Share";
 

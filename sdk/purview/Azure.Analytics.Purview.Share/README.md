@@ -28,9 +28,9 @@ This document demonstrates using [DefaultAzureCredential][default_cred_ref] to a
 
 Once you have chosen and configured your credential, you can create instances of the `SentSharesClient`.
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Authenticate_The_Client
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 var sentShareClient = new SentSharesClient(endPoint, credential);
 ```
@@ -65,10 +65,9 @@ The following section shows you how to initialize and authenticate your client a
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateSentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 var sentShareClient = new SentSharesClient(endPoint, credential);
-
 // Create sent share
 var sentShareName = "sample-Share";
 
@@ -94,7 +93,7 @@ var sentShare = await sentShareClient.CreateOrUpdateAsync(sentShareName, Request
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_AddAnAssetToASentShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 // Add asset to sent share
 var sentShareName = "sample-Share";
@@ -133,7 +132,7 @@ await assetsClient.CreateAsync(WaitUntil.Started, sentShareName, assetName, Requ
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_SendInvitation
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 // Send invitation
 var sentShareName = "sample-Share";
@@ -168,7 +167,7 @@ await sentShareInvitationsClient.CreateOrUpdateAsync(sentShareName, invitationNa
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewSentShareInvitations
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareName = "sample-Share";
 
 // View sent share invitations. (Pending/Rejected)
@@ -190,7 +189,7 @@ var targetEmail = responseInvitationDocument.RootElement.GetProperty("name");
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewReceivedInvitations
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 // View received invitations
 var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
@@ -201,7 +200,7 @@ var receivedInvitations = receivedInvitationsClient.GetReceivedInvitations();
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 // Create received share
 var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
@@ -242,7 +241,7 @@ var receivedShare = await receivedShareClient.CreateAsync(receivedShareName, Req
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewAcceptedShares
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareName = "sample-Share";
 
 // View accepted shares
@@ -264,7 +263,7 @@ var receiverEmail = JsonDocument.Parse(acceptedSentShare).RootElement.GetPropert
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 // Get received assets
 var receivedShareName = "fabrikam-received-share";

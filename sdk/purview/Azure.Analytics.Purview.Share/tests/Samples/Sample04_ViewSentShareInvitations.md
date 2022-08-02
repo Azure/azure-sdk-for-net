@@ -12,7 +12,7 @@ using Azure.Identity;
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewSentShareInvitations
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareName = "sample-Share";
 
 // View sent share invitations. (Pending/Rejected)

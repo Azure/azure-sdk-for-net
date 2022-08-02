@@ -14,7 +14,7 @@ using Azure.Identity;
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
 var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com/share";
 
 // Get received assets
 var receivedShareName = "fabrikam-received-share";

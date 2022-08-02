@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 #region Snippet:Azure_Analytics_Purview_Share_Samples_06_Namespaces
 using System.Linq;
 using System.Text.Json;
@@ -11,14 +13,25 @@ using Azure.Identity;
 
 namespace Azure.Analytics.Purview.Share.Tests.Samples
 {
+    [TestFixture]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
-    internal class CreateAReceivedShareSample
+    internal class CreateAReceivedShareSample : ShareClientTestBase
     {
+        public CreateAReceivedShareSample(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
+        {
+        }
+
+        [Test]
         public async Task CreateAReceivedShare()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
+#if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://<my-account-name>.purview.azure.com";
+            var endPoint = "https://<my-account-name>.purview.azure.com/share";
+#else
+            var credential = TestEnvironment.Credential;
+            var endPoint = TestEnvironment.Endpoint.ToString();
+#endif
 
             // Create received share
             var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);

@@ -2,24 +2,38 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 #region Snippet:Azure_Analytics_Purview_Share_Samples_01_Namespaces
 using Azure.Core;
 using Azure.Identity;
 #endregion Snippet:Azure_Analytics_Purview_Share_Samples_01_Namespaces
 
-namespace Azure.Analytics.Purview.Share.Samples
+namespace Azure.Analytics.Purview.Share.Tests.Samples
 {
+    [TestFixture]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
-    internal class CreateSentShare
+    internal class CreateSentShare : ShareClientTestBase
     {
+        public CreateSentShare(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
+        {
+        }
+
+        [Test]
         public async Task CreateSentShareSample()
         {
             #region Snippet:Azure_Analytics_Purview_Share_Samples_CreateSentShare
+            #region Snippet:Azure_Analytics_Purview_Share_Authenticate_The_Client
+#if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://<my-account-name>.purview.azure.com";
+            var endPoint = "https://<my-account-name>.purview.azure.com/share";
+#else
+            var credential = TestEnvironment.Credential;
+            var endPoint = TestEnvironment.Endpoint.ToString();
+#endif
 
             var sentShareClient = new SentSharesClient(endPoint, credential);
-
+            #endregion Snippet:Azure_Analytics_Purview_Share_Authenticate_The_Client
             // Create sent share
             var sentShareName = "sample-Share";
 
