@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await CreateApiServiceAsync();
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(list.Count == 0);
+            Assert.IsTrue(list.Count == 1);
             var api = list.Single();
 
             var collection = api.GetApiOperations();
