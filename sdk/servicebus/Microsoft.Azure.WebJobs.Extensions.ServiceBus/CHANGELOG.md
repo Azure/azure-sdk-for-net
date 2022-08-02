@@ -1,6 +1,6 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
+## 5.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.6.0 (2022-07-28)
+
+### Features Added
+
+- Added ability to register a callback for ` SessionInitializingAsync` and `SessionClosingAsync` to the `ServiceBusOptions`. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- `SessionIdleTimeout` now will be applied for batch functions in addition to single-message 
+  functions.
+
+## 5.5.1 (2022-06-07)
+
+### Bugs Fixed
+
+- Fixed race condition when starting up function app.
 
 ## 5.5.0 (2022-05-16)
 

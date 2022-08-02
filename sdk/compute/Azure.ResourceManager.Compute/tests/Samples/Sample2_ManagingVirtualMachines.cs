@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // Use the same location as the resource group
             string vmName = "myVM";
-            var input = new VirtualMachineData(resourceGroup.Data.Location)
+            VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
             {
-                HardwareProfile = new HardwareProfile()
+                HardwareProfile = new VirtualMachineHardwareProfile()
                 {
-                    VmSize = VirtualMachineSizeTypes.StandardF2
+                    VmSize = VirtualMachineSizeType.StandardF2
                 },
-                OSProfile = new OSProfile()
+                OSProfile = new VirtualMachineOSProfile()
                 {
                     AdminUsername = "adminUser",
                     ComputerName = "myVM",
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     {
                         DisablePasswordAuthentication = true,
                         SshPublicKeys = {
-                            new SshPublicKeyInfo()
+                            new SshPublicKeyConfiguration()
                             {
                                 Path = $"/home/adminUser/.ssh/authorized_keys",
                                 KeyData = "<value of the public ssh key>",
@@ -51,26 +51,26 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                         }
                     }
                 },
-                NetworkProfile = new NetworkProfile()
+                NetworkProfile = new VirtualMachineNetworkProfile()
                 {
                     NetworkInterfaces =
                     {
-                        new NetworkInterfaceReference()
+                        new VirtualMachineNetworkInterfaceReference()
                         {
                             Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                             Primary = true,
                         }
                     }
                 },
-                StorageProfile = new StorageProfile()
+                StorageProfile = new VirtualMachineStorageProfile()
                 {
-                    OSDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
                     {
-                        OSType = OperatingSystemTypes.Linux,
-                        Caching = CachingTypes.ReadWrite,
-                        ManagedDisk = new ManagedDiskParameters()
+                        OSType = SupportedOperatingSystemType.Linux,
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new VirtualMachineManagedDisk()
                         {
-                            StorageAccountType = StorageAccountTypes.StandardLRS
+                            StorageAccountType = StorageAccountType.StandardLrs
                         }
                     },
                     ImageReference = new ImageReference()

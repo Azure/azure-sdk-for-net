@@ -54,7 +54,10 @@
     {
       "source": "./.content/testResource",
       "target": "./",
-      "condition": "(includeCI)"
+      "condition": "(includeCI)",
+      "rename": {
+        "ci-template.yml": "ci.yml"
+      }
     },
     {
       "source": "./.content/packageResource",
@@ -200,8 +203,6 @@
         "separator": "" 
       },
       "description": "Renames files containing 'TemplateClient'",
-      "valueSource": "Cl",
-      "valueTransform": "ServiceShortNameForm",
       "fileRename": "TemplateClient",
       "replaces": "TemplateClient"
     },
@@ -257,6 +258,12 @@
       },
       "replaces": "Azure.Template"
     },
+    "groupNamePascal": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "groupName",
+      "valueTransform": "PascalForm"
+    },
     "PackageSafeName": {
       "type": "generated",
       "generator": "join",
@@ -268,7 +275,7 @@
           },
           {
             "type": "ref",
-            "value": "groupName"
+            "value": "groupNamePascal"
           },
           {
             "type": "ref",
@@ -278,6 +285,12 @@
         "separator": ""
       },
       "replaces": "AzureTemplate"
+    },
+    "groupNameUnderscored": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "groupName",
+      "valueTransform": "UnderscoreForm"
     },
     "PackageNameUnderscored": {
       "type": "generated",
@@ -290,11 +303,11 @@
           },
           {
             "type": "ref",
-            "value": "groupName"
+            "value": "groupNameUnderscored"
           },
           {
             "type": "ref",
-            "value": "ClientName"
+            "value": "ClientNameCapitalCase"
           }
         ],
         "separator": "_"
@@ -447,6 +460,16 @@
     "ServiceShortNameForm": {
       "identifier": "replace",
       "pattern": "^[mM]icrosoft\\.",
+      "replacement": ""
+    },
+    "UnderscoreForm": {
+      "identifier": "replace",
+      "pattern": "\\.",
+      "replacement": "_"
+    },
+    "PascalForm": {
+      "identifier": "replace",
+      "pattern": "\\.",
       "replacement": ""
     },
     "ProviderShortNameLowerForm": {

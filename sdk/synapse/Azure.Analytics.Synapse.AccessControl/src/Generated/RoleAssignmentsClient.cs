@@ -60,57 +60,109 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CheckPrincipalAccessAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "<id>",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "<scope>",
+        /// };
+        /// 
+        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CheckPrincipalAccessAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         groupIds = new[] {
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+        ///         },
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "<id>",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "<scope>",
+        /// };
+        /// 
+        /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("actionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId (required),
-        ///     groupIds: [SubjectInfoGroupIdsItem]
-        ///   } (required),
+        ///     principalId: Guid, # Required. Principal Id
+        ///     groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
+        ///   }, # Required. Subject details
         ///   actions: [
         ///     {
-        ///       id: string (required),
-        ///       isDataAction: boolean (required)
+        ///       id: string, # Required. Action Id.
+        ///       isDataAction: boolean, # Required. Is a data action or not.
         ///     }
-        ///   ] (required),
-        ///   scope: string (required)
+        ///   ], # Required. List of actions.
+        ///   scope: string, # Required. Scope at which the check access is done.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessResponse</c>:
         /// <code>{
         ///   accessDecisions: [
         ///     {
-        ///       accessDecision: string,
-        ///       actionId: string,
+        ///       accessDecision: string, # Optional. Access Decision.
+        ///       actionId: string, # Optional. Action Id.
         ///       roleAssignment: {
-        ///         id: string,
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///         principalId: RoleAssignmentDetailsPrincipalId,
-        ///         scope: string,
-        ///         principalType: string
-        ///       }
+        ///         id: string, # Optional. Role Assignment ID
+        ///         roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///         principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///         scope: string, # Optional. Scope at the role assignment is created
+        ///         principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
+        ///       }, # Optional. Role Assignment response details
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.
         /// }
         /// </code>
         /// 
@@ -134,57 +186,109 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CheckPrincipalAccess with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "<id>",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "<scope>",
+        /// };
+        /// 
+        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CheckPrincipalAccess with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     subject = new {
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///         groupIds = new[] {
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
+        ///         },
+        ///     },
+        ///     actions = new[] {
+        ///         new {
+        ///             id = "<id>",
+        ///             isDataAction = true,
+        ///         }
+        ///     },
+        ///     scope = "<scope>",
+        /// };
+        /// 
+        /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("accessDecision").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("actionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("accessDecisions")[0].GetProperty("roleAssignment").GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId (required),
-        ///     groupIds: [SubjectInfoGroupIdsItem]
-        ///   } (required),
+        ///     principalId: Guid, # Required. Principal Id
+        ///     groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
+        ///   }, # Required. Subject details
         ///   actions: [
         ///     {
-        ///       id: string (required),
-        ///       isDataAction: boolean (required)
+        ///       id: string, # Required. Action Id.
+        ///       isDataAction: boolean, # Required. Is a data action or not.
         ///     }
-        ///   ] (required),
-        ///   scope: string (required)
+        ///   ], # Required. List of actions.
+        ///   scope: string, # Required. Scope at which the check access is done.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CheckPrincipalAccessResponse</c>:
         /// <code>{
         ///   accessDecisions: [
         ///     {
-        ///       accessDecision: string,
-        ///       actionId: string,
+        ///       accessDecision: string, # Optional. Access Decision.
+        ///       actionId: string, # Optional. Action Id.
         ///       roleAssignment: {
-        ///         id: string,
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///         principalId: RoleAssignmentDetailsPrincipalId,
-        ///         scope: string,
-        ///         principalType: string
-        ///       }
+        ///         id: string, # Optional. Role Assignment ID
+        ///         roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///         principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///         scope: string, # Optional. Scope at the role assignment is created
+        ///         principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
+        ///       }, # Optional. Role Assignment response details
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.
         /// }
         /// </code>
         /// 
@@ -212,36 +316,55 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignmentsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleAssignmentsAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetailsList</c>:
         /// <code>{
-        ///   count: number,
+        ///   count: number, # Optional. Number of role assignments
         ///   value: [
         ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
+        ///       id: string, # Optional. Role Assignment ID
+        ///       roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///       principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///       scope: string, # Optional. Scope at the role assignment is created
+        ///       principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. A list of role assignments
         /// }
         /// </code>
         /// 
@@ -267,36 +390,55 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="continuationToken"> Continuation token. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignments and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleAssignments();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetailsList</c>:
         /// <code>{
-        ///   count: number,
+        ///   count: number, # Optional. Number of role assignments
         ///   value: [
         ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
+        ///       id: string, # Optional. Role Assignment ID
+        ///       roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///       principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///       scope: string, # Optional. Scope at the role assignment is created
+        ///       principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. A list of role assignments
         /// }
         /// </code>
         /// 
@@ -319,43 +461,77 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateRoleAssignmentAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        /// };
+        /// 
+        /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateRoleAssignmentAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        ///     principalType = "<principalType>",
+        /// };
+        /// 
+        /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId (required),
-        ///   principalId: RoleAssignmentRequestPrincipalId (required),
-        ///   scope: string (required),
-        ///   principalType: string
+        ///   roleId: Guid, # Required. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Required. Object ID of the AAD principal or security-group
+        ///   scope: string, # Required. Scope at which the role assignment is created
+        ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. Role Assignment ID
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///   scope: string, # Optional. Scope at the role assignment is created
+        ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
         /// 
@@ -381,43 +557,77 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateRoleAssignment with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        /// };
+        /// 
+        /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateRoleAssignment with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        ///     principalType = "<principalType>",
+        /// };
+        /// 
+        /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId (required),
-        ///   principalId: RoleAssignmentRequestPrincipalId (required),
-        ///   scope: string (required),
-        ///   principalType: string
+        ///   roleId: Guid, # Required. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Required. Object ID of the AAD principal or security-group
+        ///   scope: string, # Required. Scope at which the role assignment is created
+        ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. Role Assignment ID
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///   scope: string, # Optional. Scope at the role assignment is created
+        ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
         /// 
@@ -443,33 +653,40 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignmentByIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. Role Assignment ID
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///   scope: string, # Optional. Scope at the role assignment is created
+        ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
         /// 
@@ -494,33 +711,40 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleAssignmentById with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleAssignmentById("<roleAssignmentId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("roleDefinitionId").ToString());
+        /// Console.WriteLine(result.GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("scope").ToString());
+        /// Console.WriteLine(result.GetProperty("principalType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. Role Assignment ID
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
+        ///   scope: string, # Optional. Scope at the role assignment is created
+        ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
         /// </code>
         /// 
@@ -546,28 +770,31 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteRoleAssignmentByIdAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
-        /// </remarks>
+        /// Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call DeleteRoleAssignmentByIdAsync with all parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", "<scope>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
@@ -589,28 +816,31 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Delete role assignment by role assignment Id. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteRoleAssignmentById with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
-        /// </remarks>
+        /// Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call DeleteRoleAssignmentById with all parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleAssignmentsClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", "<scope>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));

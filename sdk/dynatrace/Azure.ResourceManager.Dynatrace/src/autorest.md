@@ -12,14 +12,22 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/c767823fdfd9d5e96bad
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
- 
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -29,11 +37,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   URL: Uri
   PRE: Pre
 
@@ -46,8 +55,6 @@ directive:
       $.MonitoredResource['x-ms-client-name'] = 'MonitoredResourceDetails';
       $.MonitoredResource.properties.sendingMetrics['x-ms-client-name'] = 'sendingMetricsStatus';
       $.MonitoredResource.properties.sendingLogs['x-ms-client-name'] = 'sendingLogsStatus';
-      $.LinkableEnvironmentRequest.properties.tenantId['format'] = 'uuid';
-      $.IdentityProperties.properties.tenantId['format'] = 'uuid';
       $.DynatraceSingleSignOnProperties.properties.enterpriseAppId['format'] = 'uuid';
       $.LinkableEnvironmentRequest.properties.region['x-ms-format'] = 'azure-location';
 ```

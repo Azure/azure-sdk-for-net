@@ -311,5 +311,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await receiver.CloseAsync(cts.Token);
             mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
+
+        [Test]
+        public async Task CallingCloseAsyncUpdatesIsClosed()
+        {
+            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
+            var receiver = new ServiceBusReceiver(mockConnection, "fake", default, new ServiceBusReceiverOptions());
+            await receiver.CloseAsync();
+            Assert.IsTrue(receiver.IsClosed);
+        }
+
+        [Test]
+        public async Task CreatingReceiverWithoutOptionsGeneratesIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var receiver = client.CreateReceiver("fake");
+
+            var identifier = receiver.Identifier;
+            Assert.That(identifier, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task CreatingReceiverWithIdentifierSetsIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            var setIdentifier = "UniqueIdentifier-abcedefg";
+
+            var options = new ServiceBusReceiverOptions
+            {
+                Identifier = setIdentifier
+            };
+
+            await using var receiver = client.CreateReceiver("fake", options);
+
+            var identifier = receiver.Identifier;
+            Assert.AreEqual(setIdentifier, identifier);
+        }
     }
 }

@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.IotCentral
     }
     public partial class IotCentralAppData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.AppSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
-        public string ApplicationId { get { throw null; } }
+        public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Guid? ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.NetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.IotCentral.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.AppSku? SkuName { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.AppState? State { get { throw null; } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralAppSku? SkuName { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralAppState? State { get { throw null; } }
         public string Subdomain { get { throw null; } set { } }
         public string Template { get { throw null; } set { } }
     }
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.IotCentral
     }
     public static partial class IotCentralExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.IotCentral.Models.AppAvailabilityInfo> CheckNameAvailabilityApp(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.OperationInputs operationInputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.Models.AppAvailabilityInfo>> CheckNameAvailabilityAppAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.OperationInputs operationInputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.IotCentral.Models.AppAvailabilityInfo> CheckSubdomainAvailabilityApp(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.OperationInputs operationInputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.Models.AppAvailabilityInfo>> CheckSubdomainAvailabilityAppAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.OperationInputs operationInputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.IotCentral.IotCentralAppResource> GetIotCentralApp(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.IotCentralAppResource>> GetIotCentralAppAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.IotCentral.IotCentralAppResource GetIotCentralAppResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.IotCentral
         public static Azure.AsyncPageable<Azure.ResourceManager.IotCentral.IotCentralAppResource> GetIotCentralAppsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionResource GetIotCentralPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.IotCentral.IotCentralPrivateLinkResource GetIotCentralPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.IotCentral.Models.AppTemplate> GetTemplatesApps(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.IotCentral.Models.AppTemplate> GetTemplatesAppsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplate> GetTemplatesApps(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplate> GetTemplatesAppsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class IotCentralPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -143,88 +143,126 @@ namespace Azure.ResourceManager.IotCentral
 }
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class AppAvailabilityInfo
+    public partial class IotCentralAppNameAvailabilityContent
     {
-        internal AppAvailabilityInfo() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AppSku : System.IEquatable<Azure.ResourceManager.IotCentral.Models.AppSku>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AppSku(string value) { throw null; }
-        public static Azure.ResourceManager.IotCentral.Models.AppSku ST0 { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.AppSku ST1 { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.AppSku ST2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotCentral.Models.AppSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.AppSku left, Azure.ResourceManager.IotCentral.Models.AppSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotCentral.Models.AppSku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.AppSku left, Azure.ResourceManager.IotCentral.Models.AppSku right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AppSkuInfo
-    {
-        public AppSkuInfo(Azure.ResourceManager.IotCentral.Models.AppSku name) { }
-        public Azure.ResourceManager.IotCentral.Models.AppSku Name { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AppState : System.IEquatable<Azure.ResourceManager.IotCentral.Models.AppState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AppState(string value) { throw null; }
-        public static Azure.ResourceManager.IotCentral.Models.AppState Created { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.AppState Suspended { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotCentral.Models.AppState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.AppState left, Azure.ResourceManager.IotCentral.Models.AppState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotCentral.Models.AppState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.AppState left, Azure.ResourceManager.IotCentral.Models.AppState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AppTemplate
-    {
-        internal AppTemplate() { }
-        public string Description { get { throw null; } }
-        public string Industry { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.Models.AppTemplateLocations> Locations { get { throw null; } }
-        public string ManifestId { get { throw null; } }
-        public string ManifestVersion { get { throw null; } }
+        public IotCentralAppNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
-        public float? Order { get { throw null; } }
-        public string Title { get { throw null; } }
+        public string ResourceType { get { throw null; } set { } }
     }
-    public partial class AppTemplateLocations
+    public partial class IotCentralAppNameAvailabilityResponse
     {
-        internal AppTemplateLocations() { }
-        public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
+        internal IotCentralAppNameAvailabilityResponse() { }
+        public string IotCentralAppNameUnavailableReason { get { throw null; } }
+        public bool? IsNameAvailable { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class IotCentralAppPatch
     {
         public IotCentralAppPatch() { }
-        public string ApplicationId { get { throw null; } }
+        public System.Guid? ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.NetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSets NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.IotCentral.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.AppSku? SkuName { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.AppState? State { get { throw null; } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralAppSku? SkuName { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralAppState? State { get { throw null; } }
         public string Subdomain { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Template { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotCentralAppSku : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralAppSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotCentralAppSku(string value) { throw null; }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralAppSku ST0 { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralAppSku ST1 { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralAppSku ST2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralAppSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralAppSku left, Azure.ResourceManager.IotCentral.Models.IotCentralAppSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralAppSku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.IotCentralAppSku left, Azure.ResourceManager.IotCentral.Models.IotCentralAppSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IotCentralAppSkuInfo
+    {
+        public IotCentralAppSkuInfo(Azure.ResourceManager.IotCentral.Models.IotCentralAppSku name) { }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralAppSku Name { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotCentralAppState : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralAppState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotCentralAppState(string value) { throw null; }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralAppState Created { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralAppState Suspended { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralAppState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralAppState left, Azure.ResourceManager.IotCentral.Models.IotCentralAppState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralAppState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.IotCentralAppState left, Azure.ResourceManager.IotCentral.Models.IotCentralAppState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IotCentralAppTemplate
+    {
+        internal IotCentralAppTemplate() { }
+        public string Description { get { throw null; } }
+        public string Industry { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplateLocation> Locations { get { throw null; } }
+        public string ManifestId { get { throw null; } }
+        public string ManifestVersion { get { throw null; } }
+        public string Name { get { throw null; } }
+        public int? Order { get { throw null; } }
+        public string Title { get { throw null; } }
+    }
+    public partial class IotCentralAppTemplateLocation
+    {
+        internal IotCentralAppTemplateLocation() { }
+        public string DisplayName { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IotCentralNetworkAction : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IotCentralNetworkAction(string value) { throw null; }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction left, Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction left, Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IotCentralNetworkRuleSetIPRule
+    {
+        public IotCentralNetworkRuleSetIPRule() { }
+        public string FilterName { get { throw null; } set { } }
+        public string IPMask { get { throw null; } set { } }
+    }
+    public partial class IotCentralNetworkRuleSets
+    {
+        public IotCentralNetworkRuleSets() { }
+        public bool? ApplyToDevices { get { throw null; } set { } }
+        public bool? ApplyToIotCentral { get { throw null; } set { } }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction? DefaultAction { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSetIPRule> IPRules { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IotCentralPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState>
@@ -273,81 +311,43 @@ namespace Azure.ResourceManager.IotCentral.Models
         public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkAction : System.IEquatable<Azure.ResourceManager.IotCentral.Models.NetworkAction>
+    public readonly partial struct IotCentralProvisioningState : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public NetworkAction(string value) { throw null; }
-        public static Azure.ResourceManager.IotCentral.Models.NetworkAction Allow { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.NetworkAction Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotCentral.Models.NetworkAction other) { throw null; }
+        public IotCentralProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.NetworkAction left, Azure.ResourceManager.IotCentral.Models.NetworkAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotCentral.Models.NetworkAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.NetworkAction left, Azure.ResourceManager.IotCentral.Models.NetworkAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NetworkRuleSetIPRule
-    {
-        public NetworkRuleSetIPRule() { }
-        public string FilterName { get { throw null; } set { } }
-        public string IPMask { get { throw null; } set { } }
-    }
-    public partial class NetworkRuleSets
-    {
-        public NetworkRuleSets() { }
-        public bool? ApplyToDevices { get { throw null; } set { } }
-        public bool? ApplyToIoTCentral { get { throw null; } set { } }
-        public Azure.ResourceManager.IotCentral.Models.NetworkAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.IotCentral.Models.NetworkRuleSetIPRule> IPRules { get { throw null; } }
-    }
-    public partial class OperationInputs
-    {
-        public OperationInputs(string name) { }
-        public string Name { get { throw null; } }
-        public string OperationInputsType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.IotCentral.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.IotCentral.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotCentral.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.ProvisioningState left, Azure.ResourceManager.IotCentral.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotCentral.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.ProvisioningState left, Azure.ResourceManager.IotCentral.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState left, Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState left, Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess>
+    public readonly partial struct IotCentralPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess other) { throw null; }
+        public IotCentralPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess left, Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess left, Azure.ResourceManager.IotCentral.Models.PublicNetworkAccess right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess left, Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess left, Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

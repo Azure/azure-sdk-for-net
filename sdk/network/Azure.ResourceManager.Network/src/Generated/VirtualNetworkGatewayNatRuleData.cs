@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
         internal VirtualNetworkGatewayNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             ProvisioningState = provisioningState;
             VpnNatRuleType = vpnNatRuleType;
             Mode = mode;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the NAT Rule resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of NAT rule for VPN NAT. </summary>

@@ -140,8 +140,10 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 
 
 ## Credential Classes
+
 ### Authenticating Azure Hosted Applications
-|credential  | usage
+
+|Credential  | Usage
 |-|-
 |[`DefaultAzureCredential`][ref_DefaultAzureCredential]|provides a simplified authentication experience to quickly start developing applications run in the Azure cloud
 |[`ChainedTokenCredential`][ref_ChainedTokenCredential]|allows users to define custom authentication flows composing multiple credentials
@@ -149,27 +151,31 @@ The [Managed identity authentication](https://docs.microsoft.com/azure/active-di
 |[`EnvironmentCredential`][ref_EnvironmentCredential]|authenticates a service principal or user via credential information specified in environment variables
 
 ### Authenticating Service Principals
-|credential  | usage
-|-|-
-|[`ClientSecretCredential`][ref_ClientSecretCredential]|authenticates a service principal using a secret
-|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|authenticates a service principal using a certificate
 
+|Credential  | Usage
+|-|-
+|[`ClientAssertionCredential`][ref_ClientAssertionCredential]|authenticates a service principal using a signed client assertion
+|[`ClientCertificateCredential`][ref_ClientCertificateCredential]|authenticates a service principal using a certificate
+|[`ClientSecretCredential`][ref_ClientSecretCredential]|authenticates a service principal using a secret
 
 ### Authenticating Users
-|credential  | usage
+
+|Credential  | Usage
 |-|-
-|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|interactively authenticates a user with the default system browser
+|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|authenticates a user with a previously obtained authorization code
 |[`DeviceCodeCredential`][ref_DeviceCodeCredential]|interactively authenticates a user on devices with limited UI
+|[`InteractiveBrowserCredential`][ref_InteractiveBrowserCredential]|interactively authenticates a user with the default system browser
+|[`OnBehalfOfCredential`][ref_OnBehalfOfCredential]|propagates the delegated user identity and permissions through the request chain
 |[`UsernamePasswordCredential`][ref_UsernamePasswordCredential]|authenticates a user with a username and password
-|[`AuthorizationCodeCredential`][ref_AuthorizationCodeCredential]|authenticate a user with a previously obtained authorization code
 
 ### Authenticating via Development Tools
-|credential  | usage
+
+|Credential  | Usage
 |-|-
-|[`AzureCliCredential`][ref_AzureCliCredential]|authenticate in a development environment with the Azure CLI
-|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|authenticate in a development environment with the Azure PowerShell
-|[`VisualStudioCredential`][ref_VisualStudioCredential]|authenticate in a development environment with Visual Studio
-|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|authenticate in a development environment with Visual Studio Code
+|[`AzureCliCredential`][ref_AzureCliCredential]|authenticates in a development environment with the Azure CLI
+|[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|authenticates in a development environment with the Azure PowerShell
+|[`VisualStudioCredential`][ref_VisualStudioCredential]|authenticates in a development environment with Visual Studio
+|[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]|authenticates in a development environment with Visual Studio Code
 
 > __Note:__ All credential implementations in the Azure Identity library are threadsafe, and a single credential instance can be used by multiple service clients.
 
@@ -329,10 +335,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_ManagedIdentityCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.managedidentitycredential?view=azure-dotnet
 [ref_ClientSecretCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet
 [ref_ClientCertificateCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.clientcertificatecredential?view=azure-dotnet
+[ref_ClientAssertionCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.clientassertioncredential?view=azure-dotnet
 [ref_InteractiveBrowserCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.interactivebrowsercredential?view=azure-dotnet
 [ref_DeviceCodeCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.devicecodecredential?view=azure-dotnet
 [ref_UsernamePasswordCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
 [ref_AuthorizationCodeCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
+[ref_OnBehalfOfCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
 [ref_AzureCliCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
 [ref_AzurePowerShellCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.azurepowershellcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet

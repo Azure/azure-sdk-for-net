@@ -23,10 +23,10 @@ pr:
     - sdk/resourcemanager/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: extendedlocation
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.ExtendedLocation
-      safeName: AzureResourceManagerExtendedLocation
+    - name: Azure.ResourceManager.ExtendedLocations
+      safeName: AzureResourceManagerExtendedLocations

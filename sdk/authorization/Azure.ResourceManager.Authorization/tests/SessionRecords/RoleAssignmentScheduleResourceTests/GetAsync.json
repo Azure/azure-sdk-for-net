@@ -1,0 +1,129 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-85705a57e95af448a76fe8615dbdad97-1d9c096de41ffd4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "96e9e918b42a7a4396fae612d77d1e02",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 13 Jul 2022 03:07:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dcc4d494-01e3-45a1-b08d-b4142e44a569",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "dcc4d494-01e3-45a1-b08d-b4142e44a569",
+        "x-ms-routing-request-id": "KOREASOUTH:20220713T030701Z:dcc4d494-01e3-45a1-b08d-b4142e44a569"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/managed-rg-ImportGlossaryTest/providers/Microsoft.Authorization/roleAssignmentSchedules/e1cc94a4-2847-4a75-bf98-492fddd6ee6b?api-version=2020-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-06b217a9bc695e47ac773ee2eb076e9d-b785997a959b9c4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Authorization/1.0.0-alpha.20220713.1 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e8f6c4db5028cd8ad5fa1a328e495bce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Headers": "content-Type, accept, origin, X-Requested-With, Authorization, name, x-ms-client-session-id, accept-language, x-ms-client-request-id, x-ms-effective-locale",
+        "Access-Control-Allow-Methods": "POST, PUT, DELETE, GET, OPTIONS, PATCH",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "private",
+        "Content-Length": "1413",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 13 Jul 2022 03:07:06 GMT",
+        "mspimslice": "PROD",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e8f6c4db-5028-cd8a-d5fa-1a328e495bce",
+        "x-ms-correlation-request-id": "16902b80-2f3c-4172-98a0-46881de219e5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "16902b80-2f3c-4172-98a0-46881de219e5",
+        "x-ms-routing-request-id": "KOREASOUTH:20220713T030706Z:16902b80-2f3c-4172-98a0-46881de219e5"
+      },
+      "ResponseBody": {
+        "properties": {
+          "assignmentType": "Assigned",
+          "scope": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/managed-rg-ImportGlossaryTest",
+          "roleDefinitionId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/f526a384-b230-433a-b45c-95f59c4a2dec",
+          "principalId": "83c8ec42-3f9f-4290-aa06-50fa91cbc645",
+          "principalType": "ServicePrincipal",
+          "status": "Provisioned",
+          "startDateTime": "2022-02-09T03:14:17.3634292Z",
+          "memberType": "Direct",
+          "createdOn": "2022-02-09T03:14:17.3634292Z",
+          "updatedOn": "2022-02-09T03:14:17.3634292Z",
+          "expandedProperties": {
+            "principal": {
+              "id": "83c8ec42-3f9f-4290-aa06-50fa91cbc645",
+              "displayName": "ImportGlossaryTest",
+              "type": "ServicePrincipal"
+            },
+            "roleDefinition": {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Authorization/roleDefinitions/f526a384-b230-433a-b45c-95f59c4a2dec",
+              "displayName": "Azure Event Hubs Data Owner"
+            },
+            "scope": {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/managed-rg-ImportGlossaryTest",
+              "displayName": "managed-rg-ImportGlossaryTest",
+              "type": "resourcegroup"
+            }
+          }
+        },
+        "name": "e1cc94a4-2847-4a75-bf98-492fddd6ee6b",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/managed-rg-ImportGlossaryTest/providers/Microsoft.Authorization/roleAssignmentSchedules/e1cc94a4-2847-4a75-bf98-492fddd6ee6b",
+        "type": "Microsoft.Authorization/roleAssignmentSchedules"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1710409481",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

@@ -40,7 +40,9 @@ namespace Azure.Storage.Files.DataLake
                     ETag = containerProperties.ETag,
                     Metadata = containerProperties.Metadata,
                     DeletedOn = containerProperties.DeletedOn,
-                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays,
+                    DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -114,7 +116,8 @@ namespace Azure.Storage.Files.DataLake
                 AccessTier = blobProperties.AccessTier,
                 ArchiveStatus = blobProperties.ArchiveStatus,
                 AccessTierChangedOn = blobProperties.AccessTierChangedOn,
-                ExpiresOn = blobProperties.ExpiresOn
+                ExpiresOn = blobProperties.ExpiresOn,
+                EncryptionScope = blobProperties.EncryptionScope
             };
 
         internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
@@ -504,43 +507,38 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                // TODO #27253
-                //TransactionalHashingOptions = options.TransactionalHashingOptions
+                TransferValidationOptions = options.TransferValidationOptions
             };
         }
 
-        // TODO #27253
-        //internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
-        //{
-        //    if (options == null)
-        //    {
-        //        return null;
-        //    }
+        internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
 
-        //    return new BlobDownloadOptions()
-        //    {
-        //        Range = options.Range,
-        //        Conditions = options.Conditions.ToBlobRequestConditions(),
-        //        // TODO #27253
-        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
-        //    };
-        //}
+            return new BlobDownloadOptions()
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferValidationOptions = options.TransferValidationOptions
+            };
+        }
 
-        // TODO #27253
-        //internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
-        //{
-        //    if (options == null)
-        //    {
-        //        return null;
-        //    }
-        //    return new BlobDownloadToOptions()
-        //    {
-        //        Conditions = options.Conditions.ToBlobRequestConditions(),
-        //        TransferOptions = options.TransferOptions,
-        //        // TODO #27253
-        //        //TransactionalHashingOptions = options.TransactionalHashingOptions
-        //    };
-        //}
+        internal static BlobDownloadToOptions ToBlobBaseDownloadToOptions(this DataLakeFileReadToOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+            return new BlobDownloadToOptions()
+            {
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                TransferOptions = options.TransferOptions,
+                TransferValidationOptions = options.TransferValidationOptions
+            };
+        }
 
         internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
             => new PathSegment
@@ -577,25 +575,37 @@ namespace Azure.Storage.Files.DataLake
                 Group = path.Group,
                 Permissions = path.Permissions,
                 CreatedOn = ParseFileTimeString(path.CreationTime),
-                ExpiresOn = ParseFileTimeString(path.ExpiryTime)
+                ExpiresOn = ParseFileTimeString(path.ExpiryTime),
+                EncryptionScope = path.EncryptionScope
             };
         }
 
         internal static DateTimeOffset? ParseFileTimeString(string fileTimeString)
         {
-            if (fileTimeString == null)
+            if (string.IsNullOrEmpty(fileTimeString))
             {
                 return null;
             }
 
-            long fileTimeLong = long.Parse(fileTimeString, CultureInfo.InvariantCulture);
-
-            if (fileTimeLong == 0)
+            // fileTimeString can come back as either in ticks or in a proper readable format
+            // If the service gives us the format in ticks
+            if (long.TryParse(fileTimeString, NumberStyles.None, CultureInfo.InvariantCulture, out long fileTimeLong))
             {
-                return null;
+                if (fileTimeLong == 0)
+                {
+                    return null;
+                }
+                return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
             }
-
-            return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
+            // If the service gives the format in DAYOFTHEWEEK, DD MMMM YYYY HH:MM:SS ZONE
+            if (DateTimeOffset.TryParse(fileTimeString, default, DateTimeStyles.None, out DateTimeOffset parsedTime))
+            {
+                return parsedTime;
+            }
+            // Reaching here means we got a format from the service we did not expect
+            // Even though we got a successful response from the service we should at least return what the service gave us
+            Errors.InvalidFormat($"When parsing a File Time property of the PathItem, it return in an unexpected format: \"{fileTimeString}\"");
+            return default;
         }
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
@@ -883,6 +893,19 @@ namespace Azure.Storage.Files.DataLake
                 IndexDocument = dataLakeStaticWebsite.IndexDocument,
                 ErrorDocument404Path = dataLakeStaticWebsite.ErrorDocument404Path,
                 DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
+            };
+        }
+        internal static BlobContainerEncryptionScopeOptions ToBlobContainerEncryptionScopeOptions(this DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions)
+        {
+            if (encryptionScopeOptions == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = encryptionScopeOptions.PreventEncryptionScopeOverride
             };
         }
 

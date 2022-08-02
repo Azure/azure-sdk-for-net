@@ -2,6 +2,21 @@
 
 This sample demonstrates scenarios for processing events read from the Event Hubs service.  To begin, please ensure that you're familiar with the items discussed in the [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md) sample.  You'll also need to have the prerequisites and connection string information available, as discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.
 
+## Table of contents
+
+- [Client types](#client-types)
+- [Event lifetime](#event-lifetime)
+- [Processing and consumer groups](#processing-and-consumer-groups)
+- [Processing and partitions](#processing-and-partitions)
+- [Checkpointing](#checkpointing)
+- [Load balancing](#load-balancing)
+- [Starting and stopping processing](#starting-and-stopping-processing)
+- [Interacting with the processor while running](#interacting-with-the-processor-while-running)
+- [Basic event processing](#basic-event-processing)
+- [Checkpointing while processing](#checkpointing-while-processing)
+- [Requesting a default starting point for processing](#requesting-a-default-starting-point-for-processing)
+- [Heartbeat while processing events](#heartbeat-while-processing-events)
+
 ## Client types
 
 The `EventProcessorClient` is intended to provide a robust and resilient client for processing events from an Event Hub and is capable of automatically managing the recovery process for transient failures.  It will also collaborate with other `EventProcessorClient` instances to dynamically distribute and share processing responsibility as processors are added and removed from the group.

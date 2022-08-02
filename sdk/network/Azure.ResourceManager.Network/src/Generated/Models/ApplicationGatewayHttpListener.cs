@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
         internal ApplicationGatewayHttpListener(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, NetworkProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;
             FrontendPort = frontendPort;
             Protocol = protocol;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Frontend IP configuration resource of an application gateway. </summary>
         internal WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("destination");

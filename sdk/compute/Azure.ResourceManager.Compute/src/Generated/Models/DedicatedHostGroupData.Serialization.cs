@@ -29,14 +29,17 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -51,6 +54,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("supportAutomaticPlacement");
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
+            if (Optional.IsDefined(AdditionalCapabilities))
+            {
+                writer.WritePropertyName("additionalCapabilities");
+                writer.WriteObjectValue(AdditionalCapabilities);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -58,16 +66,17 @@ namespace Azure.ResourceManager.Compute
         internal static DedicatedHostGroupData DeserializeDedicatedHostGroupData(JsonElement element)
         {
             Optional<IList<string>> zones = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<int> platformFaultDomainCount = default;
             Optional<IReadOnlyList<SubResource>> hosts = default;
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
+            Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"))
@@ -87,6 +96,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -117,6 +131,11 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -174,11 +193,21 @@ namespace Azure.ResourceManager.Compute
                             supportAutomaticPlacement = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("additionalCapabilities"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DedicatedHostGroupData(id, name, type, systemData, tags, location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement));
+            return new DedicatedHostGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
         }
     }
 }

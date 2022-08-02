@@ -1,17 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
         "Content-Length": "127",
         "Content-Type": "application/json",
-        "traceparent": "00-2e48d99fd128fc419aafab5fe6c65cb4-2a751c91a2603a42-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220505.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "6a8d7cb49c78645588ea934a1a63fb3b",
+        "traceparent": "00-3ffd047af7fbd9ac0969c6b4a884b0d3-d1bd7f768418209c-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "822f7d3be03d6d16a5f3bf6c0fc0fa3b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,11 +27,11 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "d4cc9c48-827c-4778-8839-7ceed6e721e4",
+        "apim-request-id": "573cf883-678e-4830-aae4-eeef596e24c4",
         "Content-Length": "205",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Thu, 05 May 2022 16:35:42 GMT",
+        "Date": "Thu, 21 Jul 2022 23:23:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "8"
@@ -58,7 +57,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2029314783",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "599162669",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

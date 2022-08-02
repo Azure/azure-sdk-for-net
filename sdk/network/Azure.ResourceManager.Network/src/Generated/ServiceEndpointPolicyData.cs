@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
         internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Kind = kind;
             ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
             Subnets = subnets;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>

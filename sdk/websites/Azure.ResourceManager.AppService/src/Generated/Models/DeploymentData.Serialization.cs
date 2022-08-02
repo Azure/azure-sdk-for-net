@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("end_time");
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Active))
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active");
-                writer.WriteBooleanValue(Active.Value);
+                writer.WriteBooleanValue(IsActive.Value);
             }
             if (Optional.IsDefined(Details))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<int> status = default;
             Optional<string> message = default;
             Optional<string> author = default;
@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new DeploymentData(id, name, type, systemData, kind.Value, Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(active), details.Value);
+            return new DeploymentData(id, name, type, systemData.Value, Optional.ToNullable(status), message.Value, author.Value, deployer.Value, authorEmail.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(active), details.Value, kind.Value);
         }
     }
 }

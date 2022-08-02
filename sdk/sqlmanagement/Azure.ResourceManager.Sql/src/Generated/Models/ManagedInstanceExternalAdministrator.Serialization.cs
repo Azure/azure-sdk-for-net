@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(AzureADOnlyAuthentication))
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication");
-                writer.WriteBooleanValue(AzureADOnlyAuthentication.Value);
+                writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ManagedInstanceExternalAdministrator DeserializeManagedInstanceExternalAdministrator(JsonElement element)
         {
-            Optional<AdministratorType> administratorType = default;
-            Optional<PrincipalType> principalType = default;
+            Optional<SqlAdministratorType> administratorType = default;
+            Optional<SqlServerPrincipalType> principalType = default;
             Optional<string> login = default;
             Optional<Guid> sid = default;
             Optional<Guid> tenantId = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    administratorType = new AdministratorType(property.Value.GetString());
+                    administratorType = new SqlAdministratorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("principalType"))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    principalType = new PrincipalType(property.Value.GetString());
+                    principalType = new SqlServerPrincipalType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("login"))

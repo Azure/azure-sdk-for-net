@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-01";
+            _apiVersion = apiVersion ?? "2022-01-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string galleryName, SelectPermissions? select)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string galleryName, SelectPermission? select, GalleryExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -211,6 +211,10 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("$select", select.Value.ToString(), true);
             }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -222,16 +226,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="expand"> The expand query option to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GalleryData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GalleryData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, select);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, select, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -254,16 +259,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
+        /// <param name="expand"> The expand query option to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GalleryData> Get(string subscriptionId, string resourceGroupName, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public Response<GalleryData> Get(string subscriptionId, string resourceGroupName, string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, select);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, select, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

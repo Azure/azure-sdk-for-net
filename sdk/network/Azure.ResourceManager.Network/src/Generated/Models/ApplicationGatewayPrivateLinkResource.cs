@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Group identifier of private link resource. </summary>
         public string GroupId { get; }
         /// <summary> Required member names of private link resource. </summary>

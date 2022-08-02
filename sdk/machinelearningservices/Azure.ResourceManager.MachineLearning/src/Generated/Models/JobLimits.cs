@@ -9,7 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The JobLimits. </summary>
+    /// <summary>
+    /// The JobLimits.
+    /// Please note <see cref="JobLimits"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SweepJobLimits"/> and <see cref="CommandJobLimits"/>.
+    /// </summary>
     public partial class JobLimits
     {
         /// <summary> Initializes a new instance of JobLimits. </summary>

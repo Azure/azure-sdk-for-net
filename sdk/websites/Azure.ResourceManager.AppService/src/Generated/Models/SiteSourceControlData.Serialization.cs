@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("isGitHubAction");
                 writer.WriteBooleanValue(IsGitHubAction.Value);
             }
-            if (Optional.IsDefined(DeploymentRollbackEnabled))
+            if (Optional.IsDefined(IsDeploymentRollbackEnabled))
             {
                 writer.WritePropertyName("deploymentRollbackEnabled");
-                writer.WriteBooleanValue(DeploymentRollbackEnabled.Value);
+                writer.WriteBooleanValue(IsDeploymentRollbackEnabled.Value);
             }
             if (Optional.IsDefined(IsMercurial))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<Uri> repoUrl = default;
             Optional<string> branch = default;
             Optional<bool> isManualIntegration = default;
@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -190,7 +195,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteSourceControlData(id, name, type, systemData, kind.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value);
+            return new SiteSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value, kind.Value);
         }
     }
 }

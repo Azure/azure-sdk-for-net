@@ -5,47 +5,57 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
+// this is required, the generator will generate another SystemData in Azure.ResourceManager.Monitor.Models under the hood and remove it in the last step if it is unused. If we did not specify that, it will have ambiguity while determining if that SystemData is truly unused
+using SystemData = Azure.ResourceManager.Models.SystemData;
 
 namespace Azure.ResourceManager.Monitor
 {
     public partial class LogProfileData
     {
+        // this customization method is here to fix the deserialization issue for some non-nullable properties
+        // they will return as nullable in the service response
         internal static LogProfileData DeserializeLogProfileData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Azure.ResourceManager.Models.SystemData systemData = default;
-            Optional<string> storageAccountId = default;
-            Optional<string> serviceBusRuleId = default;
-            IList<string> locations = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> serviceBusRuleId = default;
+            IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind != JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property0 in property.Value.EnumerateObject())
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
-                        tags = dictionary;
+                        // change this to nullable since the service might send null value for tags in the response
+                        tags = null;
+                        continue;
                     }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
+                    // enclosing this deserialization in this if since the service might return null value for this property
+                    // and we cannot resolve this using a directive since this property is inherited from base type ResourceData
                     if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        location = property.Value.GetString();
+                        location = new AzureLocation(property.Value.GetString());
                     }
                     continue;
                 }
@@ -61,15 +71,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"))
                 {
+                    // enclosing this deserialization in this if since the service might return null value for this property
+                    // and we cannot resolve this using a directive since this property is inherited from base type ResourceData
                     if (property.Value.ValueKind != JsonValueKind.Null)
                     {
-                        type = property.Value.GetString();
+                        type = new ResourceType(property.Value.GetString());
                     }
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<Azure.ResourceManager.Models.SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -83,20 +100,30 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("storageAccountId"))
                         {
-                            storageAccountId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                storageAccountId = null;
+                                continue;
+                            }
+                            storageAccountId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("serviceBusRuleId"))
                         {
-                            serviceBusRuleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                serviceBusRuleId = null;
+                                continue;
+                            }
+                            serviceBusRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("locations"))
                         {
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             locations = array;
                             continue;
@@ -120,7 +147,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogProfileData(id, name, type, systemData, tags, location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
+            return new LogProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
         }
     }
 }

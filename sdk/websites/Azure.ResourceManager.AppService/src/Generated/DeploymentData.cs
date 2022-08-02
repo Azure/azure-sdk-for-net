@@ -7,13 +7,12 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the Deployment data model. </summary>
-    public partial class DeploymentData : ProxyOnlyResource
+    public partial class DeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of DeploymentData. </summary>
         public DeploymentData()
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Deployment status. </param>
         /// <param name="message"> Details about deployment status. </param>
         /// <param name="author"> Who authored the deployment. </param>
@@ -33,9 +31,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="authorEmail"> Author email. </param>
         /// <param name="startOn"> Start time. </param>
         /// <param name="endOn"> End time. </param>
-        /// <param name="active"> True if deployment is currently active, false if completed and null if not started. </param>
+        /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? active, string details) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, string kind) : base(id, name, resourceType, systemData)
         {
             Status = status;
             Message = message;
@@ -44,8 +43,9 @@ namespace Azure.ResourceManager.AppService
             AuthorEmail = authorEmail;
             StartOn = startOn;
             EndOn = endOn;
-            Active = active;
+            IsActive = isActive;
             Details = details;
+            Kind = kind;
         }
 
         /// <summary> Deployment status. </summary>
@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> End time. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
-        public bool? Active { get; set; }
+        public bool? IsActive { get; set; }
         /// <summary> Details on deployment. </summary>
         public string Details { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
         internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ProvisioningState = provisioningState;
             IPAddresses = ipAddresses;
             Firewalls = firewalls;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the IpGroups resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>

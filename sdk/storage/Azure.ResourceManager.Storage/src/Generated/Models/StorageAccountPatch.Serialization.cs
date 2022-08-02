@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowCrossTenantReplication");
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(DefaultToOAuthAuthentication))
+            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication");
-                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
+                writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -144,6 +144,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("allowedCopyScope");
                 writer.WriteStringValue(AllowedCopyScope.Value.ToString());
+            }
+            if (Optional.IsDefined(DnsEndpointType))
+            {
+                writer.WritePropertyName("dnsEndpointType");
+                writer.WriteStringValue(DnsEndpointType.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

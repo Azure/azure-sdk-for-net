@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         {
             Sku = sku;
             Zones = zones;
-            Etag = etag;
+            ETag = etag;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             PublicIPAddresses = publicIPAddresses;
             PublicIPPrefixes = publicIPPrefixes;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </summary>
         public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The idle timeout of the nat gateway. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> An array of public ip addresses associated with the nat gateway resource. </summary>

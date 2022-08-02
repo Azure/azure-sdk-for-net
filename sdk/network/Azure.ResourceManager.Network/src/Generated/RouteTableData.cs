@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the route table. </param>
         internal RouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Routes = routes;
             Subnets = subnets;
             DisableBgpRoutePropagation = disableBgpRoutePropagation;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Collection of routes contained within a route table. </summary>
         public IList<RouteData> Routes { get; }
         /// <summary> A collection of references to subnets. </summary>

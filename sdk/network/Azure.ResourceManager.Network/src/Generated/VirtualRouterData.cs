@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         internal VirtualRouterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             VirtualRouterAsn = virtualRouterAsn;
             VirtualRouterIPs = virtualRouterIPs;
             HostedSubnet = hostedSubnet;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> VirtualRouter ASN. </summary>
         public long? VirtualRouterAsn { get; set; }
         /// <summary> VirtualRouter IPs. </summary>

@@ -72,7 +72,7 @@ jobs:
           Location: "westus"
         MacOs (AzureCloud):
           Pool: Azure Pipelines
-          OSVmImage: "macOS-10.15"
+          OSVmImage: "macos-11"
           TestTargetFramework: netcoreapp3.1
           SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
           ArmTemplateParameters: $(azureCloudArmParameters)

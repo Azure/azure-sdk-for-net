@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static CacheExpirationActionProperties DeserializeCacheExpirationActionProperties(JsonElement element)
         {
             CacheExpirationActionType typeName = default;
-            CacheBehaviorSettings cacheBehavior = default;
-            CacheLevel cacheType = default;
+            CacheBehaviorSetting cacheBehavior = default;
+            CdnCacheLevel cacheType = default;
             Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("cacheBehavior"))
                 {
-                    cacheBehavior = new CacheBehaviorSettings(property.Value.GetString());
+                    cacheBehavior = new CacheBehaviorSetting(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheType"))
                 {
-                    cacheType = new CacheLevel(property.Value.GetString());
+                    cacheType = new CdnCacheLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cacheDuration"))

@@ -73,6 +73,9 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 - [Building a Custom Event Processor using EventProcessor&lt;TPartition&gt;](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample08_CustomEventProcessor.md)  
   An introduction to the `EventProcessor<TPartition>` base class which is used when building advanced processors which need full control over state management.
 
+- [Observable Event Data Batch](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ObservableEventBatch.md)  
+  A demonstration of how to write an `ObservableEventDataBatch` class that wraps an `EventDataBatch` in order to allow an application to read events that have been added to a batch.
+
 - [Capturing Event Hubs logs using AzureEventSourceListener class](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample10_AzureEventSourceListener.md)  
   A demonstration of how to use the [`AzureEventSourceListener`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) from the `Azure.Core` package to capture logs emitted by the Event Hubs client library.
 

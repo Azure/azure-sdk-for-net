@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             */
 
             // Create a vault first
-            VaultResource vaultResource = (await CreateVault()).Value;
+            KeyVaultResource vaultResource = (await CreateVault()).Value;
             // Create a vnet
             VirtualNetworkResource vnetResource = (await createVirtualNetwork()).Value;
 
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Location = Location,
                 Subnet = vnetResource.Data.Subnets[0],
                 ManualPrivateLinkServiceConnections = {
-                    new PrivateLinkServiceConnection
+                    new NetworkPrivateLinkServiceConnection
                     {
                         Name = Recording.GenerateAssetName("pec"),
                         // TODO: externalize or create the service on-demand, like virtual network
                         //PrivateLinkServiceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}",
-                        PrivateLinkServiceId = vaultResource.Data.Id.ToString(),
+                        PrivateLinkServiceId = vaultResource.Data.Id,
 
                         RequestMessage = "SDK test",
                         GroupIds = { "vault" }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Subnets = { new SubnetData() {
                     Name = "default",
                     AddressPrefix = "10.0.1.0/24",
-                    PrivateEndpointNetworkPolicies = VirtualNetworkPrivateEndpointNetworkPolicies.Disabled
+                    PrivateEndpointNetworkPolicy = VirtualNetworkPrivateEndpointNetworkPolicy.Disabled
                 }}
             };
             vnet.AddressPrefixes.Add("10.0.0.0/16");
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return await networks.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
         }
 
-        private async Task<ArmOperation<VaultResource>> CreateVault()
+        private async Task<ArmOperation<KeyVaultResource>> CreateVault()
         {
             // Create a Vault first
-            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             return await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
         }

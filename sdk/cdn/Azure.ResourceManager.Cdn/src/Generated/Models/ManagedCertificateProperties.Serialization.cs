@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static ManagedCertificateProperties DeserializeManagedCertificateProperties(JsonElement element)
         {
             Optional<string> subject = default;
-            Optional<string> expirationDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,7 +35,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("expirationDate"))
                 {
-                    expirationDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -43,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ManagedCertificateProperties(type, subject.Value, expirationDate.Value);
+            return new ManagedCertificateProperties(type, subject.Value, Optional.ToNullable(expirationDate));
         }
     }
 }

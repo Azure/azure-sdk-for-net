@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("productType");
                 writer.WriteStringValue(ProductType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew");
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Csr))
             {
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<IDictionary<string, AppServiceCertificate>> certificates = default;
+            Optional<SystemData> systemData = default;
+            Optional<IDictionary<string, AppServiceCertificateProperties>> certificates = default;
             Optional<string> distinguishedName = default;
             Optional<string> domainVerificationToken = default;
             Optional<int> validityInYears = default;
@@ -121,6 +121,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -140,10 +145,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, AppServiceCertificate> dictionary = new Dictionary<string, AppServiceCertificate>();
+                            Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificate.DeserializeAppServiceCertificate(property1.Value));
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
                             }
                             certificates = dictionary;
                             continue;
@@ -327,7 +332,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificateOrderPatch(id, name, type, systemData, kind.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value);
+            return new AppServiceCertificateOrderPatch(id, name, type, systemData.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value, kind.Value);
         }
     }
 }

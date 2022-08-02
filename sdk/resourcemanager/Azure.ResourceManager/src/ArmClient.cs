@@ -25,7 +25,7 @@ namespace Azure.ResourceManager
         private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
 
-        private Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+        internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
         internal ConcurrentDictionary<string, string> NamespaceVersionCache { get; } = new ConcurrentDictionary<string, string>();

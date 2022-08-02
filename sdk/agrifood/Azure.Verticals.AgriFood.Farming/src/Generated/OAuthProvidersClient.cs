@@ -64,38 +64,58 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get a specified oauthProvider resource. </summary>
         /// <param name="oauthProviderId"> ID of the oauthProvider resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetOAuthProviderAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetOAuthProviderAsync("<oauthProviderId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("appId").ToString());
+        /// Console.WriteLine(result.GetProperty("appSecret").ToString());
+        /// Console.WriteLine(result.GetProperty("apiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthProvider</c>:
         /// <code>{
-        ///   appId: string,
-        ///   appSecret: string,
-        ///   apiKey: string,
-        ///   isProductionApp: boolean,
-        ///   id: string,
-        ///   eTag: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -120,38 +140,58 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get a specified oauthProvider resource. </summary>
         /// <param name="oauthProviderId"> ID of the oauthProvider resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetOAuthProvider with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetOAuthProvider("<oauthProviderId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("appId").ToString());
+        /// Console.WriteLine(result.GetProperty("appSecret").ToString());
+        /// Console.WriteLine(result.GetProperty("apiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthProvider</c>:
         /// <code>{
-        ///   appId: string,
-        ///   appSecret: string,
-        ///   apiKey: string,
-        ///   isProductionApp: boolean,
-        ///   id: string,
-        ///   eTag: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -176,54 +216,108 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Creates or updates an oauthProvider resource. </summary>
         /// <param name="oauthProviderId"> ID of oauthProvider resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<oauthProviderId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("appId").ToString());
+        /// Console.WriteLine(result.GetProperty("appSecret").ToString());
+        /// Console.WriteLine(result.GetProperty("apiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>OAuthProvider</c>:
         /// <code>{
-        ///   appId: string,
-        ///   appSecret: string,
-        ///   apiKey: string,
-        ///   isProductionApp: boolean,
-        ///   id: string,
-        ///   eTag: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthProvider</c>:
         /// <code>{
-        ///   appId: string,
-        ///   appSecret: string,
-        ///   apiKey: string,
-        ///   isProductionApp: boolean,
-        ///   id: string,
-        ///   eTag: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -248,54 +342,108 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Creates or updates an oauthProvider resource. </summary>
         /// <param name="oauthProviderId"> ID of oauthProvider resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<oauthProviderId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("appId").ToString());
+        /// Console.WriteLine(result.GetProperty("appSecret").ToString());
+        /// Console.WriteLine(result.GetProperty("apiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>OAuthProvider</c>:
         /// <code>{
-        ///   appId: string,
-        ///   appSecret: string,
-        ///   apiKey: string,
-        ///   isProductionApp: boolean,
-        ///   id: string,
-        ///   eTag: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthProvider</c>:
         /// <code>{
-        ///   appId: string,
-        ///   appSecret: string,
-        ///   apiKey: string,
-        ///   isProductionApp: boolean,
-        ///   id: string,
-        ///   eTag: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -320,27 +468,22 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Deletes an specified oauthProvider resource. </summary>
         /// <param name="oauthProviderId"> ID of oauthProvider. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
-        /// </remarks>
+        /// Response response = await client.DeleteAsync("<oauthProviderId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteAsync(string oauthProviderId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
@@ -361,27 +504,22 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Deletes an specified oauthProvider resource. </summary>
         /// <param name="oauthProviderId"> ID of oauthProvider. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="oauthProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
-        /// </remarks>
+        /// Response response = client.Delete("<oauthProviderId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response Delete(string oauthProviderId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
@@ -417,42 +555,69 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       appId: string,
-        ///       appSecret: string,
-        ///       apiKey: string,
-        ///       isProductionApp: boolean,
-        ///       id: string,
-        ///       eTag: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetOAuthProvidersAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetOAuthProvidersAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetOAuthProvidersAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetOAuthProvidersAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("appId").ToString());
+        ///     Console.WriteLine(result.GetProperty("appSecret").ToString());
+        ///     Console.WriteLine(result.GetProperty("apiKey").ToString());
+        ///     Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthProviderListResponseValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 
@@ -496,42 +661,69 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [
-        ///     {
-        ///       appId: string,
-        ///       appSecret: string,
-        ///       apiKey: string,
-        ///       isProductionApp: boolean,
-        ///       id: string,
-        ///       eTag: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetOAuthProviders and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetOAuthProviders())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetOAuthProviders with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new OAuthProvidersClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetOAuthProviders(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("appId").ToString());
+        ///     Console.WriteLine(result.GetProperty("appSecret").ToString());
+        ///     Console.WriteLine(result.GetProperty("apiKey").ToString());
+        ///     Console.WriteLine(result.GetProperty("isProductionApp").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>OAuthProviderListResponseValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   appId: string, # Optional. OAuth App ID for given OAuth Provider.
+        ///   appSecret: string, # Optional. OAuth App secret for given Provider.
+        /// Note: Won&apos;t be sent in response.
+        ///   apiKey: string, # Optional. OAuth Api key for given Provider.
+        /// Note: currently Applicable to Climate provider. Won&apos;t be sent in response.
+        ///   isProductionApp: boolean, # Optional. An optional flag to determine if the App is ready to be used for Production scenarios in the provider side or not. (Default value: false)
+        /// Note: Currently applicable for JohnDeere.
+        ///   id: string, # Optional. Unique OAuth provider ID.
+        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+        ///   name: string, # Optional. Name to identify resource.
+        ///   description: string, # Optional. Textual description of the resource.
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
         /// }
         /// </code>
         /// 

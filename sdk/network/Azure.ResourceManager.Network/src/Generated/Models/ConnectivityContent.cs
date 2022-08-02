@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The destination of connection. </summary>
         public ConnectivityDestination Destination { get; }
         /// <summary> Network protocol. </summary>
-        public Protocol? Protocol { get; set; }
+        public NetworkWatcherProtocol? Protocol { get; set; }
         /// <summary> Configuration of the protocol. </summary>
         internal ProtocolConfiguration ProtocolConfiguration { get; set; }
         /// <summary> HTTP configuration of the connectivity check. </summary>
-        public HttpConfiguration HttpProtocolConfiguration
+        public NetworkHttpConfiguration HttpProtocolConfiguration
         {
             get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpProtocolConfiguration;
             set
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Preferred IP version of the connection. </summary>
-        public IPVersion? PreferredIPVersion { get; set; }
+        public NetworkIPVersion? PreferredIPVersion { get; set; }
     }
 }

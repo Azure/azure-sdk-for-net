@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
         internal VirtualNetworkTapData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped. </summary>
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations { get; }
         /// <summary> The resource GUID property of the virtual network tap resource. </summary>

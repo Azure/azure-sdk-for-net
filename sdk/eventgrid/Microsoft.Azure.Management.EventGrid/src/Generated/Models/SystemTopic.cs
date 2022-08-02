@@ -47,19 +47,19 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="topicType">TopicType for the system topic.</param>
         /// <param name="metricResourceId">Metric resource id for the system
         /// topic.</param>
-        /// <param name="systemData">The system metadata relating to System
-        /// Topic resource.</param>
         /// <param name="identity">Identity information for the
         /// resource.</param>
-        public SystemTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string source = default(string), string topicType = default(string), string metricResourceId = default(string), SystemData systemData = default(SystemData), IdentityInfo identity = default(IdentityInfo))
+        /// <param name="systemData">The system metadata relating to System
+        /// Topic resource.</param>
+        public SystemTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string source = default(string), string topicType = default(string), string metricResourceId = default(string), IdentityInfo identity = default(IdentityInfo), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             Source = source;
             TopicType = topicType;
             MetricResourceId = metricResourceId;
-            SystemData = systemData;
             Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -95,16 +95,16 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string MetricResourceId { get; private set; }
 
         /// <summary>
-        /// Gets the system metadata relating to System Topic resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
         /// Gets or sets identity information for the resource.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to System Topic resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

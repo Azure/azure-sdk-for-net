@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A private endpoint connection under a managed instance. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstancePecProperty. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
-        internal ManagedInstancePecProperty(string id, ManagedInstancePrivateEndpointConnectionProperties properties)
+        internal ManagedInstancePecProperty(ResourceIdentifier id, ManagedInstancePrivateEndpointConnectionProperties properties)
         {
             Id = id;
             Properties = properties;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Private endpoint connection properties. </summary>
         public ManagedInstancePrivateEndpointConnectionProperties Properties { get; }
     }

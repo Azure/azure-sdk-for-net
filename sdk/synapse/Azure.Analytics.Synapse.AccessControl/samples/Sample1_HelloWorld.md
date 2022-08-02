@@ -19,7 +19,7 @@ RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endp
 First, you need to the determine the ID of the role you wish to assign, along with the ID of the principal you wish to assign that role.
 
 ```C# Snippet:PrepCreateRoleAssignment
-Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(new());
+Response roleDefinitionsResponse = definitionsClient.GetRoleDefinitions(true);
 BinaryData roleDefinitionsContent = roleDefinitionsResponse.Content;
 JsonDocument roleDefinitionsJson = JsonDocument.Parse(roleDefinitionsContent.ToMemory());
 

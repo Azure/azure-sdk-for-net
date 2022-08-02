@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         internal VirtualRouterPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             PeerAsn = peerAsn;
             PeerIP = peerIP;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Peer ASN. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>

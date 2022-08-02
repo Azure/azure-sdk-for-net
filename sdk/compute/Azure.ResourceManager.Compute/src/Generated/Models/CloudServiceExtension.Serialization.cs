@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -46,12 +47,20 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
-                writer.WriteStringValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings");
-                writer.WriteStringValue(ProtectedSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
@@ -84,8 +93,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> type = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<string> settings = default;
-            Optional<string> protectedSettings = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             Optional<CloudServiceVaultAndSecretReference> protectedSettingsFromKeyVault = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> provisioningState = default;
@@ -133,12 +142,22 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("settings"))
                         {
-                            settings = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protectedSettings"))
                         {
-                            protectedSettings = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protectedSettingsFromKeyVault"))

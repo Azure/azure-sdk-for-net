@@ -1,6 +1,14 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.12.0-beta.1 (Unreleased)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+
+## 12.11.0 (2022-07-07)
+- Includes all features from 12.11.0-beta.1.
+- Fixed bug where ShareFileClient and ShareDirectoryClient Rename() was not passing the AzureSasCredential to the source.
+
+## 12.11.0-beta.1 (2022-06-15)
 - Added support for service version 2021-08-06.
 - Added ability to set file change time with ShareFileClient.StartCopy() and .StartCopyAsync().
 

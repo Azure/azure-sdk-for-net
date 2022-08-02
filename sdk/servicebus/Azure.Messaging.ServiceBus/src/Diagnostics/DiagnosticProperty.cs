@@ -139,5 +139,20 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         public static string ProcessSessionMessageActivityName { get; } = "ServiceBusSessionProcessor.ProcessSessionMessage";
+
+        /// <summary>
+        /// The activity name associated with the add rule operation using the <see cref="ServiceBusRuleManager"/>.
+        /// </summary>
+        public static string CreateRuleActivityName { get; } = "ServiceBusRuleManager.CreateRule";
+
+        /// <summary>
+        /// The activity name associated with the delete rule operation using the <see cref="ServiceBusRuleManager"/>.
+        /// </summary>
+        public static string DeleteRuleActivityName { get; } = "ServiceBusRuleManager.DeleteRule";
+
+        /// <summary>
+        /// The activity name associated with the get rules operation using the <see cref="ServiceBusRuleManager"/>.
+        /// </summary>
+        public static string GetRulesActivityName { get; } = "ServiceBusRuleManager.GetRules";
     }
 }
