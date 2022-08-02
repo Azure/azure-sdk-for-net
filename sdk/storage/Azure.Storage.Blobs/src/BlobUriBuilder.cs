@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs
                 ResetUri();
                 // initializing blob name via uri in constructor strips the trailling slash
                 // stripping on property set ensures a consistent experience in reading this value
-                _blobName = !PreserveTrailingSlash && value.EndsWith("/", StringComparison.InvariantCulture)
+                _blobName = !PreserveTrailingSlash && value != null && value.EndsWith("/", StringComparison.InvariantCulture)
                     ? value.Substring(0, value.Length - 1)
                     : value;
             }
