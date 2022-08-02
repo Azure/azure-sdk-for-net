@@ -406,16 +406,16 @@ namespace Azure.Data.AppConfiguration
         /// var client = new ConfigurationClient(endpoint);
         /// 
         /// var data = new {
-        ///     key = "<key>",
-        ///     label = "<label>",
-        ///     content_type = "<content_type>",
-        ///     value = "<value>",
-        ///     last_modified = "2022-05-10T18:57:31.2311892Z",
+        ///     key = "<KeyValueKey>",
+        ///     label = "<KeyValueLabel>",
+        ///     content_type = "<KeyValueContentType>",
+        ///     value = "<KeyValue>",
+        ///     last_modified = "<2022-05-10T14:57:31.2311892-04:00>",
         ///     tags = new {
         ///         key = "<String>",
         ///     },
         ///     locked = true,
-        ///     etag = "<etag>",
+        ///     etag = "<KeyValueEtag>",
         /// };
         /// 
         /// Response response = await client.PutKeyValueAsync("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
@@ -513,16 +513,16 @@ namespace Azure.Data.AppConfiguration
         /// var client = new ConfigurationClient(endpoint);
         /// 
         /// var data = new {
-        ///     key = "<key>",
-        ///     label = "<label>",
-        ///     content_type = "<content_type>",
-        ///     value = "<value>",
-        ///     last_modified = "2022-05-10T18:57:31.2311892Z",
+        ///     key = "<KeyValueKey>",
+        ///     label = "<KeyValueLabel>",
+        ///     content_type = "<KeyValueContentType>",
+        ///     value = "<KeyValue>",
+        ///     last_modified = "<2022-05-10T14:57:31.2311892-04:00>",
         ///     tags = new {
         ///         key = "<String>",
         ///     },
         ///     locked = true,
-        ///     etag = "<etag>",
+        ///     etag = "<KeyValueEtag>",
         /// };
         /// 
         /// Response response = client.PutKeyValue("<key>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<label>", new MatchConditions { IfMatch = "<YOUR_ETAG>" });
