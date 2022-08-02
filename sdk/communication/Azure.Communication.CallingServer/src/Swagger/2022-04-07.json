@@ -369,6 +369,47 @@
         }
       }
     },
+    "/calling/callConnections/{callConnectionId}:recognize": {
+      "post": {
+        "tags": [
+          "MidConnections"
+        ],
+        "summary": "Recognize media from call.",
+        "description": "Recognize media from call.",
+        "operationId": "Content_Recognize",
+        "parameters": [
+          {
+            "name": "callConnectionId",
+            "in": "path",
+            "description": "The call connection id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "recognizeRequest",
+            "in": "body",
+            "description": "The media recognize request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecognizeRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Returns the recognize response."
+          }
+        },
+        "x-ms-examples": {
+          "Recognize media from call.": {
+            "$ref": "./examples/Content_Recognize.json"
+          }
+        }
+      }
+    },
     "/calling/callConnections/{callConnectionId}/participants": {
       "get": {
         "tags": [
@@ -891,6 +932,62 @@
         "callbackUri": {
           "description": "The callback uri.",
           "type": "string"
+        },
+        "mediaStreamingConfiguration": {
+          "$ref": "#/definitions/MediaStreamingConfigurationDto",
+          "description": "Media Streaming Configuration."
+        }
+      }
+    },
+    "MediaStreamingTransportTypeDto": {
+      "description": "The type of tranport to be used for media streaming, eg. Websocket",
+      "enum": [
+        "websocket"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingTransportTypeDto",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingContentTypeDto": {
+      "description": "Content type to stream, eg. audio, audio/video",
+      "enum": [
+        "audio"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingContentTypeDto",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingAudioChannelTypeDto": {
+      "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
+      "enum": [
+        "mixed",
+        "unmixed"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "MediaStreamingAudioChannelTypeDto",
+        "modelAsString": true
+      }
+    },
+    "MediaStreamingConfigurationDto": {
+      "type": "object",
+      "properties": {
+        "transportUrl": {
+          "description": "Transport URL for media streaming",
+          "type": "string"
+        },
+        "transportType": {
+          "$ref": "#/definitions/MediaStreamingTransportTypeDto"
+        },
+        "contentType": {
+          "$ref": "#/definitions/MediaStreamingContentTypeDto"
+        },
+        "audioChannelType": {
+          "$ref": "#/definitions/MediaStreamingAudioChannelTypeDto"
         }
       }
     },
@@ -1053,6 +1150,99 @@
         "uri": {
           "description": "Uri for the audio file to be played",
           "type": "string"
+        }
+      }
+    },
+    "RecognizeInputType": {
+      "description": "Determines the type of the recognition.",
+      "enum": [
+        "dTMF"
+      ],
+      "type": "string",
+      "x-ms-enum": {
+        "name": "RecognizeInputType",
+        "modelAsString": true
+      }
+    },
+    "RecognizeRequest": {
+      "required": [
+        "recognizeOptions"
+      ],
+      "type": "object",
+      "properties": {
+        "recognizeInputType": {
+          "$ref": "#/definitions/RecognizeInputType"
+        },
+        "playSourceInfo": {
+          "$ref": "#/definitions/PlaySource",
+          "description": "The source of the audio to be played for recognition."
+        },
+        "stopCurrentOperations": {
+          "description": "If set recognize can barge into other existing queued-up/currently-processing requests.",
+          "type": "boolean"
+        },
+        "recognizeOptions": {
+          "$ref": "#/definitions/RecognizeOptions",
+          "description": "Defines options for recognition."
+        },
+        "operationContext": {
+          "description": "The value to identify context of the operation.",
+          "type": "string"
+        }
+      }
+    },
+    "RecognizeOptions": {
+      "type": "object",
+      "properties": {
+        "pausePlayOnResponse": {
+          "description": "Determines if we pause the prompt and start recognizing.",
+          "type": "boolean"
+        },
+        "initialSilenceTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Time to wait for first input after prompt (if any) plays.",
+          "type": "integer"
+        },
+        "dtmfOptions": {
+          "$ref": "#/definitions/DtmfOptions",
+          "description": "Defines options for DTMF."
+        }
+      }
+    },
+    "DtmfOptions": {
+      "description": "Options for DTMF tone recognition",
+      "type": "object",
+      "properties": {
+        "collectTones": {
+          "$ref": "#/definitions/CollectTones",
+          "description": "Collects the number of digit in DTMF."
+        },
+        "dtfmToneProducer": {
+          "$ref": "#/definitions/CommunicationIdentifierModel",
+          "description": "Dtmf tone producer participant"
+        }
+      }
+    },
+    "CollectTones": {
+      "description": "Container for collecting tones for DTFM.",
+      "type": "object",
+      "properties": {
+        "interToneTimeoutInSeconds": {
+          "format": "int32",
+          "description": "Time to wait between DTMF inputs to stop recognizing.",
+          "type": "integer"
+        },
+        "maxTonesToCollect": {
+          "format": "int32",
+          "description": "Maximum number of DTMFs to be collected.",
+          "type": "integer"
+        },
+        "stopTones": {
+          "description": "List of tones that will stop recognizing.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

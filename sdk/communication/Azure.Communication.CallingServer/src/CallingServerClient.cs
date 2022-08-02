@@ -107,12 +107,14 @@ namespace Azure.Communication.CallingServer
         }
 
         /// Answer an incoming call.
-        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="incomingCallContext"> The incoming call context. </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="mediaStreamingConfiguration">Configuration for Media Streaming. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackUri,
+            MediaStreamingConfiguration mediaStreamingConfiguration = default,  CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
             scope.Start();
@@ -120,6 +122,18 @@ namespace Azure.Communication.CallingServer
             {
                 AnswerCallRequestInternal request = new AnswerCallRequestInternal(incomingCallContext);
                 request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                if (mediaStreamingConfiguration != null)
+                {
+                    MediaStreamingConfigurationDtoInternal mediaConfig = new MediaStreamingConfigurationDtoInternal()
+                    {
+                        TransportType = mediaStreamingConfiguration.TransportType,
+                        AudioChannelType = mediaStreamingConfiguration.AudioChannelType,
+                        TransportUrl = mediaStreamingConfiguration.TransportUrl,
+                        ContentType = mediaStreamingConfiguration.ContentType,
+                    };
+                    request.MediaStreamingConfiguration = mediaConfig;
+                }
 
                 var answerResponse = await ServerCallingRestClient.AnswerCallAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -136,10 +150,11 @@ namespace Azure.Communication.CallingServer
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="mediaStreamingConfiguration">Configuration for Media Streaming. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackUri, MediaStreamingConfiguration mediaStreamingConfiguration = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
             scope.Start();
@@ -147,6 +162,18 @@ namespace Azure.Communication.CallingServer
             {
                 AnswerCallRequestInternal request = new AnswerCallRequestInternal(incomingCallContext);
                 request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                if (mediaStreamingConfiguration != null)
+                {
+                    MediaStreamingConfigurationDtoInternal mediaConfig = new MediaStreamingConfigurationDtoInternal()
+                    {
+                        TransportType = mediaStreamingConfiguration.TransportType,
+                        AudioChannelType = mediaStreamingConfiguration.AudioChannelType,
+                        TransportUrl = mediaStreamingConfiguration.TransportUrl,
+                        ContentType = mediaStreamingConfiguration.ContentType,
+                    };
+                    request.MediaStreamingConfiguration = mediaConfig;
+                }
 
                 var answerResponse = ServerCallingRestClient.AnswerCall(request,
                     cancellationToken: cancellationToken);
