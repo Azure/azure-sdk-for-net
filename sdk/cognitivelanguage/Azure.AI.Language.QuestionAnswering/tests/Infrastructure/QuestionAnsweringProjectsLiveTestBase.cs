@@ -2,19 +2,34 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Language.QuestionAnswering.Projects;
 using Azure.Core;
-using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
 {
     public partial class QuestionAnsweringProjectsLiveTestBase : QuestionAnsweringTestBase<QuestionAnsweringProjectsClient>
     {
+        private ConcurrentQueue<string> _projects = new();
+
         public QuestionAnsweringProjectsLiveTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
+        }
+
+        [TearDown]
+        public async Task DeleteProjectsAsync()
+        {
+            List<Task> tasks = new();
+            while (_projects.TryDequeue(out string projectName))
+            {
+                tasks.Add(Client.DeleteProjectAsync(WaitUntil.Completed, projectName));
+            }
+
+            await Task.WhenAll(tasks);
         }
 
         protected string CreateTestProjectName()
@@ -41,6 +56,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 );
 
             Client.CreateProject(projectName, creationRequestContent);
+            _projects.Enqueue(projectName);
         }
 
         protected async Task<Response> CreateProjectAsync(string projectName = default)
@@ -61,7 +77,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 }
                 );
 
-            return await Client.CreateProjectAsync(projectName, creationRequestContent);
+            Response response = await Client.CreateProjectAsync(projectName, creationRequestContent);
+            _projects.Enqueue(projectName);
+
+            return response;
         }
 
         protected async Task DeleteProjectAsync(string projectName)
