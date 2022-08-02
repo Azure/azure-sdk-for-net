@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2020-06-01.</param>
         /// <param name="additionalCapabilities">Enables or disables a
         /// capability on the dedicated host group.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2022-08-01.</param>
+        /// api-version: 2022-03-01.</param>
         /// <param name="zones">Availability Zone to use for this host group.
         /// Only single zone is supported. The zone can be assigned only during
         /// creation. If not provided, the group supports all zones in the
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets enables or disables a capability on the dedicated host
         /// group.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2022-08-01.
+        /// 2022-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalCapabilities")]
         public DedicatedHostGroupPropertiesAdditionalCapabilities AdditionalCapabilities { get; set; }

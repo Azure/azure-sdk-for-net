@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Enables or disables a capability on the dedicated host
-    /// group.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-08-01.
+    /// group.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01.
     /// </summary>
     public partial class DedicatedHostGroupPropertiesAdditionalCapabilities
     {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for more details on Ultra SSD feature. &lt;br&gt;&lt;br&gt;NOTE:
         /// The ultraSSDEnabled setting can only be enabled for Host Groups
         /// that are created as zonal. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2022-08-01.</param>
+        /// 2022-03-01.</param>
         public DedicatedHostGroupPropertiesAdditionalCapabilities(bool? ultraSSDEnabled = default(bool?))
         {
             UltraSSDEnabled = ultraSSDEnabled;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;NOTE: The ultraSSDEnabled
         /// setting can only be enabled for Host Groups that are created as
         /// zonal. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2022-08-01.
+        /// 2022-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "ultraSSDEnabled")]
         public bool? UltraSSDEnabled { get; set; }
