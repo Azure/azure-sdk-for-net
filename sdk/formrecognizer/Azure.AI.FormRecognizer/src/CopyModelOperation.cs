@@ -183,7 +183,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == DocumentOperationStatus.Succeeded)
             {
-                return OperationState<DocumentModelDetails>.Success(rawResponse, response.Value.Result);
+                var modelDetails = new DocumentModelDetails(response.Value.Result);
+                return OperationState<DocumentModelDetails>.Success(rawResponse, modelDetails);
             }
             else if (status == DocumentOperationStatus.Failed)
             {

@@ -67,7 +67,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelDetails model = operation.Value;
 
-            ValidateDocumentModel(model);
+            ValidateDocumentModelDetails(model);
 
             Assert.AreEqual(1, model.DocTypes.Count);
             Assert.IsTrue(model.DocTypes.ContainsKey(modelId));
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelDetails model = operation.Value;
 
-            ValidateDocumentModel(model);
+            ValidateDocumentModelDetails(model);
 
             Assert.AreEqual(1, model.DocTypes.Count);
             Assert.IsTrue(model.DocTypes.ContainsKey(modelId));
@@ -191,7 +191,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelDetails model = await client.GetModelAsync("prebuilt-businessCard");
 
-            ValidateDocumentModel(model);
+            ValidateDocumentModelDetails(model);
             Assert.NotNull(model.Description);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
             DocumentModelDetails resultModel = await client.GetModelAsync(modelId);
 
-            ValidateDocumentModel(resultModel, description, TestingTags);
+            ValidateDocumentModelDetails(resultModel, description, TestingTags);
 
             DocumentModelSummary modelSummary = client.GetModelsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(m => m.ModelId == modelId);
@@ -325,7 +325,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelDetails copiedModel = operation.Value;
 
-            ValidateDocumentModel(copiedModel);
+            ValidateDocumentModelDetails(copiedModel);
             Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
             Assert.AreNotEqual(trainedModel.ModelId, copiedModel.ModelId);
 
@@ -413,7 +413,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelDetails composedModel = operation.Value;
 
-            ValidateDocumentModel(composedModel);
+            ValidateDocumentModelDetails(composedModel);
 
             Assert.AreEqual(2, composedModel.DocTypes.Count);
             Assert.IsTrue(composedModel.DocTypes.ContainsKey(modelAId));
@@ -493,7 +493,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             if (operationDetails.Status == DocumentOperationStatus.Succeeded)
             {
                 Assert.AreEqual(100, operationDetails.PercentCompleted);
-                ValidateDocumentModel(operationDetails.Result);
+                ValidateDocumentModelDetails(operationDetails.Result);
             }
             else if (operationDetails.Status == DocumentOperationStatus.Failed)
             {
@@ -503,9 +503,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateDocumentModel(DocumentModelDetails model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModelDetails(DocumentModelDetails model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            ValidateDocumentModelSummary(model, description, tags);
+            if (description != null)
+            {
+                Assert.AreEqual(description, model.Description);
+            }
+
+            if (tags != null)
+            {
+                CollectionAssert.AreEquivalent(tags, model.Tags);
+            }
+
+            Assert.IsNotNull(model.ModelId);
+            Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
 
             // TODO add validation for Doctypes https://github.com/Azure/azure-sdk-for-net-pr/issues/1432
         }
@@ -523,8 +534,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
 
             Assert.IsNotNull(model.ModelId);
-            Assert.IsNotNull(model.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), model.CreatedOn);
+            Assert.AreNotEqual(default(DateTimeOffset), model.CreatedOn);
         }
     }
 }

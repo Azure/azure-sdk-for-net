@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public class DocumentModelOperationDetails
     {
         internal DocumentModelOperationDetails(GetOperationResponse response)
-            : this(response.OperationId, response.Status, response.PercentCompleted, response.CreatedOn, response.LastUpdatedOn, response.Kind, response.ResourceLocation, response.Tags, response.Error, response.Result)
+            : this(response.OperationId, response.Status, response.PercentCompleted, response.CreatedOn, response.LastUpdatedOn, response.Kind, response.ResourceLocation, response.Tags, response.Error, new DocumentModelDetails(response.Result))
         {
         }
 
