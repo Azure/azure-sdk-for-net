@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns
 
         private readonly ClientDiagnostics _recordSetMXRecordSetsClientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetMXRecordSetsRestClient;
-        private readonly MXRecordSetData _data;
+        private readonly MXRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RecordSetMXResource"/> class for mocking. </summary>
         protected RecordSetMXResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Initializes a new instance of the <see cref = "RecordSetMXResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetMXResource(ArmClient client, MXRecordSetData data) : this(client, data.Id)
+        internal RecordSetMXResource(ArmClient client, MXRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MXRecordSetData Data
+        public virtual MXRecordData Data
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RecordSetMXResource>> UpdateAsync(MXRecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordSetMXResource>> UpdateAsync(MXRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RecordSetMXResource> Update(MXRecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<RecordSetMXResource> Update(MXRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns
 
         private readonly ClientDiagnostics _recordSetSoaRecordSetsClientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetSoaRecordSetsRestClient;
-        private readonly SoaRecordSetData _data;
+        private readonly SoaRecordData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RecordSetSoaResource"/> class for mocking. </summary>
         protected RecordSetSoaResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Initializes a new instance of the <see cref = "RecordSetSoaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetSoaResource(ArmClient client, SoaRecordSetData data) : this(client, data.Id)
+        internal RecordSetSoaResource(ArmClient client, SoaRecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SoaRecordSetData Data
+        public virtual SoaRecordData Data
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<RecordSetSoaResource>> UpdateAsync(SoaRecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordSetSoaResource>> UpdateAsync(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<RecordSetSoaResource> Update(SoaRecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<RecordSetSoaResource> Update(SoaRecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
