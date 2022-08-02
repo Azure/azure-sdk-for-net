@@ -68,7 +68,7 @@ namespace Azure.Core.TestFramework
         {
             if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
             {
-                // just return immediately if in playback as there will be nothing to match with
+                // just return immediately if in playback and using DoNotRecord as there will be nothing to match with
                 return;
             }
             try
