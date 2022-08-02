@@ -48,8 +48,15 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId");
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -146,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                resourceId = null;
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());

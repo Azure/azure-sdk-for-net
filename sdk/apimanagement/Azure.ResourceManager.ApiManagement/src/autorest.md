@@ -293,6 +293,7 @@ directive:
       $.AuthenticationSettingsContract.properties.openid["x-nullable"] = true;
       $.ApiEntityBaseContract.properties.authenticationSettings["x-nullable"] = true;
       $.ApiEntityBaseContract.properties.subscriptionKeyParameterNames["x-nullable"] = true;
+      $.LoggerContractProperties.properties.resourceId["x-nullable"] = true;
   - from: apimskus.json
     where: $.definitions
     transform: >
