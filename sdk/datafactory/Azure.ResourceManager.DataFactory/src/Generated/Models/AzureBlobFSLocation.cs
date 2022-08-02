@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The location of azure blobFS dataset.
-    /// Serialized Name: AzureBlobFSLocation
-    /// </summary>
+    /// <summary> The location of azure blobFS dataset. </summary>
     public partial class AzureBlobFSLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of AzureBlobFSLocation. </summary>
@@ -23,33 +20,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobFSLocation. </summary>
-        /// <param name="datasetLocationType">
-        /// Type of dataset storage location.
-        /// Serialized Name: DatasetLocation.type
-        /// </param>
-        /// <param name="folderPath">
-        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
-        /// Serialized Name: DatasetLocation.folderPath
-        /// </param>
-        /// <param name="fileName">
-        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetLocation.fileName
-        /// </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="fileSystem">
-        /// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLocation.fileSystem
-        /// </param>
+        /// <param name="fileSystem"> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </param>
         internal AzureBlobFSLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData fileSystem) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             FileSystem = fileSystem;
             DatasetLocationType = datasetLocationType ?? "AzureBlobFSLocation";
         }
 
-        /// <summary>
-        /// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLocation.fileSystem
-        /// </summary>
+        /// <summary> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileSystem { get; set; }
     }
 }

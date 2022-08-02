@@ -12,17 +12,11 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of managed Virtual Network resources.
-    /// Serialized Name: ManagedVirtualNetworkListResponse
-    /// </summary>
+    /// <summary> A list of managed Virtual Network resources. </summary>
     internal partial class ManagedVirtualNetworkListResponse
     {
         /// <summary> Initializes a new instance of ManagedVirtualNetworkListResponse. </summary>
-        /// <param name="value">
-        /// List of managed Virtual Networks.
-        /// Serialized Name: ManagedVirtualNetworkListResponse.value
-        /// </param>
+        /// <param name="value"> List of managed Virtual Networks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ManagedVirtualNetworkListResponse(IEnumerable<FactoryVirtualNetworkData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedVirtualNetworkListResponse. </summary>
-        /// <param name="value">
-        /// List of managed Virtual Networks.
-        /// Serialized Name: ManagedVirtualNetworkListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: ManagedVirtualNetworkListResponse.nextLink
-        /// </param>
+        /// <param name="value"> List of managed Virtual Networks. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal ManagedVirtualNetworkListResponse(IReadOnlyList<FactoryVirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of managed Virtual Networks.
-        /// Serialized Name: ManagedVirtualNetworkListResponse.value
-        /// </summary>
+        /// <summary> List of managed Virtual Networks. </summary>
         public IReadOnlyList<FactoryVirtualNetworkData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: ManagedVirtualNetworkListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

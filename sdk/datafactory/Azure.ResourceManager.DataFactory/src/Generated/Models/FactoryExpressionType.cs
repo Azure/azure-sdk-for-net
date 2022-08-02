@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Expression type.
-    /// Serialized Name: ExpressionType
-    /// </summary>
+    /// <summary> Expression type. </summary>
     public readonly partial struct FactoryExpressionType : IEquatable<FactoryExpressionType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string ExpressionValue = "Expression";
 
-        /// <summary>
-        /// Expression
-        /// Serialized Name: ExpressionType.Expression
-        /// </summary>
+        /// <summary> Expression. </summary>
         public static FactoryExpressionType Expression { get; } = new FactoryExpressionType(ExpressionValue);
         /// <summary> Determines if two <see cref="FactoryExpressionType"/> values are the same. </summary>
         public static bool operator ==(FactoryExpressionType left, FactoryExpressionType right) => left.Equals(right);

@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// User property.
-    /// Serialized Name: UserProperty
-    /// </summary>
+    /// <summary> User property. </summary>
     public partial class ActivityUserProperty
     {
         /// <summary> Initializes a new instance of ActivityUserProperty. </summary>
-        /// <param name="name">
-        /// User property name.
-        /// Serialized Name: UserProperty.name
-        /// </param>
-        /// <param name="value">
-        /// User property value. Type: string (or Expression with resultType string).
-        /// Serialized Name: UserProperty.value
-        /// </param>
+        /// <param name="name"> User property name. </param>
+        /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
         public ActivityUserProperty(string name, BinaryData value)
         {
@@ -40,15 +31,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
         }
 
-        /// <summary>
-        /// User property name.
-        /// Serialized Name: UserProperty.name
-        /// </summary>
+        /// <summary> User property name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// User property value. Type: string (or Expression with resultType string).
-        /// Serialized Name: UserProperty.value
-        /// </summary>
+        /// <summary> User property value. Type: string (or Expression with resultType string). </summary>
         public BinaryData Value { get; set; }
     }
 }

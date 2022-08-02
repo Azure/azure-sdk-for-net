@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Get Data Plane read only token request definition.
-    /// Serialized Name: UserAccessPolicy
-    /// </summary>
+    /// <summary> Get Data Plane read only token request definition. </summary>
     public partial class FactoryDataPlaneUserAccessPolicy
     {
         /// <summary> Initializes a new instance of FactoryDataPlaneUserAccessPolicy. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryDataPlaneUserAccessPolicy. </summary>
-        /// <param name="permissions">
-        /// The string with permissions for Data Plane access. Currently only &apos;r&apos; is supported which grants read only access.
-        /// Serialized Name: UserAccessPolicy.permissions
-        /// </param>
-        /// <param name="accessResourcePath">
-        /// The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource.
-        /// Serialized Name: UserAccessPolicy.accessResourcePath
-        /// </param>
-        /// <param name="profileName">
-        /// The name of the profile. Currently only the default is supported. The default value is DefaultProfile.
-        /// Serialized Name: UserAccessPolicy.profileName
-        /// </param>
-        /// <param name="startTime">
-        /// Start time for the token. If not specified the current time will be used.
-        /// Serialized Name: UserAccessPolicy.startTime
-        /// </param>
-        /// <param name="expireTime">
-        /// Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.
-        /// Serialized Name: UserAccessPolicy.expireTime
-        /// </param>
+        /// <param name="permissions"> The string with permissions for Data Plane access. Currently only &apos;r&apos; is supported which grants read only access. </param>
+        /// <param name="accessResourcePath"> The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource. </param>
+        /// <param name="profileName"> The name of the profile. Currently only the default is supported. The default value is DefaultProfile. </param>
+        /// <param name="startTime"> Start time for the token. If not specified the current time will be used. </param>
+        /// <param name="expireTime"> Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours. </param>
         internal FactoryDataPlaneUserAccessPolicy(string permissions, string accessResourcePath, string profileName, string startTime, string expireTime)
         {
             Permissions = permissions;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExpireTime = expireTime;
         }
 
-        /// <summary>
-        /// The string with permissions for Data Plane access. Currently only &apos;r&apos; is supported which grants read only access.
-        /// Serialized Name: UserAccessPolicy.permissions
-        /// </summary>
+        /// <summary> The string with permissions for Data Plane access. Currently only &apos;r&apos; is supported which grants read only access. </summary>
         public string Permissions { get; set; }
-        /// <summary>
-        /// The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource.
-        /// Serialized Name: UserAccessPolicy.accessResourcePath
-        /// </summary>
+        /// <summary> The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource. </summary>
         public string AccessResourcePath { get; set; }
-        /// <summary>
-        /// The name of the profile. Currently only the default is supported. The default value is DefaultProfile.
-        /// Serialized Name: UserAccessPolicy.profileName
-        /// </summary>
+        /// <summary> The name of the profile. Currently only the default is supported. The default value is DefaultProfile. </summary>
         public string ProfileName { get; set; }
-        /// <summary>
-        /// Start time for the token. If not specified the current time will be used.
-        /// Serialized Name: UserAccessPolicy.startTime
-        /// </summary>
+        /// <summary> Start time for the token. If not specified the current time will be used. </summary>
         public string StartTime { get; set; }
-        /// <summary>
-        /// Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.
-        /// Serialized Name: UserAccessPolicy.expireTime
-        /// </summary>
+        /// <summary> Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours. </summary>
         public string ExpireTime { get; set; }
     }
 }

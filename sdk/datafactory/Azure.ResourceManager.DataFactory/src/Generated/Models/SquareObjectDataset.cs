@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Square Service dataset.
-    /// Serialized Name: SquareObjectDataset
-    /// </summary>
+    /// <summary> Square Service dataset. </summary>
     public partial class SquareObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SquareObjectDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SquareObjectDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -33,53 +27,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SquareObjectDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName">
-        /// The table name. Type: string (or Expression with resultType string).
-        /// Serialized Name: SquareObjectDataset.typeProperties.tableName
-        /// </param>
+        /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         internal SquareObjectDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             DatasetType = datasetType ?? "SquareObject";
         }
 
-        /// <summary>
-        /// The table name. Type: string (or Expression with resultType string).
-        /// Serialized Name: SquareObjectDataset.typeProperties.tableName
-        /// </summary>
+        /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public BinaryData TableName { get; set; }
     }
 }

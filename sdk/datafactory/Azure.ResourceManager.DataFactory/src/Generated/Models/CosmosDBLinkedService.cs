@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Microsoft Azure Cosmos Database (CosmosDB) linked service.
-    /// Serialized Name: CosmosDbLinkedService
-    /// </summary>
+    /// <summary> Microsoft Azure Cosmos Database (CosmosDB) linked service. </summary>
     public partial class CosmosDBLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CosmosDBLinkedService. </summary>
@@ -23,79 +20,32 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString">
-        /// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.connectionString
-        /// </param>
-        /// <param name="accountEndpoint">
-        /// The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string)
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.accountEndpoint
-        /// </param>
-        /// <param name="database">
-        /// The name of the database. Type: string (or Expression with resultType string)
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.database
-        /// </param>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="accountEndpoint"> The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string). </param>
+        /// <param name="database"> The name of the database. Type: string (or Expression with resultType string). </param>
         /// <param name="accountKey">
         /// The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.accountKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="servicePrincipalId">
-        /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalId
-        /// </param>
-        /// <param name="servicePrincipalCredentialType">
-        /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalCredentialType
-        /// </param>
+        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalCredential">
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalCredential
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant">
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="azureCloudType">
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.azureCloudType
-        /// </param>
-        /// <param name="connectionMode">
-        /// The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.connectionMode
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.credential
-        /// </param>
+        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionMode"> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
         internal CosmosDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData accountEndpoint, BinaryData database, FactorySecretBaseDefinition accountKey, BinaryData servicePrincipalId, CosmosDBServicePrincipalCredentialType? servicePrincipalCredentialType, FactorySecretBaseDefinition servicePrincipalCredential, BinaryData tenant, BinaryData azureCloudType, CosmosDBConnectionMode? connectionMode, BinaryData encryptedCredential, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -113,69 +63,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "CosmosDb";
         }
 
-        /// <summary>
-        /// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.connectionString
-        /// </summary>
+        /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary>
-        /// The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string)
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.accountEndpoint
-        /// </summary>
+        /// <summary> The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string). </summary>
         public BinaryData AccountEndpoint { get; set; }
-        /// <summary>
-        /// The name of the database. Type: string (or Expression with resultType string)
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.database
-        /// </summary>
+        /// <summary> The name of the database. Type: string (or Expression with resultType string). </summary>
         public BinaryData Database { get; set; }
         /// <summary>
         /// The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.accountKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition AccountKey { get; set; }
-        /// <summary>
-        /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServicePrincipalId { get; set; }
-        /// <summary>
-        /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalCredentialType
-        /// </summary>
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
         public CosmosDBServicePrincipalCredentialType? ServicePrincipalCredentialType { get; set; }
         /// <summary>
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalCredential
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalCredential { get; set; }
-        /// <summary>
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.tenant
-        /// </summary>
+        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary>
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.azureCloudType
-        /// </summary>
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureCloudType { get; set; }
-        /// <summary>
-        /// The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.connectionMode
-        /// </summary>
+        /// <summary> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </summary>
         public CosmosDBConnectionMode? ConnectionMode { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: CosmosDbLinkedService.typeProperties.credential
-        /// </summary>
+        /// <summary> The credential reference containing authentication information. </summary>
         public FactoryCredentialReference Credential { get; set; }
     }
 }

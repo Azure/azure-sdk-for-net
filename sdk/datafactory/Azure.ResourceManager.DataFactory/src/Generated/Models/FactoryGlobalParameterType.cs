@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Global Parameter type.
-    /// Serialized Name: GlobalParameterType
-    /// </summary>
+    /// <summary> Global Parameter type. </summary>
     public readonly partial struct FactoryGlobalParameterType : IEquatable<FactoryGlobalParameterType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BoolValue = "Bool";
         private const string ArrayValue = "Array";
 
-        /// <summary>
-        /// Object
-        /// Serialized Name: GlobalParameterType.Object
-        /// </summary>
+        /// <summary> Object. </summary>
         public static FactoryGlobalParameterType Object { get; } = new FactoryGlobalParameterType(ObjectValue);
-        /// <summary>
-        /// String
-        /// Serialized Name: GlobalParameterType.String
-        /// </summary>
+        /// <summary> String. </summary>
         public static FactoryGlobalParameterType String { get; } = new FactoryGlobalParameterType(StringValue);
-        /// <summary>
-        /// Int
-        /// Serialized Name: GlobalParameterType.Int
-        /// </summary>
+        /// <summary> Int. </summary>
         public static FactoryGlobalParameterType Int { get; } = new FactoryGlobalParameterType(IntValue);
-        /// <summary>
-        /// Float
-        /// Serialized Name: GlobalParameterType.Float
-        /// </summary>
+        /// <summary> Float. </summary>
         public static FactoryGlobalParameterType Float { get; } = new FactoryGlobalParameterType(FloatValue);
-        /// <summary>
-        /// Bool
-        /// Serialized Name: GlobalParameterType.Bool
-        /// </summary>
+        /// <summary> Bool. </summary>
         public static FactoryGlobalParameterType Bool { get; } = new FactoryGlobalParameterType(BoolValue);
-        /// <summary>
-        /// Array
-        /// Serialized Name: GlobalParameterType.Array
-        /// </summary>
+        /// <summary> Array. </summary>
         public static FactoryGlobalParameterType Array { get; } = new FactoryGlobalParameterType(ArrayValue);
         /// <summary> Determines if two <see cref="FactoryGlobalParameterType"/> values are the same. </summary>
         public static bool operator ==(FactoryGlobalParameterType left, FactoryGlobalParameterType right) => left.Equals(right);

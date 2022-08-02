@@ -7,36 +7,21 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// An object to provide order by options for listing runs.
-    /// Serialized Name: RunQueryOrderBy
-    /// </summary>
+    /// <summary> An object to provide order by options for listing runs. </summary>
     public partial class RunQueryOrderBy
     {
         /// <summary> Initializes a new instance of RunQueryOrderBy. </summary>
-        /// <param name="orderBy">
-        /// Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
-        /// Serialized Name: RunQueryOrderBy.orderBy
-        /// </param>
-        /// <param name="order">
-        /// Sorting order of the parameter.
-        /// Serialized Name: RunQueryOrderBy.order
-        /// </param>
+        /// <param name="orderBy"> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
+        /// <param name="order"> Sorting order of the parameter. </param>
         public RunQueryOrderBy(RunQueryOrderByField orderBy, RunQueryOrder order)
         {
             OrderBy = orderBy;
             Order = order;
         }
 
-        /// <summary>
-        /// Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status.
-        /// Serialized Name: RunQueryOrderBy.orderBy
-        /// </summary>
+        /// <summary> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
         public RunQueryOrderByField OrderBy { get; }
-        /// <summary>
-        /// Sorting order of the parameter.
-        /// Serialized Name: RunQueryOrderBy.order
-        /// </summary>
+        /// <summary> Sorting order of the parameter. </summary>
         public RunQueryOrder Order { get; }
     }
 }

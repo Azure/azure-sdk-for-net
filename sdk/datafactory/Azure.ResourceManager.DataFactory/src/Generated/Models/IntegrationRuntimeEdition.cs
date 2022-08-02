@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The edition for the SSIS Integration Runtime
-    /// Serialized Name: IntegrationRuntimeEdition
-    /// </summary>
+    /// <summary> The edition for the SSIS Integration Runtime. </summary>
     public readonly partial struct IntegrationRuntimeEdition : IEquatable<IntegrationRuntimeEdition>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string StandardValue = "Standard";
         private const string EnterpriseValue = "Enterprise";
 
-        /// <summary>
-        /// Standard
-        /// Serialized Name: IntegrationRuntimeEdition.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static IntegrationRuntimeEdition Standard { get; } = new IntegrationRuntimeEdition(StandardValue);
-        /// <summary>
-        /// Enterprise
-        /// Serialized Name: IntegrationRuntimeEdition.Enterprise
-        /// </summary>
+        /// <summary> Enterprise. </summary>
         public static IntegrationRuntimeEdition Enterprise { get; } = new IntegrationRuntimeEdition(EnterpriseValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeEdition"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeEdition left, IntegrationRuntimeEdition right) => left.Equals(right);

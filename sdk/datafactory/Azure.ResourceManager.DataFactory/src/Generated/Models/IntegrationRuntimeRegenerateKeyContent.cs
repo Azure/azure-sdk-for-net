@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Parameters to regenerate the authentication key.
-    /// Serialized Name: IntegrationRuntimeRegenerateKeyParameters
-    /// </summary>
+    /// <summary> Parameters to regenerate the authentication key. </summary>
     public partial class IntegrationRuntimeRegenerateKeyContent
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeRegenerateKeyContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// The name of the authentication key to regenerate.
-        /// Serialized Name: IntegrationRuntimeRegenerateKeyParameters.keyName
-        /// </summary>
+        /// <summary> The name of the authentication key to regenerate. </summary>
         public IntegrationRuntimeAuthKeyName? KeyName { get; set; }
     }
 }

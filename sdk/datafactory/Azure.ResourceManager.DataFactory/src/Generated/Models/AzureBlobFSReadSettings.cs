@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure blobFS read settings.
-    /// Serialized Name: AzureBlobFSReadSettings
-    /// </summary>
+    /// <summary> Azure blobFS read settings. </summary>
     public partial class AzureBlobFSReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of AzureBlobFSReadSettings. </summary>
@@ -23,55 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobFSReadSettings. </summary>
-        /// <param name="storeReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: StoreReadSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreReadSettings.disableMetricsCollection
-        /// </param>
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive">
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureBlobFSReadSettings.recursive
-        /// </param>
-        /// <param name="wildcardFolderPath">
-        /// Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.wildcardFolderPath
-        /// </param>
-        /// <param name="wildcardFileName">
-        /// Azure blobFS wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.wildcardFileName
-        /// </param>
-        /// <param name="fileListPath">
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.fileListPath
-        /// </param>
-        /// <param name="enablePartitionDiscovery">
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: AzureBlobFSReadSettings.enablePartitionDiscovery
-        /// </param>
-        /// <param name="partitionRootPath">
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.partitionRootPath
-        /// </param>
-        /// <param name="deleteFilesAfterCompletion">
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureBlobFSReadSettings.deleteFilesAfterCompletion
-        /// </param>
-        /// <param name="modifiedDatetimeStart">
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.modifiedDatetimeStart
-        /// </param>
-        /// <param name="modifiedDatetimeEnd">
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.modifiedDatetimeEnd
-        /// </param>
+        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="wildcardFolderPath"> Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFileName"> Azure blobFS wildcardFileName. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
+        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         internal AzureBlobFSReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, BinaryData fileListPath, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -86,50 +47,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "AzureBlobFSReadSettings";
         }
 
-        /// <summary>
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureBlobFSReadSettings.recursive
-        /// </summary>
+        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData Recursive { get; set; }
-        /// <summary>
-        /// Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.wildcardFolderPath
-        /// </summary>
+        /// <summary> Azure blobFS wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFolderPath { get; set; }
-        /// <summary>
-        /// Azure blobFS wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.wildcardFileName
-        /// </summary>
+        /// <summary> Azure blobFS wildcardFileName. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFileName { get; set; }
-        /// <summary>
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.fileListPath
-        /// </summary>
+        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileListPath { get; set; }
-        /// <summary>
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: AzureBlobFSReadSettings.enablePartitionDiscovery
-        /// </summary>
+        /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.partitionRootPath
-        /// </summary>
+        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionRootPath { get; set; }
-        /// <summary>
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureBlobFSReadSettings.deleteFilesAfterCompletion
-        /// </summary>
+        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
-        /// <summary>
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.modifiedDatetimeStart
-        /// </summary>
+        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
-        /// <summary>
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSReadSettings.modifiedDatetimeEnd
-        /// </summary>
+        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public BinaryData ModifiedDatetimeEnd { get; set; }
     }
 }

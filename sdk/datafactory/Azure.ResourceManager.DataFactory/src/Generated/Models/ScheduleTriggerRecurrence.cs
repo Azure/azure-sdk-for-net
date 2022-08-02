@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The workflow trigger recurrence.
-    /// Serialized Name: ScheduleTriggerRecurrence
-    /// </summary>
+    /// <summary> The workflow trigger recurrence. </summary>
     public partial class ScheduleTriggerRecurrence
     {
         /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
-        /// <param name="frequency">
-        /// The frequency.
-        /// Serialized Name: ScheduleTriggerRecurrence.frequency
-        /// </param>
-        /// <param name="interval">
-        /// The interval.
-        /// Serialized Name: ScheduleTriggerRecurrence.interval
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: ScheduleTriggerRecurrence.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: ScheduleTriggerRecurrence.endTime
-        /// </param>
-        /// <param name="timeZone">
-        /// The time zone.
-        /// Serialized Name: ScheduleTriggerRecurrence.timeZone
-        /// </param>
-        /// <param name="schedule">
-        /// The recurrence schedule.
-        /// Serialized Name: ScheduleTriggerRecurrence.schedule
-        /// </param>
+        /// <param name="frequency"> The frequency. </param>
+        /// <param name="interval"> The interval. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="timeZone"> The time zone. </param>
+        /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ScheduleTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -60,35 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The frequency.
-        /// Serialized Name: ScheduleTriggerRecurrence.frequency
-        /// </summary>
+        /// <summary> The frequency. </summary>
         public RecurrenceFrequency? Frequency { get; set; }
-        /// <summary>
-        /// The interval.
-        /// Serialized Name: ScheduleTriggerRecurrence.interval
-        /// </summary>
+        /// <summary> The interval. </summary>
         public int? Interval { get; set; }
-        /// <summary>
-        /// The start time.
-        /// Serialized Name: ScheduleTriggerRecurrence.startTime
-        /// </summary>
+        /// <summary> The start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The end time.
-        /// Serialized Name: ScheduleTriggerRecurrence.endTime
-        /// </summary>
+        /// <summary> The end time. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// The time zone.
-        /// Serialized Name: ScheduleTriggerRecurrence.timeZone
-        /// </summary>
+        /// <summary> The time zone. </summary>
         public string TimeZone { get; set; }
-        /// <summary>
-        /// The recurrence schedule.
-        /// Serialized Name: ScheduleTriggerRecurrence.schedule
-        /// </summary>
+        /// <summary> The recurrence schedule. </summary>
         public RecurrenceSchedule Schedule { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

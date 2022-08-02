@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Ftp read settings.
-    /// Serialized Name: FtpReadSettings
-    /// </summary>
+    /// <summary> Ftp read settings. </summary>
     public partial class FtpReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of FtpReadSettings. </summary>
@@ -23,55 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FtpReadSettings. </summary>
-        /// <param name="storeReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: StoreReadSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreReadSettings.disableMetricsCollection
-        /// </param>
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive">
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: FtpReadSettings.recursive
-        /// </param>
-        /// <param name="wildcardFolderPath">
-        /// Ftp wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.wildcardFolderPath
-        /// </param>
-        /// <param name="wildcardFileName">
-        /// Ftp wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.wildcardFileName
-        /// </param>
-        /// <param name="enablePartitionDiscovery">
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: FtpReadSettings.enablePartitionDiscovery
-        /// </param>
-        /// <param name="partitionRootPath">
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.partitionRootPath
-        /// </param>
-        /// <param name="deleteFilesAfterCompletion">
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: FtpReadSettings.deleteFilesAfterCompletion
-        /// </param>
-        /// <param name="fileListPath">
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.fileListPath
-        /// </param>
-        /// <param name="useBinaryTransfer">
-        /// Specify whether to use binary transfer mode for FTP stores.
-        /// Serialized Name: FtpReadSettings.useBinaryTransfer
-        /// </param>
-        /// <param name="disableChunking">
-        /// If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: FtpReadSettings.disableChunking
-        /// </param>
+        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="wildcardFolderPath"> Ftp wildcardFolderPath. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFileName"> Ftp wildcardFileName. Type: string (or Expression with resultType string). </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
+        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
+        /// <param name="useBinaryTransfer"> Specify whether to use binary transfer mode for FTP stores. </param>
+        /// <param name="disableChunking"> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         internal FtpReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData fileListPath, bool? useBinaryTransfer, BinaryData disableChunking) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -86,50 +47,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "FtpReadSettings";
         }
 
-        /// <summary>
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: FtpReadSettings.recursive
-        /// </summary>
+        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData Recursive { get; set; }
-        /// <summary>
-        /// Ftp wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.wildcardFolderPath
-        /// </summary>
+        /// <summary> Ftp wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFolderPath { get; set; }
-        /// <summary>
-        /// Ftp wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.wildcardFileName
-        /// </summary>
+        /// <summary> Ftp wildcardFileName. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFileName { get; set; }
-        /// <summary>
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: FtpReadSettings.enablePartitionDiscovery
-        /// </summary>
+        /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.partitionRootPath
-        /// </summary>
+        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionRootPath { get; set; }
-        /// <summary>
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: FtpReadSettings.deleteFilesAfterCompletion
-        /// </summary>
+        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
-        /// <summary>
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: FtpReadSettings.fileListPath
-        /// </summary>
+        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileListPath { get; set; }
-        /// <summary>
-        /// Specify whether to use binary transfer mode for FTP stores.
-        /// Serialized Name: FtpReadSettings.useBinaryTransfer
-        /// </summary>
+        /// <summary> Specify whether to use binary transfer mode for FTP stores. </summary>
         public bool? UseBinaryTransfer { get; set; }
-        /// <summary>
-        /// If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: FtpReadSettings.disableChunking
-        /// </summary>
+        /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DisableChunking { get; set; }
     }
 }

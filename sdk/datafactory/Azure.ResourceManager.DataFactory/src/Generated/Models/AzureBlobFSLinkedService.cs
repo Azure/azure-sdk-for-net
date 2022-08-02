@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure Data Lake Storage Gen2 linked service.
-    /// Serialized Name: AzureBlobFSLinkedService
-    /// </summary>
+    /// <summary> Azure Data Lake Storage Gen2 linked service. </summary>
     public partial class AzureBlobFSLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
-        /// <param name="uri">
-        /// Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.url
-        /// </param>
+        /// <param name="uri"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AzureBlobFSLinkedService(BinaryData uri)
         {
@@ -34,68 +28,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri">
-        /// Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.url
-        /// </param>
-        /// <param name="accountKey">
-        /// Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.accountKey
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="uri"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
+        /// <param name="accountKey"> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account.
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant">
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="azureCloudType">
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.azureCloudType
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.credential
-        /// </param>
-        /// <param name="servicePrincipalCredentialType">
-        /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalCredentialType
-        /// </param>
+        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalCredential">
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalCredential
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -114,56 +67,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureBlobFS";
         }
 
-        /// <summary>
-        /// Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.url
-        /// </summary>
+        /// <summary> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </summary>
         public BinaryData Uri { get; set; }
-        /// <summary>
-        /// Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.accountKey
-        /// </summary>
+        /// <summary> Account key for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </summary>
         public BinaryData AccountKey { get; set; }
-        /// <summary>
-        /// The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        /// <summary> The ID of the application used to authenticate against the Azure Data Lake Storage Gen2 account. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The Key of the application used to authenticate against the Azure Data Lake Storage Gen2 account.
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.tenant
-        /// </summary>
+        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary>
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.azureCloudType
-        /// </summary>
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureCloudType { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.credential
-        /// </summary>
+        /// <summary> The credential reference containing authentication information. </summary>
         public FactoryCredentialReference Credential { get; set; }
-        /// <summary>
-        /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalCredentialType
-        /// </summary>
+        /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServicePrincipalCredentialType { get; set; }
         /// <summary>
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureBlobFSLinkedService.typeProperties.servicePrincipalCredential
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>

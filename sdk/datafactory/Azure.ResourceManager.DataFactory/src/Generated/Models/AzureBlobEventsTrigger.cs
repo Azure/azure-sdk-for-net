@@ -11,21 +11,12 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Trigger that runs every time a Blob event occurs.
-    /// Serialized Name: BlobEventsTrigger
-    /// </summary>
+    /// <summary> Trigger that runs every time a Blob event occurs. </summary>
     public partial class AzureBlobEventsTrigger : MultiplePipelineTrigger
     {
         /// <summary> Initializes a new instance of AzureBlobEventsTrigger. </summary>
-        /// <param name="events">
-        /// The type of events that cause this trigger to fire.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.events
-        /// </param>
-        /// <param name="scope">
-        /// The ARM resource ID of the Storage Account.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.scope
-        /// </param>
+        /// <param name="events"> The type of events that cause this trigger to fire. </param>
+        /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         public AzureBlobEventsTrigger(IEnumerable<AzureBlobEventType> events, string scope)
         {
@@ -44,47 +35,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobEventsTrigger. </summary>
-        /// <param name="triggerType">
-        /// Trigger type.
-        /// Serialized Name: Trigger.type
-        /// </param>
-        /// <param name="description">
-        /// Trigger description.
-        /// Serialized Name: Trigger.description
-        /// </param>
-        /// <param name="runtimeState">
-        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
-        /// Serialized Name: Trigger.runtimeState
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the trigger.
-        /// Serialized Name: Trigger.annotations
-        /// </param>
+        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="pipelines">
-        /// Pipelines that need to be started.
-        /// Serialized Name: MultiplePipelineTrigger.pipelines
-        /// </param>
-        /// <param name="blobPathBeginsWith">
-        /// The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.blobPathBeginsWith
-        /// </param>
-        /// <param name="blobPathEndsWith">
-        /// The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.blobPathEndsWith
-        /// </param>
-        /// <param name="ignoreEmptyBlobs">
-        /// If set to true, blobs with zero bytes will be ignored.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.ignoreEmptyBlobs
-        /// </param>
-        /// <param name="events">
-        /// The type of events that cause this trigger to fire.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.events
-        /// </param>
-        /// <param name="scope">
-        /// The ARM resource ID of the Storage Account.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.scope
-        /// </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <param name="blobPathBeginsWith"> The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
+        /// <param name="blobPathEndsWith"> The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
+        /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
+        /// <param name="events"> The type of events that cause this trigger to fire. </param>
+        /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         internal AzureBlobEventsTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string blobPathBeginsWith, string blobPathEndsWith, bool? ignoreEmptyBlobs, IList<AzureBlobEventType> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             BlobPathBeginsWith = blobPathBeginsWith;
@@ -95,30 +56,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "BlobEventsTrigger";
         }
 
-        /// <summary>
-        /// The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.blobPathBeginsWith
-        /// </summary>
+        /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
         public string BlobPathBeginsWith { get; set; }
-        /// <summary>
-        /// The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.blobPathEndsWith
-        /// </summary>
+        /// <summary> The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
         public string BlobPathEndsWith { get; set; }
-        /// <summary>
-        /// If set to true, blobs with zero bytes will be ignored.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.ignoreEmptyBlobs
-        /// </summary>
+        /// <summary> If set to true, blobs with zero bytes will be ignored. </summary>
         public bool? IgnoreEmptyBlobs { get; set; }
-        /// <summary>
-        /// The type of events that cause this trigger to fire.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.events
-        /// </summary>
+        /// <summary> The type of events that cause this trigger to fire. </summary>
         public IList<AzureBlobEventType> Events { get; }
-        /// <summary>
-        /// The ARM resource ID of the Storage Account.
-        /// Serialized Name: BlobEventsTrigger.typeProperties.scope
-        /// </summary>
+        /// <summary> The ARM resource ID of the Storage Account. </summary>
         public string Scope { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Trigger runs.
-    /// Serialized Name: TriggerRun
-    /// </summary>
+    /// <summary> Trigger runs. </summary>
     public partial class FactoryTriggerRun
     {
         /// <summary> Initializes a new instance of FactoryTriggerRun. </summary>
@@ -28,46 +25,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryTriggerRun. </summary>
-        /// <param name="triggerRunId">
-        /// Trigger run id.
-        /// Serialized Name: TriggerRun.triggerRunId
-        /// </param>
-        /// <param name="triggerName">
-        /// Trigger name.
-        /// Serialized Name: TriggerRun.triggerName
-        /// </param>
-        /// <param name="triggerType">
-        /// Trigger type.
-        /// Serialized Name: TriggerRun.triggerType
-        /// </param>
-        /// <param name="triggerRunTimestamp">
-        /// Trigger run start time.
-        /// Serialized Name: TriggerRun.triggerRunTimestamp
-        /// </param>
-        /// <param name="status">
-        /// Trigger run status.
-        /// Serialized Name: TriggerRun.status
-        /// </param>
-        /// <param name="message">
-        /// Trigger error message.
-        /// Serialized Name: TriggerRun.message
-        /// </param>
-        /// <param name="properties">
-        /// List of property name and value related to trigger run. Name, value pair depends on type of trigger.
-        /// Serialized Name: TriggerRun.properties
-        /// </param>
-        /// <param name="triggeredPipelines">
-        /// List of pipeline name and run Id triggered by the trigger run.
-        /// Serialized Name: TriggerRun.triggeredPipelines
-        /// </param>
-        /// <param name="runDimension">
-        /// Run dimension for which trigger was fired.
-        /// Serialized Name: TriggerRun.runDimension
-        /// </param>
-        /// <param name="dependencyStatus">
-        /// Status of the upstream pipelines.
-        /// Serialized Name: TriggerRun.dependencyStatus
-        /// </param>
+        /// <param name="triggerRunId"> Trigger run id. </param>
+        /// <param name="triggerName"> Trigger name. </param>
+        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="triggerRunTimestamp"> Trigger run start time. </param>
+        /// <param name="status"> Trigger run status. </param>
+        /// <param name="message"> Trigger error message. </param>
+        /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
+        /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
+        /// <param name="runDimension"> Run dimension for which trigger was fired. </param>
+        /// <param name="dependencyStatus"> Status of the upstream pipelines. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FactoryTriggerRun(string triggerRunId, string triggerName, string triggerType, DateTimeOffset? triggerRunTimestamp, FactoryTriggerRunStatus? status, string message, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> triggeredPipelines, IReadOnlyDictionary<string, string> runDimension, IReadOnlyDictionary<string, BinaryData> dependencyStatus, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -84,55 +51,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Trigger run id.
-        /// Serialized Name: TriggerRun.triggerRunId
-        /// </summary>
+        /// <summary> Trigger run id. </summary>
         public string TriggerRunId { get; }
-        /// <summary>
-        /// Trigger name.
-        /// Serialized Name: TriggerRun.triggerName
-        /// </summary>
+        /// <summary> Trigger name. </summary>
         public string TriggerName { get; }
-        /// <summary>
-        /// Trigger type.
-        /// Serialized Name: TriggerRun.triggerType
-        /// </summary>
+        /// <summary> Trigger type. </summary>
         public string TriggerType { get; }
-        /// <summary>
-        /// Trigger run start time.
-        /// Serialized Name: TriggerRun.triggerRunTimestamp
-        /// </summary>
+        /// <summary> Trigger run start time. </summary>
         public DateTimeOffset? TriggerRunTimestamp { get; }
-        /// <summary>
-        /// Trigger run status.
-        /// Serialized Name: TriggerRun.status
-        /// </summary>
+        /// <summary> Trigger run status. </summary>
         public FactoryTriggerRunStatus? Status { get; }
-        /// <summary>
-        /// Trigger error message.
-        /// Serialized Name: TriggerRun.message
-        /// </summary>
+        /// <summary> Trigger error message. </summary>
         public string Message { get; }
-        /// <summary>
-        /// List of property name and value related to trigger run. Name, value pair depends on type of trigger.
-        /// Serialized Name: TriggerRun.properties
-        /// </summary>
+        /// <summary> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
-        /// <summary>
-        /// List of pipeline name and run Id triggered by the trigger run.
-        /// Serialized Name: TriggerRun.triggeredPipelines
-        /// </summary>
+        /// <summary> List of pipeline name and run Id triggered by the trigger run. </summary>
         public IReadOnlyDictionary<string, string> TriggeredPipelines { get; }
-        /// <summary>
-        /// Run dimension for which trigger was fired.
-        /// Serialized Name: TriggerRun.runDimension
-        /// </summary>
+        /// <summary> Run dimension for which trigger was fired. </summary>
         public IReadOnlyDictionary<string, string> RunDimension { get; }
-        /// <summary>
-        /// Status of the upstream pipelines.
-        /// Serialized Name: TriggerRun.dependencyStatus
-        /// </summary>
+        /// <summary> Status of the upstream pipelines. </summary>
         public IReadOnlyDictionary<string, BinaryData> DependencyStatus { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

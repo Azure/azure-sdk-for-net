@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
-    /// Serialized Name: ManagedIntegrationRuntime
-    /// </summary>
+    /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
     public partial class ManagedIntegrationRuntime : IntegrationRuntimeDefinition
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
@@ -24,35 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
-        /// <param name="runtimeType">
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntime.type
-        /// </param>
-        /// <param name="description">
-        /// Integration runtime description.
-        /// Serialized Name: IntegrationRuntime.description
-        /// </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="state">
-        /// Integration runtime state, only valid for managed dedicated integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntime.state
-        /// </param>
-        /// <param name="managedVirtualNetwork">
-        /// Managed Virtual Network reference.
-        /// Serialized Name: ManagedIntegrationRuntime.managedVirtualNetwork
-        /// </param>
-        /// <param name="computeProperties">
-        /// The compute resource for managed integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntime.typeProperties.computeProperties
-        /// </param>
-        /// <param name="ssisProperties">
-        /// SSIS properties for managed integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntime.typeProperties.ssisProperties
-        /// </param>
-        /// <param name="customerVirtualNetwork">
-        /// The name of virtual network to which Azure-SSIS integration runtime will join
-        /// Serialized Name: ManagedIntegrationRuntime.typeProperties.customerVirtualNetwork
-        /// </param>
+        /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
+        /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
+        /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
+        /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
+        /// <param name="customerVirtualNetwork"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
         internal ManagedIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork) : base(runtimeType, description, additionalProperties)
         {
             State = state;
@@ -63,35 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeType = runtimeType;
         }
 
-        /// <summary>
-        /// Integration runtime state, only valid for managed dedicated integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntime.state
-        /// </summary>
+        /// <summary> Integration runtime state, only valid for managed dedicated integration runtime. </summary>
         public IntegrationRuntimeState? State { get; }
-        /// <summary>
-        /// Managed Virtual Network reference.
-        /// Serialized Name: ManagedIntegrationRuntime.managedVirtualNetwork
-        /// </summary>
+        /// <summary> Managed Virtual Network reference. </summary>
         public ManagedVirtualNetworkReference ManagedVirtualNetwork { get; set; }
-        /// <summary>
-        /// The compute resource for managed integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntime.typeProperties.computeProperties
-        /// </summary>
+        /// <summary> The compute resource for managed integration runtime. </summary>
         public IntegrationRuntimeComputeProperties ComputeProperties { get; set; }
-        /// <summary>
-        /// SSIS properties for managed integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntime.typeProperties.ssisProperties
-        /// </summary>
+        /// <summary> SSIS properties for managed integration runtime. </summary>
         public IntegrationRuntimeSsisProperties SsisProperties { get; set; }
-        /// <summary>
-        /// The name of virtual network to which Azure-SSIS integration runtime will join
-        /// Serialized Name: ManagedIntegrationRuntime.typeProperties.customerVirtualNetwork
-        /// </summary>
+        /// <summary> The name of virtual network to which Azure-SSIS integration runtime will join. </summary>
         internal IntegrationRuntimeCustomerVirtualNetwork CustomerVirtualNetwork { get; set; }
-        /// <summary>
-        /// The ID of subnet to which Azure-SSIS integration runtime will join.
-        /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork.subnetId
-        /// </summary>
+        /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
         public ResourceIdentifier CustomerVirtualNetworkSubnetId
         {
             get => CustomerVirtualNetwork is null ? default : CustomerVirtualNetwork.SubnetId;

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Managed Virtual Network reference type.
-    /// Serialized Name: ManagedVirtualNetworkReferenceType
-    /// </summary>
+    /// <summary> Managed Virtual Network reference type. </summary>
     public readonly partial struct ManagedVirtualNetworkReferenceType : IEquatable<ManagedVirtualNetworkReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string ManagedVirtualNetworkReferenceValue = "ManagedVirtualNetworkReference";
 
-        /// <summary>
-        /// ManagedVirtualNetworkReference
-        /// Serialized Name: ManagedVirtualNetworkReferenceType.ManagedVirtualNetworkReference
-        /// </summary>
+        /// <summary> ManagedVirtualNetworkReference. </summary>
         public static ManagedVirtualNetworkReferenceType ManagedVirtualNetworkReference { get; } = new ManagedVirtualNetworkReferenceType(ManagedVirtualNetworkReferenceValue);
         /// <summary> Determines if two <see cref="ManagedVirtualNetworkReferenceType"/> values are the same. </summary>
         public static bool operator ==(ManagedVirtualNetworkReferenceType left, ManagedVirtualNetworkReferenceType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity source for SAP Business Warehouse Open Hub Destination source.
-    /// Serialized Name: SapOpenHubSource
-    /// </summary>
+    /// <summary> A copy activity source for SAP Business Warehouse Open Hub Destination source. </summary>
     public partial class SapOpenHubSource : TabularSource
     {
         /// <summary> Initializes a new instance of SapOpenHubSource. </summary>
@@ -23,51 +20,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapOpenHubSource. </summary>
-        /// <param name="copySourceType">
-        /// Copy source type.
-        /// Serialized Name: CopySource.type
-        /// </param>
-        /// <param name="sourceRetryCount">
-        /// Source retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.sourceRetryCount
-        /// </param>
-        /// <param name="sourceRetryWait">
-        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySource.sourceRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySource.disableMetricsCollection
-        /// </param>
+        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="queryTimeout">
-        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: TabularSource.queryTimeout
-        /// </param>
-        /// <param name="additionalColumns">
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: TabularSource.additionalColumns
-        /// </param>
-        /// <param name="excludeLastRequest">
-        /// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SapOpenHubSource.excludeLastRequest
-        /// </param>
-        /// <param name="baseRequestId">
-        /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
-        /// Serialized Name: SapOpenHubSource.baseRequestId
-        /// </param>
-        /// <param name="customRfcReadTableFunctionModule">
-        /// Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubSource.customRfcReadTableFunctionModule
-        /// </param>
-        /// <param name="sapDataColumnDelimiter">
-        /// The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubSource.sapDataColumnDelimiter
-        /// </param>
+        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
+        /// <param name="customRfcReadTableFunctionModule"> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </param>
+        /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
         internal SapOpenHubSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData excludeLastRequest, BinaryData baseRequestId, BinaryData customRfcReadTableFunctionModule, BinaryData sapDataColumnDelimiter) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             ExcludeLastRequest = excludeLastRequest;
@@ -77,25 +41,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "SapOpenHubSource";
         }
 
-        /// <summary>
-        /// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SapOpenHubSource.excludeLastRequest
-        /// </summary>
+        /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData ExcludeLastRequest { get; set; }
-        /// <summary>
-        /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
-        /// Serialized Name: SapOpenHubSource.baseRequestId
-        /// </summary>
+        /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
         public BinaryData BaseRequestId { get; set; }
-        /// <summary>
-        /// Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubSource.customRfcReadTableFunctionModule
-        /// </summary>
+        /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
         public BinaryData CustomRfcReadTableFunctionModule { get; set; }
-        /// <summary>
-        /// The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubSource.sapDataColumnDelimiter
-        /// </summary>
+        /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
         public BinaryData SapDataColumnDelimiter { get; set; }
     }
 }

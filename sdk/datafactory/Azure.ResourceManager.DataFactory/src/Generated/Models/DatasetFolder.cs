@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-    /// Serialized Name: DatasetFolder
-    /// </summary>
+    /// <summary> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </summary>
     internal partial class DatasetFolder
     {
         /// <summary> Initializes a new instance of DatasetFolder. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetFolder. </summary>
-        /// <param name="name">
-        /// The name of the folder that this Dataset is in.
-        /// Serialized Name: DatasetFolder.name
-        /// </param>
+        /// <param name="name"> The name of the folder that this Dataset is in. </param>
         internal DatasetFolder(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// The name of the folder that this Dataset is in.
-        /// Serialized Name: DatasetFolder.name
-        /// </summary>
+        /// <summary> The name of the folder that this Dataset is in. </summary>
         public string Name { get; set; }
     }
 }

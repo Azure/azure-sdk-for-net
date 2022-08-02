@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Dataset location.
-    /// Serialized Name: DatasetLocation
     /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
     /// </summary>
@@ -26,18 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetLocation. </summary>
-        /// <param name="datasetLocationType">
-        /// Type of dataset storage location.
-        /// Serialized Name: DatasetLocation.type
-        /// </param>
-        /// <param name="folderPath">
-        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
-        /// Serialized Name: DatasetLocation.folderPath
-        /// </param>
-        /// <param name="fileName">
-        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetLocation.fileName
-        /// </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -47,20 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Type of dataset storage location.
-        /// Serialized Name: DatasetLocation.type
-        /// </summary>
+        /// <summary> Type of dataset storage location. </summary>
         internal string DatasetLocationType { get; set; }
-        /// <summary>
-        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
-        /// Serialized Name: DatasetLocation.folderPath
-        /// </summary>
+        /// <summary> Specify the folder path of dataset. Type: string (or Expression with resultType string). </summary>
         public BinaryData FolderPath { get; set; }
-        /// <summary>
-        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetLocation.fileName
-        /// </summary>
+        /// <summary> Specify the file name of dataset. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileName { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

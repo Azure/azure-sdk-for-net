@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string).
-    /// Serialized Name: SqlAlwaysEncryptedAkvAuthType
-    /// </summary>
+    /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
     public readonly partial struct SqlAlwaysEncryptedAkvAuthType : IEquatable<SqlAlwaysEncryptedAkvAuthType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ManagedIdentityValue = "ManagedIdentity";
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
-        /// <summary>
-        /// ServicePrincipal
-        /// Serialized Name: SqlAlwaysEncryptedAkvAuthType.ServicePrincipal
-        /// </summary>
+        /// <summary> ServicePrincipal. </summary>
         public static SqlAlwaysEncryptedAkvAuthType ServicePrincipal { get; } = new SqlAlwaysEncryptedAkvAuthType(ServicePrincipalValue);
-        /// <summary>
-        /// ManagedIdentity
-        /// Serialized Name: SqlAlwaysEncryptedAkvAuthType.ManagedIdentity
-        /// </summary>
+        /// <summary> ManagedIdentity. </summary>
         public static SqlAlwaysEncryptedAkvAuthType ManagedIdentity { get; } = new SqlAlwaysEncryptedAkvAuthType(ManagedIdentityValue);
-        /// <summary>
-        /// UserAssignedManagedIdentity
-        /// Serialized Name: SqlAlwaysEncryptedAkvAuthType.UserAssignedManagedIdentity
-        /// </summary>
+        /// <summary> UserAssignedManagedIdentity. </summary>
         public static SqlAlwaysEncryptedAkvAuthType UserAssignedManagedIdentity { get; } = new SqlAlwaysEncryptedAkvAuthType(UserAssignedManagedIdentityValue);
         /// <summary> Determines if two <see cref="SqlAlwaysEncryptedAkvAuthType"/> values are the same. </summary>
         public static bool operator ==(SqlAlwaysEncryptedAkvAuthType left, SqlAlwaysEncryptedAkvAuthType right) => left.Equals(right);

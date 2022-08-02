@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Staging settings.
-    /// Serialized Name: StagingSettings
-    /// </summary>
+    /// <summary> Staging settings. </summary>
     public partial class StagingSettings
     {
         /// <summary> Initializes a new instance of StagingSettings. </summary>
-        /// <param name="linkedServiceName">
-        /// Staging linked service reference.
-        /// Serialized Name: StagingSettings.linkedServiceName
-        /// </param>
+        /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public StagingSettings(FactoryLinkedServiceReference linkedServiceName)
         {
@@ -35,18 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of StagingSettings. </summary>
-        /// <param name="linkedServiceName">
-        /// Staging linked service reference.
-        /// Serialized Name: StagingSettings.linkedServiceName
-        /// </param>
-        /// <param name="path">
-        /// The path to storage for storing the interim data. Type: string (or Expression with resultType string).
-        /// Serialized Name: StagingSettings.path
-        /// </param>
-        /// <param name="enableCompression">
-        /// Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StagingSettings.enableCompression
-        /// </param>
+        /// <param name="linkedServiceName"> Staging linked service reference. </param>
+        /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
+        /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal StagingSettings(FactoryLinkedServiceReference linkedServiceName, BinaryData path, BinaryData enableCompression, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -56,20 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Staging linked service reference.
-        /// Serialized Name: StagingSettings.linkedServiceName
-        /// </summary>
+        /// <summary> Staging linked service reference. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// The path to storage for storing the interim data. Type: string (or Expression with resultType string).
-        /// Serialized Name: StagingSettings.path
-        /// </summary>
+        /// <summary> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </summary>
         public BinaryData Path { get; set; }
-        /// <summary>
-        /// Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StagingSettings.enableCompression
-        /// </summary>
+        /// <summary> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData EnableCompression { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

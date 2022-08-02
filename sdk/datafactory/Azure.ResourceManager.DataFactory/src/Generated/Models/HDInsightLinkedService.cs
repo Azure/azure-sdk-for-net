@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// HDInsight linked service.
-    /// Serialized Name: HDInsightLinkedService
-    /// </summary>
+    /// <summary> HDInsight linked service. </summary>
     public partial class HDInsightLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
-        /// <param name="clusterUri">
-        /// HDInsight cluster URI. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.clusterUri
-        /// </param>
+        /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
         public HDInsightLinkedService(BinaryData clusterUri)
         {
@@ -34,61 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="clusterUri">
-        /// HDInsight cluster URI. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.clusterUri
-        /// </param>
-        /// <param name="userName">
-        /// HDInsight cluster user name. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> HDInsight cluster user name. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// HDInsight cluster password.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="linkedServiceName">
-        /// The Azure Storage linked service reference.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.linkedServiceName
-        /// </param>
-        /// <param name="hcatalogLinkedServiceName">
-        /// A reference to the Azure SQL linked service that points to the HCatalog database.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.hcatalogLinkedServiceName
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="isEspEnabled">
-        /// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.isEspEnabled
-        /// </param>
-        /// <param name="fileSystem">
-        /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.fileSystem
-        /// </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
+        /// <param name="hcatalogLinkedServiceName"> A reference to the Azure SQL linked service that points to the HCatalog database. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="isEspEnabled"> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </param>
+        /// <param name="fileSystem"> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </param>
         internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, FactorySecretBaseDefinition password, FactoryLinkedServiceReference linkedServiceName, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterUri = clusterUri;
@@ -102,47 +59,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "HDInsight";
         }
 
-        /// <summary>
-        /// HDInsight cluster URI. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.clusterUri
-        /// </summary>
+        /// <summary> HDInsight cluster URI. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterUri { get; set; }
-        /// <summary>
-        /// HDInsight cluster user name. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.userName
-        /// </summary>
+        /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// HDInsight cluster password.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The Azure Storage linked service reference.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.linkedServiceName
-        /// </summary>
+        /// <summary> The Azure Storage linked service reference. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// A reference to the Azure SQL linked service that points to the HCatalog database.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.hcatalogLinkedServiceName
-        /// </summary>
+        /// <summary> A reference to the Azure SQL linked service that points to the HCatalog database. </summary>
         public FactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean.
-        /// Serialized Name: HDInsightLinkedService.typeProperties.isEspEnabled
-        /// </summary>
+        /// <summary> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </summary>
         public BinaryData IsEspEnabled { get; set; }
-        /// <summary>
-        /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightLinkedService.typeProperties.fileSystem
-        /// </summary>
+        /// <summary> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileSystem { get; set; }
     }
 }

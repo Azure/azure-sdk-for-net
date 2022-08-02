@@ -9,46 +9,28 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Definition of a single variable for a Pipeline.
-    /// Serialized Name: VariableSpecification
-    /// </summary>
+    /// <summary> Definition of a single variable for a Pipeline. </summary>
     public partial class PipelineVariableSpecification
     {
         /// <summary> Initializes a new instance of PipelineVariableSpecification. </summary>
-        /// <param name="variableType">
-        /// Variable type.
-        /// Serialized Name: VariableSpecification.type
-        /// </param>
+        /// <param name="variableType"> Variable type. </param>
         public PipelineVariableSpecification(PipelineVariableType variableType)
         {
             VariableType = variableType;
         }
 
         /// <summary> Initializes a new instance of PipelineVariableSpecification. </summary>
-        /// <param name="variableType">
-        /// Variable type.
-        /// Serialized Name: VariableSpecification.type
-        /// </param>
-        /// <param name="defaultValue">
-        /// Default value of variable.
-        /// Serialized Name: VariableSpecification.defaultValue
-        /// </param>
+        /// <param name="variableType"> Variable type. </param>
+        /// <param name="defaultValue"> Default value of variable. </param>
         internal PipelineVariableSpecification(PipelineVariableType variableType, BinaryData defaultValue)
         {
             VariableType = variableType;
             DefaultValue = defaultValue;
         }
 
-        /// <summary>
-        /// Variable type.
-        /// Serialized Name: VariableSpecification.type
-        /// </summary>
+        /// <summary> Variable type. </summary>
         public PipelineVariableType VariableType { get; set; }
-        /// <summary>
-        /// Default value of variable.
-        /// Serialized Name: VariableSpecification.defaultValue
-        /// </summary>
+        /// <summary> Default value of variable. </summary>
         public BinaryData DefaultValue { get; set; }
     }
 }

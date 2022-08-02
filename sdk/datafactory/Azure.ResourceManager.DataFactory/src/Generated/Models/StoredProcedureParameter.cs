@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SQL stored procedure parameter.
-    /// Serialized Name: StoredProcedureParameter
-    /// </summary>
+    /// <summary> SQL stored procedure parameter. </summary>
     public partial class StoredProcedureParameter
     {
         /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of StoredProcedureParameter. </summary>
-        /// <param name="value">
-        /// Stored procedure parameter value. Type: string (or Expression with resultType string).
-        /// Serialized Name: StoredProcedureParameter.value
-        /// </param>
-        /// <param name="parameterType">
-        /// Stored procedure parameter type.
-        /// Serialized Name: StoredProcedureParameter.type
-        /// </param>
+        /// <param name="value"> Stored procedure parameter value. Type: string (or Expression with resultType string). </param>
+        /// <param name="parameterType"> Stored procedure parameter type. </param>
         internal StoredProcedureParameter(BinaryData value, StoredProcedureParameterType? parameterType)
         {
             Value = value;
             ParameterType = parameterType;
         }
 
-        /// <summary>
-        /// Stored procedure parameter value. Type: string (or Expression with resultType string).
-        /// Serialized Name: StoredProcedureParameter.value
-        /// </summary>
+        /// <summary> Stored procedure parameter value. Type: string (or Expression with resultType string). </summary>
         public BinaryData Value { get; set; }
-        /// <summary>
-        /// Stored procedure parameter type.
-        /// Serialized Name: StoredProcedureParameter.type
-        /// </summary>
+        /// <summary> Stored procedure parameter type. </summary>
         public StoredProcedureParameterType? ParameterType { get; set; }
     }
 }

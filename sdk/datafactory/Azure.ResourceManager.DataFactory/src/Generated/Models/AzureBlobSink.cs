@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Azure Blob sink.
-    /// Serialized Name: BlobSink
-    /// </summary>
+    /// <summary> A copy activity Azure Blob sink. </summary>
     public partial class AzureBlobSink : CopySink
     {
         /// <summary> Initializes a new instance of AzureBlobSink. </summary>
@@ -25,55 +22,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobSink. </summary>
-        /// <param name="copySinkType">
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </param>
-        /// <param name="writeBatchSize">
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </param>
-        /// <param name="writeBatchTimeout">
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </param>
-        /// <param name="sinkRetryCount">
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </param>
-        /// <param name="sinkRetryWait">
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="blobWriterOverwriteFiles">
-        /// Blob writer overwrite files. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: BlobSink.blobWriterOverwriteFiles
-        /// </param>
-        /// <param name="blobWriterDateTimeFormat">
-        /// Blob writer date time format. Type: string (or Expression with resultType string).
-        /// Serialized Name: BlobSink.blobWriterDateTimeFormat
-        /// </param>
-        /// <param name="blobWriterAddHeader">
-        /// Blob writer add header. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: BlobSink.blobWriterAddHeader
-        /// </param>
-        /// <param name="copyBehavior">
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: BlobSink.copyBehavior
-        /// </param>
-        /// <param name="metadata">
-        /// Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects).
-        /// Serialized Name: BlobSink.metadata
-        /// </param>
+        /// <param name="blobWriterOverwriteFiles"> Blob writer overwrite files. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="blobWriterDateTimeFormat"> Blob writer date time format. Type: string (or Expression with resultType string). </param>
+        /// <param name="blobWriterAddHeader"> Blob writer add header. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         internal AzureBlobSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData blobWriterOverwriteFiles, BinaryData blobWriterDateTimeFormat, BinaryData blobWriterAddHeader, BinaryData copyBehavior, IList<FactoryMetadataItemInfo> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
@@ -84,30 +45,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "BlobSink";
         }
 
-        /// <summary>
-        /// Blob writer overwrite files. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: BlobSink.blobWriterOverwriteFiles
-        /// </summary>
+        /// <summary> Blob writer overwrite files. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData BlobWriterOverwriteFiles { get; set; }
-        /// <summary>
-        /// Blob writer date time format. Type: string (or Expression with resultType string).
-        /// Serialized Name: BlobSink.blobWriterDateTimeFormat
-        /// </summary>
+        /// <summary> Blob writer date time format. Type: string (or Expression with resultType string). </summary>
         public BinaryData BlobWriterDateTimeFormat { get; set; }
-        /// <summary>
-        /// Blob writer add header. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: BlobSink.blobWriterAddHeader
-        /// </summary>
+        /// <summary> Blob writer add header. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData BlobWriterAddHeader { get; set; }
-        /// <summary>
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: BlobSink.copyBehavior
-        /// </summary>
+        /// <summary> The type of copy behavior for copy sink. </summary>
         public BinaryData CopyBehavior { get; set; }
-        /// <summary>
-        /// Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects).
-        /// Serialized Name: BlobSink.metadata
-        /// </summary>
+        /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
         public IList<FactoryMetadataItemInfo> Metadata { get; }
     }
 }

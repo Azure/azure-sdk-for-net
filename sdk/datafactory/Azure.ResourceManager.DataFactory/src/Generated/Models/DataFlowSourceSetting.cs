@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Definition of data flow source setting for debug.
-    /// Serialized Name: DataFlowSourceSetting
-    /// </summary>
+    /// <summary> Definition of data flow source setting for debug. </summary>
     public partial class DataFlowSourceSetting
     {
         /// <summary> Initializes a new instance of DataFlowSourceSetting. </summary>
@@ -23,15 +20,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary>
-        /// The data flow source name.
-        /// Serialized Name: DataFlowSourceSetting.sourceName
-        /// </summary>
+        /// <summary> The data flow source name. </summary>
         public string SourceName { get; set; }
-        /// <summary>
-        /// Defines the row limit of data flow source in debug.
-        /// Serialized Name: DataFlowSourceSetting.rowLimit
-        /// </summary>
+        /// <summary> Defines the row limit of data flow source in debug. </summary>
         public int? RowLimit { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

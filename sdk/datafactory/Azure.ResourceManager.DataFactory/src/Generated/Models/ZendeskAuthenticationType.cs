@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The authentication type to use.
-    /// Serialized Name: ZendeskAuthenticationType
-    /// </summary>
+    /// <summary> The authentication type to use. </summary>
     public readonly partial struct ZendeskAuthenticationType : IEquatable<ZendeskAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string TokenValue = "Token";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: ZendeskAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static ZendeskAuthenticationType Basic { get; } = new ZendeskAuthenticationType(BasicValue);
-        /// <summary>
-        /// Token
-        /// Serialized Name: ZendeskAuthenticationType.Token
-        /// </summary>
+        /// <summary> Token. </summary>
         public static ZendeskAuthenticationType Token { get; } = new ZendeskAuthenticationType(TokenValue);
         /// <summary> Determines if two <see cref="ZendeskAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ZendeskAuthenticationType left, ZendeskAuthenticationType right) => left.Equals(right);

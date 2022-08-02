@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sftp read settings.
-    /// Serialized Name: SftpReadSettings
-    /// </summary>
+    /// <summary> Sftp read settings. </summary>
     public partial class SftpReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of SftpReadSettings. </summary>
@@ -23,59 +20,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SftpReadSettings. </summary>
-        /// <param name="storeReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: StoreReadSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreReadSettings.disableMetricsCollection
-        /// </param>
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive">
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpReadSettings.recursive
-        /// </param>
-        /// <param name="wildcardFolderPath">
-        /// Sftp wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.wildcardFolderPath
-        /// </param>
-        /// <param name="wildcardFileName">
-        /// Sftp wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.wildcardFileName
-        /// </param>
-        /// <param name="enablePartitionDiscovery">
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: SftpReadSettings.enablePartitionDiscovery
-        /// </param>
-        /// <param name="partitionRootPath">
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.partitionRootPath
-        /// </param>
-        /// <param name="fileListPath">
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.fileListPath
-        /// </param>
-        /// <param name="deleteFilesAfterCompletion">
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpReadSettings.deleteFilesAfterCompletion
-        /// </param>
-        /// <param name="modifiedDatetimeStart">
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.modifiedDatetimeStart
-        /// </param>
-        /// <param name="modifiedDatetimeEnd">
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.modifiedDatetimeEnd
-        /// </param>
-        /// <param name="disableChunking">
-        /// If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpReadSettings.disableChunking
-        /// </param>
+        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="wildcardFolderPath"> Sftp wildcardFolderPath. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFileName"> Sftp wildcardFileName. Type: string (or Expression with resultType string). </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
+        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="disableChunking"> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         internal SftpReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData fileListPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd, BinaryData disableChunking) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -91,55 +49,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "SftpReadSettings";
         }
 
-        /// <summary>
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpReadSettings.recursive
-        /// </summary>
+        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData Recursive { get; set; }
-        /// <summary>
-        /// Sftp wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.wildcardFolderPath
-        /// </summary>
+        /// <summary> Sftp wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFolderPath { get; set; }
-        /// <summary>
-        /// Sftp wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.wildcardFileName
-        /// </summary>
+        /// <summary> Sftp wildcardFileName. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFileName { get; set; }
-        /// <summary>
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: SftpReadSettings.enablePartitionDiscovery
-        /// </summary>
+        /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.partitionRootPath
-        /// </summary>
+        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionRootPath { get; set; }
-        /// <summary>
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.fileListPath
-        /// </summary>
+        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileListPath { get; set; }
-        /// <summary>
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpReadSettings.deleteFilesAfterCompletion
-        /// </summary>
+        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
-        /// <summary>
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.modifiedDatetimeStart
-        /// </summary>
+        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
-        /// <summary>
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpReadSettings.modifiedDatetimeEnd
-        /// </summary>
+        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public BinaryData ModifiedDatetimeEnd { get; set; }
-        /// <summary>
-        /// If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpReadSettings.disableChunking
-        /// </summary>
+        /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DisableChunking { get; set; }
     }
 }

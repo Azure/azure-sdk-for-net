@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The type of Hive server.
-    /// Serialized Name: HiveServerType
-    /// </summary>
+    /// <summary> The type of Hive server. </summary>
     public readonly partial struct HiveServerType : IEquatable<HiveServerType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string HiveServer2Value = "HiveServer2";
         private const string HiveThriftServerValue = "HiveThriftServer";
 
-        /// <summary>
-        /// HiveServer1
-        /// Serialized Name: HiveServerType.HiveServer1
-        /// </summary>
+        /// <summary> HiveServer1. </summary>
         public static HiveServerType HiveServer1 { get; } = new HiveServerType(HiveServer1Value);
-        /// <summary>
-        /// HiveServer2
-        /// Serialized Name: HiveServerType.HiveServer2
-        /// </summary>
+        /// <summary> HiveServer2. </summary>
         public static HiveServerType HiveServer2 { get; } = new HiveServerType(HiveServer2Value);
-        /// <summary>
-        /// HiveThriftServer
-        /// Serialized Name: HiveServerType.HiveThriftServer
-        /// </summary>
+        /// <summary> HiveThriftServer. </summary>
         public static HiveServerType HiveThriftServer { get; } = new HiveServerType(HiveThriftServerValue);
         /// <summary> Determines if two <see cref="HiveServerType"/> values are the same. </summary>
         public static bool operator ==(HiveServerType left, HiveServerType right) => left.Equals(right);

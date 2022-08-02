@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The ZipDeflate compression read settings.
-    /// Serialized Name: ZipDeflateReadSettings
-    /// </summary>
+    /// <summary> The ZipDeflate compression read settings. </summary>
     public partial class ZipDeflateReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
@@ -23,25 +20,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
-        /// <param name="compressionReadSettingsType">
-        /// The Compression setting type.
-        /// Serialized Name: CompressionReadSettings.type
-        /// </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="preserveZipFileNameAsFolder">
-        /// Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ZipDeflateReadSettings.preserveZipFileNameAsFolder
-        /// </param>
+        /// <param name="preserveZipFileNameAsFolder"> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         internal ZipDeflateReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData preserveZipFileNameAsFolder) : base(compressionReadSettingsType, additionalProperties)
         {
             PreserveZipFileNameAsFolder = preserveZipFileNameAsFolder;
             CompressionReadSettingsType = compressionReadSettingsType ?? "ZipDeflateReadSettings";
         }
 
-        /// <summary>
-        /// Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ZipDeflateReadSettings.preserveZipFileNameAsFolder
-        /// </summary>
+        /// <summary> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData PreserveZipFileNameAsFolder { get; set; }
     }
 }

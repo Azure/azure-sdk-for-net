@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sap Business Warehouse Open Hub Destination Table properties.
-    /// Serialized Name: SapOpenHubTableDataset
-    /// </summary>
+    /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
     public partial class SapOpenHubTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="openHubDestinationName">
-        /// The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.openHubDestinationName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
         public SapOpenHubTableDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData openHubDestinationName) : base(linkedServiceName)
         {
@@ -42,51 +33,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="openHubDestinationName">
-        /// The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.openHubDestinationName
-        /// </param>
-        /// <param name="excludeLastRequest">
-        /// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.excludeLastRequest
-        /// </param>
-        /// <param name="baseRequestId">
-        /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.baseRequestId
-        /// </param>
+        /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
+        /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
         internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             OpenHubDestinationName = openHubDestinationName;
@@ -95,20 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapOpenHubTable";
         }
 
-        /// <summary>
-        /// The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.openHubDestinationName
-        /// </summary>
+        /// <summary> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </summary>
         public BinaryData OpenHubDestinationName { get; set; }
-        /// <summary>
-        /// Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.excludeLastRequest
-        /// </summary>
+        /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData ExcludeLastRequest { get; set; }
-        /// <summary>
-        /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
-        /// Serialized Name: SapOpenHubTableDataset.typeProperties.baseRequestId
-        /// </summary>
+        /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
         public BinaryData BaseRequestId { get; set; }
     }
 }

@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Custom linked service.
-    /// Serialized Name: CustomDataSourceLinkedService
-    /// </summary>
+    /// <summary> Custom linked service. </summary>
     public partial class CustomDataSourceLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
-        /// <param name="typeProperties">
-        /// Custom linked service properties.
-        /// Serialized Name: CustomDataSourceLinkedService.typeProperties
-        /// </param>
+        /// <param name="typeProperties"> Custom linked service properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public CustomDataSourceLinkedService(BinaryData typeProperties)
         {
@@ -34,41 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CustomDataSourceLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="typeProperties">
-        /// Custom linked service properties.
-        /// Serialized Name: CustomDataSourceLinkedService.typeProperties
-        /// </param>
+        /// <param name="typeProperties"> Custom linked service properties. </param>
         internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "CustomDataSource";
         }
 
-        /// <summary>
-        /// Custom linked service properties.
-        /// Serialized Name: CustomDataSourceLinkedService.typeProperties
-        /// </summary>
+        /// <summary> Custom linked service properties. </summary>
         public BinaryData TypeProperties { get; set; }
     }
 }

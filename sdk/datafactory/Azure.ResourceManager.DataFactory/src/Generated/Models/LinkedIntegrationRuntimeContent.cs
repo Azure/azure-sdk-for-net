@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Data factory name for linked integration runtime request.
-    /// Serialized Name: LinkedIntegrationRuntimeRequest
-    /// </summary>
+    /// <summary> Data factory name for linked integration runtime request. </summary>
     public partial class LinkedIntegrationRuntimeContent
     {
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeContent. </summary>
-        /// <param name="linkedFactoryName">
-        /// The data factory name for linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntimeRequest.factoryName
-        /// </param>
+        /// <param name="linkedFactoryName"> The data factory name for linked integration runtime. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedFactoryName"/> is null. </exception>
         public LinkedIntegrationRuntimeContent(string linkedFactoryName)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedFactoryName = linkedFactoryName;
         }
 
-        /// <summary>
-        /// The data factory name for linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntimeRequest.factoryName
-        /// </summary>
+        /// <summary> The data factory name for linked integration runtime. </summary>
         public string LinkedFactoryName { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SAP Business Warehouse Open Hub Destination Linked Service.
-    /// Serialized Name: SapOpenHubLinkedService
-    /// </summary>
+    /// <summary> SAP Business Warehouse Open Hub Destination Linked Service. </summary>
     public partial class SapOpenHubLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
@@ -23,73 +20,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server">
-        /// Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.server
-        /// </param>
-        /// <param name="systemNumber">
-        /// System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.systemNumber
-        /// </param>
-        /// <param name="clientId">
-        /// Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.clientId
-        /// </param>
-        /// <param name="language">
-        /// Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.language
-        /// </param>
-        /// <param name="systemId">
-        /// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.systemId
-        /// </param>
-        /// <param name="userName">
-        /// Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="server"> Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="systemNumber"> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
+        /// <param name="clientId"> Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
+        /// <param name="language"> Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string). </param>
+        /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// Password to access the SAP BW server where the open hub destination is located.
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="messageServer">
-        /// The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.messageServer
-        /// </param>
-        /// <param name="messageServerService">
-        /// The service name or port number of the Message Server. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.messageServerService
-        /// </param>
-        /// <param name="logonGroup">
-        /// The Logon Group for the SAP System. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.logonGroup
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
+        /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
+        /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal SapOpenHubLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData systemNumber, BinaryData clientId, BinaryData language, BinaryData systemId, BinaryData userName, FactorySecretBaseDefinition password, BinaryData messageServer, BinaryData messageServerService, BinaryData logonGroup, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
@@ -106,62 +57,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SapOpenHub";
         }
 
-        /// <summary>
-        /// Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.server
-        /// </summary>
+        /// <summary> Host name of the SAP BW instance where the open hub destination is located. Type: string (or Expression with resultType string). </summary>
         public BinaryData Server { get; set; }
-        /// <summary>
-        /// System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.systemNumber
-        /// </summary>
+        /// <summary> System number of the BW system where the open hub destination is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
         public BinaryData SystemNumber { get; set; }
-        /// <summary>
-        /// Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.clientId
-        /// </summary>
+        /// <summary> Client ID of the client on the BW system where the open hub destination is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
         public BinaryData ClientId { get; set; }
-        /// <summary>
-        /// Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.language
-        /// </summary>
+        /// <summary> Language of the BW system where the open hub destination is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
         public BinaryData Language { get; set; }
-        /// <summary>
-        /// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.systemId
-        /// </summary>
+        /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
         public BinaryData SystemId { get; set; }
-        /// <summary>
-        /// Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.userName
-        /// </summary>
+        /// <summary> Username to access the SAP BW server where the open hub destination is located. Type: string (or Expression with resultType string). </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// Password to access the SAP BW server where the open hub destination is located.
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.messageServer
-        /// </summary>
+        /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
         public BinaryData MessageServer { get; set; }
-        /// <summary>
-        /// The service name or port number of the Message Server. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.messageServerService
-        /// </summary>
+        /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
         public BinaryData MessageServerService { get; set; }
-        /// <summary>
-        /// The Logon Group for the SAP System. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.logonGroup
-        /// </summary>
+        /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
         public BinaryData LogonGroup { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOpenHubLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Drill server dataset.
-    /// Serialized Name: DrillTableDataset
-    /// </summary>
+    /// <summary> Drill server dataset. </summary>
     public partial class DrillTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DrillTableDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DrillTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -33,51 +27,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DrillTableDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName">
-        /// This property will be retired. Please consider using schema + table properties instead.
-        /// Serialized Name: DrillTableDataset.typeProperties.tableName
-        /// </param>
-        /// <param name="table">
-        /// The table name of the Drill. Type: string (or Expression with resultType string).
-        /// Serialized Name: DrillTableDataset.typeProperties.table
-        /// </param>
-        /// <param name="schemaTypePropertiesSchema">
-        /// The schema name of the Drill. Type: string (or Expression with resultType string).
-        /// Serialized Name: DrillTableDataset.typeProperties.schema
-        /// </param>
+        /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
+        /// <param name="table"> The table name of the Drill. Type: string (or Expression with resultType string). </param>
+        /// <param name="schemaTypePropertiesSchema"> The schema name of the Drill. Type: string (or Expression with resultType string). </param>
         internal DrillTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table, BinaryData schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
@@ -86,20 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "DrillTable";
         }
 
-        /// <summary>
-        /// This property will be retired. Please consider using schema + table properties instead.
-        /// Serialized Name: DrillTableDataset.typeProperties.tableName
-        /// </summary>
+        /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public BinaryData TableName { get; set; }
-        /// <summary>
-        /// The table name of the Drill. Type: string (or Expression with resultType string).
-        /// Serialized Name: DrillTableDataset.typeProperties.table
-        /// </summary>
+        /// <summary> The table name of the Drill. Type: string (or Expression with resultType string). </summary>
         public BinaryData Table { get; set; }
-        /// <summary>
-        /// The schema name of the Drill. Type: string (or Expression with resultType string).
-        /// Serialized Name: DrillTableDataset.typeProperties.schema
-        /// </summary>
+        /// <summary> The schema name of the Drill. Type: string (or Expression with resultType string). </summary>
         public BinaryData SchemaTypePropertiesSchema { get; set; }
     }
 }

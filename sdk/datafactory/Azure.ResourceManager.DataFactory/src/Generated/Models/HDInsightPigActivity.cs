@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// HDInsight Pig activity type.
-    /// Serialized Name: HDInsightPigActivity
-    /// </summary>
+    /// <summary> HDInsight Pig activity type. </summary>
     public partial class HDInsightPigActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
+        /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightPigActivity(string name) : base(name)
         {
@@ -36,59 +30,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="storageLinkedServices">
-        /// Storage linked service references.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.storageLinkedServices
-        /// </param>
-        /// <param name="arguments">
-        /// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
-        /// Serialized Name: HDInsightPigActivity.typeProperties.arguments
-        /// </param>
-        /// <param name="getDebugInfo">
-        /// Debug info option.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.getDebugInfo
-        /// </param>
-        /// <param name="scriptPath">
-        /// Script path. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightPigActivity.typeProperties.scriptPath
-        /// </param>
-        /// <param name="scriptLinkedService">
-        /// Script linked service reference.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.scriptLinkedService
-        /// </param>
-        /// <param name="defines">
-        /// Allows user to specify defines for Pig job request.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.defines
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
+        /// <param name="arguments"> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </param>
+        /// <param name="getDebugInfo"> Debug info option. </param>
+        /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
+        /// <param name="defines"> Allows user to specify defines for Pig job request. </param>
         internal HDInsightPigActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
@@ -100,35 +55,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightPig";
         }
 
-        /// <summary>
-        /// Storage linked service references.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.storageLinkedServices
-        /// </summary>
+        /// <summary> Storage linked service references. </summary>
         public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
-        /// <summary>
-        /// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
-        /// Serialized Name: HDInsightPigActivity.typeProperties.arguments
-        /// </summary>
+        /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
         public BinaryData Arguments { get; set; }
-        /// <summary>
-        /// Debug info option.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.getDebugInfo
-        /// </summary>
+        /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
-        /// <summary>
-        /// Script path. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightPigActivity.typeProperties.scriptPath
-        /// </summary>
+        /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
         public BinaryData ScriptPath { get; set; }
-        /// <summary>
-        /// Script linked service reference.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.scriptLinkedService
-        /// </summary>
+        /// <summary> Script linked service reference. </summary>
         public FactoryLinkedServiceReference ScriptLinkedService { get; set; }
-        /// <summary>
-        /// Allows user to specify defines for Pig job request.
-        /// Serialized Name: HDInsightPigActivity.typeProperties.defines
-        /// </summary>
+        /// <summary> Allows user to specify defines for Pig job request. </summary>
         public IDictionary<string, BinaryData> Defines { get; }
     }
 }

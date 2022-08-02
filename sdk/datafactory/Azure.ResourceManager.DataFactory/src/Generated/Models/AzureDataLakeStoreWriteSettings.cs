@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure data lake store write settings.
-    /// Serialized Name: AzureDataLakeStoreWriteSettings
-    /// </summary>
+    /// <summary> Azure data lake store write settings. </summary>
     public partial class AzureDataLakeStoreWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreWriteSettings. </summary>
@@ -23,37 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeStoreWriteSettings. </summary>
-        /// <param name="storeWriteSettingsType">
-        /// The write setting type.
-        /// Serialized Name: StoreWriteSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreWriteSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreWriteSettings.disableMetricsCollection
-        /// </param>
-        /// <param name="copyBehavior">
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: StoreWriteSettings.copyBehavior
-        /// </param>
+        /// <param name="storeWriteSettingsType"> The write setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="expiryDateTime">
-        /// Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: AzureDataLakeStoreWriteSettings.expiryDateTime
-        /// </param>
+        /// <param name="expiryDateTime"> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer). </param>
         internal AzureDataLakeStoreWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData expiryDateTime) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             ExpiryDateTime = expiryDateTime;
             StoreWriteSettingsType = storeWriteSettingsType ?? "AzureDataLakeStoreWriteSettings";
         }
 
-        /// <summary>
-        /// Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: AzureDataLakeStoreWriteSettings.expiryDateTime
-        /// </summary>
+        /// <summary> Specifies the expiry time of the written files. The time is applied to the UTC time zone in the format of &quot;2018-12-01T05:00:00Z&quot;. Default value is NULL. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData ExpiryDateTime { get; set; }
     }
 }

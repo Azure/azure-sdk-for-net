@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// AuthenticationType to be used for connection.
-    /// Serialized Name: TeradataAuthenticationType
-    /// </summary>
+    /// <summary> AuthenticationType to be used for connection. </summary>
     public readonly partial struct TeradataAuthenticationType : IEquatable<TeradataAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string WindowsValue = "Windows";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: TeradataAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static TeradataAuthenticationType Basic { get; } = new TeradataAuthenticationType(BasicValue);
-        /// <summary>
-        /// Windows
-        /// Serialized Name: TeradataAuthenticationType.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         public static TeradataAuthenticationType Windows { get; } = new TeradataAuthenticationType(WindowsValue);
         /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(TeradataAuthenticationType left, TeradataAuthenticationType right) => left.Equals(right);

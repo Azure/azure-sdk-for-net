@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Power Query data flow.
-    /// Serialized Name: WranglingDataFlow
-    /// </summary>
+    /// <summary> Power Query data flow. </summary>
     public partial class FactoryWranglingDataFlowDefinition : FactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of FactoryWranglingDataFlowDefinition. </summary>
@@ -25,34 +22,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryWranglingDataFlowDefinition. </summary>
-        /// <param name="dataFlowType">
-        /// Type of data flow.
-        /// Serialized Name: DataFlow.type
-        /// </param>
-        /// <param name="description">
-        /// The description of the data flow.
-        /// Serialized Name: DataFlow.description
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the data flow.
-        /// Serialized Name: DataFlow.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-        /// Serialized Name: DataFlow.folder
-        /// </param>
-        /// <param name="sources">
-        /// List of sources in Power Query.
-        /// Serialized Name: WranglingDataFlow.typeProperties.sources
-        /// </param>
-        /// <param name="script">
-        /// Power query mashup script.
-        /// Serialized Name: WranglingDataFlow.typeProperties.script
-        /// </param>
-        /// <param name="documentLocale">
-        /// Locale of the Power query mashup document.
-        /// Serialized Name: WranglingDataFlow.typeProperties.documentLocale
-        /// </param>
+        /// <param name="dataFlowType"> Type of data flow. </param>
+        /// <param name="description"> The description of the data flow. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
+        /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
+        /// <param name="sources"> List of sources in Power Query. </param>
+        /// <param name="script"> Power query mashup script. </param>
+        /// <param name="documentLocale"> Locale of the Power query mashup document. </param>
         internal FactoryWranglingDataFlowDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<PowerQuerySource> sources, string script, string documentLocale) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
@@ -61,20 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowType = dataFlowType ?? "WranglingDataFlow";
         }
 
-        /// <summary>
-        /// List of sources in Power Query.
-        /// Serialized Name: WranglingDataFlow.typeProperties.sources
-        /// </summary>
+        /// <summary> List of sources in Power Query. </summary>
         public IList<PowerQuerySource> Sources { get; }
-        /// <summary>
-        /// Power query mashup script.
-        /// Serialized Name: WranglingDataFlow.typeProperties.script
-        /// </summary>
+        /// <summary> Power query mashup script. </summary>
         public string Script { get; set; }
-        /// <summary>
-        /// Locale of the Power query mashup document.
-        /// Serialized Name: WranglingDataFlow.typeProperties.documentLocale
-        /// </summary>
+        /// <summary> Locale of the Power query mashup document. </summary>
         public string DocumentLocale { get; set; }
     }
 }

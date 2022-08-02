@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Definition of CMK for the factory.
-    /// Serialized Name: EncryptionConfiguration
-    /// </summary>
+    /// <summary> Definition of CMK for the factory. </summary>
     public partial class FactoryEncryptionConfiguration
     {
         /// <summary> Initializes a new instance of FactoryEncryptionConfiguration. </summary>
-        /// <param name="keyName">
-        /// The name of the key in Azure Key Vault to use as Customer Managed Key.
-        /// Serialized Name: EncryptionConfiguration.keyName
-        /// </param>
-        /// <param name="vaultBaseUri">
-        /// The url of the Azure Key Vault used for CMK.
-        /// Serialized Name: EncryptionConfiguration.vaultBaseUrl
-        /// </param>
+        /// <param name="keyName"> The name of the key in Azure Key Vault to use as Customer Managed Key. </param>
+        /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="vaultBaseUri"/> is null. </exception>
         public FactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri)
         {
@@ -41,22 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryEncryptionConfiguration. </summary>
-        /// <param name="keyName">
-        /// The name of the key in Azure Key Vault to use as Customer Managed Key.
-        /// Serialized Name: EncryptionConfiguration.keyName
-        /// </param>
-        /// <param name="vaultBaseUri">
-        /// The url of the Azure Key Vault used for CMK.
-        /// Serialized Name: EncryptionConfiguration.vaultBaseUrl
-        /// </param>
-        /// <param name="keyVersion">
-        /// The version of the key used for CMK. If not provided, latest version will be used.
-        /// Serialized Name: EncryptionConfiguration.keyVersion
-        /// </param>
-        /// <param name="identity">
-        /// User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used.
-        /// Serialized Name: EncryptionConfiguration.identity
-        /// </param>
+        /// <param name="keyName"> The name of the key in Azure Key Vault to use as Customer Managed Key. </param>
+        /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
+        /// <param name="keyVersion"> The version of the key used for CMK. If not provided, latest version will be used. </param>
+        /// <param name="identity"> User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used. </param>
         internal FactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri, string keyVersion, CmkIdentityDefinition identity)
         {
             KeyName = keyName;
@@ -65,30 +44,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Identity = identity;
         }
 
-        /// <summary>
-        /// The name of the key in Azure Key Vault to use as Customer Managed Key.
-        /// Serialized Name: EncryptionConfiguration.keyName
-        /// </summary>
+        /// <summary> The name of the key in Azure Key Vault to use as Customer Managed Key. </summary>
         public string KeyName { get; set; }
-        /// <summary>
-        /// The url of the Azure Key Vault used for CMK.
-        /// Serialized Name: EncryptionConfiguration.vaultBaseUrl
-        /// </summary>
+        /// <summary> The url of the Azure Key Vault used for CMK. </summary>
         public Uri VaultBaseUri { get; set; }
-        /// <summary>
-        /// The version of the key used for CMK. If not provided, latest version will be used.
-        /// Serialized Name: EncryptionConfiguration.keyVersion
-        /// </summary>
+        /// <summary> The version of the key used for CMK. If not provided, latest version will be used. </summary>
         public string KeyVersion { get; set; }
-        /// <summary>
-        /// User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used.
-        /// Serialized Name: EncryptionConfiguration.identity
-        /// </summary>
+        /// <summary> User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used. </summary>
         internal CmkIdentityDefinition Identity { get; set; }
-        /// <summary>
-        /// The resource id of the user assigned identity to authenticate to customer&apos;s key vault.
-        /// Serialized Name: CMKIdentityDefinition.userAssignedIdentity
-        /// </summary>
+        /// <summary> The resource id of the user assigned identity to authenticate to customer&apos;s key vault. </summary>
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;

@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Connector write settings.
-    /// Serialized Name: StoreWriteSettings
     /// Please note <see cref="StoreWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/> and <see cref="SftpWriteSettings"/>.
     /// </summary>
@@ -26,22 +25,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
-        /// <param name="storeWriteSettingsType">
-        /// The write setting type.
-        /// Serialized Name: StoreWriteSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreWriteSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreWriteSettings.disableMetricsCollection
-        /// </param>
-        /// <param name="copyBehavior">
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: StoreWriteSettings.copyBehavior
-        /// </param>
+        /// <param name="storeWriteSettingsType"> The write setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal StoreWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -52,25 +39,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The write setting type.
-        /// Serialized Name: StoreWriteSettings.type
-        /// </summary>
+        /// <summary> The write setting type. </summary>
         internal string StoreWriteSettingsType { get; set; }
-        /// <summary>
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreWriteSettings.maxConcurrentConnections
-        /// </summary>
+        /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData MaxConcurrentConnections { get; set; }
-        /// <summary>
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreWriteSettings.disableMetricsCollection
-        /// </summary>
+        /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DisableMetricsCollection { get; set; }
-        /// <summary>
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: StoreWriteSettings.copyBehavior
-        /// </summary>
+        /// <summary> The type of copy behavior for copy sink. </summary>
         public BinaryData CopyBehavior { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

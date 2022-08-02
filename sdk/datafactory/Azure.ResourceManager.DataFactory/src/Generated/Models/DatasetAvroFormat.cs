@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The data stored in Avro format.
-    /// Serialized Name: AvroFormat
-    /// </summary>
+    /// <summary> The data stored in Avro format. </summary>
     public partial class DatasetAvroFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of DatasetAvroFormat. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetAvroFormat. </summary>
-        /// <param name="datasetStorageFormatType">
-        /// Type of dataset storage format.
-        /// Serialized Name: DatasetStorageFormat.type
-        /// </param>
-        /// <param name="serializer">
-        /// Serializer. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetStorageFormat.serializer
-        /// </param>
-        /// <param name="deserializer">
-        /// Deserializer. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetStorageFormat.deserializer
-        /// </param>
+        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
+        /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetAvroFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {

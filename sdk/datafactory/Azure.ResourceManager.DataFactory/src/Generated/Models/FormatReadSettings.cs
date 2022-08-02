@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format read settings.
-    /// Serialized Name: FormatReadSettings
     /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
     /// </summary>
@@ -26,10 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FormatReadSettings. </summary>
-        /// <param name="formatReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: FormatReadSettings.type
-        /// </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -37,10 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The read setting type.
-        /// Serialized Name: FormatReadSettings.type
-        /// </summary>
+        /// <summary> The read setting type. </summary>
         internal string FormatReadSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

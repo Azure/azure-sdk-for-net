@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of FactoryIntegrationRuntimeData. </summary>
         /// <param name="properties">
         /// Integration runtime properties.
-        /// Serialized Name: IntegrationRuntimeResource.properties
         /// Please note <see cref="IntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
@@ -41,14 +40,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Integration runtime properties.
-        /// Serialized Name: IntegrationRuntimeResource.properties
         /// Please note <see cref="IntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
-        /// <param name="eTag">
-        /// Etag identifies change in the resource.
-        /// Serialized Name: SubResource.etag
-        /// </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         internal FactoryIntegrationRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntimeDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
@@ -57,15 +52,11 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Integration runtime properties.
-        /// Serialized Name: IntegrationRuntimeResource.properties
         /// Please note <see cref="IntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </summary>
         public IntegrationRuntimeDefinition Properties { get; set; }
-        /// <summary>
-        /// Etag identifies change in the resource.
-        /// Serialized Name: SubResource.etag
-        /// </summary>
+        /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }
 }

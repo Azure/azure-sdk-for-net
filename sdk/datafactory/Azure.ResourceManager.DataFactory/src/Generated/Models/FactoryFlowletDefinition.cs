@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Data flow flowlet
-    /// Serialized Name: Flowlet
-    /// </summary>
+    /// <summary> Data flow flowlet. </summary>
     public partial class FactoryFlowletDefinition : FactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of FactoryFlowletDefinition. </summary>
@@ -28,42 +25,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryFlowletDefinition. </summary>
-        /// <param name="dataFlowType">
-        /// Type of data flow.
-        /// Serialized Name: DataFlow.type
-        /// </param>
-        /// <param name="description">
-        /// The description of the data flow.
-        /// Serialized Name: DataFlow.description
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the data flow.
-        /// Serialized Name: DataFlow.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-        /// Serialized Name: DataFlow.folder
-        /// </param>
-        /// <param name="sources">
-        /// List of sources in Flowlet.
-        /// Serialized Name: Flowlet.typeProperties.sources
-        /// </param>
-        /// <param name="sinks">
-        /// List of sinks in Flowlet.
-        /// Serialized Name: Flowlet.typeProperties.sinks
-        /// </param>
-        /// <param name="transformations">
-        /// List of transformations in Flowlet.
-        /// Serialized Name: Flowlet.typeProperties.transformations
-        /// </param>
-        /// <param name="script">
-        /// Flowlet script.
-        /// Serialized Name: Flowlet.typeProperties.script
-        /// </param>
-        /// <param name="scriptLines">
-        /// Flowlet script lines.
-        /// Serialized Name: Flowlet.typeProperties.scriptLines
-        /// </param>
+        /// <param name="dataFlowType"> Type of data flow. </param>
+        /// <param name="description"> The description of the data flow. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
+        /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
+        /// <param name="sources"> List of sources in Flowlet. </param>
+        /// <param name="sinks"> List of sinks in Flowlet. </param>
+        /// <param name="transformations"> List of transformations in Flowlet. </param>
+        /// <param name="script"> Flowlet script. </param>
+        /// <param name="scriptLines"> Flowlet script lines. </param>
         internal FactoryFlowletDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
@@ -74,30 +44,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowType = dataFlowType ?? "Flowlet";
         }
 
-        /// <summary>
-        /// List of sources in Flowlet.
-        /// Serialized Name: Flowlet.typeProperties.sources
-        /// </summary>
+        /// <summary> List of sources in Flowlet. </summary>
         public IList<DataFlowSource> Sources { get; }
-        /// <summary>
-        /// List of sinks in Flowlet.
-        /// Serialized Name: Flowlet.typeProperties.sinks
-        /// </summary>
+        /// <summary> List of sinks in Flowlet. </summary>
         public IList<DataFlowSink> Sinks { get; }
-        /// <summary>
-        /// List of transformations in Flowlet.
-        /// Serialized Name: Flowlet.typeProperties.transformations
-        /// </summary>
+        /// <summary> List of transformations in Flowlet. </summary>
         public IList<DataFlowTransformation> Transformations { get; }
-        /// <summary>
-        /// Flowlet script.
-        /// Serialized Name: Flowlet.typeProperties.script
-        /// </summary>
+        /// <summary> Flowlet script. </summary>
         public string Script { get; set; }
-        /// <summary>
-        /// Flowlet script lines.
-        /// Serialized Name: Flowlet.typeProperties.scriptLines
-        /// </summary>
+        /// <summary> Flowlet script lines. </summary>
         public IList<string> ScriptLines { get; }
     }
 }

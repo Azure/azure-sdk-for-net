@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Managed integration runtime status.
-    /// Serialized Name: ManagedIntegrationRuntimeStatus
-    /// </summary>
+    /// <summary> Managed integration runtime status. </summary>
     public partial class ManagedIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeStatus. </summary>
@@ -26,35 +23,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType">
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntimeStatus.type
-        /// </param>
-        /// <param name="dataFactoryName">
-        /// The data factory name which the integration runtime belong to.
-        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
-        /// </param>
-        /// <param name="state">
-        /// The state of integration runtime.
-        /// Serialized Name: IntegrationRuntimeStatus.state
-        /// </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
+        /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="createdOn">
-        /// The time at which the integration runtime was created, in ISO8601 format.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.createTime
-        /// </param>
-        /// <param name="nodes">
-        /// The list of nodes for managed integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.nodes
-        /// </param>
-        /// <param name="otherErrors">
-        /// The errors that occurred on this integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.otherErrors
-        /// </param>
-        /// <param name="lastOperation">
-        /// The last operation result that occurred on this integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.lastOperation
-        /// </param>
+        /// <param name="createdOn"> The time at which the integration runtime was created, in ISO8601 format. </param>
+        /// <param name="nodes"> The list of nodes for managed integration runtime. </param>
+        /// <param name="otherErrors"> The errors that occurred on this integration runtime. </param>
+        /// <param name="lastOperation"> The last operation result that occurred on this integration runtime. </param>
         internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, IReadOnlyList<ManagedIntegrationRuntimeNode> nodes, IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors, ManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreatedOn = createdOn;
@@ -64,25 +40,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeType = runtimeType;
         }
 
-        /// <summary>
-        /// The time at which the integration runtime was created, in ISO8601 format.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.createTime
-        /// </summary>
+        /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The list of nodes for managed integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.nodes
-        /// </summary>
+        /// <summary> The list of nodes for managed integration runtime. </summary>
         public IReadOnlyList<ManagedIntegrationRuntimeNode> Nodes { get; }
-        /// <summary>
-        /// The errors that occurred on this integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.otherErrors
-        /// </summary>
+        /// <summary> The errors that occurred on this integration runtime. </summary>
         public IReadOnlyList<ManagedIntegrationRuntimeError> OtherErrors { get; }
-        /// <summary>
-        /// The last operation result that occurred on this integration runtime.
-        /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.lastOperation
-        /// </summary>
+        /// <summary> The last operation result that occurred on this integration runtime. </summary>
         public ManagedIntegrationRuntimeOperationResult LastOperation { get; }
     }
 }

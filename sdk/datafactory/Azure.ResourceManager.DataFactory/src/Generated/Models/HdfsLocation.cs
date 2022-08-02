@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The location of HDFS.
-    /// Serialized Name: HdfsLocation
-    /// </summary>
+    /// <summary> The location of HDFS. </summary>
     public partial class HdfsLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of HdfsLocation. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HdfsLocation. </summary>
-        /// <param name="datasetLocationType">
-        /// Type of dataset storage location.
-        /// Serialized Name: DatasetLocation.type
-        /// </param>
-        /// <param name="folderPath">
-        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
-        /// Serialized Name: DatasetLocation.folderPath
-        /// </param>
-        /// <param name="fileName">
-        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetLocation.fileName
-        /// </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal HdfsLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {

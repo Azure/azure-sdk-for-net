@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sql DW upsert option settings
-    /// Serialized Name: SqlDWUpsertSettings
-    /// </summary>
+    /// <summary> Sql DW upsert option settings. </summary>
     public partial class SqlDWUpsertSettings
     {
         /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
-        /// <param name="interimSchemaName">
-        /// Schema name for interim table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SqlDWUpsertSettings.interimSchemaName
-        /// </param>
-        /// <param name="keys">
-        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
-        /// Serialized Name: SqlDWUpsertSettings.keys
-        /// </param>
+        /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
+        /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
         internal SqlDWUpsertSettings(BinaryData interimSchemaName, BinaryData keys)
         {
             InterimSchemaName = interimSchemaName;
             Keys = keys;
         }
 
-        /// <summary>
-        /// Schema name for interim table. Type: string (or Expression with resultType string).
-        /// Serialized Name: SqlDWUpsertSettings.interimSchemaName
-        /// </summary>
+        /// <summary> Schema name for interim table. Type: string (or Expression with resultType string). </summary>
         public BinaryData InterimSchemaName { get; set; }
-        /// <summary>
-        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
-        /// Serialized Name: SqlDWUpsertSettings.keys
-        /// </summary>
+        /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
         public BinaryData Keys { get; set; }
     }
 }

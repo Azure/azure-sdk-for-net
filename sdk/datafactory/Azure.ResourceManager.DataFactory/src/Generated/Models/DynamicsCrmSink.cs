@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Dynamics CRM sink.
-    /// Serialized Name: DynamicsCrmSink
-    /// </summary>
+    /// <summary> A copy activity Dynamics CRM sink. </summary>
     public partial class DynamicsCrmSink : CopySink
     {
         /// <summary> Initializes a new instance of DynamicsCrmSink. </summary>
-        /// <param name="writeBehavior">
-        /// The write behavior for the operation.
-        /// Serialized Name: DynamicsCrmSink.writeBehavior
-        /// </param>
+        /// <param name="writeBehavior"> The write behavior for the operation. </param>
         public DynamicsCrmSink(DynamicsSinkWriteBehavior writeBehavior)
         {
             WriteBehavior = writeBehavior;
@@ -28,47 +22,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DynamicsCrmSink. </summary>
-        /// <param name="copySinkType">
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </param>
-        /// <param name="writeBatchSize">
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </param>
-        /// <param name="writeBatchTimeout">
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </param>
-        /// <param name="sinkRetryCount">
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </param>
-        /// <param name="sinkRetryWait">
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="writeBehavior">
-        /// The write behavior for the operation.
-        /// Serialized Name: DynamicsCrmSink.writeBehavior
-        /// </param>
-        /// <param name="ignoreNullValues">
-        /// The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: DynamicsCrmSink.ignoreNullValues
-        /// </param>
-        /// <param name="alternateKeyName">
-        /// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsCrmSink.alternateKeyName
-        /// </param>
+        /// <param name="writeBehavior"> The write behavior for the operation. </param>
+        /// <param name="ignoreNullValues"> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="alternateKeyName"> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </param>
         internal DynamicsCrmSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, BinaryData ignoreNullValues, BinaryData alternateKeyName) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
@@ -77,20 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "DynamicsCrmSink";
         }
 
-        /// <summary>
-        /// The write behavior for the operation.
-        /// Serialized Name: DynamicsCrmSink.writeBehavior
-        /// </summary>
+        /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
-        /// <summary>
-        /// The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: DynamicsCrmSink.ignoreNullValues
-        /// </summary>
+        /// <summary> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData IgnoreNullValues { get; set; }
-        /// <summary>
-        /// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsCrmSink.alternateKeyName
-        /// </summary>
+        /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
         public BinaryData AlternateKeyName { get; set; }
     }
 }

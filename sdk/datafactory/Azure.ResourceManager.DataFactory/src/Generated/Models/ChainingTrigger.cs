@@ -11,25 +11,13 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs.
-    /// Serialized Name: ChainingTrigger
-    /// </summary>
+    /// <summary> Trigger that allows the referenced pipeline to depend on other pipeline runs based on runDimension Name/Value pairs. Upstream pipelines should declare the same runDimension Name and their runs should have the values for those runDimensions. The referenced pipeline run would be triggered if the values for the runDimension match for all upstream pipeline runs. </summary>
     public partial class ChainingTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of ChainingTrigger. </summary>
-        /// <param name="pipeline">
-        /// Pipeline for which runs are created when all upstream pipelines complete successfully.
-        /// Serialized Name: ChainingTrigger.pipeline
-        /// </param>
-        /// <param name="dependsOn">
-        /// Upstream Pipelines.
-        /// Serialized Name: ChainingTrigger.typeProperties.dependsOn
-        /// </param>
-        /// <param name="runDimension">
-        /// Run Dimension property that needs to be emitted by upstream pipelines.
-        /// Serialized Name: ChainingTrigger.typeProperties.runDimension
-        /// </param>
+        /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
+        /// <param name="dependsOn"> Upstream Pipelines. </param>
+        /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="dependsOn"/> or <paramref name="runDimension"/> is null. </exception>
         public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<FactoryPipelineReference> dependsOn, string runDimension)
         {
@@ -53,35 +41,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ChainingTrigger. </summary>
-        /// <param name="triggerType">
-        /// Trigger type.
-        /// Serialized Name: Trigger.type
-        /// </param>
-        /// <param name="description">
-        /// Trigger description.
-        /// Serialized Name: Trigger.description
-        /// </param>
-        /// <param name="runtimeState">
-        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
-        /// Serialized Name: Trigger.runtimeState
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the trigger.
-        /// Serialized Name: Trigger.annotations
-        /// </param>
+        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="pipeline">
-        /// Pipeline for which runs are created when all upstream pipelines complete successfully.
-        /// Serialized Name: ChainingTrigger.pipeline
-        /// </param>
-        /// <param name="dependsOn">
-        /// Upstream Pipelines.
-        /// Serialized Name: ChainingTrigger.typeProperties.dependsOn
-        /// </param>
-        /// <param name="runDimension">
-        /// Run Dimension property that needs to be emitted by upstream pipelines.
-        /// Serialized Name: ChainingTrigger.typeProperties.runDimension
-        /// </param>
+        /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
+        /// <param name="dependsOn"> Upstream Pipelines. </param>
+        /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
         internal ChainingTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, IList<FactoryPipelineReference> dependsOn, string runDimension) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
@@ -90,20 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "ChainingTrigger";
         }
 
-        /// <summary>
-        /// Pipeline for which runs are created when all upstream pipelines complete successfully.
-        /// Serialized Name: ChainingTrigger.pipeline
-        /// </summary>
+        /// <summary> Pipeline for which runs are created when all upstream pipelines complete successfully. </summary>
         public TriggerPipelineReference Pipeline { get; set; }
-        /// <summary>
-        /// Upstream Pipelines.
-        /// Serialized Name: ChainingTrigger.typeProperties.dependsOn
-        /// </summary>
+        /// <summary> Upstream Pipelines. </summary>
         public IList<FactoryPipelineReference> DependsOn { get; }
-        /// <summary>
-        /// Run Dimension property that needs to be emitted by upstream pipelines.
-        /// Serialized Name: ChainingTrigger.typeProperties.runDimension
-        /// </summary>
+        /// <summary> Run Dimension property that needs to be emitted by upstream pipelines. </summary>
         public string RunDimension { get; set; }
     }
 }

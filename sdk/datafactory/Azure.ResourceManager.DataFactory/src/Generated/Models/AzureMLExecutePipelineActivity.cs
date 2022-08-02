@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure ML Execute Pipeline activity.
-    /// Serialized Name: AzureMLExecutePipelineActivity
-    /// </summary>
+    /// <summary> Azure ML Execute Pipeline activity. </summary>
     public partial class AzureMLExecutePipelineActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
+        /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLExecutePipelineActivity(string name) : base(name)
         {
@@ -33,67 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="mlPipelineId">
-        /// ID of the published Azure ML pipeline. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlPipelineId
-        /// </param>
-        /// <param name="mlPipelineEndpointId">
-        /// ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlPipelineEndpointId
-        /// </param>
-        /// <param name="version">
-        /// Version of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.version
-        /// </param>
-        /// <param name="experimentName">
-        /// Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.experimentName
-        /// </param>
-        /// <param name="mlPipelineParameters">
-        /// Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlPipelineParameters
-        /// </param>
-        /// <param name="dataPathAssignments">
-        /// Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.dataPathAssignments
-        /// </param>
-        /// <param name="mlParentRunId">
-        /// The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlParentRunId
-        /// </param>
-        /// <param name="continueOnStepFailure">
-        /// Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.continueOnStepFailure
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="mlPipelineId"> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </param>
+        /// <param name="mlPipelineEndpointId"> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </param>
+        /// <param name="version"> Version of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </param>
+        /// <param name="experimentName"> Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string). </param>
+        /// <param name="mlPipelineParameters"> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </param>
+        /// <param name="dataPathAssignments"> Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </param>
+        /// <param name="mlParentRunId"> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </param>
+        /// <param name="continueOnStepFailure"> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </param>
         internal AzureMLExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData mlPipelineId, BinaryData mlPipelineEndpointId, BinaryData version, BinaryData experimentName, BinaryData mlPipelineParameters, BinaryData dataPathAssignments, BinaryData mlParentRunId, BinaryData continueOnStepFailure) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             MlPipelineId = mlPipelineId;
@@ -107,45 +56,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureMLExecutePipeline";
         }
 
-        /// <summary>
-        /// ID of the published Azure ML pipeline. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlPipelineId
-        /// </summary>
+        /// <summary> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </summary>
         public BinaryData MlPipelineId { get; set; }
-        /// <summary>
-        /// ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlPipelineEndpointId
-        /// </summary>
+        /// <summary> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
         public BinaryData MlPipelineEndpointId { get; set; }
-        /// <summary>
-        /// Version of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.version
-        /// </summary>
+        /// <summary> Version of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </summary>
         public BinaryData Version { get; set; }
-        /// <summary>
-        /// Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.experimentName
-        /// </summary>
+        /// <summary> Run history experiment name of the pipeline run. This information will be passed in the ExperimentName property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
         public BinaryData ExperimentName { get; set; }
-        /// <summary>
-        /// Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlPipelineParameters
-        /// </summary>
+        /// <summary> Key,Value pairs to be passed to the published Azure ML pipeline endpoint. Keys must match the names of pipeline parameters defined in the published pipeline. Values will be passed in the ParameterAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
         public BinaryData MlPipelineParameters { get; set; }
-        /// <summary>
-        /// Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.dataPathAssignments
-        /// </summary>
+        /// <summary> Dictionary used for changing data path assignments without retraining. Values will be passed in the dataPathAssignments property of the published pipeline execution request. Type: object with key value pairs (or Expression with resultType object). </summary>
         public BinaryData DataPathAssignments { get; set; }
-        /// <summary>
-        /// The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.mlParentRunId
-        /// </summary>
+        /// <summary> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </summary>
         public BinaryData MlParentRunId { get; set; }
-        /// <summary>
-        /// Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureMLExecutePipelineActivity.typeProperties.continueOnStepFailure
-        /// </summary>
+        /// <summary> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData ContinueOnStepFailure { get; set; }
     }
 }

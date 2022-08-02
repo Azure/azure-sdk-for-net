@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of FactoryDataFlowData. </summary>
         /// <param name="properties">
         /// Data flow properties.
-        /// Serialized Name: DataFlowResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </param>
@@ -41,14 +40,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Data flow properties.
-        /// Serialized Name: DataFlowResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </param>
-        /// <param name="eTag">
-        /// Etag identifies change in the resource.
-        /// Serialized Name: SubResource.etag
-        /// </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         internal FactoryDataFlowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FactoryDataFlowDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
@@ -57,15 +52,11 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Data flow properties.
-        /// Serialized Name: DataFlowResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </summary>
         public FactoryDataFlowDefinition Properties { get; set; }
-        /// <summary>
-        /// Etag identifies change in the resource.
-        /// Serialized Name: SubResource.etag
-        /// </summary>
+        /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }
 }

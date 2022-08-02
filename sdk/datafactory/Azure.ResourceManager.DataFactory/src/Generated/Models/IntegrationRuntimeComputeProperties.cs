@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The compute resource properties for managed integration runtime.
-    /// Serialized Name: IntegrationRuntimeComputeProperties
-    /// </summary>
+    /// <summary> The compute resource properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeComputeProperties
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
-        /// <param name="location">
-        /// The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
-        /// Serialized Name: IntegrationRuntimeComputeProperties.location
-        /// </param>
-        /// <param name="nodeSize">
-        /// The node size requirement to managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.nodeSize
-        /// </param>
-        /// <param name="numberOfNodes">
-        /// The required number of nodes for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.numberOfNodes
-        /// </param>
-        /// <param name="maxParallelExecutionsPerNode">
-        /// Maximum parallel executions count per node for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.maxParallelExecutionsPerNode
-        /// </param>
-        /// <param name="dataFlowProperties">
-        /// Data flow properties for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.dataFlowProperties
-        /// </param>
-        /// <param name="vNetProperties">
-        /// VNet properties for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.vNetProperties
-        /// </param>
+        /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
+        /// <param name="nodeSize"> The node size requirement to managed integration runtime. </param>
+        /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>
+        /// <param name="maxParallelExecutionsPerNode"> Maximum parallel executions count per node for managed integration runtime. </param>
+        /// <param name="dataFlowProperties"> Data flow properties for managed integration runtime. </param>
+        /// <param name="vNetProperties"> VNet properties for managed integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -60,35 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
-        /// Serialized Name: IntegrationRuntimeComputeProperties.location
-        /// </summary>
+        /// <summary> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// The node size requirement to managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.nodeSize
-        /// </summary>
+        /// <summary> The node size requirement to managed integration runtime. </summary>
         public string NodeSize { get; set; }
-        /// <summary>
-        /// The required number of nodes for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.numberOfNodes
-        /// </summary>
+        /// <summary> The required number of nodes for managed integration runtime. </summary>
         public int? NumberOfNodes { get; set; }
-        /// <summary>
-        /// Maximum parallel executions count per node for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.maxParallelExecutionsPerNode
-        /// </summary>
+        /// <summary> Maximum parallel executions count per node for managed integration runtime. </summary>
         public int? MaxParallelExecutionsPerNode { get; set; }
-        /// <summary>
-        /// Data flow properties for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.dataFlowProperties
-        /// </summary>
+        /// <summary> Data flow properties for managed integration runtime. </summary>
         public IntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
-        /// <summary>
-        /// VNet properties for managed integration runtime.
-        /// Serialized Name: IntegrationRuntimeComputeProperties.vNetProperties
-        /// </summary>
+        /// <summary> VNet properties for managed integration runtime. </summary>
         public IntegrationRuntimeVNetProperties VNetProperties { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

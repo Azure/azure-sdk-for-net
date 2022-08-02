@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Credential reference type.
-    /// Serialized Name: CredentialReferenceType
-    /// </summary>
+    /// <summary> Credential reference type. </summary>
     public readonly partial struct FactoryCredentialReferenceType : IEquatable<FactoryCredentialReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string CredentialReferenceValue = "CredentialReference";
 
-        /// <summary>
-        /// CredentialReference
-        /// Serialized Name: CredentialReferenceType.CredentialReference
-        /// </summary>
+        /// <summary> CredentialReference. </summary>
         public static FactoryCredentialReferenceType CredentialReference { get; } = new FactoryCredentialReferenceType(CredentialReferenceValue);
         /// <summary> Determines if two <see cref="FactoryCredentialReferenceType"/> values are the same. </summary>
         public static bool operator ==(FactoryCredentialReferenceType left, FactoryCredentialReferenceType right) => left.Equals(right);

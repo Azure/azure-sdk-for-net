@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Type of authentication used to connect to the REST service.
-    /// Serialized Name: RestServiceAuthenticationType
-    /// </summary>
+    /// <summary> Type of authentication used to connect to the REST service. </summary>
     public readonly partial struct RestServiceAuthenticationType : IEquatable<RestServiceAuthenticationType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
         private const string OAuth2ClientCredentialValue = "OAuth2ClientCredential";
 
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: RestServiceAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static RestServiceAuthenticationType Anonymous { get; } = new RestServiceAuthenticationType(AnonymousValue);
-        /// <summary>
-        /// Basic
-        /// Serialized Name: RestServiceAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static RestServiceAuthenticationType Basic { get; } = new RestServiceAuthenticationType(BasicValue);
-        /// <summary>
-        /// AadServicePrincipal
-        /// Serialized Name: RestServiceAuthenticationType.AadServicePrincipal
-        /// </summary>
+        /// <summary> AadServicePrincipal. </summary>
         public static RestServiceAuthenticationType AadServicePrincipal { get; } = new RestServiceAuthenticationType(AadServicePrincipalValue);
-        /// <summary>
-        /// ManagedServiceIdentity
-        /// Serialized Name: RestServiceAuthenticationType.ManagedServiceIdentity
-        /// </summary>
+        /// <summary> ManagedServiceIdentity. </summary>
         public static RestServiceAuthenticationType ManagedServiceIdentity { get; } = new RestServiceAuthenticationType(ManagedServiceIdentityValue);
-        /// <summary>
-        /// OAuth2ClientCredential
-        /// Serialized Name: RestServiceAuthenticationType.OAuth2ClientCredential
-        /// </summary>
+        /// <summary> OAuth2ClientCredential. </summary>
         public static RestServiceAuthenticationType OAuth2ClientCredential { get; } = new RestServiceAuthenticationType(OAuth2ClientCredentialValue);
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(RestServiceAuthenticationType left, RestServiceAuthenticationType right) => left.Equals(right);

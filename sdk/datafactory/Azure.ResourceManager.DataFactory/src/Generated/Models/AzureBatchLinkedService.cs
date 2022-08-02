@@ -10,29 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure Batch linked service.
-    /// Serialized Name: AzureBatchLinkedService
-    /// </summary>
+    /// <summary> Azure Batch linked service. </summary>
     public partial class AzureBatchLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
-        /// <param name="accountName">
-        /// The Azure Batch account name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.accountName
-        /// </param>
-        /// <param name="batchUri">
-        /// The Azure Batch URI. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.batchUri
-        /// </param>
-        /// <param name="poolName">
-        /// The Azure Batch pool name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.poolName
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// The Azure Storage linked service reference.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.linkedServiceName
-        /// </param>
+        /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
+        /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
+        /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureBatchLinkedService(BinaryData accountName, BinaryData batchUri, BinaryData poolName, FactoryLinkedServiceReference linkedServiceName)
         {
@@ -61,57 +46,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="accountName">
-        /// The Azure Batch account name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.accountName
-        /// </param>
+        /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
         /// <param name="accessKey">
         /// The Azure Batch account access key.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.accessKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="batchUri">
-        /// The Azure Batch URI. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.batchUri
-        /// </param>
-        /// <param name="poolName">
-        /// The Azure Batch pool name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.poolName
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// The Azure Storage linked service reference.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.linkedServiceName
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.credential
-        /// </param>
+        /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
+        /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
         internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accountName, FactorySecretBaseDefinition accessKey, BinaryData batchUri, BinaryData poolName, FactoryLinkedServiceReference linkedServiceName, BinaryData encryptedCredential, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
@@ -124,42 +75,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureBatch";
         }
 
-        /// <summary>
-        /// The Azure Batch account name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.accountName
-        /// </summary>
+        /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
         public BinaryData AccountName { get; set; }
         /// <summary>
         /// The Azure Batch account access key.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.accessKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition AccessKey { get; set; }
-        /// <summary>
-        /// The Azure Batch URI. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.batchUri
-        /// </summary>
+        /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
         public BinaryData BatchUri { get; set; }
-        /// <summary>
-        /// The Azure Batch pool name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.poolName
-        /// </summary>
+        /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
         public BinaryData PoolName { get; set; }
-        /// <summary>
-        /// The Azure Storage linked service reference.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.linkedServiceName
-        /// </summary>
+        /// <summary> The Azure Storage linked service reference. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureBatchLinkedService.typeProperties.credential
-        /// </summary>
+        /// <summary> The credential reference containing authentication information. </summary>
         public FactoryCredentialReference Credential { get; set; }
     }
 }

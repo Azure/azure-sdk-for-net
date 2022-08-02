@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Settings for copy activity log.
-    /// Serialized Name: CopyActivityLogSettings
-    /// </summary>
+    /// <summary> Settings for copy activity log. </summary>
     public partial class CopyActivityLogSettings
     {
         /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
-        /// <param name="logLevel">
-        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
-        /// Serialized Name: CopyActivityLogSettings.logLevel
-        /// </param>
-        /// <param name="enableReliableLogging">
-        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopyActivityLogSettings.enableReliableLogging
-        /// </param>
+        /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
+        /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
         internal CopyActivityLogSettings(BinaryData logLevel, BinaryData enableReliableLogging)
         {
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;
         }
 
-        /// <summary>
-        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
-        /// Serialized Name: CopyActivityLogSettings.logLevel
-        /// </summary>
+        /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
         public BinaryData LogLevel { get; set; }
-        /// <summary>
-        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopyActivityLogSettings.enableReliableLogging
-        /// </summary>
+        /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData EnableReliableLogging { get; set; }
     }
 }

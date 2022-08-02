@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Append value for a Variable of type Array.
-    /// Serialized Name: AppendVariableActivity
-    /// </summary>
+    /// <summary> Append value for a Variable of type Array. </summary>
     public partial class AppendVariableActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
+        /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppendVariableActivity(string name) : base(name)
         {
@@ -33,35 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="variableName">
-        /// Name of the variable whose value needs to be appended to.
-        /// Serialized Name: AppendVariableActivity.typeProperties.variableName
-        /// </param>
-        /// <param name="value">
-        /// Value to be appended. Could be a static value or Expression
-        /// Serialized Name: AppendVariableActivity.typeProperties.value
-        /// </param>
+        /// <param name="variableName"> Name of the variable whose value needs to be appended to. </param>
+        /// <param name="value"> Value to be appended. Could be a static value or Expression. </param>
         internal AppendVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             VariableName = variableName;
@@ -69,15 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AppendVariable";
         }
 
-        /// <summary>
-        /// Name of the variable whose value needs to be appended to.
-        /// Serialized Name: AppendVariableActivity.typeProperties.variableName
-        /// </summary>
+        /// <summary> Name of the variable whose value needs to be appended to. </summary>
         public string VariableName { get; set; }
-        /// <summary>
-        /// Value to be appended. Could be a static value or Expression
-        /// Serialized Name: AppendVariableActivity.typeProperties.value
-        /// </summary>
+        /// <summary> Value to be appended. Could be a static value or Expression. </summary>
         public BinaryData Value { get; set; }
     }
 }

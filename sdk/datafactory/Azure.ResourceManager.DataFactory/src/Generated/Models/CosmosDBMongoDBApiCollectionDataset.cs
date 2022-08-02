@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The CosmosDB (MongoDB API) database dataset.
-    /// Serialized Name: CosmosDbMongoDbApiCollectionDataset
-    /// </summary>
+    /// <summary> The CosmosDB (MongoDB API) database dataset. </summary>
     public partial class CosmosDBMongoDBApiCollectionDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="collection">
-        /// The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbMongoDbApiCollectionDataset.typeProperties.collection
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
         public CosmosDBMongoDBApiCollectionDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
         {
@@ -42,53 +33,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="collection">
-        /// The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbMongoDbApiCollectionDataset.typeProperties.collection
-        /// </param>
+        /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "CosmosDbMongoDbApiCollection";
         }
 
-        /// <summary>
-        /// The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbMongoDbApiCollectionDataset.typeProperties.collection
-        /// </summary>
+        /// <summary> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </summary>
         public BinaryData Collection { get; set; }
     }
 }

@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// DatabricksNotebook activity.
-    /// Serialized Name: DatabricksNotebookActivity
-    /// </summary>
+    /// <summary> DatabricksNotebook activity. </summary>
     public partial class DatabricksNotebookActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="notebookPath">
-        /// The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.notebookPath
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
         public DatabricksNotebookActivity(string name, BinaryData notebookPath) : base(name)
         {
@@ -45,47 +36,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="notebookPath">
-        /// The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.notebookPath
-        /// </param>
-        /// <param name="baseParameters">
-        /// Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used.
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.baseParameters
-        /// </param>
-        /// <param name="libraries">
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.libraries
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
+        /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </param>
+        /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
         internal DatabricksNotebookActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData notebookPath, IDictionary<string, BinaryData> baseParameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;
@@ -94,20 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DatabricksNotebook";
         }
 
-        /// <summary>
-        /// The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.notebookPath
-        /// </summary>
+        /// <summary> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </summary>
         public BinaryData NotebookPath { get; set; }
-        /// <summary>
-        /// Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used.
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.baseParameters
-        /// </summary>
+        /// <summary> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </summary>
         public IDictionary<string, BinaryData> BaseParameters { get; }
-        /// <summary>
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// Serialized Name: DatabricksNotebookActivity.typeProperties.libraries
-        /// </summary>
+        /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

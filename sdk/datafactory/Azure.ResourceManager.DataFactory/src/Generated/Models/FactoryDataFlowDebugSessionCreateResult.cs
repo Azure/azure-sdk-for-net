@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Response body structure for creating data flow debug session.
-    /// Serialized Name: CreateDataFlowDebugSessionResponse
-    /// </summary>
+    /// <summary> Response body structure for creating data flow debug session. </summary>
     public partial class FactoryDataFlowDebugSessionCreateResult
     {
         /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionCreateResult. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionCreateResult. </summary>
-        /// <param name="status">
-        /// The state of the debug session.
-        /// Serialized Name: CreateDataFlowDebugSessionResponse.status
-        /// </param>
-        /// <param name="sessionId">
-        /// The ID of data flow debug session.
-        /// Serialized Name: CreateDataFlowDebugSessionResponse.sessionId
-        /// </param>
+        /// <param name="status"> The state of the debug session. </param>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
         internal FactoryDataFlowDebugSessionCreateResult(string status, Guid? sessionId)
         {
             Status = status;
             SessionId = sessionId;
         }
 
-        /// <summary>
-        /// The state of the debug session.
-        /// Serialized Name: CreateDataFlowDebugSessionResponse.status
-        /// </summary>
+        /// <summary> The state of the debug session. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The ID of data flow debug session.
-        /// Serialized Name: CreateDataFlowDebugSessionResponse.sessionId
-        /// </summary>
+        /// <summary> The ID of data flow debug session. </summary>
         public Guid? SessionId { get; }
     }
 }

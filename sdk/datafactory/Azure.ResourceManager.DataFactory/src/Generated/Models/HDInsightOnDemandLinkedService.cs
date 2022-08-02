@@ -11,41 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// HDInsight ondemand linked service.
-    /// Serialized Name: HDInsightOnDemandLinkedService
-    /// </summary>
+    /// <summary> HDInsight ondemand linked service. </summary>
     public partial class HDInsightOnDemandLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HDInsightOnDemandLinkedService. </summary>
-        /// <param name="clusterSize">
-        /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSize
-        /// </param>
-        /// <param name="ttlExpression">
-        /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.timeToLive
-        /// </param>
-        /// <param name="version">
-        /// Version of the HDInsight cluster.  Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.version
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.linkedServiceName
-        /// </param>
-        /// <param name="hostSubscriptionId">
-        /// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hostSubscriptionId
-        /// </param>
-        /// <param name="tenant">
-        /// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="clusterResourceGroup">
-        /// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterResourceGroup
-        /// </param>
+        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
+        /// <param name="ttlExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
+        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
+        /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
+        /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="ttlExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
         public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData ttlExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
         {
@@ -91,169 +67,58 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightOnDemandLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="clusterSize">
-        /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSize
-        /// </param>
-        /// <param name="ttlExpression">
-        /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.timeToLive
-        /// </param>
-        /// <param name="version">
-        /// Version of the HDInsight cluster.  Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.version
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.linkedServiceName
-        /// </param>
-        /// <param name="hostSubscriptionId">
-        /// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hostSubscriptionId
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </param>
+        /// <param name="ttlExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
+        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </param>
+        /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// The key for the service principal id.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant">
-        /// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="clusterResourceGroup">
-        /// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterResourceGroup
-        /// </param>
-        /// <param name="clusterNamePrefix">
-        /// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterNamePrefix
-        /// </param>
-        /// <param name="clusterUserName">
-        /// The username to access the cluster. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterUserName
-        /// </param>
+        /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterNamePrefix"> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </param>
+        /// <param name="clusterUserName"> The username to access the cluster. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterPassword">
         /// The password to access the cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterPassword
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="clusterSshUserName">
-        /// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshUserName
-        /// </param>
+        /// <param name="clusterSshUserName"> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </param>
         /// <param name="clusterSshPassword">
         /// The password to SSH remotely connect cluster’s node (for Linux).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshPassword
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="additionalLinkedServiceNames">
-        /// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.additionalLinkedServiceNames
-        /// </param>
-        /// <param name="hcatalogLinkedServiceName">
-        /// The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hcatalogLinkedServiceName
-        /// </param>
-        /// <param name="clusterType">
-        /// The cluster type. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterType
-        /// </param>
-        /// <param name="sparkVersion">
-        /// The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.sparkVersion
-        /// </param>
-        /// <param name="coreConfiguration">
-        /// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.coreConfiguration
-        /// </param>
-        /// <param name="hBaseConfiguration">
-        /// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hBaseConfiguration
-        /// </param>
-        /// <param name="hdfsConfiguration">
-        /// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hdfsConfiguration
-        /// </param>
-        /// <param name="hiveConfiguration">
-        /// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hiveConfiguration
-        /// </param>
-        /// <param name="mapReduceConfiguration">
-        /// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.mapReduceConfiguration
-        /// </param>
-        /// <param name="oozieConfiguration">
-        /// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.oozieConfiguration
-        /// </param>
-        /// <param name="stormConfiguration">
-        /// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.stormConfiguration
-        /// </param>
-        /// <param name="yarnConfiguration">
-        /// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.yarnConfiguration
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="headNodeSize">
-        /// Specifies the size of the head node for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.headNodeSize
-        /// </param>
-        /// <param name="dataNodeSize">
-        /// Specifies the size of the data node for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.dataNodeSize
-        /// </param>
-        /// <param name="zookeeperNodeSize">
-        /// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.zookeeperNodeSize
-        /// </param>
-        /// <param name="scriptActions">
-        /// Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.scriptActions
-        /// </param>
-        /// <param name="virtualNetworkId">
-        /// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.virtualNetworkId
-        /// </param>
-        /// <param name="subnetName">
-        /// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.subnetName
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.credential
-        /// </param>
+        /// <param name="additionalLinkedServiceNames"> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </param>
+        /// <param name="hcatalogLinkedServiceName"> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </param>
+        /// <param name="clusterType"> The cluster type. Type: string (or Expression with resultType string). </param>
+        /// <param name="sparkVersion"> The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string). </param>
+        /// <param name="coreConfiguration"> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </param>
+        /// <param name="hBaseConfiguration"> Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster. </param>
+        /// <param name="hdfsConfiguration"> Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster. </param>
+        /// <param name="hiveConfiguration"> Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster. </param>
+        /// <param name="mapReduceConfiguration"> Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster. </param>
+        /// <param name="oozieConfiguration"> Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster. </param>
+        /// <param name="stormConfiguration"> Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster. </param>
+        /// <param name="yarnConfiguration"> Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="headNodeSize"> Specifies the size of the head node for the HDInsight cluster. </param>
+        /// <param name="dataNodeSize"> Specifies the size of the data node for the HDInsight cluster. </param>
+        /// <param name="zookeeperNodeSize"> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </param>
+        /// <param name="scriptActions"> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </param>
+        /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
+        /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
         internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData ttlExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, FactorySecretBaseDefinition clusterPassword, BinaryData clusterSshUserName, FactorySecretBaseDefinition clusterSshPassword, IList<FactoryLinkedServiceReference> additionalLinkedServiceNames, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
@@ -293,181 +158,85 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "HDInsightOnDemand";
         }
 
-        /// <summary>
-        /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSize
-        /// </summary>
+        /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterSize { get; set; }
-        /// <summary>
-        /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.timeToLive
-        /// </summary>
+        /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
         public BinaryData TtlExpression { get; set; }
-        /// <summary>
-        /// Version of the HDInsight cluster.  Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.version
-        /// </summary>
+        /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
         public BinaryData Version { get; set; }
-        /// <summary>
-        /// Azure Storage linked service to be used by the on-demand cluster for storing and processing data.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.linkedServiceName
-        /// </summary>
+        /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>
         public FactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// The customer’s subscription to host the cluster. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hostSubscriptionId
-        /// </summary>
+        /// <summary> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </summary>
         public BinaryData HostSubscriptionId { get; set; }
-        /// <summary>
-        /// The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        /// <summary> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key for the service principal id.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.tenant
-        /// </summary>
+        /// <summary> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary>
-        /// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterResourceGroup
-        /// </summary>
+        /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterResourceGroup { get; set; }
-        /// <summary>
-        /// The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterNamePrefix
-        /// </summary>
+        /// <summary> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterNamePrefix { get; set; }
-        /// <summary>
-        /// The username to access the cluster. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterUserName
-        /// </summary>
+        /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterUserName { get; set; }
         /// <summary>
         /// The password to access the cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterPassword
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ClusterPassword { get; set; }
-        /// <summary>
-        /// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshUserName
-        /// </summary>
+        /// <summary> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterSshUserName { get; set; }
         /// <summary>
         /// The password to SSH remotely connect cluster’s node (for Linux).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshPassword
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ClusterSshPassword { get; set; }
-        /// <summary>
-        /// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.additionalLinkedServiceNames
-        /// </summary>
+        /// <summary> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </summary>
         public IList<FactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; }
-        /// <summary>
-        /// The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hcatalogLinkedServiceName
-        /// </summary>
+        /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>
         public FactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
-        /// <summary>
-        /// The cluster type. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterType
-        /// </summary>
+        /// <summary> The cluster type. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterType { get; set; }
-        /// <summary>
-        /// The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.sparkVersion
-        /// </summary>
+        /// <summary> The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string). </summary>
         public BinaryData SparkVersion { get; set; }
-        /// <summary>
-        /// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.coreConfiguration
-        /// </summary>
+        /// <summary> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </summary>
         public BinaryData CoreConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hBaseConfiguration
-        /// </summary>
+        /// <summary> Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster. </summary>
         public BinaryData HBaseConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hdfsConfiguration
-        /// </summary>
+        /// <summary> Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster. </summary>
         public BinaryData HdfsConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.hiveConfiguration
-        /// </summary>
+        /// <summary> Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster. </summary>
         public BinaryData HiveConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.mapReduceConfiguration
-        /// </summary>
+        /// <summary> Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster. </summary>
         public BinaryData MapReduceConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.oozieConfiguration
-        /// </summary>
+        /// <summary> Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster. </summary>
         public BinaryData OozieConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.stormConfiguration
-        /// </summary>
+        /// <summary> Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster. </summary>
         public BinaryData StormConfiguration { get; set; }
-        /// <summary>
-        /// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.yarnConfiguration
-        /// </summary>
+        /// <summary> Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster. </summary>
         public BinaryData YarnConfiguration { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// Specifies the size of the head node for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.headNodeSize
-        /// </summary>
+        /// <summary> Specifies the size of the head node for the HDInsight cluster. </summary>
         public BinaryData HeadNodeSize { get; set; }
-        /// <summary>
-        /// Specifies the size of the data node for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.dataNodeSize
-        /// </summary>
+        /// <summary> Specifies the size of the data node for the HDInsight cluster. </summary>
         public BinaryData DataNodeSize { get; set; }
-        /// <summary>
-        /// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.zookeeperNodeSize
-        /// </summary>
+        /// <summary> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </summary>
         public BinaryData ZookeeperNodeSize { get; set; }
-        /// <summary>
-        /// Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.scriptActions
-        /// </summary>
+        /// <summary> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
         public IList<ScriptAction> ScriptActions { get; }
-        /// <summary>
-        /// The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.virtualNetworkId
-        /// </summary>
+        /// <summary> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </summary>
         public BinaryData VirtualNetworkId { get; set; }
-        /// <summary>
-        /// The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string).
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.subnetName
-        /// </summary>
+        /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>
         public BinaryData SubnetName { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.credential
-        /// </summary>
+        /// <summary> The credential reference containing authentication information. </summary>
         public FactoryCredentialReference Credential { get; set; }
     }
 }

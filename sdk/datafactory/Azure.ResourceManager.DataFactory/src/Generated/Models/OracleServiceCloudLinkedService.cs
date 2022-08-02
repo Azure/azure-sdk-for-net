@@ -10,24 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Oracle Service Cloud linked service.
-    /// Serialized Name: OracleServiceCloudLinkedService
-    /// </summary>
+    /// <summary> Oracle Service Cloud linked service. </summary>
     public partial class OracleServiceCloudLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of OracleServiceCloudLinkedService. </summary>
-        /// <param name="host">
-        /// The URL of the Oracle Service Cloud instance.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.host
-        /// </param>
-        /// <param name="username">
-        /// The user name that you use to access Oracle Service Cloud server.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.username
-        /// </param>
+        /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
+        /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username key.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -54,57 +44,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of OracleServiceCloudLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host">
-        /// The URL of the Oracle Service Cloud instance.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.host
-        /// </param>
-        /// <param name="username">
-        /// The user name that you use to access Oracle Service Cloud server.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.username
-        /// </param>
+        /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
+        /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username key.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="useEncryptedEndpoints">
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.useEncryptedEndpoints
-        /// </param>
-        /// <param name="useHostVerification">
-        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.useHostVerification
-        /// </param>
-        /// <param name="usePeerVerification">
-        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.usePeerVerification
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal OracleServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData username, FactorySecretBaseDefinition password, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
@@ -117,42 +73,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "OracleServiceCloud";
         }
 
-        /// <summary>
-        /// The URL of the Oracle Service Cloud instance.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.host
-        /// </summary>
+        /// <summary> The URL of the Oracle Service Cloud instance. </summary>
         public BinaryData Host { get; set; }
-        /// <summary>
-        /// The user name that you use to access Oracle Service Cloud server.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.username
-        /// </summary>
+        /// <summary> The user name that you use to access Oracle Service Cloud server. </summary>
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name that you provided in the username key.
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.useEncryptedEndpoints
-        /// </summary>
+        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UseEncryptedEndpoints { get; set; }
-        /// <summary>
-        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.useHostVerification
-        /// </summary>
+        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UseHostVerification { get; set; }
-        /// <summary>
-        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.usePeerVerification
-        /// </summary>
+        /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UsePeerVerification { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

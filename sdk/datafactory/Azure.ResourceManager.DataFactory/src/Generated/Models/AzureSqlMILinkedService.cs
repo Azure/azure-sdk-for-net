@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure SQL Managed Instance linked service.
-    /// Serialized Name: AzureSqlMILinkedService
-    /// </summary>
+    /// <summary> Azure SQL Managed Instance linked service. </summary>
     public partial class AzureSqlMILinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureSqlMILinkedService. </summary>
-        /// <param name="connectionString">
-        /// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.connectionString
-        /// </param>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public AzureSqlMILinkedService(BinaryData connectionString)
         {
@@ -34,65 +28,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlMILinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString">
-        /// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.connectionString
-        /// </param>
-        /// <param name="password">
-        /// The Azure key vault secret reference of password in connection string.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.password
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
+        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against Azure SQL Managed Instance.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant">
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="azureCloudType">
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.azureCloudType
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="alwaysEncryptedSettings">
-        /// Sql always encrypted properties.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.alwaysEncryptedSettings
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.credential
-        /// </param>
+        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
         internal AzureSqlMILinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference password, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, BinaryData encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -107,52 +61,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureSqlMI";
         }
 
-        /// <summary>
-        /// The connection string. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.connectionString
-        /// </summary>
+        /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary>
-        /// The Azure key vault secret reference of password in connection string.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.password
-        /// </summary>
+        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
         public AzureKeyVaultSecretReference Password { get; set; }
-        /// <summary>
-        /// The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        /// <summary> The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against Azure SQL Managed Instance.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.tenant
-        /// </summary>
+        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary>
-        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.azureCloudType
-        /// </summary>
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureCloudType { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// Sql always encrypted properties.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.alwaysEncryptedSettings
-        /// </summary>
+        /// <summary> Sql always encrypted properties. </summary>
         public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureSqlMILinkedService.typeProperties.credential
-        /// </summary>
+        /// <summary> The credential reference containing authentication information. </summary>
         public FactoryCredentialReference Credential { get; set; }
     }
 }

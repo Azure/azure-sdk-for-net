@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure blobFS write settings.
-    /// Serialized Name: AzureBlobFSWriteSettings
-    /// </summary>
+    /// <summary> Azure blobFS write settings. </summary>
     public partial class AzureBlobFSWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of AzureBlobFSWriteSettings. </summary>
@@ -23,37 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobFSWriteSettings. </summary>
-        /// <param name="storeWriteSettingsType">
-        /// The write setting type.
-        /// Serialized Name: StoreWriteSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreWriteSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreWriteSettings.disableMetricsCollection
-        /// </param>
-        /// <param name="copyBehavior">
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: StoreWriteSettings.copyBehavior
-        /// </param>
+        /// <param name="storeWriteSettingsType"> The write setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="blockSizeInMB">
-        /// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: AzureBlobFSWriteSettings.blockSizeInMB
-        /// </param>
+        /// <param name="blockSizeInMB"> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </param>
         internal AzureBlobFSWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData blockSizeInMB) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             BlockSizeInMB = blockSizeInMB;
             StoreWriteSettingsType = storeWriteSettingsType ?? "AzureBlobFSWriteSettings";
         }
 
-        /// <summary>
-        /// Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: AzureBlobFSWriteSettings.blockSizeInMB
-        /// </summary>
+        /// <summary> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData BlockSizeInMB { get; set; }
     }
 }

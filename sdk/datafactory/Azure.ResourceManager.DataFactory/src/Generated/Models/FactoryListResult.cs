@@ -12,17 +12,11 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of factory resources.
-    /// Serialized Name: FactoryListResponse
-    /// </summary>
+    /// <summary> A list of factory resources. </summary>
     internal partial class FactoryListResult
     {
         /// <summary> Initializes a new instance of FactoryListResult. </summary>
-        /// <param name="value">
-        /// List of factories.
-        /// Serialized Name: FactoryListResponse.value
-        /// </param>
+        /// <param name="value"> List of factories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FactoryListResult(IEnumerable<DataFactoryData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryListResult. </summary>
-        /// <param name="value">
-        /// List of factories.
-        /// Serialized Name: FactoryListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: FactoryListResponse.nextLink
-        /// </param>
+        /// <param name="value"> List of factories. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal FactoryListResult(IReadOnlyList<DataFactoryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of factories.
-        /// Serialized Name: FactoryListResponse.value
-        /// </summary>
+        /// <summary> List of factories. </summary>
         public IReadOnlyList<DataFactoryData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: FactoryListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

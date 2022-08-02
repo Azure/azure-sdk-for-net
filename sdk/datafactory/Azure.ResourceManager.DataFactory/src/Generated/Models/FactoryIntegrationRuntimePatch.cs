@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Update integration runtime request.
-    /// Serialized Name: UpdateIntegrationRuntimeRequest
-    /// </summary>
+    /// <summary> Update integration runtime request. </summary>
     public partial class FactoryIntegrationRuntimePatch
     {
         /// <summary> Initializes a new instance of FactoryIntegrationRuntimePatch. </summary>
@@ -20,15 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189.
-        /// Serialized Name: UpdateIntegrationRuntimeRequest.autoUpdate
-        /// </summary>
+        /// <summary> Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189. </summary>
         public IntegrationRuntimeAutoUpdate? AutoUpdate { get; set; }
-        /// <summary>
-        /// The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
-        /// Serialized Name: UpdateIntegrationRuntimeRequest.updateDelayOffset
-        /// </summary>
+        /// <summary> The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time. </summary>
         public TimeSpan? UpdateDelayOffset { get; set; }
     }
 }

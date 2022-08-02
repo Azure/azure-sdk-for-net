@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Properties of Self-hosted integration runtime node.
-    /// Serialized Name: SelfHostedIntegrationRuntimeNode
-    /// </summary>
+    /// <summary> Properties of Self-hosted integration runtime node. </summary>
     public partial class SelfHostedIntegrationRuntimeNode
     {
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>
@@ -25,78 +22,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>
-        /// <param name="nodeName">
-        /// Name of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.nodeName
-        /// </param>
-        /// <param name="machineName">
-        /// Machine name of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.machineName
-        /// </param>
-        /// <param name="hostServiceUri">
-        /// URI for the host machine of the integration runtime.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.hostServiceUri
-        /// </param>
-        /// <param name="status">
-        /// Status of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.status
-        /// </param>
-        /// <param name="capabilities">
-        /// The integration runtime capabilities dictionary
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.capabilities
-        /// </param>
-        /// <param name="versionStatus">
-        /// Status of the integration runtime node version.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.versionStatus
-        /// </param>
-        /// <param name="version">
-        /// Version of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.version
-        /// </param>
-        /// <param name="registerOn">
-        /// The time at which the integration runtime node was registered in ISO8601 format.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.registerTime
-        /// </param>
-        /// <param name="lastConnectOn">
-        /// The most recent time at which the integration runtime was connected in ISO8601 format.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastConnectTime
-        /// </param>
-        /// <param name="expireOn">
-        /// The time at which the integration runtime will expire in ISO8601 format.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.expiryTime
-        /// </param>
-        /// <param name="lastStartOn">
-        /// The time the node last started up.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStartTime
-        /// </param>
-        /// <param name="lastStopOn">
-        /// The integration runtime node last stop time.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStopTime
-        /// </param>
-        /// <param name="lastUpdateResult">
-        /// The result of the last integration runtime node update.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastUpdateResult
-        /// </param>
-        /// <param name="lastStartUpdateOn">
-        /// The last time for the integration runtime node update start.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStartUpdateTime
-        /// </param>
-        /// <param name="lastEndUpdateOn">
-        /// The last time for the integration runtime node update end.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastEndUpdateTime
-        /// </param>
-        /// <param name="isActiveDispatcher">
-        /// Indicates whether this node is the active dispatcher for integration runtime requests.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.isActiveDispatcher
-        /// </param>
-        /// <param name="concurrentJobsLimit">
-        /// Maximum concurrent jobs on the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.concurrentJobsLimit
-        /// </param>
-        /// <param name="maxConcurrentJobs">
-        /// The maximum concurrent jobs in this integration runtime.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.maxConcurrentJobs
-        /// </param>
+        /// <param name="nodeName"> Name of the integration runtime node. </param>
+        /// <param name="machineName"> Machine name of the integration runtime node. </param>
+        /// <param name="hostServiceUri"> URI for the host machine of the integration runtime. </param>
+        /// <param name="status"> Status of the integration runtime node. </param>
+        /// <param name="capabilities"> The integration runtime capabilities dictionary. </param>
+        /// <param name="versionStatus"> Status of the integration runtime node version. </param>
+        /// <param name="version"> Version of the integration runtime node. </param>
+        /// <param name="registerOn"> The time at which the integration runtime node was registered in ISO8601 format. </param>
+        /// <param name="lastConnectOn"> The most recent time at which the integration runtime was connected in ISO8601 format. </param>
+        /// <param name="expireOn"> The time at which the integration runtime will expire in ISO8601 format. </param>
+        /// <param name="lastStartOn"> The time the node last started up. </param>
+        /// <param name="lastStopOn"> The integration runtime node last stop time. </param>
+        /// <param name="lastUpdateResult"> The result of the last integration runtime node update. </param>
+        /// <param name="lastStartUpdateOn"> The last time for the integration runtime node update start. </param>
+        /// <param name="lastEndUpdateOn"> The last time for the integration runtime node update end. </param>
+        /// <param name="isActiveDispatcher"> Indicates whether this node is the active dispatcher for integration runtime requests. </param>
+        /// <param name="concurrentJobsLimit"> Maximum concurrent jobs on the integration runtime node. </param>
+        /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expireOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -121,95 +64,41 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Name of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.nodeName
-        /// </summary>
+        /// <summary> Name of the integration runtime node. </summary>
         public string NodeName { get; }
-        /// <summary>
-        /// Machine name of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.machineName
-        /// </summary>
+        /// <summary> Machine name of the integration runtime node. </summary>
         public string MachineName { get; }
-        /// <summary>
-        /// URI for the host machine of the integration runtime.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.hostServiceUri
-        /// </summary>
+        /// <summary> URI for the host machine of the integration runtime. </summary>
         public Uri HostServiceUri { get; }
-        /// <summary>
-        /// Status of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.status
-        /// </summary>
+        /// <summary> Status of the integration runtime node. </summary>
         public SelfHostedIntegrationRuntimeNodeStatus? Status { get; }
-        /// <summary>
-        /// The integration runtime capabilities dictionary
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.capabilities
-        /// </summary>
+        /// <summary> The integration runtime capabilities dictionary. </summary>
         public IReadOnlyDictionary<string, string> Capabilities { get; }
-        /// <summary>
-        /// Status of the integration runtime node version.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.versionStatus
-        /// </summary>
+        /// <summary> Status of the integration runtime node version. </summary>
         public string VersionStatus { get; }
-        /// <summary>
-        /// Version of the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.version
-        /// </summary>
+        /// <summary> Version of the integration runtime node. </summary>
         public string Version { get; }
-        /// <summary>
-        /// The time at which the integration runtime node was registered in ISO8601 format.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.registerTime
-        /// </summary>
+        /// <summary> The time at which the integration runtime node was registered in ISO8601 format. </summary>
         public DateTimeOffset? RegisterOn { get; }
-        /// <summary>
-        /// The most recent time at which the integration runtime was connected in ISO8601 format.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastConnectTime
-        /// </summary>
+        /// <summary> The most recent time at which the integration runtime was connected in ISO8601 format. </summary>
         public DateTimeOffset? LastConnectOn { get; }
-        /// <summary>
-        /// The time at which the integration runtime will expire in ISO8601 format.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.expiryTime
-        /// </summary>
+        /// <summary> The time at which the integration runtime will expire in ISO8601 format. </summary>
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary>
-        /// The time the node last started up.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStartTime
-        /// </summary>
+        /// <summary> The time the node last started up. </summary>
         public DateTimeOffset? LastStartOn { get; }
-        /// <summary>
-        /// The integration runtime node last stop time.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStopTime
-        /// </summary>
+        /// <summary> The integration runtime node last stop time. </summary>
         public DateTimeOffset? LastStopOn { get; }
-        /// <summary>
-        /// The result of the last integration runtime node update.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastUpdateResult
-        /// </summary>
+        /// <summary> The result of the last integration runtime node update. </summary>
         public IntegrationRuntimeUpdateResult? LastUpdateResult { get; }
-        /// <summary>
-        /// The last time for the integration runtime node update start.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStartUpdateTime
-        /// </summary>
+        /// <summary> The last time for the integration runtime node update start. </summary>
         public DateTimeOffset? LastStartUpdateOn { get; }
-        /// <summary>
-        /// The last time for the integration runtime node update end.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastEndUpdateTime
-        /// </summary>
+        /// <summary> The last time for the integration runtime node update end. </summary>
         public DateTimeOffset? LastEndUpdateOn { get; }
-        /// <summary>
-        /// Indicates whether this node is the active dispatcher for integration runtime requests.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.isActiveDispatcher
-        /// </summary>
+        /// <summary> Indicates whether this node is the active dispatcher for integration runtime requests. </summary>
         public bool? IsActiveDispatcher { get; }
-        /// <summary>
-        /// Maximum concurrent jobs on the integration runtime node.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.concurrentJobsLimit
-        /// </summary>
+        /// <summary> Maximum concurrent jobs on the integration runtime node. </summary>
         public int? ConcurrentJobsLimit { get; }
-        /// <summary>
-        /// The maximum concurrent jobs in this integration runtime.
-        /// Serialized Name: SelfHostedIntegrationRuntimeNode.maxConcurrentJobs
-        /// </summary>
+        /// <summary> The maximum concurrent jobs in this integration runtime. </summary>
         public int? MaxConcurrentJobs { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

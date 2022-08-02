@@ -11,14 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Wrapper for a collection of private link resources
-    /// Serialized Name: PrivateLinkResourcesWrapper
-    /// </summary>
+    /// <summary> Wrapper for a collection of private link resources. </summary>
     internal partial class PrivateLinkResourcesWrapper
     {
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
-        /// <param name="value"> Serialized Name: PrivateLinkResourcesWrapper.value. </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateLinkResourcesWrapper(IEnumerable<FactoryPrivateLinkResource> value)
         {
@@ -31,13 +28,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
-        /// <param name="value"> Serialized Name: PrivateLinkResourcesWrapper.value. </param>
+        /// <param name="value"></param>
         internal PrivateLinkResourcesWrapper(IReadOnlyList<FactoryPrivateLinkResource> value)
         {
             Value = value;
         }
 
-        /// <summary> Serialized Name: PrivateLinkResourcesWrapper.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<FactoryPrivateLinkResource> Value { get; }
     }
 }

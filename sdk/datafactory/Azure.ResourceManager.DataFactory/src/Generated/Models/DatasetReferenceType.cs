@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Dataset reference type.
-    /// Serialized Name: DatasetReferenceType
-    /// </summary>
+    /// <summary> Dataset reference type. </summary>
     public readonly partial struct DatasetReferenceType : IEquatable<DatasetReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string DatasetReferenceValue = "DatasetReference";
 
-        /// <summary>
-        /// DatasetReference
-        /// Serialized Name: DatasetReferenceType.DatasetReference
-        /// </summary>
+        /// <summary> DatasetReference. </summary>
         public static DatasetReferenceType DatasetReference { get; } = new DatasetReferenceType(DatasetReferenceValue);
         /// <summary> Determines if two <see cref="DatasetReferenceType"/> values are the same. </summary>
         public static bool operator ==(DatasetReferenceType left, DatasetReferenceType right) => left.Equals(right);

@@ -9,25 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Custom script action to run on HDI ondemand cluster once it&apos;s up.
-    /// Serialized Name: ScriptAction
-    /// </summary>
+    /// <summary> Custom script action to run on HDI ondemand cluster once it&apos;s up. </summary>
     public partial class ScriptAction
     {
         /// <summary> Initializes a new instance of ScriptAction. </summary>
-        /// <param name="name">
-        /// The user provided name of the script action.
-        /// Serialized Name: ScriptAction.name
-        /// </param>
-        /// <param name="uri">
-        /// The URI for the script action.
-        /// Serialized Name: ScriptAction.uri
-        /// </param>
-        /// <param name="roles">
-        /// The node types on which the script action should be executed.
-        /// Serialized Name: ScriptAction.roles
-        /// </param>
+        /// <param name="name"> The user provided name of the script action. </param>
+        /// <param name="uri"> The URI for the script action. </param>
+        /// <param name="roles"> The node types on which the script action should be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public ScriptAction(string name, Uri uri, BinaryData roles)
         {
@@ -50,22 +38,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScriptAction. </summary>
-        /// <param name="name">
-        /// The user provided name of the script action.
-        /// Serialized Name: ScriptAction.name
-        /// </param>
-        /// <param name="uri">
-        /// The URI for the script action.
-        /// Serialized Name: ScriptAction.uri
-        /// </param>
-        /// <param name="roles">
-        /// The node types on which the script action should be executed.
-        /// Serialized Name: ScriptAction.roles
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters for the script action.
-        /// Serialized Name: ScriptAction.parameters
-        /// </param>
+        /// <param name="name"> The user provided name of the script action. </param>
+        /// <param name="uri"> The URI for the script action. </param>
+        /// <param name="roles"> The node types on which the script action should be executed. </param>
+        /// <param name="parameters"> The parameters for the script action. </param>
         internal ScriptAction(string name, Uri uri, BinaryData roles, string parameters)
         {
             Name = name;
@@ -74,25 +50,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// The user provided name of the script action.
-        /// Serialized Name: ScriptAction.name
-        /// </summary>
+        /// <summary> The user provided name of the script action. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The URI for the script action.
-        /// Serialized Name: ScriptAction.uri
-        /// </summary>
+        /// <summary> The URI for the script action. </summary>
         public Uri Uri { get; set; }
-        /// <summary>
-        /// The node types on which the script action should be executed.
-        /// Serialized Name: ScriptAction.roles
-        /// </summary>
+        /// <summary> The node types on which the script action should be executed. </summary>
         public BinaryData Roles { get; set; }
-        /// <summary>
-        /// The parameters for the script action.
-        /// Serialized Name: ScriptAction.parameters
-        /// </summary>
+        /// <summary> The parameters for the script action. </summary>
         public string Parameters { get; set; }
     }
 }

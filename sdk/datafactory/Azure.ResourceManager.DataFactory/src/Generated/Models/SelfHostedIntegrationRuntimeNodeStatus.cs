@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Status of the integration runtime node.
-    /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus
-    /// </summary>
+    /// <summary> Status of the integration runtime node. </summary>
     public readonly partial struct SelfHostedIntegrationRuntimeNodeStatus : IEquatable<SelfHostedIntegrationRuntimeNodeStatus>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string InitializingValue = "Initializing";
         private const string InitializeFailedValue = "InitializeFailed";
 
-        /// <summary>
-        /// NeedRegistration
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.NeedRegistration
-        /// </summary>
+        /// <summary> NeedRegistration. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus NeedRegistration { get; } = new SelfHostedIntegrationRuntimeNodeStatus(NeedRegistrationValue);
-        /// <summary>
-        /// Online
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Online
-        /// </summary>
+        /// <summary> Online. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Online { get; } = new SelfHostedIntegrationRuntimeNodeStatus(OnlineValue);
-        /// <summary>
-        /// Limited
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Limited
-        /// </summary>
+        /// <summary> Limited. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Limited { get; } = new SelfHostedIntegrationRuntimeNodeStatus(LimitedValue);
-        /// <summary>
-        /// Offline
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Offline
-        /// </summary>
+        /// <summary> Offline. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Offline { get; } = new SelfHostedIntegrationRuntimeNodeStatus(OfflineValue);
-        /// <summary>
-        /// Upgrading
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Upgrading
-        /// </summary>
+        /// <summary> Upgrading. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Upgrading { get; } = new SelfHostedIntegrationRuntimeNodeStatus(UpgradingValue);
-        /// <summary>
-        /// Initializing
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Initializing
-        /// </summary>
+        /// <summary> Initializing. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus Initializing { get; } = new SelfHostedIntegrationRuntimeNodeStatus(InitializingValue);
-        /// <summary>
-        /// InitializeFailed
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.InitializeFailed
-        /// </summary>
+        /// <summary> InitializeFailed. </summary>
         public static SelfHostedIntegrationRuntimeNodeStatus InitializeFailed { get; } = new SelfHostedIntegrationRuntimeNodeStatus(InitializeFailedValue);
         /// <summary> Determines if two <see cref="SelfHostedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(SelfHostedIntegrationRuntimeNodeStatus left, SelfHostedIntegrationRuntimeNodeStatus right) => left.Equals(right);

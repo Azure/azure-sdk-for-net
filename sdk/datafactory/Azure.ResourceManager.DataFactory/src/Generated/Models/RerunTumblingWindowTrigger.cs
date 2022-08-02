@@ -10,29 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time.
-    /// Serialized Name: RerunTumblingWindowTrigger
-    /// </summary>
+    /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
     public partial class RerunTumblingWindowTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
-        /// <param name="parentTrigger">
-        /// The parent trigger reference.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.parentTrigger
-        /// </param>
-        /// <param name="requestedStartOn">
-        /// The start time for the time period for which restatement is initiated. Only UTC time is currently supported.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.requestedStartTime
-        /// </param>
-        /// <param name="requestedEndOn">
-        /// The end time for the time period for which restatement is initiated. Only UTC time is currently supported.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.requestedEndTime
-        /// </param>
-        /// <param name="rerunConcurrency">
-        /// The max number of parallel time windows (ready for execution) for which a rerun is triggered.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.rerunConcurrency
-        /// </param>
+        /// <param name="parentTrigger"> The parent trigger reference. </param>
+        /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parentTrigger"/> is null. </exception>
         public RerunTumblingWindowTrigger(BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency)
         {
@@ -49,39 +34,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
-        /// <param name="triggerType">
-        /// Trigger type.
-        /// Serialized Name: Trigger.type
-        /// </param>
-        /// <param name="description">
-        /// Trigger description.
-        /// Serialized Name: Trigger.description
-        /// </param>
-        /// <param name="runtimeState">
-        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
-        /// Serialized Name: Trigger.runtimeState
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the trigger.
-        /// Serialized Name: Trigger.annotations
-        /// </param>
+        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="parentTrigger">
-        /// The parent trigger reference.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.parentTrigger
-        /// </param>
-        /// <param name="requestedStartOn">
-        /// The start time for the time period for which restatement is initiated. Only UTC time is currently supported.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.requestedStartTime
-        /// </param>
-        /// <param name="requestedEndOn">
-        /// The end time for the time period for which restatement is initiated. Only UTC time is currently supported.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.requestedEndTime
-        /// </param>
-        /// <param name="rerunConcurrency">
-        /// The max number of parallel time windows (ready for execution) for which a rerun is triggered.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.rerunConcurrency
-        /// </param>
+        /// <param name="parentTrigger"> The parent trigger reference. </param>
+        /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
         internal RerunTumblingWindowTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
@@ -91,25 +52,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "RerunTumblingWindowTrigger";
         }
 
-        /// <summary>
-        /// The parent trigger reference.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.parentTrigger
-        /// </summary>
+        /// <summary> The parent trigger reference. </summary>
         public BinaryData ParentTrigger { get; set; }
-        /// <summary>
-        /// The start time for the time period for which restatement is initiated. Only UTC time is currently supported.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.requestedStartTime
-        /// </summary>
+        /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
         public DateTimeOffset RequestedStartOn { get; set; }
-        /// <summary>
-        /// The end time for the time period for which restatement is initiated. Only UTC time is currently supported.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.requestedEndTime
-        /// </summary>
+        /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
         public DateTimeOffset RequestedEndOn { get; set; }
-        /// <summary>
-        /// The max number of parallel time windows (ready for execution) for which a rerun is triggered.
-        /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.rerunConcurrency
-        /// </summary>
+        /// <summary> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </summary>
         public int RerunConcurrency { get; set; }
     }
 }

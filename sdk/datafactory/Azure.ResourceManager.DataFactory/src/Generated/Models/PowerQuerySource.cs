@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Power query source.
-    /// Serialized Name: PowerQuerySource
-    /// </summary>
+    /// <summary> Power query source. </summary>
     public partial class PowerQuerySource : DataFlowSource
     {
         /// <summary> Initializes a new instance of PowerQuerySource. </summary>
-        /// <param name="name">
-        /// Transformation name.
-        /// Serialized Name: Transformation.name
-        /// </param>
+        /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySource(string name) : base(name)
         {
@@ -30,43 +24,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PowerQuerySource. </summary>
-        /// <param name="name">
-        /// Transformation name.
-        /// Serialized Name: Transformation.name
-        /// </param>
-        /// <param name="description">
-        /// Transformation description.
-        /// Serialized Name: Transformation.description
-        /// </param>
-        /// <param name="dataset">
-        /// Dataset reference.
-        /// Serialized Name: Transformation.dataset
-        /// </param>
-        /// <param name="linkedService">
-        /// Linked service reference.
-        /// Serialized Name: Transformation.linkedService
-        /// </param>
-        /// <param name="flowlet">
-        /// Flowlet Reference
-        /// Serialized Name: Transformation.flowlet
-        /// </param>
-        /// <param name="schemaLinkedService">
-        /// Schema linked service reference.
-        /// Serialized Name: DataFlowSource.schemaLinkedService
-        /// </param>
-        /// <param name="script">
-        /// source script.
-        /// Serialized Name: PowerQuerySource.script
-        /// </param>
+        /// <param name="name"> Transformation name. </param>
+        /// <param name="description"> Transformation description. </param>
+        /// <param name="dataset"> Dataset reference. </param>
+        /// <param name="linkedService"> Linked service reference. </param>
+        /// <param name="flowlet"> Flowlet Reference. </param>
+        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
+        /// <param name="script"> source script. </param>
         internal PowerQuerySource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
         {
             Script = script;
         }
 
-        /// <summary>
-        /// source script.
-        /// Serialized Name: PowerQuerySource.script
-        /// </summary>
+        /// <summary> source script. </summary>
         public string Script { get; set; }
     }
 }

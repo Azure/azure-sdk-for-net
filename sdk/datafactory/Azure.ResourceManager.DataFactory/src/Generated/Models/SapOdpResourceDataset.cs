@@ -10,25 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SAP ODP Resource properties.
-    /// Serialized Name: SapOdpResourceDataset
-    /// </summary>
+    /// <summary> SAP ODP Resource properties. </summary>
     public partial class SapOdpResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="context">
-        /// The context of the SAP ODP Object. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOdpResourceDataset.typeProperties.context
-        /// </param>
-        /// <param name="objectName">
-        /// The name of the SAP ODP Object. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOdpResourceDataset.typeProperties.objectName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
+        /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/>, <paramref name="context"/> or <paramref name="objectName"/> is null. </exception>
         public SapOdpResourceDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData context, BinaryData objectName) : base(linkedServiceName)
         {
@@ -51,47 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="context">
-        /// The context of the SAP ODP Object. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOdpResourceDataset.typeProperties.context
-        /// </param>
-        /// <param name="objectName">
-        /// The name of the SAP ODP Object. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOdpResourceDataset.typeProperties.objectName
-        /// </param>
+        /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
+        /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         internal SapOdpResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData context, BinaryData objectName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Context = context;
@@ -99,15 +57,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapOdpResource";
         }
 
-        /// <summary>
-        /// The context of the SAP ODP Object. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOdpResourceDataset.typeProperties.context
-        /// </summary>
+        /// <summary> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
         public BinaryData Context { get; set; }
-        /// <summary>
-        /// The name of the SAP ODP Object. Type: string (or Expression with resultType string).
-        /// Serialized Name: SapOdpResourceDataset.typeProperties.objectName
-        /// </summary>
+        /// <summary> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
         public BinaryData ObjectName { get; set; }
     }
 }

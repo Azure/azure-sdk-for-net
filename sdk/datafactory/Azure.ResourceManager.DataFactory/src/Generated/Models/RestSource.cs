@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Rest service source.
-    /// Serialized Name: RestSource
-    /// </summary>
+    /// <summary> A copy activity Rest service source. </summary>
     public partial class RestSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of RestSource. </summary>
@@ -23,55 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RestSource. </summary>
-        /// <param name="copySourceType">
-        /// Copy source type.
-        /// Serialized Name: CopySource.type
-        /// </param>
-        /// <param name="sourceRetryCount">
-        /// Source retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.sourceRetryCount
-        /// </param>
-        /// <param name="sourceRetryWait">
-        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySource.sourceRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySource.disableMetricsCollection
-        /// </param>
+        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="requestMethod">
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.requestMethod
-        /// </param>
-        /// <param name="requestBody">
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.requestBody
-        /// </param>
-        /// <param name="additionalHeaders">
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.additionalHeaders
-        /// </param>
-        /// <param name="paginationRules">
-        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.paginationRules
-        /// </param>
-        /// <param name="httpRequestTimeout">
-        /// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: RestSource.httpRequestTimeout
-        /// </param>
-        /// <param name="requestInterval">
-        /// The time to await before sending next page request. 
-        /// Serialized Name: RestSource.requestInterval
-        /// </param>
-        /// <param name="additionalColumns">
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: RestSource.additionalColumns
-        /// </param>
+        /// <param name="requestMethod"> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </param>
+        /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
+        /// <param name="paginationRules"> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </param>
+        /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="requestInterval"> The time to await before sending next page request. </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         internal RestSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData paginationRules, BinaryData httpRequestTimeout, BinaryData requestInterval, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
@@ -84,40 +45,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "RestSource";
         }
 
-        /// <summary>
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.requestMethod
-        /// </summary>
+        /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
         public BinaryData RequestMethod { get; set; }
-        /// <summary>
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.requestBody
-        /// </summary>
+        /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
         public BinaryData RequestBody { get; set; }
-        /// <summary>
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.additionalHeaders
-        /// </summary>
+        /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
         public BinaryData AdditionalHeaders { get; set; }
-        /// <summary>
-        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
-        /// Serialized Name: RestSource.paginationRules
-        /// </summary>
+        /// <summary> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </summary>
         public BinaryData PaginationRules { get; set; }
-        /// <summary>
-        /// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: RestSource.httpRequestTimeout
-        /// </summary>
+        /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public BinaryData HttpRequestTimeout { get; set; }
-        /// <summary>
-        /// The time to await before sending next page request. 
-        /// Serialized Name: RestSource.requestInterval
-        /// </summary>
+        /// <summary> The time to await before sending next page request. </summary>
         public BinaryData RequestInterval { get; set; }
-        /// <summary>
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: RestSource.additionalColumns
-        /// </summary>
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
         public BinaryData AdditionalColumns { get; set; }
     }
 }

@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list activity runs.
-    /// Serialized Name: ActivityRunsQueryResponse
-    /// </summary>
+    /// <summary> A list activity runs. </summary>
     internal partial class ActivityRunsResult
     {
         /// <summary> Initializes a new instance of ActivityRunsResult. </summary>
-        /// <param name="value">
-        /// List of activity runs.
-        /// Serialized Name: ActivityRunsQueryResponse.value
-        /// </param>
+        /// <param name="value"> List of activity runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActivityRunsResult(IEnumerable<ActivityRunInfo> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ActivityRunsResult. </summary>
-        /// <param name="value">
-        /// List of activity runs.
-        /// Serialized Name: ActivityRunsQueryResponse.value
-        /// </param>
-        /// <param name="continuationToken">
-        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-        /// Serialized Name: ActivityRunsQueryResponse.continuationToken
-        /// </param>
+        /// <param name="value"> List of activity runs. </param>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal ActivityRunsResult(IReadOnlyList<ActivityRunInfo> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary>
-        /// List of activity runs.
-        /// Serialized Name: ActivityRunsQueryResponse.value
-        /// </summary>
+        /// <summary> List of activity runs. </summary>
         public IReadOnlyList<ActivityRunInfo> Value { get; }
-        /// <summary>
-        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-        /// Serialized Name: ActivityRunsQueryResponse.continuationToken
-        /// </summary>
+        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
         public string ContinuationToken { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A managed Virtual Network associated with the Azure Data Factory
-    /// Serialized Name: ManagedVirtualNetwork
-    /// </summary>
+    /// <summary> A managed Virtual Network associated with the Azure Data Factory. </summary>
     public partial class ManagedVirtualNetwork
     {
         /// <summary> Initializes a new instance of ManagedVirtualNetwork. </summary>
@@ -24,14 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedVirtualNetwork. </summary>
-        /// <param name="vnetId">
-        /// Managed Virtual Network ID.
-        /// Serialized Name: ManagedVirtualNetwork.vNetId
-        /// </param>
-        /// <param name="alias">
-        /// Managed Virtual Network alias.
-        /// Serialized Name: ManagedVirtualNetwork.alias
-        /// </param>
+        /// <param name="vnetId"> Managed Virtual Network ID. </param>
+        /// <param name="alias"> Managed Virtual Network alias. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ManagedVirtualNetwork(Guid? vnetId, string @alias, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -40,15 +31,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Managed Virtual Network ID.
-        /// Serialized Name: ManagedVirtualNetwork.vNetId
-        /// </summary>
+        /// <summary> Managed Virtual Network ID. </summary>
         public Guid? VnetId { get; }
-        /// <summary>
-        /// Managed Virtual Network alias.
-        /// Serialized Name: ManagedVirtualNetwork.alias
-        /// </summary>
+        /// <summary> Managed Virtual Network alias. </summary>
         public string Alias { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// DatabricksSparkPython activity.
-    /// Serialized Name: DatabricksSparkPythonActivity
-    /// </summary>
+    /// <summary> DatabricksSparkPython activity. </summary>
     public partial class DatabricksSparkPythonActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="pythonFile">
-        /// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.pythonFile
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pythonFile"/> is null. </exception>
         public DatabricksSparkPythonActivity(string name, BinaryData pythonFile) : base(name)
         {
@@ -45,47 +36,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatabricksSparkPythonActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="pythonFile">
-        /// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.pythonFile
-        /// </param>
-        /// <param name="parameters">
-        /// Command line parameters that will be passed to the Python file.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.parameters
-        /// </param>
-        /// <param name="libraries">
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.libraries
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
+        /// <param name="parameters"> Command line parameters that will be passed to the Python file. </param>
+        /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
         internal DatabricksSparkPythonActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData pythonFile, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PythonFile = pythonFile;
@@ -94,20 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DatabricksSparkPython";
         }
 
-        /// <summary>
-        /// The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.pythonFile
-        /// </summary>
+        /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
         public BinaryData PythonFile { get; set; }
-        /// <summary>
-        /// Command line parameters that will be passed to the Python file.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.parameters
-        /// </summary>
+        /// <summary> Command line parameters that will be passed to the Python file. </summary>
         public IList<BinaryData> Parameters { get; }
-        /// <summary>
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// Serialized Name: DatabricksSparkPythonActivity.typeProperties.libraries
-        /// </summary>
+        /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

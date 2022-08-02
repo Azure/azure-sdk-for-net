@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Whether or not public network access is allowed for the data factory.
-    /// Serialized Name: PublicNetworkAccess
-    /// </summary>
+    /// <summary> Whether or not public network access is allowed for the data factory. </summary>
     public readonly partial struct FactoryPublicNetworkAccess : IEquatable<FactoryPublicNetworkAccess>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PublicNetworkAccess.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static FactoryPublicNetworkAccess Enabled { get; } = new FactoryPublicNetworkAccess(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PublicNetworkAccess.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static FactoryPublicNetworkAccess Disabled { get; } = new FactoryPublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="FactoryPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(FactoryPublicNetworkAccess left, FactoryPublicNetworkAccess right) => left.Equals(right);

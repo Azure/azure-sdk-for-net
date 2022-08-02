@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Request body structure for creating data flow debug session.
-    /// Serialized Name: CreateDataFlowDebugSessionRequest
-    /// </summary>
+    /// <summary> Request body structure for creating data flow debug session. </summary>
     public partial class FactoryDataFlowDebugSessionContent
     {
         /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionContent. </summary>
@@ -18,25 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided.
-        /// Serialized Name: CreateDataFlowDebugSessionRequest.computeType
-        /// </summary>
+        /// <summary> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
         public string ComputeType { get; set; }
-        /// <summary>
-        /// Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided.
-        /// Serialized Name: CreateDataFlowDebugSessionRequest.coreCount
-        /// </summary>
+        /// <summary> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
         public int? CoreCount { get; set; }
-        /// <summary>
-        /// Time to live setting of the cluster in minutes.
-        /// Serialized Name: CreateDataFlowDebugSessionRequest.timeToLive
-        /// </summary>
+        /// <summary> Time to live setting of the cluster in minutes. </summary>
         public int? TtlInMinutes { get; set; }
-        /// <summary>
-        /// Set to use integration runtime setting for data flow debug session.
-        /// Serialized Name: CreateDataFlowDebugSessionRequest.integrationRuntime
-        /// </summary>
+        /// <summary> Set to use integration runtime setting for data flow debug session. </summary>
         public FactoryIntegrationRuntimeDebugInfo IntegrationRuntime { get; set; }
     }
 }

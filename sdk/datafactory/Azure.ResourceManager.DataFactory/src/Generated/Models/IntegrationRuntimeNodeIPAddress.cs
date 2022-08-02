@@ -9,10 +9,7 @@ using System.Net;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The IP address of self-hosted integration runtime node.
-    /// Serialized Name: IntegrationRuntimeNodeIpAddress
-    /// </summary>
+    /// <summary> The IP address of self-hosted integration runtime node. </summary>
     public partial class IntegrationRuntimeNodeIPAddress
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
-        /// <param name="ipAddress">
-        /// The IP address of self-hosted integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeIpAddress.ipAddress
-        /// </param>
+        /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
         internal IntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
         {
             IPAddress = ipAddress;
         }
 
-        /// <summary>
-        /// The IP address of self-hosted integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeIpAddress.ipAddress
-        /// </summary>
+        /// <summary> The IP address of self-hosted integration runtime node. </summary>
         public IPAddress IPAddress { get; }
     }
 }

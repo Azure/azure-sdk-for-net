@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// License type for bringing your own license scenario.
-    /// Serialized Name: IntegrationRuntimeLicenseType
-    /// </summary>
+    /// <summary> License type for bringing your own license scenario. </summary>
     public readonly partial struct IntegrationRuntimeLicenseType : IEquatable<IntegrationRuntimeLicenseType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasePriceValue = "BasePrice";
         private const string LicenseIncludedValue = "LicenseIncluded";
 
-        /// <summary>
-        /// BasePrice
-        /// Serialized Name: IntegrationRuntimeLicenseType.BasePrice
-        /// </summary>
+        /// <summary> BasePrice. </summary>
         public static IntegrationRuntimeLicenseType BasePrice { get; } = new IntegrationRuntimeLicenseType(BasePriceValue);
-        /// <summary>
-        /// LicenseIncluded
-        /// Serialized Name: IntegrationRuntimeLicenseType.LicenseIncluded
-        /// </summary>
+        /// <summary> LicenseIncluded. </summary>
         public static IntegrationRuntimeLicenseType LicenseIncluded { get; } = new IntegrationRuntimeLicenseType(LicenseIncludedValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeLicenseType"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeLicenseType left, IntegrationRuntimeLicenseType right) => left.Equals(right);

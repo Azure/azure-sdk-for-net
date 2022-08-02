@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Compute properties for data flow activity.
-    /// Serialized Name: ExecuteDataFlowActivityTypePropertiesCompute
-    /// </summary>
+    /// <summary> Compute properties for data flow activity. </summary>
     public partial class ExecuteDataFlowActivityTypePropertiesCompute
     {
         /// <summary> Initializes a new instance of ExecuteDataFlowActivityTypePropertiesCompute. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExecuteDataFlowActivityTypePropertiesCompute. </summary>
-        /// <param name="computeType">
-        /// Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string)
-        /// Serialized Name: ExecuteDataFlowActivityTypePropertiesCompute.computeType
-        /// </param>
-        /// <param name="coreCount">
-        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer)
-        /// Serialized Name: ExecuteDataFlowActivityTypePropertiesCompute.coreCount
-        /// </param>
+        /// <param name="computeType"> Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string). </param>
+        /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </param>
         internal ExecuteDataFlowActivityTypePropertiesCompute(BinaryData computeType, BinaryData coreCount)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
         }
 
-        /// <summary>
-        /// Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string)
-        /// Serialized Name: ExecuteDataFlowActivityTypePropertiesCompute.computeType
-        /// </summary>
+        /// <summary> Compute type of the cluster which will execute data flow job. Possible values include: &apos;General&apos;, &apos;MemoryOptimized&apos;, &apos;ComputeOptimized&apos;. Type: string (or Expression with resultType string). </summary>
         public BinaryData ComputeType { get; set; }
-        /// <summary>
-        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer)
-        /// Serialized Name: ExecuteDataFlowActivityTypePropertiesCompute.coreCount
-        /// </summary>
+        /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData CoreCount { get; set; }
     }
 }

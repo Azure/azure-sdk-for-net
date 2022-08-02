@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure Data Factory nested debug resource.
-    /// Serialized Name: SubResourceDebugResource
-    /// </summary>
+    /// <summary> Azure Data Factory nested debug resource. </summary>
     public partial class FactoryDebugInfo
     {
         /// <summary> Initializes a new instance of FactoryDebugInfo. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// The resource name.
-        /// Serialized Name: SubResourceDebugResource.name
-        /// </summary>
+        /// <summary> The resource name. </summary>
         public string Name { get; set; }
     }
 }

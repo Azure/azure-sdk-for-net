@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
-    /// Serialized Name: RunQueryFilterOperand
-    /// </summary>
+    /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
     public readonly partial struct RunQueryFilterOperand : IEquatable<RunQueryFilterOperand>
     {
         private readonly string _value;
@@ -38,65 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string RunGroupIdValue = "RunGroupId";
         private const string LatestOnlyValue = "LatestOnly";
 
-        /// <summary>
-        /// PipelineName
-        /// Serialized Name: RunQueryFilterOperand.PipelineName
-        /// </summary>
+        /// <summary> PipelineName. </summary>
         public static RunQueryFilterOperand PipelineName { get; } = new RunQueryFilterOperand(PipelineNameValue);
-        /// <summary>
-        /// Status
-        /// Serialized Name: RunQueryFilterOperand.Status
-        /// </summary>
+        /// <summary> Status. </summary>
         public static RunQueryFilterOperand Status { get; } = new RunQueryFilterOperand(StatusValue);
-        /// <summary>
-        /// RunStart
-        /// Serialized Name: RunQueryFilterOperand.RunStart
-        /// </summary>
+        /// <summary> RunStart. </summary>
         public static RunQueryFilterOperand RunStart { get; } = new RunQueryFilterOperand(RunStartValue);
-        /// <summary>
-        /// RunEnd
-        /// Serialized Name: RunQueryFilterOperand.RunEnd
-        /// </summary>
+        /// <summary> RunEnd. </summary>
         public static RunQueryFilterOperand RunEnd { get; } = new RunQueryFilterOperand(RunEndValue);
-        /// <summary>
-        /// ActivityName
-        /// Serialized Name: RunQueryFilterOperand.ActivityName
-        /// </summary>
+        /// <summary> ActivityName. </summary>
         public static RunQueryFilterOperand ActivityName { get; } = new RunQueryFilterOperand(ActivityNameValue);
-        /// <summary>
-        /// ActivityRunStart
-        /// Serialized Name: RunQueryFilterOperand.ActivityRunStart
-        /// </summary>
+        /// <summary> ActivityRunStart. </summary>
         public static RunQueryFilterOperand ActivityRunStart { get; } = new RunQueryFilterOperand(ActivityRunStartValue);
-        /// <summary>
-        /// ActivityRunEnd
-        /// Serialized Name: RunQueryFilterOperand.ActivityRunEnd
-        /// </summary>
+        /// <summary> ActivityRunEnd. </summary>
         public static RunQueryFilterOperand ActivityRunEnd { get; } = new RunQueryFilterOperand(ActivityRunEndValue);
-        /// <summary>
-        /// ActivityType
-        /// Serialized Name: RunQueryFilterOperand.ActivityType
-        /// </summary>
+        /// <summary> ActivityType. </summary>
         public static RunQueryFilterOperand ActivityType { get; } = new RunQueryFilterOperand(ActivityTypeValue);
-        /// <summary>
-        /// TriggerName
-        /// Serialized Name: RunQueryFilterOperand.TriggerName
-        /// </summary>
+        /// <summary> TriggerName. </summary>
         public static RunQueryFilterOperand TriggerName { get; } = new RunQueryFilterOperand(TriggerNameValue);
-        /// <summary>
-        /// TriggerRunTimestamp
-        /// Serialized Name: RunQueryFilterOperand.TriggerRunTimestamp
-        /// </summary>
+        /// <summary> TriggerRunTimestamp. </summary>
         public static RunQueryFilterOperand TriggerRunTimestamp { get; } = new RunQueryFilterOperand(TriggerRunTimestampValue);
-        /// <summary>
-        /// RunGroupId
-        /// Serialized Name: RunQueryFilterOperand.RunGroupId
-        /// </summary>
+        /// <summary> RunGroupId. </summary>
         public static RunQueryFilterOperand RunGroupId { get; } = new RunQueryFilterOperand(RunGroupIdValue);
-        /// <summary>
-        /// LatestOnly
-        /// Serialized Name: RunQueryFilterOperand.LatestOnly
-        /// </summary>
+        /// <summary> LatestOnly. </summary>
         public static RunQueryFilterOperand LatestOnly { get; } = new RunQueryFilterOperand(LatestOnlyValue);
         /// <summary> Determines if two <see cref="RunQueryFilterOperand"/> values are the same. </summary>
         public static bool operator ==(RunQueryFilterOperand left, RunQueryFilterOperand right) => left.Equals(right);

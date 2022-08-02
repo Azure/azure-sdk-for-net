@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Import command settings.
-    /// Serialized Name: ImportSettings
     /// Please note <see cref="ImportSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SnowflakeImportCopyCommand"/> and <see cref="AzureDatabricksDeltaLakeImportCommand"/>.
     /// </summary>
@@ -26,10 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ImportSettings. </summary>
-        /// <param name="importSettingsType">
-        /// The import setting type.
-        /// Serialized Name: ImportSettings.type
-        /// </param>
+        /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ImportSettings(string importSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -37,10 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The import setting type.
-        /// Serialized Name: ImportSettings.type
-        /// </summary>
+        /// <summary> The import setting type. </summary>
         internal string ImportSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

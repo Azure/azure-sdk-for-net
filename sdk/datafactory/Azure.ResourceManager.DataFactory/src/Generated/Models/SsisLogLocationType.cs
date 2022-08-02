@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The type of SSIS log location.
-    /// Serialized Name: SsisLogLocationType
-    /// </summary>
+    /// <summary> The type of SSIS log location. </summary>
     public readonly partial struct SsisLogLocationType : IEquatable<SsisLogLocationType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string FileValue = "File";
 
-        /// <summary>
-        /// File
-        /// Serialized Name: SsisLogLocationType.File
-        /// </summary>
+        /// <summary> File. </summary>
         public static SsisLogLocationType File { get; } = new SsisLogLocationType(FileValue);
         /// <summary> Determines if two <see cref="SsisLogLocationType"/> values are the same. </summary>
         public static bool operator ==(SsisLogLocationType left, SsisLogLocationType right) => left.Equals(right);

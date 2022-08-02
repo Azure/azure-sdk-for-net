@@ -12,17 +12,11 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of trigger resources.
-    /// Serialized Name: TriggerListResponse
-    /// </summary>
+    /// <summary> A list of trigger resources. </summary>
     internal partial class FactoryTriggerListResult
     {
         /// <summary> Initializes a new instance of FactoryTriggerListResult. </summary>
-        /// <param name="value">
-        /// List of triggers.
-        /// Serialized Name: TriggerListResponse.value
-        /// </param>
+        /// <param name="value"> List of triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FactoryTriggerListResult(IEnumerable<FactoryTriggerData> value)
         {
@@ -35,29 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryTriggerListResult. </summary>
-        /// <param name="value">
-        /// List of triggers.
-        /// Serialized Name: TriggerListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: TriggerListResponse.nextLink
-        /// </param>
+        /// <param name="value"> List of triggers. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal FactoryTriggerListResult(IReadOnlyList<FactoryTriggerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of triggers.
-        /// Serialized Name: TriggerListResponse.value
-        /// </summary>
+        /// <summary> List of triggers. </summary>
         public IReadOnlyList<FactoryTriggerData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: TriggerListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

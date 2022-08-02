@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Ssis Package.
-    /// Serialized Name: SsisPackage
-    /// </summary>
+    /// <summary> Ssis Package. </summary>
     public partial class SsisPackage : SsisObjectMetadata
     {
         /// <summary> Initializes a new instance of SsisPackage. </summary>
@@ -24,38 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisPackage. </summary>
-        /// <param name="metadataType">
-        /// Type of metadata.
-        /// Serialized Name: SsisObjectMetadata.type
-        /// </param>
-        /// <param name="id">
-        /// Metadata id.
-        /// Serialized Name: SsisObjectMetadata.id
-        /// </param>
-        /// <param name="name">
-        /// Metadata name.
-        /// Serialized Name: SsisObjectMetadata.name
-        /// </param>
-        /// <param name="description">
-        /// Metadata description.
-        /// Serialized Name: SsisObjectMetadata.description
-        /// </param>
-        /// <param name="folderId">
-        /// Folder id which contains package.
-        /// Serialized Name: SsisPackage.folderId
-        /// </param>
-        /// <param name="projectVersion">
-        /// Project version which contains package.
-        /// Serialized Name: SsisPackage.projectVersion
-        /// </param>
-        /// <param name="projectId">
-        /// Project id which contains package.
-        /// Serialized Name: SsisPackage.projectId
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters in package
-        /// Serialized Name: SsisPackage.parameters
-        /// </param>
+        /// <param name="metadataType"> Type of metadata. </param>
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <param name="folderId"> Folder id which contains package. </param>
+        /// <param name="projectVersion"> Project version which contains package. </param>
+        /// <param name="projectId"> Project id which contains package. </param>
+        /// <param name="parameters"> Parameters in package. </param>
         internal SsisPackage(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description)
         {
             FolderId = folderId;
@@ -65,25 +38,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             MetadataType = metadataType;
         }
 
-        /// <summary>
-        /// Folder id which contains package.
-        /// Serialized Name: SsisPackage.folderId
-        /// </summary>
+        /// <summary> Folder id which contains package. </summary>
         public long? FolderId { get; }
-        /// <summary>
-        /// Project version which contains package.
-        /// Serialized Name: SsisPackage.projectVersion
-        /// </summary>
+        /// <summary> Project version which contains package. </summary>
         public long? ProjectVersion { get; }
-        /// <summary>
-        /// Project id which contains package.
-        /// Serialized Name: SsisPackage.projectId
-        /// </summary>
+        /// <summary> Project id which contains package. </summary>
         public long? ProjectId { get; }
-        /// <summary>
-        /// Parameters in package
-        /// Serialized Name: SsisPackage.parameters
-        /// </summary>
+        /// <summary> Parameters in package. </summary>
         public IReadOnlyList<SsisParameterInfo> Parameters { get; }
     }
 }

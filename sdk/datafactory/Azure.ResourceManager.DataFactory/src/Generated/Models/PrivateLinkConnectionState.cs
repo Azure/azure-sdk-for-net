@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The state of a private link connection
-    /// Serialized Name: PrivateLinkConnectionState
-    /// </summary>
+    /// <summary> The state of a private link connection. </summary>
     public partial class PrivateLinkConnectionState
     {
         /// <summary> Initializes a new instance of PrivateLinkConnectionState. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkConnectionState. </summary>
-        /// <param name="status">
-        /// Status of a private link connection
-        /// Serialized Name: PrivateLinkConnectionState.status
-        /// </param>
-        /// <param name="description">
-        /// Description of a private link connection
-        /// Serialized Name: PrivateLinkConnectionState.description
-        /// </param>
-        /// <param name="actionsRequired">
-        /// ActionsRequired for a private link connection
-        /// Serialized Name: PrivateLinkConnectionState.actionsRequired
-        /// </param>
+        /// <param name="status"> Status of a private link connection. </param>
+        /// <param name="description"> Description of a private link connection. </param>
+        /// <param name="actionsRequired"> ActionsRequired for a private link connection. </param>
         internal PrivateLinkConnectionState(string status, string description, string actionsRequired)
         {
             Status = status;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary>
-        /// Status of a private link connection
-        /// Serialized Name: PrivateLinkConnectionState.status
-        /// </summary>
+        /// <summary> Status of a private link connection. </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// Description of a private link connection
-        /// Serialized Name: PrivateLinkConnectionState.description
-        /// </summary>
+        /// <summary> Description of a private link connection. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// ActionsRequired for a private link connection
-        /// Serialized Name: PrivateLinkConnectionState.actionsRequired
-        /// </summary>
+        /// <summary> ActionsRequired for a private link connection. </summary>
         public string ActionsRequired { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Get Data Plane read only token response definition.
-    /// Serialized Name: AccessPolicyResponse
-    /// </summary>
+    /// <summary> Get Data Plane read only token response definition. </summary>
     public partial class FactoryDataPlaneAccessPolicyResult
     {
         /// <summary> Initializes a new instance of FactoryDataPlaneAccessPolicyResult. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryDataPlaneAccessPolicyResult. </summary>
-        /// <param name="policy">
-        /// The user access policy.
-        /// Serialized Name: AccessPolicyResponse.policy
-        /// </param>
-        /// <param name="accessToken">
-        /// Data Plane read only access token.
-        /// Serialized Name: AccessPolicyResponse.accessToken
-        /// </param>
-        /// <param name="dataPlaneUri">
-        /// Data Plane service base URL.
-        /// Serialized Name: AccessPolicyResponse.dataPlaneUrl
-        /// </param>
+        /// <param name="policy"> The user access policy. </param>
+        /// <param name="accessToken"> Data Plane read only access token. </param>
+        /// <param name="dataPlaneUri"> Data Plane service base URL. </param>
         internal FactoryDataPlaneAccessPolicyResult(FactoryDataPlaneUserAccessPolicy policy, string accessToken, Uri dataPlaneUri)
         {
             Policy = policy;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataPlaneUri = dataPlaneUri;
         }
 
-        /// <summary>
-        /// The user access policy.
-        /// Serialized Name: AccessPolicyResponse.policy
-        /// </summary>
+        /// <summary> The user access policy. </summary>
         public FactoryDataPlaneUserAccessPolicy Policy { get; }
-        /// <summary>
-        /// Data Plane read only access token.
-        /// Serialized Name: AccessPolicyResponse.accessToken
-        /// </summary>
+        /// <summary> Data Plane read only access token. </summary>
         public string AccessToken { get; }
-        /// <summary>
-        /// Data Plane service base URL.
-        /// Serialized Name: AccessPolicyResponse.dataPlaneUrl
-        /// </summary>
+        /// <summary> Data Plane service base URL. </summary>
         public Uri DataPlaneUri { get; }
     }
 }

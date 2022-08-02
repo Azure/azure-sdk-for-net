@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A file in an HTTP web server.
-    /// Serialized Name: HttpDataset
-    /// </summary>
+    /// <summary> A file in an HTTP web server. </summary>
     public partial class HttpFileDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of HttpFileDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public HttpFileDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -33,67 +27,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HttpFileDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="relativeUri">
-        /// The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.relativeUrl
-        /// </param>
-        /// <param name="requestMethod">
-        /// The HTTP method for the HTTP request. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.requestMethod
-        /// </param>
-        /// <param name="requestBody">
-        /// The body for the HTTP request. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.requestBody
-        /// </param>
+        /// <param name="relativeUri"> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </param>
+        /// <param name="requestMethod"> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </param>
+        /// <param name="requestBody"> The body for the HTTP request. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders">
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.additionalHeaders
         /// </param>
         /// <param name="format">
         /// The format of files.
-        /// Serialized Name: HttpDataset.typeProperties.format
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </param>
-        /// <param name="compression">
-        /// The data compression method used on files.
-        /// Serialized Name: HttpDataset.typeProperties.compression
-        /// </param>
+        /// <param name="compression"> The data compression method used on files. </param>
         internal HttpFileDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUri = relativeUri;
@@ -105,39 +61,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "HttpFile";
         }
 
-        /// <summary>
-        /// The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.relativeUrl
-        /// </summary>
+        /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>
         public BinaryData RelativeUri { get; set; }
-        /// <summary>
-        /// The HTTP method for the HTTP request. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.requestMethod
-        /// </summary>
+        /// <summary> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </summary>
         public BinaryData RequestMethod { get; set; }
-        /// <summary>
-        /// The body for the HTTP request. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.requestBody
-        /// </summary>
+        /// <summary> The body for the HTTP request. Type: string (or Expression with resultType string). </summary>
         public BinaryData RequestBody { get; set; }
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpDataset.typeProperties.additionalHeaders
         /// </summary>
         public BinaryData AdditionalHeaders { get; set; }
         /// <summary>
         /// The format of files.
-        /// Serialized Name: HttpDataset.typeProperties.format
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
         public DatasetStorageFormat Format { get; set; }
-        /// <summary>
-        /// The data compression method used on files.
-        /// Serialized Name: HttpDataset.typeProperties.compression
-        /// </summary>
+        /// <summary> The data compression method used on files. </summary>
         public DatasetCompression Compression { get; set; }
     }
 }

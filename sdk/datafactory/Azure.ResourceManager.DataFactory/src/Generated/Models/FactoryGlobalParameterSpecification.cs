@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Definition of a single parameter for an entity.
-    /// Serialized Name: GlobalParameterSpecification
-    /// </summary>
+    /// <summary> Definition of a single parameter for an entity. </summary>
     public partial class FactoryGlobalParameterSpecification
     {
         /// <summary> Initializes a new instance of FactoryGlobalParameterSpecification. </summary>
-        /// <param name="parameterType">
-        /// Global Parameter type.
-        /// Serialized Name: GlobalParameterSpecification.type
-        /// </param>
-        /// <param name="value">
-        /// Value of parameter.
-        /// Serialized Name: GlobalParameterSpecification.value
-        /// </param>
+        /// <param name="parameterType"> Global Parameter type. </param>
+        /// <param name="value"> Value of parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FactoryGlobalParameterSpecification(FactoryGlobalParameterType parameterType, BinaryData value)
         {
@@ -36,15 +27,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
         }
 
-        /// <summary>
-        /// Global Parameter type.
-        /// Serialized Name: GlobalParameterSpecification.type
-        /// </summary>
+        /// <summary> Global Parameter type. </summary>
         public FactoryGlobalParameterType ParameterType { get; set; }
-        /// <summary>
-        /// Value of parameter.
-        /// Serialized Name: GlobalParameterSpecification.value
-        /// </summary>
+        /// <summary> Value of parameter. </summary>
         public BinaryData Value { get; set; }
     }
 }

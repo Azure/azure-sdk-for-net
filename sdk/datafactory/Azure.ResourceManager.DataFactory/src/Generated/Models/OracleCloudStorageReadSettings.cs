@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Oracle Cloud Storage read settings.
-    /// Serialized Name: OracleCloudStorageReadSettings
-    /// </summary>
+    /// <summary> Oracle Cloud Storage read settings. </summary>
     public partial class OracleCloudStorageReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of OracleCloudStorageReadSettings. </summary>
@@ -23,59 +20,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of OracleCloudStorageReadSettings. </summary>
-        /// <param name="storeReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: StoreReadSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreReadSettings.disableMetricsCollection
-        /// </param>
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive">
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleCloudStorageReadSettings.recursive
-        /// </param>
-        /// <param name="wildcardFolderPath">
-        /// Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.wildcardFolderPath
-        /// </param>
-        /// <param name="wildcardFileName">
-        /// Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.wildcardFileName
-        /// </param>
-        /// <param name="prefix">
-        /// The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.prefix
-        /// </param>
-        /// <param name="fileListPath">
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.fileListPath
-        /// </param>
-        /// <param name="enablePartitionDiscovery">
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: OracleCloudStorageReadSettings.enablePartitionDiscovery
-        /// </param>
-        /// <param name="partitionRootPath">
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.partitionRootPath
-        /// </param>
-        /// <param name="deleteFilesAfterCompletion">
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleCloudStorageReadSettings.deleteFilesAfterCompletion
-        /// </param>
-        /// <param name="modifiedDatetimeStart">
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.modifiedDatetimeStart
-        /// </param>
-        /// <param name="modifiedDatetimeEnd">
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.modifiedDatetimeEnd
-        /// </param>
+        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="wildcardFolderPath"> Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFileName"> Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string). </param>
+        /// <param name="prefix"> The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
+        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         internal OracleCloudStorageReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, BinaryData prefix, BinaryData fileListPath, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -91,55 +49,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "OracleCloudStorageReadSettings";
         }
 
-        /// <summary>
-        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleCloudStorageReadSettings.recursive
-        /// </summary>
+        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData Recursive { get; set; }
-        /// <summary>
-        /// Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.wildcardFolderPath
-        /// </summary>
+        /// <summary> Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFolderPath { get; set; }
-        /// <summary>
-        /// Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.wildcardFileName
-        /// </summary>
+        /// <summary> Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string). </summary>
         public BinaryData WildcardFileName { get; set; }
-        /// <summary>
-        /// The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.prefix
-        /// </summary>
+        /// <summary> The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string). </summary>
         public BinaryData Prefix { get; set; }
-        /// <summary>
-        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.fileListPath
-        /// </summary>
+        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileListPath { get; set; }
-        /// <summary>
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: OracleCloudStorageReadSettings.enablePartitionDiscovery
-        /// </summary>
+        /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.partitionRootPath
-        /// </summary>
+        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionRootPath { get; set; }
-        /// <summary>
-        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: OracleCloudStorageReadSettings.deleteFilesAfterCompletion
-        /// </summary>
+        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
-        /// <summary>
-        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.modifiedDatetimeStart
-        /// </summary>
+        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
-        /// <summary>
-        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
-        /// Serialized Name: OracleCloudStorageReadSettings.modifiedDatetimeEnd
-        /// </summary>
+        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public BinaryData ModifiedDatetimeEnd { get; set; }
     }
 }

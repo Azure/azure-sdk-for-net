@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure Databricks Delta Lake linked service.
-    /// Serialized Name: AzureDatabricksDeltaLakeLinkedService
-    /// </summary>
+    /// <summary> Azure Databricks Delta Lake linked service. </summary>
     public partial class AzureDatabricksDeltaLakeLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
-        /// <param name="domain">
-        /// &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.domain
-        /// </param>
+        /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksDeltaLakeLinkedService(BinaryData domain)
         {
@@ -34,53 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="domain">
-        /// &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.domain
-        /// </param>
+        /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <param name="accessToken">
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.accessToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="clusterId">
-        /// The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.clusterId
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.encryptedCredential
-        /// </param>
-        /// <param name="credential">
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.credential
-        /// </param>
-        /// <param name="workspaceResourceId">
-        /// Workspace resource id for databricks REST API. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.workspaceResourceId
-        /// </param>
+        /// <param name="clusterId"> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="workspaceResourceId"> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </param>
         internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, FactorySecretBaseDefinition accessToken, BinaryData clusterId, BinaryData encryptedCredential, FactoryCredentialReference credential, BinaryData workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
@@ -92,37 +55,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureDatabricksDeltaLake";
         }
 
-        /// <summary>
-        /// &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.domain
-        /// </summary>
+        /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
         public BinaryData Domain { get; set; }
         /// <summary>
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.accessToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition AccessToken { get; set; }
-        /// <summary>
-        /// The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.clusterId
-        /// </summary>
+        /// <summary> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClusterId { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
-        /// <summary>
-        /// The credential reference containing authentication information.
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.credential
-        /// </summary>
+        /// <summary> The credential reference containing authentication information. </summary>
         public FactoryCredentialReference Credential { get; set; }
-        /// <summary>
-        /// Workspace resource id for databricks REST API. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.workspaceResourceId
-        /// </summary>
+        /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
         public BinaryData WorkspaceResourceId { get; set; }
     }
 }

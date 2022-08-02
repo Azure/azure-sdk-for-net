@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Execute data flow activity.
-    /// Serialized Name: ExecuteDataFlowActivity
-    /// </summary>
+    /// <summary> Execute data flow activity. </summary>
     public partial class ExecuteDataFlowActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="dataFlow">
-        /// Data flow reference.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.dataFlow
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="dataFlow"> Data flow reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
         public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow) : base(name)
         {
@@ -42,67 +33,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="dataFlow">
-        /// Data flow reference.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.dataFlow
-        /// </param>
-        /// <param name="staging">
-        /// Staging info for execute data flow activity.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.staging
-        /// </param>
-        /// <param name="integrationRuntime">
-        /// The integration runtime reference.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.integrationRuntime
-        /// </param>
-        /// <param name="compute">
-        /// Compute properties for data flow activity.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.compute
-        /// </param>
-        /// <param name="traceLevel">
-        /// Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.traceLevel
-        /// </param>
-        /// <param name="continueOnError">
-        /// Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.continueOnError
-        /// </param>
-        /// <param name="runConcurrently">
-        /// Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.runConcurrently
-        /// </param>
-        /// <param name="sourceStagingConcurrency">
-        /// Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.sourceStagingConcurrency
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="dataFlow"> Data flow reference. </param>
+        /// <param name="staging"> Staging info for execute data flow activity. </param>
+        /// <param name="integrationRuntime"> The integration runtime reference. </param>
+        /// <param name="compute"> Compute properties for data flow activity. </param>
+        /// <param name="traceLevel"> Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string). </param>
+        /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
         internal ExecuteDataFlowActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, BinaryData traceLevel, BinaryData continueOnError, BinaryData runConcurrently, BinaryData sourceStagingConcurrency) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             DataFlow = dataFlow;
@@ -116,45 +62,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecuteDataFlow";
         }
 
-        /// <summary>
-        /// Data flow reference.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.dataFlow
-        /// </summary>
+        /// <summary> Data flow reference. </summary>
         public DataFlowReference DataFlow { get; set; }
-        /// <summary>
-        /// Staging info for execute data flow activity.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.staging
-        /// </summary>
+        /// <summary> Staging info for execute data flow activity. </summary>
         public DataFlowStagingInfo Staging { get; set; }
-        /// <summary>
-        /// The integration runtime reference.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.integrationRuntime
-        /// </summary>
+        /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
-        /// <summary>
-        /// Compute properties for data flow activity.
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.compute
-        /// </summary>
+        /// <summary> Compute properties for data flow activity. </summary>
         public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
-        /// <summary>
-        /// Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.traceLevel
-        /// </summary>
+        /// <summary> Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string). </summary>
         public BinaryData TraceLevel { get; set; }
-        /// <summary>
-        /// Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.continueOnError
-        /// </summary>
+        /// <summary> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData ContinueOnError { get; set; }
-        /// <summary>
-        /// Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.runConcurrently
-        /// </summary>
+        /// <summary> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData RunConcurrently { get; set; }
-        /// <summary>
-        /// Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer)
-        /// Serialized Name: ExecuteDataFlowActivity.typeProperties.sourceStagingConcurrency
-        /// </summary>
+        /// <summary> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData SourceStagingConcurrency { get; set; }
     }
 }

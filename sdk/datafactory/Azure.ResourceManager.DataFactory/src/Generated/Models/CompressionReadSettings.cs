@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Compression read settings.
-    /// Serialized Name: CompressionReadSettings
     /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
     /// </summary>
@@ -26,10 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
-        /// <param name="compressionReadSettingsType">
-        /// The Compression setting type.
-        /// Serialized Name: CompressionReadSettings.type
-        /// </param>
+        /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CompressionReadSettings(string compressionReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -37,10 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The Compression setting type.
-        /// Serialized Name: CompressionReadSettings.type
-        /// </summary>
+        /// <summary> The Compression setting type. </summary>
         internal string CompressionReadSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

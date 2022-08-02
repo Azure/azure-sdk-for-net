@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The authentication mechanism used to connect to the Presto server.
-    /// Serialized Name: PrestoAuthenticationType
-    /// </summary>
+    /// <summary> The authentication mechanism used to connect to the Presto server. </summary>
     public readonly partial struct PrestoAuthenticationType : IEquatable<PrestoAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string AnonymousValue = "Anonymous";
         private const string LdapValue = "LDAP";
 
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: PrestoAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static PrestoAuthenticationType Anonymous { get; } = new PrestoAuthenticationType(AnonymousValue);
-        /// <summary>
-        /// LDAP
-        /// Serialized Name: PrestoAuthenticationType.LDAP
-        /// </summary>
+        /// <summary> LDAP. </summary>
         public static PrestoAuthenticationType Ldap { get; } = new PrestoAuthenticationType(LdapValue);
         /// <summary> Determines if two <see cref="PrestoAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(PrestoAuthenticationType left, PrestoAuthenticationType right) => left.Equals(right);

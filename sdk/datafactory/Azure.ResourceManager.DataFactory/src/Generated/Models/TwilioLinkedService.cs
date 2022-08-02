@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Linked service for Twilio.
-    /// Serialized Name: TwilioLinkedService
-    /// </summary>
+    /// <summary> Linked service for Twilio. </summary>
     public partial class TwilioLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
-        /// <param name="userName">
-        /// The Account SID of Twilio service.
-        /// Serialized Name: TwilioLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="userName"> The Account SID of Twilio service. </param>
         /// <param name="password">
         /// The auth token of Twilio service.
-        /// Serialized Name: TwilioLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -45,34 +38,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TwilioLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="userName">
-        /// The Account SID of Twilio service.
-        /// Serialized Name: TwilioLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="userName"> The Account SID of Twilio service. </param>
         /// <param name="password">
         /// The auth token of Twilio service.
-        /// Serialized Name: TwilioLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -83,14 +57,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Twilio";
         }
 
-        /// <summary>
-        /// The Account SID of Twilio service.
-        /// Serialized Name: TwilioLinkedService.typeProperties.userName
-        /// </summary>
+        /// <summary> The Account SID of Twilio service. </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// The auth token of Twilio service.
-        /// Serialized Name: TwilioLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>

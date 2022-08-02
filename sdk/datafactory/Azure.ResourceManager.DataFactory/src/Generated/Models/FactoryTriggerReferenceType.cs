@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Trigger reference type.
-    /// Serialized Name: TriggerReferenceType
-    /// </summary>
+    /// <summary> Trigger reference type. </summary>
     public readonly partial struct FactoryTriggerReferenceType : IEquatable<FactoryTriggerReferenceType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string TriggerReferenceValue = "TriggerReference";
 
-        /// <summary>
-        /// TriggerReference
-        /// Serialized Name: TriggerReferenceType.TriggerReference
-        /// </summary>
+        /// <summary> TriggerReference. </summary>
         public static FactoryTriggerReferenceType TriggerReference { get; } = new FactoryTriggerReferenceType(TriggerReferenceValue);
         /// <summary> Determines if two <see cref="FactoryTriggerReferenceType"/> values are the same. </summary>
         public static bool operator ==(FactoryTriggerReferenceType left, FactoryTriggerReferenceType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The location of azure blob dataset.
-    /// Serialized Name: AzureBlobStorageLocation
-    /// </summary>
+    /// <summary> The location of azure blob dataset. </summary>
     public partial class AzureBlobStorageLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of AzureBlobStorageLocation. </summary>
@@ -23,33 +20,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageLocation. </summary>
-        /// <param name="datasetLocationType">
-        /// Type of dataset storage location.
-        /// Serialized Name: DatasetLocation.type
-        /// </param>
-        /// <param name="folderPath">
-        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
-        /// Serialized Name: DatasetLocation.folderPath
-        /// </param>
-        /// <param name="fileName">
-        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
-        /// Serialized Name: DatasetLocation.fileName
-        /// </param>
+        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
+        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="container">
-        /// Specify the container of azure blob. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobStorageLocation.container
-        /// </param>
+        /// <param name="container"> Specify the container of azure blob. Type: string (or Expression with resultType string). </param>
         internal AzureBlobStorageLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData container) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             Container = container;
             DatasetLocationType = datasetLocationType ?? "AzureBlobStorageLocation";
         }
 
-        /// <summary>
-        /// Specify the container of azure blob. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureBlobStorageLocation.container
-        /// </summary>
+        /// <summary> Specify the container of azure blob. Type: string (or Expression with resultType string). </summary>
         public BinaryData Container { get; set; }
     }
 }

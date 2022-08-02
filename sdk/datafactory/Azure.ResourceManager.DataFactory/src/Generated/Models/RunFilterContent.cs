@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Query parameters for listing runs.
-    /// Serialized Name: RunFilterParameters
-    /// </summary>
+    /// <summary> Query parameters for listing runs. </summary>
     public partial class RunFilterContent
     {
         /// <summary> Initializes a new instance of RunFilterContent. </summary>
-        /// <param name="lastUpdatedAfter">
-        /// The time at or after which the run event was updated in &apos;ISO 8601&apos; format.
-        /// Serialized Name: RunFilterParameters.lastUpdatedAfter
-        /// </param>
-        /// <param name="lastUpdatedBefore">
-        /// The time at or before which the run event was updated in &apos;ISO 8601&apos; format.
-        /// Serialized Name: RunFilterParameters.lastUpdatedBefore
-        /// </param>
+        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </param>
+        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </param>
         public RunFilterContent(DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore)
         {
             LastUpdatedAfter = lastUpdatedAfter;
@@ -34,30 +25,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             OrderBy = new ChangeTrackingList<RunQueryOrderBy>();
         }
 
-        /// <summary>
-        /// The continuation token for getting the next page of results. Null for first page.
-        /// Serialized Name: RunFilterParameters.continuationToken
-        /// </summary>
+        /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
         public string ContinuationToken { get; set; }
-        /// <summary>
-        /// The time at or after which the run event was updated in &apos;ISO 8601&apos; format.
-        /// Serialized Name: RunFilterParameters.lastUpdatedAfter
-        /// </summary>
+        /// <summary> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </summary>
         public DateTimeOffset LastUpdatedAfter { get; }
-        /// <summary>
-        /// The time at or before which the run event was updated in &apos;ISO 8601&apos; format.
-        /// Serialized Name: RunFilterParameters.lastUpdatedBefore
-        /// </summary>
+        /// <summary> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </summary>
         public DateTimeOffset LastUpdatedBefore { get; }
-        /// <summary>
-        /// List of filters.
-        /// Serialized Name: RunFilterParameters.filters
-        /// </summary>
+        /// <summary> List of filters. </summary>
         public IList<RunQueryFilter> Filters { get; }
-        /// <summary>
-        /// List of OrderBy option.
-        /// Serialized Name: RunFilterParameters.orderBy
-        /// </summary>
+        /// <summary> List of OrderBy option. </summary>
         public IList<RunQueryOrderBy> OrderBy { get; }
     }
 }

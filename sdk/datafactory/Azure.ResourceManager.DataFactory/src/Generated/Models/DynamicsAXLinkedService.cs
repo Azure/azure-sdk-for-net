@@ -10,35 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Dynamics AX linked service.
-    /// Serialized Name: DynamicsAXLinkedService
-    /// </summary>
+    /// <summary> Dynamics AX linked service. </summary>
     public partial class DynamicsAXLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of DynamicsAXLinkedService. </summary>
-        /// <param name="uri">
-        /// The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint.
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.url
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// Specify the application&apos;s client ID. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="uri"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
+        /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant">
-        /// Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="aadResourceId">
-        /// Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.aadResourceId
-        /// </param>
+        /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
+        /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="servicePrincipalId"/>, <paramref name="servicePrincipalKey"/>, <paramref name="tenant"/> or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedService(BinaryData uri, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData aadResourceId)
         {
@@ -72,53 +56,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DynamicsAXLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="uri">
-        /// The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint.
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.url
-        /// </param>
-        /// <param name="servicePrincipalId">
-        /// Specify the application&apos;s client ID. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.servicePrincipalId
-        /// </param>
+        /// <param name="uri"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
+        /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant">
-        /// Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.tenant
-        /// </param>
-        /// <param name="aadResourceId">
-        /// Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.aadResourceId
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
+        /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal DynamicsAXLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData aadResourceId, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
@@ -130,37 +83,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "DynamicsAX";
         }
 
-        /// <summary>
-        /// The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint.
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.url
-        /// </summary>
+        /// <summary> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </summary>
         public BinaryData Uri { get; set; }
-        /// <summary>
-        /// Specify the application&apos;s client ID. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.servicePrincipalId
-        /// </summary>
+        /// <summary> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.tenant
-        /// </summary>
+        /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary>
-        /// Specify the resource you are requesting authorization. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.aadResourceId
-        /// </summary>
+        /// <summary> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </summary>
         public BinaryData AadResourceId { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: DynamicsAXLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

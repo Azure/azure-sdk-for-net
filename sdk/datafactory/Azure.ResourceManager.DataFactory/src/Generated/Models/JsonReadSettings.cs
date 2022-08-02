@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Json read settings.
-    /// Serialized Name: JsonReadSettings
-    /// </summary>
+    /// <summary> Json read settings. </summary>
     public partial class JsonReadSettings : FormatReadSettings
     {
         /// <summary> Initializes a new instance of JsonReadSettings. </summary>
@@ -23,14 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of JsonReadSettings. </summary>
-        /// <param name="formatReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: FormatReadSettings.type
-        /// </param>
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">
         /// Compression settings.
-        /// Serialized Name: JsonReadSettings.compressionProperties
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </param>
@@ -42,7 +35,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Compression settings.
-        /// Serialized Name: JsonReadSettings.compressionProperties
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </summary>

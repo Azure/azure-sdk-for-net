@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Azure Table sink.
-    /// Serialized Name: AzureTableSink
-    /// </summary>
+    /// <summary> A copy activity Azure Table sink. </summary>
     public partial class AzureTableSink : CopySink
     {
         /// <summary> Initializes a new instance of AzureTableSink. </summary>
@@ -23,51 +20,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureTableSink. </summary>
-        /// <param name="copySinkType">
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </param>
-        /// <param name="writeBatchSize">
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </param>
-        /// <param name="writeBatchTimeout">
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </param>
-        /// <param name="sinkRetryCount">
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </param>
-        /// <param name="sinkRetryWait">
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="azureTableDefaultPartitionKeyValue">
-        /// Azure Table default partition key value. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTableDefaultPartitionKeyValue
-        /// </param>
-        /// <param name="azureTablePartitionKeyName">
-        /// Azure Table partition key name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTablePartitionKeyName
-        /// </param>
-        /// <param name="azureTableRowKeyName">
-        /// Azure Table row key name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTableRowKeyName
-        /// </param>
-        /// <param name="azureTableInsertType">
-        /// Azure Table insert type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTableInsertType
-        /// </param>
+        /// <param name="azureTableDefaultPartitionKeyValue"> Azure Table default partition key value. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureTablePartitionKeyName"> Azure Table partition key name. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureTableRowKeyName"> Azure Table row key name. Type: string (or Expression with resultType string). </param>
+        /// <param name="azureTableInsertType"> Azure Table insert type. Type: string (or Expression with resultType string). </param>
         internal AzureTableSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData azureTableDefaultPartitionKeyValue, BinaryData azureTablePartitionKeyName, BinaryData azureTableRowKeyName, BinaryData azureTableInsertType) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AzureTableDefaultPartitionKeyValue = azureTableDefaultPartitionKeyValue;
@@ -77,25 +41,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "AzureTableSink";
         }
 
-        /// <summary>
-        /// Azure Table default partition key value. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTableDefaultPartitionKeyValue
-        /// </summary>
+        /// <summary> Azure Table default partition key value. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureTableDefaultPartitionKeyValue { get; set; }
-        /// <summary>
-        /// Azure Table partition key name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTablePartitionKeyName
-        /// </summary>
+        /// <summary> Azure Table partition key name. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureTablePartitionKeyName { get; set; }
-        /// <summary>
-        /// Azure Table row key name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTableRowKeyName
-        /// </summary>
+        /// <summary> Azure Table row key name. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureTableRowKeyName { get; set; }
-        /// <summary>
-        /// Azure Table insert type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureTableSink.azureTableInsertType
-        /// </summary>
+        /// <summary> Azure Table insert type. Type: string (or Expression with resultType string). </summary>
         public BinaryData AzureTableInsertType { get; set; }
     }
 }

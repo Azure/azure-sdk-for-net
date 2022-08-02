@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Managed Identity used for CMK.
-    /// Serialized Name: CMKIdentityDefinition
-    /// </summary>
+    /// <summary> Managed Identity used for CMK. </summary>
     internal partial class CmkIdentityDefinition
     {
         /// <summary> Initializes a new instance of CmkIdentityDefinition. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CmkIdentityDefinition. </summary>
-        /// <param name="userAssignedIdentity">
-        /// The resource id of the user assigned identity to authenticate to customer&apos;s key vault.
-        /// Serialized Name: CMKIdentityDefinition.userAssignedIdentity
-        /// </param>
+        /// <param name="userAssignedIdentity"> The resource id of the user assigned identity to authenticate to customer&apos;s key vault. </param>
         internal CmkIdentityDefinition(string userAssignedIdentity)
         {
             UserAssignedIdentity = userAssignedIdentity;
         }
 
-        /// <summary>
-        /// The resource id of the user assigned identity to authenticate to customer&apos;s key vault.
-        /// Serialized Name: CMKIdentityDefinition.userAssignedIdentity
-        /// </summary>
+        /// <summary> The resource id of the user assigned identity to authenticate to customer&apos;s key vault. </summary>
         public string UserAssignedIdentity { get; set; }
     }
 }

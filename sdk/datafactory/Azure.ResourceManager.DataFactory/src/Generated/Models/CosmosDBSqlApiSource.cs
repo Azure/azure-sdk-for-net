@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Azure CosmosDB (SQL API) Collection source.
-    /// Serialized Name: CosmosDbSqlApiSource
-    /// </summary>
+    /// <summary> A copy activity Azure CosmosDB (SQL API) Collection source. </summary>
     public partial class CosmosDBSqlApiSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of CosmosDBSqlApiSource. </summary>
@@ -23,47 +20,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlApiSource. </summary>
-        /// <param name="copySourceType">
-        /// Copy source type.
-        /// Serialized Name: CopySource.type
-        /// </param>
-        /// <param name="sourceRetryCount">
-        /// Source retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.sourceRetryCount
-        /// </param>
-        /// <param name="sourceRetryWait">
-        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySource.sourceRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySource.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySource.disableMetricsCollection
-        /// </param>
+        /// <param name="copySourceType"> Copy source type. </param>
+        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="query">
-        /// SQL API query. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbSqlApiSource.query
-        /// </param>
-        /// <param name="pageSize">
-        /// Page size of the result. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CosmosDbSqlApiSource.pageSize
-        /// </param>
-        /// <param name="preferredRegions">
-        /// Preferred regions. Type: array of strings (or Expression with resultType array of strings).
-        /// Serialized Name: CosmosDbSqlApiSource.preferredRegions
-        /// </param>
-        /// <param name="detectDatetime">
-        /// Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CosmosDbSqlApiSource.detectDatetime
-        /// </param>
-        /// <param name="additionalColumns">
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: CosmosDbSqlApiSource.additionalColumns
-        /// </param>
+        /// <param name="query"> SQL API query. Type: string (or Expression with resultType string). </param>
+        /// <param name="pageSize"> Page size of the result. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="preferredRegions"> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </param>
+        /// <param name="detectDatetime"> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         internal CosmosDBSqlApiSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData pageSize, BinaryData preferredRegions, BinaryData detectDatetime, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
@@ -74,30 +41,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "CosmosDbSqlApiSource";
         }
 
-        /// <summary>
-        /// SQL API query. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbSqlApiSource.query
-        /// </summary>
+        /// <summary> SQL API query. Type: string (or Expression with resultType string). </summary>
         public BinaryData Query { get; set; }
-        /// <summary>
-        /// Page size of the result. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CosmosDbSqlApiSource.pageSize
-        /// </summary>
+        /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData PageSize { get; set; }
-        /// <summary>
-        /// Preferred regions. Type: array of strings (or Expression with resultType array of strings).
-        /// Serialized Name: CosmosDbSqlApiSource.preferredRegions
-        /// </summary>
+        /// <summary> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </summary>
         public BinaryData PreferredRegions { get; set; }
-        /// <summary>
-        /// Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CosmosDbSqlApiSource.detectDatetime
-        /// </summary>
+        /// <summary> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DetectDatetime { get; set; }
-        /// <summary>
-        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
-        /// Serialized Name: CosmosDbSqlApiSource.additionalColumns
-        /// </summary>
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
         public BinaryData AdditionalColumns { get; set; }
     }
 }

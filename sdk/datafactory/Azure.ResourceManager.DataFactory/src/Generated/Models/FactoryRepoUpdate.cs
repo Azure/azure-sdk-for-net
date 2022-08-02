@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Factory&apos;s git repo information.
-    /// Serialized Name: FactoryRepoUpdate
-    /// </summary>
+    /// <summary> Factory&apos;s git repo information. </summary>
     public partial class FactoryRepoUpdate
     {
         /// <summary> Initializes a new instance of FactoryRepoUpdate. </summary>
@@ -20,14 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary>
-        /// The factory resource id.
-        /// Serialized Name: FactoryRepoUpdate.factoryResourceId
-        /// </summary>
+        /// <summary> The factory resource id. </summary>
         public ResourceIdentifier FactoryResourceId { get; set; }
         /// <summary>
         /// Git repo information of the factory.
-        /// Serialized Name: FactoryRepoUpdate.repoConfiguration
         /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
         /// </summary>

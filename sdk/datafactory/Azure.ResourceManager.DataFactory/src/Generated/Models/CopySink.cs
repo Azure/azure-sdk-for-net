@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// A copy activity sink.
-    /// Serialized Name: CopySink
     /// Please note <see cref="CopySink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AvroSink"/>, <see cref="AzureBlobFSSink"/>, <see cref="AzureDataExplorerSink"/>, <see cref="AzureDataLakeStoreSink"/>, <see cref="AzureDatabricksDeltaLakeSink"/>, <see cref="AzureMySqlSink"/>, <see cref="AzurePostgreSqlSink"/>, <see cref="AzureQueueSink"/>, <see cref="AzureSearchIndexSink"/>, <see cref="AzureSqlSink"/>, <see cref="AzureTableSink"/>, <see cref="BinarySink"/>, <see cref="AzureBlobSink"/>, <see cref="CommonDataServiceForAppsSink"/>, <see cref="CosmosDBMongoDBApiSink"/>, <see cref="CosmosDBSqlApiSink"/>, <see cref="DelimitedTextSink"/>, <see cref="DocumentDBCollectionSink"/>, <see cref="DynamicsCrmSink"/>, <see cref="DynamicsSink"/>, <see cref="FileSystemSink"/>, <see cref="InformixSink"/>, <see cref="JsonSink"/>, <see cref="MicrosoftAccessSink"/>, <see cref="MongoDBAtlasSink"/>, <see cref="MongoDBV2Sink"/>, <see cref="OdbcSink"/>, <see cref="OracleSink"/>, <see cref="OrcSink"/>, <see cref="ParquetSink"/>, <see cref="RestSink"/>, <see cref="SalesforceServiceCloudSink"/>, <see cref="SalesforceSink"/>, <see cref="SapCloudForCustomerSink"/>, <see cref="SnowflakeSink"/>, <see cref="SqlDWSink"/>, <see cref="SqlMISink"/>, <see cref="SqlServerSink"/> and <see cref="SqlSink"/>.
     /// </summary>
@@ -26,34 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CopySink. </summary>
-        /// <param name="copySinkType">
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </param>
-        /// <param name="writeBatchSize">
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </param>
-        /// <param name="writeBatchTimeout">
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </param>
-        /// <param name="sinkRetryCount">
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </param>
-        /// <param name="sinkRetryWait">
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopySink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -67,40 +45,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </summary>
+        /// <summary> Copy sink type. </summary>
         internal string CopySinkType { get; set; }
-        /// <summary>
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </summary>
+        /// <summary> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public BinaryData WriteBatchSize { get; set; }
-        /// <summary>
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </summary>
+        /// <summary> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public BinaryData WriteBatchTimeout { get; set; }
-        /// <summary>
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </summary>
+        /// <summary> Sink retry count. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData SinkRetryCount { get; set; }
-        /// <summary>
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </summary>
+        /// <summary> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public BinaryData SinkRetryWait { get; set; }
-        /// <summary>
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </summary>
+        /// <summary> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </summary>
         public BinaryData MaxConcurrentConnections { get; set; }
-        /// <summary>
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </summary>
+        /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData DisableMetricsCollection { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

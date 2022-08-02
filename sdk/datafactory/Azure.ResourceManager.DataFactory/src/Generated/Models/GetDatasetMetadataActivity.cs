@@ -11,21 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Activity to get metadata of dataset
-    /// Serialized Name: GetMetadataActivity
-    /// </summary>
+    /// <summary> Activity to get metadata of dataset. </summary>
     public partial class GetDatasetMetadataActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of GetDatasetMetadataActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="dataset">
-        /// GetMetadata activity dataset reference.
-        /// Serialized Name: GetMetadataActivity.typeProperties.dataset
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="dataset"> GetMetadata activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public GetDatasetMetadataActivity(string name, DatasetReference dataset) : base(name)
         {
@@ -44,52 +35,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GetDatasetMetadataActivity. </summary>
-        /// <param name="name">
-        /// Activity name.
-        /// Serialized Name: Activity.name
-        /// </param>
-        /// <param name="activityType">
-        /// Type of activity.
-        /// Serialized Name: Activity.type
-        /// </param>
-        /// <param name="description">
-        /// Activity description.
-        /// Serialized Name: Activity.description
-        /// </param>
-        /// <param name="dependsOn">
-        /// Activity depends on condition.
-        /// Serialized Name: Activity.dependsOn
-        /// </param>
-        /// <param name="userProperties">
-        /// Activity user properties.
-        /// Serialized Name: Activity.userProperties
-        /// </param>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="activityType"> Type of activity. </param>
+        /// <param name="description"> Activity description. </param>
+        /// <param name="dependsOn"> Activity depends on condition. </param>
+        /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: ExecutionActivity.linkedServiceName
-        /// </param>
-        /// <param name="policy">
-        /// Activity policy.
-        /// Serialized Name: ExecutionActivity.policy
-        /// </param>
-        /// <param name="dataset">
-        /// GetMetadata activity dataset reference.
-        /// Serialized Name: GetMetadataActivity.typeProperties.dataset
-        /// </param>
-        /// <param name="fieldList">
-        /// Fields of metadata to get from dataset.
-        /// Serialized Name: GetMetadataActivity.typeProperties.fieldList
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="policy"> Activity policy. </param>
+        /// <param name="dataset"> GetMetadata activity dataset reference. </param>
+        /// <param name="fieldList"> Fields of metadata to get from dataset. </param>
         /// <param name="storeSettings">
         /// GetMetadata activity store settings.
-        /// Serialized Name: GetMetadataActivity.typeProperties.storeSettings
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </param>
         /// <param name="formatSettings">
         /// GetMetadata activity format settings.
-        /// Serialized Name: GetMetadataActivity.typeProperties.formatSettings
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
         /// </param>
@@ -102,26 +64,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "GetMetadata";
         }
 
-        /// <summary>
-        /// GetMetadata activity dataset reference.
-        /// Serialized Name: GetMetadataActivity.typeProperties.dataset
-        /// </summary>
+        /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
-        /// <summary>
-        /// Fields of metadata to get from dataset.
-        /// Serialized Name: GetMetadataActivity.typeProperties.fieldList
-        /// </summary>
+        /// <summary> Fields of metadata to get from dataset. </summary>
         public IList<BinaryData> FieldList { get; }
         /// <summary>
         /// GetMetadata activity store settings.
-        /// Serialized Name: GetMetadataActivity.typeProperties.storeSettings
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </summary>
         public StoreReadSettings StoreSettings { get; set; }
         /// <summary>
         /// GetMetadata activity format settings.
-        /// Serialized Name: GetMetadataActivity.typeProperties.formatSettings
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
         /// </summary>

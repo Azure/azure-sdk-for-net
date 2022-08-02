@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Properties of a managed private endpoint
-    /// Serialized Name: ManagedPrivateEndpoint
-    /// </summary>
+    /// <summary> Properties of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpoint
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
@@ -25,30 +22,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
-        /// <param name="connectionState">
-        /// The managed private endpoint connection state
-        /// Serialized Name: ManagedPrivateEndpoint.connectionState
-        /// </param>
-        /// <param name="fqdns">
-        /// Fully qualified domain names
-        /// Serialized Name: ManagedPrivateEndpoint.fqdns
-        /// </param>
-        /// <param name="groupId">
-        /// The groupId to which the managed private endpoint is created
-        /// Serialized Name: ManagedPrivateEndpoint.groupId
-        /// </param>
-        /// <param name="isReserved">
-        /// Denotes whether the managed private endpoint is reserved
-        /// Serialized Name: ManagedPrivateEndpoint.isReserved
-        /// </param>
-        /// <param name="privateLinkResourceId">
-        /// The ARM resource ID of the resource to which the managed private endpoint is created
-        /// Serialized Name: ManagedPrivateEndpoint.privateLinkResourceId
-        /// </param>
-        /// <param name="provisioningState">
-        /// The managed private endpoint provisioning state
-        /// Serialized Name: ManagedPrivateEndpoint.provisioningState
-        /// </param>
+        /// <param name="connectionState"> The managed private endpoint connection state. </param>
+        /// <param name="fqdns"> Fully qualified domain names. </param>
+        /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
+        /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
+        /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
+        /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ManagedPrivateEndpoint(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, ResourceIdentifier privateLinkResourceId, string provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -61,35 +40,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The managed private endpoint connection state
-        /// Serialized Name: ManagedPrivateEndpoint.connectionState
-        /// </summary>
+        /// <summary> The managed private endpoint connection state. </summary>
         public ConnectionStateProperties ConnectionState { get; set; }
-        /// <summary>
-        /// Fully qualified domain names
-        /// Serialized Name: ManagedPrivateEndpoint.fqdns
-        /// </summary>
+        /// <summary> Fully qualified domain names. </summary>
         public IList<string> Fqdns { get; }
-        /// <summary>
-        /// The groupId to which the managed private endpoint is created
-        /// Serialized Name: ManagedPrivateEndpoint.groupId
-        /// </summary>
+        /// <summary> The groupId to which the managed private endpoint is created. </summary>
         public string GroupId { get; set; }
-        /// <summary>
-        /// Denotes whether the managed private endpoint is reserved
-        /// Serialized Name: ManagedPrivateEndpoint.isReserved
-        /// </summary>
+        /// <summary> Denotes whether the managed private endpoint is reserved. </summary>
         public bool? IsReserved { get; }
-        /// <summary>
-        /// The ARM resource ID of the resource to which the managed private endpoint is created
-        /// Serialized Name: ManagedPrivateEndpoint.privateLinkResourceId
-        /// </summary>
+        /// <summary> The ARM resource ID of the resource to which the managed private endpoint is created. </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary>
-        /// The managed private endpoint provisioning state
-        /// Serialized Name: ManagedPrivateEndpoint.provisioningState
-        /// </summary>
+        /// <summary> The managed private endpoint provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

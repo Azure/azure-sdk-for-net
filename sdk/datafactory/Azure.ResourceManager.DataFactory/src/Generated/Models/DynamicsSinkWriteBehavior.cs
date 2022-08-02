@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Defines values for DynamicsSinkWriteBehavior.
-    /// Serialized Name: DynamicsSinkWriteBehavior
-    /// </summary>
+    /// <summary> Defines values for DynamicsSinkWriteBehavior. </summary>
     public readonly partial struct DynamicsSinkWriteBehavior : IEquatable<DynamicsSinkWriteBehavior>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string UpsertValue = "Upsert";
 
-        /// <summary>
-        /// Upsert
-        /// Serialized Name: DynamicsSinkWriteBehavior.Upsert
-        /// </summary>
+        /// <summary> Upsert. </summary>
         public static DynamicsSinkWriteBehavior Upsert { get; } = new DynamicsSinkWriteBehavior(UpsertValue);
         /// <summary> Determines if two <see cref="DynamicsSinkWriteBehavior"/> values are the same. </summary>
         public static bool operator ==(DynamicsSinkWriteBehavior left, DynamicsSinkWriteBehavior right) => left.Equals(right);

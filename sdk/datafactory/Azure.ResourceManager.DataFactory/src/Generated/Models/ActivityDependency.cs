@@ -12,21 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Activity dependency information.
-    /// Serialized Name: ActivityDependency
-    /// </summary>
+    /// <summary> Activity dependency information. </summary>
     public partial class ActivityDependency
     {
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
-        /// <param name="activity">
-        /// Activity name.
-        /// Serialized Name: ActivityDependency.activity
-        /// </param>
-        /// <param name="dependencyConditions">
-        /// Match-Condition for the dependency.
-        /// Serialized Name: ActivityDependency.dependencyConditions
-        /// </param>
+        /// <param name="activity"> Activity name. </param>
+        /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
         public ActivityDependency(string activity, IEnumerable<DependencyCondition> dependencyConditions)
         {
@@ -45,14 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
-        /// <param name="activity">
-        /// Activity name.
-        /// Serialized Name: ActivityDependency.activity
-        /// </param>
-        /// <param name="dependencyConditions">
-        /// Match-Condition for the dependency.
-        /// Serialized Name: ActivityDependency.dependencyConditions
-        /// </param>
+        /// <param name="activity"> Activity name. </param>
+        /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -61,15 +46,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Activity name.
-        /// Serialized Name: ActivityDependency.activity
-        /// </summary>
+        /// <summary> Activity name. </summary>
         public string Activity { get; set; }
-        /// <summary>
-        /// Match-Condition for the dependency.
-        /// Serialized Name: ActivityDependency.dependencyConditions
-        /// </summary>
+        /// <summary> Match-Condition for the dependency. </summary>
         public IList<DependencyCondition> DependencyConditions { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

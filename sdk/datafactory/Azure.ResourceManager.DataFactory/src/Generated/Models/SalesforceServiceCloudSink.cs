@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Salesforce Service Cloud sink.
-    /// Serialized Name: SalesforceServiceCloudSink
-    /// </summary>
+    /// <summary> A copy activity Salesforce Service Cloud sink. </summary>
     public partial class SalesforceServiceCloudSink : CopySink
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudSink. </summary>
@@ -23,47 +20,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SalesforceServiceCloudSink. </summary>
-        /// <param name="copySinkType">
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </param>
-        /// <param name="writeBatchSize">
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </param>
-        /// <param name="writeBatchTimeout">
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </param>
-        /// <param name="sinkRetryCount">
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </param>
-        /// <param name="sinkRetryWait">
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="writeBehavior">
-        /// The write behavior for the operation. Default is Insert.
-        /// Serialized Name: SalesforceServiceCloudSink.writeBehavior
-        /// </param>
-        /// <param name="externalIdFieldName">
-        /// The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string).
-        /// Serialized Name: SalesforceServiceCloudSink.externalIdFieldName
-        /// </param>
-        /// <param name="ignoreNullValues">
-        /// The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SalesforceServiceCloudSink.ignoreNullValues
-        /// </param>
+        /// <param name="writeBehavior"> The write behavior for the operation. Default is Insert. </param>
+        /// <param name="externalIdFieldName"> The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string). </param>
+        /// <param name="ignoreNullValues"> The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean). </param>
         internal SalesforceServiceCloudSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, SalesforceSinkWriteBehavior? writeBehavior, BinaryData externalIdFieldName, BinaryData ignoreNullValues) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
@@ -72,20 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "SalesforceServiceCloudSink";
         }
 
-        /// <summary>
-        /// The write behavior for the operation. Default is Insert.
-        /// Serialized Name: SalesforceServiceCloudSink.writeBehavior
-        /// </summary>
+        /// <summary> The write behavior for the operation. Default is Insert. </summary>
         public SalesforceSinkWriteBehavior? WriteBehavior { get; set; }
-        /// <summary>
-        /// The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string).
-        /// Serialized Name: SalesforceServiceCloudSink.externalIdFieldName
-        /// </summary>
+        /// <summary> The name of the external ID field for upsert operation. Default value is &apos;Id&apos; column. Type: string (or Expression with resultType string). </summary>
         public BinaryData ExternalIdFieldName { get; set; }
-        /// <summary>
-        /// The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SalesforceServiceCloudSink.ignoreNullValues
-        /// </summary>
+        /// <summary> The flag indicating whether or not to ignore null values from input dataset (except key fields) during write operation. Default value is false. If set it to true, it means ADF will leave the data in the destination object unchanged when doing upsert/update operation and insert defined default value when doing insert operation, versus ADF will update the data in the destination object to NULL when doing upsert/update operation and insert NULL value when doing insert operation. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData IgnoreNullValues { get; set; }
     }
 }

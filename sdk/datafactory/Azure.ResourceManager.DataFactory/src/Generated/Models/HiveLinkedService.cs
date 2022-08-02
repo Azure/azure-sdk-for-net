@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Hive Server linked service.
-    /// Serialized Name: HiveLinkedService
-    /// </summary>
+    /// <summary> Hive Server linked service. </summary>
     public partial class HiveLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HiveLinkedService. </summary>
-        /// <param name="host">
-        /// IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable).
-        /// Serialized Name: HiveLinkedService.typeProperties.host
-        /// </param>
-        /// <param name="authenticationType">
-        /// The authentication method used to access the Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.authenticationType
-        /// </param>
+        /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
+        /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HiveLinkedService(BinaryData host, HiveAuthenticationType authenticationType)
         {
@@ -39,97 +30,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HiveLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host">
-        /// IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable).
-        /// Serialized Name: HiveLinkedService.typeProperties.host
-        /// </param>
-        /// <param name="port">
-        /// The TCP port that the Hive server uses to listen for client connections.
-        /// Serialized Name: HiveLinkedService.typeProperties.port
-        /// </param>
-        /// <param name="serverType">
-        /// The type of Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.serverType
-        /// </param>
-        /// <param name="thriftTransportProtocol">
-        /// The transport protocol to use in the Thrift layer.
-        /// Serialized Name: HiveLinkedService.typeProperties.thriftTransportProtocol
-        /// </param>
-        /// <param name="authenticationType">
-        /// The authentication method used to access the Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.authenticationType
-        /// </param>
-        /// <param name="serviceDiscoveryMode">
-        /// true to indicate using the ZooKeeper service, false not.
-        /// Serialized Name: HiveLinkedService.typeProperties.serviceDiscoveryMode
-        /// </param>
-        /// <param name="zooKeeperNameSpace">
-        /// The namespace on ZooKeeper under which Hive Server 2 nodes are added.
-        /// Serialized Name: HiveLinkedService.typeProperties.zooKeeperNameSpace
-        /// </param>
-        /// <param name="useNativeQuery">
-        /// Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL.
-        /// Serialized Name: HiveLinkedService.typeProperties.useNativeQuery
-        /// </param>
-        /// <param name="username">
-        /// The user name that you use to access Hive Server.
-        /// Serialized Name: HiveLinkedService.typeProperties.username
-        /// </param>
+        /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
+        /// <param name="port"> The TCP port that the Hive server uses to listen for client connections. </param>
+        /// <param name="serverType"> The type of Hive server. </param>
+        /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer. </param>
+        /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
+        /// <param name="serviceDiscoveryMode"> true to indicate using the ZooKeeper service, false not. </param>
+        /// <param name="zooKeeperNameSpace"> The namespace on ZooKeeper under which Hive Server 2 nodes are added. </param>
+        /// <param name="useNativeQuery"> Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL. </param>
+        /// <param name="username"> The user name that you use to access Hive Server. </param>
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the Username field
-        /// Serialized Name: HiveLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="httpPath">
-        /// The partial URL corresponding to the Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.httpPath
-        /// </param>
-        /// <param name="enableSsl">
-        /// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.enableSsl
-        /// </param>
-        /// <param name="trustedCertPath">
-        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR.
-        /// Serialized Name: HiveLinkedService.typeProperties.trustedCertPath
-        /// </param>
-        /// <param name="useSystemTrustStore">
-        /// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.useSystemTrustStore
-        /// </param>
-        /// <param name="allowHostNameCNMismatch">
-        /// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.allowHostNameCNMismatch
-        /// </param>
-        /// <param name="allowSelfSignedServerCert">
-        /// Specifies whether to allow self-signed certificates from the server. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.allowSelfSignedServerCert
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: HiveLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="httpPath"> The partial URL corresponding to the Hive server. </param>
+        /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
+        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
+        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
+        /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
+        /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal HiveLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, HiveServerType? serverType, HiveThriftTransportProtocol? thriftTransportProtocol, HiveAuthenticationType authenticationType, BinaryData serviceDiscoveryMode, BinaryData zooKeeperNameSpace, BinaryData useNativeQuery, BinaryData username, FactorySecretBaseDefinition password, BinaryData httpPath, BinaryData enableSsl, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData allowHostNameCNMismatch, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
@@ -152,92 +79,43 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Hive";
         }
 
-        /// <summary>
-        /// IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable).
-        /// Serialized Name: HiveLinkedService.typeProperties.host
-        /// </summary>
+        /// <summary> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
         public BinaryData Host { get; set; }
-        /// <summary>
-        /// The TCP port that the Hive server uses to listen for client connections.
-        /// Serialized Name: HiveLinkedService.typeProperties.port
-        /// </summary>
+        /// <summary> The TCP port that the Hive server uses to listen for client connections. </summary>
         public BinaryData Port { get; set; }
-        /// <summary>
-        /// The type of Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.serverType
-        /// </summary>
+        /// <summary> The type of Hive server. </summary>
         public HiveServerType? ServerType { get; set; }
-        /// <summary>
-        /// The transport protocol to use in the Thrift layer.
-        /// Serialized Name: HiveLinkedService.typeProperties.thriftTransportProtocol
-        /// </summary>
+        /// <summary> The transport protocol to use in the Thrift layer. </summary>
         public HiveThriftTransportProtocol? ThriftTransportProtocol { get; set; }
-        /// <summary>
-        /// The authentication method used to access the Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.authenticationType
-        /// </summary>
+        /// <summary> The authentication method used to access the Hive server. </summary>
         public HiveAuthenticationType AuthenticationType { get; set; }
-        /// <summary>
-        /// true to indicate using the ZooKeeper service, false not.
-        /// Serialized Name: HiveLinkedService.typeProperties.serviceDiscoveryMode
-        /// </summary>
+        /// <summary> true to indicate using the ZooKeeper service, false not. </summary>
         public BinaryData ServiceDiscoveryMode { get; set; }
-        /// <summary>
-        /// The namespace on ZooKeeper under which Hive Server 2 nodes are added.
-        /// Serialized Name: HiveLinkedService.typeProperties.zooKeeperNameSpace
-        /// </summary>
+        /// <summary> The namespace on ZooKeeper under which Hive Server 2 nodes are added. </summary>
         public BinaryData ZooKeeperNameSpace { get; set; }
-        /// <summary>
-        /// Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL.
-        /// Serialized Name: HiveLinkedService.typeProperties.useNativeQuery
-        /// </summary>
+        /// <summary> Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL. </summary>
         public BinaryData UseNativeQuery { get; set; }
-        /// <summary>
-        /// The user name that you use to access Hive Server.
-        /// Serialized Name: HiveLinkedService.typeProperties.username
-        /// </summary>
+        /// <summary> The user name that you use to access Hive Server. </summary>
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name that you provided in the Username field
-        /// Serialized Name: HiveLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
-        /// <summary>
-        /// The partial URL corresponding to the Hive server.
-        /// Serialized Name: HiveLinkedService.typeProperties.httpPath
-        /// </summary>
+        /// <summary> The partial URL corresponding to the Hive server. </summary>
         public BinaryData HttpPath { get; set; }
-        /// <summary>
-        /// Specifies whether the connections to the server are encrypted using SSL. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.enableSsl
-        /// </summary>
+        /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
         public BinaryData EnableSsl { get; set; }
-        /// <summary>
-        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR.
-        /// Serialized Name: HiveLinkedService.typeProperties.trustedCertPath
-        /// </summary>
+        /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
         public BinaryData TrustedCertPath { get; set; }
-        /// <summary>
-        /// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.useSystemTrustStore
-        /// </summary>
+        /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
         public BinaryData UseSystemTrustStore { get; set; }
-        /// <summary>
-        /// Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.allowHostNameCNMismatch
-        /// </summary>
+        /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
         public BinaryData AllowHostNameCNMismatch { get; set; }
-        /// <summary>
-        /// Specifies whether to allow self-signed certificates from the server. The default value is false.
-        /// Serialized Name: HiveLinkedService.typeProperties.allowSelfSignedServerCert
-        /// </summary>
+        /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
         public BinaryData AllowSelfSignedServerCert { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: HiveLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure Data Lake Store dataset.
-    /// Serialized Name: AzureDataLakeStoreDataset
-    /// </summary>
+    /// <summary> Azure Data Lake Store dataset. </summary>
     public partial class AzureDataLakeStoreDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureDataLakeStoreDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -33,57 +27,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
-        /// <param name="datasetType">
-        /// Type of dataset.
-        /// Serialized Name: Dataset.type
-        /// </param>
-        /// <param name="description">
-        /// Dataset description.
-        /// Serialized Name: Dataset.description
-        /// </param>
-        /// <param name="structure">
-        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
-        /// Serialized Name: Dataset.structure
-        /// </param>
-        /// <param name="schema">
-        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
-        /// Serialized Name: Dataset.schema
-        /// </param>
-        /// <param name="linkedServiceName">
-        /// Linked service reference.
-        /// Serialized Name: Dataset.linkedServiceName
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for dataset.
-        /// Serialized Name: Dataset.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the Dataset.
-        /// Serialized Name: Dataset.annotations
-        /// </param>
-        /// <param name="folder">
-        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
-        /// Serialized Name: Dataset.folder
-        /// </param>
+        /// <param name="datasetType"> Type of dataset. </param>
+        /// <param name="description"> Dataset description. </param>
+        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
+        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="parameters"> Parameters for dataset. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
+        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="folderPath">
-        /// Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.folderPath
-        /// </param>
-        /// <param name="fileName">
-        /// The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.fileName
-        /// </param>
+        /// <param name="folderPath"> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </param>
+        /// <param name="fileName"> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </param>
         /// <param name="format">
         /// The format of the Data Lake Store.
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.format
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </param>
-        /// <param name="compression">
-        /// The data compression method used for the item(s) in the Azure Data Lake Store.
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.compression
-        /// </param>
+        /// <param name="compression"> The data compression method used for the item(s) in the Azure Data Lake Store. </param>
         internal AzureDataLakeStoreDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData folderPath, BinaryData fileName, DatasetStorageFormat format, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             FolderPath = folderPath;
@@ -93,27 +53,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "AzureDataLakeStoreFile";
         }
 
-        /// <summary>
-        /// Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.folderPath
-        /// </summary>
+        /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
         public BinaryData FolderPath { get; set; }
-        /// <summary>
-        /// The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.fileName
-        /// </summary>
+        /// <summary> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
         public BinaryData FileName { get; set; }
         /// <summary>
         /// The format of the Data Lake Store.
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.format
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
         public DatasetStorageFormat Format { get; set; }
-        /// <summary>
-        /// The data compression method used for the item(s) in the Azure Data Lake Store.
-        /// Serialized Name: AzureDataLakeStoreDataset.typeProperties.compression
-        /// </summary>
+        /// <summary> The data compression method used for the item(s) in the Azure Data Lake Store. </summary>
         public DatasetCompression Compression { get; set; }
     }
 }

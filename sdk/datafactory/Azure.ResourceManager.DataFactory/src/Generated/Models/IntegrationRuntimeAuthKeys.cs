@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The integration runtime authentication keys.
-    /// Serialized Name: IntegrationRuntimeAuthKeys
-    /// </summary>
+    /// <summary> The integration runtime authentication keys. </summary>
     public partial class IntegrationRuntimeAuthKeys
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
-        /// <param name="authKey1">
-        /// The primary integration runtime authentication key.
-        /// Serialized Name: IntegrationRuntimeAuthKeys.authKey1
-        /// </param>
-        /// <param name="authKey2">
-        /// The secondary integration runtime authentication key.
-        /// Serialized Name: IntegrationRuntimeAuthKeys.authKey2
-        /// </param>
+        /// <param name="authKey1"> The primary integration runtime authentication key. </param>
+        /// <param name="authKey2"> The secondary integration runtime authentication key. </param>
         internal IntegrationRuntimeAuthKeys(string authKey1, string authKey2)
         {
             AuthKey1 = authKey1;
             AuthKey2 = authKey2;
         }
 
-        /// <summary>
-        /// The primary integration runtime authentication key.
-        /// Serialized Name: IntegrationRuntimeAuthKeys.authKey1
-        /// </summary>
+        /// <summary> The primary integration runtime authentication key. </summary>
         public string AuthKey1 { get; }
-        /// <summary>
-        /// The secondary integration runtime authentication key.
-        /// Serialized Name: IntegrationRuntimeAuthKeys.authKey2
-        /// </summary>
+        /// <summary> The secondary integration runtime authentication key. </summary>
         public string AuthKey2 { get; }
     }
 }

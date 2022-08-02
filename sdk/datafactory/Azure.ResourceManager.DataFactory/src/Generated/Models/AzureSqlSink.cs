@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A copy activity Azure SQL sink.
-    /// Serialized Name: AzureSqlSink
-    /// </summary>
+    /// <summary> A copy activity Azure SQL sink. </summary>
     public partial class AzureSqlSink : CopySink
     {
         /// <summary> Initializes a new instance of AzureSqlSink. </summary>
@@ -25,71 +22,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlSink. </summary>
-        /// <param name="copySinkType">
-        /// Copy sink type.
-        /// Serialized Name: CopySink.type
-        /// </param>
-        /// <param name="writeBatchSize">
-        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
-        /// Serialized Name: CopySink.writeBatchSize
-        /// </param>
-        /// <param name="writeBatchTimeout">
-        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.writeBatchTimeout
-        /// </param>
-        /// <param name="sinkRetryCount">
-        /// Sink retry count. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.sinkRetryCount
-        /// </param>
-        /// <param name="sinkRetryWait">
-        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        /// Serialized Name: CopySink.sinkRetryWait
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: CopySink.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CopySink.disableMetricsCollection
-        /// </param>
+        /// <param name="copySinkType"> Copy sink type. </param>
+        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="sqlWriterStoredProcedureName">
-        /// SQL writer stored procedure name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.sqlWriterStoredProcedureName
-        /// </param>
-        /// <param name="sqlWriterTableType">
-        /// SQL writer table type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.sqlWriterTableType
-        /// </param>
-        /// <param name="preCopyScript">
-        /// SQL pre-copy script. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.preCopyScript
-        /// </param>
-        /// <param name="storedProcedureParameters">
-        /// SQL stored procedure parameters.
-        /// Serialized Name: AzureSqlSink.storedProcedureParameters
-        /// </param>
-        /// <param name="storedProcedureTableTypeParameterName">
-        /// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.storedProcedureTableTypeParameterName
-        /// </param>
-        /// <param name="tableOption">
-        /// The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.tableOption
-        /// </param>
-        /// <param name="sqlWriterUseTableLock">
-        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureSqlSink.sqlWriterUseTableLock
-        /// </param>
-        /// <param name="writeBehavior">
-        /// Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum)
-        /// Serialized Name: AzureSqlSink.writeBehavior
-        /// </param>
-        /// <param name="upsertSettings">
-        /// SQL upsert settings.
-        /// Serialized Name: AzureSqlSink.upsertSettings
-        /// </param>
+        /// <param name="sqlWriterStoredProcedureName"> SQL writer stored procedure name. Type: string (or Expression with resultType string). </param>
+        /// <param name="sqlWriterTableType"> SQL writer table type. Type: string (or Expression with resultType string). </param>
+        /// <param name="preCopyScript"> SQL pre-copy script. Type: string (or Expression with resultType string). </param>
+        /// <param name="storedProcedureParameters"> SQL stored procedure parameters. </param>
+        /// <param name="storedProcedureTableTypeParameterName"> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </param>
+        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
+        /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="writeBehavior"> Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum). </param>
+        /// <param name="upsertSettings"> SQL upsert settings. </param>
         internal AzureSqlSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData sqlWriterStoredProcedureName, BinaryData sqlWriterTableType, BinaryData preCopyScript, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, BinaryData storedProcedureTableTypeParameterName, BinaryData tableOption, BinaryData sqlWriterUseTableLock, BinaryData writeBehavior, SqlUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
@@ -104,50 +53,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "AzureSqlSink";
         }
 
-        /// <summary>
-        /// SQL writer stored procedure name. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.sqlWriterStoredProcedureName
-        /// </summary>
+        /// <summary> SQL writer stored procedure name. Type: string (or Expression with resultType string). </summary>
         public BinaryData SqlWriterStoredProcedureName { get; set; }
-        /// <summary>
-        /// SQL writer table type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.sqlWriterTableType
-        /// </summary>
+        /// <summary> SQL writer table type. Type: string (or Expression with resultType string). </summary>
         public BinaryData SqlWriterTableType { get; set; }
-        /// <summary>
-        /// SQL pre-copy script. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.preCopyScript
-        /// </summary>
+        /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
         public BinaryData PreCopyScript { get; set; }
-        /// <summary>
-        /// SQL stored procedure parameters.
-        /// Serialized Name: AzureSqlSink.storedProcedureParameters
-        /// </summary>
+        /// <summary> SQL stored procedure parameters. </summary>
         public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
-        /// <summary>
-        /// The stored procedure parameter name of the table type. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.storedProcedureTableTypeParameterName
-        /// </summary>
+        /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
         public BinaryData StoredProcedureTableTypeParameterName { get; set; }
-        /// <summary>
-        /// The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string).
-        /// Serialized Name: AzureSqlSink.tableOption
-        /// </summary>
+        /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
         public BinaryData TableOption { get; set; }
-        /// <summary>
-        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: AzureSqlSink.sqlWriterUseTableLock
-        /// </summary>
+        /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData SqlWriterUseTableLock { get; set; }
-        /// <summary>
-        /// Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum)
-        /// Serialized Name: AzureSqlSink.writeBehavior
-        /// </summary>
+        /// <summary> Write behavior when copying data into Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with resultType SqlWriteBehaviorEnum). </summary>
         public BinaryData WriteBehavior { get; set; }
-        /// <summary>
-        /// SQL upsert settings.
-        /// Serialized Name: AzureSqlSink.upsertSettings
-        /// </summary>
+        /// <summary> SQL upsert settings. </summary>
         public SqlUpsertSettings UpsertSettings { get; set; }
     }
 }

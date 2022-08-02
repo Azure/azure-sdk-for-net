@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The settings that will be leveraged for teradata source partitioning.
-    /// Serialized Name: TeradataPartitionSettings
-    /// </summary>
+    /// <summary> The settings that will be leveraged for teradata source partitioning. </summary>
     public partial class TeradataPartitionSettings
     {
         /// <summary> Initializes a new instance of TeradataPartitionSettings. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TeradataPartitionSettings. </summary>
-        /// <param name="partitionColumnName">
-        /// The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string).
-        /// Serialized Name: TeradataPartitionSettings.partitionColumnName
-        /// </param>
-        /// <param name="partitionUpperBound">
-        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
-        /// Serialized Name: TeradataPartitionSettings.partitionUpperBound
-        /// </param>
-        /// <param name="partitionLowerBound">
-        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
-        /// Serialized Name: TeradataPartitionSettings.partitionLowerBound
-        /// </param>
+        /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         internal TeradataPartitionSettings(BinaryData partitionColumnName, BinaryData partitionUpperBound, BinaryData partitionLowerBound)
         {
             PartitionColumnName = partitionColumnName;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             PartitionLowerBound = partitionLowerBound;
         }
 
-        /// <summary>
-        /// The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string).
-        /// Serialized Name: TeradataPartitionSettings.partitionColumnName
-        /// </summary>
+        /// <summary> The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionColumnName { get; set; }
-        /// <summary>
-        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
-        /// Serialized Name: TeradataPartitionSettings.partitionUpperBound
-        /// </summary>
+        /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionUpperBound { get; set; }
-        /// <summary>
-        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
-        /// Serialized Name: TeradataPartitionSettings.partitionLowerBound
-        /// </summary>
+        /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionLowerBound { get; set; }
     }
 }

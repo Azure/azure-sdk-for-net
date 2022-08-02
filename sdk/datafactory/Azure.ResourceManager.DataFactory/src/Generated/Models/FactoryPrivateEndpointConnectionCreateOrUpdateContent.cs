@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Private Endpoint Connection Approval ARM resource.
-    /// Serialized Name: PrivateLinkConnectionApprovalRequestResource
-    /// </summary>
+    /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
     public partial class FactoryPrivateEndpointConnectionCreateOrUpdateContent : ResourceData
     {
         /// <summary> Initializes a new instance of FactoryPrivateEndpointConnectionCreateOrUpdateContent. </summary>
@@ -27,29 +24,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Core resource properties
-        /// Serialized Name: PrivateLinkConnectionApprovalRequestResource.properties
-        /// </param>
-        /// <param name="eTag">
-        /// Etag identifies change in the resource.
-        /// Serialized Name: SubResource.etag
-        /// </param>
+        /// <param name="properties"> Core resource properties. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         internal FactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionApprovalRequest properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary>
-        /// Core resource properties
-        /// Serialized Name: PrivateLinkConnectionApprovalRequestResource.properties
-        /// </summary>
+        /// <summary> Core resource properties. </summary>
         public PrivateLinkConnectionApprovalRequest Properties { get; set; }
-        /// <summary>
-        /// Etag identifies change in the resource.
-        /// Serialized Name: SubResource.etag
-        /// </summary>
+        /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }
 }

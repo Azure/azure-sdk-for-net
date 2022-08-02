@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Type of authentication used to connect to the OData service.
-    /// Serialized Name: ODataAuthenticationType
-    /// </summary>
+    /// <summary> Type of authentication used to connect to the OData service. </summary>
     public readonly partial struct ODataAuthenticationType : IEquatable<ODataAuthenticationType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string AadServicePrincipalValue = "AadServicePrincipal";
         private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: ODataAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static ODataAuthenticationType Basic { get; } = new ODataAuthenticationType(BasicValue);
-        /// <summary>
-        /// Anonymous
-        /// Serialized Name: ODataAuthenticationType.Anonymous
-        /// </summary>
+        /// <summary> Anonymous. </summary>
         public static ODataAuthenticationType Anonymous { get; } = new ODataAuthenticationType(AnonymousValue);
-        /// <summary>
-        /// Windows
-        /// Serialized Name: ODataAuthenticationType.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         public static ODataAuthenticationType Windows { get; } = new ODataAuthenticationType(WindowsValue);
-        /// <summary>
-        /// AadServicePrincipal
-        /// Serialized Name: ODataAuthenticationType.AadServicePrincipal
-        /// </summary>
+        /// <summary> AadServicePrincipal. </summary>
         public static ODataAuthenticationType AadServicePrincipal { get; } = new ODataAuthenticationType(AadServicePrincipalValue);
-        /// <summary>
-        /// ManagedServiceIdentity
-        /// Serialized Name: ODataAuthenticationType.ManagedServiceIdentity
-        /// </summary>
+        /// <summary> ManagedServiceIdentity. </summary>
         public static ODataAuthenticationType ManagedServiceIdentity { get; } = new ODataAuthenticationType(ManagedServiceIdentityValue);
         /// <summary> Determines if two <see cref="ODataAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(ODataAuthenticationType left, ODataAuthenticationType right) => left.Equals(right);

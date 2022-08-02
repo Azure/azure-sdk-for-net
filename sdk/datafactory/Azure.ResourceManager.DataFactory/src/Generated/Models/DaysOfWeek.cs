@@ -7,46 +7,22 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The DaysOfWeek.
-    /// Serialized Name: DaysOfWeek
-    /// </summary>
+    /// <summary> The DaysOfWeek. </summary>
     public enum DaysOfWeek
     {
-        /// <summary>
-        /// Sunday
-        /// Serialized Name: DaysOfWeek.Sunday
-        /// </summary>
+        /// <summary> Sunday. </summary>
         Sunday,
-        /// <summary>
-        /// Monday
-        /// Serialized Name: DaysOfWeek.Monday
-        /// </summary>
+        /// <summary> Monday. </summary>
         Monday,
-        /// <summary>
-        /// Tuesday
-        /// Serialized Name: DaysOfWeek.Tuesday
-        /// </summary>
+        /// <summary> Tuesday. </summary>
         Tuesday,
-        /// <summary>
-        /// Wednesday
-        /// Serialized Name: DaysOfWeek.Wednesday
-        /// </summary>
+        /// <summary> Wednesday. </summary>
         Wednesday,
-        /// <summary>
-        /// Thursday
-        /// Serialized Name: DaysOfWeek.Thursday
-        /// </summary>
+        /// <summary> Thursday. </summary>
         Thursday,
-        /// <summary>
-        /// Friday
-        /// Serialized Name: DaysOfWeek.Friday
-        /// </summary>
+        /// <summary> Friday. </summary>
         Friday,
-        /// <summary>
-        /// Saturday
-        /// Serialized Name: DaysOfWeek.Saturday
-        /// </summary>
+        /// <summary> Saturday. </summary>
         Saturday
     }
 }

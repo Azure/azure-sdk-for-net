@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Azure-SSIS integration runtime outbound network dependency endpoints.
-    /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse
-    /// </summary>
+    /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints. </summary>
     internal partial class IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse. </summary>
-        /// <param name="value">
-        /// The list of outbound network dependency endpoints.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse.value
-        /// </param>
+        /// <param name="value"> The list of outbound network dependency endpoints. </param>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse(IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of outbound network dependency endpoints.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse.value
-        /// </summary>
+        /// <summary> The list of outbound network dependency endpoints. </summary>
         public IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> Value { get; }
     }
 }

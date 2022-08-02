@@ -10,16 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Web linked service.
-    /// Serialized Name: WebLinkedService
-    /// </summary>
+    /// <summary> Web linked service. </summary>
     public partial class WebLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of WebLinkedService. </summary>
         /// <param name="typeProperties">
         /// Web linked service properties.
-        /// Serialized Name: WebLinkedService.typeProperties
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
         /// </param>
@@ -36,30 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of WebLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="typeProperties">
         /// Web linked service properties.
-        /// Serialized Name: WebLinkedService.typeProperties
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
         /// </param>
@@ -71,7 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Web linked service properties.
-        /// Serialized Name: WebLinkedService.typeProperties
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
         /// </summary>

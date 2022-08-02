@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Linked service for Zendesk.
-    /// Serialized Name: ZendeskLinkedService
-    /// </summary>
+    /// <summary> Linked service for Zendesk. </summary>
     public partial class ZendeskLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ZendeskLinkedService. </summary>
-        /// <param name="authenticationType">
-        /// The authentication type to use.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.authenticationType
-        /// </param>
-        /// <param name="uri">
-        /// The url to connect Zendesk source. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.url
-        /// </param>
+        /// <param name="authenticationType"> The authentication type to use. </param>
+        /// <param name="uri"> The url to connect Zendesk source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ZendeskLinkedService(ZendeskAuthenticationType authenticationType, BinaryData uri)
         {
@@ -39,55 +30,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ZendeskLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="authenticationType">
-        /// The authentication type to use.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.authenticationType
-        /// </param>
-        /// <param name="uri">
-        /// The url to connect Zendesk source. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.url
-        /// </param>
-        /// <param name="userName">
-        /// The username of the Zendesk source. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.userName
-        /// </param>
+        /// <param name="authenticationType"> The authentication type to use. </param>
+        /// <param name="uri"> The url to connect Zendesk source. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> The username of the Zendesk source. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// The password of the Zendesk source.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="apiToken">
         /// The api token for the Zendesk source.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.apiToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal ZendeskLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, ZendeskAuthenticationType authenticationType, BinaryData uri, BinaryData userName, FactorySecretBaseDefinition password, FactorySecretBaseDefinition apiToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AuthenticationType = authenticationType;
@@ -99,39 +61,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Zendesk";
         }
 
-        /// <summary>
-        /// The authentication type to use.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.authenticationType
-        /// </summary>
+        /// <summary> The authentication type to use. </summary>
         public ZendeskAuthenticationType AuthenticationType { get; set; }
-        /// <summary>
-        /// The url to connect Zendesk source. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.url
-        /// </summary>
+        /// <summary> The url to connect Zendesk source. Type: string (or Expression with resultType string). </summary>
         public BinaryData Uri { get; set; }
-        /// <summary>
-        /// The username of the Zendesk source. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.userName
-        /// </summary>
+        /// <summary> The username of the Zendesk source. Type: string (or Expression with resultType string). </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// The password of the Zendesk source.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The api token for the Zendesk source.
-        /// Serialized Name: ZendeskLinkedService.typeProperties.apiToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ApiToken { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: ZendeskLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

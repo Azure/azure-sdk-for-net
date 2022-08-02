@@ -11,17 +11,11 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of trigger runs.
-    /// Serialized Name: TriggerRunsQueryResponse
-    /// </summary>
+    /// <summary> A list of trigger runs. </summary>
     internal partial class FactoryTriggerRunsQueryResult
     {
         /// <summary> Initializes a new instance of FactoryTriggerRunsQueryResult. </summary>
-        /// <param name="value">
-        /// List of trigger runs.
-        /// Serialized Name: TriggerRunsQueryResponse.value
-        /// </param>
+        /// <param name="value"> List of trigger runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FactoryTriggerRunsQueryResult(IEnumerable<FactoryTriggerRun> value)
         {
@@ -34,29 +28,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryTriggerRunsQueryResult. </summary>
-        /// <param name="value">
-        /// List of trigger runs.
-        /// Serialized Name: TriggerRunsQueryResponse.value
-        /// </param>
-        /// <param name="continuationToken">
-        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-        /// Serialized Name: TriggerRunsQueryResponse.continuationToken
-        /// </param>
+        /// <param name="value"> List of trigger runs. </param>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal FactoryTriggerRunsQueryResult(IReadOnlyList<FactoryTriggerRun> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary>
-        /// List of trigger runs.
-        /// Serialized Name: TriggerRunsQueryResponse.value
-        /// </summary>
+        /// <summary> List of trigger runs. </summary>
         public IReadOnlyList<FactoryTriggerRun> Value { get; }
-        /// <summary>
-        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
-        /// Serialized Name: TriggerRunsQueryResponse.continuationToken
-        /// </summary>
+        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
         public string ContinuationToken { get; }
     }
 }

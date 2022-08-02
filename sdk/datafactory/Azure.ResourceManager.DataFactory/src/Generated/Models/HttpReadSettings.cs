@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sftp read settings.
-    /// Serialized Name: HttpReadSettings
-    /// </summary>
+    /// <summary> Sftp read settings. </summary>
     public partial class HttpReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of HttpReadSettings. </summary>
@@ -23,43 +20,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of HttpReadSettings. </summary>
-        /// <param name="storeReadSettingsType">
-        /// The read setting type.
-        /// Serialized Name: StoreReadSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreReadSettings.disableMetricsCollection
-        /// </param>
+        /// <param name="storeReadSettingsType"> The read setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="requestMethod">
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.requestMethod
-        /// </param>
-        /// <param name="requestBody">
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.requestBody
-        /// </param>
-        /// <param name="additionalHeaders">
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.additionalHeaders
-        /// </param>
-        /// <param name="requestTimeout">
-        /// Specifies the timeout for a HTTP client to get HTTP response from HTTP server.
-        /// Serialized Name: HttpReadSettings.requestTimeout
-        /// </param>
-        /// <param name="enablePartitionDiscovery">
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: HttpReadSettings.enablePartitionDiscovery
-        /// </param>
-        /// <param name="partitionRootPath">
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.partitionRootPath
-        /// </param>
+        /// <param name="requestMethod"> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </param>
+        /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
+        /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
+        /// <param name="requestTimeout"> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
         internal HttpReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData requestTimeout, bool? enablePartitionDiscovery, BinaryData partitionRootPath) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
@@ -71,35 +41,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "HttpReadSettings";
         }
 
-        /// <summary>
-        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.requestMethod
-        /// </summary>
+        /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
         public BinaryData RequestMethod { get; set; }
-        /// <summary>
-        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.requestBody
-        /// </summary>
+        /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
         public BinaryData RequestBody { get; set; }
-        /// <summary>
-        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.additionalHeaders
-        /// </summary>
+        /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
         public BinaryData AdditionalHeaders { get; set; }
-        /// <summary>
-        /// Specifies the timeout for a HTTP client to get HTTP response from HTTP server.
-        /// Serialized Name: HttpReadSettings.requestTimeout
-        /// </summary>
+        /// <summary> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. </summary>
         public BinaryData RequestTimeout { get; set; }
-        /// <summary>
-        /// Indicates whether to enable partition discovery.
-        /// Serialized Name: HttpReadSettings.enablePartitionDiscovery
-        /// </summary>
+        /// <summary> Indicates whether to enable partition discovery. </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary>
-        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
-        /// Serialized Name: HttpReadSettings.partitionRootPath
-        /// </summary>
+        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public BinaryData PartitionRootPath { get; set; }
     }
 }

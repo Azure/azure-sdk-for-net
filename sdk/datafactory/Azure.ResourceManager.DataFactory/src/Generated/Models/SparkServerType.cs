@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The type of Spark server.
-    /// Serialized Name: SparkServerType
-    /// </summary>
+    /// <summary> The type of Spark server. </summary>
     public readonly partial struct SparkServerType : IEquatable<SparkServerType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SharkServer2Value = "SharkServer2";
         private const string SparkThriftServerValue = "SparkThriftServer";
 
-        /// <summary>
-        /// SharkServer
-        /// Serialized Name: SparkServerType.SharkServer
-        /// </summary>
+        /// <summary> SharkServer. </summary>
         public static SparkServerType SharkServer { get; } = new SparkServerType(SharkServerValue);
-        /// <summary>
-        /// SharkServer2
-        /// Serialized Name: SparkServerType.SharkServer2
-        /// </summary>
+        /// <summary> SharkServer2. </summary>
         public static SparkServerType SharkServer2 { get; } = new SparkServerType(SharkServer2Value);
-        /// <summary>
-        /// SparkThriftServer
-        /// Serialized Name: SparkServerType.SparkThriftServer
-        /// </summary>
+        /// <summary> SparkThriftServer. </summary>
         public static SparkServerType SparkThriftServer { get; } = new SparkServerType(SparkThriftServerValue);
         /// <summary> Determines if two <see cref="SparkServerType"/> values are the same. </summary>
         public static bool operator ==(SparkServerType left, SparkServerType right) => left.Equals(right);

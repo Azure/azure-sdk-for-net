@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Responsys linked service.
-    /// Serialized Name: ResponsysLinkedService
-    /// </summary>
+    /// <summary> Responsys linked service. </summary>
     public partial class ResponsysLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of ResponsysLinkedService. </summary>
-        /// <param name="endpoint">
-        /// The endpoint of the Responsys server.
-        /// Serialized Name: ResponsysLinkedService.typeProperties.endpoint
-        /// </param>
-        /// <param name="clientId">
-        /// The client ID associated with the Responsys application. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.clientId
-        /// </param>
+        /// <param name="endpoint"> The endpoint of the Responsys server. </param>
+        /// <param name="clientId"> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         public ResponsysLinkedService(BinaryData endpoint, BinaryData clientId)
         {
@@ -43,57 +34,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ResponsysLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="endpoint">
-        /// The endpoint of the Responsys server.
-        /// Serialized Name: ResponsysLinkedService.typeProperties.endpoint
-        /// </param>
-        /// <param name="clientId">
-        /// The client ID associated with the Responsys application. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.clientId
-        /// </param>
+        /// <param name="endpoint"> The endpoint of the Responsys server. </param>
+        /// <param name="clientId"> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </param>
         /// <param name="clientSecret">
         /// The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.clientSecret
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="useEncryptedEndpoints">
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.useEncryptedEndpoints
-        /// </param>
-        /// <param name="useHostVerification">
-        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.useHostVerification
-        /// </param>
-        /// <param name="usePeerVerification">
-        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.usePeerVerification
-        /// </param>
-        /// <param name="encryptedCredential">
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.encryptedCredential
-        /// </param>
+        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal ResponsysLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData endpoint, BinaryData clientId, FactorySecretBaseDefinition clientSecret, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
@@ -106,42 +63,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Responsys";
         }
 
-        /// <summary>
-        /// The endpoint of the Responsys server.
-        /// Serialized Name: ResponsysLinkedService.typeProperties.endpoint
-        /// </summary>
+        /// <summary> The endpoint of the Responsys server. </summary>
         public BinaryData Endpoint { get; set; }
-        /// <summary>
-        /// The client ID associated with the Responsys application. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.clientId
-        /// </summary>
+        /// <summary> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret associated with the Responsys application. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.clientSecret
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ClientSecret { get; set; }
-        /// <summary>
-        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.useEncryptedEndpoints
-        /// </summary>
+        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UseEncryptedEndpoints { get; set; }
-        /// <summary>
-        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.useHostVerification
-        /// </summary>
+        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UseHostVerification { get; set; }
-        /// <summary>
-        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.usePeerVerification
-        /// </summary>
+        /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UsePeerVerification { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// Serialized Name: ResponsysLinkedService.typeProperties.encryptedCredential
-        /// </summary>
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

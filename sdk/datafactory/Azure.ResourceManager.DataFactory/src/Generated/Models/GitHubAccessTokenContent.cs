@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Get GitHub access token request definition.
-    /// Serialized Name: GitHubAccessTokenRequest
-    /// </summary>
+    /// <summary> Get GitHub access token request definition. </summary>
     public partial class GitHubAccessTokenContent
     {
         /// <summary> Initializes a new instance of GitHubAccessTokenContent. </summary>
-        /// <param name="gitHubAccessCode">
-        /// GitHub access code.
-        /// Serialized Name: GitHubAccessTokenRequest.gitHubAccessCode
-        /// </param>
-        /// <param name="gitHubAccessTokenBaseUri">
-        /// GitHub access token base URL.
-        /// Serialized Name: GitHubAccessTokenRequest.gitHubAccessTokenBaseUrl
-        /// </param>
+        /// <param name="gitHubAccessCode"> GitHub access code. </param>
+        /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
         public GitHubAccessTokenContent(string gitHubAccessCode, Uri gitHubAccessTokenBaseUri)
         {
@@ -40,25 +31,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
         }
 
-        /// <summary>
-        /// GitHub access code.
-        /// Serialized Name: GitHubAccessTokenRequest.gitHubAccessCode
-        /// </summary>
+        /// <summary> GitHub access code. </summary>
         public string GitHubAccessCode { get; }
-        /// <summary>
-        /// GitHub application client ID.
-        /// Serialized Name: GitHubAccessTokenRequest.gitHubClientId
-        /// </summary>
+        /// <summary> GitHub application client ID. </summary>
         public string GitHubClientId { get; set; }
-        /// <summary>
-        /// GitHub bring your own app client secret information.
-        /// Serialized Name: GitHubAccessTokenRequest.gitHubClientSecret
-        /// </summary>
+        /// <summary> GitHub bring your own app client secret information. </summary>
         public GitHubClientSecret GitHubClientSecret { get; set; }
-        /// <summary>
-        /// GitHub access token base URL.
-        /// Serialized Name: GitHubAccessTokenRequest.gitHubAccessTokenBaseUrl
-        /// </summary>
+        /// <summary> GitHub access token base URL. </summary>
         public Uri GitHubAccessTokenBaseUri { get; }
     }
 }

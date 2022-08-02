@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// SSIS package location.
-    /// Serialized Name: SsisPackageLocation
-    /// </summary>
+    /// <summary> SSIS package location. </summary>
     public partial class SsisPackageLocation
     {
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
@@ -24,48 +21,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
-        /// <param name="packagePath">
-        /// The SSIS package path. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPackageLocation.packagePath
-        /// </param>
-        /// <param name="locationType">
-        /// The type of SSIS package location.
-        /// Serialized Name: SsisPackageLocation.type
-        /// </param>
+        /// <param name="packagePath"> The SSIS package path. Type: string (or Expression with resultType string). </param>
+        /// <param name="locationType"> The type of SSIS package location. </param>
         /// <param name="packagePassword">
         /// Password of the package.
-        /// Serialized Name: SsisPackageLocation.typeProperties.packagePassword
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="accessCredential">
-        /// The package access credential.
-        /// Serialized Name: SsisPackageLocation.typeProperties.accessCredential
-        /// </param>
-        /// <param name="configurationPath">
-        /// The configuration file of the package execution. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPackageLocation.typeProperties.configurationPath
-        /// </param>
-        /// <param name="configurationAccessCredential">
-        /// The configuration file access credential.
-        /// Serialized Name: SsisPackageLocation.typeProperties.configurationAccessCredential
-        /// </param>
-        /// <param name="packageName">
-        /// The package name.
-        /// Serialized Name: SsisPackageLocation.typeProperties.packageName
-        /// </param>
-        /// <param name="packageContent">
-        /// The embedded package content. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPackageLocation.typeProperties.packageContent
-        /// </param>
-        /// <param name="packageLastModifiedDate">
-        /// The embedded package last modified date.
-        /// Serialized Name: SsisPackageLocation.typeProperties.packageLastModifiedDate
-        /// </param>
-        /// <param name="childPackages">
-        /// The embedded child package list.
-        /// Serialized Name: SsisPackageLocation.typeProperties.childPackages
-        /// </param>
+        /// <param name="accessCredential"> The package access credential. </param>
+        /// <param name="configurationPath"> The configuration file of the package execution. Type: string (or Expression with resultType string). </param>
+        /// <param name="configurationAccessCredential"> The configuration file access credential. </param>
+        /// <param name="packageName"> The package name. </param>
+        /// <param name="packageContent"> The embedded package content. Type: string (or Expression with resultType string). </param>
+        /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
+        /// <param name="childPackages"> The embedded child package list. </param>
         internal SsisPackageLocation(BinaryData packagePath, SsisPackageLocationType? locationType, FactorySecretBaseDefinition packagePassword, SsisAccessCredential accessCredential, BinaryData configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, BinaryData packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
         {
             PackagePath = packagePath;
@@ -80,57 +49,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             ChildPackages = childPackages;
         }
 
-        /// <summary>
-        /// The SSIS package path. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPackageLocation.packagePath
-        /// </summary>
+        /// <summary> The SSIS package path. Type: string (or Expression with resultType string). </summary>
         public BinaryData PackagePath { get; set; }
-        /// <summary>
-        /// The type of SSIS package location.
-        /// Serialized Name: SsisPackageLocation.type
-        /// </summary>
+        /// <summary> The type of SSIS package location. </summary>
         public SsisPackageLocationType? LocationType { get; set; }
         /// <summary>
         /// Password of the package.
-        /// Serialized Name: SsisPackageLocation.typeProperties.packagePassword
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition PackagePassword { get; set; }
-        /// <summary>
-        /// The package access credential.
-        /// Serialized Name: SsisPackageLocation.typeProperties.accessCredential
-        /// </summary>
+        /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
-        /// <summary>
-        /// The configuration file of the package execution. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPackageLocation.typeProperties.configurationPath
-        /// </summary>
+        /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>
         public BinaryData ConfigurationPath { get; set; }
-        /// <summary>
-        /// The configuration file access credential.
-        /// Serialized Name: SsisPackageLocation.typeProperties.configurationAccessCredential
-        /// </summary>
+        /// <summary> The configuration file access credential. </summary>
         public SsisAccessCredential ConfigurationAccessCredential { get; set; }
-        /// <summary>
-        /// The package name.
-        /// Serialized Name: SsisPackageLocation.typeProperties.packageName
-        /// </summary>
+        /// <summary> The package name. </summary>
         public string PackageName { get; set; }
-        /// <summary>
-        /// The embedded package content. Type: string (or Expression with resultType string).
-        /// Serialized Name: SsisPackageLocation.typeProperties.packageContent
-        /// </summary>
+        /// <summary> The embedded package content. Type: string (or Expression with resultType string). </summary>
         public BinaryData PackageContent { get; set; }
-        /// <summary>
-        /// The embedded package last modified date.
-        /// Serialized Name: SsisPackageLocation.typeProperties.packageLastModifiedDate
-        /// </summary>
+        /// <summary> The embedded package last modified date. </summary>
         public string PackageLastModifiedDate { get; set; }
-        /// <summary>
-        /// The embedded child package list.
-        /// Serialized Name: SsisPackageLocation.typeProperties.childPackages
-        /// </summary>
+        /// <summary> The embedded child package list. </summary>
         public IList<SsisChildPackage> ChildPackages { get; }
     }
 }

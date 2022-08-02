@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Connection information for encrypting the on-premises data source credentials.
-    /// Serialized Name: IntegrationRuntimeConnectionInfo
-    /// </summary>
+    /// <summary> Connection information for encrypting the on-premises data source credentials. </summary>
     public partial class IntegrationRuntimeConnectionInfo
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeConnectionInfo. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeConnectionInfo. </summary>
-        /// <param name="serviceToken">
-        /// The token generated in service. Callers use this token to authenticate to integration runtime.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.serviceToken
-        /// </param>
-        /// <param name="identityCertThumbprint">
-        /// The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.identityCertThumbprint
-        /// </param>
-        /// <param name="hostServiceUri">
-        /// The on-premises integration runtime host URL.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.hostServiceUri
-        /// </param>
-        /// <param name="version">
-        /// The integration runtime version.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.version
-        /// </param>
-        /// <param name="publicKey">
-        /// The public key for encrypting a credential when transferring the credential to the integration runtime.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.publicKey
-        /// </param>
-        /// <param name="isIdentityCertExprired">
-        /// Whether the identity certificate is expired.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.isIdentityCertExprired
-        /// </param>
+        /// <param name="serviceToken"> The token generated in service. Callers use this token to authenticate to integration runtime. </param>
+        /// <param name="identityCertThumbprint"> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </param>
+        /// <param name="hostServiceUri"> The on-premises integration runtime host URL. </param>
+        /// <param name="version"> The integration runtime version. </param>
+        /// <param name="publicKey"> The public key for encrypting a credential when transferring the credential to the integration runtime. </param>
+        /// <param name="isIdentityCertExprired"> Whether the identity certificate is expired. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeConnectionInfo(string serviceToken, string identityCertThumbprint, Uri hostServiceUri, string version, string publicKey, bool? isIdentityCertExprired, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -60,35 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The token generated in service. Callers use this token to authenticate to integration runtime.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.serviceToken
-        /// </summary>
+        /// <summary> The token generated in service. Callers use this token to authenticate to integration runtime. </summary>
         public string ServiceToken { get; }
-        /// <summary>
-        /// The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.identityCertThumbprint
-        /// </summary>
+        /// <summary> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </summary>
         public string IdentityCertThumbprint { get; }
-        /// <summary>
-        /// The on-premises integration runtime host URL.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.hostServiceUri
-        /// </summary>
+        /// <summary> The on-premises integration runtime host URL. </summary>
         public Uri HostServiceUri { get; }
-        /// <summary>
-        /// The integration runtime version.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.version
-        /// </summary>
+        /// <summary> The integration runtime version. </summary>
         public string Version { get; }
-        /// <summary>
-        /// The public key for encrypting a credential when transferring the credential to the integration runtime.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.publicKey
-        /// </summary>
+        /// <summary> The public key for encrypting a credential when transferring the credential to the integration runtime. </summary>
         public string PublicKey { get; }
-        /// <summary>
-        /// Whether the identity certificate is expired.
-        /// Serialized Name: IntegrationRuntimeConnectionInfo.isIdentityCertExprired
-        /// </summary>
+        /// <summary> Whether the identity certificate is expired. </summary>
         public bool? IsIdentityCertExprired { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

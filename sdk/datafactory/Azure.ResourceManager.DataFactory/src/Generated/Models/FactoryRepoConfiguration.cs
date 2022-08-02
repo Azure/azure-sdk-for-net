@@ -11,29 +11,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Factory&apos;s git repo information.
-    /// Serialized Name: FactoryRepoConfiguration
     /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
     /// </summary>
     public partial class FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
-        /// <param name="accountName">
-        /// Account name.
-        /// Serialized Name: FactoryRepoConfiguration.accountName
-        /// </param>
-        /// <param name="repositoryName">
-        /// Repository name.
-        /// Serialized Name: FactoryRepoConfiguration.repositoryName
-        /// </param>
-        /// <param name="collaborationBranch">
-        /// Collaboration branch.
-        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
-        /// </param>
-        /// <param name="rootFolder">
-        /// Root folder.
-        /// Serialized Name: FactoryRepoConfiguration.rootFolder
-        /// </param>
+        /// <param name="accountName"> Account name. </param>
+        /// <param name="repositoryName"> Repository name. </param>
+        /// <param name="collaborationBranch"> Collaboration branch. </param>
+        /// <param name="rootFolder"> Root folder. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/> or <paramref name="rootFolder"/> is null. </exception>
         public FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder)
         {
@@ -61,30 +48,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
-        /// <param name="factoryRepoConfigurationType">
-        /// Type of repo configuration.
-        /// Serialized Name: FactoryRepoConfiguration.type
-        /// </param>
-        /// <param name="accountName">
-        /// Account name.
-        /// Serialized Name: FactoryRepoConfiguration.accountName
-        /// </param>
-        /// <param name="repositoryName">
-        /// Repository name.
-        /// Serialized Name: FactoryRepoConfiguration.repositoryName
-        /// </param>
-        /// <param name="collaborationBranch">
-        /// Collaboration branch.
-        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
-        /// </param>
-        /// <param name="rootFolder">
-        /// Root folder.
-        /// Serialized Name: FactoryRepoConfiguration.rootFolder
-        /// </param>
-        /// <param name="lastCommitId">
-        /// Last commit id.
-        /// Serialized Name: FactoryRepoConfiguration.lastCommitId
-        /// </param>
+        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
+        /// <param name="accountName"> Account name. </param>
+        /// <param name="repositoryName"> Repository name. </param>
+        /// <param name="collaborationBranch"> Collaboration branch. </param>
+        /// <param name="rootFolder"> Root folder. </param>
+        /// <param name="lastCommitId"> Last commit id. </param>
         internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId)
         {
             FactoryRepoConfigurationType = factoryRepoConfigurationType;
@@ -95,35 +64,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             LastCommitId = lastCommitId;
         }
 
-        /// <summary>
-        /// Type of repo configuration.
-        /// Serialized Name: FactoryRepoConfiguration.type
-        /// </summary>
+        /// <summary> Type of repo configuration. </summary>
         internal string FactoryRepoConfigurationType { get; set; }
-        /// <summary>
-        /// Account name.
-        /// Serialized Name: FactoryRepoConfiguration.accountName
-        /// </summary>
+        /// <summary> Account name. </summary>
         public string AccountName { get; set; }
-        /// <summary>
-        /// Repository name.
-        /// Serialized Name: FactoryRepoConfiguration.repositoryName
-        /// </summary>
+        /// <summary> Repository name. </summary>
         public string RepositoryName { get; set; }
-        /// <summary>
-        /// Collaboration branch.
-        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
-        /// </summary>
+        /// <summary> Collaboration branch. </summary>
         public string CollaborationBranch { get; set; }
-        /// <summary>
-        /// Root folder.
-        /// Serialized Name: FactoryRepoConfiguration.rootFolder
-        /// </summary>
+        /// <summary> Root folder. </summary>
         public string RootFolder { get; set; }
-        /// <summary>
-        /// Last commit id.
-        /// Serialized Name: FactoryRepoConfiguration.lastCommitId
-        /// </summary>
+        /// <summary> Last commit id. </summary>
         public string LastCommitId { get; set; }
     }
 }

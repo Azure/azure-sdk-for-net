@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The AzureBlobEventType.
-    /// Serialized Name: BlobEventTypes
-    /// </summary>
+    /// <summary> The AzureBlobEventType. </summary>
     public readonly partial struct AzureBlobEventType : IEquatable<AzureBlobEventType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string MicrosoftStorageBlobCreatedValue = "Microsoft.Storage.BlobCreated";
         private const string MicrosoftStorageBlobDeletedValue = "Microsoft.Storage.BlobDeleted";
 
-        /// <summary>
-        /// Microsoft.Storage.BlobCreated
-        /// Serialized Name: BlobEventTypes.Microsoft.Storage.BlobCreated
-        /// </summary>
+        /// <summary> Microsoft.Storage.BlobCreated. </summary>
         public static AzureBlobEventType MicrosoftStorageBlobCreated { get; } = new AzureBlobEventType(MicrosoftStorageBlobCreatedValue);
-        /// <summary>
-        /// Microsoft.Storage.BlobDeleted
-        /// Serialized Name: BlobEventTypes.Microsoft.Storage.BlobDeleted
-        /// </summary>
+        /// <summary> Microsoft.Storage.BlobDeleted. </summary>
         public static AzureBlobEventType MicrosoftStorageBlobDeleted { get; } = new AzureBlobEventType(MicrosoftStorageBlobDeletedValue);
         /// <summary> Determines if two <see cref="AzureBlobEventType"/> values are the same. </summary>
         public static bool operator ==(AzureBlobEventType left, AzureBlobEventType right) => left.Equals(right);

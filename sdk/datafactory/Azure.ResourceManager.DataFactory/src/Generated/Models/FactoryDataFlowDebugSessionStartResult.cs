@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Response body structure for starting data flow debug session.
-    /// Serialized Name: AddDataFlowToDebugSessionResponse
-    /// </summary>
+    /// <summary> Response body structure for starting data flow debug session. </summary>
     public partial class FactoryDataFlowDebugSessionStartResult
     {
         /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionStartResult. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryDataFlowDebugSessionStartResult. </summary>
-        /// <param name="jobVersion">
-        /// The ID of data flow debug job version.
-        /// Serialized Name: AddDataFlowToDebugSessionResponse.jobVersion
-        /// </param>
+        /// <param name="jobVersion"> The ID of data flow debug job version. </param>
         internal FactoryDataFlowDebugSessionStartResult(string jobVersion)
         {
             JobVersion = jobVersion;
         }
 
-        /// <summary>
-        /// The ID of data flow debug job version.
-        /// Serialized Name: AddDataFlowToDebugSessionResponse.jobVersion
-        /// </summary>
+        /// <summary> The ID of data flow debug job version. </summary>
         public string JobVersion { get; }
     }
 }

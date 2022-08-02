@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string).
-    /// Serialized Name: CosmosDbConnectionMode
-    /// </summary>
+    /// <summary> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </summary>
     public readonly partial struct CosmosDBConnectionMode : IEquatable<CosmosDBConnectionMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string GatewayValue = "Gateway";
         private const string DirectValue = "Direct";
 
-        /// <summary>
-        /// Gateway
-        /// Serialized Name: CosmosDbConnectionMode.Gateway
-        /// </summary>
+        /// <summary> Gateway. </summary>
         public static CosmosDBConnectionMode Gateway { get; } = new CosmosDBConnectionMode(GatewayValue);
-        /// <summary>
-        /// Direct
-        /// Serialized Name: CosmosDbConnectionMode.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static CosmosDBConnectionMode Direct { get; } = new CosmosDBConnectionMode(DirectValue);
         /// <summary> Determines if two <see cref="CosmosDBConnectionMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBConnectionMode left, CosmosDBConnectionMode right) => left.Equals(right);

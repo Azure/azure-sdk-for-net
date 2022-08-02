@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// A list of active debug sessions.
-    /// Serialized Name: QueryDataFlowDebugSessionsResponse
-    /// </summary>
+    /// <summary> A list of active debug sessions. </summary>
     internal partial class QueryDataFlowDebugSessionsResponse
     {
         /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
-        /// <param name="value">
-        /// Array with all active debug sessions.
-        /// Serialized Name: QueryDataFlowDebugSessionsResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: QueryDataFlowDebugSessionsResponse.nextLink
-        /// </param>
+        /// <param name="value"> Array with all active debug sessions. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal QueryDataFlowDebugSessionsResponse(IReadOnlyList<DataFlowDebugSessionInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array with all active debug sessions.
-        /// Serialized Name: QueryDataFlowDebugSessionsResponse.value
-        /// </summary>
+        /// <summary> Array with all active debug sessions. </summary>
         public IReadOnlyList<DataFlowDebugSessionInfo> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: QueryDataFlowDebugSessionsResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

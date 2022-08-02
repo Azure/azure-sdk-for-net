@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Sftp write settings.
-    /// Serialized Name: SftpWriteSettings
-    /// </summary>
+    /// <summary> Sftp write settings. </summary>
     public partial class SftpWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of SftpWriteSettings. </summary>
@@ -23,31 +20,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SftpWriteSettings. </summary>
-        /// <param name="storeWriteSettingsType">
-        /// The write setting type.
-        /// Serialized Name: StoreWriteSettings.type
-        /// </param>
-        /// <param name="maxConcurrentConnections">
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// Serialized Name: StoreWriteSettings.maxConcurrentConnections
-        /// </param>
-        /// <param name="disableMetricsCollection">
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: StoreWriteSettings.disableMetricsCollection
-        /// </param>
-        /// <param name="copyBehavior">
-        /// The type of copy behavior for copy sink.
-        /// Serialized Name: StoreWriteSettings.copyBehavior
-        /// </param>
+        /// <param name="storeWriteSettingsType"> The write setting type. </param>
+        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="operationTimeout">
-        /// Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpWriteSettings.operationTimeout
-        /// </param>
-        /// <param name="useTempFileRename">
-        /// Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpWriteSettings.useTempFileRename
-        /// </param>
+        /// <param name="operationTimeout"> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </param>
+        /// <param name="useTempFileRename"> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean). </param>
         internal SftpWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, BinaryData operationTimeout, BinaryData useTempFileRename) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             OperationTimeout = operationTimeout;
@@ -55,15 +34,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreWriteSettingsType = storeWriteSettingsType ?? "SftpWriteSettings";
         }
 
-        /// <summary>
-        /// Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string).
-        /// Serialized Name: SftpWriteSettings.operationTimeout
-        /// </summary>
+        /// <summary> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </summary>
         public BinaryData OperationTimeout { get; set; }
-        /// <summary>
-        /// Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: SftpWriteSettings.useTempFileRename
-        /// </summary>
+        /// <summary> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn&apos;t support rename operation. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData UseTempFileRename { get; set; }
     }
 }

@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Linked service for CosmosDB (MongoDB API) data source.
-    /// Serialized Name: CosmosDbMongoDbApiLinkedService
-    /// </summary>
+    /// <summary> Linked service for CosmosDB (MongoDB API) data source. </summary>
     public partial class CosmosDBMongoDBApiLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiLinkedService. </summary>
-        /// <param name="connectionString">
-        /// The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.connectionString
-        /// </param>
-        /// <param name="database">
-        /// The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.database
-        /// </param>
+        /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         public CosmosDBMongoDBApiLinkedService(BinaryData connectionString, BinaryData database)
         {
@@ -43,39 +34,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiLinkedService. </summary>
-        /// <param name="linkedServiceType">
-        /// Type of linked service.
-        /// Serialized Name: LinkedService.type
-        /// </param>
-        /// <param name="connectVia">
-        /// The integration runtime reference.
-        /// Serialized Name: LinkedService.connectVia
-        /// </param>
-        /// <param name="description">
-        /// Linked service description.
-        /// Serialized Name: LinkedService.description
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for linked service.
-        /// Serialized Name: LinkedService.parameters
-        /// </param>
-        /// <param name="annotations">
-        /// List of tags that can be used for describing the linked service.
-        /// Serialized Name: LinkedService.annotations
-        /// </param>
+        /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="description"> Linked service description. </param>
+        /// <param name="parameters"> Parameters for linked service. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="isServerVersionAbove32">
-        /// Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.isServerVersionAbove32
-        /// </param>
-        /// <param name="connectionString">
-        /// The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.connectionString
-        /// </param>
-        /// <param name="database">
-        /// The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.database
-        /// </param>
+        /// <param name="isServerVersionAbove32"> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
         internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData isServerVersionAbove32, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             IsServerVersionAbove32 = isServerVersionAbove32;
@@ -84,20 +51,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "CosmosDbMongoDbApi";
         }
 
-        /// <summary>
-        /// Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean).
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.isServerVersionAbove32
-        /// </summary>
+        /// <summary> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public BinaryData IsServerVersionAbove32 { get; set; }
-        /// <summary>
-        /// The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.connectionString
-        /// </summary>
+        /// <summary> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary>
-        /// The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string).
-        /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.database
-        /// </summary>
+        /// <summary> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </summary>
         public BinaryData Database { get; set; }
     }
 }

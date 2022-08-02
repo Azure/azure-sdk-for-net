@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Pipeline ElapsedTime Metric Policy.
-    /// Serialized Name: PipelineElapsedTimeMetricPolicy
-    /// </summary>
+    /// <summary> Pipeline ElapsedTime Metric Policy. </summary>
     internal partial class PipelineElapsedTimeMetricPolicy
     {
         /// <summary> Initializes a new instance of PipelineElapsedTimeMetricPolicy. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineElapsedTimeMetricPolicy. </summary>
-        /// <param name="duration">
-        /// TimeSpan value, after which an Azure Monitoring Metric is fired.
-        /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
-        /// </param>
+        /// <param name="duration"> TimeSpan value, after which an Azure Monitoring Metric is fired. </param>
         internal PipelineElapsedTimeMetricPolicy(TimeSpan? duration)
         {
             Duration = duration;
         }
 
-        /// <summary>
-        /// TimeSpan value, after which an Azure Monitoring Metric is fired.
-        /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
-        /// </summary>
+        /// <summary> TimeSpan value, after which an Azure Monitoring Metric is fired. </summary>
         public TimeSpan? Duration { get; set; }
     }
 }

@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The express custom setup of installing Azure PowerShell.
-    /// Serialized Name: AzPowerShellSetup
-    /// </summary>
+    /// <summary> The express custom setup of installing Azure PowerShell. </summary>
     public partial class AzPowerShellSetup : CustomSetupBase
     {
         /// <summary> Initializes a new instance of AzPowerShellSetup. </summary>
-        /// <param name="version">
-        /// The required version of Azure PowerShell to install.
-        /// Serialized Name: AzPowerShellSetup.typeProperties.version
-        /// </param>
+        /// <param name="version"> The required version of Azure PowerShell to install. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public AzPowerShellSetup(string version)
         {
@@ -33,24 +27,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzPowerShellSetup. </summary>
-        /// <param name="customSetupBaseType">
-        /// The type of custom setup.
-        /// Serialized Name: CustomSetupBase.type
-        /// </param>
-        /// <param name="version">
-        /// The required version of Azure PowerShell to install.
-        /// Serialized Name: AzPowerShellSetup.typeProperties.version
-        /// </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="version"> The required version of Azure PowerShell to install. </param>
         internal AzPowerShellSetup(string customSetupBaseType, string version) : base(customSetupBaseType)
         {
             Version = version;
             CustomSetupBaseType = customSetupBaseType ?? "AzPowerShellSetup";
         }
 
-        /// <summary>
-        /// The required version of Azure PowerShell to install.
-        /// Serialized Name: AzPowerShellSetup.typeProperties.version
-        /// </summary>
+        /// <summary> The required version of Azure PowerShell to install. </summary>
         public string Version { get; set; }
     }
 }

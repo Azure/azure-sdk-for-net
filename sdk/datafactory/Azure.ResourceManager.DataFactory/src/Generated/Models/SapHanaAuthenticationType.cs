@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The authentication type to be used to connect to the SAP HANA server.
-    /// Serialized Name: SapHanaAuthenticationType
-    /// </summary>
+    /// <summary> The authentication type to be used to connect to the SAP HANA server. </summary>
     public readonly partial struct SapHanaAuthenticationType : IEquatable<SapHanaAuthenticationType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string WindowsValue = "Windows";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: SapHanaAuthenticationType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static SapHanaAuthenticationType Basic { get; } = new SapHanaAuthenticationType(BasicValue);
-        /// <summary>
-        /// Windows
-        /// Serialized Name: SapHanaAuthenticationType.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         public static SapHanaAuthenticationType Windows { get; } = new SapHanaAuthenticationType(WindowsValue);
         /// <summary> Determines if two <see cref="SapHanaAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SapHanaAuthenticationType left, SapHanaAuthenticationType right) => left.Equals(right);

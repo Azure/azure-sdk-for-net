@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Monitoring data for integration runtime node.
-    /// Serialized Name: IntegrationRuntimeNodeMonitoringData
-    /// </summary>
+    /// <summary> Monitoring data for integration runtime node. </summary>
     public partial class IntegrationRuntimeNodeMonitoringData
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
@@ -24,38 +21,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
-        /// <param name="nodeName">
-        /// Name of the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.nodeName
-        /// </param>
-        /// <param name="availableMemoryInMB">
-        /// Available memory (MB) on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.availableMemoryInMB
-        /// </param>
-        /// <param name="cpuUtilization">
-        /// CPU percentage on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.cpuUtilization
-        /// </param>
-        /// <param name="concurrentJobsLimit">
-        /// Maximum concurrent jobs on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.concurrentJobsLimit
-        /// </param>
-        /// <param name="concurrentJobsRunning">
-        /// The number of jobs currently running on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.concurrentJobsRunning
-        /// </param>
-        /// <param name="maxConcurrentJobs">
-        /// The maximum concurrent jobs in this integration runtime.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.maxConcurrentJobs
-        /// </param>
-        /// <param name="sentBytes">
-        /// Sent bytes on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.sentBytes
-        /// </param>
-        /// <param name="receivedBytes">
-        /// Received bytes on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.receivedBytes
-        /// </param>
+        /// <param name="nodeName"> Name of the integration runtime node. </param>
+        /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
+        /// <param name="cpuUtilization"> CPU percentage on the integration runtime node. </param>
+        /// <param name="concurrentJobsLimit"> Maximum concurrent jobs on the integration runtime node. </param>
+        /// <param name="concurrentJobsRunning"> The number of jobs currently running on the integration runtime node. </param>
+        /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
+        /// <param name="sentBytes"> Sent bytes on the integration runtime node. </param>
+        /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeNodeMonitoringData(string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, float? sentBytes, float? receivedBytes, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -70,45 +43,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Name of the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.nodeName
-        /// </summary>
+        /// <summary> Name of the integration runtime node. </summary>
         public string NodeName { get; }
-        /// <summary>
-        /// Available memory (MB) on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.availableMemoryInMB
-        /// </summary>
+        /// <summary> Available memory (MB) on the integration runtime node. </summary>
         public int? AvailableMemoryInMB { get; }
-        /// <summary>
-        /// CPU percentage on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.cpuUtilization
-        /// </summary>
+        /// <summary> CPU percentage on the integration runtime node. </summary>
         public int? CpuUtilization { get; }
-        /// <summary>
-        /// Maximum concurrent jobs on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.concurrentJobsLimit
-        /// </summary>
+        /// <summary> Maximum concurrent jobs on the integration runtime node. </summary>
         public int? ConcurrentJobsLimit { get; }
-        /// <summary>
-        /// The number of jobs currently running on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.concurrentJobsRunning
-        /// </summary>
+        /// <summary> The number of jobs currently running on the integration runtime node. </summary>
         public int? ConcurrentJobsRunning { get; }
-        /// <summary>
-        /// The maximum concurrent jobs in this integration runtime.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.maxConcurrentJobs
-        /// </summary>
+        /// <summary> The maximum concurrent jobs in this integration runtime. </summary>
         public int? MaxConcurrentJobs { get; }
-        /// <summary>
-        /// Sent bytes on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.sentBytes
-        /// </summary>
+        /// <summary> Sent bytes on the integration runtime node. </summary>
         public float? SentBytes { get; }
-        /// <summary>
-        /// Received bytes on the integration runtime node.
-        /// Serialized Name: IntegrationRuntimeNodeMonitoringData.receivedBytes
-        /// </summary>
+        /// <summary> Received bytes on the integration runtime node. </summary>
         public float? ReceivedBytes { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

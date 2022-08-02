@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// Power query sink.
-    /// Serialized Name: PowerQuerySink
-    /// </summary>
+    /// <summary> Power query sink. </summary>
     public partial class PowerQuerySink : DataFlowSink
     {
         /// <summary> Initializes a new instance of PowerQuerySink. </summary>
-        /// <param name="name">
-        /// Transformation name.
-        /// Serialized Name: Transformation.name
-        /// </param>
+        /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySink(string name) : base(name)
         {
@@ -30,47 +24,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PowerQuerySink. </summary>
-        /// <param name="name">
-        /// Transformation name.
-        /// Serialized Name: Transformation.name
-        /// </param>
-        /// <param name="description">
-        /// Transformation description.
-        /// Serialized Name: Transformation.description
-        /// </param>
-        /// <param name="dataset">
-        /// Dataset reference.
-        /// Serialized Name: Transformation.dataset
-        /// </param>
-        /// <param name="linkedService">
-        /// Linked service reference.
-        /// Serialized Name: Transformation.linkedService
-        /// </param>
-        /// <param name="flowlet">
-        /// Flowlet Reference
-        /// Serialized Name: Transformation.flowlet
-        /// </param>
-        /// <param name="schemaLinkedService">
-        /// Schema linked service reference.
-        /// Serialized Name: DataFlowSink.schemaLinkedService
-        /// </param>
-        /// <param name="rejectedDataLinkedService">
-        /// Rejected data linked service reference.
-        /// Serialized Name: DataFlowSink.rejectedDataLinkedService
-        /// </param>
-        /// <param name="script">
-        /// sink script.
-        /// Serialized Name: PowerQuerySink.script
-        /// </param>
+        /// <param name="name"> Transformation name. </param>
+        /// <param name="description"> Transformation description. </param>
+        /// <param name="dataset"> Dataset reference. </param>
+        /// <param name="linkedService"> Linked service reference. </param>
+        /// <param name="flowlet"> Flowlet Reference. </param>
+        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
+        /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
+        /// <param name="script"> sink script. </param>
         internal PowerQuerySink(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService, FactoryLinkedServiceReference rejectedDataLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, schemaLinkedService, rejectedDataLinkedService)
         {
             Script = script;
         }
 
-        /// <summary>
-        /// sink script.
-        /// Serialized Name: PowerQuerySink.script
-        /// </summary>
+        /// <summary> sink script. </summary>
         public string Script { get; set; }
     }
 }

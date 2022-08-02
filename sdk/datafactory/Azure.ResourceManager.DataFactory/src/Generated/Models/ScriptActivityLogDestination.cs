@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The destination of logs. Type: string.
-    /// Serialized Name: ScriptActivityLogDestination
-    /// </summary>
+    /// <summary> The destination of logs. Type: string. </summary>
     public readonly partial struct ScriptActivityLogDestination : IEquatable<ScriptActivityLogDestination>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ActivityOutputValue = "ActivityOutput";
         private const string ExternalStoreValue = "ExternalStore";
 
-        /// <summary>
-        /// ActivityOutput
-        /// Serialized Name: ScriptActivityLogDestination.ActivityOutput
-        /// </summary>
+        /// <summary> ActivityOutput. </summary>
         public static ScriptActivityLogDestination ActivityOutput { get; } = new ScriptActivityLogDestination(ActivityOutputValue);
-        /// <summary>
-        /// ExternalStore
-        /// Serialized Name: ScriptActivityLogDestination.ExternalStore
-        /// </summary>
+        /// <summary> ExternalStore. </summary>
         public static ScriptActivityLogDestination ExternalStore { get; } = new ScriptActivityLogDestination(ExternalStoreValue);
         /// <summary> Determines if two <see cref="ScriptActivityLogDestination"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityLogDestination left, ScriptActivityLogDestination right) => left.Equals(right);

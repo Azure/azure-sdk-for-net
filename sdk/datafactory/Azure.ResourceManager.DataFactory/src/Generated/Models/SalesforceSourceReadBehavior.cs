@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary>
-    /// The read behavior for the operation. Default is Query.
-    /// Serialized Name: SalesforceSourceReadBehavior
-    /// </summary>
+    /// <summary> The read behavior for the operation. Default is Query. </summary>
     public readonly partial struct SalesforceSourceReadBehavior : IEquatable<SalesforceSourceReadBehavior>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string QueryValue = "Query";
         private const string QueryAllValue = "QueryAll";
 
-        /// <summary>
-        /// Query
-        /// Serialized Name: SalesforceSourceReadBehavior.Query
-        /// </summary>
+        /// <summary> Query. </summary>
         public static SalesforceSourceReadBehavior Query { get; } = new SalesforceSourceReadBehavior(QueryValue);
-        /// <summary>
-        /// QueryAll
-        /// Serialized Name: SalesforceSourceReadBehavior.QueryAll
-        /// </summary>
+        /// <summary> QueryAll. </summary>
         public static SalesforceSourceReadBehavior QueryAll { get; } = new SalesforceSourceReadBehavior(QueryAllValue);
         /// <summary> Determines if two <see cref="SalesforceSourceReadBehavior"/> values are the same. </summary>
         public static bool operator ==(SalesforceSourceReadBehavior left, SalesforceSourceReadBehavior right) => left.Equals(right);
