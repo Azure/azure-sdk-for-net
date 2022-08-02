@@ -67,6 +67,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private AmqpConnectionScope ConnectionScope { get; }
 
+        /// <summary>
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
+        /// </summary>
+        private readonly AmqpMessageConverter MessageConverter;
+
         public override ServiceBusTransportMetrics TransportMetrics { get; }
 
         /// <summary>
@@ -121,6 +126,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 options.EnableCrossEntityTransactions,
                 options.RetryOptions.TryTimeout,
                 TransportMetrics);
+            MessageConverter = new AmqpMessageConverter();
         }
 
         /// <summary>
@@ -145,7 +151,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 entityPath,
                 ConnectionScope,
                 retryPolicy,
-                identifier
+                identifier,
+                MessageConverter
             );
         }
 

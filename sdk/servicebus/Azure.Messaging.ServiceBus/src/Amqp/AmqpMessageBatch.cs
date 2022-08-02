@@ -60,6 +60,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private CreateMessageBatchOptions Options { get; }
 
         /// <summary>
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
+        /// </summary>
+        private readonly AmqpMessageConverter MessageConverter;
+
+        /// <summary>
         ///   The set of messages that have been added to the batch.
         /// </summary>
         ///
@@ -69,15 +74,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpMessageBatch"/> class.
         /// </summary>
         ///
+        /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage"/> data into
+        /// an AMQP-specific message.</param>
         /// <param name="options">The set of options to apply to the batch.</param>
         ///
-        public AmqpMessageBatch(CreateMessageBatchOptions options)
+        public AmqpMessageBatch(AmqpMessageConverter messageConverter,
+                                CreateMessageBatchOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(options.MaxSizeInBytes, nameof(options.MaxSizeInBytes));
+            Argument.AssertNotNull(messageConverter, nameof(AmqpMessageConverter));
 
             Options = options;
             MaxSizeInBytes = options.MaxSizeInBytes.Value;
+            MessageConverter = messageConverter;
         }
 
         /// <summary>
@@ -100,11 +110,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
                 // message which will be used to populate properties on the batch envelope.
-                amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(message, forceBatch: true);
+                amqpMessage = MessageConverter.BatchSBMessagesAsAmqpMessage(message, forceBatch: true);
             }
             else
             {
-                amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);
+                amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
             }
 
             // Calculate the size for the message, based on the AMQP message size and accounting for a

@@ -493,8 +493,18 @@ namespace Azure.Messaging.ServiceBus
             internal ListTransportBatch(long maxSizeInBytes,
                                         long sizeInBytes,
                                         IList<ServiceBusMessage> backingStore,
-                                        Func<ServiceBusMessage, bool> tryAddCallback) =>
-                (MaxSizeInBytes, SizeInBytes, _backingStore, _tryAddCallback) = (maxSizeInBytes, sizeInBytes, backingStore, tryAddCallback);
+                                        Func<ServiceBusMessage, bool> tryAddCallback)
+            {
+                MaxSizeInBytes = maxSizeInBytes;
+                SizeInBytes = sizeInBytes;
+                _backingStore = backingStore;
+                _batchMessages = new List<AmqpMessage>();
+                foreach (var message in _backingStore)
+                {
+                    _batchMessages.Add(AmqpMessageConverter.SBMessageToAmqpMessage(message));
+                }
+                _tryAddCallback = tryAddCallback;
+            }
 
             /// <summary>
             ///   Attempts to add an event to the batch, ensuring that the size

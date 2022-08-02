@@ -176,7 +176,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
 
             var batch = new AmqpMessageBatch(options);
-            Assert.That(() => batch.AsReadOnly<AmqpMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnly<ServiceBusMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
@@ -189,17 +189,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var maximumSize = 5000;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
-            var batchMessages = new ServiceBusMessage[5];
+            var batchMessages = new AmqpMessage[5];
 
             var batch = new AmqpMessageBatch(options);
 
             for (var index = 0; index < batchMessages.Length; ++index)
             {
-                batchMessages[index] = new ServiceBusMessage(Array.Empty<byte>());
-                batch.TryAddMessage(batchMessages[index]);
+                var serviceBusMessage = new ServiceBusMessage(Array.Empty<byte>());
+                batchMessages[index] = AmqpMessageConverter.SBMessageToAmqpMessage(serviceBusMessage);
+                batch.
             }
 
-            var batchReadOnly = batch.AsReadOnly<ServiceBusMessage>();
+            var batchReadOnly = batch.AsReadOnly<AmqpMessage>();
             Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
             Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 
@@ -331,6 +332,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             batch.Dispose();
             Assert.That(batch.SizeInBytes, Is.EqualTo(0));
+        }
+
+        /// <summary>
+        ///   Allows for control over AMQP message conversion for testing purposes.
+        /// </summary>
+        ///
+        private class InjectableMockConverter : AmqpMessageConverter
+        {
+            public Func<EventData, string, AmqpMessage> CreateMessageFromEventHandler = (_e, _p) => null;
+            public Func<IEnumerable<EventData>, string, AmqpMessage> CreateBatchFromEventsHandler = (_e, _p) => null;
+            public Func<IEnumerable<AmqpMessage>, string, AmqpMessage> CreateBatchFromMessagesHandler = (_m, _p) => null;
+            public Action<AmqpMessage, int?, long?, short?> ApplyPublisherPropertiesToAmqpMessageHandler = (_m, _s, _g, _o) => { };
+            public Action<AmqpMessage> RemovePublishingPropertiesFromAmqpMessageHandler = _m => { };
+            public override AmqpMessage CreateMessageFromEvent(EventData source, string partitionKey = null) => CreateMessageFromEventHandler(source, partitionKey);
+            public override AmqpMessage CreateBatchFromEvents(IReadOnlyCollection<EventData> source, string partitionKey = null) => CreateBatchFromEventsHandler(source, partitionKey);
+            public override AmqpMessage CreateBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, string partitionKey = null) => CreateBatchFromMessagesHandler(source, partitionKey);
+            public override void ApplyPublisherPropertiesToAmqpMessage(AmqpMessage message, int? sequenceNumber, long? groupId, short? ownerLevel) => ApplyPublisherPropertiesToAmqpMessageHandler(message, sequenceNumber, groupId, ownerLevel);
+            public override void RemovePublishingPropertiesFromAmqpMessage(AmqpMessage message) => RemovePublishingPropertiesFromAmqpMessageHandler(message);
         }
     }
 }

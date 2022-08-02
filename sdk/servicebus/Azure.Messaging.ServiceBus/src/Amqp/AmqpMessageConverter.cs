@@ -20,7 +20,7 @@ using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
-    internal static class AmqpMessageConverter
+    internal class AmqpMessageConverter
     {
         /// <summary>
         /// The size, in bytes, to use for extracting the delivery tag bytes into <see cref="Guid"/>.
@@ -30,14 +30,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
+        public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             var batchMessages = new List<AmqpMessage>(1) { SBMessageToAmqpMessage(source) };
             return BuildAmqpBatchFromMessages(batchMessages, source, forceBatch);
         }
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
+        public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             return BuildAmqpBatchFromMessage(source, forceBatch);
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        public static AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
+        public virtual AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
         {
             AmqpMessage firstAmqpMessage = null;
             ServiceBusMessage firstMessage = null;
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        public static AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<AmqpMessage> source)
+        public virtual AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<AmqpMessage> source)
         {
             AmqpMessage batchEnvelope = null;
 
@@ -224,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        public static AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
+        public virtual AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
         {
             // body
             var amqpMessage = sbMessage.ToAmqpMessage();
@@ -372,7 +372,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
+        public virtual ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
             AmqpAnnotatedMessage annotatedMessage;
@@ -598,7 +598,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return sbMessage;
         }
 
-        public static AmqpMap GetRuleDescriptionMap(RuleProperties description)
+        public virtual AmqpMap GetRuleDescriptionMap(RuleProperties description)
         {
             var ruleDescriptionMap = new AmqpMap();
 
@@ -627,7 +627,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return ruleDescriptionMap;
         }
 
-        public static RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
+        public virtual RuleProperties GetRuleDescription(AmqpRuleDescriptionCodec amqpDescription)
         {
             var filter = GetFilter(amqpDescription.Filter);
             var ruleAction = GetRuleAction(amqpDescription.Action);
@@ -640,7 +640,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return ruleDescription;
         }
 
-        public static RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
+        public virtual RuleFilter GetFilter(AmqpRuleFilterCodec amqpFilter)
         {
             RuleFilter filter;
 

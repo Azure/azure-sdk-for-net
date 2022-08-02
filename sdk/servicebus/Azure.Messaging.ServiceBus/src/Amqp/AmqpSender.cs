@@ -64,6 +64,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
+        /// </summary>
+        private readonly AmqpMessageConverter MessageConverter;
+
+        /// <summary>
         ///   The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
         ///
@@ -89,6 +94,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -103,7 +109,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier)
+            string identifier,
+            AmqpMessageConverter messageConverter)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -121,6 +128,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
                 link => _connectionScope.CloseLink(link));
+            MessageConverter = messageConverter;
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -185,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             options.MaxSizeInBytes ??= MaxMessageSize;
 
             Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxMessageSize.Value, nameof(options.MaxSizeInBytes));
-            return new AmqpMessageBatch(options);
+            return new AmqpMessageBatch(new AmqpMessageConverter(), options);
         }
 
         /// <summary>
@@ -231,7 +239,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                using (AmqpMessage batchMessage = AmqpMessageConverter.BuildAmqpBatchFromMessage(messages))
+                using (AmqpMessage batchMessage = MessageConverter.BuildAmqpBatchFromMessage(messages))
                 {
                     string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
@@ -304,7 +312,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     var index = 0;
                     foreach (var serviceBusMessage in messages)
                     {
-                        amqpMessages[index] = AmqpMessageConverter.SBMessageToAmqpMessage(serviceBusMessage);
+                        amqpMessages[index] = sender.MessageConverter.SBMessageToAmqpMessage(serviceBusMessage);
                         ++index;
                     }
                     try
@@ -430,7 +438,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 List<AmqpMap> entries = new List<AmqpMap>(messages.Count);
                 foreach (ServiceBusMessage message in messages)
                 {
-                    using AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);
+                    using AmqpMessage amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
                     var entry = new AmqpMap();
                     ArraySegment<byte>[] payload = amqpMessage.GetPayload();
                     var buffer = new BufferListStream(payload);

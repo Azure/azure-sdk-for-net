@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract void Clear();
 
         /// <summary>
-        ///   Represents the batch as a set of the AMQP-specific representations of an event. 
+        ///   Represents the batch as a set of the AMQP-specific representations of an event.
         /// </summary>
         ///
         /// <typeparam name="T">The transport-specific message representation being requested.</typeparam>
