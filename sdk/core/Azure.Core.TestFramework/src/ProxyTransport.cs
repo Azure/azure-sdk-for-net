@@ -157,6 +157,11 @@ namespace Azure.Core.TestFramework
                 {
                     message.Request.Content = null;
                 }
+                else if (_filter() == EntryRecordModel.DoNotRecord)
+                {
+                    // skip going to the test proxy as there will be nothing to match the request against anyway.
+                    return;
+                }
             }
 
             var request = message.Request;
