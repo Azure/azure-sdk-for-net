@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity snowflake source. </summary>
-    public partial class SnowflakeSource : CopySource
+    public partial class SnowflakeSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of SnowflakeSource. </summary>
         public SnowflakeSource()

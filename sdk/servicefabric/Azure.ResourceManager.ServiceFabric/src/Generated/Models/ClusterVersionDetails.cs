@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The detail of the Service Fabric runtime version result
-    /// Serialized Name: ClusterVersionDetails
-    /// </summary>
+    /// <summary> The detail of the Service Fabric runtime version result. </summary>
     public partial class ClusterVersionDetails
     {
         /// <summary> Initializes a new instance of ClusterVersionDetails. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterVersionDetails. </summary>
-        /// <param name="codeVersion">
-        /// The Service Fabric runtime version of the cluster.
-        /// Serialized Name: ClusterVersionDetails.codeVersion
-        /// </param>
-        /// <param name="supportExpireOn">
-        /// The date of expiry of support of the version.
-        /// Serialized Name: ClusterVersionDetails.supportExpiryUtc
-        /// </param>
-        /// <param name="environment">
-        /// Indicates if this version is for Windows or Linux operating system.
-        /// Serialized Name: ClusterVersionDetails.environment
-        /// </param>
+        /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
+        /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
+        /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
         internal ClusterVersionDetails(string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment)
         {
             CodeVersion = codeVersion;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Environment = environment;
         }
 
-        /// <summary>
-        /// The Service Fabric runtime version of the cluster.
-        /// Serialized Name: ClusterVersionDetails.codeVersion
-        /// </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. </summary>
         public string CodeVersion { get; }
-        /// <summary>
-        /// The date of expiry of support of the version.
-        /// Serialized Name: ClusterVersionDetails.supportExpiryUtc
-        /// </summary>
+        /// <summary> The date of expiry of support of the version. </summary>
         public DateTimeOffset? SupportExpireOn { get; }
-        /// <summary>
-        /// Indicates if this version is for Windows or Linux operating system.
-        /// Serialized Name: ClusterVersionDetails.environment
-        /// </summary>
+        /// <summary> Indicates if this version is for Windows or Linux operating system. </summary>
         public ClusterEnvironment? Environment { get; }
     }
 }

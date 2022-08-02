@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delimited text dataset. </summary>
-    public partial class DelimitedTextDataset : Dataset
+    public partial class DelimitedTextDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public DelimitedTextDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public DelimitedTextDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             ColumnDelimiter = columnDelimiter;

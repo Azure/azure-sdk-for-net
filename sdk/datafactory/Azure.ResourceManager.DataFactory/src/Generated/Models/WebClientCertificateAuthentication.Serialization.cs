@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebClientCertificateAuthentication DeserializeWebClientCertificateAuthentication(JsonElement element)
         {
-            SecretBase pfx = default;
-            SecretBase password = default;
+            FactorySecretBaseDefinition pfx = default;
+            FactorySecretBaseDefinition password = default;
             BinaryData url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pfx"))
                 {
-                    pfx = SecretBase.DeserializeSecretBase(property.Value);
+                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("password"))
                 {
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"))

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(response);
+                var operation = new SqlArmOperation(_sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(response);
+                var operation = new SqlArmOperation(_sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

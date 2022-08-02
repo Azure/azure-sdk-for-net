@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Salesforce Service Cloud source. </summary>
-    public partial class SalesforceServiceCloudSource : CopySource
+    public partial class SalesforceServiceCloudSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudSource. </summary>
         public SalesforceServiceCloudSource()

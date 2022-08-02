@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -151,6 +152,45 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
                 #endregion
                 Assert.IsNotNull(dlqMessage);
+            }
+        }
+
+        [Test]
+        public async Task RenewMessageLockAndComplete()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string queueName = scope.QueueName;
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using var client = new ServiceBusClient(connectionString);
+
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
+
+                // create a message that we can send
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+
+                // send the message
+                await sender.SendMessageAsync(message);
+
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+                #region Snippet:ServiceBusRenewMessageLockAndComplete
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+                // If we know that we are going to be processing the message for a long time, we can extend the lock for the message
+                // by the configured LockDuration (by default, 30 seconds).
+                await receiver.RenewMessageLockAsync(receivedMessage);
+
+                // simulate some processing of the message
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                // complete the message, thereby deleting it from the service
+                await receiver.CompleteMessageAsync(receivedMessage);
+                #endregion
+                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
     }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("dedicatedHostCount");
                 writer.WriteNumberValue(DedicatedHostCount.Value);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

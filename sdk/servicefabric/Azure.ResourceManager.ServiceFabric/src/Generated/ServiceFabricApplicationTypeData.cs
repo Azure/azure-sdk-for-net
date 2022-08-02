@@ -28,29 +28,17 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The current deployment or provisioning state, which only appears in the response.
-        /// Serialized Name: ApplicationTypeResource.properties.provisioningState
-        /// </param>
-        /// <param name="etag">
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="etag"> Azure resource etag. </param>
         internal ServiceFabricApplicationTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ETag = etag;
         }
 
-        /// <summary>
-        /// The current deployment or provisioning state, which only appears in the response.
-        /// Serialized Name: ApplicationTypeResource.properties.provisioningState
-        /// </summary>
+        /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </summary>
+        /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }
 }
