@@ -13,6 +13,10 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
     internal class ViewReceivedInvitationsSample : ShareClientTestBase
     {
+        public ViewReceivedInvitationsSample() : base(false)
+        {
+        }
+
         public ViewReceivedInvitationsSample(bool isAsync) : base(isAsync)
         {
         }
