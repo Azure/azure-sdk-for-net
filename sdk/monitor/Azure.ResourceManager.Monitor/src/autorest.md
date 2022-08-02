@@ -7,9 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1b0569d8adbd342a1111d6a69764d099f5f717c/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
-tag: package-monitor-track2
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -59,6 +58,11 @@ rename-rules:
   Etag: ETag|etag
   Odatatype: OdataType
   AutoScale: Autoscale
+  MMM: Mmm
+  MM: Mm
+  HH: Hh
+  DD: Dd
+  SS: Ss
 
 irregular-plural-words:
   status: status
@@ -212,6 +216,11 @@ rename-mapping:
   MetricAlertAction.actionGroupId: -|arm-id
   WebtestLocationAvailabilityCriteria.webTestId: -|arm-id
   WebtestLocationAvailabilityCriteria.componentId: -|arm-id
+  ColumnDefinition: DataColumnDefinition
+  StreamDeclaration: DataStreamDeclaration
+  KnownColumnDefinitionType: DataColumnDefinitionType
+  KnownLogFilesDataSourceFormat: LogFilesDataSourceFormat
+  KnownLogFileTextSettingsRecordStartTimestampFormat: LogFileTextSettingsRecordStartTimestampFormat
 
 directive:
   # nullable issue resolution
@@ -258,43 +267,6 @@ directive:
   - from: types.json
     where: $.definitions.ProxyResource
     transform: $["x-ms-client-name"] = "CommonProxyResource"
-  # some format changes
-#   - from: swagger-document
-#     where: $.definitions.DiagnosticSettings.properties.workspaceId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.ScopedResourceProperties.properties.linkedResourceId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: activityLogAlerts_API.json
-#     where: $.definitions.ActionGroup.properties.actionGroupId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.AutomationRunbookReceiver.properties.automationAccountId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.AutomationRunbookReceiver.properties.webhookResourceId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.AzureFunctionReceiver.properties.functionAppResourceId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.MetricAlertAction.properties.actionGroupId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.Source.properties.dataSourceId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.WebtestLocationAvailabilityCriteria.properties.webTestId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.WebtestLocationAvailabilityCriteria.properties.componentId
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.WorkspaceInfo.properties.id
-#     transform: $["x-ms-format"] = "arm-id"
-#   - from: swagger-document
-#     where: $.definitions.PrivateLinkResourceProperties.properties.groupId
-#     transform: $["x-ms-format"] = "arm-id"
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
         {
+            StreamDeclarations = new ChangeTrackingDictionary<string, DataStreamDeclaration>();
             DataFlows = new ChangeTrackingList<DataFlow>();
         }
 
@@ -33,6 +34,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection rule. </param>
         /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
+        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
+        /// <param name="metadata"> Metadata about the resource. </param>
+        /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
         /// <param name="dataSources">
         /// The specification of data sources. 
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
@@ -40,11 +44,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="destinations"> The specification of destinations. </param>
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Description = description;
             ImmutableId = immutableId;
+            DataCollectionEndpointId = dataCollectionEndpointId;
+            Metadata = metadata;
+            StreamDeclarations = streamDeclarations;
             DataSources = dataSources;
             Destinations = destinations;
             DataFlows = dataFlows;
@@ -57,6 +64,18 @@ namespace Azure.ResourceManager.Monitor
         public string Description { get; set; }
         /// <summary> The immutable ID of this data collection rule. This property is READ-ONLY. </summary>
         public string ImmutableId { get; }
+        /// <summary> The resource ID of the data collection endpoint that this rule can be used with. </summary>
+        public ResourceIdentifier DataCollectionEndpointId { get; set; }
+        /// <summary> Metadata about the resource. </summary>
+        internal DataCollectionRuleMetadata Metadata { get; }
+        /// <summary> Azure offering managing this resource on-behalf-of customer. </summary>
+        public string MetadataProvisionedBy
+        {
+            get => Metadata?.ProvisionedBy;
+        }
+
+        /// <summary> Declaration of custom streams used in this rule. </summary>
+        public IDictionary<string, DataStreamDeclaration> StreamDeclarations { get; }
         /// <summary>
         /// The specification of data sources. 
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
