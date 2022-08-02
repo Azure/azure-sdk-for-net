@@ -199,9 +199,9 @@ var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitations
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
+var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 
 // Create received share
-var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
 var receivedShareName = "fabrikam-received-share";
 var receivedInvitation = receivedInvitations.LastOrDefault();

@@ -28,13 +28,14 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
 #if SNIPPET
             var credential = new DefaultAzureCredential();
             var endPoint = "https://<my-account-name>.purview.azure.com/share";
+            var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
 #else
             var credential = TestEnvironment.Credential;
             var endPoint = TestEnvironment.Endpoint.ToString();
+            var receivedInvitationsClient = GetReceivedInvitationsClient();
 #endif
 
             // Create received share
-            var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
             var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
             var receivedShareName = "fabrikam-received-share";
             var receivedInvitation = receivedInvitations.LastOrDefault();
