@@ -12,11 +12,11 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    internal partial class NotificationHubListResult
+    internal partial class NotificationHubNamespaceListResult
     {
-        internal static NotificationHubListResult DeserializeNotificationHubListResult(JsonElement element)
+        internal static NotificationHubNamespaceListResult DeserializeNotificationHubNamespaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NotificationHubData>> value = default;
+            Optional<IReadOnlyList<NotificationHubNamespaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NotificationHubData> array = new List<NotificationHubData>();
+                    List<NotificationHubNamespaceData> array = new List<NotificationHubNamespaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubData.DeserializeNotificationHubData(item));
+                        array.Add(NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     continue;
                 }
             }
-            return new NotificationHubListResult(Optional.ToList(value), nextLink.Value);
+            return new NotificationHubNamespaceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

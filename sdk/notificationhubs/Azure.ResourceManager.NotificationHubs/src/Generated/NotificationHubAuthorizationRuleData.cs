@@ -8,19 +8,28 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NotificationHubs.Models;
 
-namespace Azure.ResourceManager.NotificationHubs.Models
+namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary> SharedAccessAuthorizationRule properties. </summary>
-    public partial class SharedAccessAuthorizationRuleProperties
+    /// <summary> A class representing the NotificationHubAuthorizationRule data model. </summary>
+    public partial class NotificationHubAuthorizationRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
-        public SharedAccessAuthorizationRuleProperties()
+        /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>
+        /// <param name="location"> The location. </param>
+        public NotificationHubAuthorizationRuleData(AzureLocation location) : base(location)
         {
             Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
+        /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
@@ -30,7 +39,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="modifiedOn"> The last modified time for this rule. </param>
         /// <param name="createdOn"> The created time for this rule. </param>
         /// <param name="revision"> The revision number for the rule. </param>
-        internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision)
+        /// <param name="sku"> The sku of the created namespace. </param>
+        internal NotificationHubAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision, NotificationHubsSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Rights = rights;
             PrimaryKey = primaryKey;
@@ -41,6 +51,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             ModifiedOn = modifiedOn;
             CreatedOn = createdOn;
             Revision = revision;
+            Sku = sku;
         }
 
         /// <summary> The rights associated with the rule. </summary>
@@ -61,5 +72,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The revision number for the rule. </summary>
         public int? Revision { get; }
+        /// <summary> The sku of the created namespace. </summary>
+        public NotificationHubsSku Sku { get; set; }
     }
 }

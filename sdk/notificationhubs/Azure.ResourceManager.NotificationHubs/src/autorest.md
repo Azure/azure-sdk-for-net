@@ -16,7 +16,47 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}: NotificationHubAuthorizationRule
+
+rename-mapping:
+  NamespaceResource.properties.serviceBusEndpoint: -|uri
+  NamespaceCreateOrUpdateParameters.properties.serviceBusEndpoint: -|uri
+  ApnsCredential.properties.endpoint: -|uri
+  BaiduCredential.properties.baiduEndPoint: BaiduEndpoint|uri
+  GcmCredential.properties.gcmEndpoint: -|uri
+  WnsCredential.properties.windowsLiveEndpoint: -|uri
+  NotificationHubResource.properties.registrationTtl: -|duration-constant
+  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|datetime
+  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|datetime
+  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|datetime
+  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|datetime
+  NamespaceResource.properties.enabled: IsEnabled
+  NamespaceResource.properties.critical: IsCritical
+  NamespaceCreateOrUpdateParameters.properties.enabled: IsEnabled
+  NamespaceCreateOrUpdateParameters.properties.critical: IsCritical
+  ApnsCredential: NotificationHubApnsCredential
+  WnsCredential: NotificationHubWnsCredential
+  GcmCredential: NotificationHubGcmCredential
+  MpnsCredential: NotificationHubMpnsCredential
+  AdmCredential: NotificationHubAdmCredential
+  BaiduCredential: NotificationHubBaiduCredential
+  AccessRights: AuthorizationRuleAccessRight
+  NamespaceResource: NotificationHubNamespace
+  NotificationHubResource: NotificationHub
+  SharedAccessAuthorizationRuleResource: NotificationHubAuthorizationRule
+  CheckAvailabilityParameters: NotificationHubNameAvailabilityContent
+  CheckAvailabilityResult: NotificationHubNameAvailabilityResult
+  DebugSendResponse: NotificationHubTestSendResult
+  NamespaceListResult: NotificationHubNamespaceListResult
+  NamespaceType: NotificationHubNamespaceType
+  PnsCredentialsResource: NotificationHubPnsCredentials
+  PolicykeyResource: NotificationHubPolicyKey
+  ResourceListKeys: NotificationHubResourceKeys
+
+override-operation-name:
+  NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubNameAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,6 +64,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'Thumbprint': 'any'
 
 rename-rules:
   CPU: Cpu
