@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiDiagnosticCollectionTests : ApiManagementManagementTestBase
     {
         public ApiDiagnosticCollectionTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task CreateApiAsync()
         {
-            // Create vnet First
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
@@ -76,6 +75,14 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             // Please create the resource first.
             await CreateApiAsync();
             var collection = Resources.GetApiDiagnostics();
+            var logColle = ApiServiceResource.GetApiManagementLoggers();
+            var logData = new ApiManagementLoggerData()
+            {
+                LoggerType = LoggerType.ApplicationInsights,
+                Description = "adding a new logger",
+                Credentials = { { "instrumentationKey", "4fc0bf44-3517-4ef3-b615-4a5b09362400" } }
+            };
+            var logResource = await logColle.CreateOrUpdateAsync(WaitUntil.Completed, "azuremonitor", logData);
             var data = new DiagnosticContractData()
             {
                 AlwaysLog = AlwaysLog.AllErrors,

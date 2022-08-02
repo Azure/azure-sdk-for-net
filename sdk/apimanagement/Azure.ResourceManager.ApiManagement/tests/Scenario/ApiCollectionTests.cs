@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiCollectionTests : ApiManagementManagementTestBase
     {
         public ApiCollectionTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task CreateApiService()
         {
-            // Create vnet First
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")

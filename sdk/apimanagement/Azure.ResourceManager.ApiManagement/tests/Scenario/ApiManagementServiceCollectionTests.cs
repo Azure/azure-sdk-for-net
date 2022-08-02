@@ -32,24 +32,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         [Test]
         public async Task CRUD()
         {
-            // Create vnet First
             var collection = await GetApiManagementServiceCollectionAsync();
-            var vnetName = Recording.GenerateAssetName("testvnet-");
-            var vnetData = new VirtualNetworkData()
-            {
-                Location = AzureLocation.EastUS,
-                AddressPrefixes = { "10.0.0.0/16" },
-                Subnets = { new SubnetData() { Name = "testsubnet", AddressPrefix = "10.0.1.0/24", } }
-            };
-            var vnet = (await VNetCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData)).Value;
-            var virtualNetworkConfiguration = new VirtualNetworkConfiguration() { SubnetResourceId = new ResourceIdentifier(vnet.Data.Subnets.FirstOrDefault().Id) };
-
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
-                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned),
-                VirtualNetworkType = VirtualNetworkType.Internal,
-                VirtualNetworkConfiguration = virtualNetworkConfiguration
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
             };
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
             Assert.AreEqual(apiManagementService.Data.Name, apiName);
