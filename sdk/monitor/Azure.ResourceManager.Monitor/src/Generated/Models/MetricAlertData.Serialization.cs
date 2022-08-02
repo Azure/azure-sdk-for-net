@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("severity");
             writer.WriteNumberValue(Severity);
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("scopes");
             writer.WriteStartArray();
             foreach (var item in Scopes)
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WriteNull("criteria");
             }
-            if (Optional.IsDefined(AutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigate))
             {
                 writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(AutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigate.Value);
             }
             if (Optional.IsCollectionDefined(Actions))
             {

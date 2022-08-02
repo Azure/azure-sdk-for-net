@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Authorization
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> scope = default;
-            Optional<string> roleDefinitionId = default;
-            Optional<string> principalId = default;
-            Optional<PrincipalType> principalType = default;
-            Optional<string> roleAssignmentScheduleId = default;
-            Optional<string> originRoleAssignmentId = default;
-            Optional<RoleAssignmentScheduleInstanceStatus> status = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
+            Optional<RoleAssignmentSchedulePrincipalType> principalType = default;
+            Optional<ResourceIdentifier> roleAssignmentScheduleId = default;
+            Optional<ResourceIdentifier> originRoleAssignmentId = default;
+            Optional<RoleAssignmentScheduleStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
-            Optional<string> linkedRoleEligibilityScheduleId = default;
-            Optional<string> linkedRoleEligibilityScheduleInstanceId = default;
-            Optional<AssignmentType> assignmentType = default;
-            Optional<MemberType> memberType = default;
+            Optional<Guid> linkedRoleEligibilityScheduleId = default;
+            Optional<Guid> linkedRoleEligibilityScheduleInstanceId = default;
+            Optional<RoleAssignmentScheduleAssignmentType> assignmentType = default;
+            Optional<RoleAssignmentScheduleMemberType> memberType = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
             Optional<DateTimeOffset> createdOn = default;
@@ -81,12 +81,22 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleDefinitionId"))
                         {
-                            roleDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("principalId"))
                         {
-                            principalId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            principalId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("principalType"))
@@ -96,17 +106,27 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            principalType = new PrincipalType(property0.Value.GetString());
+                            principalType = new RoleAssignmentSchedulePrincipalType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("roleAssignmentScheduleId"))
                         {
-                            roleAssignmentScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleAssignmentScheduleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("originRoleAssignmentId"))
                         {
-                            originRoleAssignmentId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            originRoleAssignmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -116,7 +136,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new RoleAssignmentScheduleInstanceStatus(property0.Value.GetString());
+                            status = new RoleAssignmentScheduleStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDateTime"))
@@ -141,12 +161,22 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("linkedRoleEligibilityScheduleId"))
                         {
-                            linkedRoleEligibilityScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedRoleEligibilityScheduleId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("linkedRoleEligibilityScheduleInstanceId"))
                         {
-                            linkedRoleEligibilityScheduleInstanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            linkedRoleEligibilityScheduleInstanceId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("assignmentType"))
@@ -156,7 +186,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            assignmentType = new AssignmentType(property0.Value.GetString());
+                            assignmentType = new RoleAssignmentScheduleAssignmentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("memberType"))
@@ -166,7 +196,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            memberType = new MemberType(property0.Value.GetString());
+                            memberType = new RoleAssignmentScheduleMemberType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("condition"))
@@ -203,7 +233,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, principalId.Value, Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
+            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(linkedRoleEligibilityScheduleId), Optional.ToNullable(linkedRoleEligibilityScheduleInstanceId), Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
         }
     }
 }

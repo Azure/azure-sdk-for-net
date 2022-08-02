@@ -127,12 +127,16 @@ directive:
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
   - from: types.json
-    where: $.definitions['OperationStatusResult']
+    where: $.definitions.OperationStatusResult
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = false;
       $["x-ms-mgmt-typeReferenceType"] = true;
       $["x-csharp-formats"] = "json";
-      $["x-csharp-usage"] = "model,output";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.OperationStatusResult.properties.*
+    transform: >
+      $["readOnly"] = true;
   - from: managedidentity.json
     where: $.definitions.SystemAssignedServiceIdentity
     transform: >
@@ -255,6 +259,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+rename-mapping:
+  PolicyAssignment.identity: ManagedIdentity
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById

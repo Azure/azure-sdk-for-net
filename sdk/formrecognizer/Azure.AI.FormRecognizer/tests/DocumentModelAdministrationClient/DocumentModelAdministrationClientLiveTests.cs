@@ -42,9 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var modelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
-
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
 
             // Sanity check to make sure we got an actual response back from the service.
             Assert.IsNotNull(operation.Value.ModelId);
@@ -63,12 +61,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId);
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             ValidateDocumentModel(model);
 
@@ -96,12 +93,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Neural, modelId);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Neural, modelId);
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             ValidateDocumentModel(model);
 
@@ -120,9 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder/" });
-
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder/" });
 
             Assert.IsTrue(operation.HasValue);
             Assert.IsNotNull(operation.Value.ModelId);
@@ -136,7 +130,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" }));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -154,10 +148,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            DocumentModel model = operation.Value;
+            DocumentModelDetails model = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, model.Tags);
         }
@@ -170,7 +163,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var containerUrl = new Uri("https://someUrl");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartBuildModelAsync(containerUrl, DocumentBuildMode.Template, modelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildModelAsync(WaitUntil.Started, containerUrl, DocumentBuildMode.Template, modelId));
             Assert.AreEqual("InvalidArgument", ex.ErrorCode);
         }
 
@@ -179,14 +172,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region management ops
 
         [RecordedTest]
-        public async Task GetAccountProperties()
+        public async Task GetResourceDetails()
         {
             var client = CreateDocumentModelAdministrationClient();
 
-            AccountProperties accountP = await client.GetAccountPropertiesAsync();
+            ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
-            Assert.IsNotNull(accountP.DocumentModelCount);
-            Assert.IsNotNull(accountP.DocumentModelLimit);
+            Assert.IsNotNull(resourceDetails.DocumentModelCount);
+            Assert.IsNotNull(resourceDetails.DocumentModelLimit);
         }
 
         [RecordedTest]
@@ -194,7 +187,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
 
-            DocumentModel model = await client.GetModelAsync("prebuilt-businessCard");
+            DocumentModelDetails model = await client.GetModelAsync("prebuilt-businessCard");
 
             ValidateDocumentModel(model);
             Assert.NotNull(model.Description);
@@ -221,11 +214,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
-
-            await operation.WaitForCompletionAsync();
-
-            DocumentModel resultModel = await client.GetModelAsync(modelId);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            DocumentModelDetails resultModel = await client.GetModelAsync(modelId);
 
             ValidateDocumentModel(resultModel, description, TestingTags);
 
@@ -265,20 +255,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelOperationFromList = client.GetOperationsAsync().ToEnumerableAsync().Result;
             Assert.GreaterOrEqual(modelOperationFromList.Count, 1);
 
-            ValidateModelOperationInfo(modelOperationFromList.FirstOrDefault());
+            ValidateOperationSummary(modelOperationFromList.FirstOrDefault());
 
-            ModelOperation modelOperationInfo = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
+            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
-            ValidateModelOperationInfo(modelOperationInfo);
-            if (modelOperationInfo.Status == DocumentOperationStatus.Failed)
+            ValidateOperationSummary(operationDetails);
+            if (operationDetails.Status == DocumentOperationStatus.Failed)
             {
-                Assert.NotNull(modelOperationInfo.Error);
-                Assert.NotNull(modelOperationInfo.Error.Code);
-                Assert.NotNull(modelOperationInfo.Error.Message);
+                Assert.NotNull(operationDetails.Error);
+                Assert.NotNull(operationDetails.Error.Code);
+                Assert.NotNull(operationDetails.Error.Message);
             }
             else
             {
-                ValidateDocumentModel(modelOperationInfo.Result);
+                ValidateDocumentModel(operationDetails.Result);
             }
         }
 
@@ -295,18 +285,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 options.Tags.Add(tag);
             }
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, options);
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId, options);
 
-            ModelOperationInfo modelOperationInfo = client.GetOperationsAsync().ToEnumerableAsync().Result
+            DocumentModelOperationSummary operationSummary = client.GetOperationsAsync().ToEnumerableAsync().Result
                 .FirstOrDefault(op => op.OperationId == operation.Id);
 
-            Assert.NotNull(modelOperationInfo);
+            Assert.NotNull(operationSummary);
 
-            CollectionAssert.AreEquivalent(TestingTags, modelOperationInfo.Tags);
+            CollectionAssert.AreEquivalent(TestingTags, operationSummary.Tags);
 
-            ModelOperation modelOperation = await client.GetOperationAsync(operation.Id);
+            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
 
-            CollectionAssert.AreEquivalent(TestingTags, modelOperation.Tags);
+            CollectionAssert.AreEquivalent(TestingTags, operationDetails.Tags);
 
             await client.DeleteModelAsync(modelId);
         }
@@ -337,12 +327,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
 
-            CopyModelOperation operation = await sourceClient.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
+            CopyModelOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel copiedModel = operation.Value;
+            DocumentModelDetails copiedModel = operation.Value;
 
             ValidateDocumentModel(copiedModel);
             Assert.AreEqual(targetAuth.TargetModelId, copiedModel.ModelId);
@@ -384,11 +373,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
-            CopyModelOperation operation = await sourceClient.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
+            CopyModelOperation operation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, trainedModel.ModelId, targetAuth);
 
-            await operation.WaitForCompletionAsync();
-
-            DocumentModel copiedModel = operation.Value;
+            DocumentModelDetails copiedModel = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, copiedModel.Tags);
 
@@ -404,7 +391,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelToAsync(modelId, targetAuth));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.CopyModelToAsync(WaitUntil.Started, modelId, targetAuth));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -428,12 +415,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, composedModelId);
-            await operation.WaitForCompletionAsync();
+            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId);
 
             Assert.IsTrue(operation.HasValue);
 
-            DocumentModel composedModel = operation.Value;
+            DocumentModelDetails composedModel = operation.Value;
 
             ValidateDocumentModel(composedModel);
 
@@ -463,11 +449,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, composedModelId, tags: tags);
+            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
 
-            await operation.WaitForCompletionAsync();
-
-            DocumentModel composedModel = operation.Value;
+            DocumentModelDetails composedModel = operation.Value;
 
             CollectionAssert.AreEquivalent(TestingTags, composedModel.Tags);
 
@@ -486,28 +470,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModel.ModelId, "00000000-0000-0000-0000-000000000000" };
 
             var composedModelId = Recording.GenerateId();
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartComposeModelAsync(modelIds, composedModelId));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, modelIds, composedModelId));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
         #endregion Composed model
 
-        private void ValidateModelOperationInfo(ModelOperationInfo model)
+        private void ValidateOperationSummary(DocumentModelOperationSummary operationSummary)
         {
-            Assert.NotNull(model.OperationId);
-            Assert.NotNull(model.Status);
-            Assert.AreNotEqual(new DateTimeOffset(), model.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), model.LastUpdatedOn);
-            Assert.NotNull(model.Kind);
-            Assert.NotNull(model.ResourceLocation);
-            if (model.Status == DocumentOperationStatus.Succeeded)
+            Assert.NotNull(operationSummary.OperationId);
+            Assert.NotNull(operationSummary.Status);
+            Assert.AreNotEqual(new DateTimeOffset(), operationSummary.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), operationSummary.LastUpdatedOn);
+            Assert.NotNull(operationSummary.Kind);
+            Assert.NotNull(operationSummary.ResourceLocation);
+            if (operationSummary.Status == DocumentOperationStatus.Succeeded)
             {
-                Assert.NotNull(model.PercentCompleted);
-                Assert.AreEqual(100, model.PercentCompleted);
+                Assert.NotNull(operationSummary.PercentCompleted);
+                Assert.AreEqual(100, operationSummary.PercentCompleted);
             }
         }
 
-        private void ValidateDocumentModel(DocumentModel model, string description = null, IReadOnlyDictionary<string, string> tags = null)
+        private void ValidateDocumentModel(DocumentModelDetails model, string description = null, IReadOnlyDictionary<string, string> tags = null)
         {
             ValidateDocumentModelSummary(model, description, tags);
 

@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Sql.Tests
                 AdministratorLogin = $"admin-{managedInstanceName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),
                 SubnetId = subnetId,
-                PublicDataEndpointEnabled = false,
+                IsPublicDataEndpointEnabled = false,
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                ZoneRedundant = false,
+                IsZoneRedundant = false,
             };
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 Location = location,
                 PrivateLinkServiceConnections =
                 {
-                    new PrivateLinkServiceConnection()
+                    new NetworkPrivateLinkServiceConnection()
                     {
                         Name = privateEndpointName,
                         PrivateLinkServiceId = managedInstance.Data.Id,

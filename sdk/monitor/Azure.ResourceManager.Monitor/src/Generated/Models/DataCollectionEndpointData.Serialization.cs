@@ -19,16 +19,6 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -42,13 +32,39 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ImmutableId))
+            {
+                writer.WritePropertyName("immutableId");
+                writer.WriteStringValue(ImmutableId);
+            }
+            if (Optional.IsDefined(ConfigurationAccess))
+            {
+                writer.WritePropertyName("configurationAccess");
+                writer.WriteObjectValue(ConfigurationAccess);
+            }
+            if (Optional.IsDefined(LogsIngestion))
+            {
+                writer.WritePropertyName("logsIngestion");
+                writer.WriteObjectValue(LogsIngestion);
+            }
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                writer.WritePropertyName("networkAcls");
+                writer.WriteObjectValue(NetworkAcls);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element)
         {
-            Optional<DataCollectionEndpointProperties> properties = default;
-            Optional<KnownDataCollectionEndpointResourceKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -56,28 +72,14 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> immutableId = default;
+            Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
+            Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
+            Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
+            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = DataCollectionEndpointProperties.DeserializeDataCollectionEndpointProperties(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("kind"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    kind = new KnownDataCollectionEndpointResourceKind(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -133,8 +135,70 @@ namespace Azure.ResourceManager.Monitor
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("immutableId"))
+                        {
+                            immutableId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationAccess"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("logsIngestion"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new DataCollectionEndpointProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(kind), Optional.ToNullable(etag));
+            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

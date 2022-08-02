@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a ManagedOnlineDeployment. </summary>
-    internal partial class PartialManagedOnlineDeployment : PartialOnlineDeployment
+    public partial class PartialManagedOnlineDeployment : PartialOnlineDeployment
     {
         /// <summary> Initializes a new instance of PartialManagedOnlineDeployment. </summary>
         public PartialManagedOnlineDeployment()

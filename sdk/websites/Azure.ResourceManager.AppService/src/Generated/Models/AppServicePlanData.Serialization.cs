@@ -11,6 +11,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -66,15 +67,15 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("hostingEnvironmentProfile");
                 }
             }
-            if (Optional.IsDefined(PerSiteScaling))
+            if (Optional.IsDefined(IsPerSiteScaling))
             {
                 writer.WritePropertyName("perSiteScaling");
-                writer.WriteBooleanValue(PerSiteScaling.Value);
+                writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (Optional.IsDefined(ElasticScaleEnabled))
+            if (Optional.IsDefined(IsElasticScaleEnabled))
             {
                 writer.WritePropertyName("elasticScaleEnabled");
-                writer.WriteBooleanValue(ElasticScaleEnabled.Value);
+                writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
             if (Optional.IsDefined(MaximumElasticWorkerCount))
             {
@@ -86,44 +87,44 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("isSpot");
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(SpotExpirationOn))
+            if (Optional.IsDefined(SpotExpireOn))
             {
-                if (SpotExpirationOn != null)
+                if (SpotExpireOn != null)
                 {
                     writer.WritePropertyName("spotExpirationTime");
-                    writer.WriteStringValue(SpotExpirationOn.Value, "O");
+                    writer.WriteStringValue(SpotExpireOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("spotExpirationTime");
                 }
             }
-            if (Optional.IsDefined(FreeOfferExpirationOn))
+            if (Optional.IsDefined(FreeOfferExpiredOn))
             {
-                if (FreeOfferExpirationOn != null)
+                if (FreeOfferExpiredOn != null)
                 {
                     writer.WritePropertyName("freeOfferExpirationTime");
-                    writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
+                    writer.WriteStringValue(FreeOfferExpiredOn.Value, "O");
                 }
                 else
                 {
                     writer.WriteNull("freeOfferExpirationTime");
                 }
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved");
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon");
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(HyperV))
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV");
-                writer.WriteBooleanValue(HyperV.Value);
+                writer.WriteBooleanValue(IsHyperV.Value);
             }
             if (Optional.IsDefined(TargetWorkerCount))
             {
@@ -147,10 +148,10 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("kubeEnvironmentProfile");
                 }
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element)
         {
-            Optional<SkuDescription> sku = default;
+            Optional<AppServiceSkuDescription> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -474,7 +475,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServicePlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
+            return new AppServicePlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
         }
     }
 }

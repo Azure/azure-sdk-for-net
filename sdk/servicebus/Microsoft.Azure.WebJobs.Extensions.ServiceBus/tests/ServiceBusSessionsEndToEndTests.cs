@@ -575,6 +575,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_CustomSessionHandlers()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestCustomSessionHandlers>(SetCustomSessionHandlers);
+            using (host)
+            {
+                bool result1 = _waitHandle1.WaitOne(SBTimeoutMills);
+                bool result2 = _waitHandle2.WaitOne(SBTimeoutMills);
+
+                Assert.True(result1);
+                Assert.True(result2);
+                await host.StopAsync();
+            }
+        }
+
+        private static Action<IHostBuilder> SetCustomSessionHandlers =>
+            builder => builder.ConfigureWebJobs(b =>
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.SessionInitializingAsync = TestCustomSessionHandlers.SessionInitializingHandler;
+                    sbOptions.SessionClosingAsync = TestCustomSessionHandlers.SessionClosingHandler;
+                }));
+
+        [Test]
         public async Task TestBatch_ReceiveFromFunction()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
@@ -1103,6 +1127,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.IsNotNull(received);
 
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestCustomSessionHandlers
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                await sessionActions.CompleteMessageAsync(message);
+                sessionActions.ReleaseSession();
+            }
+
+            public static Task SessionInitializingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle1.Set();
+                return Task.CompletedTask;
+            }
+
+            public static Task SessionClosingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle2.Set();
+                return Task.CompletedTask;
             }
         }
 

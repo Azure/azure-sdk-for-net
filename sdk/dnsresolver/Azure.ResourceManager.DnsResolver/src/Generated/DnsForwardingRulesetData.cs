@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
@@ -19,9 +21,16 @@ namespace Azure.ResourceManager.DnsResolver
     {
         /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
         /// <param name="location"> The location. </param>
-        public DnsForwardingRulesetData(AzureLocation location) : base(location)
+        /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
+        public DnsForwardingRulesetData(AzureLocation location, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints) : base(location)
         {
-            DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();
+            if (dnsResolverOutboundEndpoints == null)
+            {
+                throw new ArgumentNullException(nameof(dnsResolverOutboundEndpoints));
+            }
+
+            DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints.ToList();
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
@@ -31,13 +40,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="eTag"> ETag of the DNS forwarding ruleset. </param>
+        /// <param name="etag"> ETag of the DNS forwarding ruleset. </param>
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
-        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, IList<WritableSubResource> dnsResolverOutboundEndpoints, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<WritableSubResource> dnsResolverOutboundEndpoints, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = eTag;
+            ETag = etag;
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
@@ -48,8 +57,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </summary>
         public IList<WritableSubResource> DnsResolverOutboundEndpoints { get; }
         /// <summary> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState { get; }
         /// <summary> The resourceGuid for the DNS forwarding ruleset. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, BackupStorageRedundancy? backupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             ServerName = serverName;
             ServerCreateOn = serverCreateOn;
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The time the long term retention backup will expire. </summary>
         public DateTimeOffset? BackupExpireOn { get; }
         /// <summary> The storage redundancy type of the backup. </summary>
-        public BackupStorageRedundancy? BackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
         /// <summary> The storage redundancy type of the backup. </summary>
-        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
     }
 }

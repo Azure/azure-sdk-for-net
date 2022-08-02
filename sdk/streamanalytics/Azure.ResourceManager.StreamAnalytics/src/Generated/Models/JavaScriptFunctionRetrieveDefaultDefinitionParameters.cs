@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The parameters needed to retrieve the default function definition for a JavaScript function. </summary>
-    internal partial class JavaScriptFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
+    public partial class JavaScriptFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
     {
         /// <summary> Initializes a new instance of JavaScriptFunctionRetrieveDefaultDefinitionParameters. </summary>
         public JavaScriptFunctionRetrieveDefaultDefinitionParameters()

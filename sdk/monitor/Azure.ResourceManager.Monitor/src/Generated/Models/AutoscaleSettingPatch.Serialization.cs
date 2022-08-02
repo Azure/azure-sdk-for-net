@@ -55,15 +55,27 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("notifications");
                 }
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(PredictiveAutoscalePolicy))
+            {
+                if (PredictiveAutoscalePolicy != null)
+                {
+                    writer.WritePropertyName("predictiveAutoscalePolicy");
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy);
+                }
+                else
+                {
+                    writer.WriteNull("predictiveAutoscalePolicy");
+                }
+            }
+            if (Optional.IsDefined(AutoscaleSettingName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(AutoscaleSettingName);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
@@ -73,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TargetResourceLocation))
             {
                 writer.WritePropertyName("targetResourceLocation");
-                writer.WriteStringValue(TargetResourceLocation);
+                writer.WriteStringValue(TargetResourceLocation.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
         /// <param name="diskRestorePoint"> Gets the disk restore point Id. </param>
-        internal RestorePointSourceVmDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, ManagedDiskParameters managedDisk, WritableSubResource diskRestorePoint)
+        internal RestorePointSourceVmDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, WritableSubResource diskRestorePoint)
         {
             Lun = lun;
             Name = name;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </summary>
         public int? DiskSizeGB { get; }
         /// <summary> Gets the managed disk details. </summary>
-        public ManagedDiskParameters ManagedDisk { get; }
+        public VirtualMachineManagedDisk ManagedDisk { get; }
         /// <summary> Gets the disk restore point Id. </summary>
         internal WritableSubResource DiskRestorePoint { get; }
         /// <summary> Gets or sets Id. </summary>
