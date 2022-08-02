@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.Share.Tests.Samples
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
     internal class AddAnAssetToASentShareSample : ShareClientTestBase
     {
-        public AddAnAssetToASentShareSample(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
+        public AddAnAssetToASentShareSample(bool isAsync) : base(isAsync)
         {
         }
 
