@@ -13,6 +13,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Tests.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Queues;
@@ -182,6 +183,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
         [Test]
         [Category("DynamicConcurrency")]
+        [RetryOnException(5, typeof(OperationCanceledException))]
         public async Task DynamicConcurrency_Queues()
         {
             // Reinitialize the name resolver to avoid conflicts
