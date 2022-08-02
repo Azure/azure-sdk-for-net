@@ -60,25 +60,30 @@ Constructor Accessibility | public | internal | public |
 Required Property | get-only | get-only | get/set | [autorest.csharp #2463](https://github.com/Azure/autorest.csharp/issues/2463)
 Optional Property | get/set | get-only | get/set | [autorest.csharp #2339](https://github.com/Azure/autorest.csharp/issues/2339)
 Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList<T>` get-only | [autorest.csharp #2471](https://github.com/Azure/autorest.csharp/issues/2471)
-Readonly Property | n/a |  |  | [autorest.csharp #2341](https://github.com/Azure/autorest.csharp/issues/2341)
+Readonly Property | n/a | get-only | get-only | [autorest.csharp #2341](https://github.com/Azure/autorest.csharp/issues/2341)
 
 ### Model Constructors
 
 Models have one or more constructors as follows.
 
-#### Main Constructor
+#### Initialization Constructor
 
-- Accessibility is specified in model shape table above
-- Takes required parameters and does not take optional parameters
+The initialization constructor allows callers to set input values that will be sent in a request to the service.
+
+- Input and Round-Trip model types have public initialization constructors
+- Takes parameters to initialize required property values
+- Does not take parameters for optional values
+- Does not take parameters for read-only values (even if required)
 - Validates required reference type parameters for null using `Argument.AssertNotNull`
-- Takes list properties as `IEnumerable<T>` parameters
-- Initializes lists from `IEnumerable` parameter using System.Linq `.ToList()`
+- Assigns values from input parameters
+- Initializes unassigned collection parameters to empty lists
 
 #### Serialization Constructor
 
-- Internal accessibility
-- Generated for Output and Round-trip types
-- Takes required and optional parameters
+The serialization constructor allows the library to create an instance of a deserialized model.
+
+- Output and Round-Trip model types have internal serialization constructors
+- Takes parameters to initialize all property values
 - Takes list properties as `IReadOnlyList<T>` parameters for Output models and `IList<T>` parameters for Round-trip models
 - List properties are initialized by assignment
 
