@@ -299,10 +299,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, messages) = value;
-                    await sender.SendBatchInternalAsync(
-                        messages,
+                    var amqpMessages = new AmqpMessage[messages.Count];
+
+                    var index = 0;
+                    foreach (var serviceBusMessage in messages)
+                    {
+                        amqpMessages[index] = AmqpMessageConverter.SBMessageToAmqpMessage(serviceBusMessage);
+                        ++index;
+                    }
+                    try
+                    {
+                        await sender.SendBatchInternalAsync(
+                        amqpMessages,
                         timeout,
                         token).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        foreach (var amqpMessage in amqpMessages)
+                        {
+                            amqpMessage.Dispose();
+                        }
+                    }
                 },
                 (this, messages),
             _connectionScope,

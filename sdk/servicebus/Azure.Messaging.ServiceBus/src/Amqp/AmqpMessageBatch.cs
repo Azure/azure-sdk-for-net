@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override IReadOnlyCollection<T> AsReadOnly<T>()
         {
-            if (typeof(T) != typeof(ServiceBusMessage))
+            if (typeof(T) != typeof(AmqpMessage))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
