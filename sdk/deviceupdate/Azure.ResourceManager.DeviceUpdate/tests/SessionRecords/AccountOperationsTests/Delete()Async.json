@@ -92,7 +92,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -113,8 +113,8 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview",
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview, 2022-10-01",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
         "Cache-Control": "no-cache",
         "Content-Length": "575",
         "Content-Type": "application/json; charset=utf-8",
@@ -151,7 +151,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -186,7 +186,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -221,7 +221,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -256,7 +256,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -291,7 +291,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -326,7 +326,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -361,7 +361,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -396,7 +396,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -431,7 +431,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -466,7 +466,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/59ccb208-89c9-4194-95a3-3f58e7988e34*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -502,7 +502,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -562,7 +562,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-10-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -575,15 +575,15 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview",
-        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+        "api-supported-versions": "2020-03-01-preview, 2022-04-01-preview, 2022-10-01",
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
         "Cache-Control": "no-cache",
         "Content-Length": "4",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Tue, 07 Jun 2022 07:06:56 GMT",
         "ETag": "\u0022f503a57e-0000-0800-0000-629ef9100000\u0022",
         "Expires": "-1",
-        "Location": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+        "Location": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
@@ -596,7 +596,7 @@
       "ResponseBody": "null"
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -631,7 +631,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -666,7 +666,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -701,7 +701,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -736,7 +736,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -771,7 +771,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -806,7 +806,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -841,7 +841,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -876,7 +876,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -911,7 +911,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/df423198-d8af-4a79-8f6b-bcab7e270784*2B0FB41164E69C88B8925BC10730A43B4D3860CFC722BDE7AC6C489DD12244E4?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -947,7 +947,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-04-01-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/cf65b9a6-fe0f-4011-881c-aba5a5fb8603/resourceGroups/testRg-8752/providers/Microsoft.DeviceUpdate/accounts/Account-3023?api-version=2022-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
