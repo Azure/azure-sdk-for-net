@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The local certificate store location.
-    /// Serialized Name: StoreName
-    /// </summary>
+    /// <summary> The local certificate store location. </summary>
     public readonly partial struct ClusterCertificateStoreName : IEquatable<ClusterCertificateStoreName>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string TrustedPeopleValue = "TrustedPeople";
         private const string TrustedPublisherValue = "TrustedPublisher";
 
-        /// <summary>
-        /// AddressBook
-        /// Serialized Name: StoreName.AddressBook
-        /// </summary>
+        /// <summary> AddressBook. </summary>
         public static ClusterCertificateStoreName AddressBook { get; } = new ClusterCertificateStoreName(AddressBookValue);
-        /// <summary>
-        /// AuthRoot
-        /// Serialized Name: StoreName.AuthRoot
-        /// </summary>
+        /// <summary> AuthRoot. </summary>
         public static ClusterCertificateStoreName AuthRoot { get; } = new ClusterCertificateStoreName(AuthRootValue);
-        /// <summary>
-        /// CertificateAuthority
-        /// Serialized Name: StoreName.CertificateAuthority
-        /// </summary>
+        /// <summary> CertificateAuthority. </summary>
         public static ClusterCertificateStoreName CertificateAuthority { get; } = new ClusterCertificateStoreName(CertificateAuthorityValue);
-        /// <summary>
-        /// Disallowed
-        /// Serialized Name: StoreName.Disallowed
-        /// </summary>
+        /// <summary> Disallowed. </summary>
         public static ClusterCertificateStoreName Disallowed { get; } = new ClusterCertificateStoreName(DisallowedValue);
-        /// <summary>
-        /// My
-        /// Serialized Name: StoreName.My
-        /// </summary>
+        /// <summary> My. </summary>
         public static ClusterCertificateStoreName My { get; } = new ClusterCertificateStoreName(MyValue);
-        /// <summary>
-        /// Root
-        /// Serialized Name: StoreName.Root
-        /// </summary>
+        /// <summary> Root. </summary>
         public static ClusterCertificateStoreName Root { get; } = new ClusterCertificateStoreName(RootValue);
-        /// <summary>
-        /// TrustedPeople
-        /// Serialized Name: StoreName.TrustedPeople
-        /// </summary>
+        /// <summary> TrustedPeople. </summary>
         public static ClusterCertificateStoreName TrustedPeople { get; } = new ClusterCertificateStoreName(TrustedPeopleValue);
-        /// <summary>
-        /// TrustedPublisher
-        /// Serialized Name: StoreName.TrustedPublisher
-        /// </summary>
+        /// <summary> TrustedPublisher. </summary>
         public static ClusterCertificateStoreName TrustedPublisher { get; } = new ClusterCertificateStoreName(TrustedPublisherValue);
         /// <summary> Determines if two <see cref="ClusterCertificateStoreName"/> values are the same. </summary>
         public static bool operator ==(ClusterCertificateStoreName left, ClusterCertificateStoreName right) => left.Equals(right);

@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The ApplicationUserAssignedIdentity.
-    /// Serialized Name: ApplicationUserAssignedIdentity
-    /// </summary>
+    /// <summary> The ApplicationUserAssignedIdentity. </summary>
     public partial class ApplicationUserAssignedIdentity
     {
         /// <summary> Initializes a new instance of ApplicationUserAssignedIdentity. </summary>
-        /// <param name="name">
-        /// The friendly name of user assigned identity.
-        /// Serialized Name: ApplicationUserAssignedIdentity.name
-        /// </param>
-        /// <param name="principalId">
-        /// The principal id of user assigned identity.
-        /// Serialized Name: ApplicationUserAssignedIdentity.principalId
-        /// </param>
+        /// <param name="name"> The friendly name of user assigned identity. </param>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ApplicationUserAssignedIdentity(string name, Guid principalId)
         {
@@ -36,15 +27,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             PrincipalId = principalId;
         }
 
-        /// <summary>
-        /// The friendly name of user assigned identity.
-        /// Serialized Name: ApplicationUserAssignedIdentity.name
-        /// </summary>
+        /// <summary> The friendly name of user assigned identity. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The principal id of user assigned identity.
-        /// Serialized Name: ApplicationUserAssignedIdentity.principalId
-        /// </summary>
+        /// <summary> The principal id of user assigned identity. </summary>
         public Guid PrincipalId { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The ClusterVersionsEnvironment.
-    /// Serialized Name: ClusterVersionsEnvironment
-    /// </summary>
+    /// <summary> The ClusterVersionsEnvironment. </summary>
     public readonly partial struct ClusterVersionsEnvironment : IEquatable<ClusterVersionsEnvironment>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string WindowsValue = "Windows";
         private const string LinuxValue = "Linux";
 
-        /// <summary>
-        /// Windows
-        /// Serialized Name: ClusterVersionsEnvironment.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         public static ClusterVersionsEnvironment Windows { get; } = new ClusterVersionsEnvironment(WindowsValue);
-        /// <summary>
-        /// Linux
-        /// Serialized Name: ClusterVersionsEnvironment.Linux
-        /// </summary>
+        /// <summary> Linux. </summary>
         public static ClusterVersionsEnvironment Linux { get; } = new ClusterVersionsEnvironment(LinuxValue);
         /// <summary> Determines if two <see cref="ClusterVersionsEnvironment"/> values are the same. </summary>
         public static bool operator ==(ClusterVersionsEnvironment left, ClusterVersionsEnvironment right) => left.Equals(right);

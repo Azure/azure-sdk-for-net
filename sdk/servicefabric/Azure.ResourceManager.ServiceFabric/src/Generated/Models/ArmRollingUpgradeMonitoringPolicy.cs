@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The policy used for monitoring the application upgrade
-    /// Serialized Name: ArmRollingUpgradeMonitoringPolicy
-    /// </summary>
+    /// <summary> The policy used for monitoring the application upgrade. </summary>
     public partial class ArmRollingUpgradeMonitoringPolicy
     {
         /// <summary> Initializes a new instance of ArmRollingUpgradeMonitoringPolicy. </summary>
@@ -21,30 +18,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ArmRollingUpgradeMonitoringPolicy. </summary>
-        /// <param name="failureAction">
-        /// The activation Mode of the service package
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.failureAction
-        /// </param>
-        /// <param name="healthCheckWaitDuration">
-        /// The amount of time to wait after completing an upgrade domain before applying health policies. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.healthCheckWaitDuration
-        /// </param>
-        /// <param name="healthCheckStableDuration">
-        /// The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.healthCheckStableDuration
-        /// </param>
-        /// <param name="healthCheckRetryTimeout">
-        /// The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.healthCheckRetryTimeout
-        /// </param>
-        /// <param name="upgradeTimeout">
-        /// The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.upgradeTimeout
-        /// </param>
-        /// <param name="upgradeDomainTimeout">
-        /// The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.upgradeDomainTimeout
-        /// </param>
+        /// <param name="failureAction"> The activation Mode of the service package. </param>
+        /// <param name="healthCheckWaitDuration"> The amount of time to wait after completing an upgrade domain before applying health policies. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="healthCheckStableDuration"> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="healthCheckRetryTimeout"> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="upgradeTimeout"> The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
+        /// <param name="upgradeDomainTimeout"> The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
         internal ArmRollingUpgradeMonitoringPolicy(ArmUpgradeFailureAction? failureAction, TimeSpan? healthCheckWaitDuration, TimeSpan? healthCheckStableDuration, TimeSpan? healthCheckRetryTimeout, TimeSpan? upgradeTimeout, TimeSpan? upgradeDomainTimeout)
         {
             FailureAction = failureAction;
@@ -55,35 +34,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             UpgradeDomainTimeout = upgradeDomainTimeout;
         }
 
-        /// <summary>
-        /// The activation Mode of the service package
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.failureAction
-        /// </summary>
+        /// <summary> The activation Mode of the service package. </summary>
         public ArmUpgradeFailureAction? FailureAction { get; set; }
-        /// <summary>
-        /// The amount of time to wait after completing an upgrade domain before applying health policies. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.healthCheckWaitDuration
-        /// </summary>
+        /// <summary> The amount of time to wait after completing an upgrade domain before applying health policies. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
         public TimeSpan? HealthCheckWaitDuration { get; set; }
-        /// <summary>
-        /// The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.healthCheckStableDuration
-        /// </summary>
+        /// <summary> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
         public TimeSpan? HealthCheckStableDuration { get; set; }
-        /// <summary>
-        /// The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.healthCheckRetryTimeout
-        /// </summary>
+        /// <summary> The amount of time to retry health evaluation when the application or cluster is unhealthy before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
         public TimeSpan? HealthCheckRetryTimeout { get; set; }
-        /// <summary>
-        /// The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.upgradeTimeout
-        /// </summary>
+        /// <summary> The amount of time the overall upgrade has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
         public TimeSpan? UpgradeTimeout { get; set; }
-        /// <summary>
-        /// The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds.
-        /// Serialized Name: ArmRollingUpgradeMonitoringPolicy.upgradeDomainTimeout
-        /// </summary>
+        /// <summary> The amount of time each upgrade domain has to complete before FailureAction is executed. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </summary>
         public TimeSpan? UpgradeDomainTimeout { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterpriseCache.Models
 {
-    public partial class PersistenceSettings : IUtf8JsonSerializable
+    public partial class RedisPersistenceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache.Models
             writer.WriteEndObject();
         }
 
-        internal static PersistenceSettings DeserializePersistenceSettings(JsonElement element)
+        internal static RedisPersistenceSettings DeserializeRedisPersistenceSettings(JsonElement element)
         {
             Optional<bool> aofEnabled = default;
             Optional<bool> rdbEnabled = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache.Models
                     continue;
                 }
             }
-            return new PersistenceSettings(Optional.ToNullable(aofEnabled), Optional.ToNullable(rdbEnabled), Optional.ToNullable(aofFrequency), Optional.ToNullable(rdbFrequency));
+            return new RedisPersistenceSettings(Optional.ToNullable(aofEnabled), Optional.ToNullable(rdbEnabled), Optional.ToNullable(aofFrequency), Optional.ToNullable(rdbFrequency));
         }
     }
 }
