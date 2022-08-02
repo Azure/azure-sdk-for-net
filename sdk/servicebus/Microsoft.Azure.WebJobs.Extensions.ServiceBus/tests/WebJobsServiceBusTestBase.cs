@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static EventWaitHandle _drainValidationPreDelay;
         protected static EventWaitHandle _drainValidationPostDelay;
 
-        protected int ExpectedRemainingMessages { get; set; }
+        protected static int ExpectedRemainingMessages { get; set; }
 
         protected WebJobsServiceBusTestBase(bool isSession)
         {
