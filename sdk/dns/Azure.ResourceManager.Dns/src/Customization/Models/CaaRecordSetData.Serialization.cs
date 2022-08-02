@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<DnsCaaRecord>> caaRecords = default;
+            Optional<IList<CaaRecordInfo>> caaRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DnsCaaRecord> array = new List<DnsCaaRecord>();
+                            List<CaaRecordInfo> array = new List<CaaRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsCaaRecord.DeserializeDnsCaaRecord(item));
+                                array.Add(CaaRecordInfo.DeserializeCaaRecordInfo(item));
                             }
                             caaRecords = array;
                             continue;

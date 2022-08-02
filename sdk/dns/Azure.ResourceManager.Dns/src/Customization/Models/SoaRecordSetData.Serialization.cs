@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<DnsSoaRecord> soaRecord = default;
+            Optional<SoaRecordInfo> soaRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            soaRecord = DnsSoaRecord.DeserializeDnsSoaRecord(property0.Value);
+                            soaRecord = SoaRecordInfo.DeserializeSoaRecordInfo(property0.Value);
                             continue;
                         }
                     }

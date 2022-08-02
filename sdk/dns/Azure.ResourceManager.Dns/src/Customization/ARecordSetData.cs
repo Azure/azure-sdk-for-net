@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public ARecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            ARecords = new ChangeTrackingList<DnsARecord>();
+            ARecords = new ChangeTrackingList<ARecordInfo>();
         }
 
         /// <summary> Initializes a new instance of ARecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
-        internal ARecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsARecord> aRecords) : base(id, name, resourceType, systemData)
+        internal ARecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecordInfo> aRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of A records in the record set. </summary>
-        public IList<DnsARecord> ARecords { get; }
+        public IList<ARecordInfo> ARecords { get; }
     }
 }

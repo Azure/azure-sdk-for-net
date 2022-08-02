@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<DnsARecord>> aRecords = default;
+            Optional<IList<ARecordInfo>> aRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DnsARecord> array = new List<DnsARecord>();
+                            List<ARecordInfo> array = new List<ARecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsARecord.DeserializeDnsARecord(item));
+                                array.Add(ARecordInfo.DeserializeARecordInfo(item));
                             }
                             aRecords = array;
                             continue;

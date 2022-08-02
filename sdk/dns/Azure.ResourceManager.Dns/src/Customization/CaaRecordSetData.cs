@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public CaaRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            CaaRecords = new ChangeTrackingList<DnsCaaRecord>();
+            CaaRecords = new ChangeTrackingList<CaaRecordInfo>();
         }
 
         /// <summary> Initializes a new instance of CaaRecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal CaaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsCaaRecord> caaRecords) : base(id, name, resourceType, systemData)
+        internal CaaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<CaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of CAA records in the record set. </summary>
-        public IList<DnsCaaRecord> CaaRecords { get; }
+        public IList<CaaRecordInfo> CaaRecords { get; }
     }
 }

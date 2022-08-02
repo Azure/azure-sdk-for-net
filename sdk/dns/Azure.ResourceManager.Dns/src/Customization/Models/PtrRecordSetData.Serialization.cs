@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<DnsPtrRecord>> ptrRecords = default;
+            Optional<IList<PtrRecordInfo>> ptrRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DnsPtrRecord> array = new List<DnsPtrRecord>();
+                            List<PtrRecordInfo> array = new List<PtrRecordInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsPtrRecord.DeserializeDnsPtrRecord(item));
+                                array.Add(PtrRecordInfo.DeserializePtrRecordInfo(item));
                             }
                             ptrRecords = array;
                             continue;
