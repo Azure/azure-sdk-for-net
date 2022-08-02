@@ -33,7 +33,7 @@ namespace Relay.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location =  this.ResourceManagementClient.GetLocationFromProvider();
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                var resourceGroup = string.Empty;
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
                     resourceGroup = TestUtilities.GenerateName(RelayManagementHelper.ResourceGroupPrefix);

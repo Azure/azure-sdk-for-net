@@ -182,7 +182,6 @@ namespace Relay.Tests.ScenarioTests
                     Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
                 }
 
-
                 regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
 
                 //Secondary Key
@@ -199,8 +198,6 @@ namespace Relay.Tests.ScenarioTests
                     Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
                     Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);
                 }
-
-
 
                 // Delete HybridConnections authorizationRule
                 RelayManagementClient.HybridConnections.DeleteAuthorizationRule(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName);

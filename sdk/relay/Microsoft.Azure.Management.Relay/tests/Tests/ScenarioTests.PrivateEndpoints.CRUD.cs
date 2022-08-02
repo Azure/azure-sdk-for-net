@@ -6,10 +6,8 @@ namespace Relay.Tests.ScenarioTests
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.Azure.Management.Relay;
     using Microsoft.Azure.Management.Relay.Models;
-    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Azure.Management.Network;
     using PrivateLinkClient = Microsoft.Azure.Management.Network;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;

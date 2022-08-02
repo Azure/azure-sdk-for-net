@@ -22,9 +22,7 @@ namespace Relay.Tests.TestHelper
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Management.KeyVault;
     using Microsoft.Azure.Management.Network;
-    using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Newtonsoft.Json;
     using System.Security.Cryptography;
     using System.Threading.Tasks;
@@ -79,19 +77,6 @@ namespace Relay.Tests.TestHelper
                 : string.Empty;
         }
 
-
-        public static ManagedServiceIdentityClient GetIdentityManagementClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            if (handler != null)
-            {
-                handler.IsPassThrough = true;
-                ManagedServiceIdentityClient identityManagementClient = context.GetServiceClient<ManagedServiceIdentityClient>(handlers: handler);
-                return identityManagementClient;
-            }
-
-            return null;
-        }
-
         public static NetworkManagementClient GetNetworkManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             if (handler != null)
@@ -103,20 +88,6 @@ namespace Relay.Tests.TestHelper
 
             return null;
         }
-
-        public static KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            if (handler != null)
-            {
-                handler.IsPassThrough = true;
-                KeyVaultManagementClient keyValutManagementClient = context.GetServiceClient<KeyVaultManagementClient>(handlers: handler);
-                return keyValutManagementClient;
-            }
-
-            return null;
-        }
-
-
 
         public static void TryRegisterResourceGroup(this ResourceManagementClient resourceManagementClient, string location, string resourceGroupName)
         {

@@ -19,11 +19,9 @@ namespace Relay.Tests.ScenarioTests
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
     using Microsoft.Azure.Management.Relay;
     using Microsoft.Azure.Management.Relay.Models;
     using Microsoft.Azure.Test.HttpRecorder;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Relay.Tests.TestHelper;
     using Xunit;
