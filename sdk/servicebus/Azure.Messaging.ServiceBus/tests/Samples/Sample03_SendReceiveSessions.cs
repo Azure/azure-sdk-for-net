@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusMessage message = new ServiceBusMessage("Hello world!") { SessionId = "mySessionId" };
 
                 // send the message
-                await sender.SendMessageAsync(message);
+                // await sender.SendMessageAsync(message);
 
                 // create a receiver that we can use to receive and settle the message
                 ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);

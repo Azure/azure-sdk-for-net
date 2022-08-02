@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.Runtime.ExceptionServices;
@@ -305,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                     cancellationToken).ConfigureAwait(false);
 
-                await OpenAmqpObjectAsync(link, entityPath, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await OpenAmqpLinkAsync(link, entityPath, cancellationToken: cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 ServiceBusEventSource.Log.CreateManagementLinkComplete(identifier);
                 return link;
@@ -346,7 +347,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var receiverEndpoint = new Uri(ServiceEndpoint, entityPath);
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             ReceivingAmqpLink link = await CreateReceivingLinkAsync(
                 entityPath: entityPath,
@@ -361,9 +361,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            await OpenAmqpObjectAsync(link, entityPath, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
+            await OpenAmqpLinkAsync(link, entityPath, cancellationToken: cancellationToken).ConfigureAwait(false);
             return link;
         }
 
@@ -397,10 +395,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            await OpenAmqpObjectAsync(link, entityPath, timeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            await OpenAmqpLinkAsync(link, entityPath, cancellationToken).ConfigureAwait(false);
 
             return link;
         }
@@ -473,7 +468,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 connection.UsageMeter = new AmqpUsageMeter(metrics);
             }
 
-            await OpenAmqpObjectAsync(connection, timeout: timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(connection, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
 
             // Create the CBS link that will be used for authorization.  The act of creating the link will associate
             // it with the connection.
@@ -529,11 +524,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Create and open the AMQP session associated with the link.
 
-                var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
-                session = connection.CreateSession(sessionSettings);
-
-                await OpenAmqpObjectAsync(session, entityPath, timeout, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                session = await CreateSessionIfNeededAsync(connection, timeout).ConfigureAwait(false);
 
                 // Create and open the link.
 
@@ -731,10 +722,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return await _singletonSession.GetOrCreateAsync(timeout).ConfigureAwait(false);
             }
-            else
-            {
-                return await CreateAndOpenSessionAsync(connection, timeout).ConfigureAwait(false);
-            }
+
+            return await CreateAndOpenSessionAsync(connection, timeout).ConfigureAwait(false);
         }
 
         private async Task<AmqpSession> CreateAndOpenSessionAsync(AmqpConnection connection, TimeSpan timeout)
@@ -749,7 +738,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             session = connection.CreateSession(sessionSettings);
 
-            await OpenAmqpObjectAsync(session, timeout: timeout).ConfigureAwait(false);
+            await OpenAmqpObjectAsync(session, timeout).ConfigureAwait(false);
             return session;
         }
 
@@ -1112,27 +1101,59 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Performs the actions needed to open an AMQP object, such
-        ///   as a session or link for use.
+        ///   Performs the actions needed to open an AMQP link.
         /// </summary>
-        /// <param name="target">The target AMQP object to open.</param>
+        /// <param name="link">The target AMQP object to open.</param>
         /// <param name="entityPath">The path of the entity associated with the AMQP object being opened, if any.</param>
-        /// <param name="timeout">The timeout to apply when opening the link.</param>
         /// <param name="cancellationToken">Token to signal cancellation of the operation.</param>
+        protected virtual async Task OpenAmqpLinkAsync(
+            AmqpLink link,
+            string entityPath,
+            CancellationToken cancellationToken)
+        {
+            await OpenAmqpObjectCoreAsync(link, entityPath, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///  Performs the actions needed to open a request response link. This overload is necessary because <see cref="RequestResponseAmqpLink"/>
+        ///  does not inherit from <see cref="AmqpLink"/>.
+        /// </summary>
+        /// <param name="link">The target AMQP object to open.</param>
+        /// <param name="entityPath">The path of the entity associated with the AMQP object being opened, if any.</param>
+        /// <param name="cancellationToken">Token to signal cancellation of the operation.</param>
+        protected virtual async Task OpenAmqpLinkAsync(
+            RequestResponseAmqpLink link,
+            string entityPath,
+            CancellationToken cancellationToken)
+        {
+            await OpenAmqpObjectCoreAsync(link, entityPath, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///  Performs the actions needed to open an AmqpObject.
+        /// </summary>
+        /// <param name="targetObject">The target AMQP object to open.</param>
+        /// <param name="timeout">The timeout to apply when opening the object.</param>
         protected virtual async Task OpenAmqpObjectAsync(
+            AmqpObject targetObject,
+            TimeSpan timeout)
+        {
+            await OpenAmqpObjectCoreAsync(targetObject, timeout: timeout).ConfigureAwait(false);
+        }
+
+        private static async Task OpenAmqpObjectCoreAsync(
             AmqpObject target,
             string entityPath = default,
             TimeSpan? timeout = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken? cancellationToken = default)
         {
+            // only one of timeout or cancellation token should be set
+            Debug.Assert(timeout.HasValue ^ cancellationToken.HasValue);
             try
             {
-                // Prefer the cancellation token, falling back to the timeout only when
-                // no cancellation token was provided.
-
-                if (cancellationToken != default || timeout == null)
+                if (cancellationToken.HasValue)
                 {
-                    await target.OpenAsync(cancellationToken).ConfigureAwait(false);
+                    await target.OpenAsync(cancellationToken.Value).ConfigureAwait(false);
                 }
                 else
                 {

@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             try
             {
-                await mockScope.InvokeOpenAmqpObjectAsync(mockScope.MockConnection.Object, TimeSpan.FromMinutes(5), CancellationToken.None);
+                await mockScope.InvokeOpenAmqpObjectAsync(mockScope.MockConnection.Object, TimeSpan.FromMinutes(5));
             }
             catch (Exception ex)
             {
@@ -182,8 +182,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpLinkAsync",
+                    ItExpr.IsAny<SendingAmqpLink>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<TimeSpan?>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
@@ -244,8 +251,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Protected()
                 .Setup<Task>("OpenAmqpObjectAsync",
                     ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpLinkAsync",
+                    ItExpr.IsAny<ReceivingAmqpLink>(),
                     ItExpr.IsAny<string>(),
-                    ItExpr.IsAny<TimeSpan?>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask)
                 .Verifiable();
@@ -350,8 +364,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             public Task InvokeOpenAmqpObjectAsync(
                 AmqpObject target,
-                TimeSpan timeout,
-                CancellationToken cancellationToken) => base.OpenAmqpObjectAsync(target, timeout: timeout, cancellationToken: cancellationToken);
+                TimeSpan timeout) =>
+                base.OpenAmqpObjectAsync(target, timeout);
 
             public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(
                 DateTime expirationTimeUtc,
