@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Language.QuestionAnswering.Projects;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
@@ -23,13 +22,22 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         [TearDown]
         public async Task DeleteProjectsAsync()
         {
-            List<Task> tasks = new();
-            while (_projects.TryDequeue(out string projectName))
+            if (Mode == RecordedTestMode.Playback)
             {
-                tasks.Add(Client.DeleteProjectAsync(WaitUntil.Completed, projectName));
+                return;
             }
 
-            await Task.WhenAll(tasks);
+            using TestRecording.DisableRecordingScope scope = Recording.DisableRecording();
+            while (_projects.TryDequeue(out string projectName))
+            {
+                try
+                {
+                    await Client.DeleteProjectAsync(WaitUntil.Completed, projectName).ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                }
+            }
         }
 
         protected string CreateTestProjectName()
@@ -83,15 +91,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             return response;
         }
 
-        protected async Task DeleteProjectAsync(string projectName)
-        {
-            Operation<BinaryData> deletionOperation = await Client.DeleteProjectAsync(WaitUntil.Completed, projectName);
-        }
-
-        protected void DeleteProject(string projectName)
-        {
-            // Insert this back when the delete LRO bug is fixed
-            Operation<BinaryData> deletionOperation = Client.DeleteProject(WaitUntil.Completed, projectName);
-        }
+        protected void EnqueueProjectDeletion(string projectName) => _projects.Enqueue(projectName);
     }
 }
