@@ -1,14 +1,9 @@
 # Release History
 
-## 11.4.0-beta.9 (Unreleased)
+## 11.4.0-beta.9 (2022-08-08)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in `SimpleField` and `SearchableField`.
 
 ## 11.4.0-beta.8 (2022-07-07)
 
