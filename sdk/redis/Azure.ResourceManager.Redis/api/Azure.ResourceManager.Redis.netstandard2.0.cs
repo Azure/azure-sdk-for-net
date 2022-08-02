@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Redis
     }
     public partial class RedisFirewallRuleData : Azure.ResourceManager.Models.ResourceData
     {
-        public RedisFirewallRuleData(string startIP, string endIP) { }
-        public string EndIP { get { throw null; } set { } }
-        public string StartIP { get { throw null; } set { } }
+        public RedisFirewallRuleData(System.Net.IPAddress startIP, System.Net.IPAddress endIP) { }
+        public System.Net.IPAddress EndIP { get { throw null; } set { } }
+        public System.Net.IPAddress StartIP { get { throw null; } set { } }
     }
     public partial class RedisFirewallRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -273,10 +273,11 @@ namespace Azure.ResourceManager.Redis.Models
     {
         public RedisCommonConfiguration() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string AofBackupEnabled { get { throw null; } set { } }
         public string AofStorageConnectionString0 { get { throw null; } set { } }
         public string AofStorageConnectionString1 { get { throw null; } set { } }
         public string AuthNotRequired { get { throw null; } set { } }
+        public bool? IsAofBackupEnabled { get { throw null; } set { } }
+        public bool? IsRdbBackupEnabled { get { throw null; } set { } }
         public string MaxClients { get { throw null; } }
         public string MaxFragmentationMemoryReserved { get { throw null; } set { } }
         public string MaxMemoryDelta { get { throw null; } set { } }
@@ -284,7 +285,6 @@ namespace Azure.ResourceManager.Redis.Models
         public string MaxMemoryReserved { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } }
         public string PreferredDataPersistenceAuthMethod { get { throw null; } }
-        public string RdbBackupEnabled { get { throw null; } set { } }
         public string RdbBackupFrequency { get { throw null; } set { } }
         public string RdbBackupMaxSnapshotCount { get { throw null; } set { } }
         public string RdbStorageConnectionString { get { throw null; } set { } }

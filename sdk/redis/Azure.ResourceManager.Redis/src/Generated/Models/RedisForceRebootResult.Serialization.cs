@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisForceRebootResponse
+    public partial class RedisForceRebootResult
     {
-        internal static RedisForceRebootResponse DeserializeRedisForceRebootResponse(JsonElement element)
+        internal static RedisForceRebootResult DeserializeRedisForceRebootResult(JsonElement element)
         {
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new RedisForceRebootResponse(message.Value);
+            return new RedisForceRebootResult(message.Value);
         }
     }
 }

@@ -36,6 +36,9 @@ rename-mapping:
   NotificationListResponse: RedisUpgradeNotificationListResponse
   RedisKeyType: RedisRegenerateKeyType
   ReplicationRole: RedisLinkedServerRole
+  RedisCommonPropertiesRedisConfiguration.rdb-backup-enabled: IsRdbBackupEnabled|boolean
+  RedisCommonPropertiesRedisConfiguration.aof-backup-enabled: IsAofBackupEnabled|boolean
+  RedisForceRebootResponse: RedisForceRebootResult
 
 prepend-rp-prefix:
   - OperationStatus
@@ -50,6 +53,8 @@ format-by-name-rules:
   'ETag': 'etag'
   'location': 'azure-location'
   'staticIP': 'ip-address'
+  'startIP': 'ip-address'
+  'endIP': 'ip-address'
   'subnetId': 'arm-id'
   'linkedRedisCacheId': 'arm-id'
   'linkedRedisCacheLocation': 'azure-location'
