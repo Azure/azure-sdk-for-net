@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Ttl))
+            if (Optional.IsDefined(TtlInSeconds))
             {
-                writer.WritePropertyName("Ttl");
-                writer.WriteNumberValue(Ttl.Value);
+                writer.WritePropertyName("TTL");
+                writer.WriteNumberValue(TtlInSeconds.Value);
             }
             if (Optional.IsDefined(TargetResource))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Dns
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("Ttl"))
+                        if (property0.NameEquals("TTL"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

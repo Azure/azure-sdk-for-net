@@ -76,7 +76,6 @@ prepend-rp-prefix:
   - AdministratorType
   - AdvisorResultList
   - ConfigurationListContent
-  - ConfigurationListResult
   - CreateMode
   - DatabaseListResult
   - FirewallRuleListResult
@@ -127,8 +126,6 @@ rename-mapping:
   WaitStatisticsResultList: MySqlWaitStatisticsListResult
   PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
   RecoverableServerResource: MySqlRecoverableServerResourceData
-  RecommendationAction.properties.expirationTime: ExpireOn
-  ServerKey.properties.creationDate: CreatedOn
   ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
   NameAvailability.nameAvailable: IsNameAvailable
   StorageProfile.storageMB: StorageInMB
@@ -141,6 +138,7 @@ rename-mapping:
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
   NameAvailability: MySqlNameAvailabilityResult
   PerformanceTierProperties: MySqlPerformanceTier
+  ConfigurationListResult: MySqlConfigurationList
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
@@ -161,27 +159,6 @@ directive:
   - rename-operation:
       from: Servers_Upgrade
       to: MySqlServers_Upgrade
-  - from: mysql.json
-    where: $.definitions
-    transform: >
-      $.ConfigurationListContent = {
-          "properties": {
-            "value": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Configuration"
-              },
-              "description": "The list of server configurations."
-            }
-          },
-          "description": "A list of server configurations."
-        };
-      $.ConfigurationListResult.properties.value.readOnly = true;
-    reason: The generator will not treat the model as the schema for a list method without value being a IReadOnlyList. Need to have separate models for input and output.
-  - from: mysql.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/updateConfigurations'].post.parameters[?(@.name === 'value')]
-    transform: >
-      $.schema['$ref'] = $.schema['$ref'].replace('ConfigurationListResult', 'ConfigurationListContent');
   - from: mysql.json
     where: $.definitions
     transform: >

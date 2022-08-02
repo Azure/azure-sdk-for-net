@@ -92,10 +92,6 @@ rename-mapping:
   TableServiceProperties: TableService
   StorageAccountCheckNameAvailabilityParameters: StorageAccountNameAvailabilityContent
   Multichannel.enabled: IsMultiChannelEnabled
-  DeletedAccount.properties.creationTime: CreatedOn
-  DeletedAccount.properties.deletionTime: DeletedOn
-  StorageAccount.properties.creationTime: CreatedOn
-  EncryptionScope.properties.creationTime: CreatedOn
   AccessPolicy.expiryTime: expireOn
   AccountStatus: StorageAccountStatus
   ResourceAccessRule: StorageAccountResourceAccessRule

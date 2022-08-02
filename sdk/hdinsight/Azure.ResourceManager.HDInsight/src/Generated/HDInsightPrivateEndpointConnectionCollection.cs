@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A class representing a collection of <see cref="HDInsightPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HDInsightPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
-    /// To get a <see cref="HDInsightPrivateEndpointConnectionCollection" /> instance call the GetHDInsightPrivateEndpointConnections method from an instance of <see cref="ClusterResource" />.
+    /// Each <see cref="HDInsightPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HDInsightClusterResource" />.
+    /// To get a <see cref="HDInsightPrivateEndpointConnectionCollection" /> instance call the GetHDInsightPrivateEndpointConnections method from an instance of <see cref="HDInsightClusterResource" />.
     /// </summary>
     public partial class HDInsightPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HDInsightPrivateEndpointConnectionResource>, IAsyncEnumerable<HDInsightPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HDInsight
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
+            if (id.ResourceType != HDInsightClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HDInsightClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>

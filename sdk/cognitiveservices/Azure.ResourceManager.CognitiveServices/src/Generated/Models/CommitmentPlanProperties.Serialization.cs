@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element)
         {
-            Optional<HostingModel> hostingModel = default;
+            Optional<ServiceAccountHostingModel> hostingModel = default;
             Optional<string> planType = default;
             Optional<CommitmentPeriod> current = default;
             Optional<bool> autoRenew = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hostingModel = new HostingModel(property.Value.GetString());
+                    hostingModel = new ServiceAccountHostingModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("planType"))

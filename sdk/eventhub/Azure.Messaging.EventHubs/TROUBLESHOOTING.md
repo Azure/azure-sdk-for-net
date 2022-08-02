@@ -229,6 +229,7 @@ It is generally recommended that an event processor own no more than three parti
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
+- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
 #### "Soft Delete" is enabled for a Blob Storage checkpoint store:
@@ -265,6 +266,10 @@ Another possible cause is an event processor owning too many partitions.  See: [
 ### High CPU usage
 
 High CPU usage is usually because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
+
+### One or more partitions have high latency for processing
+
+When processing for one or more partitions is delayed, it is most often because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
 
 ### A partition is not being processed
 

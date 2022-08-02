@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.DataFactory.Tests
 
         protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
         {
-            string storageAccountName = Recording.GenerateAssetName($"{DateTime.Now.ToString("yyMMdd")}datafactory");
+            string storageAccountName = Recording.GenerateAssetName("datafactory");
             StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, resourceGroup.Data.Location)
             {
                 AccessTier = StorageAccountAccessTier.Hot,
             };
             var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
-            var keylist = await storage.Value.GetKeysAsync();
-            return keylist.Value.Keys.FirstOrDefault().Value;
+            var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
+            return key.Value;
         }
     }
 }

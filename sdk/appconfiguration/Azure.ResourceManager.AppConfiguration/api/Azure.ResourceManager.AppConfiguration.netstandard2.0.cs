@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.CreateMode? CreateMode { get { throw null; } set { } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public bool? EnablePurgeProtection { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppConfiguration
     {
         internal DeletedConfigurationStoreData() { }
         public string ConfigurationStoreId { get { throw null; } }
-        public System.DateTimeOffset? DeletionOn { get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }

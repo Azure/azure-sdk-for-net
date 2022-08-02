@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>
+    /// <summary>
+    /// This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added.
+    /// Serialized Name: VmssZonalUpgradeMode
+    /// </summary>
     public readonly partial struct VmssZonalUpgradeMode : IEquatable<VmssZonalUpgradeMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string ParallelValue = "Parallel";
         private const string HierarchicalValue = "Hierarchical";
 
-        /// <summary> Updates will happen in all Availability Zones at once for the virtual machine scale sets. </summary>
+        /// <summary>
+        /// Updates will happen in all Availability Zones at once for the virtual machine scale sets.
+        /// Serialized Name: VmssZonalUpgradeMode.Parallel
+        /// </summary>
         public static VmssZonalUpgradeMode Parallel { get; } = new VmssZonalUpgradeMode(ParallelValue);
-        /// <summary> VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone. </summary>
+        /// <summary>
+        /// VMs are grouped to reflect the zonal distribution in up to 15 UDs. Each of the three zones has five UDs. This ensures that the zones are updated one at a time, moving to next zone only after completing five UDs within the first zone.
+        /// Serialized Name: VmssZonalUpgradeMode.Hierarchical
+        /// </summary>
         public static VmssZonalUpgradeMode Hierarchical { get; } = new VmssZonalUpgradeMode(HierarchicalValue);
         /// <summary> Determines if two <see cref="VmssZonalUpgradeMode"/> values are the same. </summary>
         public static bool operator ==(VmssZonalUpgradeMode left, VmssZonalUpgradeMode right) => left.Equals(right);

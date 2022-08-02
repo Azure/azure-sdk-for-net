@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading;
@@ -131,6 +132,130 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenSenderLinkAsync(string, string, TimeSpan, CancellationToken)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenLinkAssociatesSendLinkSource()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("amqp://mine.hubs.com");
+            var linkIdentifier = "MyAmqpConnectionScope";
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            var cancellationSource = new CancellationTokenSource();
+            var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
+            {
+                CallBase = true,
+            };
+
+            mockScope
+                .Protected()
+                .Setup<Task<AmqpConnection>>("CreateAndOpenConnectionAsync",
+                ItExpr.IsAny<Version>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<ServiceBusTransportType>(),
+                ItExpr.IsAny<IWebProxy>(),
+                ItExpr.IsAny<string>(),
+                ItExpr.IsAny<TimeSpan>(),
+                ItExpr.IsAny<ServiceBusTransportMetrics>())
+                .Returns(Task.FromResult(mockConnection))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task<DateTime>>("RequestAuthorizationUsingCbsAsync",
+                    ItExpr.IsAny<AmqpConnection>(),
+                    ItExpr.IsAny<CbsTokenProvider>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.FromResult(DateTime.UtcNow.AddDays(1)))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpObjectAsync",
+                    ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            var link = await mockScope.Object.OpenSenderLinkAsync("fake/path", linkIdentifier, TimeSpan.FromDays(1), cancellationSource.Token);
+            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.That(link.Settings.Source.ToString(), Contains.Substring(linkIdentifier));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenReceiverLinkAsync(string, string, TimeSpan, uint, ServiceBusReceiveMode, string, bool, CancellationToken)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenLinkAssociatesReceiveLinkTarget()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("amqp://mine.hubs.com");
+            var linkIdentifier = "MyAmqpConnectionScope";
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            var cancellationSource = new CancellationTokenSource();
+            var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
+            {
+                CallBase = true,
+            };
+
+            mockScope
+                .Protected()
+                .Setup<Task<AmqpConnection>>("CreateAndOpenConnectionAsync",
+                ItExpr.IsAny<Version>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<Uri>(),
+                ItExpr.IsAny<ServiceBusTransportType>(),
+                ItExpr.IsAny<IWebProxy>(),
+                ItExpr.IsAny<string>(),
+                ItExpr.IsAny<TimeSpan>(),
+                ItExpr.IsAny<ServiceBusTransportMetrics>())
+                .Returns(Task.FromResult(mockConnection))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task<DateTime>>("RequestAuthorizationUsingCbsAsync",
+                    ItExpr.IsAny<AmqpConnection>(),
+                    ItExpr.IsAny<CbsTokenProvider>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.FromResult(DateTime.UtcNow.AddDays(1)))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpObjectAsync",
+                    ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            var link = await mockScope.Object.OpenReceiverLinkAsync(linkIdentifier, "fake/path", TimeSpan.FromDays(1), 100, ServiceBusReceiveMode.ReceiveAndDelete, "0", false, cancellationSource.Token);
+            Assert.That(link, Is.Not.Null, "The link produced was null");
+            Assert.That(link.Settings.Target.ToString(), Contains.Substring(linkIdentifier));
+        }
+
+        /// <summary>
         ///   Gets the token refresh buffer for the scope, using the
         ///   private property accessor.
         /// </summary>
@@ -231,6 +356,18 @@ namespace Azure.Messaging.ServiceBus.Tests
             public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(
                 DateTime expirationTimeUtc,
                 DateTime currentTimeUtc) => base.CalculateLinkAuthorizationRefreshInterval(expirationTimeUtc, currentTimeUtc);
+
+            protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
+                                                                                Uri serviceEndpoint,
+                                                                                Uri connectionEndpoint,
+                                                                                ServiceBusTransportType transportType,
+                                                                                IWebProxy proxy,
+                                                                                string scopeIdentifier,
+                                                                                TimeSpan timeout,
+                                                                                ServiceBusTransportMetrics metrics)
+            {
+                return Task.FromResult(MockConnection.Object);
+            }
         }
     }
 }

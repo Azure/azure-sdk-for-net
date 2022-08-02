@@ -163,7 +163,7 @@ format-by-name-rules:
   'trackingId': 'uuid'
   'actionTrackingId': 'uuid'
   'PublicCertificate': 'any'
-  'Content': 'any'
+  'content': 'any'
   'contentType': 'content-type'
   'MessageContentType': 'content-type'
   '*Uri': 'Uri'
@@ -206,6 +206,7 @@ rename-rules:
   SQL: Sql
   SSL: Ssl
   UTF8: Utf8
+  B2B: B2B|b2b
 
 directive:
   - from: logic.json
@@ -224,6 +225,7 @@ directive:
       $.WorkflowTriggerRecurrence.properties.startTime['format'] = 'date-time';
       $.WorkflowTriggerRecurrence.properties.endTime['format'] = 'date-time';
       $.RecurrenceSchedule.properties.weekDays.items['x-ms-enum']['name'] = 'DayOfWeek';
+      $.CallbackUrl.properties.value['x-ms-client-name'] = 'url';
 
   # TODO: change ManagedServiceIdentity to common identity type(ManagedServiceIdentity)
   - from: logic.json

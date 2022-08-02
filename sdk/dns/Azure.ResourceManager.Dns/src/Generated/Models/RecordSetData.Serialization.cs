@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TTL))
+            if (Optional.IsDefined(TtlInSeconds))
             {
                 writer.WritePropertyName("TTL");
-                writer.WriteNumberValue(TTL.Value);
+                writer.WriteNumberValue(TtlInSeconds.Value);
             }
             if (Optional.IsDefined(TargetResource))
             {

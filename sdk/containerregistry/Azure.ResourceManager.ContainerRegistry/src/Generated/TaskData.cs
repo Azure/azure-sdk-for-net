@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the task. </param>
-        /// <param name="creationOn"> The creation date of task. </param>
+        /// <param name="createdOn"> The creation date of task. </param>
         /// <param name="status"> The current status of task. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <param name="agentConfiguration"> The machine configuration of the run agent. </param>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
-        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity, ProvisioningState? provisioningState, DateTimeOffset? creationOn, TaskStatus? status, PlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeout, TaskStepProperties step, TriggerProperties trigger, Credentials credentials, string logTemplate, bool? isSystemTask) : base(id, name, resourceType, systemData, tags, location)
+        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IdentityProperties identity, ProvisioningState? provisioningState, DateTimeOffset? createdOn, TaskStatus? status, PlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeout, TaskStepProperties step, TriggerProperties trigger, Credentials credentials, string logTemplate, bool? isSystemTask) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             Status = status;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The provisioning state of the task. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of task. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current status of task. </summary>
         public TaskStatus? Status { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
