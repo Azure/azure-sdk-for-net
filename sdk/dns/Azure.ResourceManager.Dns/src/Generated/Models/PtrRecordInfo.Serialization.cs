@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsPtrRecord : IUtf8JsonSerializable
+    public partial class PtrRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static DnsPtrRecord DeserializeDnsPtrRecord(JsonElement element)
+        internal static PtrRecordInfo DeserializePtrRecordInfo(JsonElement element)
         {
             Optional<string> ptrdname = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsPtrRecord(ptrdname.Value);
+            return new PtrRecordInfo(ptrdname.Value);
         }
     }
 }

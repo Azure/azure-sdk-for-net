@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsMXRecord : IUtf8JsonSerializable
+    public partial class MXRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static DnsMXRecord DeserializeDnsMXRecord(JsonElement element)
+        internal static MXRecordInfo DeserializeMXRecordInfo(JsonElement element)
         {
             Optional<int> preference = default;
             Optional<string> exchange = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsMXRecord(Optional.ToNullable(preference), exchange.Value);
+            return new MXRecordInfo(Optional.ToNullable(preference), exchange.Value);
         }
     }
 }

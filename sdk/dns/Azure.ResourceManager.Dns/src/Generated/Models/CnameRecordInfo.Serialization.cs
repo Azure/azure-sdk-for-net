@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsNSRecord : IUtf8JsonSerializable
+    internal partial class CnameRecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DnsNSDomainName))
+            if (Optional.IsDefined(Cname))
             {
-                writer.WritePropertyName("nsdname");
-                writer.WriteStringValue(DnsNSDomainName);
+                writer.WritePropertyName("cname");
+                writer.WriteStringValue(Cname);
             }
             writer.WriteEndObject();
         }
 
-        internal static DnsNSRecord DeserializeDnsNSRecord(JsonElement element)
+        internal static CnameRecordInfo DeserializeCnameRecordInfo(JsonElement element)
         {
-            Optional<string> nsdname = default;
+            Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nsdname"))
+                if (property.NameEquals("cname"))
                 {
-                    nsdname = property.Value.GetString();
+                    cname = property.Value.GetString();
                     continue;
                 }
             }
-            return new DnsNSRecord(nsdname.Value);
+            return new CnameRecordInfo(cname.Value);
         }
     }
 }

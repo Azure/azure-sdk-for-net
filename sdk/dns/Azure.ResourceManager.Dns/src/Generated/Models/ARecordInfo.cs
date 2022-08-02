@@ -10,16 +10,16 @@ using System.Net;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An A record. </summary>
-    public partial class DnsARecord
+    public partial class ARecordInfo
     {
-        /// <summary> Initializes a new instance of DnsARecord. </summary>
-        public DnsARecord()
+        /// <summary> Initializes a new instance of ARecordInfo. </summary>
+        public ARecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsARecord. </summary>
+        /// <summary> Initializes a new instance of ARecordInfo. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        internal DnsARecord(IPAddress ipv4Address)
+        internal ARecordInfo(IPAddress ipv4Address)
         {
             IPv4Address = ipv4Address;
         }

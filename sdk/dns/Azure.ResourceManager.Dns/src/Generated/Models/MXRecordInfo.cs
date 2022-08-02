@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An MX record. </summary>
-    public partial class DnsMXRecord
+    public partial class MXRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsMXRecord. </summary>
-        public DnsMXRecord()
+        /// <summary> Initializes a new instance of MXRecordInfo. </summary>
+        public MXRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsMXRecord. </summary>
+        /// <summary> Initializes a new instance of MXRecordInfo. </summary>
         /// <param name="preference"> The preference value for this MX record. </param>
         /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
-        internal DnsMXRecord(int? preference, string exchange)
+        internal MXRecordInfo(int? preference, string exchange)
         {
             Preference = preference;
             Exchange = exchange;

@@ -11,36 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsAaaaRecord : IUtf8JsonSerializable
+    public partial class ARecordInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPv6Address))
+            if (Optional.IsDefined(IPv4Address))
             {
-                writer.WritePropertyName("ipv6Address");
-                writer.WriteStringValue(IPv6Address.ToString());
+                writer.WritePropertyName("ipv4Address");
+                writer.WriteStringValue(IPv4Address.ToString());
             }
             writer.WriteEndObject();
         }
 
-        internal static DnsAaaaRecord DeserializeDnsAaaaRecord(JsonElement element)
+        internal static ARecordInfo DeserializeARecordInfo(JsonElement element)
         {
-            Optional<IPAddress> ipv6Address = default;
+            Optional<IPAddress> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv6Address"))
+                if (property.NameEquals("ipv4Address"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ipv6Address = IPAddress.Parse(property.Value.GetString());
+                    ipv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }
-            return new DnsAaaaRecord(ipv6Address.Value);
+            return new ARecordInfo(ipv4Address.Value);
         }
     }
 }
