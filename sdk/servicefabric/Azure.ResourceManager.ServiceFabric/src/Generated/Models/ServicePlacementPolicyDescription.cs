@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Serialized Name: ServicePlacementPolicyDescription
-    /// </summary>
+    /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
     public partial class ServicePlacementPolicyDescription
     {
         /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
-        /// <param name="policyType">
-        /// The type of placement policy for a service fabric service. Following are the possible values.
-        /// Serialized Name: ServicePlacementPolicyDescription.type
-        /// </param>
+        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         internal ServicePlacementPolicyDescription(ServicePlacementPolicyType policyType)
         {
             PolicyType = policyType;
         }
 
-        /// <summary>
-        /// The type of placement policy for a service fabric service. Following are the possible values.
-        /// Serialized Name: ServicePlacementPolicyDescription.type
-        /// </summary>
+        /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
         internal ServicePlacementPolicyType PolicyType { get; set; }
     }
 }
