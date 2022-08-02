@@ -66,6 +66,11 @@ namespace Azure.Core.TestFramework
 
         private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
+            if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
+            {
+                // just return immediately if in playback as there will be nothing to match with
+                return;
+            }
             try
             {
                 RedirectToTestProxy(message);
@@ -156,11 +161,6 @@ namespace Azure.Core.TestFramework
                 if (_filter() == EntryRecordModel.RecordWithoutRequestBody)
                 {
                     message.Request.Content = null;
-                }
-                else if (_filter() == EntryRecordModel.DoNotRecord)
-                {
-                    // skip going to the test proxy as there will be nothing to match the request against anyway.
-                    return;
                 }
             }
 
