@@ -58,6 +58,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Odatatype: OdataType
+  AutoScale: Autoscale
 
 irregular-plural-words:
   status: status
@@ -95,20 +96,33 @@ rename-mapping:
   AutoscaleSettingResourcePatch.properties.targetResourceUri: targetResourceId
   AutoscaleSettingResourcePatch.properties.enabled: IsEnabled
   AutoscaleSettingResourcePatch.properties.name: AutoscaleSettingName
-  AzureMonitorPrivateLinkScope: PrivateLinkScope
-  ScopedResource: PrivateLinkScopedResource
+  AzureMonitorPrivateLinkScope: MonitorPrivateLinkScope
+  AccessModeSettings: MonitorPrivateLinkAccessModeSettings
+  AccessModeSettingsExclusion: MonitorPrivateLinkAccessModeSettingsExclusion
+  AccessMode: MonitorPrivateLinkAccessMode
+  ScopedResource: MonitorPrivateLinkScopedResource
+  ScopedResource.properties.linkedResourceId: -|arm-id
+  ActivityLogAlertActionGroup.actionGroupId: -|arm-id
   DataCollectionRuleAssociation: DataCollectionRuleAssociationProperties
   DataCollectionRuleAssociationProxyOnlyResource: DataCollectionRuleAssociation
   ActionGroup: ActionGroupProperties
   ActionGroupResource: ActionGroup
   ActionGroupResource.properties.enabled: IsEnabled
+  ActionGroupPatchBody.properties.enabled: IsEnabled
   MetricAlertResource: MetricAlert
+  MetricAlertResource.properties.targetResourceType: -|resource-type
+  MetricAlertResource.properties.targetResourceRegion: -|azure-location
+  MetricAlertResourcePatch.properties.targetResourceType: -|resource-type
+  MetricAlertResourcePatch.properties.targetResourceRegion: -|azure-location
   DiagnosticSettings: DiagnosticSettingsProperties
   DiagnosticSettingsResource: DiagnosticSettings
+  DiagnosticSettingsResource.properties.workspaceId: -|arm-id
+  PrivateLinkResource.properties.groupId: -|arm-id
   ActivityLogAlert: ActivityLogAlertProperties
   ActivityLogAlertResource: ActivityLogAlert
   ActivityLogAlertResource.properties.enabled: IsEnabled
   ActivityLogAlertResourcePatch.properties.enabled: IsEnabled
+  AlertRulePatchObject.properties.enabled: IsEnabled
   AlertRule: AlertRuleProperties
   AlertRuleResource: AlertRule
   AlertRuleResource.properties.name: AlertRuleName
@@ -124,10 +138,9 @@ rename-mapping:
   RuleDataSource.resourceUri: resourceId
   RuleMetricDataSource.resourceUri: resourceId
   RuleManagementEventDataSource.resourceUri: resourceId
-  LogSearchRule.autoMitigate: IsAutoMitigate
-  MetricAlertResource.properties.autoMitigate: IsAutoMitigate
+  MetricAlertResource.properties.autoMitigate: IsAutoMitigateEnabled
   MetricAlertResource.properties.enabled: IsEnabled
-  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigate
+  MetricAlertResourcePatch.properties.autoMitigate: IsAutoMitigateEnabled
   MetricAlertResourcePatch.properties.enabled: IsEnabled
   MetricSettings.enabled: IsEnabled
   EventData: EventDataInfo
@@ -160,8 +173,12 @@ rename-mapping:
   TimeWindow: MonitorTimeWindow
   ArmRoleReceiver: MonitorArmRoleReceiver
   AutomationRunbookReceiver: MonitorAutomationRunbookReceiver
+  AutomationRunbookReceiver.automationAccountId: -|arm-id
+  AutomationRunbookReceiver.webhookResourceId: -|arm-id
   AzureAppPushReceiver: MonitorAzureAppPushReceiver
   AzureFunctionReceiver: MonitorAzureFunctionReceiver
+  AzureFunctionReceiver.functionAppResourceId: -|arm-id
+  Source.dataSourceId: -|arm-id
   EmailReceiver: MonitorEmailReceiver
   EventHubReceiver: MonitorEventHubReceiver
   ItsmReceiver: MonitorItsmReceiver
@@ -170,6 +187,7 @@ rename-mapping:
   VoiceReceiver: MonitorVoiceReceiver
   WebhookReceiver: MonitorWebhookReceiver
   WorkspaceInfo: DataContainerWorkspace
+  WorkspaceInfo.id: -|arm-id
   CategoryType: MonitorCategoryType
   ConditionOperator: MonitorConditionOperator
   EventLevel: MonitorEventLevel
@@ -183,6 +201,17 @@ rename-mapping:
   EnableRequest: ActionGroupEnableContent
   OperationStatus: MonitorPrivateLinkScopeOperationStatus
   QueryType: MonitorSourceQueryType
+  RuleDataSource.legacyResourceId: -|arm-id
+  LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
+  ScaleRule: AutoscaleRule
+  ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
+  TestNotificationDetailsResponse.completedTime: -|datetime
+  TestNotificationDetailsResponse.createdTime: -|datetime
+  HttpRequestInfo: EventDataHttpRequestInfo
+  HttpRequestInfo.clientIpAddress: -|ip-address
+  MetricAlertAction.actionGroupId: -|arm-id
+  WebtestLocationAvailabilityCriteria.webTestId: -|arm-id
+  WebtestLocationAvailabilityCriteria.componentId: -|arm-id
 
 directive:
   # nullable issue resolution
@@ -230,42 +259,42 @@ directive:
     where: $.definitions.ProxyResource
     transform: $["x-ms-client-name"] = "CommonProxyResource"
   # some format changes
-  - from: swagger-document
-    where: $.definitions.DiagnosticSettings.properties.workspaceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.ScopedResourceProperties.properties.linkedResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: activityLogAlerts_API.json
-    where: $.definitions.ActionGroup.properties.actionGroupId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.AutomationRunbookReceiver.properties.automationAccountId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.AutomationRunbookReceiver.properties.webhookResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.AzureFunctionReceiver.properties.functionAppResourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.MetricAlertAction.properties.actionGroupId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.Source.properties.dataSourceId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.WebtestLocationAvailabilityCriteria.properties.webTestId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.WebtestLocationAvailabilityCriteria.properties.componentId
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.WorkspaceInfo.properties.id
-    transform: $["x-ms-format"] = "arm-id"
-  - from: swagger-document
-    where: $.definitions.PrivateLinkResourceProperties.properties.groupId
-    transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.DiagnosticSettings.properties.workspaceId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.ScopedResourceProperties.properties.linkedResourceId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: activityLogAlerts_API.json
+#     where: $.definitions.ActionGroup.properties.actionGroupId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.AutomationRunbookReceiver.properties.automationAccountId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.AutomationRunbookReceiver.properties.webhookResourceId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.AzureFunctionReceiver.properties.functionAppResourceId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.MetricAlertAction.properties.actionGroupId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.Source.properties.dataSourceId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.WebtestLocationAvailabilityCriteria.properties.webTestId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.WebtestLocationAvailabilityCriteria.properties.componentId
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.WorkspaceInfo.properties.id
+#     transform: $["x-ms-format"] = "arm-id"
+#   - from: swagger-document
+#     where: $.definitions.PrivateLinkResourceProperties.properties.groupId
+#     transform: $["x-ms-format"] = "arm-id"
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties

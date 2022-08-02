@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ScaleRule : IUtf8JsonSerializable
+    public partial class AutoscaleRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static ScaleRule DeserializeScaleRule(JsonElement element)
+        internal static AutoscaleRule DeserializeAutoscaleRule(JsonElement element)
         {
             MetricTrigger metricTrigger = default;
             MonitorScaleAction scaleAction = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ScaleRule(metricTrigger, scaleAction);
+            return new AutoscaleRule(metricTrigger, scaleAction);
         }
     }
 }

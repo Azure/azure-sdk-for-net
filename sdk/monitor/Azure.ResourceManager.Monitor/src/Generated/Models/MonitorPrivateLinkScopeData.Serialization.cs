@@ -13,7 +13,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class PrivateLinkScopeData : IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkScopeData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkScopeData DeserializePrivateLinkScopeData(JsonElement element)
+        internal static MonitorPrivateLinkScopeData DeserializeMonitorPrivateLinkScopeData(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            AccessModeSettings accessModeSettings = default;
+            MonitorPrivateLinkAccessModeSettings accessModeSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("accessModeSettings"))
                         {
-                            accessModeSettings = AccessModeSettings.DeserializeAccessModeSettings(property0.Value);
+                            accessModeSettings = MonitorPrivateLinkAccessModeSettings.DeserializeMonitorPrivateLinkAccessModeSettings(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), accessModeSettings);
+            return new MonitorPrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), accessModeSettings);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AccessModeSettingsExclusion : IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkAccessModeSettingsExclusion : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static AccessModeSettingsExclusion DeserializeAccessModeSettingsExclusion(JsonElement element)
+        internal static MonitorPrivateLinkAccessModeSettingsExclusion DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(JsonElement element)
         {
             Optional<string> privateEndpointConnectionName = default;
-            Optional<AccessMode> queryAccessMode = default;
-            Optional<AccessMode> ingestionAccessMode = default;
+            Optional<MonitorPrivateLinkAccessMode> queryAccessMode = default;
+            Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpointConnectionName"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    queryAccessMode = new AccessMode(property.Value.GetString());
+                    queryAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ingestionAccessMode"))
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ingestionAccessMode = new AccessMode(property.Value.GetString());
+                    ingestionAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
             }
-            return new AccessModeSettingsExclusion(privateEndpointConnectionName.Value, Optional.ToNullable(queryAccessMode), Optional.ToNullable(ingestionAccessMode));
+            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName.Value, Optional.ToNullable(queryAccessMode), Optional.ToNullable(ingestionAccessMode));
         }
     }
 }

@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of NotificationStatus. </summary>
         /// <param name="context"> The context info. </param>
         /// <param name="state"> The overall state. </param>
-        /// <param name="completedTime"> The completed time. </param>
-        /// <param name="createdTime"> The created time. </param>
+        /// <param name="completedOn"> The completed time. </param>
+        /// <param name="createdOn"> The created time. </param>
         /// <param name="actionDetails"> The list of action detail. </param>
-        internal NotificationStatus(NotificationContext context, string state, string completedTime, string createdTime, IReadOnlyList<NotificationActionDetail> actionDetails)
+        internal NotificationStatus(NotificationContext context, string state, DateTimeOffset? completedOn, DateTimeOffset? createdOn, IReadOnlyList<NotificationActionDetail> actionDetails)
         {
             Context = context;
             State = state;
-            CompletedTime = completedTime;
-            CreatedTime = createdTime;
+            CompletedOn = completedOn;
+            CreatedOn = createdOn;
             ActionDetails = actionDetails;
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The overall state. </summary>
         public string State { get; }
         /// <summary> The completed time. </summary>
-        public string CompletedTime { get; }
+        public DateTimeOffset? CompletedOn { get; }
         /// <summary> The created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The list of action detail. </summary>
         public IReadOnlyList<NotificationActionDetail> ActionDetails { get; }
     }

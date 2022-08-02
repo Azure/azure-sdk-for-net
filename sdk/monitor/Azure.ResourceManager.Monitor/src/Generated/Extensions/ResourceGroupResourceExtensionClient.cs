@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new LogSearchRuleCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateLinkScopeResources and their operations over a PrivateLinkScopeResource. </returns>
-        public virtual PrivateLinkScopeCollection GetPrivateLinkScopes()
+        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
+        public virtual MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes()
         {
-            return GetCachedClient(Client => new PrivateLinkScopeCollection(Client, Id));
+            return GetCachedClient(Client => new MonitorPrivateLinkScopeCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>

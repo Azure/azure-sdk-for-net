@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

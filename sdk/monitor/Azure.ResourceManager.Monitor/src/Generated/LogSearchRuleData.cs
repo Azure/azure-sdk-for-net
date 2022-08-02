@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
         /// <param name="description"> The description of the Log Search rule. </param>
         /// <param name="displayName"> The display name of the alert rule. </param>
-        /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is false. </param>
+        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be automatically resolved or not. The default is false. </param>
         /// <param name="enabled"> The flag which indicates whether the Log Search rule is enabled. Value should be true or false. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in IS08601 format. </param>
         /// <param name="provisioningState"> Provisioning state of the scheduled query rule. </param>
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Monitor
         /// The available derived classes include <see cref="AlertingAction"/> and <see cref="LogToMetricAction"/>.
         /// </param>
         /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, MonitorEnabled? enabled, DateTimeOffset? lastUpdatedOn, MonitorProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? isAutoMitigateEnabled, MonitorEnabled? enabled, DateTimeOffset? lastUpdatedOn, MonitorProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
             Description = description;
             DisplayName = displayName;
-            AutoMitigate = autoMitigate;
+            IsAutoMitigateEnabled = isAutoMitigateEnabled;
             Enabled = enabled;
             LastUpdatedOn = lastUpdatedOn;
             ProvisioningState = provisioningState;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The display name of the alert rule. </summary>
         public string DisplayName { get; set; }
         /// <summary> The flag that indicates whether the alert should be automatically resolved or not. The default is false. </summary>
-        public bool? AutoMitigate { get; set; }
+        public bool? IsAutoMitigateEnabled { get; set; }
         /// <summary> The flag which indicates whether the Log Search rule is enabled. Value should be true or false. </summary>
         public MonitorEnabled? Enabled { get; set; }
         /// <summary> Last time the rule was updated in IS08601 format. </summary>

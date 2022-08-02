@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorTimeAggregationType timeAggregation = default;
             ComparisonOperationType @operator = default;
             double threshold = default;
-            Optional<IList<ScaleRuleMetricDimension>> dimensions = default;
+            Optional<IList<AutoscaleRuleMetricDimension>> dimensions = default;
             Optional<bool> dividePerInstance = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         dimensions = null;
                         continue;
                     }
-                    List<ScaleRuleMetricDimension> array = new List<ScaleRuleMetricDimension>();
+                    List<AutoscaleRuleMetricDimension> array = new List<AutoscaleRuleMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScaleRuleMetricDimension.DeserializeScaleRuleMetricDimension(item));
+                        array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item));
                     }
                     dimensions = array;
                     continue;

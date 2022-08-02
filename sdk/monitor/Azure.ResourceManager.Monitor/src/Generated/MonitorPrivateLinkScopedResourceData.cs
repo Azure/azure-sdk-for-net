@@ -10,22 +10,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the PrivateLinkScopedResource data model. </summary>
-    public partial class PrivateLinkScopedResourceData : ResourceData
+    /// <summary> A class representing the MonitorPrivateLinkScopedResource data model. </summary>
+    public partial class MonitorPrivateLinkScopedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceData. </summary>
-        public PrivateLinkScopedResourceData()
+        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
+        public MonitorPrivateLinkScopedResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopedResourceData. </summary>
+        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal PrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState) : base(id, name, resourceType, systemData)
+        internal MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState) : base(id, name, resourceType, systemData)
         {
             LinkedResourceId = linkedResourceId;
             ProvisioningState = provisioningState;

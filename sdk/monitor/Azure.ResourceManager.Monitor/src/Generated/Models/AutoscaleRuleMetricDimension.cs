@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies an auto scale rule metric dimension. </summary>
-    public partial class ScaleRuleMetricDimension
+    public partial class AutoscaleRuleMetricDimension
     {
-        /// <summary> Initializes a new instance of ScaleRuleMetricDimension. </summary>
+        /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
         /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> or <paramref name="values"/> is null. </exception>
-        public ScaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IEnumerable<string> values)
+        public AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IEnumerable<string> values)
         {
             if (dimensionName == null)
             {
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of ScaleRuleMetricDimension. </summary>
+        /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
         /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
-        internal ScaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values)
+        internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values)
         {
             DimensionName = dimensionName;
             Operator = @operator;

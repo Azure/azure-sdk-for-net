@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a PrivateLinkScopedResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateLinkScopedResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateLinkScopedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkScopeResource" /> using the GetPrivateLinkScopedResource method.
+    /// A Class representing a MonitorPrivateLinkScopedResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorPrivateLinkScopedResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMonitorPrivateLinkScopedResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource" /> using the GetMonitorPrivateLinkScopedResource method.
     /// </summary>
-    public partial class PrivateLinkScopedResource : ArmResource
+    public partial class MonitorPrivateLinkScopedResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PrivateLinkScopedResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MonitorPrivateLinkScopedResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _privateLinkScopedResourceClientDiagnostics;
-        private readonly PrivateLinkScopedResourcesRestOperations _privateLinkScopedResourceRestClient;
-        private readonly PrivateLinkScopedResourceData _data;
+        private readonly ClientDiagnostics _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics;
+        private readonly PrivateLinkScopedResourcesRestOperations _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient;
+        private readonly MonitorPrivateLinkScopedResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkScopedResource"/> class for mocking. </summary>
-        protected PrivateLinkScopedResource()
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopedResource"/> class for mocking. </summary>
+        protected MonitorPrivateLinkScopedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateLinkScopedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "MonitorPrivateLinkScopedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkScopedResource(ArmClient client, PrivateLinkScopedResourceData data) : this(client, data.Id)
+        internal MonitorPrivateLinkScopedResource(ArmClient client, MonitorPrivateLinkScopedResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkScopedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkScopedResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorPrivateLinkScopedResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkScopedResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string privateLinkScopedResourceApiVersion);
-            _privateLinkScopedResourceRestClient = new PrivateLinkScopedResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkScopedResourceApiVersion);
+            _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesApiVersion);
+            _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient = new PrivateLinkScopedResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateLinkScopedResourceData Data
+        public virtual MonitorPrivateLinkScopedResourceData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopedResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkScopedResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopedResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopedResourceClientDiagnostics.CreateScope("PrivateLinkScopedResource.Get");
+            using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopedResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkScopedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopedResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkScopedResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopedResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopedResourceClientDiagnostics.CreateScope("PrivateLinkScopedResource.Get");
+            using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkScopedResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkScopedResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopedResourceClientDiagnostics.CreateScope("PrivateLinkScopedResource.Delete");
+            using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Delete");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopedResourceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation(_privateLinkScopedResourceClientDiagnostics, Pipeline, _privateLinkScopedResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation(_monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopedResourceClientDiagnostics.CreateScope("PrivateLinkScopedResource.Delete");
+            using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Delete");
             scope.Start();
             try
             {
-                var response = _privateLinkScopedResourceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MonitorArmOperation(_privateLinkScopedResourceClientDiagnostics, Pipeline, _privateLinkScopedResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new MonitorArmOperation(_monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopedResources_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The PrivateLinkScopedResource to use. </param>
+        /// <param name="data"> The MonitorPrivateLinkScopedResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkScopedResource>> UpdateAsync(WaitUntil waitUntil, PrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MonitorPrivateLinkScopedResource>> UpdateAsync(WaitUntil waitUntil, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateLinkScopedResourceClientDiagnostics.CreateScope("PrivateLinkScopedResource.Update");
+            using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Update");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopedResourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<PrivateLinkScopedResource>(new PrivateLinkScopedResourceOperationSource(Client), _privateLinkScopedResourceClientDiagnostics, Pipeline, _privateLinkScopedResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(new MonitorPrivateLinkScopedResourceOperationSource(Client), _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopedResources_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The PrivateLinkScopedResource to use. </param>
+        /// <param name="data"> The MonitorPrivateLinkScopedResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkScopedResource> Update(WaitUntil waitUntil, PrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MonitorPrivateLinkScopedResource> Update(WaitUntil waitUntil, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateLinkScopedResourceClientDiagnostics.CreateScope("PrivateLinkScopedResource.Update");
+            using var scope = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResource.Update");
             scope.Start();
             try
             {
-                var response = _privateLinkScopedResourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MonitorArmOperation<PrivateLinkScopedResource>(new PrivateLinkScopedResourceOperationSource(Client), _privateLinkScopedResourceClientDiagnostics, Pipeline, _privateLinkScopedResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(new MonitorPrivateLinkScopedResourceOperationSource(Client), _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesClientDiagnostics, Pipeline, _monitorPrivateLinkScopedResourcePrivateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

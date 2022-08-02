@@ -376,10 +376,10 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivateLinkScopeResource> GetPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateLinkScopesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -389,10 +389,10 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivateLinkScopeResource> GetPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetPrivateLinkScopes(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
@@ -682,12 +682,12 @@ namespace Azure.ResourceManager.Monitor
             return resourceGroupResource.GetLogSearchRules().Get(ruleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopeResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of PrivateLinkScopeResources and their operations over a PrivateLinkScopeResource. </returns>
-        public static PrivateLinkScopeCollection GetPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
+        public static MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetPrivateLinkScopes();
+            return GetExtensionClient(resourceGroupResource).GetMonitorPrivateLinkScopes();
         }
 
         /// <summary>
@@ -701,9 +701,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateLinkScopeResource>> GetPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorPrivateLinkScopeResource>> GetMonitorPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMonitorPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -717,9 +717,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateLinkScopeResource> GetPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
+        public static Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPrivateLinkScopes().Get(scopeName, cancellationToken);
+            return resourceGroupResource.GetMonitorPrivateLinkScopes().Get(scopeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
@@ -1252,20 +1252,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region PrivateLinkScopeResource
+        #region MonitorPrivateLinkScopeResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkScopeResource" /> object. </returns>
-        public static PrivateLinkScopeResource GetPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
+        public static MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkScopeResource.ValidateResourceId(id);
-                return new PrivateLinkScopeResource(client, id);
+                MonitorPrivateLinkScopeResource.ValidateResourceId(id);
+                return new MonitorPrivateLinkScopeResource(client, id);
             }
             );
         }
@@ -1309,20 +1309,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region PrivateLinkScopedResource
+        #region MonitorPrivateLinkScopedResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkScopedResource" /> object. </returns>
-        public static PrivateLinkScopedResource GetPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
+        public static MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateLinkScopedResource.ValidateResourceId(id);
-                return new PrivateLinkScopedResource(client, id);
+                MonitorPrivateLinkScopedResource.ValidateResourceId(id);
+                return new MonitorPrivateLinkScopedResource(client, id);
             }
             );
         }

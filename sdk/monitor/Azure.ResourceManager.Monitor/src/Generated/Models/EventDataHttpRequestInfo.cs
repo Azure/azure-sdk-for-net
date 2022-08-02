@@ -6,23 +6,24 @@
 #nullable disable
 
 using System;
+using System.Net;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The Http request info. </summary>
-    public partial class HttpRequestInfo
+    public partial class EventDataHttpRequestInfo
     {
-        /// <summary> Initializes a new instance of HttpRequestInfo. </summary>
-        internal HttpRequestInfo()
+        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
+        internal EventDataHttpRequestInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
         /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
-        internal HttpRequestInfo(string clientRequestId, string clientIPAddress, string method, Uri uri)
+        internal EventDataHttpRequestInfo(string clientRequestId, IPAddress clientIPAddress, string method, Uri uri)
         {
             ClientRequestId = clientRequestId;
             ClientIPAddress = clientIPAddress;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the client request id. </summary>
         public string ClientRequestId { get; }
         /// <summary> the client Ip Address. </summary>
-        public string ClientIPAddress { get; }
+        public IPAddress ClientIPAddress { get; }
         /// <summary> the Http request method. </summary>
         public string Method { get; }
         /// <summary> the Uri. </summary>

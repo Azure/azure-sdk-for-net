@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Optional<NotificationContext> context = default;
             string state = default;
-            Optional<string> completedTime = default;
-            Optional<string> createdTime = default;
+            Optional<DateTimeOffset> completedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
             Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,12 +40,22 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("completedTime"))
                 {
-                    completedTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    completedTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("actionDetails"))
@@ -63,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new NotificationStatus(context.Value, state, completedTime.Value, createdTime.Value, Optional.ToList(actionDetails));
+            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails));
         }
     }
 }

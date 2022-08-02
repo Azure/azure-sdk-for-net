@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("displayName");
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(AutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate");
-                writer.WriteBooleanValue(AutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsDefined(Enabled))
             {

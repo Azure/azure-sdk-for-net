@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AccessModeSettings : IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkAccessModeSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,21 +33,21 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static AccessModeSettings DeserializeAccessModeSettings(JsonElement element)
+        internal static MonitorPrivateLinkAccessModeSettings DeserializeMonitorPrivateLinkAccessModeSettings(JsonElement element)
         {
-            AccessMode queryAccessMode = default;
-            AccessMode ingestionAccessMode = default;
-            Optional<IList<AccessModeSettingsExclusion>> exclusions = default;
+            MonitorPrivateLinkAccessMode queryAccessMode = default;
+            MonitorPrivateLinkAccessMode ingestionAccessMode = default;
+            Optional<IList<MonitorPrivateLinkAccessModeSettingsExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryAccessMode"))
                 {
-                    queryAccessMode = new AccessMode(property.Value.GetString());
+                    queryAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ingestionAccessMode"))
                 {
-                    ingestionAccessMode = new AccessMode(property.Value.GetString());
+                    ingestionAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exclusions"))
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessModeSettingsExclusion> array = new List<AccessModeSettingsExclusion>();
+                    List<MonitorPrivateLinkAccessModeSettingsExclusion> array = new List<MonitorPrivateLinkAccessModeSettingsExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessModeSettingsExclusion.DeserializeAccessModeSettingsExclusion(item));
+                        array.Add(MonitorPrivateLinkAccessModeSettingsExclusion.DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(item));
                     }
                     exclusions = array;
                     continue;
                 }
             }
-            return new AccessModeSettings(queryAccessMode, ingestionAccessMode, Optional.ToList(exclusions));
+            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, Optional.ToList(exclusions));
         }
     }
 }

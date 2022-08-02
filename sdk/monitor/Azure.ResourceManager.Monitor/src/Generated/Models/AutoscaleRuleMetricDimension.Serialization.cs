@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ScaleRuleMetricDimension : IUtf8JsonSerializable
+    public partial class AutoscaleRuleMetricDimension : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static ScaleRuleMetricDimension DeserializeScaleRuleMetricDimension(JsonElement element)
+        internal static AutoscaleRuleMetricDimension DeserializeAutoscaleRuleMetricDimension(JsonElement element)
         {
             string dimensionName = default;
             ScaleRuleMetricDimensionOperationType @operator = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ScaleRuleMetricDimension(dimensionName, @operator, values);
+            return new AutoscaleRuleMetricDimension(dimensionName, @operator, values);
         }
     }
 }

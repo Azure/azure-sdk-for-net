@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a PrivateLinkScope along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateLinkScopeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateLinkScopeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPrivateLinkScope method.
+    /// A Class representing a MonitorPrivateLinkScope along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorPrivateLinkScopeResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMonitorPrivateLinkScopeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMonitorPrivateLinkScope method.
     /// </summary>
-    public partial class PrivateLinkScopeResource : ArmResource
+    public partial class MonitorPrivateLinkScopeResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PrivateLinkScopeResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MonitorPrivateLinkScopeResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _privateLinkScopeClientDiagnostics;
-        private readonly PrivateLinkScopesRestOperations _privateLinkScopeRestClient;
-        private readonly PrivateLinkScopeData _data;
+        private readonly ClientDiagnostics _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics;
+        private readonly PrivateLinkScopesRestOperations _monitorPrivateLinkScopePrivateLinkScopesRestClient;
+        private readonly MonitorPrivateLinkScopeData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkScopeResource"/> class for mocking. </summary>
-        protected PrivateLinkScopeResource()
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopeResource"/> class for mocking. </summary>
+        protected MonitorPrivateLinkScopeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateLinkScopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "MonitorPrivateLinkScopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkScopeResource(ArmClient client, PrivateLinkScopeData data) : this(client, data.Id)
+        internal MonitorPrivateLinkScopeResource(ArmClient client, MonitorPrivateLinkScopeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateLinkScopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorPrivateLinkScopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkScopeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorPrivateLinkScopeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string privateLinkScopeApiVersion);
-            _privateLinkScopeRestClient = new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkScopeApiVersion);
+            _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string monitorPrivateLinkScopePrivateLinkScopesApiVersion);
+            _monitorPrivateLinkScopePrivateLinkScopesRestClient = new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitorPrivateLinkScopePrivateLinkScopesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateLinkScopeData Data
+        public virtual MonitorPrivateLinkScopeData Data
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MonitorPrivateLinkResources in the PrivateLinkScope. </summary>
+        /// <summary> Gets a collection of MonitorPrivateLinkResources in the MonitorPrivateLinkScope. </summary>
         /// <returns> An object representing collection of MonitorPrivateLinkResources and their operations over a MonitorPrivateLinkResource. </returns>
         public virtual MonitorPrivateLinkResourceCollection GetMonitorPrivateLinkResources()
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
             return GetMonitorPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MonitorPrivateEndpointConnectionResources in the PrivateLinkScope. </summary>
+        /// <summary> Gets a collection of MonitorPrivateEndpointConnectionResources in the MonitorPrivateLinkScope. </summary>
         /// <returns> An object representing collection of MonitorPrivateEndpointConnectionResources and their operations over a MonitorPrivateEndpointConnectionResource. </returns>
         public virtual MonitorPrivateEndpointConnectionCollection GetMonitorPrivateEndpointConnections()
         {
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Monitor
             return GetMonitorPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopedResources in the PrivateLinkScope. </summary>
-        /// <returns> An object representing collection of PrivateLinkScopedResources and their operations over a PrivateLinkScopedResource. </returns>
-        public virtual PrivateLinkScopedResourceCollection GetPrivateLinkScopedResources()
+        /// <summary> Gets a collection of MonitorPrivateLinkScopedResources in the MonitorPrivateLinkScope. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkScopedResources and their operations over a MonitorPrivateLinkScopedResource. </returns>
+        public virtual MonitorPrivateLinkScopedResourceCollection GetMonitorPrivateLinkScopedResources()
         {
-            return GetCachedClient(Client => new PrivateLinkScopedResourceCollection(Client, Id));
+            return GetCachedClient(Client => new MonitorPrivateLinkScopedResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkScopedResource>> GetPrivateLinkScopedResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopedResource>> GetMonitorPrivateLinkScopedResourceAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateLinkScopedResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorPrivateLinkScopedResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkScopedResource> GetPrivateLinkScopedResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopedResource> GetMonitorPrivateLinkScopedResource(string name, CancellationToken cancellationToken = default)
         {
-            return GetPrivateLinkScopedResources().Get(name, cancellationToken);
+            return GetMonitorPrivateLinkScopedResources().Get(name, cancellationToken);
         }
 
         /// <summary>
@@ -206,16 +206,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopes_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkScopeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Get");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,16 +230,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopes_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkScopeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Get");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.Get");
             scope.Start();
             try
             {
-                var response = _privateLinkScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Delete");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.Delete");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopeRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation(_privateLinkScopeClientDiagnostics, Pipeline, _privateLinkScopeRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation(_monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Delete");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.Delete");
             scope.Start();
             try
             {
-                var response = _privateLinkScopeRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MonitorArmOperation(_privateLinkScopeClientDiagnostics, Pipeline, _privateLinkScopeRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new MonitorArmOperation(_monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _monitorPrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -308,16 +308,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Updated tag information to set into the PrivateLinkScope instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<PrivateLinkScopeResource>> UpdateAsync(PrivateLinkScopePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> UpdateAsync(MonitorPrivateLinkScopePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Update");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.Update");
             scope.Start();
             try
             {
-                var response = await _privateLinkScopeRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                var response = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -334,16 +334,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Updated tag information to set into the PrivateLinkScope instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<PrivateLinkScopeResource> Update(PrivateLinkScopePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeResource> Update(MonitorPrivateLinkScopePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.Update");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.Update");
             scope.Start();
             try
             {
-                var response = _privateLinkScopeRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
+                var response = _monitorPrivateLinkScopePrivateLinkScopesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -361,20 +361,20 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<PrivateLinkScopeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.AddTag");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _privateLinkScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -392,20 +392,20 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<PrivateLinkScopeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.AddTag");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _privateLinkScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -422,11 +422,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PrivateLinkScopeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.SetTags");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.SetTags");
             scope.Start();
             try
             {
@@ -434,8 +434,8 @@ namespace Azure.ResourceManager.Monitor
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _privateLinkScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -452,11 +452,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PrivateLinkScopeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.SetTags");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.SetTags");
             scope.Start();
             try
             {
@@ -464,8 +464,8 @@ namespace Azure.ResourceManager.Monitor
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _privateLinkScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -482,19 +482,19 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<PrivateLinkScopeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.RemoveTag");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _privateLinkScopeRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _monitorPrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -511,19 +511,19 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<PrivateLinkScopeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _privateLinkScopeClientDiagnostics.CreateScope("PrivateLinkScopeResource.RemoveTag");
+            using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _privateLinkScopeRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new PrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _monitorPrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new MonitorPrivateLinkScopeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

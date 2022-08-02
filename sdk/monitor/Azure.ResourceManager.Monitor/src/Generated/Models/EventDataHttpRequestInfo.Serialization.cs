@@ -6,17 +6,18 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class HttpRequestInfo
+    public partial class EventDataHttpRequestInfo
     {
-        internal static HttpRequestInfo DeserializeHttpRequestInfo(JsonElement element)
+        internal static EventDataHttpRequestInfo DeserializeEventDataHttpRequestInfo(JsonElement element)
         {
             Optional<string> clientRequestId = default;
-            Optional<string> clientIPAddress = default;
+            Optional<IPAddress> clientIPAddress = default;
             Optional<string> method = default;
             Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +29,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("clientIpAddress"))
                 {
-                    clientIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("method"))
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new HttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value);
+            return new EventDataHttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value);
         }
     }
 }
