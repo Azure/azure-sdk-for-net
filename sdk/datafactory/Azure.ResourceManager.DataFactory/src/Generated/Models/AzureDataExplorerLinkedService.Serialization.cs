@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
             BinaryData database = default;
             Optional<BinaryData> tenant = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                     }

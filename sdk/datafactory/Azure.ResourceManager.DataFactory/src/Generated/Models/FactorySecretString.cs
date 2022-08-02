@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Factory secure string definition. The string value will be masked with asterisks &apos;*&apos; during Get or List API calls.
     /// Serialized Name: SecureString
     /// </summary>
-    public partial class SecureString : FactorySecretBaseDefinition
+    public partial class FactorySecretString : FactorySecretBaseDefinition
     {
-        /// <summary> Initializes a new instance of SecureString. </summary>
+        /// <summary> Initializes a new instance of FactorySecretString. </summary>
         /// <param name="value">
         /// Value of secure string.
         /// Serialized Name: SecureString.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SecureString(string value)
+        public FactorySecretString(string value)
         {
             if (value == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             SecretBaseType = "SecureString";
         }
 
-        /// <summary> Initializes a new instance of SecureString. </summary>
+        /// <summary> Initializes a new instance of FactorySecretString. </summary>
         /// <param name="secretBaseType">
         /// Type of the secret.
         /// Serialized Name: SecretBase.type
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Value of secure string.
         /// Serialized Name: SecureString.value
         /// </param>
-        internal SecureString(string secretBaseType, string value) : base(secretBaseType)
+        internal FactorySecretString(string secretBaseType, string value) : base(secretBaseType)
         {
             Value = value;
             SecretBaseType = secretBaseType ?? "SecureString";

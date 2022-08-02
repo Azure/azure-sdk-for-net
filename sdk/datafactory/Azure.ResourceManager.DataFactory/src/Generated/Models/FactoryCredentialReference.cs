@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Credential reference type.
     /// Serialized Name: CredentialReference
     /// </summary>
-    public partial class CredentialReference
+    public partial class FactoryCredentialReference
     {
-        /// <summary> Initializes a new instance of CredentialReference. </summary>
+        /// <summary> Initializes a new instance of FactoryCredentialReference. </summary>
         /// <param name="referenceType">
         /// Credential reference type.
         /// Serialized Name: CredentialReference.type
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: CredentialReference.referenceName
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public CredentialReference(CredentialReferenceType referenceType, string referenceName)
+        public FactoryCredentialReference(FactoryCredentialReferenceType referenceType, string referenceName)
         {
             if (referenceName == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CredentialReference. </summary>
+        /// <summary> Initializes a new instance of FactoryCredentialReference. </summary>
         /// <param name="referenceType">
         /// Credential reference type.
         /// Serialized Name: CredentialReference.type
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: CredentialReference.referenceName
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CredentialReference(CredentialReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalProperties)
+        internal FactoryCredentialReference(FactoryCredentialReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> additionalProperties)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Credential reference type.
         /// Serialized Name: CredentialReference.type
         /// </summary>
-        public CredentialReferenceType ReferenceType { get; set; }
+        public FactoryCredentialReferenceType ReferenceType { get; set; }
         /// <summary>
         /// Reference credential name.
         /// Serialized Name: CredentialReference.referenceName

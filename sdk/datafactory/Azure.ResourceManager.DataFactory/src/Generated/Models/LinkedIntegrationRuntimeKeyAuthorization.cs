@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization.key
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public LinkedIntegrationRuntimeKeyAuthorization(SecureString key)
+        public LinkedIntegrationRuntimeKeyAuthorization(FactorySecretString key)
         {
             if (key == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The key used for authorization.
         /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization.key
         /// </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SecureString key) : base(authorizationType)
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, FactorySecretString key) : base(authorizationType)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The key used for authorization.
         /// Serialized Name: LinkedIntegrationRuntimeKeyAuthorization.key
         /// </summary>
-        public SecureString Key { get; set; }
+        public FactorySecretString Key { get; set; }
     }
 }

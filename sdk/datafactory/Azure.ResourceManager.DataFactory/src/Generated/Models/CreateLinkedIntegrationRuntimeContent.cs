@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -37,6 +39,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The location of the data factory that the linked integration runtime belongs to.
         /// Serialized Name: CreateLinkedIntegrationRuntimeRequest.dataFactoryLocation
         /// </summary>
-        public string DataFactoryLocation { get; set; }
+        public AzureLocation? DataFactoryLocation { get; set; }
     }
 }

@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> azureCloudType = default;
             Optional<BinaryData> aadResourceId = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             Optional<BinaryData> clientId = default;
             Optional<FactorySecretBaseDefinition> clientSecret = default;
             Optional<BinaryData> tokenEndpoint = default;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"))

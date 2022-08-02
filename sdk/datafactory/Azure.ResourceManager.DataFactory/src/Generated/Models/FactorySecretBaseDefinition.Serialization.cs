@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecureString": return SecureString.DeserializeSecureString(element);
+                    case "SecureString": return FactorySecretString.DeserializeFactorySecretString(element);
                     case "AzureKeyVaultSecret": return AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(element);
                 }
             }

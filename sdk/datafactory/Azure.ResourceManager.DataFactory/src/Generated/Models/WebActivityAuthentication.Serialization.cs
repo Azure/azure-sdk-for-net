@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> resource = default;
             Optional<BinaryData> userTenant = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
+                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
                     continue;
                 }
             }

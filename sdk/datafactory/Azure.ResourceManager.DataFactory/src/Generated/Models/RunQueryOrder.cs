@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ASCValue = "ASC";
+        private const string AscValue = "ASC";
         private const string DescValue = "DESC";
 
         /// <summary>
         /// ASC
         /// Serialized Name: RunQueryOrder.ASC
         /// </summary>
-        public static RunQueryOrder ASC { get; } = new RunQueryOrder(ASCValue);
+        public static RunQueryOrder Asc { get; } = new RunQueryOrder(AscValue);
         /// <summary>
         /// DESC
         /// Serialized Name: RunQueryOrder.DESC

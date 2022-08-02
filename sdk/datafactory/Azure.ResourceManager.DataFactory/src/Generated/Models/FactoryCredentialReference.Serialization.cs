@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CredentialReference : IUtf8JsonSerializable
+    public partial class FactoryCredentialReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CredentialReference DeserializeCredentialReference(JsonElement element)
+        internal static FactoryCredentialReference DeserializeFactoryCredentialReference(JsonElement element)
         {
-            CredentialReferenceType type = default;
+            FactoryCredentialReferenceType type = default;
             string referenceName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("type"))
                 {
-                    type = new CredentialReferenceType(property.Value.GetString());
+                    type = new FactoryCredentialReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CredentialReference(type, referenceName, additionalProperties);
+            return new FactoryCredentialReference(type, referenceName, additionalProperties);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The password for Basic authentication.
         /// Serialized Name: WebBasicAuthentication.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public WebBasicAuthentication(BinaryData uri, BinaryData username, FactorySecretBaseDefinition password) : base(uri)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The password for Basic authentication.
         /// Serialized Name: WebBasicAuthentication.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         internal WebBasicAuthentication(BinaryData uri, WebAuthenticationType authenticationType, BinaryData username, FactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The password for Basic authentication.
         /// Serialized Name: WebBasicAuthentication.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
     }

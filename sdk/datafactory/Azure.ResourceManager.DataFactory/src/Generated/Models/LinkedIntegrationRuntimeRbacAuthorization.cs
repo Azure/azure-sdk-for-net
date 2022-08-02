@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: LinkedIntegrationRuntimeRbacAuthorization.credential
         /// </param>
-        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId, CredentialReference credential) : base(authorizationType)
+        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId, FactoryCredentialReference credential) : base(authorizationType)
         {
             ResourceId = resourceId;
             Credential = credential;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: LinkedIntegrationRuntimeRbacAuthorization.credential
         /// </summary>
-        public CredentialReference Credential { get; set; }
+        public FactoryCredentialReference Credential { get; set; }
     }
 }

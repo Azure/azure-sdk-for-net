@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<FactorySecretBaseDefinition> accessToken = default;
             Optional<BinaryData> clusterId = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             Optional<BinaryData> workspaceResourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceResourceId"))

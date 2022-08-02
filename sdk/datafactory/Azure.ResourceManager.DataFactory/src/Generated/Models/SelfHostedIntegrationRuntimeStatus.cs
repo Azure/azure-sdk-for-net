@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Nodes = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
             Capabilities = new ChangeTrackingDictionary<string, string>();
-            ServiceUrls = new ChangeTrackingList<string>();
+            ServiceUris = new ChangeTrackingList<Uri>();
             Links = new ChangeTrackingList<LinkedIntegrationRuntime>();
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Object with additional information about integration runtime capabilities.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.capabilities
         /// </param>
-        /// <param name="serviceUrls">
+        /// <param name="serviceUris">
         /// The URLs for the services used in integration runtime backend service.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls
         /// </param>
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The latest version on download center.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.latestVersion
         /// </param>
-        /// <param name="autoUpdateETA">
+        /// <param name="autoUpdateEta">
         /// The estimated time when the self-hosted integration runtime will be updated.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdateETA
         /// </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, string taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<Uri> serviceUris, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreatedOn = createdOn;
             TaskQueueId = taskQueueId;
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             UpdateDelayOffset = updateDelayOffset;
             LocalTimeZoneOffset = localTimeZoneOffset;
             Capabilities = capabilities;
-            ServiceUrls = serviceUrls;
+            ServiceUris = serviceUris;
             AutoUpdate = autoUpdate;
             VersionStatus = versionStatus;
             Links = links;
             PushedVersion = pushedVersion;
             LatestVersion = latestVersion;
-            AutoUpdateETA = autoUpdateETA;
+            AutoUpdateEta = autoUpdateEta;
             RuntimeType = runtimeType;
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The task queue id of the integration runtime.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId
         /// </summary>
-        public string TaskQueueId { get; }
+        public Guid? TaskQueueId { get; }
         /// <summary>
         /// It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.internalChannelEncryption
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.updateDelayOffset
         /// </summary>
-        public string UpdateDelayOffset { get; }
+        public TimeSpan? UpdateDelayOffset { get; }
         /// <summary>
         /// The local time zone offset in hours.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.localTimeZoneOffset
         /// </summary>
-        public string LocalTimeZoneOffset { get; }
+        public TimeSpan? LocalTimeZoneOffset { get; }
         /// <summary>
         /// Object with additional information about integration runtime capabilities.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.capabilities
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The URLs for the services used in integration runtime backend service.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls
         /// </summary>
-        public IReadOnlyList<string> ServiceUrls { get; }
+        public IReadOnlyList<Uri> ServiceUris { get; }
         /// <summary>
         /// Whether Self-hosted integration runtime auto update has been turned on.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdate
@@ -205,6 +205,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The estimated time when the self-hosted integration runtime will be updated.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdateETA
         /// </summary>
-        public DateTimeOffset? AutoUpdateETA { get; }
+        public DateTimeOffset? AutoUpdateEta { get; }
     }
 }

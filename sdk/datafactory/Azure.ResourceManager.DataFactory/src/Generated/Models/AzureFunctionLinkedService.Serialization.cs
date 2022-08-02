@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData functionAppUrl = default;
             Optional<FactorySecretBaseDefinition> functionKey = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             Optional<BinaryData> resourceId = default;
             Optional<BinaryData> authentication = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceId"))

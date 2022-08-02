@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Function or Host key for Azure Function App.
         /// Serialized Name: AzureFunctionLinkedService.typeProperties.functionKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential">
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureFunctionLinkedService.typeProperties.authentication
         /// </param>
-        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData functionAppUri, FactorySecretBaseDefinition functionKey, BinaryData encryptedCredential, CredentialReference credential, BinaryData resourceId, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData functionAppUri, FactorySecretBaseDefinition functionKey, BinaryData encryptedCredential, FactoryCredentialReference credential, BinaryData resourceId, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             FunctionAppUri = functionAppUri;
             FunctionKey = functionKey;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Function or Host key for Azure Function App.
         /// Serialized Name: AzureFunctionLinkedService.typeProperties.functionKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition FunctionKey { get; set; }
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: AzureFunctionLinkedService.typeProperties.credential
         /// </summary>
-        public CredentialReference Credential { get; set; }
+        public FactoryCredentialReference Credential { get; set; }
         /// <summary>
         /// Allowed token audiences for azure function.
         /// Serialized Name: AzureFunctionLinkedService.typeProperties.resourceId

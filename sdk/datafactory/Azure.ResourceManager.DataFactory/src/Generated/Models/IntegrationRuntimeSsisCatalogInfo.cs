@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.dualStandbyPairName
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, FactorySecretString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The password of the administrator user account of the catalog database.
         /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogAdminPassword
         /// </summary>
-        public SecureString CatalogAdminPassword { get; set; }
+        public FactorySecretString CatalogAdminPassword { get; set; }
         /// <summary>
         /// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
         /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogPricingTier

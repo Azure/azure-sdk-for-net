@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The most recent time at which the integration runtime was connected in ISO8601 format.
         /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastConnectTime
         /// </param>
-        /// <param name="expiryOn">
+        /// <param name="expireOn">
         /// The time at which the integration runtime will expire in ISO8601 format.
         /// Serialized Name: SelfHostedIntegrationRuntimeNode.expiryTime
         /// </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: SelfHostedIntegrationRuntimeNode.maxConcurrentJobs
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expiryOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expireOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeName = nodeName;
             MachineName = machineName;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Version = version;
             RegisterOn = registerOn;
             LastConnectOn = lastConnectOn;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             LastStartOn = lastStartOn;
             LastStopOn = lastStopOn;
             LastUpdateResult = lastUpdateResult;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The time at which the integration runtime will expire in ISO8601 format.
         /// Serialized Name: SelfHostedIntegrationRuntimeNode.expiryTime
         /// </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary>
         /// The time the node last started up.
         /// Serialized Name: SelfHostedIntegrationRuntimeNode.lastStartTime

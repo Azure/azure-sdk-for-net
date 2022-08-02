@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The API access token that can be used to access Shopify’s data. The token won&apos;t expire if it is offline mode.
         /// Serialized Name: ShopifyLinkedService.typeProperties.accessToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints">
         /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The API access token that can be used to access Shopify’s data. The token won&apos;t expire if it is offline mode.
         /// Serialized Name: ShopifyLinkedService.typeProperties.accessToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary>

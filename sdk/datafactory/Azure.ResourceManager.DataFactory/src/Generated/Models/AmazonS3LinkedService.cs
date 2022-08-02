@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.secretAccessKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="serviceUri">
         /// This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string).
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The session token for the S3 temporary security credential.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.sessionToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential">
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.secretAccessKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition SecretAccessKey { get; set; }
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The session token for the S3 temporary security credential.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.sessionToken
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition SessionToken { get; set; }
         /// <summary>

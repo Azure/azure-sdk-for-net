@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time.
         /// Serialized Name: UpdateIntegrationRuntimeRequest.updateDelayOffset
         /// </summary>
-        public string UpdateDelayOffset { get; set; }
+        public TimeSpan? UpdateDelayOffset { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UpdateDelayOffset))
             {
                 writer.WritePropertyName("updateDelayOffset");
-                writer.WriteStringValue(UpdateDelayOffset);
+                writer.WriteStringValue(UpdateDelayOffset.Value, "P");
             }
             writer.WriteEndObject();
         }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The SAS token of the Azure blob container.
         /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.sasToken
         /// </param>
-        internal IntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SecureString sasToken)
+        internal IntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, FactorySecretString sasToken)
         {
             BlobContainerUri = blobContainerUri;
             SasToken = sasToken;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The SAS token of the Azure blob container.
         /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.sasToken
         /// </summary>
-        public SecureString SasToken { get; set; }
+        public FactorySecretString SasToken { get; set; }
     }
 }

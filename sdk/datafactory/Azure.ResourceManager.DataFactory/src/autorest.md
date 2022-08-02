@@ -57,6 +57,10 @@ rename-rules:
   Etag: ETag|etag
   Db: DB|db
   CMK: Cmk
+  ASC: Asc
+  ETA: Eta
+  GET: Get
+  PUT: Put
 
 rename-mapping:
   # Property
@@ -87,7 +91,13 @@ rename-mapping:
   ManagedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
   ManagedVirtualNetwork.vNetId: VnetId|uuid
   ManagedPrivateEndpoint.privateLinkResourceId: -|arm-id
+  Office365Source.endTime: EndOn
+  Office365Source.startTime: StartOn
   SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  ScriptActivityParameterType.Timespan: TimeSpan
+  SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
+  SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: serviceUris
   # Factory
   Factory: DataFactory
   FactoryListResponse: FactoryListResult
@@ -186,6 +196,8 @@ rename-mapping:
   # Others
   UserAccessPolicy: FactoryDataPlaneUserAccessPolicy
   AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
+  CredentialReference: FactoryCredentialReference
+  CredentialReferenceType: FactoryCredentialReferenceType
   EncryptionConfiguration: FactoryEncryptionConfiguration
   ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlResponse: ExposureControlResult
@@ -197,6 +209,7 @@ rename-mapping:
   PurviewConfiguration: FactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
   SecretBase: FactorySecretBaseDefinition
+  SecureString: FactorySecretString
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
   
@@ -218,9 +231,15 @@ directive:
     where: $.definitions
     transform: >
       $.DataFlowDebugSessionInfo.properties.lastActivityTime['format'] = 'date-time';
+      $.UpdateIntegrationRuntimeRequest.properties.updateDelayOffset['format'] = 'duration';
   - from: Pipeline.json
     where: $.definitions
     transform: >
       $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
       $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
+  - from: IntegrationRuntime.json
+    where: $.definitions
+    transform: >
+      $.SelfHostedIntegrationRuntimeStatusTypeProperties.properties.updateDelayOffset['format'] = 'duration';
+      $.SelfHostedIntegrationRuntimeStatusTypeProperties.properties.localTimeZoneOffset['format'] = 'duration';
 ```

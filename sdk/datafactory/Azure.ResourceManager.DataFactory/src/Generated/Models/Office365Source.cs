@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string).
         /// Serialized Name: Office365Source.dateFilterColumn
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
         /// Serialized Name: Office365Source.startTime
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// End time of the requested range for this dataset. Type: string (or Expression with resultType string).
         /// Serialized Name: Office365Source.endTime
         /// </param>
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]
         /// Serialized Name: Office365Source.outputColumns
         /// </param>
-        internal Office365Source(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData allowedGroups, BinaryData userScopeFilterUri, BinaryData dateFilterColumn, BinaryData startTime, BinaryData endTime, BinaryData outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal Office365Source(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData allowedGroups, BinaryData userScopeFilterUri, BinaryData dateFilterColumn, BinaryData startOn, BinaryData endOn, BinaryData outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AllowedGroups = allowedGroups;
             UserScopeFilterUri = userScopeFilterUri;
             DateFilterColumn = dateFilterColumn;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             OutputColumns = outputColumns;
             CopySourceType = copySourceType ?? "Office365Source";
         }
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
         /// Serialized Name: Office365Source.startTime
         /// </summary>
-        public BinaryData StartTime { get; set; }
+        public BinaryData StartOn { get; set; }
         /// <summary>
         /// End time of the requested range for this dataset. Type: string (or Expression with resultType string).
         /// Serialized Name: Office365Source.endTime
         /// </summary>
-        public BinaryData EndTime { get; set; }
+        public BinaryData EndOn { get; set; }
         /// <summary>
         /// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]
         /// Serialized Name: Office365Source.outputColumns

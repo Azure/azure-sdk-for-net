@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The secret access key of the Oracle Cloud Storage Identity and Access Management (IAM) user.
         /// Serialized Name: OracleCloudStorageLinkedService.typeProperties.secretAccessKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="serviceUri">
         /// This value specifies the endpoint to access with the Oracle Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string).
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The secret access key of the Oracle Cloud Storage Identity and Access Management (IAM) user.
         /// Serialized Name: OracleCloudStorageLinkedService.typeProperties.secretAccessKey
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition SecretAccessKey { get; set; }
         /// <summary>

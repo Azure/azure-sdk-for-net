@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: SsisExecutionCredential.password
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisExecutionCredential(BinaryData domain, BinaryData userName, SecureString password)
+        public SsisExecutionCredential(BinaryData domain, BinaryData userName, FactorySecretString password)
         {
             if (domain == null)
             {
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Password for windows authentication.
         /// Serialized Name: SsisExecutionCredential.password
         /// </summary>
-        public SecureString Password { get; set; }
+        public FactorySecretString Password { get; set; }
     }
 }

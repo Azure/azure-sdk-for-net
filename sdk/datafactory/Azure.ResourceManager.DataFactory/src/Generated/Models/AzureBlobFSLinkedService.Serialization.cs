@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> tenant = default;
             Optional<BinaryData> azureCloudType = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             Optional<BinaryData> servicePrincipalCredentialType = default;
             Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalCredentialType"))

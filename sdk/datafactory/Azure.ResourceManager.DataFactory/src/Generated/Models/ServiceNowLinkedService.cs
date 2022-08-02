@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The password corresponding to the user name for Basic and OAuth2 authentication.
         /// Serialized Name: ServiceNowLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="clientId">
         /// The client id for OAuth2 authentication.
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The client secret for OAuth2 authentication.
         /// Serialized Name: ServiceNowLinkedService.typeProperties.clientSecret
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints">
         /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The password corresponding to the user name for Basic and OAuth2 authentication.
         /// Serialized Name: ServiceNowLinkedService.typeProperties.password
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The client secret for OAuth2 authentication.
         /// Serialized Name: ServiceNowLinkedService.typeProperties.clientSecret
         /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public FactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary>

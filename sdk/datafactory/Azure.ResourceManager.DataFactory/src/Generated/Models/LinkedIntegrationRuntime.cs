@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The creating time of the linked integration runtime.
         /// Serialized Name: LinkedIntegrationRuntime.createTime
         /// </param>
-        internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createdOn)
+        internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, AzureLocation? dataFactoryLocation, DateTimeOffset? createdOn)
         {
             Name = name;
             SubscriptionId = subscriptionId;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The location of the data factory for which the linked integration runtime belong to.
         /// Serialized Name: LinkedIntegrationRuntime.dataFactoryLocation
         /// </summary>
-        public string DataFactoryLocation { get; }
+        public AzureLocation? DataFactoryLocation { get; }
         /// <summary>
         /// The creating time of the linked integration runtime.
         /// Serialized Name: LinkedIntegrationRuntime.createTime
