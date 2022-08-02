@@ -6,17 +6,18 @@
 #nullable disable
 
 using System;
+using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> Configure the presenter layout. </summary>
-    public partial class PresenterLayoutOptions
+    public partial class PresenterLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of PresenterLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of PresenterLayout. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="supportId"> Id of the support input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="supportId"/> is null. </exception>
-        public PresenterLayoutOptions(string presenterId, string supportId)
+        public PresenterLayout(string presenterId, string supportId)
         {
             if (presenterId == null)
             {
@@ -29,19 +30,24 @@ namespace Azure.Communication.MediaComposition
 
             PresenterId = presenterId;
             SupportId = supportId;
+            Kind = LayoutType.Presenter;
         }
 
-        /// <summary> Initializes a new instance of PresenterLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of PresenterLayout. </summary>
+        /// <param name="kind"> Kind of layout. </param>
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="supportId"> Id of the support input. </param>
         /// <param name="supportPosition"> Position of the support stream. </param>
         /// <param name="supportAspectRatio"> Aspect ratio of the support stream. </param>
-        internal PresenterLayoutOptions(string presenterId, string supportId, SupportPosition? supportPosition, double? supportAspectRatio)
+        internal PresenterLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, string presenterId, string supportId, SupportPosition? supportPosition, double? supportAspectRatio) : base(kind, resolution, placeholderImageUri)
         {
             PresenterId = presenterId;
             SupportId = supportId;
             SupportPosition = supportPosition;
             SupportAspectRatio = supportAspectRatio;
+            Kind = kind;
         }
 
         /// <summary> Id of the presenter input. </summary>

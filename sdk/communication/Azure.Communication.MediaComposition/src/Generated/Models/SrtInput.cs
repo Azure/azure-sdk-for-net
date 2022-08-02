@@ -10,20 +10,15 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> Rtmp stream to be used as an input or output. </summary>
-    public partial class RtmpStream
+    /// <summary> Srt stream to be used as an input. </summary>
+    public partial class SrtInput : MediaInput
     {
-        /// <summary> Initializes a new instance of RtmpStream. </summary>
-        /// <param name="streamKey"> Stream key of the stream. </param>
+        /// <summary> Initializes a new instance of SrtInput. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="streamKey"/>, <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
-        public RtmpStream(string streamKey, LayoutResolution resolution, string streamUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
+        public SrtInput(LayoutResolution resolution, string streamUrl)
         {
-            if (streamKey == null)
-            {
-                throw new ArgumentNullException(nameof(streamKey));
-            }
             if (resolution == null)
             {
                 throw new ArgumentNullException(nameof(resolution));
@@ -33,31 +28,26 @@ namespace Azure.Communication.MediaComposition
                 throw new ArgumentNullException(nameof(streamUrl));
             }
 
-            StreamKey = streamKey;
             Resolution = resolution;
             StreamUrl = streamUrl;
+            Kind = MediaInputType.Srt;
         }
 
-        /// <summary> Initializes a new instance of RtmpStream. </summary>
-        /// <param name="streamKey"> Stream key of the stream. </param>
+        /// <summary> Initializes a new instance of SrtInput. </summary>
+        /// <param name="kind"> Kind of media input. </param>
+        /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
-        /// <param name="mode"> Rtmp mode. </param>
-        internal RtmpStream(string streamKey, LayoutResolution resolution, string streamUrl, RtmpMode? mode)
+        internal SrtInput(MediaInputType kind, string placeholderImageUri, LayoutResolution resolution, string streamUrl) : base(kind, placeholderImageUri)
         {
-            StreamKey = streamKey;
             Resolution = resolution;
             StreamUrl = streamUrl;
-            Mode = mode;
+            Kind = kind;
         }
 
-        /// <summary> Stream key of the stream. </summary>
-        public string StreamKey { get; set; }
         /// <summary> The dimensions of the scene or objects in the scene. </summary>
         public LayoutResolution Resolution { get; set; }
         /// <summary> The url of the stream. </summary>
         public string StreamUrl { get; set; }
-        /// <summary> Rtmp mode. </summary>
-        public RtmpMode? Mode { get; set; }
     }
 }

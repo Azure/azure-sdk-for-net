@@ -5,11 +5,11 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    /// <summary>Media Composition Layout.</summary>
-    [CodeGenModel("Layout")]
-    public partial class MediaCompositionLayout
+    /// <summary> Media input to be used in the composition. </summary>
+    [CodeGenModel("MediaInput")]
+    public partial class MediaInput
     {
-        internal MediaCompositionLayout()
+        internal MediaInput()
         {
         }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class RtmpStream : IUtf8JsonSerializable
+    public partial class RtmpInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,15 +27,24 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("mode");
                 writer.WriteStringValue(Mode.Value.ToString());
             }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(PlaceholderImageUri))
+            {
+                writer.WritePropertyName("placeholderImageUri");
+                writer.WriteStringValue(PlaceholderImageUri);
+            }
             writer.WriteEndObject();
         }
 
-        internal static RtmpStream DeserializeRtmpStream(JsonElement element)
+        internal static RtmpInput DeserializeRtmpInput(JsonElement element)
         {
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
             Optional<RtmpMode> mode = default;
+            MediaInputType kind = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamKey"))
@@ -63,8 +72,18 @@ namespace Azure.Communication.MediaComposition
                     mode = new RtmpMode(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new MediaInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new RtmpStream(streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpInput(kind, placeholderImageUri.Value, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
         }
     }
 }

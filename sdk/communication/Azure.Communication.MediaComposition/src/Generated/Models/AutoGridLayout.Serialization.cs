@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class AutoGridLayoutOptions : IUtf8JsonSerializable
+    public partial class AutoGridLayout : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,13 +29,28 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("highlightDominantSpeaker");
                 writer.WriteBooleanValue(HighlightDominantSpeaker.Value);
             }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(Resolution))
+            {
+                writer.WritePropertyName("resolution");
+                writer.WriteObjectValue(Resolution);
+            }
+            if (Optional.IsDefined(PlaceholderImageUri))
+            {
+                writer.WritePropertyName("placeholderImageUri");
+                writer.WriteStringValue(PlaceholderImageUri);
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutoGridLayoutOptions DeserializeAutoGridLayoutOptions(JsonElement element)
+        internal static AutoGridLayout DeserializeAutoGridLayout(JsonElement element)
         {
             IList<string> inputIds = default;
             Optional<bool> highlightDominantSpeaker = default;
+            LayoutType kind = default;
+            Optional<LayoutResolution> resolution = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputIds"))
@@ -57,8 +73,28 @@ namespace Azure.Communication.MediaComposition
                     highlightDominantSpeaker = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new LayoutType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resolution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new AutoGridLayoutOptions(inputIds, Optional.ToNullable(highlightDominantSpeaker));
+            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, inputIds, Optional.ToNullable(highlightDominantSpeaker));
         }
     }
 }

@@ -6,20 +6,17 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
-namespace Azure.Communication.MediaComposition.Models
+namespace Azure.Communication.MediaComposition
 {
-    public partial class ParticipantInput : IUtf8JsonSerializable
+    public partial class RoomInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteObjectValue(Id);
-            writer.WritePropertyName("call");
-            writer.WriteStringValue(Call);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
@@ -30,22 +27,16 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteEndObject();
         }
 
-        internal static ParticipantInput DeserializeParticipantInput(JsonElement element)
+        internal static RoomInput DeserializeRoomInput(JsonElement element)
         {
-            CommunicationIdentifierModel id = default;
-            string call = default;
+            string id = default;
             MediaInputType kind = default;
             Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("call"))
-                {
-                    call = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -59,7 +50,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ParticipantInput(kind, placeholderImageUri.Value, id, call);
+            return new RoomInput(kind, placeholderImageUri.Value, id);
         }
     }
 }

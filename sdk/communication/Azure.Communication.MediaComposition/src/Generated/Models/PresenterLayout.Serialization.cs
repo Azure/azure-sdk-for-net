@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class PresenterLayoutOptions : IUtf8JsonSerializable
+    public partial class PresenterLayout : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,15 +30,30 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("supportAspectRatio");
                 writer.WriteNumberValue(SupportAspectRatio.Value);
             }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(Resolution))
+            {
+                writer.WritePropertyName("resolution");
+                writer.WriteObjectValue(Resolution);
+            }
+            if (Optional.IsDefined(PlaceholderImageUri))
+            {
+                writer.WritePropertyName("placeholderImageUri");
+                writer.WriteStringValue(PlaceholderImageUri);
+            }
             writer.WriteEndObject();
         }
 
-        internal static PresenterLayoutOptions DeserializePresenterLayoutOptions(JsonElement element)
+        internal static PresenterLayout DeserializePresenterLayout(JsonElement element)
         {
             string presenterId = default;
             string supportId = default;
             Optional<SupportPosition> supportPosition = default;
             Optional<double> supportAspectRatio = default;
+            LayoutType kind = default;
+            Optional<LayoutResolution> resolution = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("presenterId"))
@@ -70,8 +86,28 @@ namespace Azure.Communication.MediaComposition
                     supportAspectRatio = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new LayoutType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resolution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PresenterLayoutOptions(presenterId, supportId, Optional.ToNullable(supportPosition), Optional.ToNullable(supportAspectRatio));
+            return new PresenterLayout(kind, resolution.Value, placeholderImageUri.Value, presenterId, supportId, Optional.ToNullable(supportPosition), Optional.ToNullable(supportAspectRatio));
         }
     }
 }

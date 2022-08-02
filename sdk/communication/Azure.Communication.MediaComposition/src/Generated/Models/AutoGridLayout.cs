@@ -8,16 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> Configure the autogrid layout. </summary>
-    public partial class AutoGridLayoutOptions
+    public partial class AutoGridLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of AutoGridLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of AutoGridLayout. </summary>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
-        public AutoGridLayoutOptions(IEnumerable<string> inputIds)
+        public AutoGridLayout(IEnumerable<string> inputIds)
         {
             if (inputIds == null)
             {
@@ -25,15 +26,20 @@ namespace Azure.Communication.MediaComposition
             }
 
             InputIds = inputIds.ToList();
+            Kind = LayoutType.AutoGrid;
         }
 
-        /// <summary> Initializes a new instance of AutoGridLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of AutoGridLayout. </summary>
+        /// <param name="kind"> Kind of layout. </param>
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <param name="highlightDominantSpeaker"> Toggle dominant speaker highlighting. </param>
-        internal AutoGridLayoutOptions(IList<string> inputIds, bool? highlightDominantSpeaker)
+        internal AutoGridLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, IList<string> inputIds, bool? highlightDominantSpeaker) : base(kind, resolution, placeholderImageUri)
         {
             InputIds = inputIds;
             HighlightDominantSpeaker = highlightDominantSpeaker;
+            Kind = kind;
         }
 
         /// <summary> Input ids to be included in the layout. </summary>

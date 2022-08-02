@@ -10,19 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class TeamsMeeting : IUtf8JsonSerializable
+    public partial class TeamsMeetingOutput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("teamsJoinUrl");
             writer.WriteStringValue(TeamsJoinUrl);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static TeamsMeeting DeserializeTeamsMeeting(JsonElement element)
+        internal static TeamsMeetingOutput DeserializeTeamsMeetingOutput(JsonElement element)
         {
             string teamsJoinUrl = default;
+            MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("teamsJoinUrl"))
@@ -30,8 +33,13 @@ namespace Azure.Communication.MediaComposition
                     teamsJoinUrl = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new MediaOutputType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new TeamsMeeting(teamsJoinUrl);
+            return new TeamsMeetingOutput(kind, teamsJoinUrl);
         }
     }
 }

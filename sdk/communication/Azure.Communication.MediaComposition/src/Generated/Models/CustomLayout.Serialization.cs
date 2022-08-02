@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class CustomLayoutOptions : IUtf8JsonSerializable
+    public partial class CustomLayout : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,13 +36,28 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(Resolution))
+            {
+                writer.WritePropertyName("resolution");
+                writer.WriteObjectValue(Resolution);
+            }
+            if (Optional.IsDefined(PlaceholderImageUri))
+            {
+                writer.WritePropertyName("placeholderImageUri");
+                writer.WriteStringValue(PlaceholderImageUri);
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomLayoutOptions DeserializeCustomLayoutOptions(JsonElement element)
+        internal static CustomLayout DeserializeCustomLayout(JsonElement element)
         {
             Optional<IDictionary<string, LayoutLayer>> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
+            LayoutType kind = default;
+            Optional<LayoutResolution> resolution = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("layers"))
@@ -70,8 +85,28 @@ namespace Azure.Communication.MediaComposition
                     inputGroups = dictionary;
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new LayoutType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resolution"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CustomLayoutOptions(Optional.ToDictionary(layers), inputGroups);
+            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToDictionary(layers), inputGroups);
         }
     }
 }

@@ -8,17 +8,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> Configure the presentation layout. </summary>
-    public partial class PresentationLayoutOptions
+    public partial class PresentationLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of PresentationLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of PresentationLayout. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="audienceIds"/> is null. </exception>
-        public PresentationLayoutOptions(string presenterId, IEnumerable<string> audienceIds)
+        public PresentationLayout(string presenterId, IEnumerable<string> audienceIds)
         {
             if (presenterId == null)
             {
@@ -31,17 +32,22 @@ namespace Azure.Communication.MediaComposition
 
             PresenterId = presenterId;
             AudienceIds = audienceIds.ToList();
+            Kind = LayoutType.Presentation;
         }
 
-        /// <summary> Initializes a new instance of PresentationLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of PresentationLayout. </summary>
+        /// <param name="kind"> Kind of layout. </param>
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <param name="audiencePosition"> Position of the audience streams. </param>
-        internal PresentationLayoutOptions(string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition)
+        internal PresentationLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition) : base(kind, resolution, placeholderImageUri)
         {
             PresenterId = presenterId;
             AudienceIds = audienceIds;
             AudiencePosition = audiencePosition;
+            Kind = kind;
         }
 
         /// <summary> Id of the presenter input. </summary>

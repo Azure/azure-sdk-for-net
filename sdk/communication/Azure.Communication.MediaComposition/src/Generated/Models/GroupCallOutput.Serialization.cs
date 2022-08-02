@@ -10,19 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class GroupCall : IUtf8JsonSerializable
+    public partial class GroupCallOutput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static GroupCall DeserializeGroupCall(JsonElement element)
+        internal static GroupCallOutput DeserializeGroupCallOutput(JsonElement element)
         {
             string id = default;
+            MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -30,8 +33,13 @@ namespace Azure.Communication.MediaComposition
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new MediaOutputType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new GroupCall(id);
+            return new GroupCallOutput(kind, id);
         }
     }
 }
