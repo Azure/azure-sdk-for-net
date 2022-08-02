@@ -983,6 +983,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetPathsAsync_NonHns()
         {
             await using DisposingFileSystem test = await GetNewFileSystem(hnsEnabled: false);

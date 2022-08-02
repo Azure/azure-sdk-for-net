@@ -5755,6 +5755,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetPathsAsync_NonHns()
         {
             // Arrange

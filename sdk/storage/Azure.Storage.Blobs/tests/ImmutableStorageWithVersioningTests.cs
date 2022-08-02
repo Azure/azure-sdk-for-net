@@ -102,7 +102,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync()
         {
             // Arrange
@@ -157,7 +156,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_IfModifiedSince()
         {
             // Arrange
@@ -194,7 +192,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(nameof(BlobRequestConditions.IfNoneMatch))]
         [TestCase(nameof(BlobRequestConditions.LeaseId))]
         [TestCase(nameof(BlobRequestConditions.TagConditions))]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_InvalidRequestConditions(string invalidCondition)
         {
             // Arrange
@@ -243,7 +240,6 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(AccountSasPermissions.All)]
         [TestCase(AccountSasPermissions.SetImmutabilityPolicy)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_AccoutnSas(AccountSasPermissions sasPermissions)
         {
             // Arrange
@@ -287,7 +283,6 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobContainerSasPermissions.All)]
         [TestCase(BlobContainerSasPermissions.SetImmutabilityPolicy)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_ContainerSas(BlobContainerSasPermissions sasPermissions)
         {
             // Arrange
@@ -326,7 +321,6 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobSasPermissions.All)]
         [TestCase(BlobSasPermissions.SetImmutabilityPolicy)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSas(BlobSasPermissions sasPermissions)
         {
             // Arrange
@@ -367,7 +361,6 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(SnapshotSasPermissions.All)]
         [TestCase(SnapshotSasPermissions.SetImmutabilityPolicy)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSnapshotSas(SnapshotSasPermissions sasPermissions)
         {
             // Arrange
@@ -425,7 +418,6 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobVersionSasPermissions.All)]
         [TestCase(BlobVersionSasPermissions.SetImmutabilityPolicy)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobVersionSas(BlobVersionSasPermissions sasPermissions)
         {
             // Arrange
@@ -503,7 +495,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_Error()
         {
             // Arrange
@@ -523,7 +514,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetImmutibilityPolicyAsync_Mutable()
         {
             // Arrange
@@ -543,7 +533,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task DeleteImmutibilityPolicyAsync()
         {
             // Arrange
@@ -568,7 +557,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
 
         public async Task DeleteImmutibilityPolicyAsync_Error()
         {
@@ -583,7 +571,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetLegalHoldAsync()
         {
             // Arrange
@@ -630,7 +617,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SetLegalHoldAsync_Error()
         {
             // Arrange
@@ -644,7 +630,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task ContainerImmutableStorageWithVersioning()
         {
             // Validate we are deserializing Get Container Properties responses correctly.
@@ -666,7 +651,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task CreateAppendBlob_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -699,7 +683,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task CreatePageBlob_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -732,7 +715,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task CommitBlockList_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -777,7 +759,6 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(false)]
         [TestCase(true)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task Upload_ImmutableStorageWithVersioning(bool multipart)
         {
             // Arrange
@@ -823,7 +804,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task SyncCopyFromUri_ImmutableStorageWithVersioning()
         {
             // Arrange
@@ -857,7 +837,6 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        [RetryOnException(5, typeof(TaskCanceledException))]
         public async Task StartCopyFromUri_ImmutableStorageWithVersioning()
         {
             // Arrange
