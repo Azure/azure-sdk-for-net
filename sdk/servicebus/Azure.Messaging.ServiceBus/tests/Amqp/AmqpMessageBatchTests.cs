@@ -111,10 +111,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var maximumSize = 50;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
+            var mockMessage = new Mock<AmqpMessage>();
             var mockMessageConverter = new InjectableMockConverter
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => mockMessage.Object
             };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(maximumSize);
+
             var batch = new AmqpMessageBatch(mockMessageConverter, options);
 
             Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[50])), Is.False, "A message of the maximum size is too large due to the reserved overhead.");
@@ -130,10 +137,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var maximumSize = 50;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
+            var mockMessage = new Mock<AmqpMessage>();
             var mockMessageConverter = new InjectableMockConverter
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => mockMessage.Object
             };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
 
             var batch = new AmqpMessageBatch(mockMessageConverter, options);
 
@@ -149,12 +162,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddAcceptMessagesUntilTheMaximumSizeIsReached()
         {
             var maximumSize = 100;
+            var currentIndex = -1;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
             var messages = new AmqpMessage[3];
+            var mockMessage = new Mock<AmqpMessage>();
             var mockMessageConverter = new InjectableMockConverter
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => messages[++currentIndex]
             };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                var size = 40;
+                var messageToAdd = new Mock<AmqpMessage>();
+                messageToAdd.Setup(messageToAdd => messageToAdd.SerializedMessageSize).Returns(size);
+                messages[index] = messageToAdd.Object;
+            }
 
             var batch = new AmqpMessageBatch(mockMessageConverter, options);
 
@@ -180,11 +208,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddSetsTheCount()
         {
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
+            var currentIndex = -1;
             var messages = new AmqpMessage[5];
-            var mockMessageConverter = new InjectableMockConverter
+            var mockMessage = new Mock<AmqpMessage>();
+            var mockMessageConverter = new InjectableMockConverter()
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => messages[++currentIndex]
             };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
 
             for (var index = 0; index < messages.Length; ++index)
             {
@@ -230,29 +265,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void AsReadOnlyReturnsTheMessages()
         {
             var maximumSize = 5000;
+            var currentIndex = -1;
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = maximumSize };
-            var batchMessages = new AmqpMessage[5];
+            var amqpMessages = new AmqpMessage[5];
+            var serviceBusMessages = new ServiceBusMessage[5];
+            var mockMessage = new Mock<AmqpMessage>();
             var mockMessageConverter = new InjectableMockConverter
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>(),
-                BuildAmqpMessageFromSBMessageHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => amqpMessages[++currentIndex]
             };
+
+            mockMessage.Setup(message => message.SerializedMessageSize).Returns(0);
+
+            for (var index = 0; index < amqpMessages.Length; ++index)
+            {
+                var messageToAdd = new Mock<AmqpMessage>();
+                messageToAdd.Setup(message => message.SerializedMessageSize).Returns(50);
+                amqpMessages[index] = messageToAdd.Object;
+            }
 
             var batch = new AmqpMessageBatch(mockMessageConverter, options);
 
-            for (var index = 0; index < batchMessages.Length; ++index)
+            for (var index = 0; index < serviceBusMessages.Length; ++index)
             {
                 var serviceBusMessage = new ServiceBusMessage(Array.Empty<byte>());
-                batchMessages[index] = mockMessageConverter.SBMessageToAmqpMessage(serviceBusMessage);
+                serviceBusMessages[index] = serviceBusMessage;
+                batch.TryAddMessage(serviceBusMessage);
             }
 
             var batchReadOnly = batch.AsReadOnly<AmqpMessage>();
             Assert.That(batchReadOnly, Is.Not.Null, "The batch enumerable should have been populated.");
             Assert.That(batchReadOnly.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
 
-            for (var index = 0; index < batchMessages.Length; ++index)
+            for (var index = 0; index < amqpMessages.Length; ++index)
             {
-                Assert.That(batchReadOnly.Contains(batchMessages[index]), $"The message at index: { index } was not in the enumerable.");
+                Assert.That(batchReadOnly.Contains(amqpMessages[index]), $"The message at index: { index } was not in the enumerable.");
             }
         }
 
@@ -335,11 +383,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void DisposeClearsTheCount()
         {
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
+            var currentIndex = -1;
             var messages = new AmqpMessage[5];
+            var mockMessage = new Mock<AmqpMessage>();
             var mockMessageConverter = new InjectableMockConverter
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => messages[++currentIndex]
             };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
 
             for (var index = 0; index < messages.Length; ++index)
             {
@@ -371,14 +426,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
             var messages = new AmqpMessage[5];
+            var currentIndex = -1;
+            var mockMessage = new Mock<AmqpMessage>();
             var mockMessageConverter = new InjectableMockConverter
             {
-                BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>()
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => messages[++currentIndex]
             };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
 
             for (var index = 0; index < messages.Length; ++index)
             {
-                messages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+                var size = 10;
+                var messageToAdd = new Mock<AmqpMessage>();
+                messageToAdd.Setup(messageToAdd => messageToAdd.SerializedMessageSize).Returns(size);
+                messages[index] = messageToAdd.Object;
             }
 
             // Add the messages to the batch; all should be accepted.
@@ -402,12 +467,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         ///
         private class InjectableMockConverter : AmqpMessageConverter
         {
-            public Func<ServiceBusMessage, AmqpMessage> BuildAmqpMessageFromSBMessageHandler = (_s) => null;
-            public Func<IEnumerable<ServiceBusMessage>, bool, AmqpMessage> BuildBatchFromSBMessagesHandler = (_s, _f) => null;
-            public Func<IEnumerable<AmqpMessage>, AmqpMessage> BuildBatchFromAmqpMessagesHandler = (_s) => null;
+            public Func<ServiceBusMessage, AmqpMessage> BuildAmqpMessageFromSBMessageHandler = (_s) => Mock.Of<AmqpMessage>();
+            public Func<IEnumerable<ServiceBusMessage>, bool, AmqpMessage> BuildBatchFromSBMessagesHandler = (_s, _f) => Mock.Of<AmqpMessage>();
+            public Func<IEnumerable<AmqpMessage>, AmqpMessage> BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>();
             public override AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage source) => BuildAmqpMessageFromSBMessageHandler(source);
             public override AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
             public override AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<AmqpMessage> source) => BuildBatchFromAmqpMessagesHandler(source);
+            public override AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, Boolean forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
+            public override AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false) => BuildAmqpMessageFromSBMessageHandler(source);
         }
     }
 }
