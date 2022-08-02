@@ -194,11 +194,14 @@ namespace Azure.Storage.Blobs
     public partial class BlobUriBuilder
     {
         public BlobUriBuilder(System.Uri uri) { }
+        public BlobUriBuilder(System.Uri uri, bool preserveTrailingSlash) { }
         public string AccountName { get { throw null; } set { } }
         public string BlobContainerName { get { throw null; } set { } }
         public string BlobName { get { throw null; } set { } }
         public string Host { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
+        public bool PreserveTrailingSlash { get { throw null; } }
+        public static bool PreserveTrailingSlashDefault { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public Azure.Storage.Sas.BlobSasQueryParameters Sas { get { throw null; } set { } }
         public string Scheme { get { throw null; } set { } }
