@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             public Task InvokeOpenAmqpObjectAsync(
                 AmqpObject target,
                 TimeSpan timeout,
-                CancellationToken cancellationToken) => base.OpenAmqpObjectAsync(target, timeout, cancellationToken);
+                CancellationToken cancellationToken) => base.OpenAmqpObjectAsync(target, timeout: timeout, cancellationToken: cancellationToken);
 
             public TimeSpan InvokeCalculateLinkAuthorizationRefreshInterval(
                 DateTime expirationTimeUtc,
