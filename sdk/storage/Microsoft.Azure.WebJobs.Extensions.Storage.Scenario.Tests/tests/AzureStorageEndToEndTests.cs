@@ -341,7 +341,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 await UploadTestObject();
             }
 
-            var waitTime = TimeSpan.FromSeconds(15);
+            var waitTime = TimeSpan.FromSeconds(30);
             bool signaled = _functionChainWaitHandle.WaitOne(waitTime);
 
             // Stop the host and wait for it to finish
