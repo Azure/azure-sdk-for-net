@@ -209,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout,
                         token).ConfigureAwait(false);
                 },
-                (this, messageBatch.AsReadOnly<ServiceBusMessage>()),
+                (this, messageBatch.AsReadOnly<AmqpMessage>()),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -223,7 +223,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            IReadOnlyCollection<ServiceBusMessage> messages,
+            IReadOnlyCollection<AmqpMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                using (AmqpMessage batchMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages))
+                using (AmqpMessage batchMessage = AmqpMessageConverter.BuildAmqpBatchFromMessage(messages))
                 {
                     string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 

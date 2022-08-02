@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The set of messages that have been added to the batch.
         /// </summary>
         ///
-        private List<ServiceBusMessage> BatchMessages { get; } = new List<ServiceBusMessage>();
+        private List<AmqpMessage> BatchMessages { get; } = new List<AmqpMessage>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpMessageBatch"/> class.
@@ -96,42 +96,36 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             AmqpMessage amqpMessage = null;
 
-            try
+            if (BatchMessages.Count == 0)
             {
-                if (BatchMessages.Count == 0)
-                {
-                    // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
-                    // message which will be used to populate properties on the batch envelope.
-                    amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(message, forceBatch: true);
-                }
-                else
-                {
-                    amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);
-                }
-
-                // Calculate the size for the message, based on the AMQP message size and accounting for a
-                // bit of reserved overhead size.
-
-                var size = _sizeBytes
-                    + amqpMessage.SerializedMessageSize
-                    + (amqpMessage.SerializedMessageSize <= MaximumBytesSmallMessage
-                        ? OverheadBytesSmallMessage
-                        : OverheadBytesLargeMessage);
-
-                if (size > MaxSizeInBytes)
-                {
-                    return false;
-                }
-
-                _sizeBytes = size;
-                BatchMessages.Add(message);
-
-            return true;
+                // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
+                // message which will be used to populate properties on the batch envelope.
+                amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(message, forceBatch: true);
             }
-            finally
+            else
+            {
+                amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);
+            }
+
+            // Calculate the size for the message, based on the AMQP message size and accounting for a
+            // bit of reserved overhead size.
+
+            var size = _sizeBytes
+                + amqpMessage.SerializedMessageSize
+                + (amqpMessage.SerializedMessageSize <= MaximumBytesSmallMessage
+                    ? OverheadBytesSmallMessage
+                    : OverheadBytesLargeMessage);
+
+            if (size > MaxSizeInBytes)
             {
                 amqpMessage?.Dispose();
+                return false;
             }
+
+            _sizeBytes = size;
+            BatchMessages.Add(amqpMessage);
+
+            return true;
         }
 
         /// <summary>
@@ -141,6 +135,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override void Clear()
         {
+            foreach (var message in BatchMessages)
+            {
+                message.Dispose();
+            }
             BatchMessages.Clear();
             _sizeBytes = 0;
         }
