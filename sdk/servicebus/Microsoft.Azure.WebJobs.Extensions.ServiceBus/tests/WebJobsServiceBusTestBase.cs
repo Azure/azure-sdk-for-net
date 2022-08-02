@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static EventWaitHandle _drainValidationPreDelay;
         protected static EventWaitHandle _drainValidationPostDelay;
 
-        protected static int ExpectedRemainingMessages = 0;
+        protected int ExpectedRemainingMessages { get; set; }
 
         protected WebJobsServiceBusTestBase(bool isSession)
         {
@@ -87,6 +87,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [SetUp]
         public async Task FixtureSetUp()
         {
+            ExpectedRemainingMessages = 0;
             FirstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             SecondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
