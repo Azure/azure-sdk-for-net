@@ -461,6 +461,9 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>A callback to be invoked when an adding an event via <see cref="TryAddMessage"/></summary>
             private readonly Func<ServiceBusMessage, bool> _tryAddCallback;
 
+            /// <summary>The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</summary>
+            private readonly AmqpMessageConverter _messageConverter;
+
             /// <summary>
             ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
             ///   well as any overhead for the batch itself when sent to the Event Hubs service.
@@ -499,9 +502,10 @@ namespace Azure.Messaging.ServiceBus
                 SizeInBytes = sizeInBytes;
                 _backingStore = backingStore;
                 _batchMessages = new List<AmqpMessage>();
+                _messageConverter = new AmqpMessageConverter();
                 foreach (var message in _backingStore)
                 {
-                    _batchMessages.Add(AmqpMessageConverter.SBMessageToAmqpMessage(message));
+                    _batchMessages.Add(_messageConverter.SBMessageToAmqpMessage(message));
                 }
                 _tryAddCallback = tryAddCallback;
             }
@@ -520,7 +524,7 @@ namespace Azure.Messaging.ServiceBus
                 if (_tryAddCallback(message))
                 {
                     _backingStore.Add(message);
-                    _batchMessages.Add(AmqpMessageConverter.SBMessageToAmqpMessage(message));
+                    _batchMessages.Add(_messageConverter.SBMessageToAmqpMessage(message));
                     return true;
                 }
 

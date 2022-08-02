@@ -195,6 +195,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 sessionId,
                 isSessionReceiver,
                 isProcessor,
+                MessageConverter,
                 cancellationToken
             );
         }
@@ -221,7 +222,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 subscriptionPath,
                 ConnectionScope,
                 retryPolicy,
-                identifier
+                identifier,
+                MessageConverter
             );
         }
 

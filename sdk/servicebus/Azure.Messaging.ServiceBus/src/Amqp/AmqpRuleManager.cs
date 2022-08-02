@@ -41,6 +41,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly AmqpConnectionScope _connectionScope;
 
         /// <summary>
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
+        /// </summary>
+        private readonly AmqpMessageConverter _messageConverter;
+
+        /// <summary>
         /// Indicates whether or not this instance has been closed.
         /// </summary>
         private bool _closed;
@@ -75,6 +80,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the rule manager.</param>
+        /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -88,16 +94,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string subscriptionPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier)
+            string identifier,
+            AmqpMessageConverter messageConverter)
         {
             Argument.AssertNotNullOrEmpty(subscriptionPath, nameof(subscriptionPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
+            Argument.AssertNotNull(messageConverter, nameof(messageConverter));
 
             _subscriptionPath = subscriptionPath;
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _identifier = identifier;
+            _messageConverter = messageConverter;
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
@@ -160,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                      timeout,
                      null);
             amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = description.Name;
-            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = AmqpMessageConverter.GetRuleDescriptionMap(description);
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = _messageConverter.GetRuleDescriptionMap(description);
 
             AmqpResponseMessage response = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,
@@ -271,7 +280,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 foreach (var entry in ruleList)
                 {
                     var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
-                    var ruleDescription = AmqpMessageConverter.GetRuleDescription(amqpRule);
+                    var ruleDescription = _messageConverter.GetRuleDescription(amqpRule);
                     ruleDescriptions.Add(ruleDescription);
                 }
             }
