@@ -44,10 +44,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     sessionId);
 
                 sequenceNumber ??= 1;
-                var regularReceiver = client.CreateReceiver(scope.QueueName);
+
                 // verify peeked == send
                 var ct = 0;
-                foreach (ServiceBusReceivedMessage peekedMessage in await regularReceiver.PeekMessagesAsync(
+                foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekMessagesAsync(
                     messageCt,
                     sequenceNumber))
                 {
