@@ -14,18 +14,23 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         internal static MoveResourceDependency DeserializeMoveResourceDependency(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> resolutionStatus = default;
-            Optional<ResolutionType> resolutionType = default;
-            Optional<DependencyType> dependencyType = default;
+            Optional<MoveResourceResolutionType> resolutionType = default;
+            Optional<MoverDependencyType> dependencyType = default;
             Optional<ManualResolutionProperties> manualResolution = default;
             Optional<AutomaticResolutionProperties> automaticResolution = default;
-            Optional<string> isOptional = default;
+            Optional<bool> isOptional = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resolutionStatus"))
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resolutionType = new ResolutionType(property.Value.GetString());
+                    resolutionType = new MoveResourceResolutionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependencyType"))
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dependencyType = new DependencyType(property.Value.GetString());
+                    dependencyType = new MoverDependencyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("manualResolution"))
@@ -75,11 +80,16 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("isOptional"))
                 {
-                    isOptional = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    isOptional = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new MoveResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, isOptional.Value);
+            return new MoveResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional));
         }
     }
 }

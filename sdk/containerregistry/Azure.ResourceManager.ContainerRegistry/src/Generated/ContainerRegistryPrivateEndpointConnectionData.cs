@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of private endpoint connection resource. </param>
-        internal ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ContainerRegistryPrivateLinkServiceConnectionState connectionState, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ContainerRegistryPrivateLinkServiceConnectionState connectionState, ContainerRegistryProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public ContainerRegistryPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of private endpoint connection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ContainerRegistryProvisioningState? ProvisioningState { get; }
     }
 }

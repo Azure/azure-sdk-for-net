@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP Table Linked Service. </summary>
-    public partial class SapTableLinkedService : LinkedService
+    public partial class SapTableLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SapTableLinkedService. </summary>
         public SapTableLinkedService()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// Password to access the SAP server where the table is located.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SapTableLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData systemNumber, BinaryData clientId, BinaryData language, BinaryData systemId, BinaryData userName, SecretBase password, BinaryData messageServer, BinaryData messageServerService, BinaryData sncMode, BinaryData sncMyName, BinaryData sncPartnerName, BinaryData sncLibraryPath, BinaryData sncQop, BinaryData logonGroup, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SapTableLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData systemNumber, BinaryData clientId, BinaryData language, BinaryData systemId, BinaryData userName, FactorySecretBaseDefinition password, BinaryData messageServer, BinaryData messageServerService, BinaryData sncMode, BinaryData sncMyName, BinaryData sncPartnerName, BinaryData sncLibraryPath, BinaryData sncQop, BinaryData logonGroup, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData UserName { get; set; }
         /// <summary>
         /// Password to access the SAP server where the table is located.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
         public BinaryData MessageServer { get; set; }
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>

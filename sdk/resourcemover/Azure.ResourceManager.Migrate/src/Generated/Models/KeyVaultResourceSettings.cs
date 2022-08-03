@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the key vault resource settings. </summary>
-    public partial class KeyVaultResourceSettings : ResourceSettings
+    public partial class KeyVaultResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of KeyVaultResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

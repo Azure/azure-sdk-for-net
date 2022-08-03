@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Schedule-based autoscale request parameters
-    /// Serialized Name: AutoscaleRecurrence
-    /// </summary>
+    /// <summary> Schedule-based autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleRecurrence
     {
         /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
-        /// <param name="timeZone">
-        /// The time zone for the autoscale schedule times
-        /// Serialized Name: AutoscaleRecurrence.timeZone
-        /// </param>
-        /// <param name="schedule">
-        /// Array of schedule-based autoscale rules
-        /// Serialized Name: AutoscaleRecurrence.schedule
-        /// </param>
+        /// <param name="timeZone"> The time zone for the autoscale schedule times. </param>
+        /// <param name="schedule"> Array of schedule-based autoscale rules. </param>
         internal HDInsightAutoScaleRecurrence(string timeZone, IList<HDInsightAutoScaleSchedule> schedule)
         {
             TimeZone = timeZone;
             Schedule = schedule;
         }
 
-        /// <summary>
-        /// The time zone for the autoscale schedule times
-        /// Serialized Name: AutoscaleRecurrence.timeZone
-        /// </summary>
+        /// <summary> The time zone for the autoscale schedule times. </summary>
         public string TimeZone { get; set; }
-        /// <summary>
-        /// Array of schedule-based autoscale rules
-        /// Serialized Name: AutoscaleRecurrence.schedule
-        /// </summary>
+        /// <summary> Array of schedule-based autoscale rules. </summary>
         public IList<HDInsightAutoScaleSchedule> Schedule { get; }
     }
 }

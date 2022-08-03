@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static SqlElasticPoolResourceSettings DeserializeSqlElasticPoolResourceSettings(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            Optional<ZoneRedundant> zoneRedundant = default;
+            Optional<ResourceZoneRedundantSetting> zoneRedundant = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    zoneRedundant = new ZoneRedundant(property.Value.GetString());
+                    zoneRedundant = new ResourceZoneRedundantSetting(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceType"))

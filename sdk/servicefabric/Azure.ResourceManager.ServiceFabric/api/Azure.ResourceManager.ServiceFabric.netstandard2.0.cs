@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateCommonName> ClientCertificateCommonNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateThumbprint> ClientCertificateThumbprints { get { throw null; } }
         public string ClusterCodeVersion { get { throw null; } set { } }
-        public string ClusterEndpoint { get { throw null; } }
+        public System.Uri ClusterEndpoint { get { throw null; } }
         public System.Guid? ClusterId { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ServiceFabricClusterState? ClusterState { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.DiagnosticsStorageAccountConfig DiagnosticsStorageAccountConfig { get { throw null; } set { } }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public bool? IsEventStoreServiceEnabled { get { throw null; } set { } }
         public bool? IsInfrastructureServiceManagerEnabled { get { throw null; } set { } }
         public bool? IsWaveUpgradePaused { get { throw null; } set { } }
-        public string ManagementEndpoint { get { throw null; } set { } }
+        public System.Uri ManagementEndpoint { get { throw null; } set { } }
         public long? MaxUnusedVersionsToKeep { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterNodeTypeDescription> NodeTypes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterNotification> Notifications { get { throw null; } }
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.ServiceFabric
         public Azure.ResourceManager.ServiceFabric.Models.ClusterReliabilityLevel? ReliabilityLevel { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateDescription ReverseProxyCertificate { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterServerCertificateCommonNames ReverseProxyCertificateCommonNames { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode? SfZonalUpgradeMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabric.Models.SfZonalUpgradeMode? ServiceFabricZonalUpgradeMode { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode? UpgradeMode { get { throw null; } set { } }
-        public System.DateTimeOffset? UpgradePauseEndTimestampUtc { get { throw null; } set { } }
-        public System.DateTimeOffset? UpgradePauseStartTimestampUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? UpgradePauseEndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? UpgradePauseStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence? UpgradeWave { get { throw null; } set { } }
         public string VmImage { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode? VmssZonalUpgradeMode { get { throw null; } set { } }
@@ -762,13 +762,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     }
     public partial class DiagnosticsStorageAccountConfig
     {
-        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint) { }
-        public string BlobEndpoint { get { throw null; } set { } }
+        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, System.Uri blobEndpoint, System.Uri queueEndpoint, System.Uri tableEndpoint) { }
+        public System.Uri BlobEndpoint { get { throw null; } set { } }
         public string ProtectedAccountKeyName { get { throw null; } set { } }
         public string ProtectedAccountKeyName2 { get { throw null; } set { } }
-        public string QueueEndpoint { get { throw null; } set { } }
+        public System.Uri QueueEndpoint { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
-        public string TableEndpoint { get { throw null; } set { } }
+        public System.Uri TableEndpoint { get { throw null; } set { } }
     }
     public partial class NamedPartitionSchemeDescription : Azure.ResourceManager.ServiceFabric.Models.PartitionSchemeDescription
     {
@@ -841,8 +841,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeMode? UpgradeMode { get { throw null; } set { } }
-        public System.DateTimeOffset? UpgradePauseEndTimestampUtc { get { throw null; } set { } }
-        public System.DateTimeOffset? UpgradePauseStartTimestampUtc { get { throw null; } set { } }
+        public System.DateTimeOffset? UpgradePauseEndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? UpgradePauseStartOn { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterUpgradeCadence? UpgradeWave { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.VmssZonalUpgradeMode? VmssZonalUpgradeMode { get { throw null; } set { } }
     }

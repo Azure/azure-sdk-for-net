@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The binding to an Azure Machine Learning Studio. </summary>
-    public partial class AzureMachineLearningStudioFunctionBinding : FunctionBinding
+    public partial class AzureMachineLearningStudioFunctionBinding : StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of AzureMachineLearningStudioFunctionBinding. </summary>
         public AzureMachineLearningStudioFunctionBinding()

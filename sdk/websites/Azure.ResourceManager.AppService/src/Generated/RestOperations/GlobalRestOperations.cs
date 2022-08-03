@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Snapshot>>> GetDeletedWebAppSnapshotsAsync(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AppSnapshot>>> GetDeletedWebAppSnapshotsAsync(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Snapshot> value = default;
+                        IReadOnlyList<AppSnapshot> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Snapshot> array = new List<Snapshot>();
+                        List<AppSnapshot> array = new List<AppSnapshot>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Snapshot.DeserializeSnapshot(item));
+                            array.Add(AppSnapshot.DeserializeAppSnapshot(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Snapshot>> GetDeletedWebAppSnapshots(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AppSnapshot>> GetDeletedWebAppSnapshots(string subscriptionId, string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
@@ -182,82 +182,16 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Snapshot> value = default;
+                        IReadOnlyList<AppSnapshot> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Snapshot> array = new List<Snapshot>();
+                        List<AppSnapshot> array = new List<AppSnapshot>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Snapshot.DeserializeSnapshot(item));
+                            array.Add(AppSnapshot.DeserializeAppSnapshot(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetSubscriptionOperationWithAsyncResponseRequest(string subscriptionId, AzureLocation location, string operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Description for Gets an operation in a subscription and given region. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetSubscriptionOperationWithAsyncResponseAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetSubscriptionOperationWithAsyncResponseRequest(subscriptionId, location, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Description for Gets an operation in a subscription and given region. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="location"> Location name. </param>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetSubscriptionOperationWithAsyncResponse(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetSubscriptionOperationWithAsyncResponseRequest(subscriptionId, location, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

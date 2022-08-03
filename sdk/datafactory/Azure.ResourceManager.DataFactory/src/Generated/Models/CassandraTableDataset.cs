@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Cassandra database dataset. </summary>
-    public partial class CassandraTableDataset : Dataset
+    public partial class CassandraTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of CassandraTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public CassandraTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public CassandraTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> The table name of the Cassandra database. Type: string (or Expression with resultType string). </param>
         /// <param name="keyspace"> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </param>
-        internal CassandraTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData keyspace) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CassandraTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData keyspace) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Keyspace = keyspace;

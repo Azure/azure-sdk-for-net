@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> database = default;
             Optional<string> user = default;
             Optional<string> password = default;
-            Optional<RefreshType> refreshType = default;
+            Optional<DataRefreshType> refreshType = default;
             Optional<string> refreshRate = default;
             Optional<string> fullSnapshotQuery = default;
             Optional<string> deltaSnapshotQuery = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshType = new RefreshType(property0.Value.GetString());
+                            refreshType = new DataRefreshType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("refreshRate"))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                     }

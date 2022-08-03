@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> filePathPrefix = default;
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                     }

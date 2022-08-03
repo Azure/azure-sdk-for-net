@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The snowflake dataset. </summary>
-    public partial class SnowflakeDataset : Dataset
+    public partial class SnowflakeDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SnowflakeDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public SnowflakeDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public SnowflakeDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Snowflake database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Snowflake database. Type: string (or Expression with resultType string). </param>
-        internal SnowflakeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SnowflakeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;

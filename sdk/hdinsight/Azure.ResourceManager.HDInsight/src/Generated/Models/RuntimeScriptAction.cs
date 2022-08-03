@@ -11,25 +11,13 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Describes a script action on a running cluster.
-    /// Serialized Name: RuntimeScriptAction
-    /// </summary>
+    /// <summary> Describes a script action on a running cluster. </summary>
     public partial class RuntimeScriptAction
     {
         /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>
-        /// <param name="name">
-        /// The name of the script action.
-        /// Serialized Name: RuntimeScriptAction.name
-        /// </param>
-        /// <param name="uri">
-        /// The URI to the script.
-        /// Serialized Name: RuntimeScriptAction.uri
-        /// </param>
-        /// <param name="roles">
-        /// The list of roles where script will be executed.
-        /// Serialized Name: RuntimeScriptAction.roles
-        /// </param>
+        /// <param name="name"> The name of the script action. </param>
+        /// <param name="uri"> The URI to the script. </param>
+        /// <param name="roles"> The list of roles where script will be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public RuntimeScriptAction(string name, Uri uri, IEnumerable<string> roles)
         {
@@ -52,26 +40,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>
-        /// <param name="name">
-        /// The name of the script action.
-        /// Serialized Name: RuntimeScriptAction.name
-        /// </param>
-        /// <param name="uri">
-        /// The URI to the script.
-        /// Serialized Name: RuntimeScriptAction.uri
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters for the script
-        /// Serialized Name: RuntimeScriptAction.parameters
-        /// </param>
-        /// <param name="roles">
-        /// The list of roles where script will be executed.
-        /// Serialized Name: RuntimeScriptAction.roles
-        /// </param>
-        /// <param name="applicationName">
-        /// The application name of the script action, if any.
-        /// Serialized Name: RuntimeScriptAction.applicationName
-        /// </param>
+        /// <param name="name"> The name of the script action. </param>
+        /// <param name="uri"> The URI to the script. </param>
+        /// <param name="parameters"> The parameters for the script. </param>
+        /// <param name="roles"> The list of roles where script will be executed. </param>
+        /// <param name="applicationName"> The application name of the script action, if any. </param>
         internal RuntimeScriptAction(string name, Uri uri, string parameters, IList<string> roles, string applicationName)
         {
             Name = name;
@@ -81,30 +54,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             ApplicationName = applicationName;
         }
 
-        /// <summary>
-        /// The name of the script action.
-        /// Serialized Name: RuntimeScriptAction.name
-        /// </summary>
+        /// <summary> The name of the script action. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The URI to the script.
-        /// Serialized Name: RuntimeScriptAction.uri
-        /// </summary>
+        /// <summary> The URI to the script. </summary>
         public Uri Uri { get; set; }
-        /// <summary>
-        /// The parameters for the script
-        /// Serialized Name: RuntimeScriptAction.parameters
-        /// </summary>
+        /// <summary> The parameters for the script. </summary>
         public string Parameters { get; set; }
-        /// <summary>
-        /// The list of roles where script will be executed.
-        /// Serialized Name: RuntimeScriptAction.roles
-        /// </summary>
+        /// <summary> The list of roles where script will be executed. </summary>
         public IList<string> Roles { get; }
-        /// <summary>
-        /// The application name of the script action, if any.
-        /// Serialized Name: RuntimeScriptAction.applicationName
-        /// </summary>
+        /// <summary> The application name of the script action, if any. </summary>
         public string ApplicationName { get; }
     }
 }

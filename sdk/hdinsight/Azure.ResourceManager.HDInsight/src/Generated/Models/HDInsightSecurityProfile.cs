@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The security profile which contains Ssh public key for the HDInsight cluster.
-    /// Serialized Name: SecurityProfile
-    /// </summary>
+    /// <summary> The security profile which contains Ssh public key for the HDInsight cluster. </summary>
     public partial class HDInsightSecurityProfile
     {
         /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
@@ -24,42 +21,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
-        /// <param name="directoryType">
-        /// The directory type.
-        /// Serialized Name: SecurityProfile.directoryType
-        /// </param>
-        /// <param name="domain">
-        /// The organization&apos;s active directory domain.
-        /// Serialized Name: SecurityProfile.domain
-        /// </param>
-        /// <param name="organizationalUnitDN">
-        /// The organizational unit within the Active Directory to place the cluster and service accounts.
-        /// Serialized Name: SecurityProfile.organizationalUnitDN
-        /// </param>
-        /// <param name="ldapsUrls">
-        /// The LDAPS protocol URLs to communicate with the Active Directory.
-        /// Serialized Name: SecurityProfile.ldapsUrls
-        /// </param>
-        /// <param name="domainUsername">
-        /// The domain user account that will have admin privileges on the cluster.
-        /// Serialized Name: SecurityProfile.domainUsername
-        /// </param>
-        /// <param name="domainUserPassword">
-        /// The domain admin password.
-        /// Serialized Name: SecurityProfile.domainUserPassword
-        /// </param>
-        /// <param name="clusterUsersGroupDNs">
-        /// Optional. The Distinguished Names for cluster user groups
-        /// Serialized Name: SecurityProfile.clusterUsersGroupDNs
-        /// </param>
-        /// <param name="aaddsResourceId">
-        /// The resource ID of the user&apos;s Azure Active Directory Domain Service.
-        /// Serialized Name: SecurityProfile.aaddsResourceId
-        /// </param>
-        /// <param name="msiResourceId">
-        /// User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS.
-        /// Serialized Name: SecurityProfile.msiResourceId
-        /// </param>
+        /// <param name="directoryType"> The directory type. </param>
+        /// <param name="domain"> The organization&apos;s active directory domain. </param>
+        /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
+        /// <param name="ldapsUrls"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
+        /// <param name="domainUsername"> The domain user account that will have admin privileges on the cluster. </param>
+        /// <param name="domainUserPassword"> The domain admin password. </param>
+        /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
+        /// <param name="aaddsResourceId"> The resource ID of the user&apos;s Azure Active Directory Domain Service. </param>
+        /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </param>
         internal HDInsightSecurityProfile(DirectoryType? directoryType, string domain, string organizationalUnitDN, IList<string> ldapsUrls, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, string aaddsResourceId, ResourceIdentifier msiResourceId)
         {
             DirectoryType = directoryType;
@@ -73,50 +43,23 @@ namespace Azure.ResourceManager.HDInsight.Models
             MsiResourceId = msiResourceId;
         }
 
-        /// <summary>
-        /// The directory type.
-        /// Serialized Name: SecurityProfile.directoryType
-        /// </summary>
+        /// <summary> The directory type. </summary>
         public DirectoryType? DirectoryType { get; set; }
-        /// <summary>
-        /// The organization&apos;s active directory domain.
-        /// Serialized Name: SecurityProfile.domain
-        /// </summary>
+        /// <summary> The organization&apos;s active directory domain. </summary>
         public string Domain { get; set; }
-        /// <summary>
-        /// The organizational unit within the Active Directory to place the cluster and service accounts.
-        /// Serialized Name: SecurityProfile.organizationalUnitDN
-        /// </summary>
+        /// <summary> The organizational unit within the Active Directory to place the cluster and service accounts. </summary>
         public string OrganizationalUnitDN { get; set; }
-        /// <summary>
-        /// The LDAPS protocol URLs to communicate with the Active Directory.
-        /// Serialized Name: SecurityProfile.ldapsUrls
-        /// </summary>
+        /// <summary> The LDAPS protocol URLs to communicate with the Active Directory. </summary>
         public IList<string> LdapsUrls { get; }
-        /// <summary>
-        /// The domain user account that will have admin privileges on the cluster.
-        /// Serialized Name: SecurityProfile.domainUsername
-        /// </summary>
+        /// <summary> The domain user account that will have admin privileges on the cluster. </summary>
         public string DomainUsername { get; set; }
-        /// <summary>
-        /// The domain admin password.
-        /// Serialized Name: SecurityProfile.domainUserPassword
-        /// </summary>
+        /// <summary> The domain admin password. </summary>
         public string DomainUserPassword { get; set; }
-        /// <summary>
-        /// Optional. The Distinguished Names for cluster user groups
-        /// Serialized Name: SecurityProfile.clusterUsersGroupDNs
-        /// </summary>
+        /// <summary> Optional. The Distinguished Names for cluster user groups. </summary>
         public IList<string> ClusterUsersGroupDNs { get; }
-        /// <summary>
-        /// The resource ID of the user&apos;s Azure Active Directory Domain Service.
-        /// Serialized Name: SecurityProfile.aaddsResourceId
-        /// </summary>
+        /// <summary> The resource ID of the user&apos;s Azure Active Directory Domain Service. </summary>
         public string AaddsResourceId { get; set; }
-        /// <summary>
-        /// User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS.
-        /// Serialized Name: SecurityProfile.msiResourceId
-        /// </summary>
+        /// <summary> User assigned identity that has permissions to read and create cluster-related artifacts in the user&apos;s AADDS. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
     }
 }

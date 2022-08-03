@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Describes a role on the cluster.
-    /// Serialized Name: Role
-    /// </summary>
+    /// <summary> Describes a role on the cluster. </summary>
     public partial class HDInsightClusterRole
     {
         /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
@@ -24,50 +21,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
-        /// <param name="name">
-        /// The name of the role.
-        /// Serialized Name: Role.name
-        /// </param>
-        /// <param name="minInstanceCount">
-        /// The minimum instance count of the cluster.
-        /// Serialized Name: Role.minInstanceCount
-        /// </param>
-        /// <param name="targetInstanceCount">
-        /// The instance count of the cluster.
-        /// Serialized Name: Role.targetInstanceCount
-        /// </param>
-        /// <param name="vmGroupName">
-        /// The name of the virtual machine group.
-        /// Serialized Name: Role.VMGroupName
-        /// </param>
-        /// <param name="autoScaleConfiguration">
-        /// The autoscale configurations.
-        /// Serialized Name: Role.autoscale
-        /// </param>
-        /// <param name="hardwareProfile">
-        /// The hardware profile.
-        /// Serialized Name: Role.hardwareProfile
-        /// </param>
-        /// <param name="osProfile">
-        /// The operating system profile.
-        /// Serialized Name: Role.osProfile
-        /// </param>
-        /// <param name="virtualNetworkProfile">
-        /// The virtual network profile.
-        /// Serialized Name: Role.virtualNetworkProfile
-        /// </param>
-        /// <param name="dataDisksGroups">
-        /// The data disks groups for the role.
-        /// Serialized Name: Role.dataDisksGroups
-        /// </param>
-        /// <param name="scriptActions">
-        /// The list of script actions on the role.
-        /// Serialized Name: Role.scriptActions
-        /// </param>
-        /// <param name="encryptDataDisks">
-        /// Indicates whether encrypt the data disks.
-        /// Serialized Name: Role.encryptDataDisks
-        /// </param>
+        /// <param name="name"> The name of the role. </param>
+        /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
+        /// <param name="targetInstanceCount"> The instance count of the cluster. </param>
+        /// <param name="vmGroupName"> The name of the virtual machine group. </param>
+        /// <param name="autoScaleConfiguration"> The autoscale configurations. </param>
+        /// <param name="hardwareProfile"> The hardware profile. </param>
+        /// <param name="osProfile"> The operating system profile. </param>
+        /// <param name="virtualNetworkProfile"> The virtual network profile. </param>
+        /// <param name="dataDisksGroups"> The data disks groups for the role. </param>
+        /// <param name="scriptActions"> The list of script actions on the role. </param>
+        /// <param name="encryptDataDisks"> Indicates whether encrypt the data disks. </param>
         internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoScaleConfiguration, HardwareProfile hardwareProfile, OSProfile osProfile, HDInsightVirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDiskGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks)
         {
             Name = name;
@@ -83,40 +47,19 @@ namespace Azure.ResourceManager.HDInsight.Models
             EncryptDataDisks = encryptDataDisks;
         }
 
-        /// <summary>
-        /// The name of the role.
-        /// Serialized Name: Role.name
-        /// </summary>
+        /// <summary> The name of the role. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The minimum instance count of the cluster.
-        /// Serialized Name: Role.minInstanceCount
-        /// </summary>
+        /// <summary> The minimum instance count of the cluster. </summary>
         public int? MinInstanceCount { get; set; }
-        /// <summary>
-        /// The instance count of the cluster.
-        /// Serialized Name: Role.targetInstanceCount
-        /// </summary>
+        /// <summary> The instance count of the cluster. </summary>
         public int? TargetInstanceCount { get; set; }
-        /// <summary>
-        /// The name of the virtual machine group.
-        /// Serialized Name: Role.VMGroupName
-        /// </summary>
+        /// <summary> The name of the virtual machine group. </summary>
         public string VmGroupName { get; set; }
-        /// <summary>
-        /// The autoscale configurations.
-        /// Serialized Name: Role.autoscale
-        /// </summary>
+        /// <summary> The autoscale configurations. </summary>
         public HDInsightAutoScaleConfiguration AutoScaleConfiguration { get; set; }
-        /// <summary>
-        /// The hardware profile.
-        /// Serialized Name: Role.hardwareProfile
-        /// </summary>
+        /// <summary> The hardware profile. </summary>
         internal HardwareProfile HardwareProfile { get; set; }
-        /// <summary>
-        /// The size of the VM
-        /// Serialized Name: HardwareProfile.vmSize
-        /// </summary>
+        /// <summary> The size of the VM. </summary>
         public string HardwareVmSize
         {
             get => HardwareProfile is null ? default : HardwareProfile.VmSize;
@@ -128,15 +71,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <summary>
-        /// The operating system profile.
-        /// Serialized Name: Role.osProfile
-        /// </summary>
+        /// <summary> The operating system profile. </summary>
         internal OSProfile OSProfile { get; set; }
-        /// <summary>
-        /// The Linux OS profile.
-        /// Serialized Name: OsProfile.linuxOperatingSystemProfile
-        /// </summary>
+        /// <summary> The Linux OS profile. </summary>
         public HDInsightLinuxOSProfile OSLinuxProfile
         {
             get => OSProfile is null ? default : OSProfile.LinuxProfile;
@@ -148,25 +85,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <summary>
-        /// The virtual network profile.
-        /// Serialized Name: Role.virtualNetworkProfile
-        /// </summary>
+        /// <summary> The virtual network profile. </summary>
         public HDInsightVirtualNetworkProfile VirtualNetworkProfile { get; set; }
-        /// <summary>
-        /// The data disks groups for the role.
-        /// Serialized Name: Role.dataDisksGroups
-        /// </summary>
+        /// <summary> The data disks groups for the role. </summary>
         public IList<HDInsightClusterDataDiskGroup> DataDisksGroups { get; }
-        /// <summary>
-        /// The list of script actions on the role.
-        /// Serialized Name: Role.scriptActions
-        /// </summary>
+        /// <summary> The list of script actions on the role. </summary>
         public IList<ScriptAction> ScriptActions { get; }
-        /// <summary>
-        /// Indicates whether encrypt the data disks.
-        /// Serialized Name: Role.encryptDataDisks
-        /// </summary>
+        /// <summary> Indicates whether encrypt the data disks. </summary>
         public bool? EncryptDataDisks { get; set; }
     }
 }

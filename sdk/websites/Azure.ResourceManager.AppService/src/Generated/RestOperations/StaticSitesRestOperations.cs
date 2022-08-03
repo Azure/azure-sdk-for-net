@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, StringDictionary appSettings)
+        internal HttpMessage CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteBuildAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1132,9 +1132,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> CreateOrUpdateStaticSiteBuildAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteBuildAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1165,9 +1165,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, StringDictionary appSettings)
+        internal HttpMessage CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteBuildFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1225,9 +1225,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> CreateOrUpdateStaticSiteBuildFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteBuildFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1258,9 +1258,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1384,7 +1384,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> ListStaticSiteBuildAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteBuildAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1397,9 +1397,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> ListStaticSiteBuildAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> ListStaticSiteBuildAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1428,9 +1428,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> ListStaticSiteBuildFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteBuildFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1482,9 +1482,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> ListStaticSiteBuildFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> ListStaticSiteBuildFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1513,9 +1513,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings)
+        internal HttpMessage CreateCreateOrUpdateStaticSiteAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1998,7 +1998,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2011,9 +2011,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> CreateOrUpdateStaticSiteAppSettings(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteAppSettings(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2042,9 +2042,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2052,7 +2052,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings)
+        internal HttpMessage CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2085,7 +2085,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> CreateOrUpdateStaticSiteFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateStaticSiteFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2098,9 +2098,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2116,7 +2116,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="appSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> CreateOrUpdateStaticSiteFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> CreateOrUpdateStaticSiteFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2129,9 +2129,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2816,7 +2816,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> ListStaticSiteAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2828,9 +2828,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2845,7 +2845,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> ListStaticSiteAppSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> ListStaticSiteAppSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2857,9 +2857,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2974,7 +2974,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> ListStaticSiteFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteFunctionAppSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2986,9 +2986,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3003,7 +3003,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> ListStaticSiteFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> ListStaticSiteFunctionAppSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3015,9 +3015,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3053,7 +3053,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StringDictionary>> ListStaticSiteSecretsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceConfigurationDictionary>> ListStaticSiteSecretsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3065,9 +3065,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3082,7 +3082,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StringDictionary> ListStaticSiteSecrets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceConfigurationDictionary> ListStaticSiteSecrets(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3094,9 +3094,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StringDictionary value = default;
+                        AppServiceConfigurationDictionary value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StringDictionary.DeserializeStringDictionary(document.RootElement);
+                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

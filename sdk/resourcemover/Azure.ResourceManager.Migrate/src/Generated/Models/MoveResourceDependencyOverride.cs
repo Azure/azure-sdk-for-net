@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the dependency override of the move resource. </summary>
@@ -21,18 +23,18 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Gets or sets the resource ARM id of either the MoveResource or the resource ARM ID of
         /// the dependent resource.
         /// </param>
-        internal MoveResourceDependencyOverride(string id, string targetId)
+        internal MoveResourceDependencyOverride(ResourceIdentifier id, ResourceIdentifier targetId)
         {
             Id = id;
             TargetId = targetId;
         }
 
         /// <summary> Gets or sets the ARM ID of the dependent resource. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// Gets or sets the resource ARM id of either the MoveResource or the resource ARM ID of
         /// the dependent resource.
         /// </summary>
-        public string TargetId { get; set; }
+        public ResourceIdentifier TargetId { get; set; }
     }
 }

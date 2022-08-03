@@ -425,8 +425,8 @@ support for async APIs as well.  You'll generally just add an `Async` suffix to
 the name of the method and `await` it.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
-await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+SearchResults<Hotel> searchResponse = await client.SearchAsync<Hotel>("luxury");
+await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 {
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.Id}: {doc.Name}");
