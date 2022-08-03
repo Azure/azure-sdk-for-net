@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// The class to overcome issue with the Endpoint Collection REST API where there is no REST API couterpart that GETs all
-    /// profile data resource. The all profile data resources are retrived from the collection of endpoints attached to <see cref="ProfileData"/>.
+    /// The class to overcome issue with the Endpoint Collection REST API where there is no REST API counterpart that GETs all
+    /// profile data resource. The all profile data resources are retrieved from the collection of endpoints attached to <see cref="ProfileData"/>.
     /// </summary>
-    public partial class EndpointCollection : ArmCollection
+    public partial class EndpointCollection : ArmCollection, IEnumerable<EndpointData>, IAsyncEnumerable<EndpointData>
     {
         private readonly ProfileData _profileData;
 
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Asynchroniosly lists all Traffic Manager endpoints within a profile.
+        /// Asynchronously lists all Traffic Manager endpoints within a profile.
         /// </summary>
         /// <returns> A collection of <see cref="EndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EndpointData> GetAllAsync()
@@ -50,5 +53,14 @@ namespace Azure.ResourceManager.TrafficManager
 
             return PageableHelpers.CreateEnumerable(_ => Page.FromValues(this._profileData.Endpoints, null, null), null, null);
         }
+
+        /// <inheritdoc />
+        public IEnumerator<EndpointData> GetEnumerator() => GetAll().GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+
+        /// <inheritdoc />
+        public IAsyncEnumerator<EndpointData> GetAsyncEnumerator(CancellationToken cancellationToken = default) => GetAllAsync().GetAsyncEnumerator(cancellationToken);
     }
 }

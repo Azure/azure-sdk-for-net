@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    /// <summary> The Enum8. </summary>
+    /// <summary> The HeatMapType. </summary>
     public readonly partial struct HeatMapType : IEquatable<HeatMapType>
     {
         private readonly string _value;

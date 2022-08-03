@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// Customizes validation of the reousce name since default resource name of the Endpoint has a template parameter baked in.
+    /// Customizes validation of the resource name since default resource name of the Endpoint has a template parameter baked in.
     /// </summary>
     public partial class EndpointResource : ArmResource
     {

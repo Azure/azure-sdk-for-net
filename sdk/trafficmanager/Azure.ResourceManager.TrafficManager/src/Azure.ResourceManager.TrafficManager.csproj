@@ -5,7 +5,4 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider TrafficManager</Description>
     <PackageTags>azure;management;arm;resource manager;trafficmanager</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Update="C:\Users\oldukhno\work\azure-sdk\eng\/../sdk/core/Azure.Core/src/Shared/AzureResourceProviderNamespaceAttribute.cs" Link="Properties\AzureResourceProviderNamespaceAttribute.cs" />
-  </ItemGroup>
 </Project>

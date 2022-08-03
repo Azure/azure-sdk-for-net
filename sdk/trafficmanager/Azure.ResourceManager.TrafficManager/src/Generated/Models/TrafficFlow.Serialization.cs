@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficFlow DeserializeTrafficFlow(JsonElement element)
         {
-            Optional<string> sourceIp = default;
+            Optional<string> sourceIP = default;
             Optional<double> latitude = default;
             Optional<double> longitude = default;
             Optional<IList<QueryExperience>> queryExperiences = default;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 if (property.NameEquals("sourceIp"))
                 {
-                    sourceIp = property.Value.GetString();
+                    sourceIP = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("latitude"))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficFlow(sourceIp.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToList(queryExperiences));
+            return new TrafficFlow(sourceIP.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToList(queryExperiences));
         }
     }
 }
