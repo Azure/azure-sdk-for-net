@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         internal static MoveErrorInfo DeserializeMoveErrorInfo(JsonElement element)
         {
-            Optional<IReadOnlyList<AffectedMoveResource>> moveResources = default;
+            Optional<IReadOnlyList<MoverAffectedMoveResourceInfo>> moveResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("moveResources"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AffectedMoveResource> array = new List<AffectedMoveResource>();
+                    List<MoverAffectedMoveResourceInfo> array = new List<MoverAffectedMoveResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AffectedMoveResource.DeserializeAffectedMoveResource(item));
+                        array.Add(MoverAffectedMoveResourceInfo.DeserializeMoverAffectedMoveResourceInfo(item));
                     }
                     moveResources = array;
                     continue;

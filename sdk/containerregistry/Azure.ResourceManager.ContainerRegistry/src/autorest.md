@@ -125,7 +125,7 @@ prepend-rp-prefix:
 rename-mapping:
   OS: ContainerRegistryOS
   KeyVaultProperties.keyRotationEnabled: IsKeyRotationEnabled
-  RegistryNameStatus: ContainerRegistryNameStatus
+  RegistryNameStatus: ContainerRegistryNameAvailableResult
   RegistryNameStatus.nameAvailable: IsNameAvailable
   RegistryPatch: ContainerRegistryPatch
   RegistryUpdateParameters.properties.adminUserEnabled: IsAdminUserEnabled
@@ -179,7 +179,7 @@ rename-mapping:
   EncryptionProperty: ContainerRegistryEncryption
   RegenerateCredentialParameters: ContainerRegistryCredentialRegenerateContent
   RegistryListCredentialsResult: ContainerRegistryListCredentialsResult
-  RegistryNameCheckRequest: ContainerRegistryNameCheckContent
+  RegistryNameCheckRequest: ContainerRegistryNameAvailabilityContent
   RegistryPassword: ContainerRegistryPassword
   RegistryUsage: ContainerRegistryUsage
   RegistryUsageUnit: ContainerRegistryUsageUnit

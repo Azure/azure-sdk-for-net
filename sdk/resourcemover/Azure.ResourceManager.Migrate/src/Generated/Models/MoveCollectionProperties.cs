@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="targetRegion"> Gets or sets the target region. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the move collection errors. </param>
-        internal MoveCollectionProperties(string sourceRegion, string targetRegion, ProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
+        internal MoveCollectionProperties(string sourceRegion, string targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
         {
             SourceRegion = sourceRegion;
             TargetRegion = targetRegion;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Gets or sets the target region. </summary>
         public string TargetRegion { get; set; }
         /// <summary> Defines the provisioning states. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MoverProvisioningState? ProvisioningState { get; }
         /// <summary> Defines the move collection errors. </summary>
         internal MoveCollectionPropertiesErrors Errors { get; }
         /// <summary> The move resource error body. </summary>

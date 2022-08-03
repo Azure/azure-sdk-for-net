@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the public IP address resource settings. </summary>
-    public partial class PublicIPAddressResourceSettings : ResourceSettings
+    public partial class PublicIPAddressResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of PublicIPAddressResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

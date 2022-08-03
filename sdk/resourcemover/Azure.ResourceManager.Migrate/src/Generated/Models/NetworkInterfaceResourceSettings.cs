@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the network interface resource settings. </summary>
-    public partial class NetworkInterfaceResourceSettings : ResourceSettings
+    public partial class NetworkInterfaceResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Gets or sets the virtual machine resource settings. </summary>
-    public partial class VirtualMachineResourceSettings : ResourceSettings
+    public partial class VirtualMachineResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             Tags = new ChangeTrackingDictionary<string, string>();
-            UserManagedIdentities = new ChangeTrackingList<string>();
+            UserManagedIdentities = new ChangeTrackingList<ResourceIdentifier>();
             ResourceType = "Microsoft.Compute/virtualMachines";
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="targetAvailabilityZone"> Gets or sets the target availability zone. </param>
         /// <param name="targetVmSize"> Gets or sets the target virtual machine size. </param>
         /// <param name="targetAvailabilitySetId"> Gets or sets the target availability set id for virtual machines not in an availability set at source. </param>
-        internal VirtualMachineResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, IList<string> userManagedIdentities, TargetAvailabilityZone? targetAvailabilityZone, string targetVmSize, string targetAvailabilitySetId) : base(resourceType, targetResourceName)
+        internal VirtualMachineResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, IList<ResourceIdentifier> userManagedIdentities, MoverTargetAvailabilityZone? targetAvailabilityZone, string targetVmSize, ResourceIdentifier targetAvailabilitySetId) : base(resourceType, targetResourceName)
         {
             Tags = tags;
             UserManagedIdentities = userManagedIdentities;
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets user-managed identities. </summary>
-        public IList<string> UserManagedIdentities { get; }
+        public IList<ResourceIdentifier> UserManagedIdentities { get; }
         /// <summary> Gets or sets the target availability zone. </summary>
-        public TargetAvailabilityZone? TargetAvailabilityZone { get; set; }
+        public MoverTargetAvailabilityZone? TargetAvailabilityZone { get; set; }
         /// <summary> Gets or sets the target virtual machine size. </summary>
         public string TargetVmSize { get; set; }
         /// <summary> Gets or sets the target availability set id for virtual machines not in an availability set at source. </summary>
-        public string TargetAvailabilitySetId { get; set; }
+        public ResourceIdentifier TargetAvailabilitySetId { get; set; }
     }
 }
