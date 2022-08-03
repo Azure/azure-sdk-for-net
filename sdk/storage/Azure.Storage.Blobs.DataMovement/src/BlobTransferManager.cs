@@ -227,7 +227,8 @@ namespace Azure.Storage.Blobs.DataMovement
                 sourceLocalPath,
                 destinationClient,
                 uploadOptions,
-                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures);
+                Options?.ErrorHandling ?? ErrorHandlingOptions.PauseOnAllFailures,
+                QueueJobChunkAsync);
             await QueueJobAsync(transferJob).ConfigureAwait(false);
             _jobDictionary.Add(transferId, transferJob);
                 //transferJob.ProcessUploadTransfer(_taskFactory, _jobTransferScheduler),

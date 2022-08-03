@@ -237,6 +237,7 @@ namespace Azure.Storage.Blobs.DataMovement.Samples
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 uploadOptions.UploadFailedEventHandler += async (BlobUploadFailedEventArgs args) =>
                 {
+
                     //await LogFailedFileAsync(args.SourcePath, args.DestinationBlobClient.Uri, args.Exception.Message);
                 };
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously

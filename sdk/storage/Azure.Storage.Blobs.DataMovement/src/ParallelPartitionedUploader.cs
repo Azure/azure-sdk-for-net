@@ -11,8 +11,10 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.DataMovement;
+using Azure.Storage.Blobs.DataMovement.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Shared;
 
@@ -109,7 +111,28 @@ namespace Azure.Storage.Blob.Experiemental
         /// </summary>
         private readonly string _operationName;
 
+        /// <summary>
+        /// The name of the filePath being transferred.
+        /// </summary>
+        private readonly string _filePath;
+
+        /// <summary>
+        /// Length of the File
+        /// </summary>
+        private readonly long _fileLength;
+
+        /// <summary>
+        /// Length of the file.
+        /// </summary>
+        public long FileLength => _fileLength;
+
+        /// <summary>
+        /// Commit Ranges gathered from staging blocks
+        /// </summary>
+        private ConcurrentBag<(long Offset, long Size)> _blockList;
+
         public ParallelPartitionedUploader(
+            string filePath,
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
             //UploadTransactionalHashingOptions hashingOptions,
@@ -169,7 +192,17 @@ namespace Azure.Storage.Blob.Experiemental
             //}
 
             _operationName = operationName;
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw Errors.ArgumentNull(nameof(filePath));
+            }
+            _filePath = filePath;
+            FileInfo fileInfo = new FileInfo(filePath);
+            _fileLength = fileInfo.Length;
         }
+
+        public bool IsPutBlockRequest() => _fileLength < _singleUploadThreshold;
 
         /*
         public IEnumerable<Task> Upload(
@@ -201,31 +234,22 @@ namespace Azure.Storage.Blob.Experiemental
             cancellationToken);
         */
 
-        public async IAsyncEnumerable<Func<Task>> UploadInternal(
-            string filePath,
+        public async Task UploadInternal(
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(filePath))
-            {
-                throw Errors.ArgumentNull(nameof(filePath));
-            }
-
             if (_initializeDestinationInternal != InitializeNoOp)
             {
                 await _initializeDestinationInternal(args, true, cancellationToken).ConfigureAwait(false);
             }
 
-            FileInfo fileInfo = new FileInfo(filePath);
-            long length = fileInfo.Length;
-
             // If we know the length and it's small enough
-            if (length < _singleUploadThreshold)
+            if (IsPutBlockRequest())
             {
                 // Upload it in a single request
-                yield return async () => await _singleUploadInternal(
-                            filePath,
+                await _singleUploadInternal(
+                            _filePath,
                             args,
                             progressHandler,
                             // TODO #27253
@@ -233,6 +257,8 @@ namespace Azure.Storage.Blob.Experiemental
                             _operationName,
                             async: true,
                             cancellationToken).ConfigureAwait(false);
+                // default on empty bag
+                _blockList = default;
             }
             else
             {
@@ -241,41 +267,26 @@ namespace Azure.Storage.Blob.Experiemental
                 // content.
                 long blockSize = _blockSize != null
                     ? _blockSize.Value
-                    : length < Constants.LargeUploadThreshold ?
+                    : _fileLength < Constants.LargeUploadThreshold ?
                         Constants.DefaultBufferSize :
                         Constants.LargeBufferSize;
 
                 // Otherwise stage individual blocks
-
-                /* We only support parallel upload in an async context to avoid issues in our overall sync story.
-                 * We're branching on both async and max worker count, where 3 combinations lead to
-                 * UploadInSequenceInternal and 1 combination leads to UploadInParallelAsync. We are guaranteed
-                 * to be in an async context when we call UploadInParallelAsync, even though the analyzer can't
-                 * detext this, and we properly pass in the async context in the else case when we haven't
-                 * explicitly checked.
-                 */
-                await foreach (Func<Task> item in UploadInParallelAsync(
-                    filePath,
-                    length,
+                _blockList = await CreateStageBlocks(
                     blockSize,
                     args,
                     progressHandler,
                     true,
-                    cancellationToken).ConfigureAwait(false))
-                {
-                    yield return item;
-                }
+                    cancellationToken).ConfigureAwait(false);
             }
         }
 
-        private async IAsyncEnumerable<Func<Task>> UploadInParallelAsync(
-            string filePath,
-            long contentLength,
+        private async Task<ConcurrentBag<(long Offset, long Size)>> CreateStageBlocks(
             long blockSize,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
             bool async,
-            [EnumeratorCancellation] CancellationToken cancellationToken)
+            CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
@@ -294,14 +305,14 @@ namespace Azure.Storage.Blob.Experiemental
 
             // A list of tasks that are currently executing which will
             // always be smaller than _maxWorkerCount
-            ConcurrentBag<Task> runningTasks = new ConcurrentBag<Task>();
+            ConcurrentBag<Func<Task>> runningTasks = new ConcurrentBag<Func<Task>>();
 
             // Partition the stream into individual blocks
-            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(_filePath, FileMode.Open, FileAccess.Read))
             {
                 await foreach (SlicedStream block in GetPartitionsAsync(
                 stream,
-                contentLength,
+                _fileLength,
                 blockSize,
                 GetBufferedPartitionInternal, // we always buffer for upload in parallel from stream
                 async: async,
@@ -315,36 +326,31 @@ namespace Azure.Storage.Blob.Experiemental
                     // Start staging the next block (but don't await the Task!)
                     Func<Task> func = async () =>
                     {
-                        Task task = StagePartitionAndDisposeInternal(
+                        await StagePartitionAndDisposeInternal(
                               block,
                               block.AbsolutePosition,
                               args,
                               progressHandler,
                               async: async,
-                              cancellationToken);
-                        runningTasks.Add(task);
-                        await task.ConfigureAwait(false);
+                              cancellationToken).ConfigureAwait(false);
                     };
-                    // Add the block to our task and commit lists
-                    yield return func;
                 }
-
-                // Wait for all the remaining blocks to finish staging and then
-                // commit the block list to complete the upload
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                while (runningTasks.Count < partitions.Count)
-                {
-                }
-                await Task.WhenAll(runningTasks).ConfigureAwait(false);
             }
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            return partitions;
+        }
 
-            // Calling internal method for easier mocking in PartitionedUploaderTests
-            yield return async () => await _commitPartitionedUploadInternal(
-                partitions.ToList(),
-                args,
-                async: async,
-                cancellationToken).ConfigureAwait(false);
+        public async Task CommitBlockList(
+            TServiceSpecificData args,
+            CancellationToken cancellationToken)
+        {
+            if (_blockList != null && !(_blockList.IsEmpty))
+            {
+                await _commitPartitionedUploadInternal(
+                    _blockList.ToList(),
+                    args,
+                    true,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
