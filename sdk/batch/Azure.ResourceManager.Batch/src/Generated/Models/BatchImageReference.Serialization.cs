@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> offer = default;
             Optional<string> sku = default;
             Optional<string> version = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"))
@@ -74,7 +74,12 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

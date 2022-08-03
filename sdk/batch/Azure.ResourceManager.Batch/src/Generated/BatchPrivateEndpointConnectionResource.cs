@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="ifMatch"> The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BatchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, BatchPrivateEndpointConnectionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, BatchPrivateEndpointConnectionData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="ifMatch"> The state (ETag) version of the private endpoint connection to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BatchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, BatchPrivateEndpointConnectionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, BatchPrivateEndpointConnectionData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
