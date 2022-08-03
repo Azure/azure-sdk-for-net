@@ -70,7 +70,7 @@ rename-mapping:
   ExtensionAggregateState: ArcExtensionAggregateState
   ExtensionList: ArcExtensionListResult
   ImdsAttestation: ImdsAttestationState
-  PasswordCredential: ArcSettingPasswordCredential
+  PasswordCredential: ArcPasswordCredential
   UploadCertificateRequest: HciClusterCertificateContent
   RawCertificateData: HciClusterRawCertificate
 

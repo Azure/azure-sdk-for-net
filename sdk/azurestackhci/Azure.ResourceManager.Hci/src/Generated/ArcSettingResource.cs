@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: ArcSettings_GeneratePassword
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ArcSettingPasswordCredential>> GeneratePasswordAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcPasswordCredential>> GeneratePasswordAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.GeneratePassword");
             scope.Start();
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: ArcSettings_GeneratePassword
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ArcSettingPasswordCredential> GeneratePassword(CancellationToken cancellationToken = default)
+        public virtual Response<ArcPasswordCredential> GeneratePassword(CancellationToken cancellationToken = default)
         {
             using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.GeneratePassword");
             scope.Start();

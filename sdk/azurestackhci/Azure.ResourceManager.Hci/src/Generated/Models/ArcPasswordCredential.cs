@@ -9,20 +9,20 @@ using System;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The ArcSettingPasswordCredential. </summary>
-    public partial class ArcSettingPasswordCredential
+    /// <summary> The ArcPasswordCredential. </summary>
+    public partial class ArcPasswordCredential
     {
-        /// <summary> Initializes a new instance of ArcSettingPasswordCredential. </summary>
-        internal ArcSettingPasswordCredential()
+        /// <summary> Initializes a new instance of ArcPasswordCredential. </summary>
+        internal ArcPasswordCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcSettingPasswordCredential. </summary>
+        /// <summary> Initializes a new instance of ArcPasswordCredential. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
         /// <param name="startOn"></param>
         /// <param name="endOn"></param>
-        internal ArcSettingPasswordCredential(string secretText, string keyId, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        internal ArcPasswordCredential(string secretText, string keyId, DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             SecretText = secretText;
             KeyId = keyId;
