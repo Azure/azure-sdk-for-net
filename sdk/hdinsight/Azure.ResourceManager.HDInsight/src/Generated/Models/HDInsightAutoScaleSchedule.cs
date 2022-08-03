@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// Parameters for a schedule-based autoscale rule, consisting of an array of days + a time and capacity
-    /// Serialized Name: AutoscaleSchedule
-    /// </summary>
+    /// <summary> Parameters for a schedule-based autoscale rule, consisting of an array of days + a time and capacity. </summary>
     public partial class HDInsightAutoScaleSchedule
     {
         /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
-        /// <param name="days">
-        /// Days of the week for a schedule-based autoscale rule
-        /// Serialized Name: AutoscaleSchedule.days
-        /// </param>
-        /// <param name="timeAndCapacity">
-        /// Time and capacity for a schedule-based autoscale rule
-        /// Serialized Name: AutoscaleSchedule.timeAndCapacity
-        /// </param>
+        /// <param name="days"> Days of the week for a schedule-based autoscale rule. </param>
+        /// <param name="timeAndCapacity"> Time and capacity for a schedule-based autoscale rule. </param>
         internal HDInsightAutoScaleSchedule(IList<DaysOfWeek> days, HDInsightAutoScaleTimeAndCapacity timeAndCapacity)
         {
             Days = days;
             TimeAndCapacity = timeAndCapacity;
         }
 
-        /// <summary>
-        /// Days of the week for a schedule-based autoscale rule
-        /// Serialized Name: AutoscaleSchedule.days
-        /// </summary>
+        /// <summary> Days of the week for a schedule-based autoscale rule. </summary>
         public IList<DaysOfWeek> Days { get; }
-        /// <summary>
-        /// Time and capacity for a schedule-based autoscale rule
-        /// Serialized Name: AutoscaleSchedule.timeAndCapacity
-        /// </summary>
+        /// <summary> Time and capacity for a schedule-based autoscale rule. </summary>
         public HDInsightAutoScaleTimeAndCapacity TimeAndCapacity { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The provisioning state, which only appears in the response.
-    /// Serialized Name: HDInsightClusterProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state, which only appears in the response. </summary>
     public readonly partial struct HDInsightClusterProvisioningState : IEquatable<HDInsightClusterProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary>
-        /// InProgress
-        /// Serialized Name: HDInsightClusterProvisioningState.InProgress
-        /// </summary>
+        /// <summary> InProgress. </summary>
         public static HDInsightClusterProvisioningState InProgress { get; } = new HDInsightClusterProvisioningState(InProgressValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: HDInsightClusterProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static HDInsightClusterProvisioningState Failed { get; } = new HDInsightClusterProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: HDInsightClusterProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static HDInsightClusterProvisioningState Succeeded { get; } = new HDInsightClusterProvisioningState(SucceededValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: HDInsightClusterProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static HDInsightClusterProvisioningState Canceled { get; } = new HDInsightClusterProvisioningState(CanceledValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: HDInsightClusterProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static HDInsightClusterProvisioningState Deleting { get; } = new HDInsightClusterProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="HDInsightClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HDInsightClusterProvisioningState left, HDInsightClusterProvisioningState right) => left.Equals(right);

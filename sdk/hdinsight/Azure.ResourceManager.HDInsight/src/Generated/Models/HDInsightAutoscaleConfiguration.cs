@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The autoscale request parameters
-    /// Serialized Name: Autoscale
-    /// </summary>
+    /// <summary> The autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleConfiguration
     {
         /// <summary> Initializes a new instance of HDInsightAutoScaleConfiguration. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleConfiguration. </summary>
-        /// <param name="capacity">
-        /// Parameters for load-based autoscale
-        /// Serialized Name: Autoscale.capacity
-        /// </param>
-        /// <param name="recurrence">
-        /// Parameters for schedule-based autoscale
-        /// Serialized Name: Autoscale.recurrence
-        /// </param>
+        /// <param name="capacity"> Parameters for load-based autoscale. </param>
+        /// <param name="recurrence"> Parameters for schedule-based autoscale. </param>
         internal HDInsightAutoScaleConfiguration(HDInsightAutoScaleCapacity capacity, HDInsightAutoScaleRecurrence recurrence)
         {
             Capacity = capacity;
             Recurrence = recurrence;
         }
 
-        /// <summary>
-        /// Parameters for load-based autoscale
-        /// Serialized Name: Autoscale.capacity
-        /// </summary>
+        /// <summary> Parameters for load-based autoscale. </summary>
         public HDInsightAutoScaleCapacity Capacity { get; set; }
-        /// <summary>
-        /// Parameters for schedule-based autoscale
-        /// Serialized Name: Autoscale.recurrence
-        /// </summary>
+        /// <summary> Parameters for schedule-based autoscale. </summary>
         public HDInsightAutoScaleRecurrence Recurrence { get; set; }
     }
 }
