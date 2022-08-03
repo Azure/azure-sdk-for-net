@@ -59,8 +59,9 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterMessageAsync(receivedMessage);
+// Dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// We can optionally pass a dead letter reason and dead letter description to further describe the reason for dead-lettering the message.
+await receiver.DeadLetterMessageAsync(receivedMessage, "sample reason", "sample description");
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
 ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -68,6 +69,10 @@ ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBus
     SubQueue = SubQueue.DeadLetter
 });
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+
+// The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
+string reason = dlqMessage.DeadLetterReason;
+string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
 ### Renew the lock for a message and then complete it
