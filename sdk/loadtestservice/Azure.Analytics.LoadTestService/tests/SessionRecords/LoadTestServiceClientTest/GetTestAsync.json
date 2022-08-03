@@ -1,0 +1,62 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com/loadtests/a011890b-12cd-004d-015d-12aed8880000?api-version=2022-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5e6bf7020bcca0be79b5db5348e1e183-9720ee91b046220e-00",
+        "User-Agent": "azsdk-net-Analytics.LoadTestService/1.0.0-alpha.20220627.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "8ba741cf754a9fa4ee7ee111cf32b03c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Jun 2022 11:27:57 GMT",
+        "mise-correlation-id": "1e1c37e8-a3ec-408a-a75c-4e58c41e71ab",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d89d59d9-1d71-4d9d-89b9-c0ef4c617965"
+      },
+      "ResponseBody": {
+        "testId": "a011890b-12cd-004d-015d-12aed8880000",
+        "description": "",
+        "displayName": "testone",
+        "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourcegroups/yashika-rg/providers/microsoft.loadtestservice/loadtests/loadtestsdk",
+        "loadTestConfig": {
+          "engineInstances": 1,
+          "splitAllCSVs": false
+        },
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        },
+        "createdDateTime": "2022-06-21T15:42:20.585Z",
+        "createdBy": null,
+        "lastModifiedDateTime": "2022-06-21T15:42:20.585Z",
+        "lastModifiedBy": null,
+        "inputArtifacts": {
+          "configUrl": null,
+          "testScriptUrl": null,
+          "userPropUrl": null,
+          "inputArtifactsZipFileurl": null,
+          "additionalUrls": []
+        },
+        "secrets": null,
+        "environmentVariables": null,
+        "subnetId": null,
+        "keyvaultReferenceIdentityType": "SystemAssigned",
+        "keyvaultReferenceIdentityId": null
+      }
+    }
+  ],
+  "Variables": {
+    "LoadTestService_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
+    "RandomSeed": "1653821927"
+  }
+}

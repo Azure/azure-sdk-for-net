@@ -1,0 +1,82 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com/loadtests/a011890b-12cd-000a-0150-12aed8880000?api-version=2022-06-01-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "607",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-4ba25cda5335b50e482ec2bffff16955-d5a6d24bb02a38e8-00",
+        "User-Agent": "azsdk-net-Analytics.LoadTestService/1.0.0-alpha.20220627.1 (.NET 6.0.6; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "31cf639f3151a51ec486ef8e8809bec0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "testId": "a011890b-12cd-000a-0150-12aed8880000",
+        "description": null,
+        "displayName": "dotnetTest",
+        "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/yashika-rg/providers/Microsoft.LoadTestService/loadtests/loadtestsdk",
+        "loadTestConfig": {
+          "engineInstances": 1,
+          "splitAllCSVs": false
+        },
+        "passFailCriteria": null,
+        "createdDateTime": "0001-01-01T00:00:00",
+        "createdBy": null,
+        "lastModifiedDateTime": "0001-01-01T00:00:00",
+        "lastModifiedBy": null,
+        "inputArtifacts": null,
+        "secrets": null,
+        "environmentVariables": null,
+        "subnetId": null,
+        "keyvaultReferenceIdentityType": null,
+        "keyvaultReferenceIdentityId": null
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "723",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 27 Jun 2022 11:27:56 GMT",
+        "mise-correlation-id": "a25980c7-ad97-4dee-a601-aee045fdf1c2",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f1b10d8b-622e-46c1-8cbd-fdac4b0887c4"
+      },
+      "ResponseBody": {
+        "testId": "a011890b-12cd-000a-0150-12aed8880000",
+        "description": null,
+        "displayName": "dotnetTest",
+        "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourcegroups/yashika-rg/providers/microsoft.loadtestservice/loadtests/loadtestsdk",
+        "loadTestConfig": {
+          "engineInstances": 1,
+          "splitAllCSVs": false
+        },
+        "passFailCriteria": null,
+        "createdDateTime": "2022-06-25T16:55:04.063Z",
+        "createdBy": null,
+        "lastModifiedDateTime": "2022-06-25T16:55:04.063Z",
+        "lastModifiedBy": null,
+        "inputArtifacts": {
+          "configUrl": null,
+          "testScriptUrl": null,
+          "userPropUrl": null,
+          "inputArtifactsZipFileurl": null,
+          "additionalUrls": []
+        },
+        "secrets": null,
+        "environmentVariables": null,
+        "subnetId": null,
+        "keyvaultReferenceIdentityType": null,
+        "keyvaultReferenceIdentityId": null
+      }
+    }
+  ],
+  "Variables": {
+    "LoadTestService_ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
+    "RandomSeed": "1881165174"
+  }
+}

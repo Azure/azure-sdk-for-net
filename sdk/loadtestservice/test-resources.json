@@ -1,0 +1,85 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentLoadTestService.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "new-app",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "412ce840-37d9-41d0-a4ac-5c14ba07488b",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "defaultValue": "412ce840-37d9-41d0-a4ac-5c14ba07488b",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        }
+    },
+    "variables": {
+        "secretValue": "Very secret value"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.LoadTestService/loadtests",
+            "apiVersion": "2022-06-01-preview",
+            "name": "[parameters('baseName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "premium"
+                },
+                "tenantId": "[parameters('tenantId')]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[parameters('tenantId')]",
+                        "objectId": "[parameters('testApplicationOid')]",
+                        "permissions": {
+                            "secrets": [
+                                "get"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.LoadTestService/loadtests/secrets",
+            "name": "[concat(parameters('baseName'), '/TestSecret')]",
+            "apiVersion": "2022-06-01-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+              "[resourceId('Microsoft.KeyVault/vaults', parameters('baseName'))]"
+            ],
+            "properties": {
+              "value": "[variables('secretValue')]"
+            }
+          }
+    ],
+    "outputs": {
+        "LOADTESTSERVICE_URL": {
+            "type": "string",
+            "value": "[reference(parameters('baseName')).vaultUri]"
+        },
+        "LOADTESTSERVICE_SECRET": {
+            "type": "string",
+            "value": "[variables('secretValue')]"
+        }
+    }
+}
