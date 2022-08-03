@@ -16,33 +16,33 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("RecordSetTxtCollection")]
+[assembly: CodeGenSuppressType("SoaRecordCollection")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TxtRecordResource" /> and their operations.
-    /// Each <see cref="TxtRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="RecordSetTxtCollection" /> instance call the GetRecordSetTxts method from an instance of <see cref="DnsZoneResource" />.
+    /// A class representing a collection of <see cref="SoaRecordResource" /> and their operations.
+    /// Each <see cref="SoaRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="SoaRecordCollection" /> instance call the GetRecordSetSoas method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
-    public partial class RecordSetTxtCollection : ArmCollection, IEnumerable<TxtRecordResource>, IAsyncEnumerable<TxtRecordResource>
+    public partial class SoaRecordCollection : ArmCollection, IEnumerable<SoaRecordResource>, IAsyncEnumerable<SoaRecordResource>
     {
-        private readonly ClientDiagnostics _recordSetTxtRecordSetsClientDiagnostics;
-        private readonly RecordSetsRestOperations _recordSetTxtRecordSetsRestClient;
+        private readonly ClientDiagnostics _recordSetSoaRecordSetsClientDiagnostics;
+        private readonly RecordSetsRestOperations _recordSetSoaRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetTxtCollection"/> class for mocking. </summary>
-        protected RecordSetTxtCollection()
+        /// <summary> Initializes a new instance of the <see cref="SoaRecordCollection"/> class for mocking. </summary>
+        protected SoaRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetTxtCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SoaRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RecordSetTxtCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SoaRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recordSetTxtRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", TxtRecordResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TxtRecordResource.ResourceType, out string recordSetTxtRecordSetsApiVersion);
-            _recordSetTxtRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetTxtRecordSetsApiVersion);
+            _recordSetSoaRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", SoaRecordResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SoaRecordResource.ResourceType, out string recordSetSoaRecordSetsApiVersion);
+            _recordSetSoaRecordSetsRestClient = new RecordSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recordSetSoaRecordSetsApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TxtRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, TxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SoaRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string relativeRecordSetName, SoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.CreateOrUpdate");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _recordSetTxtRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsArmOperation<TxtRecordResource>(Response.FromValue(new TxtRecordResource(Client, response), response.GetRawResponse()));
+                var response = await _recordSetSoaRecordSetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsArmOperation<SoaRecordResource>(Response.FromValue(new SoaRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TxtRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, TxtRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SoaRecordResource> CreateOrUpdate(WaitUntil waitUntil, string relativeRecordSetName, SoaRecordData data, ETag? ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.CreateOrUpdate");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _recordSetTxtRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsArmOperation<TxtRecordResource>(Response.FromValue(new TxtRecordResource(Client, response), response.GetRawResponse()));
+                var response = _recordSetSoaRecordSetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsArmOperation<SoaRecordResource>(Response.FromValue(new SoaRecordResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual async Task<Response<TxtRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoaRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.Get");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recordSetTxtRecordSetsRestClient.GetTxtRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetSoaRecordSetsRestClient.GetSoaRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.Dns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        public virtual Response<TxtRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        public virtual Response<SoaRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.Get");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.Get");
             scope.Start();
             try
             {
-                var response = _recordSetTxtRecordSetsRestClient.GetTxtRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken);
+                var response = _recordSetSoaRecordSetsRestClient.GetSoaRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TxtRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SoaRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,17 +186,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TxtRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TxtRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SoaRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SoaRecordResource> GetAllAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TxtRecordResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SoaRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.GetAll");
+                using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetTxtRecordSetsRestClient.ListTxtRecordByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recordSetSoaRecordSetsRestClient.ListSoaRecordByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<TxtRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SoaRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.GetAll");
+                using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetTxtRecordSetsRestClient.ListTxtRecordByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recordSetSoaRecordSetsRestClient.ListSoaRecordByTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -230,17 +230,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TxtRecordResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TxtRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SoaRecordResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SoaRecordResource> GetAll(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<TxtRecordResource> FirstPageFunc(int? pageSizeHint)
+            Page<SoaRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.GetAll");
+                using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetTxtRecordSetsRestClient.ListTxtRecordByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recordSetSoaRecordSetsRestClient.ListSoaRecordByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<TxtRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SoaRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.GetAll");
+                using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetTxtRecordSetsRestClient.ListTxtRecordByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TxtRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recordSetSoaRecordSetsRestClient.ListSoaRecordByTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SoaRecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.Exists");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _recordSetTxtRecordSetsRestClient.GetTxtRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _recordSetSoaRecordSetsRestClient.GetSoaRecordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetTxtRecordSetsClientDiagnostics.CreateScope("RecordSetTxtCollection.Exists");
+            using var scope = _recordSetSoaRecordSetsClientDiagnostics.CreateScope("SoaRecordCollection.Exists");
             scope.Start();
             try
             {
-                var response = _recordSetTxtRecordSetsRestClient.GetTxtRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken);
+                var response = _recordSetSoaRecordSetsRestClient.GetSoaRecord(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        IEnumerator<TxtRecordResource> IEnumerable<TxtRecordResource>.GetEnumerator()
+        IEnumerator<SoaRecordResource> IEnumerable<SoaRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Dns
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<TxtRecordResource> IAsyncEnumerable<TxtRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SoaRecordResource> IAsyncEnumerable<SoaRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -16,29 +16,29 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("RecordSetPtrCollection")]
+[assembly: CodeGenSuppressType("PtrRecordCollection")]
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
     /// A class representing a collection of <see cref="PtrRecordResource" /> and their operations.
     /// Each <see cref="PtrRecordResource" /> in the collection will belong to the same instance of <see cref="DnsZoneResource" />.
-    /// To get a <see cref="RecordSetPtrCollection" /> instance call the GetRecordSetPtrs method from an instance of <see cref="DnsZoneResource" />.
+    /// To get a <see cref="PtrRecordCollection" /> instance call the GetRecordSetPtrs method from an instance of <see cref="DnsZoneResource" />.
     /// </summary>
-    public partial class RecordSetPtrCollection : ArmCollection, IEnumerable<PtrRecordResource>, IAsyncEnumerable<PtrRecordResource>
+    public partial class PtrRecordCollection : ArmCollection, IEnumerable<PtrRecordResource>, IAsyncEnumerable<PtrRecordResource>
     {
         private readonly ClientDiagnostics _recordSetPtrRecordSetsClientDiagnostics;
         private readonly RecordSetsRestOperations _recordSetPtrRecordSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetPtrCollection"/> class for mocking. </summary>
-        protected RecordSetPtrCollection()
+        /// <summary> Initializes a new instance of the <see cref="PtrRecordCollection"/> class for mocking. </summary>
+        protected PtrRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetPtrCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PtrRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RecordSetPtrCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PtrRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _recordSetPtrRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", PtrRecordResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PtrRecordResource.ResourceType, out string recordSetPtrRecordSetsApiVersion);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.CreateOrUpdate");
+            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Dns
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.CreateOrUpdate");
+            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.Get");
+            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.Get");
             scope.Start();
             try
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.Get");
+            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.Get");
             scope.Start();
             try
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Dns
         {
             async Task<Page<PtrRecordResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.GetAll");
+                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
             }
             async Task<Page<PtrRecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.GetAll");
+                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Dns
         {
             Page<PtrRecordResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.GetAll");
+                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Dns
             }
             Page<PtrRecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.GetAll");
+                using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.GetAll");
                 scope.Start();
                 try
                 {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.Exists");
+            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(relativeRecordSetName, nameof(relativeRecordSetName));
 
-            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("RecordSetPtrCollection.Exists");
+            using var scope = _recordSetPtrRecordSetsClientDiagnostics.CreateScope("PtrRecordCollection.Exists");
             scope.Start();
             try
             {

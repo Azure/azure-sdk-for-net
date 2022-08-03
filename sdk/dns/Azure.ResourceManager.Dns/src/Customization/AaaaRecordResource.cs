@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 
-[assembly: CodeGenSuppressType("RecordSetAaaaResource")]
+[assembly: CodeGenSuppressType("AaaaRecordResource")]
 
 namespace Azure.ResourceManager.Dns
 {

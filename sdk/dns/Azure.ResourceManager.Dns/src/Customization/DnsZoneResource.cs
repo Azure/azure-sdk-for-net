@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of ARecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of ARecordResources and their operations over a ARecordResource. </returns>
-        public virtual RecordSetACollection GetRecordSetACollection()
+        public virtual ARecordCollection GetARecordCollection()
         {
-            return GetCachedClient(Client => new RecordSetACollection(Client, Id));
+            return GetCachedClient(Client => new ARecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual async Task<Response<ARecordResource>> GetRecordSetAAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return await GetRecordSetACollection().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+            return await GetARecordCollection().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual Response<ARecordResource> GetRecordSetA(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return GetRecordSetACollection().Get(relativeRecordSetName, cancellationToken);
+            return GetARecordCollection().Get(relativeRecordSetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AaaaRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of AaaaRecordResources and their operations over a AaaaRecordResource. </returns>
-        public virtual RecordSetAaaaCollection GetRecordSetAaaas()
+        public virtual AaaaRecordCollection GetRecordSetAaaas()
         {
-            return GetCachedClient(Client => new RecordSetAaaaCollection(Client, Id));
+            return GetCachedClient(Client => new AaaaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of CaaRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of CaaRecordResources and their operations over a CaaRecordResource. </returns>
-        public virtual RecordSetCaaCollection GetRecordSetCaas()
+        public virtual CaaRecordCollection GetRecordSetCaas()
         {
-            return GetCachedClient(Client => new RecordSetCaaCollection(Client, Id));
+            return GetCachedClient(Client => new CaaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of CnameRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of CnameRecordResources and their operations over a CnameRecordResource. </returns>
-        public virtual RecordSetCnameCollection GetRecordSetCnames()
+        public virtual CnameRecordCollection GetRecordSetCnames()
         {
-            return GetCachedClient(Client => new RecordSetCnameCollection(Client, Id));
+            return GetCachedClient(Client => new CnameRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of MXRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of MXRecordResources and their operations over a MXRecordResource. </returns>
-        public virtual RecordSetMXCollection GetRecordSetMXes()
+        public virtual MXRecordCollection GetRecordSetMXes()
         {
-            return GetCachedClient(Client => new RecordSetMXCollection(Client, Id));
+            return GetCachedClient(Client => new MXRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -272,9 +272,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of NSRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of NSRecordResources and their operations over a NSRecordResource. </returns>
-        public virtual RecordSetNSCollection GetRecordSetNS()
+        public virtual NSRecordCollection GetRecordSetNS()
         {
-            return GetCachedClient(Client => new RecordSetNSCollection(Client, Id));
+            return GetCachedClient(Client => new NSRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of PtrRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of PtrRecordResources and their operations over a PtrRecordResource. </returns>
-        public virtual RecordSetPtrCollection GetRecordSetPtrs()
+        public virtual PtrRecordCollection GetRecordSetPtrs()
         {
-            return GetCachedClient(Client => new RecordSetPtrCollection(Client, Id));
+            return GetCachedClient(Client => new PtrRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of SoaRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of SoaRecordResources and their operations over a SoaRecordResource. </returns>
-        public virtual RecordSetSoaCollection GetRecordSetSoas()
+        public virtual SoaRecordCollection GetRecordSetSoas()
         {
-            return GetCachedClient(Client => new RecordSetSoaCollection(Client, Id));
+            return GetCachedClient(Client => new SoaRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of SrvRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of SrvRecordResources and their operations over a SrvRecordResource. </returns>
-        public virtual RecordSetSrvCollection GetRecordSetSrvs()
+        public virtual SrvRecordCollection GetRecordSetSrvs()
         {
-            return GetCachedClient(Client => new RecordSetSrvCollection(Client, Id));
+            return GetCachedClient(Client => new SrvRecordCollection(Client, Id));
         }
 
         /// <summary>
@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of TxtRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of TxtRecordResources and their operations over a TxtRecordResource. </returns>
-        public virtual RecordSetTxtCollection GetRecordSetTxts()
+        public virtual TxtRecordCollection GetRecordSetTxts()
         {
-            return GetCachedClient(Client => new RecordSetTxtCollection(Client, Id));
+            return GetCachedClient(Client => new TxtRecordCollection(Client, Id));
         }
 
         /// <summary>
