@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of BatchNameAvailabilityResult. </summary>
-        /// <param name="nameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </param>
+        /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
-        internal BatchNameAvailabilityResult(bool? nameAvailable, BatchNameUnavailableReason? reason, string message)
+        internal BatchNameAvailabilityResult(bool? isNameAvailable, BatchNameUnavailableReason? reason, string message)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
 
         /// <summary> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> Gets the reason that a Batch account name could not be used. The Reason element is only returned if NameAvailable is false. </summary>
         public BatchNameUnavailableReason? Reason { get; }
         /// <summary> Gets an error message explaining the Reason value in more detail. </summary>

@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Batch.Models
     {
         /// <summary> Initializes a new instance of BatchVmDataDisk. </summary>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. The value must be between 0 and 63, inclusive. </param>
-        /// <param name="diskSizeGB"> The initial disk size in GB when creating new data disk. </param>
-        public BatchVmDataDisk(int lun, int diskSizeGB)
+        /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
+        public BatchVmDataDisk(int lun, int diskSizeInGB)
         {
             Lun = lun;
-            DiskSizeGB = diskSizeGB;
+            DiskSizeInGB = diskSizeInGB;
         }
 
         /// <summary> Initializes a new instance of BatchVmDataDisk. </summary>
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// 
         ///  The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </param>
-        /// <param name="diskSizeGB"> The initial disk size in GB when creating new data disk. </param>
+        /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
         /// <param name="storageAccountType">
         /// If omitted, the default is &quot;Standard_LRS&quot;. Values are:
         /// 
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
         /// </param>
-        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeGB, BatchStorageAccountType? storageAccountType)
+        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType)
         {
             Lun = lun;
             Caching = caching;
-            DiskSizeGB = diskSizeGB;
+            DiskSizeInGB = diskSizeInGB;
             StorageAccountType = storageAccountType;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         public BatchDiskCachingType? Caching { get; set; }
         /// <summary> The initial disk size in GB when creating new data disk. </summary>
-        public int DiskSizeGB { get; set; }
+        public int DiskSizeInGB { get; set; }
         /// <summary>
         /// If omitted, the default is &quot;Standard_LRS&quot;. Values are:
         /// 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lastKeySync");
-            writer.WriteStringValue(LastKeySync, "O");
+            writer.WriteStringValue(LastKeySyncOn, "O");
             writer.WritePropertyName("storageAccountId");
             writer.WriteStringValue(StorageAccountId);
             if (Optional.IsDefined(AuthenticationMode))

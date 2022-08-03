@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
             writer.WritePropertyName("diskSizeGB");
-            writer.WriteNumberValue(DiskSizeGB);
+            writer.WriteNumberValue(DiskSizeInGB);
             if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType");

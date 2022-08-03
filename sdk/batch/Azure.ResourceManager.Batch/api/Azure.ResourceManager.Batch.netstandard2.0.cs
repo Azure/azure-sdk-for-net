@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageConfiguration AutoStorage { get { throw null; } }
         public int? DedicatedCoreQuota { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
-        public bool? DedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountEncryptionConfiguration Encryption { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsDedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchKeyVaultReference KeyVaultReference { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? LowPriorityCoreQuota { get { throw null; } }
@@ -418,8 +418,8 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchAccountAutoStorageConfiguration : Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageBaseConfiguration
     {
-        public BatchAccountAutoStorageConfiguration(Azure.Core.ResourceIdentifier storageAccountId, System.DateTimeOffset lastKeySync) : base (default(Azure.Core.ResourceIdentifier)) { }
-        public System.DateTimeOffset LastKeySync { get { throw null; } set { } }
+        public BatchAccountAutoStorageConfiguration(Azure.Core.ResourceIdentifier storageAccountId, System.DateTimeOffset lastKeySyncOn) : base (default(Azure.Core.ResourceIdentifier)) { }
+        public System.DateTimeOffset LastKeySyncOn { get { throw null; } set { } }
     }
     public partial class BatchAccountCertificateCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchImageReference
     {
         public BatchImageReference() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Offer { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
@@ -824,8 +824,8 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchNameAvailabilityResult
     {
         internal BatchNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchNameUnavailableReason? Reason { get { throw null; } }
     }
     public enum BatchNameUnavailableReason
@@ -1068,9 +1068,9 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchVmDataDisk
     {
-        public BatchVmDataDisk(int lun, int diskSizeGB) { }
+        public BatchVmDataDisk(int lun, int diskSizeInGB) { }
         public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
-        public int DiskSizeGB { get { throw null; } set { } }
+        public int DiskSizeInGB { get { throw null; } set { } }
         public int Lun { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
     }

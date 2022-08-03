@@ -53,7 +53,6 @@ rename-rules:
 
 prepend-rp-prefix:
 - StorageAccountType
-- ImageReference
 - ProvisioningState
 
 override-operation-name:
@@ -68,6 +67,7 @@ rename-mapping:
   ApplicationPackage: BatchApplicationPackage
   ApplicationPackage.properties.lastActivationTime: LastActivatedOn
   PublicNetworkAccessType: BatchPublicNetworkAccess
+  BatchAccount.properties.dedicatedCoreQuotaPerVMFamilyEnforced: IsDedicatedCoreQuotaPerVmFamilyEnforced
   DetectorResponse: BatchAccountDetector
   OutboundEnvironmentEndpoint: BatchAccountOutboundEnvironmentEndpoint
   EndpointDependency: BatchAccountEndpointDependency
@@ -93,6 +93,7 @@ rename-mapping:
   CloudServiceConfiguration: BatchCloudServiceConfiguration
   VirtualMachineConfiguration: BatchVmConfiguration
   DataDisk: BatchVmDataDisk
+  DataDisk.diskSizeGB: DiskSizeInGB
   VMExtension: BatchVmExtension
   VMExtension.type: ExtensionType
   ContainerConfiguration: BatchVmContainerConfiguration
@@ -115,6 +116,7 @@ rename-mapping:
   AzureFileShareConfiguration: BatchFileShareConfiguration
   ComputeNodeIdentityReference.resourceId: -|arm-id
   AutoStorageProperties: BatchAccountAutoStorageConfiguration
+  AutoStorageProperties.lastKeySync: LastKeySyncOn
   AutoStorageBaseProperties: BatchAccountAutoStorageBaseConfiguration
   AutoStorageBaseProperties.storageAccountId: -|arm-id
   AutoStorageAuthenticationMode: BatchAutoStorageAuthenticationMode
@@ -148,6 +150,7 @@ rename-mapping:
   CheckNameAvailabilityParameters: BatchNameAvailabilityContent
   CheckNameAvailabilityParameters.type: -|resource-type
   CheckNameAvailabilityResult: BatchNameAvailabilityResult
+  CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
   NameAvailabilityReason: BatchNameUnavailableReason
   CifsMountConfiguration: BatchCifsMountConfiguration
   NFSMountConfiguration: BatchNFSMountConfiguration
@@ -167,6 +170,8 @@ rename-mapping:
   PublicIPAddressConfiguration: BatchPublicIPAddressConfiguration
   SkuCapability: BatchSkuCapability
   UserIdentity: BatchUserIdentity
+  ImageReference: BatchImageReference
+  ImageReference.id: -|arm-id
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
