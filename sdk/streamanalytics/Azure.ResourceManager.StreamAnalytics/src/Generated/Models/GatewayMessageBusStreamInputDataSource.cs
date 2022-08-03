@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Describes a blob input data source that contains stream data.
-    /// Serialized Name: GatewayMessageBusStreamInputDataSource
-    /// </summary>
+    /// <summary> Describes a blob input data source that contains stream data. </summary>
     public partial class GatewayMessageBusStreamInputDataSource : StreamInputDataSource
     {
         /// <summary> Initializes a new instance of GatewayMessageBusStreamInputDataSource. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of GatewayMessageBusStreamInputDataSource. </summary>
-        /// <param name="streamInputDataSourceType">
-        /// Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: StreamInputDataSource.type
-        /// </param>
-        /// <param name="topic">
-        /// The name of the Service Bus topic.
-        /// Serialized Name: GatewayMessageBusStreamInputDataSource.properties.topic
-        /// </param>
+        /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="topic"> The name of the Service Bus topic. </param>
         internal GatewayMessageBusStreamInputDataSource(string streamInputDataSourceType, string topic) : base(streamInputDataSourceType)
         {
             Topic = topic;
             StreamInputDataSourceType = streamInputDataSourceType ?? "GatewayMessageBus";
         }
 
-        /// <summary>
-        /// The name of the Service Bus topic.
-        /// Serialized Name: GatewayMessageBusStreamInputDataSource.properties.topic
-        /// </summary>
+        /// <summary> The name of the Service Bus topic. </summary>
         public string Topic { get; set; }
     }
 }

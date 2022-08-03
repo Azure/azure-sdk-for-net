@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
-    /// Serialized Name: EventSerializationType
-    /// </summary>
+    /// <summary> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </summary>
     internal readonly partial struct EventSerializationType : IEquatable<EventSerializationType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string CustomClrValue = "CustomClr";
         private const string ParquetValue = "Parquet";
 
-        /// <summary>
-        /// Csv
-        /// Serialized Name: EventSerializationType.Csv
-        /// </summary>
+        /// <summary> Csv. </summary>
         public static EventSerializationType Csv { get; } = new EventSerializationType(CsvValue);
-        /// <summary>
-        /// Avro
-        /// Serialized Name: EventSerializationType.Avro
-        /// </summary>
+        /// <summary> Avro. </summary>
         public static EventSerializationType Avro { get; } = new EventSerializationType(AvroValue);
-        /// <summary>
-        /// Json
-        /// Serialized Name: EventSerializationType.Json
-        /// </summary>
+        /// <summary> Json. </summary>
         public static EventSerializationType Json { get; } = new EventSerializationType(JsonValue);
-        /// <summary>
-        /// CustomClr
-        /// Serialized Name: EventSerializationType.CustomClr
-        /// </summary>
+        /// <summary> CustomClr. </summary>
         public static EventSerializationType CustomClr { get; } = new EventSerializationType(CustomClrValue);
-        /// <summary>
-        /// Parquet
-        /// Serialized Name: EventSerializationType.Parquet
-        /// </summary>
+        /// <summary> Parquet. </summary>
         public static EventSerializationType Parquet { get; } = new EventSerializationType(ParquetValue);
         /// <summary> Determines if two <see cref="EventSerializationType"/> values are the same. </summary>
         public static bool operator ==(EventSerializationType left, EventSerializationType right) => left.Equals(right);

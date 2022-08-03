@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Common error representation.
-    /// Serialized Name: StreamAnalyticsError
-    /// </summary>
+    /// <summary> Common error representation. </summary>
     public partial class StreamAnalyticsError
     {
         /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
-        /// <param name="code">
-        /// Error code.
-        /// Serialized Name: StreamAnalyticsError.error.code
-        /// </param>
-        /// <param name="message">
-        /// Error message.
-        /// Serialized Name: StreamAnalyticsError.error.message
-        /// </param>
-        /// <param name="target">
-        /// Error target.
-        /// Serialized Name: StreamAnalyticsError.error.target
-        /// </param>
-        /// <param name="details">
-        /// Error details.
-        /// Serialized Name: StreamAnalyticsError.error.details
-        /// </param>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="target"> Error target. </param>
+        /// <param name="details"> Error details. </param>
         internal StreamAnalyticsError(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details)
         {
             Code = code;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Details = details;
         }
 
-        /// <summary>
-        /// Error code.
-        /// Serialized Name: StreamAnalyticsError.error.code
-        /// </summary>
+        /// <summary> Error code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// Error message.
-        /// Serialized Name: StreamAnalyticsError.error.message
-        /// </summary>
+        /// <summary> Error message. </summary>
         public string Message { get; }
-        /// <summary>
-        /// Error target.
-        /// Serialized Name: StreamAnalyticsError.error.target
-        /// </summary>
+        /// <summary> Error target. </summary>
         public string Target { get; }
-        /// <summary>
-        /// Error details.
-        /// Serialized Name: StreamAnalyticsError.error.details
-        /// </summary>
+        /// <summary> Error details. </summary>
         public IReadOnlyList<StreamAnalyticsErrorDetails> Details { get; }
     }
 }

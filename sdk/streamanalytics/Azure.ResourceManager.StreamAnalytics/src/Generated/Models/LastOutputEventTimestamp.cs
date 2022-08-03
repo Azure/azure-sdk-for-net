@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// An output event timestamp.
-    /// Serialized Name: LastOutputEventTimestamp
-    /// </summary>
+    /// <summary> An output event timestamp. </summary>
     public partial class LastOutputEventTimestamp
     {
         /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
@@ -19,29 +18,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
-        /// <param name="lastOutputEventTime">
-        /// The last output event time.
-        /// Serialized Name: LastOutputEventTimestamp.lastOutputEventTime
-        /// </param>
-        /// <param name="lastUpdateTime">
-        /// The time that the last update happened.
-        /// Serialized Name: LastOutputEventTimestamp.lastUpdateTime
-        /// </param>
-        internal LastOutputEventTimestamp(string lastOutputEventTime, string lastUpdateTime)
+        /// <param name="lastOutputEventOn"> The last output event time. </param>
+        /// <param name="lastUpdatedOn"> The time that the last update happened. </param>
+        internal LastOutputEventTimestamp(DateTimeOffset? lastOutputEventOn, DateTimeOffset? lastUpdatedOn)
         {
-            LastOutputEventTime = lastOutputEventTime;
-            LastUpdateTime = lastUpdateTime;
+            LastOutputEventOn = lastOutputEventOn;
+            LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary>
-        /// The last output event time.
-        /// Serialized Name: LastOutputEventTimestamp.lastOutputEventTime
-        /// </summary>
-        public string LastOutputEventTime { get; }
-        /// <summary>
-        /// The time that the last update happened.
-        /// Serialized Name: LastOutputEventTimestamp.lastUpdateTime
-        /// </summary>
-        public string LastUpdateTime { get; }
+        /// <summary> The last output event time. </summary>
+        public DateTimeOffset? LastOutputEventOn { get; }
+        /// <summary> The time that the last update happened. </summary>
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

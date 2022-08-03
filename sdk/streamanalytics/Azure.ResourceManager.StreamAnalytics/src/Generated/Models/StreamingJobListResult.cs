@@ -11,10 +11,7 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Object containing a list of streaming jobs.
-    /// Serialized Name: StreamingJobListResult
-    /// </summary>
+    /// <summary> Object containing a list of streaming jobs. </summary>
     internal partial class StreamingJobListResult
     {
         /// <summary> Initializes a new instance of StreamingJobListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of StreamingJobListResult. </summary>
-        /// <param name="value">
-        /// A list of streaming jobs. Populated by a &apos;List&apos; operation.
-        /// Serialized Name: StreamingJobListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: StreamingJobListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of streaming jobs. Populated by a &apos;List&apos; operation. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal StreamingJobListResult(IReadOnlyList<StreamingJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// A list of streaming jobs. Populated by a &apos;List&apos; operation.
-        /// Serialized Name: StreamingJobListResult.value
-        /// </summary>
+        /// <summary> A list of streaming jobs. Populated by a &apos;List&apos; operation. </summary>
         public IReadOnlyList<StreamingJobData> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: StreamingJobListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

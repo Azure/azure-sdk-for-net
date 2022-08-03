@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -18,35 +19,24 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> Initializes a new instance of StreamingJobFunctionData. </summary>
-        /// <param name="id">
-        /// Resource Id
-        /// Serialized Name: SubResource.id
-        /// </param>
-        /// <param name="name">
-        /// Resource name
-        /// Serialized Name: SubResource.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type
-        /// Serialized Name: SubResource.type
-        /// </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties">
         /// The properties that are associated with a function.
-        /// Serialized Name: Function.properties
-        /// Please note <see cref="FunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AggregateFunctionProperties"/> and <see cref="ScalarFunctionProperties"/>.
         /// </param>
-        internal StreamingJobFunctionData(string id, string name, string resourceType, FunctionProperties properties) : base(id, name, resourceType)
+        internal StreamingJobFunctionData(ResourceIdentifier id, string name, ResourceType? resourceType, StreamingJobFunctionProperties properties) : base(id, name, resourceType)
         {
             Properties = properties;
         }
 
         /// <summary>
         /// The properties that are associated with a function.
-        /// Serialized Name: Function.properties
-        /// Please note <see cref="FunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="StreamingJobFunctionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AggregateFunctionProperties"/> and <see cref="ScalarFunctionProperties"/>.
         /// </summary>
-        public FunctionProperties Properties { get; set; }
+        public StreamingJobFunctionProperties Properties { get; set; }
     }
 }

@@ -7,11 +7,8 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Describes a PostgreSQL output data source.
-    /// Serialized Name: PostgreSQLOutputDataSource
-    /// </summary>
-    public partial class PostgreSQLOutputDataSource : OutputDataSource
+    /// <summary> Describes a PostgreSQL output data source. </summary>
+    public partial class PostgreSQLOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
         public PostgreSQLOutputDataSource()
@@ -20,39 +17,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
-        /// <param name="outputDataSourceType">
-        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: OutputDataSource.type
-        /// </param>
-        /// <param name="server">
-        /// The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.server
-        /// </param>
-        /// <param name="database">
-        /// The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.database
-        /// </param>
-        /// <param name="table">
-        /// The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.table
-        /// </param>
-        /// <param name="user">
-        /// The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.user
-        /// </param>
-        /// <param name="password">
-        /// The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.password
-        /// </param>
-        /// <param name="maxWriterCount">
-        /// Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.maxWriterCount
-        /// </param>
-        /// <param name="authenticationMode">
-        /// Authentication Mode.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.authenticationMode
-        /// </param>
-        internal PostgreSQLOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, float? maxWriterCount, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="table"> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="user"> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="maxWriterCount"> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </param>
+        /// <param name="authenticationMode"> Authentication Mode. </param>
+        internal PostgreSQLOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, float? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -64,40 +37,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.DBForPostgreSQL/servers/databases";
         }
 
-        /// <summary>
-        /// The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.server
-        /// </summary>
+        /// <summary> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Server { get; set; }
-        /// <summary>
-        /// The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.database
-        /// </summary>
+        /// <summary> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Database { get; set; }
-        /// <summary>
-        /// The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.table
-        /// </summary>
+        /// <summary> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Table { get; set; }
-        /// <summary>
-        /// The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.user
-        /// </summary>
+        /// <summary> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string User { get; set; }
-        /// <summary>
-        /// The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.password
-        /// </summary>
+        /// <summary> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Password { get; set; }
-        /// <summary>
-        /// Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.maxWriterCount
-        /// </summary>
+        /// <summary> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </summary>
         public float? MaxWriterCount { get; set; }
-        /// <summary>
-        /// Authentication Mode.
-        /// Serialized Name: PostgreSQLOutputDataSource.properties.authenticationMode
-        /// </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        /// <summary> Authentication Mode. </summary>
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

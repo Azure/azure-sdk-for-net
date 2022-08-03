@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// The base sub-resource model definition.
-    /// Serialized Name: SubResource
-    /// </summary>
+    /// <summary> The base sub-resource model definition. </summary>
     public partial class StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
@@ -19,39 +18,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
-        /// <param name="id">
-        /// Resource Id
-        /// Serialized Name: SubResource.id
-        /// </param>
-        /// <param name="name">
-        /// Resource name
-        /// Serialized Name: SubResource.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type
-        /// Serialized Name: SubResource.type
-        /// </param>
-        internal StreamAnalyticsSubResource(string id, string name, string resourceType)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        internal StreamAnalyticsSubResource(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
         }
 
-        /// <summary>
-        /// Resource Id
-        /// Serialized Name: SubResource.id
-        /// </summary>
-        public string Id { get; }
-        /// <summary>
-        /// Resource name
-        /// Serialized Name: SubResource.name
-        /// </summary>
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> Resource name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Resource type
-        /// Serialized Name: SubResource.type
-        /// </summary>
-        public string ResourceType { get; }
+        /// <summary> Resource type. </summary>
+        public ResourceType? ResourceType { get; }
     }
 }

@@ -7,11 +7,8 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// The binding to a CSharp function.
-    /// Serialized Name: CSharpFunctionBinding
-    /// </summary>
-    public partial class CSharpFunctionBinding : FunctionBinding
+    /// <summary> The binding to a CSharp function. </summary>
+    public partial class CSharpFunctionBinding : StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
         public CSharpFunctionBinding()
@@ -20,27 +17,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
-        /// <param name="functionBindingType">
-        /// Indicates the function binding type.
-        /// Serialized Name: FunctionBinding.type
-        /// </param>
-        /// <param name="dllPath">
-        /// The Csharp code containing a single function definition.
-        /// Serialized Name: CSharpFunctionBinding.properties.dllPath
-        /// </param>
-        /// <param name="class">
-        /// The Csharp code containing a single function definition.
-        /// Serialized Name: CSharpFunctionBinding.properties.class
-        /// </param>
-        /// <param name="method">
-        /// The Csharp code containing a single function definition.
-        /// Serialized Name: CSharpFunctionBinding.properties.method
-        /// </param>
-        /// <param name="updateMode">
-        /// Refresh modes for Stream Analytics functions.
-        /// Serialized Name: CSharpFunctionBinding.properties.updateMode
-        /// </param>
-        internal CSharpFunctionBinding(string functionBindingType, string dllPath, string @class, string method, FunctionUpdateMode? updateMode) : base(functionBindingType)
+        /// <param name="functionBindingType"> Indicates the function binding type. </param>
+        /// <param name="dllPath"> The Csharp code containing a single function definition. </param>
+        /// <param name="class"> The Csharp code containing a single function definition. </param>
+        /// <param name="method"> The Csharp code containing a single function definition. </param>
+        /// <param name="updateMode"> Refresh modes for Stream Analytics functions. </param>
+        internal CSharpFunctionBinding(string functionBindingType, string dllPath, string @class, string method, StreamingJobFunctionUpdateMode? updateMode) : base(functionBindingType)
         {
             DllPath = dllPath;
             Class = @class;
@@ -49,25 +31,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             FunctionBindingType = functionBindingType ?? "Microsoft.StreamAnalytics/CLRUdf";
         }
 
-        /// <summary>
-        /// The Csharp code containing a single function definition.
-        /// Serialized Name: CSharpFunctionBinding.properties.dllPath
-        /// </summary>
+        /// <summary> The Csharp code containing a single function definition. </summary>
         public string DllPath { get; set; }
-        /// <summary>
-        /// The Csharp code containing a single function definition.
-        /// Serialized Name: CSharpFunctionBinding.properties.class
-        /// </summary>
+        /// <summary> The Csharp code containing a single function definition. </summary>
         public string Class { get; set; }
-        /// <summary>
-        /// The Csharp code containing a single function definition.
-        /// Serialized Name: CSharpFunctionBinding.properties.method
-        /// </summary>
+        /// <summary> The Csharp code containing a single function definition. </summary>
         public string Method { get; set; }
-        /// <summary>
-        /// Refresh modes for Stream Analytics functions.
-        /// Serialized Name: CSharpFunctionBinding.properties.updateMode
-        /// </summary>
-        public FunctionUpdateMode? UpdateMode { get; set; }
+        /// <summary> Refresh modes for Stream Analytics functions. </summary>
+        public StreamingJobFunctionUpdateMode? UpdateMode { get; set; }
     }
 }

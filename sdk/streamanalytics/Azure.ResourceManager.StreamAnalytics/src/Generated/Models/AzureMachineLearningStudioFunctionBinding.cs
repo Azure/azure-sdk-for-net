@@ -10,11 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// The binding to an Azure Machine Learning Studio.
-    /// Serialized Name: AzureMachineLearningStudioFunctionBinding
-    /// </summary>
-    public partial class AzureMachineLearningStudioFunctionBinding : FunctionBinding
+    /// <summary> The binding to an Azure Machine Learning Studio. </summary>
+    public partial class AzureMachineLearningStudioFunctionBinding : StreamingJobFunctionBinding
     {
         /// <summary> Initializes a new instance of AzureMachineLearningStudioFunctionBinding. </summary>
         public AzureMachineLearningStudioFunctionBinding()
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureMachineLearningStudioFunctionBinding. </summary>
-        /// <param name="functionBindingType">
-        /// Indicates the function binding type.
-        /// Serialized Name: FunctionBinding.type
-        /// </param>
-        /// <param name="endpoint">
-        /// The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.endpoint
-        /// </param>
-        /// <param name="apiKey">
-        /// The API key used to authenticate with Request-Response endpoint.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.apiKey
-        /// </param>
-        /// <param name="inputs">
-        /// The inputs for the Azure Machine Learning Studio endpoint.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.inputs
-        /// </param>
-        /// <param name="outputs">
-        /// A list of outputs from the Azure Machine Learning Studio endpoint execution.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.outputs
-        /// </param>
-        /// <param name="batchSize">
-        /// Number between 1 and 10000 describing maximum number of rows for every Azure ML RRS execute request. Default is 1000.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.batchSize
-        /// </param>
+        /// <param name="functionBindingType"> Indicates the function binding type. </param>
+        /// <param name="endpoint"> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </param>
+        /// <param name="apiKey"> The API key used to authenticate with Request-Response endpoint. </param>
+        /// <param name="inputs"> The inputs for the Azure Machine Learning Studio endpoint. </param>
+        /// <param name="outputs"> A list of outputs from the Azure Machine Learning Studio endpoint execution. </param>
+        /// <param name="batchSize"> Number between 1 and 10000 describing maximum number of rows for every Azure ML RRS execute request. Default is 1000. </param>
         internal AzureMachineLearningStudioFunctionBinding(string functionBindingType, string endpoint, string apiKey, AzureMachineLearningStudioInputs inputs, IList<AzureMachineLearningStudioOutputColumn> outputs, int? batchSize) : base(functionBindingType)
         {
             Endpoint = endpoint;
@@ -58,30 +37,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             FunctionBindingType = functionBindingType ?? "Microsoft.MachineLearning/WebService";
         }
 
-        /// <summary>
-        /// The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.endpoint
-        /// </summary>
+        /// <summary> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </summary>
         public string Endpoint { get; set; }
-        /// <summary>
-        /// The API key used to authenticate with Request-Response endpoint.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.apiKey
-        /// </summary>
+        /// <summary> The API key used to authenticate with Request-Response endpoint. </summary>
         public string ApiKey { get; set; }
-        /// <summary>
-        /// The inputs for the Azure Machine Learning Studio endpoint.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.inputs
-        /// </summary>
+        /// <summary> The inputs for the Azure Machine Learning Studio endpoint. </summary>
         public AzureMachineLearningStudioInputs Inputs { get; set; }
-        /// <summary>
-        /// A list of outputs from the Azure Machine Learning Studio endpoint execution.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.outputs
-        /// </summary>
+        /// <summary> A list of outputs from the Azure Machine Learning Studio endpoint execution. </summary>
         public IList<AzureMachineLearningStudioOutputColumn> Outputs { get; }
-        /// <summary>
-        /// Number between 1 and 10000 describing maximum number of rows for every Azure ML RRS execute request. Default is 1000.
-        /// Serialized Name: AzureMachineLearningStudioFunctionBinding.properties.batchSize
-        /// </summary>
+        /// <summary> Number between 1 and 10000 describing maximum number of rows for every Azure ML RRS execute request. Default is 1000. </summary>
         public int? BatchSize { get; set; }
     }
 }

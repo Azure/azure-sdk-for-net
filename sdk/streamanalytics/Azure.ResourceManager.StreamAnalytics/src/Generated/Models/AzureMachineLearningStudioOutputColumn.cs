@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Describes an output column for the Azure Machine Learning Studio endpoint.
-    /// Serialized Name: AzureMachineLearningStudioOutputColumn
-    /// </summary>
+    /// <summary> Describes an output column for the Azure Machine Learning Studio endpoint. </summary>
     public partial class AzureMachineLearningStudioOutputColumn
     {
         /// <summary> Initializes a new instance of AzureMachineLearningStudioOutputColumn. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureMachineLearningStudioOutputColumn. </summary>
-        /// <param name="name">
-        /// The name of the output column.
-        /// Serialized Name: AzureMachineLearningStudioOutputColumn.name
-        /// </param>
-        /// <param name="dataType">
-        /// The (Azure Machine Learning supported) data type of the output column. A list of valid  Azure Machine Learning data types are described at https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx .
-        /// Serialized Name: AzureMachineLearningStudioOutputColumn.dataType
-        /// </param>
+        /// <param name="name"> The name of the output column. </param>
+        /// <param name="dataType"> The (Azure Machine Learning supported) data type of the output column. A list of valid  Azure Machine Learning data types are described at https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx . </param>
         internal AzureMachineLearningStudioOutputColumn(string name, string dataType)
         {
             Name = name;
             DataType = dataType;
         }
 
-        /// <summary>
-        /// The name of the output column.
-        /// Serialized Name: AzureMachineLearningStudioOutputColumn.name
-        /// </summary>
+        /// <summary> The name of the output column. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The (Azure Machine Learning supported) data type of the output column. A list of valid  Azure Machine Learning data types are described at https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx .
-        /// Serialized Name: AzureMachineLearningStudioOutputColumn.dataType
-        /// </summary>
+        /// <summary> The (Azure Machine Learning supported) data type of the output column. A list of valid  Azure Machine Learning data types are described at https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx . </summary>
         public string DataType { get; set; }
     }
 }

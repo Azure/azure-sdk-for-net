@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
     /// Describes an input data source that contains reference data.
-    /// Serialized Name: ReferenceInputDataSource
     /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureSqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ReferenceInputDataSource. </summary>
-        /// <param name="referenceInputDataSourceType">
-        /// Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: ReferenceInputDataSource.type
-        /// </param>
+        /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
         internal ReferenceInputDataSource(string referenceInputDataSourceType)
         {
             ReferenceInputDataSourceType = referenceInputDataSourceType;
         }
 
-        /// <summary>
-        /// Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: ReferenceInputDataSource.type
-        /// </summary>
+        /// <summary> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </summary>
         internal string ReferenceInputDataSourceType { get; set; }
     }
 }

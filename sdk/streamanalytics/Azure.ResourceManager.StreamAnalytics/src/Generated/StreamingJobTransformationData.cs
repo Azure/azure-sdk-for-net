@@ -22,35 +22,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>
-        /// <param name="id">
-        /// Resource Id
-        /// Serialized Name: SubResource.id
-        /// </param>
-        /// <param name="name">
-        /// Resource name
-        /// Serialized Name: SubResource.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type
-        /// Serialized Name: SubResource.type
-        /// </param>
-        /// <param name="streamingUnits">
-        /// Specifies the number of streaming units that the streaming job uses.
-        /// Serialized Name: Transformation.properties.streamingUnits
-        /// </param>
-        /// <param name="validStreamingUnits">
-        /// Specifies the valid streaming units a streaming job can scale to.
-        /// Serialized Name: Transformation.properties.validStreamingUnits
-        /// </param>
-        /// <param name="query">
-        /// Specifies the query that will be run in the streaming job. You can learn more about the Stream Analytics Query Language (SAQL) here: https://msdn.microsoft.com/library/azure/dn834998 . Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: Transformation.properties.query
-        /// </param>
-        /// <param name="etag">
-        /// The current entity tag for the transformation. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency.
-        /// Serialized Name: Transformation.properties.etag
-        /// </param>
-        internal StreamingJobTransformationData(string id, string name, string resourceType, int? streamingUnits, IList<int> validStreamingUnits, string query, ETag? etag) : base(id, name, resourceType)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="streamingUnits"> Specifies the number of streaming units that the streaming job uses. </param>
+        /// <param name="validStreamingUnits"> Specifies the valid streaming units a streaming job can scale to. </param>
+        /// <param name="query"> Specifies the query that will be run in the streaming job. You can learn more about the Stream Analytics Query Language (SAQL) here: https://msdn.microsoft.com/library/azure/dn834998 . Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="etag"> The current entity tag for the transformation. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
+        internal StreamingJobTransformationData(ResourceIdentifier id, string name, ResourceType? resourceType, int? streamingUnits, IList<int> validStreamingUnits, string query, ETag? etag) : base(id, name, resourceType)
         {
             StreamingUnits = streamingUnits;
             ValidStreamingUnits = validStreamingUnits;
@@ -58,25 +37,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             ETag = etag;
         }
 
-        /// <summary>
-        /// Specifies the number of streaming units that the streaming job uses.
-        /// Serialized Name: Transformation.properties.streamingUnits
-        /// </summary>
+        /// <summary> Specifies the number of streaming units that the streaming job uses. </summary>
         public int? StreamingUnits { get; set; }
-        /// <summary>
-        /// Specifies the valid streaming units a streaming job can scale to.
-        /// Serialized Name: Transformation.properties.validStreamingUnits
-        /// </summary>
+        /// <summary> Specifies the valid streaming units a streaming job can scale to. </summary>
         public IList<int> ValidStreamingUnits { get; }
-        /// <summary>
-        /// Specifies the query that will be run in the streaming job. You can learn more about the Stream Analytics Query Language (SAQL) here: https://msdn.microsoft.com/library/azure/dn834998 . Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: Transformation.properties.query
-        /// </summary>
+        /// <summary> Specifies the query that will be run in the streaming job. You can learn more about the Stream Analytics Query Language (SAQL) here: https://msdn.microsoft.com/library/azure/dn834998 . Required on PUT (CreateOrReplace) requests. </summary>
         public string Query { get; set; }
-        /// <summary>
-        /// The current entity tag for the transformation. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency.
-        /// Serialized Name: Transformation.properties.etag
-        /// </summary>
+        /// <summary> The current entity tag for the transformation. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
         public ETag? ETag { get; }
     }
 }

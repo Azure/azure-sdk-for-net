@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Describes an Azure SQL database reference input data source.
-    /// Serialized Name: AzureSqlReferenceInputDataSource
-    /// </summary>
+    /// <summary> Describes an Azure SQL database reference input data source. </summary>
     public partial class AzureSqlReferenceInputDataSource : ReferenceInputDataSource
     {
         /// <summary> Initializes a new instance of AzureSqlReferenceInputDataSource. </summary>
@@ -20,47 +17,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlReferenceInputDataSource. </summary>
-        /// <param name="referenceInputDataSourceType">
-        /// Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: ReferenceInputDataSource.type
-        /// </param>
-        /// <param name="server">
-        /// This element is associated with the datasource element. This is the name of the server that contains the database that will be written to.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.server
-        /// </param>
-        /// <param name="database">
-        /// This element is associated with the datasource element. This is the name of the database that output will be written to.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.database
-        /// </param>
-        /// <param name="user">
-        /// This element is associated with the datasource element. This is the user name that will be used to connect to the SQL Database instance.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.user
-        /// </param>
-        /// <param name="password">
-        /// This element is associated with the datasource element. This is the password that will be used to connect to the SQL Database instance.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.password
-        /// </param>
-        /// <param name="refreshType">
-        /// Indicates the type of data refresh option.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.refreshType
-        /// </param>
-        /// <param name="refreshRate">
-        /// This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.refreshRate
-        /// </param>
-        /// <param name="fullSnapshotQuery">
-        /// This element is associated with the datasource element. This query is used to fetch data from the sql database.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.fullSnapshotQuery
-        /// </param>
-        /// <param name="deltaSnapshotQuery">
-        /// This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.deltaSnapshotQuery
-        /// </param>
-        /// <param name="authenticationMode">
-        /// Authentication Mode.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.authenticationMode
-        /// </param>
-        internal AzureSqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, RefreshType? refreshType, string refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, AuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
+        /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="server"> This element is associated with the datasource element. This is the name of the server that contains the database that will be written to. </param>
+        /// <param name="database"> This element is associated with the datasource element. This is the name of the database that output will be written to. </param>
+        /// <param name="user"> This element is associated with the datasource element. This is the user name that will be used to connect to the SQL Database instance. </param>
+        /// <param name="password"> This element is associated with the datasource element. This is the password that will be used to connect to the SQL Database instance. </param>
+        /// <param name="refreshType"> Indicates the type of data refresh option. </param>
+        /// <param name="refreshRate"> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </param>
+        /// <param name="fullSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch data from the sql database. </param>
+        /// <param name="deltaSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </param>
+        /// <param name="authenticationMode"> Authentication Mode. </param>
+        internal AzureSqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, string refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -74,50 +41,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             ReferenceInputDataSourceType = referenceInputDataSourceType ?? "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary>
-        /// This element is associated with the datasource element. This is the name of the server that contains the database that will be written to.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.server
-        /// </summary>
+        /// <summary> This element is associated with the datasource element. This is the name of the server that contains the database that will be written to. </summary>
         public string Server { get; set; }
-        /// <summary>
-        /// This element is associated with the datasource element. This is the name of the database that output will be written to.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.database
-        /// </summary>
+        /// <summary> This element is associated with the datasource element. This is the name of the database that output will be written to. </summary>
         public string Database { get; set; }
-        /// <summary>
-        /// This element is associated with the datasource element. This is the user name that will be used to connect to the SQL Database instance.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.user
-        /// </summary>
+        /// <summary> This element is associated with the datasource element. This is the user name that will be used to connect to the SQL Database instance. </summary>
         public string User { get; set; }
-        /// <summary>
-        /// This element is associated with the datasource element. This is the password that will be used to connect to the SQL Database instance.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.password
-        /// </summary>
+        /// <summary> This element is associated with the datasource element. This is the password that will be used to connect to the SQL Database instance. </summary>
         public string Password { get; set; }
-        /// <summary>
-        /// Indicates the type of data refresh option.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.refreshType
-        /// </summary>
-        public RefreshType? RefreshType { get; set; }
-        /// <summary>
-        /// This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.refreshRate
-        /// </summary>
+        /// <summary> Indicates the type of data refresh option. </summary>
+        public DataRefreshType? RefreshType { get; set; }
+        /// <summary> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </summary>
         public string RefreshRate { get; set; }
-        /// <summary>
-        /// This element is associated with the datasource element. This query is used to fetch data from the sql database.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.fullSnapshotQuery
-        /// </summary>
+        /// <summary> This element is associated with the datasource element. This query is used to fetch data from the sql database. </summary>
         public string FullSnapshotQuery { get; set; }
-        /// <summary>
-        /// This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.deltaSnapshotQuery
-        /// </summary>
+        /// <summary> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </summary>
         public string DeltaSnapshotQuery { get; set; }
-        /// <summary>
-        /// Authentication Mode.
-        /// Serialized Name: AzureSqlReferenceInputDataSource.properties.authenticationMode
-        /// </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        /// <summary> Authentication Mode. </summary>
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

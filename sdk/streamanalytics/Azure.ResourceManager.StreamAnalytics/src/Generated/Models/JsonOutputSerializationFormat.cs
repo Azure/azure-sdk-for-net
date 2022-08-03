@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects.
-    /// Serialized Name: JsonOutputSerializationFormat
-    /// </summary>
+    /// <summary> Specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. </summary>
     public readonly partial struct JsonOutputSerializationFormat : IEquatable<JsonOutputSerializationFormat>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string LineSeparatedValue = "LineSeparated";
         private const string ArrayValue = "Array";
 
-        /// <summary>
-        /// LineSeparated
-        /// Serialized Name: JsonOutputSerializationFormat.LineSeparated
-        /// </summary>
+        /// <summary> LineSeparated. </summary>
         public static JsonOutputSerializationFormat LineSeparated { get; } = new JsonOutputSerializationFormat(LineSeparatedValue);
-        /// <summary>
-        /// Array
-        /// Serialized Name: JsonOutputSerializationFormat.Array
-        /// </summary>
+        /// <summary> Array. </summary>
         public static JsonOutputSerializationFormat Array { get; } = new JsonOutputSerializationFormat(ArrayValue);
         /// <summary> Determines if two <see cref="JsonOutputSerializationFormat"/> values are the same. </summary>
         public static bool operator ==(JsonOutputSerializationFormat left, JsonOutputSerializationFormat right) => left.Equals(right);

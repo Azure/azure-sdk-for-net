@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Scale Streaming Job operation.
-    /// Serialized Name: ScaleStreamingJobParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the Scale Streaming Job operation. </summary>
     public partial class ScaleStreamingJobContent
     {
         /// <summary> Initializes a new instance of ScaleStreamingJobContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
         }
 
-        /// <summary>
-        /// Specifies the number of streaming units that the streaming job will scale to.
-        /// Serialized Name: ScaleStreamingJobParameters.streamingUnits
-        /// </summary>
+        /// <summary> Specifies the number of streaming units that the streaming job will scale to. </summary>
         public int? StreamingUnits { get; set; }
     }
 }

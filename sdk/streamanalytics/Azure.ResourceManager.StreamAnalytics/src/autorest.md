@@ -16,29 +16,104 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 list-exception:
 - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/transformations/{transformationName}
 
 rename-mapping:
-  Cluster: StreamAnalyticsCluster
+  SampleInput.dataLocale: dataLocalion|azure-location
+  StreamingJob.properties.dataLocale: dataLocalion|azure-location
+  StreamingJob.properties.jobId: -|uuid
+  ClusterJob.id: -|arm-id
+  ClusterProperties.clusterId: -|uuid
+  LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|datetime
+  LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|datetime
+  PowerBIOutputDataSource.properties.groupId: -|uuid
+  PrivateEndpointProperties.createdDate: createdOn|datetime
+  SampleInputResult.lastArrivalTime: lastArrivedOn|datetime
+  SubResource.id: -|arm-id
+  SubResource.type: -|resource-type
+  AvroSerialization: AvroFormatSerialization
+  AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters: AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionContent
+  AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters: AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionContent
+  BlobWriteMode: BlobOutputWriteMode
+  CompatibilityLevel: StreamingJobCompatibilityLevel
+  Compression: StreamingCompression
+  CompressionType: StreamingCompressionType
+  ContentStoragePolicy: StreamingJobContentStoragePolicy
+  CustomClrSerialization: CustomClrFormatSerialization
+  CsvSerialization: CsvFormatSerialization
+  DiagnosticCondition: StreamingJobDiagnosticCondition
+  Diagnostics: StreamingJobDiagnostics
+  Encoding: StreamingEncoding
+  External: StreamingJobExternal
   Function: StreamingJobFunction
-  SubResource: StreamAnalyticsSubResource
-  UpdateMode: FunctionUpdateMode
-  UdfType: FunctionUdfType
+  FunctionBinding: StreamingJobFunctionBinding
+  FunctionInput: StreamingJobFunctionInput
+  FunctionListResult: StreamingJobFunctionListResult
+  FunctionOutput: StreamingJobFunctionOutput
+  FunctionProperties: StreamingJobFunctionProperties
+  FunctionRetrieveDefaultDefinitionParameters: FunctionRetrieveDefaultDefinitionContent
   Input: StreamingJobInput
-  Encoding: StreamEncoding
+  InputListResult: StreamingJobInputListResult
+  InputProperties: StreamingJobInputProperties
+  InputWatermarkMode: StreamingJobInputWatermarkMode
+  InputWatermarkProperties: StreamingJobInputWatermarkProperties
+  JavaScriptFunctionRetrieveDefaultDefinitionParameters: JavaScriptFunctionRetrieveDefaultDefinitionContent
+  JobState: StreamingJobState
+  JobStorageAccount: StreamingJobStorageAccount
+  JobType: StreamingJobType
+  JsonSerialization: JsonFormatSerialization
+  CSharpFunctionRetrieveDefaultDefinitionParameters: CSharpFunctionRetrieveDefaultDefinitionContent
   Output: StreamingJobOutput
-  PrivateEndpoint: StreamAnalyticsPrivateEndpoint
+  OutputDataSource: StreamingJobOutputDataSource
+  OutputErrorPolicy: StreamingJobOutputErrorPolicy
+  OutputListResult: StreamingJobOutputListResult
+  OutputStartMode: StreamingJobOutputStartMode
+  OutputWatermarkMode: StreamingJobOutputWatermarkMode
+  OutputWatermarkProperties: StreamingJobOutputWatermarkProperties
+  ParquetSerialization: ParquetFormatSerialization
+  RefreshConfiguration: StreamingJobRefreshConfiguration
+  RefreshType: DataRefreshType
+  SampleInput: StreamAnalyticsSampleInputContent
+  Serialization: DataSerialization
   Transformation: StreamingJobTransformation
-  External: ExternalStorageAccount
-  TestInput: StreamAnalyticsTestInputContent
-  TestOutput: StreamAnalyticsTestOutputContent
-  TestQuery: StreamAnalyticsTestQueryContent
-  TestDatasourceResult: StreamAnalyticsTestResult
-  TestDatasourceResultStatus: StreamAnalyticsTestResultStatus
+  UpdateMode: StreamingJobFunctionUpdateMode
+  UdfType: StreamingJobFunctionUdfType
+  
+prepend-rp-prefix:
+  - AuthenticationMode
+  - Cluster
+  - ClusterJob
+  - ClusterJobListResult
+  - ClusterListResult
+  - ClusterProperties
+  - ClusterProvisioningState
+  - ClusterSku
+  - ClusterSkuName
+  - CompileQuery
+  - PrivateEndpoint
+  - PrivateEndpointListResult
+  - PrivateEndpointProperties
+  - PrivateLinkConnectionState
+  - PrivateLinkServiceConnection
+  - QueryCompilationError
+  - QueryCompilationResult
+  - QueryFunction
+  - QueryInput
+  - QueryTestingResult
+  - QueryTestingResultStatus
+  - ResourceTestStatus
+  - SampleInputResult
+  - SampleInputResultStatus
+  - SubResource
+  - StorageAccount
+  - SubscriptionQuota
+  - SubscriptionQuotasListResult
+  - TestInput
+  - TestOutput
+  - TestQuery
+  - TestDatasourceResult
+  - TestDatasourceResultStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -69,6 +144,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  GZip: Gzip
+  UTF8: Utf8
 
 directive:
 - from: definitions.json
@@ -93,16 +170,16 @@ directive:
     $.properties.tenantId['readOnly'] = true;
     delete $.properties.userAssignedIdentities;
     $.properties.type = {
-          "type": "string",
-          "description": "The identity type.",
-          "enum": [
-            "SystemAssigned",
-            "UserAssigned",
-            "SystemAssigned,UserAssigned"
+          'type': 'string',
+          'description': 'The identity type.',
+          'enum': [
+            'SystemAssigned',
+            'UserAssigned',
+            'SystemAssigned,UserAssigned'
           ],
-          "x-ms-enum": {
-            "name": "IdentityType",
-            "modelAsString": true
+          'x-ms-enum': {
+            'name': 'IdentityType',
+            'modelAsString': true
           }
         };
 

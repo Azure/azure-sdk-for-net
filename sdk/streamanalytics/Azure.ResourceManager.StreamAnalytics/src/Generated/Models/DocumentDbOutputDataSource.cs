@@ -7,11 +7,8 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary>
-    /// Describes a DocumentDB output data source.
-    /// Serialized Name: DocumentDbOutputDataSource
-    /// </summary>
-    public partial class DocumentDbOutputDataSource : OutputDataSource
+    /// <summary> Describes a DocumentDB output data source. </summary>
+    public partial class DocumentDbOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
         public DocumentDbOutputDataSource()
@@ -20,39 +17,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of DocumentDbOutputDataSource. </summary>
-        /// <param name="outputDataSourceType">
-        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: OutputDataSource.type
-        /// </param>
-        /// <param name="accountId">
-        /// The DocumentDB account name or ID. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.accountId
-        /// </param>
-        /// <param name="accountKey">
-        /// The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.accountKey
-        /// </param>
-        /// <param name="database">
-        /// The name of the DocumentDB database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.database
-        /// </param>
-        /// <param name="collectionNamePattern">
-        /// The collection name pattern for the collections to be used. The collection name format can be constructed using the optional {partition} token, where partitions start from 0. See the DocumentDB section of https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for more information. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.collectionNamePattern
-        /// </param>
-        /// <param name="partitionKey">
-        /// The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.partitionKey
-        /// </param>
-        /// <param name="documentId">
-        /// The name of the field in output events used to specify the primary key which insert or update operations are based on.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.documentId
-        /// </param>
-        /// <param name="authenticationMode">
-        /// Authentication Mode.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.authenticationMode
-        /// </param>
-        internal DocumentDbOutputDataSource(string outputDataSourceType, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="accountId"> The DocumentDB account name or ID. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="accountKey"> The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="database"> The name of the DocumentDB database. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="collectionNamePattern"> The collection name pattern for the collections to be used. The collection name format can be constructed using the optional {partition} token, where partitions start from 0. See the DocumentDB section of https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for more information. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="partitionKey"> The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified. </param>
+        /// <param name="documentId"> The name of the field in output events used to specify the primary key which insert or update operations are based on. </param>
+        /// <param name="authenticationMode"> Authentication Mode. </param>
+        internal DocumentDbOutputDataSource(string outputDataSourceType, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             AccountId = accountId;
             AccountKey = accountKey;
@@ -64,40 +37,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.Storage/DocumentDB";
         }
 
-        /// <summary>
-        /// The DocumentDB account name or ID. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.accountId
-        /// </summary>
+        /// <summary> The DocumentDB account name or ID. Required on PUT (CreateOrReplace) requests. </summary>
         public string AccountId { get; set; }
-        /// <summary>
-        /// The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.accountKey
-        /// </summary>
+        /// <summary> The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests. </summary>
         public string AccountKey { get; set; }
-        /// <summary>
-        /// The name of the DocumentDB database. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.database
-        /// </summary>
+        /// <summary> The name of the DocumentDB database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Database { get; set; }
-        /// <summary>
-        /// The collection name pattern for the collections to be used. The collection name format can be constructed using the optional {partition} token, where partitions start from 0. See the DocumentDB section of https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for more information. Required on PUT (CreateOrReplace) requests.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.collectionNamePattern
-        /// </summary>
+        /// <summary> The collection name pattern for the collections to be used. The collection name format can be constructed using the optional {partition} token, where partitions start from 0. See the DocumentDB section of https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for more information. Required on PUT (CreateOrReplace) requests. </summary>
         public string CollectionNamePattern { get; set; }
-        /// <summary>
-        /// The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.partitionKey
-        /// </summary>
+        /// <summary> The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified. </summary>
         public string PartitionKey { get; set; }
-        /// <summary>
-        /// The name of the field in output events used to specify the primary key which insert or update operations are based on.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.documentId
-        /// </summary>
+        /// <summary> The name of the field in output events used to specify the primary key which insert or update operations are based on. </summary>
         public string DocumentId { get; set; }
-        /// <summary>
-        /// Authentication Mode.
-        /// Serialized Name: DocumentDbOutputDataSource.properties.authenticationMode
-        /// </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        /// <summary> Authentication Mode. </summary>
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }
