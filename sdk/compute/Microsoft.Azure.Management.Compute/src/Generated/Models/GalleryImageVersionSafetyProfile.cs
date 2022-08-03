@@ -54,18 +54,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates whether this image has been reported as
-        /// violating Microsoft's policies.
+        /// Gets indicates whether this image has been reported as violating
+        /// Microsoft's policies.
         /// </summary>
         [JsonProperty(PropertyName = "reportedForPolicyViolation")]
-        public bool? ReportedForPolicyViolation { get; set; }
+        public bool? ReportedForPolicyViolation { get; private set; }
 
         /// <summary>
-        /// Gets or sets a list of Policy Violations that have been reported
-        /// for this Gallery Image Version.
+        /// Gets a list of Policy Violations that have been reported for this
+        /// Gallery Image Version.
         /// </summary>
         [JsonProperty(PropertyName = "policyViolations")]
-        public IList<PolicyViolation> PolicyViolations { get; set; }
+        public IList<PolicyViolation> PolicyViolations { get; private set; }
 
     }
 }

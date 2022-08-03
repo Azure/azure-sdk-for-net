@@ -679,16 +679,7 @@ namespace Compute.Tests
                 Location = galleryHomeLocation,
                 SafetyProfile = new GalleryImageVersionSafetyProfile()
                 {
-                    AllowDeletionOfReplicatedLocations = true,
-                    ReportedForPolicyViolation = true,
-                    PolicyViolations = new List<PolicyViolation>()
-                    {
-                        new PolicyViolation()
-                        {
-                            Category = PolicyViolationCategory.CopyrightValidation,
-                            Details = "Policy violation details",
-                        }
-                    }
+                    AllowDeletionOfReplicatedLocations = true
                 },
                 PublishingProfile = new GalleryImageVersionPublishingProfile
                 {

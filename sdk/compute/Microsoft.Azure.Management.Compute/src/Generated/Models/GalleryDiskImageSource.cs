@@ -34,10 +34,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// resource.</param>
         /// <param name="uri">The uri of the gallery artifact version source.
         /// Currently used to specify vhd/blob source.</param>
-        public GalleryDiskImageSource(string id = default(string), string uri = default(string))
+        /// <param name="storageAccountId">The Storage Account Id that contains
+        /// the vhd blob being used as a source for this artifact
+        /// version.</param>
+        public GalleryDiskImageSource(string id = default(string), string uri = default(string), string storageAccountId = default(string))
             : base(id)
         {
             Uri = uri;
+            StorageAccountId = storageAccountId;
             CustomInit();
         }
 
@@ -52,6 +56,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Storage Account Id that contains the vhd blob
+        /// being used as a source for this artifact version.
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountId")]
+        public string StorageAccountId { get; set; }
 
     }
 }
