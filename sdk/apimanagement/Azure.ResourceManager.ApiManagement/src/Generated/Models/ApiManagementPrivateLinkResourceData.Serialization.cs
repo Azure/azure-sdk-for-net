@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPrivateLinkData : IUtf8JsonSerializable
+    public partial class ApiManagementPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementPrivateLinkData DeserializeApiManagementPrivateLinkData(JsonElement element)
+        internal static ApiManagementPrivateLinkResourceData DeserializeApiManagementPrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementPrivateLinkData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new ApiManagementPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

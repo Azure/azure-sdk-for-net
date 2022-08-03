@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiManagementGlobalSchemaData() { }
         public string Description { get { throw null; } set { } }
         public System.BinaryData Document { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.SchemaType? SchemaType { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiSchemaType? SchemaType { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
     }
     public partial class ApiManagementGlobalSchemaResource : Azure.ResourceManager.ArmResource
@@ -1252,9 +1252,19 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateEndpointConnectionCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ApiManagementPrivateLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>, System.Collections.IEnumerable
+    public partial class ApiManagementPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
-        protected ApiManagementPrivateLinkCollection() { }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ApiManagementPrivateLinkResource() { }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ApiManagementPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>, System.Collections.IEnumerable
+    {
+        protected ApiManagementPrivateLinkResourceCollection() { }
         public virtual Azure.Response<bool> Exists(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource> Get(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1265,22 +1275,12 @@ namespace Azure.ResourceManager.ApiManagement
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApiManagementPrivateLinkData : Azure.ResourceManager.Models.ResourceData
+    public partial class ApiManagementPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        public ApiManagementPrivateLinkData() { }
+        public ApiManagementPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class ApiManagementPrivateLinkResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ApiManagementPrivateLinkResource() { }
-        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ApiManagementProductCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementProductResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.ApiManagementProductResource>, System.Collections.IEnumerable
     {
@@ -1541,9 +1541,9 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionResource> GetApiManagementPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionResource>> GetApiManagementPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionCollection GetApiManagementPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource> GetApiManagementPrivateLink(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkAsync(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkCollection GetApiManagementPrivateLinks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource> GetApiManagementPrivateLinkResource(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkResourceAsync(string privateLinkSubResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResourceCollection GetApiManagementPrivateLinkResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementProductResource> GetApiManagementProduct(string productId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementProductResource>> GetApiManagementProductAsync(string productId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.ApiManagementProductCollection GetApiManagementProducts() { throw null; }
@@ -2974,6 +2974,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Uri PrivateUri { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApiSchemaType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ApiSchemaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApiSchemaType(string value) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiSchemaType Json { get { throw null; } }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiSchemaType Xml { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType left, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiSchemaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType left, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
         public ApiTagDescriptionCreateOrUpdateContent() { }
@@ -4227,7 +4245,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public double? ServiceTimeAvg { get { throw null; } }
         public double? ServiceTimeMax { get { throw null; } }
         public double? ServiceTimeMin { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string UserId { get { throw null; } }
         public string Zip { get { throw null; } }
@@ -4308,24 +4326,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SamplingType left, Azure.ResourceManager.ApiManagement.Models.SamplingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.SamplingType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.SamplingType left, Azure.ResourceManager.ApiManagement.Models.SamplingType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SchemaType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.SchemaType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SchemaType(string value) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.SchemaType Json { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.SchemaType Xml { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiManagement.Models.SchemaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SchemaType left, Azure.ResourceManager.ApiManagement.Models.SchemaType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiManagement.Models.SchemaType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.SchemaType left, Azure.ResourceManager.ApiManagement.Models.SchemaType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

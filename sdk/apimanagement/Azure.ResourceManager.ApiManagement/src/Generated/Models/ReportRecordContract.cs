@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="serviceTimeAvg"> Average time it took to process request on backend. </param>
         /// <param name="serviceTimeMin"> Minimum time it took to process request on backend. </param>
         /// <param name="serviceTimeMax"> Maximum time it took to process request on backend. </param>
-        internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, string subscriptionId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax)
+        internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, ResourceIdentifier subscriptionId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax)
         {
             Name = name;
             Timestamp = timestamp;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> API region identifier. </summary>
         public string ApiRegion { get; }
         /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
-        public string SubscriptionId { get; }
+        public ResourceIdentifier SubscriptionId { get; }
         /// <summary> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </summary>
         public int? CallCountSuccess { get; }
         /// <summary> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </summary>
