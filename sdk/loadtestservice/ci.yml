@@ -27,5 +27,7 @@ extends:
     ServiceDirectory: loadtestservice
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Developer.LoadTesting
+      safeName: AzureDeveloperLoadTesting
     - name: Azure.Analytics.LoadTestService
       safeName: AzureAnalyticsLoadTestService
