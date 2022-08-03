@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryNameCheckContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(RegistryResourceType.ToString());
+            writer.WriteStringValue(ResourceType.ToString());
             writer.WriteEndObject();
         }
     }

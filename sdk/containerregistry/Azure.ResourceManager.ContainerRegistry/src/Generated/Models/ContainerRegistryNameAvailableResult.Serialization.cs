@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryNameStatus
+    public partial class ContainerRegistryNameAvailableResult
     {
-        internal static ContainerRegistryNameStatus DeserializeContainerRegistryNameStatus(JsonElement element)
+        internal static ContainerRegistryNameAvailableResult DeserializeContainerRegistryNameAvailableResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryNameStatus(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new ContainerRegistryNameAvailableResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

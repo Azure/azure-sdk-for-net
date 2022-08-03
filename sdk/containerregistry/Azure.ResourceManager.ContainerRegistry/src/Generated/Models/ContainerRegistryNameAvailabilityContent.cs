@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> A request to check whether a container registry name is available. </summary>
-    public partial class ContainerRegistryNameCheckContent
+    public partial class ContainerRegistryNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryNameCheckContent. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryNameAvailabilityContent. </summary>
         /// <param name="name"> The name of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ContainerRegistryNameCheckContent(string name)
+        public ContainerRegistryNameAvailabilityContent(string name)
         {
             if (name == null)
             {
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             Name = name;
-            RegistryResourceType = ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries;
+            ResourceType = ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries;
         }
 
         /// <summary> The name of the container registry. </summary>
         public string Name { get; }
         /// <summary> The resource type of the container registry. This field must be set to &apos;Microsoft.ContainerRegistry/registries&apos;. </summary>
-        public ContainerRegistryResourceType RegistryResourceType { get; }
+        public ContainerRegistryResourceType ResourceType { get; }
     }
 }
