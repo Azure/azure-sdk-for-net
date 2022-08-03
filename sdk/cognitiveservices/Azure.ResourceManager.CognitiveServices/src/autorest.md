@@ -48,4 +48,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+- from: cognitiveservices.json
+  where: $.paths
+  transform: >
+    delete $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}"]["put"]
 ```

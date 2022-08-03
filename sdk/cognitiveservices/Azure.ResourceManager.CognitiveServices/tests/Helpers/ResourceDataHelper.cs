@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.Helpers
             var data = new AccountData(location)
             {
                 Sku = new CognitiveServicesSku("S0"),
-                Kind = "LUIS",
+                Kind = "Face",
                 Properties = new AccountProperties()
             };
             return data;
