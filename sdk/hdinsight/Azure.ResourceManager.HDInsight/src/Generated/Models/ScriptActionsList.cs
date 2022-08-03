@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The persisted script action for the cluster. </summary>
+    /// <summary>
+    /// The persisted script action for the cluster.
+    /// Serialized Name: ScriptActionsList
+    /// </summary>
     internal partial class ScriptActionsList
     {
         /// <summary> Initializes a new instance of ScriptActionsList. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActionsList. </summary>
-        /// <param name="value"> The list of persisted script action details for the cluster. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The list of persisted script action details for the cluster.
+        /// Serialized Name: ScriptActionsList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ScriptActionsList.nextLink
+        /// </param>
         internal ScriptActionsList(IReadOnlyList<RuntimeScriptActionDetail> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of persisted script action details for the cluster. </summary>
+        /// <summary>
+        /// The list of persisted script action details for the cluster.
+        /// Serialized Name: ScriptActionsList.value
+        /// </summary>
         public IReadOnlyList<RuntimeScriptActionDetail> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: ScriptActionsList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

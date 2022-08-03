@@ -9,28 +9,20 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions.
-    /// Serialized Name: UniformInt64RangePartitionSchemeDescription
-    /// </summary>
+    /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
     public partial class UniformInt64RangePartitionSchemeDescription : PartitionSchemeDescription
     {
         /// <summary> Initializes a new instance of UniformInt64RangePartitionSchemeDescription. </summary>
-        /// <param name="count">
-        /// The number of partitions.
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.count
-        /// </param>
+        /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
         /// 
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.lowKey
         /// </param>
         /// <param name="highKey">
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
         /// 
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.highKey
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lowKey"/> or <paramref name="highKey"/> is null. </exception>
         public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey)
@@ -51,25 +43,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of UniformInt64RangePartitionSchemeDescription. </summary>
-        /// <param name="partitionScheme">
-        /// Specifies how the service is partitioned.
-        /// Serialized Name: PartitionSchemeDescription.partitionScheme
-        /// </param>
-        /// <param name="count">
-        /// The number of partitions.
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.count
-        /// </param>
+        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
         /// 
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.lowKey
         /// </param>
         /// <param name="highKey">
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
         /// 
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.highKey
         /// </param>
         internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, string lowKey, string highKey) : base(partitionScheme)
         {
@@ -79,23 +63,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             PartitionScheme = partitionScheme;
         }
 
-        /// <summary>
-        /// The number of partitions.
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.count
-        /// </summary>
+        /// <summary> The number of partitions. </summary>
         public int Count { get; set; }
         /// <summary>
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
         /// 
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.lowKey
         /// </summary>
         public string LowKey { get; set; }
         /// <summary>
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
         /// 
-        /// Serialized Name: UniformInt64RangePartitionSchemeDescription.highKey
         /// </summary>
         public string HighKey { get; set; }
     }

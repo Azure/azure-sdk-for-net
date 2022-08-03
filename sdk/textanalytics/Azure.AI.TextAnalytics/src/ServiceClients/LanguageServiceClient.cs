@@ -1672,6 +1672,54 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
+        public override async Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelAnalyzeActionsJob)}");
+            scope.Start();
+
+            try
+            {
+                await _languageRestClient.AnalyzeBatchCancelJobAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            {
+                Argument.AssertNotNull(jobId, nameof(jobId));
+
+                if (!Guid.TryParse(jobId, out var id))
+                {
+                    throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+                }
+
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelAnalyzeActionsJob)}");
+                scope.Start();
+
+                try
+                {
+                    _languageRestClient.AnalyzeBatchCancelJob(id, cancellationToken);
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+        }
+
         private static IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
         {
             List<AnalyzeTextLROTask> analyzeTasks = new();
@@ -1707,6 +1755,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             if (actions.MultiLabelClassifyActions != null)
             {
                 analyzeTasks.AddRange(Transforms.ConvertFromMultiLabelClassifyActionsToTasks(actions.MultiLabelClassifyActions));
+            }
+            if (actions.AnalyzeHealthcareEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromAnalyzeHealthcareEntitiesActionsToTasks(actions.AnalyzeHealthcareEntitiesActions));
             }
 
             return analyzeTasks;

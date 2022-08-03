@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        public virtual async Task<Response> ResendRequestEmailsAsync(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResendRequestEmailsAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nameIdentifier"> Email address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        public virtual Response ResendRequestEmails(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        public virtual Response ResendRequestEmails(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 

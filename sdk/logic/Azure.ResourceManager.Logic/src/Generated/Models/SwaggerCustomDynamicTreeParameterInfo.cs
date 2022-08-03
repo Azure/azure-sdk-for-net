@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
         /// <param name="value"> The parameter value. </param>
         /// <param name="parameterReference"> The parameter reference. </param>
-        /// <param name="required"> Indicates whether the parameter is required. </param>
-        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? required)
+        /// <param name="isRequired"> Indicates whether the parameter is required. </param>
+        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? isRequired)
         {
             SelectedItemValuePath = selectedItemValuePath;
             Value = value;
             ParameterReference = parameterReference;
-            Required = required;
+            IsRequired = isRequired;
         }
 
         /// <summary> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The parameter reference. </summary>
         public string ParameterReference { get; set; }
         /// <summary> Indicates whether the parameter is required. </summary>
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
     }
 }

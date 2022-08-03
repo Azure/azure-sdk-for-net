@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("prefix");
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(Attribute))
+            if (Optional.IsDefined(IsAttribute))
             {
                 writer.WritePropertyName("attribute");
-                writer.WriteBooleanValue(Attribute.Value);
+                writer.WriteBooleanValue(IsAttribute.Value);
             }
-            if (Optional.IsDefined(Wrapped))
+            if (Optional.IsDefined(IsWrapped))
             {
                 writer.WritePropertyName("wrapped");
-                writer.WriteBooleanValue(Wrapped.Value);
+                writer.WriteBooleanValue(IsWrapped.Value);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {

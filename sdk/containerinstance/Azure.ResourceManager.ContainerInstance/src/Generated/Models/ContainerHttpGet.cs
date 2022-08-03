@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="port"> The port number to probe. </param>
         /// <param name="scheme"> The scheme. </param>
         /// <param name="httpHeaders"> The HTTP headers. </param>
-        internal ContainerHttpGet(string path, int port, Scheme? scheme, IList<HttpHeader> httpHeaders)
+        internal ContainerHttpGet(string path, int port, ContainerHttpGetScheme? scheme, IList<HttpHeader> httpHeaders)
         {
             Path = path;
             Port = port;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The port number to probe. </summary>
         public int Port { get; set; }
         /// <summary> The scheme. </summary>
-        public Scheme? Scheme { get; set; }
+        public ContainerHttpGetScheme? Scheme { get; set; }
         /// <summary> The HTTP headers. </summary>
         public IList<HttpHeader> HttpHeaders { get; }
     }

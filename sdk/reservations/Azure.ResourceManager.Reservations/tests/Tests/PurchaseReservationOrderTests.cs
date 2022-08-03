@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Shared", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId.ToString(), purchaseRequestContent);
+            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
         }
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Shared", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId.ToString(), purchaseRequestContent);
+            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
         }
@@ -61,7 +64,8 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Single", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId.ToString(), purchaseRequestContent);
+            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
         }
@@ -72,12 +76,13 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var purchaseRequestContent = CreatePurchaseRequestContent("Single", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
-            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId.ToString(), purchaseRequestContent);
+            Assert.NotNull(response.Value.Properties.ReservationOrderId);
+            var purchaseResponse = await Collection.CreateOrUpdateAsync(WaitUntil.Completed, (Guid)response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
             TestCreatePurchaseResponse(purchaseResponse, purchaseRequestContent, response.Value.Properties.ReservationOrderId.ToString());
         }
 
-        private void TestCreatePurchaseResponse(ArmOperation<ReservationOrderResource> purchaseResponse, PurchaseRequestContent purchaseRequest, string reservationOrderId)
+        private void TestCreatePurchaseResponse(ArmOperation<ReservationOrderResource> purchaseResponse, ReservationPurchaseContent purchaseRequest, string reservationOrderId)
         {
             Assert.IsTrue(purchaseResponse.HasCompleted);
             Assert.IsTrue(purchaseResponse.HasValue);
@@ -93,9 +98,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(1, purchaseResponse.Value.Data.Reservations.Count);
         }
 
-        private PurchaseRequestContent CreatePurchaseRequestContent(string scope, string billingPlan)
+        private ReservationPurchaseContent CreatePurchaseRequestContent(string scope, string billingPlan)
         {
-            var request = new PurchaseRequestContent
+            var request = new ReservationPurchaseContent
             {
                 Sku = new ReservationsSkuName("Standard_B1ls"),
                 Location = new Core.AzureLocation("westus"),
@@ -106,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 Quantity = 1,
                 DisplayName = "testVM",
                 AppliedScopeType = new AppliedScopeType(scope),
-                Renew = false,
+                IsRenewEnabled = false,
                 ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
             };
 

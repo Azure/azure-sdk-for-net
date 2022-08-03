@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Parquet source. </summary>
-    public partial class ParquetSource : CopySource
+    public partial class ParquetSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of ParquetSource. </summary>
         public ParquetSource()

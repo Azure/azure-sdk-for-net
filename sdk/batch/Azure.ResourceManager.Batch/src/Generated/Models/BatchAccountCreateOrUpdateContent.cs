@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,8 +27,8 @@ namespace Azure.ResourceManager.Batch.Models
         public AzureLocation Location { get; }
         /// <summary> The user-specified tags associated with the account. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; set; }
+        /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The properties related to the auto-storage account. </summary>
         public AutoStorageBaseProperties AutoStorage { get; set; }
         /// <summary> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Azure Active Directory. If the mode is UserSubscription, clients must use Azure Active Directory. The default is BatchService. </summary>

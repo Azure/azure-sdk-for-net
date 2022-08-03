@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The AmazonRdsForOracle database dataset. </summary>
-    public partial class AmazonRdsForOracleTableDataset : Dataset
+    public partial class AmazonRdsForOracleTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AmazonRdsForOracleTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AmazonRdsForOracleTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </param>
-        internal AmazonRdsForOracleTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AmazonRdsForOracleTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;

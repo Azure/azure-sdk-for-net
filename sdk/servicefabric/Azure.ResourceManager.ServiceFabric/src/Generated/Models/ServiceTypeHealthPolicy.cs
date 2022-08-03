@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary>
     /// Represents the health policy used to evaluate the health of services belonging to a service type.
     /// 
-    /// Serialized Name: ServiceTypeHealthPolicy
     /// </summary>
     public partial class ServiceTypeHealthPolicy
     {
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
         /// 
-        /// Serialized Name: ServiceTypeHealthPolicy.maxPercentUnhealthyServices
         /// </param>
         internal ServiceTypeHealthPolicy(int? maxPercentUnhealthyServices)
         {
@@ -33,7 +31,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary>
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
         /// 
-        /// Serialized Name: ServiceTypeHealthPolicy.maxPercentUnhealthyServices
         /// </summary>
         public int? MaxPercentUnhealthyServices { get; set; }
     }

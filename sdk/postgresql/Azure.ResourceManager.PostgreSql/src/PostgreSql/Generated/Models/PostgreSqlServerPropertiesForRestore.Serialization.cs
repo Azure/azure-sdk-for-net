@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WritePropertyName("sourceServerId");
             writer.WriteStringValue(SourceServerId);
             writer.WritePropertyName("restorePointInTime");
-            writer.WriteStringValue(RestorePointInOn, "O");
+            writer.WriteStringValue(RestorePointInTime, "O");
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");

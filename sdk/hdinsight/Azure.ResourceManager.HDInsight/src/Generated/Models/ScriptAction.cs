@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> Describes a script action on role on the cluster. </summary>
+    /// <summary>
+    /// Describes a script action on role on the cluster.
+    /// Serialized Name: ScriptAction
+    /// </summary>
     public partial class ScriptAction
     {
         /// <summary> Initializes a new instance of ScriptAction. </summary>
-        /// <param name="name"> The name of the script action. </param>
-        /// <param name="uri"> The URI to the script. </param>
-        /// <param name="parameters"> The parameters for the script provided. </param>
+        /// <param name="name">
+        /// The name of the script action.
+        /// Serialized Name: ScriptAction.name
+        /// </param>
+        /// <param name="uri">
+        /// The URI to the script.
+        /// Serialized Name: ScriptAction.uri
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters for the script provided.
+        /// Serialized Name: ScriptAction.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="parameters"/> is null. </exception>
         public ScriptAction(string name, Uri uri, string parameters)
         {
@@ -37,11 +49,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             Parameters = parameters;
         }
 
-        /// <summary> The name of the script action. </summary>
+        /// <summary>
+        /// The name of the script action.
+        /// Serialized Name: ScriptAction.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The URI to the script. </summary>
+        /// <summary>
+        /// The URI to the script.
+        /// Serialized Name: ScriptAction.uri
+        /// </summary>
         public Uri Uri { get; set; }
-        /// <summary> The parameters for the script provided. </summary>
+        /// <summary>
+        /// The parameters for the script provided.
+        /// Serialized Name: ScriptAction.parameters
+        /// </summary>
         public string Parameters { get; set; }
     }
 }

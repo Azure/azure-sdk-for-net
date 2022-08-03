@@ -64,11 +64,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationOrderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ReservationOrderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.CreateOrUpdate");
@@ -97,11 +95,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReservationOrderResource> CreateOrUpdate(WaitUntil waitUntil, string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ReservationOrderResource> CreateOrUpdate(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.CreateOrUpdate");
@@ -129,12 +125,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual async Task<Response<ReservationOrderResource>> GetAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationOrderResource>> GetAsync(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Get");
             scope.Start();
             try
@@ -159,12 +151,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual Response<ReservationOrderResource> Get(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationOrderResource> Get(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Get");
             scope.Start();
             try
@@ -273,12 +261,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Exists");
             scope.Start();
             try
@@ -301,12 +285,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual Response<bool> Exists(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Exists");
             scope.Start();
             try

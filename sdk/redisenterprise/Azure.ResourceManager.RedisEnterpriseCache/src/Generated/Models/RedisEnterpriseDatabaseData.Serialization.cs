@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             Optional<RedisEnterpriseClusterResourceState> resourceState = default;
             Optional<RedisEnterpriseClusteringPolicy> clusteringPolicy = default;
             Optional<RedisEnterpriseEvictionPolicy> evictionPolicy = default;
-            Optional<PersistenceSettings> persistence = default;
+            Optional<RedisPersistenceSettings> persistence = default;
             Optional<IList<RedisEnterpriseModule>> modules = default;
             Optional<RedisEnterpriseDatabaseGeoReplication> geoReplication = default;
             foreach (var property in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            persistence = PersistenceSettings.DeserializePersistenceSettings(property0.Value);
+                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("modules"))

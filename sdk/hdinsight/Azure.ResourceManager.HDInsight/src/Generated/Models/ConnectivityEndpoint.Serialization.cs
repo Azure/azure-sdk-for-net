@@ -10,8 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ConnectivityEndpoint
+    public partial class ConnectivityEndpoint : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol");
+                writer.WriteStringValue(Protocol);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location");
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port");
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIPAddress");
+                writer.WriteStringValue(PrivateIPAddress);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ConnectivityEndpoint DeserializeConnectivityEndpoint(JsonElement element)
         {
             Optional<string> name = default;

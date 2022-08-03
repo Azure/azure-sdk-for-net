@@ -1218,8 +1218,8 @@ namespace Azure.Storage.Blobs.Test
                 Range = new HttpRange(offset, count),
                 TransferValidationOptions = new DownloadTransferValidationOptions
                 {
-                    Algorithm = ValidationAlgorithm.MD5,
-                    Validate = false
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+                    AutoValidateChecksum = false
                 }
             });
 
