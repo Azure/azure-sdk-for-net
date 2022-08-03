@@ -8,12 +8,12 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
+namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class AccountResourceTests : CognitiveServicesManagementTestBase
     {
         public AccountResourceTests(bool Async)
-            : base(Async, RecordedTestMode.Record)
+            : base(Async)//, RecordedTestMode.Record)
         {
         }
         private async Task<AccountResource> CreateAccountResourceAsync(string accountName)
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task AccountResourceApiTests()
         {
             //1.Get

@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
+namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class DeploymentResourceTests : CognitiveServicesManagementTestBase
     {
@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task DeploymentResourceApiTests()
         {
             //1.Get

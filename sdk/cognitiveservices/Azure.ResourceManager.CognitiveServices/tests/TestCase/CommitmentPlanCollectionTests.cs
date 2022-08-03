@@ -8,12 +8,12 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
+namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class CommitmentPlanCollectionTests : CognitiveServicesManagementTestBase
     {
         public CommitmentPlanCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<CommitmentPlanCollection> GetCommitmentPlanCollectionAsync()
@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task CommitmentPlanCollectionApiTests()
         {
             //1.CreateOrUpdate

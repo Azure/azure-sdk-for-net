@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
+namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class DeploymentCollectionTests : CognitiveServicesManagementTestBase
     {
@@ -20,14 +22,14 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
         private async Task<DeploymentCollection> GetDeploymentCollectionAsync()
         {
             var container = (await CreateResourceGroupAsync()).GetAccounts();
-            var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input);
-            var account = lro.Value;
+            var input = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
+            input.Kind = "OpenAI";
+            input.Sku = new CognitiveServicesSku("s0");
+            var account = (await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input)).Value;
             return account.GetDeployments();
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task DeploymentCollectionApiTests()
         {
             //1.CreateOrUpdate

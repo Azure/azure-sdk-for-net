@@ -7,40 +7,42 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
+using System.Linq;
 
-namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
+namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class CognitiveServicesPrivateEndpointConnectionResourceTests : CognitiveServicesManagementTestBase
     {
         public CognitiveServicesPrivateEndpointConnectionResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<CognitiveServicesPrivateEndpointConnectionResource> CreateCognitiveServicesPrivateEndpointConnectionsAsync(string connectionName)
+        private async Task<CognitiveServicesPrivateEndpointConnectionCollection> GetCognitiveServicesPrivateEndpointConnectionCollectionAsync()
         {
-            var accountContainer = (await CreateResourceGroupAsync()).GetAccounts();
-            var accountInput = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
-            var lro = await accountContainer.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), accountInput);
+            var container = (await CreateResourceGroupAsync()).GetAccounts();
+            var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input);
             var account = lro.Value;
-            var container = account.GetCognitiveServicesPrivateEndpointConnections();
-            var input = ResourceDataHelper.GetBasicCognitiveServicesPrivateEndpointConnectionData();
-            var lro_connection = await container.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, input);
-            return lro_connection.Value;
+            return account.GetCognitiveServicesPrivateEndpointConnections();
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task CognitiveServicesPrivateEndpointConnectionResourceApiTests()
         {
             //1.Get
-            var connectionName = Recording.GenerateAssetName("testCognitiveServicesPrivateEndpointConnection-");
-            var connection1 = await CreateCognitiveServicesPrivateEndpointConnectionsAsync(connectionName);
-            CognitiveServicesPrivateEndpointConnectionResource connection2 = await connection1.GetAsync();
+            var collection = await GetCognitiveServicesPrivateEndpointConnectionCollectionAsync();
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
 
-            ResourceDataHelper.AssertConnection(connection1.Data, connection2.Data);
-            //2.Delete
-            await connection1.DeleteAsync(WaitUntil.Completed);
+            if (list.Count > 0)
+            {
+                var connection1 = list.FirstOrDefault();
+                var connection2 = (await connection1.GetAsync()).Value;
+                ResourceDataHelper.AssertConnection(connection1.Data, connection2.Data);
+
+                //2.Delete
+                await connection1.DeleteAsync(WaitUntil.Completed);
+            }
         }
     }
 }

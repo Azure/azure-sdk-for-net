@@ -13,12 +13,12 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
+namespace Azure.ResourceManager.CognitiveServices.Tests
 {
     public class AccountCollectionTests : CognitiveServicesManagementTestBase
     {
         public AccountCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<AccountCollection> GetAccountCollectionAsync()
@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests.TestCase
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task AccountCollectionApiTests()
         {
             //1.CreateOrUpdate

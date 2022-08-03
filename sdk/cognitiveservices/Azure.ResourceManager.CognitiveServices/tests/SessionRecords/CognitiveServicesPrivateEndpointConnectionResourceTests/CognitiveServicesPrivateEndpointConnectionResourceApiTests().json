@@ -1,0 +1,450 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5782e6d139bee9439d870ca985154c48-7d8cacccd03b384a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7bfab27bb324707abe6b2b5329a3e7ee",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e6ddc768-732d-4916-9a21-390ecce12b3e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "e6ddc768-732d-4916-9a21-390ecce12b3e",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160411Z:e6ddc768-732d-4916-9a21-390ecce12b3e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG-612?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "traceparent": "00-d1cf387baa4612449da371789504dd5d-bec2b8e0f218c04c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a51311a36b2943d8f20c4abe805a9720",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {
+          "test": "env"
+        },
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "239",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2179bbcf-86b3-4bd5-a92b-9d5a0ee6c823",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "2179bbcf-86b3-4bd5-a92b-9d5a0ee6c823",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160412Z:2179bbcf-86b3-4bd5-a92b-9d5a0ee6c823"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-612",
+        "name": "testRG-612",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "tags": {
+          "test": "env"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-612/providers/Microsoft.CognitiveServices/accounts/testAccount-1751?api-version=2022-03-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "81",
+        "Content-Type": "application/json",
+        "traceparent": "00-0a8569c94607154e8bcb9c6834685a4c-34ab775837196b4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.CognitiveServices/1.0.0-alpha.20220804.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "74bb56f750dfaa23ac66e49b193b4a92",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "Face",
+        "sku": {
+          "name": "S0"
+        },
+        "properties": {},
+        "tags": {},
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CognitiveServices/locations/westus/operationResults/3b38e315-ed9a-4cdc-a8ff-f67426a4c7be?api-version=2017-04-18",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1474",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:14 GMT",
+        "ETag": "\u0022490058a6-0000-0700-0000-62ea9c7e0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "331",
+        "x-ms-correlation-request-id": "136b43c2-ba98-4404-921d-916f5dfc1d0c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "01dd0ab1-77df-4dac-8e7b-56ee0f6ae73c",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160414Z:136b43c2-ba98-4404-921d-916f5dfc1d0c"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-612/providers/Microsoft.CognitiveServices/accounts/testAccount-1751",
+        "name": "testAccount-1751",
+        "type": "Microsoft.CognitiveServices/accounts",
+        "etag": "\u0022490058a6-0000-0700-0000-62ea9c7e0000\u0022",
+        "location": "westus",
+        "sku": {
+          "name": "S0"
+        },
+        "kind": "Face",
+        "tags": {},
+        "properties": {
+          "endpoint": "https://westus.api.cognitive.microsoft.com/",
+          "internalId": "94769b2d0c1941bea23554246bbcdd64",
+          "dateCreated": "2022-08-03T16:04:13.8477594Z",
+          "callRateLimit": {
+            "rules": [
+              {
+                "key": "face",
+                "renewalPeriod": 1,
+                "count": 10,
+                "dynamicThrottlingEnabled": false,
+                "matchPatterns": [
+                  {
+                    "path": "face/*",
+                    "method": "*"
+                  }
+                ]
+              },
+              {
+                "key": "container.billing",
+                "renewalPeriod": 10,
+                "count": 500,
+                "dynamicThrottlingEnabled": false,
+                "matchPatterns": [
+                  {
+                    "path": "billing/*",
+                    "method": "*"
+                  }
+                ]
+              },
+              {
+                "key": "default",
+                "renewalPeriod": 1,
+                "count": 10,
+                "dynamicThrottlingEnabled": false,
+                "matchPatterns": [
+                  {
+                    "path": "*",
+                    "method": "*"
+                  }
+                ]
+              }
+            ]
+          },
+          "isMigrated": false,
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Enabled",
+          "capabilities": [
+            {
+              "name": "VirtualNetworks"
+            },
+            {
+              "name": "Container",
+              "value": "Face.*,Face.Face"
+            }
+          ],
+          "endpoints": {
+            "Face": "https://westus.api.cognitive.microsoft.com/"
+          },
+          "provisioningState": "Creating"
+        },
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2022-08-03T16:04:13.7593693Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-03T16:04:13.7593693Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CognitiveServices/locations/westus/operationResults/3b38e315-ed9a-4cdc-a8ff-f67426a4c7be?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0a8569c94607154e8bcb9c6834685a4c-5e2f5cc7f601e449-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "90acd432ab32c1c3f0fb7c05f4a7d8d1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "270",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:15 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "7",
+        "x-ms-correlation-request-id": "95f15778-da3f-419e-a28a-707a2ea686db",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "cf7689ee-a9b7-40da-a08e-5b728b5a6f9b",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160415Z:95f15778-da3f-419e-a28a-707a2ea686db"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CognitiveServices/locations/westus/operationResults/3b38e315-ed9a-4cdc-a8ff-f67426a4c7be",
+        "name": "3b38e315-ed9a-4cdc-a8ff-f67426a4c7be",
+        "status": "Creating",
+        "startTime": "2022-08-03T16:04:14Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CognitiveServices/locations/westus/operationResults/3b38e315-ed9a-4cdc-a8ff-f67426a4c7be?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0a8569c94607154e8bcb9c6834685a4c-12ab94528c426c40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "ed432cffb032a48510993bada9f2f96e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "304",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "40",
+        "x-ms-correlation-request-id": "79b3fd5e-9a21-4fc8-9e86-c389222af2e8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "46d27eb3-5d79-47a8-8820-202102f4d12d",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160416Z:79b3fd5e-9a21-4fc8-9e86-c389222af2e8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.CognitiveServices/locations/westus/operationResults/3b38e315-ed9a-4cdc-a8ff-f67426a4c7be",
+        "name": "3b38e315-ed9a-4cdc-a8ff-f67426a4c7be",
+        "status": "Succeeded",
+        "startTime": "2022-08-03T16:04:14Z",
+        "endTime": "2022-08-03T16:04:15Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-612/providers/Microsoft.CognitiveServices/accounts/testAccount-1751?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0a8569c94607154e8bcb9c6834685a4c-29658169bd0be646-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "45685056ba8f9160aaa27fd4d5412e91",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1475",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:16 GMT",
+        "ETag": "\u00224900f7a6-0000-0700-0000-62ea9c7f0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "9",
+        "x-ms-correlation-request-id": "c0cd823c-51c8-4dbc-8df9-4c405dfc3c8d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "9d258941-8925-4f2d-a346-ed7d6d414a89",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160416Z:c0cd823c-51c8-4dbc-8df9-4c405dfc3c8d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-612/providers/Microsoft.CognitiveServices/accounts/testAccount-1751",
+        "name": "testAccount-1751",
+        "type": "Microsoft.CognitiveServices/accounts",
+        "etag": "\u00224900f7a6-0000-0700-0000-62ea9c7f0000\u0022",
+        "location": "westus",
+        "sku": {
+          "name": "S0"
+        },
+        "kind": "Face",
+        "tags": {},
+        "properties": {
+          "endpoint": "https://westus.api.cognitive.microsoft.com/",
+          "internalId": "94769b2d0c1941bea23554246bbcdd64",
+          "dateCreated": "2022-08-03T16:04:13.8477594Z",
+          "callRateLimit": {
+            "rules": [
+              {
+                "key": "face",
+                "renewalPeriod": 1,
+                "count": 10,
+                "dynamicThrottlingEnabled": false,
+                "matchPatterns": [
+                  {
+                    "path": "face/*",
+                    "method": "*"
+                  }
+                ]
+              },
+              {
+                "key": "container.billing",
+                "renewalPeriod": 10,
+                "count": 500,
+                "dynamicThrottlingEnabled": false,
+                "matchPatterns": [
+                  {
+                    "path": "billing/*",
+                    "method": "*"
+                  }
+                ]
+              },
+              {
+                "key": "default",
+                "renewalPeriod": 1,
+                "count": 10,
+                "dynamicThrottlingEnabled": false,
+                "matchPatterns": [
+                  {
+                    "path": "*",
+                    "method": "*"
+                  }
+                ]
+              }
+            ]
+          },
+          "isMigrated": false,
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Enabled",
+          "capabilities": [
+            {
+              "name": "VirtualNetworks"
+            },
+            {
+              "name": "Container",
+              "value": "Face.*,Face.Face"
+            }
+          ],
+          "endpoints": {
+            "Face": "https://westus.api.cognitive.microsoft.com/"
+          },
+          "provisioningState": "Succeeded"
+        },
+        "systemData": {
+          "createdBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "createdByType": "Application",
+          "createdAt": "2022-08-03T16:04:13.7593693Z",
+          "lastModifiedBy": "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-08-03T16:04:13.7593693Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-612/providers/Microsoft.CognitiveServices/accounts/testAccount-1751/privateEndpointConnections?api-version=2022-03-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a32cd19b0f1a449ad81f9ae55a5215b-bdba6b0cc7924249-00",
+        "User-Agent": "azsdk-net-ResourceManager.CognitiveServices/1.0.0-alpha.20220804.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8531d55923fb82614e078098701518fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 16:04:17 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "114",
+        "x-ms-correlation-request-id": "8d948ff5-77de-4502-95d6-0695155291cd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "80d5273f-4051-4190-b764-04db0b4f2e61",
+        "x-ms-routing-request-id": "JAPANEAST:20220803T160417Z:8d948ff5-77de-4502-95d6-0695155291cd"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "273228952",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}
