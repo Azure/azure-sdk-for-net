@@ -3,7 +3,7 @@
   "info": {
     "title": "MultiInterfaceClient",
     "version": "1.0.0",
-    "description": "Illustrates a client generated from a Cadl with multiple interfaces.",
+    "description": "Illustrates clients generated from a Cadl with multiple interfaces.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
