@@ -22,25 +22,6 @@
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
     <PackageReference Include="Microsoft.Azure.Batch" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System.Web" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0">
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0">
-    </PackageReference>
-  </ItemGroup>
-  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <ProjectReference Include="..\..\..\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
-    <Analyzer Include="..\..\..\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
-  </ItemGroup>-->
 </Project>
