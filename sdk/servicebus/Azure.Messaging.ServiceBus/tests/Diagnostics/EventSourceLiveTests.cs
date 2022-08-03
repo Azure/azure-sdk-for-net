@@ -279,8 +279,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     ServiceBusEventSource.StartProcessingCompleteEvent,
                     e => e.Payload.Contains(processor.Identifier));
                 _listener.SingleEventById(
+                    ServiceBusEventSource.ReceiveMessageStartEvent,
+                    e => e.Payload.Contains($"{processor.Identifier}-Receiver"));
+                _listener.SingleEventById(
                     ServiceBusEventSource.ReceiveMessageCompleteEvent,
-                    e => e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
+                    e => e.Payload.Contains($"{processor.Identifier}-Receiver") && e.Payload.Contains($"<LockToken>{lockToken}</LockToken>"));
                 _listener.SingleEventById(
                     ServiceBusEventSource.ProcessorMessageHandlerStartEvent,
                     e => e.Payload.Contains(processor.Identifier) && e.Payload.Contains(lockToken));
@@ -408,6 +411,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageStartEvent, e => e.Payload.Contains($"{processor.Identifier}-SsessionId"));
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageCompleteEvent, e => e.Payload.Contains($"{processor.Identifier}-SsessionId"));
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerStartEvent, args => args.Payload.Contains(processor.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent, args => args.Payload.Contains(processor.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.ProcessorErrorHandlerThrewExceptionEvent, args => args.Payload.Contains(processor.Identifier));
