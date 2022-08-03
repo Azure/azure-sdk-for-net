@@ -68,8 +68,9 @@ namespace Azure.Core.TestFramework
         {
             if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
             {
-                throw new InvalidOperationException("Operations that are enclosed in a Do Not Record scope should not be executed in Playback mode." +
-                                                    "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
+                throw new InvalidOperationException(
+                    "Operations that are enclosed in a 'TestRecording.DisableRecordingScope' created with the 'DisableRecording' method should not be executed in Playback mode." +
+                    "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
             }
             try
             {
