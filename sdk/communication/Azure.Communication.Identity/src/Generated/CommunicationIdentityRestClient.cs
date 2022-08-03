@@ -41,7 +41,7 @@ namespace Azure.Communication.Identity
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes)
+        internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,7 +53,10 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest();
+            CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest()
+            {
+                ExpiresInMinutes = expiresInMinutes
+            };
             if (createTokenWithScopes != null)
             {
                 foreach (var value in createTokenWithScopes)
@@ -70,10 +73,11 @@ namespace Azure.Communication.Identity
 
         /// <summary> Create a new identity, and optionally, an access token. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CommunicationUserIdentifierAndToken>> CreateAsync(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes);
+            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -91,10 +95,11 @@ namespace Azure.Communication.Identity
 
         /// <summary> Create a new identity, and optionally, an access token. </summary>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, CancellationToken cancellationToken = default)
+        public Response<CommunicationUserIdentifierAndToken> Create(IEnumerable<CommunicationTokenScope> createTokenWithScopes = null, int? expiresInMinutes = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(createTokenWithScopes);
+            using var message = CreateCreateRequest(createTokenWithScopes, expiresInMinutes);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

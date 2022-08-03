@@ -4,8 +4,13 @@
 
 ### Features Added
 - Added support to customize the Communication Identity access token’s validity period:
-    - Added `GetToken(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)` and `GetTokenAsync(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)` methods that provide the ability to create a Communication Identity access token with custom expiration.
+    - Added methods that provide the ability to create a Communication Identity access token with custom expiration:
+        - `GetToken(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)`
+        - `GetTokenAsync(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)`
+        - `CreateUserAndToken(CreateUserAndTokenOptions createUserAndTokenOptions, CancellationToken cancellationToken = default)`
+        - `CreateUserAndTokenAsync(CreateUserAndTokenOptions createUserAndTokenOptions, CancellationToken cancellationToken = default)`
     - Added `GetTokenOptions` to pass mandatory and configurable parameters when using `GetToken` APIs.
+    - Added `CreateUserAndTokenOptions` to pass mandatory and configurable parameters when using `CreateUserAndToken` APIs.
     - Added a new API version `ServiceVersion.V2022_10_01` that is now the default API version.
 
 ## 1.2.0-beta.1 (Unreleased)

@@ -7,15 +7,10 @@ using System.Collections.Generic;
 namespace Azure.Communication.Identity
 {
     /// <summary>
-    /// Options to pass mandatory and configurable parameters to get a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.
+    /// Options to pass mandatory and configurable parameters to get a Communication Identity access token together with <see cref="CommunicationUserIdentifier"/>.
     /// </summary>
-    public class GetTokenOptions
+    public class CreateUserAndTokenOptions
     {
-        /// <summary>
-        /// The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.
-        /// </summary>
-        public CommunicationUserIdentifier CommunicationUser { get; }
-
         /// <summary>
         /// List of <see cref="CommunicationTokenScope"/> scopes for the Communication Identity access token.
         /// </summary>
@@ -29,14 +24,9 @@ namespace Azure.Communication.Identity
         /// <summary>
         /// Initializes a new instance of <see cref="GetTokenOptions"/>.
         /// </summary>
-        /// <param name="communicationUserIdentifier">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the Communication Identity access token.</param>
-        public GetTokenOptions(
-            CommunicationUserIdentifier communicationUserIdentifier,
-            IEnumerable<CommunicationTokenScope> scopes
-            )
+        public CreateUserAndTokenOptions(IEnumerable<CommunicationTokenScope> scopes)
         {
-            CommunicationUser = communicationUserIdentifier;
             Scopes = scopes;
         }
     }

@@ -63,7 +63,7 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
-It's also possible to create token with custom expiration. Bounds are 1 - 24 hours. Default expiration is 24 hours.
+It's also possible to create a Communication Identity access token by customizing the expiration time. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
 
 The `GetToken` function accepts the following parameters wrapped into the `GetTokenOptions` option bag:
 - `CommunicationUser` The CommunicationUserIdentifier for whom to get a token.
@@ -81,6 +81,26 @@ DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
+
+## Creating a user and a token with custom expiration in the same request
+
+You can create user and token in the same request. You can specify expiration time for the token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
+
+The `CreateUserAndToken` function accepts the following parameters wrapped into the `CreateUserAndTokenOptions` option bag:
+- `Scopes` The scopes that the token should have.
+- `ExpiresInMinutes` Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
+
+```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
+CreateUserAndTokenOptions createUserAndTokenOptions = new CreateUserAndTokenOptions(scopes: new[] { CommunicationTokenScope.Chat })
+{
+    ExpiresInMinutes = new TimeSpan(0, 60, 0)
+};
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(createUserAndTokenOptions);
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
+```
+
 
 ## Exchange an Azure AD access token of a Teams User for a Communication Identity access token
 

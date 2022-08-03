@@ -119,6 +119,23 @@ Console.WriteLine($"User id: {user.Id}");
 Console.WriteLine($"Token: {token.Token}");
 ```
 
+Here it's also possible to specify the expiration time for the Communication Identity access token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
+
+The `CreateUserAndTokenAsync` function accepts the following parameters wrapped into the `CreateUserAndTokenOptions` option bag:
+- `Scopes` The scopes that the token should have.
+- `ExpiresInMinutes` Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
+
+```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+CreateUserAndTokenOptions createUserAndTokenOptions = new CreateUserAndTokenOptions(scopes: new[] { CommunicationTokenScope.Chat })
+{
+    ExpiresInMinutes = new TimeSpan(0, 60, 0)
+};
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(createUserAndTokenOptions);
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
+```
+
 ### Revoking a user's tokens
 
 In case a user's tokens are compromised or need to be revoked:

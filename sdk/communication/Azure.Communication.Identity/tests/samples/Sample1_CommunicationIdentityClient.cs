@@ -155,6 +155,43 @@ namespace Azure.Communication.Identity.Samples
         }
 
         [Test]
+        public async Task CreateUserAndTokenWithCustomExpirationAsync()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+            #region Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+            CreateUserAndTokenOptions createUserAndTokenOptions = new CreateUserAndTokenOptions(scopes: new[] { CommunicationTokenScope.Chat })
+            {
+                ExpiresInMinutes = new TimeSpan(0, 60, 0)
+            };
+            Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(createUserAndTokenOptions);
+            var (user, token) = response.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            Console.WriteLine($"Token: {token.Token}");
+            #endregion Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
+        }
+
+        [Test]
+        [SyncOnly]
+        public void CreateUserAndTokenWithCustomExpiration()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+            #region Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
+            CreateUserAndTokenOptions createUserAndTokenOptions = new CreateUserAndTokenOptions(scopes: new[] { CommunicationTokenScope.Chat })
+            {
+                ExpiresInMinutes = new TimeSpan(0, 60, 0)
+            };
+            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(createUserAndTokenOptions);
+            var (user, token) = response.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            Console.WriteLine($"Token: {token.Token}");
+            #endregion Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
+        }
+
+        [Test]
         public async Task CreateUserAndToken()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
@@ -173,8 +210,7 @@ namespace Azure.Communication.Identity.Samples
         {
             #region Snippet:CreateCommunicationIdentityFromToken
             var endpoint = new Uri("https://my-resource.communication.azure.com");
-            /*@@*/
-            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+            /*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
             TokenCredential tokenCredential = new DefaultAzureCredential();
             var client = new CommunicationIdentityClient(endpoint, tokenCredential);
             #endregion Snippet:CreateCommunicationIdentityFromToken
@@ -196,10 +232,8 @@ namespace Azure.Communication.Identity.Samples
             #region Snippet:CreateCommunicationIdentityFromAccessKey
             var endpoint = new Uri("https://my-resource.communication.azure.com");
             var accessKey = "<access_key>";
-            /*@@*/
-            endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-            /*@@*/
-            accessKey = TestEnvironment.LiveTestDynamicAccessKey;
+            /*@@*/ endpoint = TestEnvironment.LiveTestDynamicEndpoint;
+            /*@@*/ accessKey = TestEnvironment.LiveTestDynamicAccessKey;
             var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
             #endregion Snippet:CreateCommunicationIdentityFromAccessKey
 
@@ -268,8 +302,7 @@ namespace Azure.Communication.Identity.Samples
             // Get a connection string to our Azure Communication resource.
             //@@var connectionString = "<connection_string>";
             var client = new CommunicationIdentityClient(connectionString);
-            /*@@*/
-            client = CreateClientWithConnectionString();
+            /*@@*/ client = CreateClientWithConnectionString();
 
             try
             {
