@@ -12,9 +12,9 @@ using System.Text.Json;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Get Operation response object. </summary>
-    public partial class DocumentModelOperationDetails : DocumentModelOperationSummary
+    internal partial class GetOperationResponse : DocumentModelOperationSummary
     {
-        /// <summary> Initializes a new instance of DocumentModelOperationDetails. </summary>
+        /// <summary> Initializes a new instance of GetOperationResponse. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, kind, resourceLocation)
+        internal GetOperationResponse(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, kind, resourceLocation)
         {
             if (operationId == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Initializes a new instance of DocumentModelOperationDetails. </summary>
+        /// <summary> Initializes a new instance of GetOperationResponse. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -44,11 +44,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <param name="error"> Encountered error. </param>
+        /// <param name="jsonError"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement error, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
+        internal GetOperationResponse(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
         {
-            _error = error;
+            JsonError = jsonError;
             Result = result;
         }
     }
