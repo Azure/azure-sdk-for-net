@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
@@ -362,7 +361,36 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeleteOperationResult> Delete(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, profileName, endpointType, endpointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a Traffic Manager endpoint. </summary>
+        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="profileName"> The name of the Traffic Manager profile. </param>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint to be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="endpointType"/> or <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string profileName, string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -375,14 +403,8 @@ namespace Azure.ResourceManager.TrafficManager
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DeleteOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeleteOperationResult.DeserializeDeleteOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 case 204:
-                    return Response.FromValue((DeleteOperationResult)null, message.Response);
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

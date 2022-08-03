@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Generate the resource identifier of a <see cref="UserMetricsModelResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys";
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default";
             return new ResourceIdentifier(resourceId);
         }
 

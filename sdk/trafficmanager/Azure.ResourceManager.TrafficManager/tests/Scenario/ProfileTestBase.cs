@@ -24,8 +24,15 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         protected internal ResourceGroupResource _resourceGroup;
         protected internal string _profileName;
 
-        public ProfileTestBase(bool isAsync, RecordedTestMode mode = RecordedTestMode.Playback) : base(isAsync, mode)
-        { }
+        protected ProfileTestBase(bool isAsync, RecordedTestMode mode)
+        : base(isAsync, mode)
+        {
+        }
+
+        protected ProfileTestBase(bool isAsync)
+            : base(isAsync)
+        {
+        }
 
         /// <summary>
         /// The method creates a traffic manager profile, so it covers the creation use-case.

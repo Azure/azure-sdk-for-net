@@ -12,7 +12,7 @@ using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class ProfileListResult
+    internal partial class ProfileListResult
     {
         internal static ProfileListResult DeserializeProfileListResult(JsonElement element)
         {

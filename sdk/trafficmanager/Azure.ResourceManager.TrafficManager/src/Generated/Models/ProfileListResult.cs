@@ -12,7 +12,7 @@ using Azure.ResourceManager.TrafficManager;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The list Traffic Manager profiles operation response. </summary>
-    public partial class ProfileListResult
+    internal partial class ProfileListResult
     {
         /// <summary> Initializes a new instance of ProfileListResult. </summary>
         internal ProfileListResult()

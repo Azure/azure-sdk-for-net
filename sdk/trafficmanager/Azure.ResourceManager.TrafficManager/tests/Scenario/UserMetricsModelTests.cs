@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TrafficManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.TrafficManager.Tests.Scenario
@@ -44,6 +45,18 @@ namespace Azure.ResourceManager.TrafficManager.Tests.Scenario
         }
 
         [RecordedTest]
+        public async Task DeleteFailureTest()
+        {
+            const string FalseySubId = "5941c11c-485a-4a27-a87f-db38d642b886";
+            ResourceIdentifier resourceIdentifier = UserMetricsModelResource.CreateResourceIdentifier(FalseySubId);
+            var badResource = Client.GetUserMetricsModelResource(resourceIdentifier);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await badResource.DeleteAsync(WaitUntil.Completed));
+            Assert.AreEqual(404, exception.Status);
+
+            await Task.CompletedTask;
+        }
+
+        [RecordedTest]
         public async Task CreateTest()
         {
             await Delete();
@@ -66,10 +79,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests.Scenario
 
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
-            ArmOperation<DeleteOperationResult> armOperation = await userMetricsModelResource.DeleteAsync(WaitUntil.Completed);
-
-            Assert.IsTrue(armOperation.HasCompleted);
-            Assert.IsTrue(armOperation.HasValue);
+            await userMetricsModelResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task Create()
