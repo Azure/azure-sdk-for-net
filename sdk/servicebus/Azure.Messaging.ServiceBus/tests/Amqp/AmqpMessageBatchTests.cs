@@ -462,6 +462,59 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageBatch.Dispose" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void DisposeCleansUpBatchMessages()
+        {
+            var options = new CreateMessageBatchOptions { MaxSizeInBytes = 5000 };
+            var messages = new AmqpMessage[5];
+            var currentIndex = -1;
+            var mockMessage = new Mock<AmqpMessage>();
+            var mockConverter = new InjectableMockConverter
+            {
+                BuildBatchFromAmqpMessagesHandler = (_s) => mockMessage.Object,
+                BuildAmqpMessageFromSBMessageHandler = (_s) => messages[++currentIndex]
+            };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                messages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+            }
+
+            // Add the messages to the batch; all should be accepted.
+
+            var batch = new AmqpMessageBatch(mockConverter, options);
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                Assert.That(batch.TryAddMessage(new ServiceBusMessage(new byte[0])), Is.True, $"The addition for index: {index} should fit and be accepted.");
+            }
+
+            // Validate that the AMQP messages have not been disposed.
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                Assert.That(() => messages[index].ThrowIfDisposed(), Throws.Nothing, $"The message at index: {index} should not have been disposed.");
+            }
+
+            // Dispose the batch and verify that the messages held by the batch have been disposed.
+
+            batch.Dispose();
+
+            for (var index = 0; index < messages.Length; ++index)
+            {
+                Assert.That(() => messages[index].ThrowIfDisposed(), Throws.InstanceOf<ObjectDisposedException>(), $"The message at index: {index} should have been disposed.");
+            }
+        }
+
+        /// <summary>
         ///   Allows for control over AMQP message conversion for testing purposes.
         /// </summary>
         ///
