@@ -50,6 +50,10 @@ directive:
         "name": "HeatMapType",
         "modelAsString": true
       }
+  - from: trafficmanager.json
+    where: $.paths..delete.responses["200"]
+    transform: >
+      delete $["schema"]
      
 #TODO: excluding since the following REST endpoints do not have GetAll method.
 #TODO: e.g. The ResourceCollection EndpointCollection (RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}) does not have a GetAll method
