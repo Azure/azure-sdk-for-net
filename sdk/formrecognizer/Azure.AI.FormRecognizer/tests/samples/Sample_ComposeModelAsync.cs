@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 cleaningSuppliesModel.ModelId
             };
 
-            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
+            ComposeModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
             DocumentModelDetails purchaseOrderModel = operation.Value;
 
             Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");

@@ -856,10 +856,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual BuildModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual ComposeModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -883,7 +883,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = ServiceClient.ComposeDocumentModel(composeRequest, cancellationToken);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -915,10 +915,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual async Task<BuildModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ComposeModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -942,7 +942,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = await ServiceClient.ComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {

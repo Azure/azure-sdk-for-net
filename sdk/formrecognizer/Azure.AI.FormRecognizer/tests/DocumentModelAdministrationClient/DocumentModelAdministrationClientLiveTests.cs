@@ -389,12 +389,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion copy
 
-        #region Composed model
+        #region Compose model
 
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
-        public async Task StartComposeModel(bool useTokenCredential)
+        public async Task ComposeModel(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
 
@@ -407,7 +407,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId);
+            ComposeModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId);
 
             Assert.IsTrue(operation.HasValue);
 
@@ -441,7 +441,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var tags = TestingTags.ToDictionary(t => t.Key, t => t.Value);
 
             var composedModelId = Recording.GenerateId();
-            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
+            ComposeModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, composedModelId, tags: tags);
 
             DocumentModelDetails composedModel = operation.Value;
 
