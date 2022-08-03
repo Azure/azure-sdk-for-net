@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiDiagnosticCollectionTests : ApiManagementManagementTestBase
     {
         public ApiDiagnosticCollectionTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

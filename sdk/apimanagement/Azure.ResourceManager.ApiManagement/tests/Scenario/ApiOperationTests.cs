@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await CreateApiServiceAsync();
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(list.Count == 1);
+            Assert.GreaterOrEqual(list.Count, 1);
             var api = list.Single();
 
             var collection = api.GetApiOperations();
@@ -130,39 +130,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                                 TypeName = newOperationRequestRepresentationTypeName
                             }
                         },
-                    Representations =
-                            {
-                            new RepresentationContract(newOperationRequestRepresentationContentType)
-                            {
-                                Examples = {
-                                    ["default"] = new ParameterExampleContract
-                                    {
-                                        Description = "My default request example",
-                                        ExternalValue = "https://contoso.com",
-                                        Summary = "Just an example",
-                                        Value = new BinaryData("default")
-                                    }
-                                }
-                            }
-                        }
+                    Representations = { new RepresentationContract("application/json") }
                 },
                 Responses = {
                         new ResponseContract(newOperationResponseStatusCode)
                         {
                             Description = newOperationResponseDescription,
                             Representations = {
-                                new RepresentationContract (newOperationResponseRepresentationContentType)
-                                {
-                                    Examples = {
-                                        ["default"] = new ParameterExampleContract
-                                        {
-                                            Description = "My default request example",
-                                            ExternalValue = "https://contoso.com",
-                                            Summary = "Just an example",
-                                            Value = new BinaryData("default")
-                                        }
-                                    }
-                                }
+                                new RepresentationContract ("application/xml"),
+                                new RepresentationContract ("application/json")
                             }
                         }
                  }
@@ -170,8 +146,32 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var createResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, newOperationId, newOperation)).Value;
             Assert.NotNull(createResponse);
-            var apiOperationResponse = (await collection.GetAsync(newOperationId));
+            var apiOperationResponse = (await collection.GetAsync(newOperationId)).Value;
             Assert.NotNull(apiOperationResponse);
+            Assert.AreEqual(newOperationId, apiOperationResponse.Data.Name);
+
+            // Get the Api Operation Etag
+            var operationTag = (await apiOperationResponse.GetEntityTagAsync()).Value;
+            Assert.NotNull(operationTag);
+
+            // Patch the operation
+            string patchedName = Recording.GenerateAssetName("patchedName");
+            string patchedDescription = Recording.GenerateAssetName("patchedDescription");
+            string patchedMethod = "HEAD";
+            var patchOperation = new ApiOperationPatch()
+            {
+                DisplayName = patchedName,
+                Description = patchedDescription,
+                Method = patchedMethod,
+            };
+            getResponse = (await apiOperationResponse.UpdateAsync("*", patchOperation)).Value;
+            Assert.NotNull(getResponse);
+            Assert.AreEqual(getResponse.Data.Method, patchedMethod);
+
+            // Delete the operation
+            await apiOperationResponse.DeleteAsync(WaitUntil.Completed, "*");
+            var exsits = (await collection.ExistsAsync(newOperationId)).Value;
+            Assert.IsFalse(exsits);
         }
     }
 }

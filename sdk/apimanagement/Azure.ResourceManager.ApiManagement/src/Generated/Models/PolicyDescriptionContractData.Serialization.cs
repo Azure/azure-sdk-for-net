@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<long> scope = default;
+            Optional<BinaryData> scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -78,14 +79,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            scope = property0.Value.GetInt64();
+                            scope = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PolicyDescriptionContractData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(scope));
+            return new PolicyDescriptionContractData(id, name, type, systemData.Value, description.Value, scope.Value);
         }
     }
 }

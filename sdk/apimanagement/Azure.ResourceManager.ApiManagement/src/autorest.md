@@ -294,6 +294,10 @@ directive:
       $.ApiEntityBaseContract.properties.authenticationSettings["x-nullable"] = true;
       $.ApiEntityBaseContract.properties.subscriptionKeyParameterNames["x-nullable"] = true;
       $.LoggerContractProperties.properties.resourceId["x-nullable"] = true;
+      $.PolicyDescriptionContractProperties.properties.scope = {
+          "description": "Binary OR value of the Snippet scope.",
+          "readOnly": true
+        }
   - from: apimskus.json
     where: $.definitions
     transform: >

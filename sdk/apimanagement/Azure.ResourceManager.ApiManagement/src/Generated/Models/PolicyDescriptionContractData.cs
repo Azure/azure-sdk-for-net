@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Policy description. </param>
         /// <param name="scope"> Binary OR value of the Snippet scope. </param>
-        internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, long? scope) : base(id, name, resourceType, systemData)
+        internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, BinaryData scope) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Scope = scope;
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Policy description. </summary>
         public string Description { get; }
         /// <summary> Binary OR value of the Snippet scope. </summary>
-        public long? Scope { get; }
+        public BinaryData Scope { get; }
     }
 }
