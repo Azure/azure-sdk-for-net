@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.JobRouter;
 
 namespace Azure.Communication.JobRouter.Models
 {

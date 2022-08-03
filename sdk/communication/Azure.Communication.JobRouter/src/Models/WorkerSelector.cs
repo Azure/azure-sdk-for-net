@@ -9,8 +9,6 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("WorkerSelector")]
-    [CodeGenSuppress("WorkerSelector", typeof(string), typeof(LabelOperator))]
-    [CodeGenSuppress("WorkerSelector", typeof(string), typeof(LabelOperator), typeof(object))]
     public partial class WorkerSelector
     {
         /// <summary> Describes how long this label selector is valid in seconds. </summary>

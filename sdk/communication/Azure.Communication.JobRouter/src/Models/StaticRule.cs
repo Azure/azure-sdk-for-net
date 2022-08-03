@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenModel("StaticRule")]
     [CodeGenSuppress("StaticRule")]
     public partial class StaticRule : RouterRule
     {

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
+
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter;
 #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async

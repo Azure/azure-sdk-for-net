@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Response payload after a job has been successfully unassigned. </summary>
     public partial class UnassignJobResult

@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenModel("FunctionRule")]
     [CodeGenSuppress("FunctionRule")]
     [CodeGenSuppress("FunctionRule", typeof(string))]
     public partial class FunctionRule : RouterRule

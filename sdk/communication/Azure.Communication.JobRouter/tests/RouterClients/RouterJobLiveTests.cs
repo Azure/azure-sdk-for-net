@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -73,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             });
             var allJobs = new List<string>();
 
-            await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 100))
+            await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
             {
                 foreach (var job in jobPage.Values)
                 {

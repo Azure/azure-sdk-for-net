@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Response containing Id&apos;s for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResult

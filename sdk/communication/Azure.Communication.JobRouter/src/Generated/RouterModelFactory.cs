@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter.Models
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// </param>
         /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
-        /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClassificationPolicy"/> instance for mocking. </returns>
         public static ClassificationPolicy ClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectors = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectors = null)
         {
             queueSelectors ??= new List<QueueSelectorAttachment>();
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of ClassificationPolicyItem. </summary>
         /// <param name="classificationPolicy"> A container for the rules that govern how jobs are classified. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="JobRouter.ClassificationPolicyItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ClassificationPolicyItem"/> instance for mocking. </returns>
         public static ClassificationPolicyItem ClassificationPolicyItem(ClassificationPolicy classificationPolicy = null, string etag = null)
         {
             return new ClassificationPolicyItem(classificationPolicy, etag);
@@ -64,7 +64,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of DistributionPolicyItem. </summary>
         /// <param name="distributionPolicy"> Policy governing how jobs are distributed to workers. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="JobRouter.DistributionPolicyItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DistributionPolicyItem"/> instance for mocking. </returns>
         public static DistributionPolicyItem DistributionPolicyItem(DistributionPolicy distributionPolicy = null, string etag = null)
         {
             return new DistributionPolicyItem(distributionPolicy, etag);
@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of ExceptionPolicyItem. </summary>
         /// <param name="exceptionPolicy"> A policy that defines actions to execute when exception are triggered. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="JobRouter.ExceptionPolicyItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ExceptionPolicyItem"/> instance for mocking. </returns>
         public static ExceptionPolicyItem ExceptionPolicyItem(ExceptionPolicy exceptionPolicy = null, string etag = null)
         {
             return new ExceptionPolicyItem(exceptionPolicy, etag);
@@ -97,7 +97,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="assignTime"> The assignment time of the job. </param>
         /// <param name="completeTime"> The time the job was marked as completed after being assigned. </param>
         /// <param name="closeTime"> The time the job was marked as closed after being completed. </param>
-        /// <returns> A new <see cref="JobRouter.JobAssignment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.JobAssignment"/> instance for mocking. </returns>
         public static JobAssignment JobAssignment(string id = null, string workerId = null, DateTimeOffset assignTime = default, DateTimeOffset? completeTime = null, DateTimeOffset? closeTime = null)
         {
             return new JobAssignment(id, workerId, assignTime, completeTime, closeTime);
@@ -106,7 +106,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of RouterJobItem. </summary>
         /// <param name="routerJob"> A unit of work to be routed. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="JobRouter.RouterJobItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RouterJobItem"/> instance for mocking. </returns>
         public static RouterJobItem RouterJobItem(RouterJob routerJob = null, string etag = null)
         {
             return new RouterJobItem(routerJob, etag);
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimeMinutes"> Estimated wait time of the job rounded up to the nearest minute. </param>
-        /// <returns> A new <see cref="JobRouter.JobPositionDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.JobPositionDetails"/> instance for mocking. </returns>
         public static JobPositionDetails JobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, double estimatedWaitTimeMinutes = default)
         {
             return new JobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
@@ -127,7 +127,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of UnassignJobResult. </summary>
         /// <param name="jobId"> The Id of the job unassigned. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
-        /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.UnassignJobResult"/> instance for mocking. </returns>
         public static UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = default)
         {
             return new UnassignJobResult(jobId, unassignmentCount);
@@ -137,7 +137,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
-        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AcceptJobOfferResult"/> instance for mocking. </returns>
         public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
         {
             return new AcceptJobOfferResult(assignmentId, jobId, workerId);
@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of JobQueueItem. </summary>
         /// <param name="jobQueue"> A queue that can contain jobs to be routed. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="JobRouter.JobQueueItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.JobQueueItem"/> instance for mocking. </returns>
         public static JobQueueItem JobQueueItem(JobQueue jobQueue = null, string etag = null)
         {
             return new JobQueueItem(jobQueue, etag);
@@ -157,7 +157,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimeMinutes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
         /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
-        /// <returns> A new <see cref="JobRouter.QueueStatistics"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.QueueStatistics"/> instance for mocking. </returns>
         public static QueueStatistics QueueStatistics(string queueId = null, int length = default, IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = null)
         {
             estimatedWaitTimeMinutes ??= new Dictionary<string, double>();
@@ -182,7 +182,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="jobId"> The Id of the Job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignTime"> The assignment time of the job. </param>
-        /// <returns> A new <see cref="JobRouter.WorkerAssignment"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WorkerAssignment"/> instance for mocking. </returns>
         public static WorkerAssignment WorkerAssignment(string id = null, string jobId = null, int capacityCost = default, DateTimeOffset assignTime = default)
         {
             return new WorkerAssignment(id, jobId, capacityCost, assignTime);
@@ -191,7 +191,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of RouterWorkerItem. </summary>
         /// <param name="routerWorker"> An entity for jobs to be routed to. </param>
         /// <param name="etag"> (Optional) The Concurrency Token. </param>
-        /// <returns> A new <see cref="JobRouter.RouterWorkerItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RouterWorkerItem"/> instance for mocking. </returns>
         public static RouterWorkerItem RouterWorkerItem(RouterWorker routerWorker = null, string etag = null)
         {
             return new RouterWorkerItem(routerWorker, etag);

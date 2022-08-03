@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
+    [CodeGenModel("ClassificationPolicy")]
     [CodeGenSuppress("ClassificationPolicy")]
     public partial class ClassificationPolicy
     {

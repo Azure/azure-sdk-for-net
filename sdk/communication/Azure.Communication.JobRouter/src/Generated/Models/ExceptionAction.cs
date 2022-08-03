@@ -10,10 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> The action to take when the exception is triggered. </summary>
     public partial class ExceptionAction
     {
-        /// <summary> Initializes a new instance of ExceptionAction. </summary>
-        public ExceptionAction()
-        {
-        }
 
         /// <summary> Initializes a new instance of ExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
@@ -21,8 +17,5 @@ namespace Azure.Communication.JobRouter
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of ExceptionAction. </summary>
-        internal string Kind { get; set; }
     }
 }

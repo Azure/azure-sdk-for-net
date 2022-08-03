@@ -45,24 +45,24 @@ using Azure.Core.Pipeline;
 
         /// <summary> Initializes a new instance of <see cref="RouterClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public RouterClient(Uri endpoint, AzureKeyCredential keyCredential, RouterClientOptions options = default)
+        public RouterClient(Uri endpoint, AzureKeyCredential credential, RouterClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new RouterClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RouterClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public RouterClient(Uri endpoint, TokenCredential tokenCredential, RouterClientOptions options = default)
+        public RouterClient(Uri endpoint, TokenCredential credential, RouterClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new RouterClientOptions())
         {
         }
@@ -578,7 +578,7 @@ using Azure.Core.Pipeline;
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<CloseJobResult> CloseJob(
-            CloseJobOptions options = default,
+            CloseJobOptions options,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(CloseJob)}");

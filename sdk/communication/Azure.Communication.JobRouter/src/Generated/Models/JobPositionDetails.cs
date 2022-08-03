@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Dto for JobPositionDetails. </summary>
     public partial class JobPositionDetails

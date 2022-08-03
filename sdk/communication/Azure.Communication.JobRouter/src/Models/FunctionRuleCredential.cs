@@ -6,6 +6,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenModel("FunctionRuleCredential")]
     [CodeGenSuppress("FunctionRuleCredential")]
     public partial class FunctionRuleCredential
     {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,16 +34,7 @@ namespace Azure.Communication.JobRouter
                     case "weighted-allocation-worker-selector": return WeightedAllocationWorkerSelectorAttachment.DeserializeWeightedAllocationWorkerSelectorAttachment(element);
                 }
             }
-            string kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new WorkerSelectorAttachment(kind);
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.WorkerSelectorAttachment' not supported.");
         }
     }
 }

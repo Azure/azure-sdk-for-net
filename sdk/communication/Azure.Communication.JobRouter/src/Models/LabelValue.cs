@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 
 namespace Azure.Communication.JobRouter
@@ -10,7 +12,7 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Generic value wrapper.
     /// </summary>
-    public record LabelValue
+    public readonly struct LabelValue : IEquatable<LabelValue>
     {
         /// <summary>
         /// Primitive value.
@@ -129,5 +131,30 @@ namespace Azure.Communication.JobRouter
         {
             Value = value;
         }
+
+        /// <inheritdoc />
+        public bool Equals(LabelValue other)
+        {
+            if (Value == null)
+            {
+                return other.Value == null;
+            }
+
+            var response = Value.Equals(other.Value);
+            return response;
+        }
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is LabelValue other && Equals(other);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => Value?.GetHashCode() ?? 0;
+
+        /// <summary> Determines if two <see cref="LabelValue"/> values are the same. </summary>
+        public static bool operator ==(LabelValue left, LabelValue right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LabelValue"/> values are not the same. </summary>
+        public static bool operator !=(LabelValue left, LabelValue right) => !left.Equals(right);
     }
 }

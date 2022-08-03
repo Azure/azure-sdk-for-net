@@ -130,7 +130,7 @@ namespace Azure.Communication.JobRouter.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobStatus = property.Value.GetString().ToRouterJobStatus();
+                    jobStatus = new RouterJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enqueueTimeUtc"))

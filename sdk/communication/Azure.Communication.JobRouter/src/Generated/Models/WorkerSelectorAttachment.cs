@@ -10,10 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> An attachment which attaches WorkerSelectors to workers. </summary>
     public partial class WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
-        public WorkerSelectorAttachment()
-        {
-        }
 
         /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
@@ -21,8 +17,5 @@ namespace Azure.Communication.JobRouter
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing the type of label selector attachment. </summary>
-        internal string Kind { get; set; }
     }
 }

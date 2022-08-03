@@ -13,12 +13,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> An action that manually reclassifies a job by providing the queue, priority and worker selectors. </summary>
     public partial class ManualReclassifyExceptionAction : ExceptionAction
     {
-        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
-        public ManualReclassifyExceptionAction()
-        {
-            WorkerSelectors = new ChangeTrackingList<WorkerSelector>();
-            Kind = "manual-reclassify";
-        }
 
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>

@@ -8,6 +8,8 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenModel("ManualReclassifyExceptionAction")]
+    [CodeGenSuppress("ManualReclassifyExceptionAction")]
     [CodeGenSuppress("ManualReclassifyExceptionAction", typeof(string))]
     public partial class ManualReclassifyExceptionAction
     {

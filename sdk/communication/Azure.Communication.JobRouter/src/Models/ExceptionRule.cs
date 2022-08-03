@@ -5,9 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenModel("ExceptionRule")]
     public partial class ExceptionRule
     {
         /// <summary> Initializes a new instance of ExceptionRule. </summary>

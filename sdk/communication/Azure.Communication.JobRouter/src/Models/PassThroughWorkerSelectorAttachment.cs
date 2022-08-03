@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("PassThroughWorkerSelectorAttachment")]
-    [CodeGenSuppress("PassThroughWorkerSelectorAttachment", typeof(string), typeof(LabelOperator))]
     public partial class PassThroughWorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>

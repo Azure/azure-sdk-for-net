@@ -8,6 +8,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed in order to workers, starting with the worker that is after the last worker to receive a job. </summary>
+    [CodeGenModel("RoundRobinMode")]
     [CodeGenSuppress("RoundRobinMode", typeof(int), typeof(int))]
     public partial class RoundRobinMode : DistributionMode
     {

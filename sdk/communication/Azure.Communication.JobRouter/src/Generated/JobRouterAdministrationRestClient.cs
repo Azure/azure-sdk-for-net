@@ -1123,19 +1123,6 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListClassificationPoliciesNextPageRequest(string nextLink, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxpagesize"> Maximum page size. </param>
@@ -1190,19 +1177,6 @@ namespace Azure.Communication.JobRouter
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }
-
-        internal HttpMessage CreateListDistributionPoliciesNextPageRequest(string nextLink, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
@@ -1261,19 +1235,6 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListExceptionPoliciesNextPageRequest(string nextLink, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
@@ -1328,19 +1289,6 @@ namespace Azure.Communication.JobRouter
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }
-
-        internal HttpMessage CreateListQueuesNextPageRequest(string nextLink, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Retrieves existing queues. </summary>

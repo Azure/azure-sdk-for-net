@@ -7,9 +7,10 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     public partial class ClassificationPolicy : IUtf8JsonSerializable
     {

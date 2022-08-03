@@ -10,10 +10,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> The trigger for this exception rule. </summary>
     public partial class JobExceptionTrigger
     {
-        /// <summary> Initializes a new instance of JobExceptionTrigger. </summary>
-        public JobExceptionTrigger()
-        {
-        }
 
         /// <summary> Initializes a new instance of JobExceptionTrigger. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
@@ -21,8 +17,5 @@ namespace Azure.Communication.JobRouter
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of ExceptionTrigger. </summary>
-        internal string Kind { get; set; }
     }
 }

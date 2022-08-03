@@ -7,6 +7,7 @@
 
 using System;
 using System.Text.Json;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -96,7 +97,7 @@ namespace Azure.Communication.JobRouter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToWorkerSelectorState();
+                    state = new WorkerSelectorState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expireTime"))

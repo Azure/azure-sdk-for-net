@@ -6,9 +6,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExceptionTrigger")]
+    [CodeGenModel("JobExceptionTrigger")]
+    [CodeGenSuppress("JobExceptionTrigger")]
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<JobExceptionTrigger>))]
     public abstract partial class JobExceptionTrigger
     {
+        /// <summary> The type discriminator describing a sub-type of ExceptionTrigger. </summary>
+        protected string Kind { get; set; }
     }
 }

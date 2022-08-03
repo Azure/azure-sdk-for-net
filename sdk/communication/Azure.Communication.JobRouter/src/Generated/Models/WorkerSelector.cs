@@ -6,12 +6,27 @@
 #nullable disable
 
 using System;
+using Azure.Communication.JobRouter.Models;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>
     public partial class WorkerSelector
     {
+        /// <summary> Initializes a new instance of WorkerSelector. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public WorkerSelector(string key, LabelOperator labelOperator)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            Key = key;
+            LabelOperator = labelOperator;
+        }
 
         /// <summary> Initializes a new instance of WorkerSelector. </summary>
         /// <param name="key"> The label key to query against. </param>

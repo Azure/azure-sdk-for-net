@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Paged instance of ClassificationPolicy. </summary>
     public partial class ClassificationPolicyItem

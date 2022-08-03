@@ -12,6 +12,20 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>
     public partial class QueueSelector
     {
+        /// <summary> Initializes a new instance of QueueSelector. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public QueueSelector(string key, LabelOperator labelOperator)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            Key = key;
+            LabelOperator = labelOperator;
+        }
 
         /// <summary> The label key to query against. </summary>
         public string Key { get; set; }

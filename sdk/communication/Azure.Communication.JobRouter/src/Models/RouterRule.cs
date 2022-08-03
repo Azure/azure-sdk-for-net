@@ -15,5 +15,8 @@ namespace Azure.Communication.JobRouter
         internal RouterRule()
         {
         }
+
+        /// <summary> The type discriminator describing a sub-type of Rule. </summary>
+        public string Kind { get; set; }
     }
 }

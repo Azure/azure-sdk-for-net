@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
+    [CodeGenModel("ReclassifyExceptionAction")]
     [CodeGenSuppress("ReclassifyExceptionAction")]
     public partial class ReclassifyExceptionAction
     {

@@ -1383,19 +1383,6 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal HttpMessage CreateListJobsNextPageRequest(string nextLink, JobStateSelector? status, string queueId, string channelId, string classificationPolicyId, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
@@ -1458,19 +1445,6 @@ namespace Azure.Communication.JobRouter
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
-        }
-
-        internal HttpMessage CreateListWorkersNextPageRequest(string nextLink, WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         /// <summary> Retrieves existing workers. </summary>

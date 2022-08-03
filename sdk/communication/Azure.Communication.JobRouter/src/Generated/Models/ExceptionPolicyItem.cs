@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Communication.JobRouter.Models;
-
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Paged instance of ExceptionPolicy. </summary>
     public partial class ExceptionPolicyItem

@@ -7,8 +7,6 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("QueueSelector")]
-    [CodeGenSuppress("QueueSelector", typeof(string), typeof(LabelOperator))]
-    [CodeGenSuppress("QueueSelector", typeof(string), typeof(LabelOperator), typeof(object))]
     public partial class QueueSelector
     {
         [CodeGenMember("Value")]
