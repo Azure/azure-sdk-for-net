@@ -10,21 +10,12 @@ using Azure;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the move collection properties.
-    /// Serialized Name: MoveCollectionProperties
-    /// </summary>
+    /// <summary> Defines the move collection properties. </summary>
     public partial class MoveCollectionProperties
     {
         /// <summary> Initializes a new instance of MoveCollectionProperties. </summary>
-        /// <param name="sourceRegion">
-        /// Gets or sets the source region.
-        /// Serialized Name: MoveCollectionProperties.sourceRegion
-        /// </param>
-        /// <param name="targetRegion">
-        /// Gets or sets the target region.
-        /// Serialized Name: MoveCollectionProperties.targetRegion
-        /// </param>
+        /// <param name="sourceRegion"> Gets or sets the source region. </param>
+        /// <param name="targetRegion"> Gets or sets the target region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is null. </exception>
         public MoveCollectionProperties(string sourceRegion, string targetRegion)
         {
@@ -42,22 +33,10 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveCollectionProperties. </summary>
-        /// <param name="sourceRegion">
-        /// Gets or sets the source region.
-        /// Serialized Name: MoveCollectionProperties.sourceRegion
-        /// </param>
-        /// <param name="targetRegion">
-        /// Gets or sets the target region.
-        /// Serialized Name: MoveCollectionProperties.targetRegion
-        /// </param>
-        /// <param name="provisioningState">
-        /// Defines the provisioning states.
-        /// Serialized Name: MoveCollectionProperties.provisioningState
-        /// </param>
-        /// <param name="errors">
-        /// Defines the move collection errors.
-        /// Serialized Name: MoveCollectionProperties.errors
-        /// </param>
+        /// <param name="sourceRegion"> Gets or sets the source region. </param>
+        /// <param name="targetRegion"> Gets or sets the target region. </param>
+        /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="errors"> Defines the move collection errors. </param>
         internal MoveCollectionProperties(string sourceRegion, string targetRegion, MoverProvisioningState? provisioningState, MoveCollectionPropertiesErrors errors)
         {
             SourceRegion = sourceRegion;
@@ -66,30 +45,15 @@ namespace Azure.ResourceManager.Migrate.Models
             Errors = errors;
         }
 
-        /// <summary>
-        /// Gets or sets the source region.
-        /// Serialized Name: MoveCollectionProperties.sourceRegion
-        /// </summary>
+        /// <summary> Gets or sets the source region. </summary>
         public string SourceRegion { get; set; }
-        /// <summary>
-        /// Gets or sets the target region.
-        /// Serialized Name: MoveCollectionProperties.targetRegion
-        /// </summary>
+        /// <summary> Gets or sets the target region. </summary>
         public string TargetRegion { get; set; }
-        /// <summary>
-        /// Defines the provisioning states.
-        /// Serialized Name: MoveCollectionProperties.provisioningState
-        /// </summary>
+        /// <summary> Defines the provisioning states. </summary>
         public MoverProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Defines the move collection errors.
-        /// Serialized Name: MoveCollectionProperties.errors
-        /// </summary>
+        /// <summary> Defines the move collection errors. </summary>
         internal MoveCollectionPropertiesErrors Errors { get; }
-        /// <summary>
-        /// The move resource error body.
-        /// Serialized Name: MoveResourceError.properties
-        /// </summary>
+        /// <summary> The move resource error body. </summary>
         public ResponseError ErrorsProperties
         {
             get => Errors?.Properties;

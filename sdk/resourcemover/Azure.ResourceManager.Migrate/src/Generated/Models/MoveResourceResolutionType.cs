@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the resolution type.
-    /// Serialized Name: ResolutionType
-    /// </summary>
+    /// <summary> Defines the resolution type. </summary>
     public readonly partial struct MoveResourceResolutionType : IEquatable<MoveResourceResolutionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string ManualValue = "Manual";
         private const string AutomaticValue = "Automatic";
 
-        /// <summary>
-        /// Manual
-        /// Serialized Name: ResolutionType.Manual
-        /// </summary>
+        /// <summary> Manual. </summary>
         public static MoveResourceResolutionType Manual { get; } = new MoveResourceResolutionType(ManualValue);
-        /// <summary>
-        /// Automatic
-        /// Serialized Name: ResolutionType.Automatic
-        /// </summary>
+        /// <summary> Automatic. </summary>
         public static MoveResourceResolutionType Automatic { get; } = new MoveResourceResolutionType(AutomaticValue);
         /// <summary> Determines if two <see cref="MoveResourceResolutionType"/> values are the same. </summary>
         public static bool operator ==(MoveResourceResolutionType left, MoveResourceResolutionType right) => left.Equals(right);

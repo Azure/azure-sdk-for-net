@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Migrate.Models
     /// (1) custom role definitions for RBAC;
     /// (2) complex query filters for the event service; and
     /// (3) audit history / records for management operations.
-    /// Serialized Name: Display
     /// </summary>
     public partial class MoverDisplayInfo
     {
@@ -29,7 +28,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// include the publisher/company responsible.
         /// It should use Title Casing and begin with &quot;Microsoft&quot; for 1st party services.
         /// e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute.&quot;.
-        /// Serialized Name: Display.provider
         /// </param>
         /// <param name="resource">
         /// Gets or sets the resource.
@@ -40,7 +38,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// reuse their parent’s display.resource field)
         /// e.g. &quot;Virtual Machines&quot; or &quot;Scheduler Job Collections&quot;, or &quot;Virtual Machine VM Sizes&quot;
         /// or &quot;Scheduler Jobs&quot;.
-        /// Serialized Name: Display.resource
         /// </param>
         /// <param name="operation">
         /// Gets or sets the operation.
@@ -48,7 +45,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// It should be concise (to fit in drop downs) but clear (i.e. self-documenting).
         /// It should use Title Casing.
         /// Prescriptive guidance: Read Create or Update Delete &apos;ActionName&apos;.
-        /// Serialized Name: Display.operation
         /// </param>
         /// <param name="description">
         /// Gets or sets the description.
@@ -63,7 +59,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Prescriptive guidance for namespace:
         /// Read any &apos;display.resource&apos; Create or Update any  &apos;display.resource&apos; Delete any
         ///  &apos;display.resource&apos; &apos;ActionName&apos; any &apos;display.resources&apos;.
-        /// Serialized Name: Display.description
         /// </param>
         internal MoverDisplayInfo(string provider, string resource, string operation, string description)
         {
@@ -79,7 +74,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// include the publisher/company responsible.
         /// It should use Title Casing and begin with &quot;Microsoft&quot; for 1st party services.
         /// e.g. &quot;Microsoft Monitoring Insights&quot; or &quot;Microsoft Compute.&quot;.
-        /// Serialized Name: Display.provider
         /// </summary>
         public string Provider { get; }
         /// <summary>
@@ -91,7 +85,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// reuse their parent’s display.resource field)
         /// e.g. &quot;Virtual Machines&quot; or &quot;Scheduler Job Collections&quot;, or &quot;Virtual Machine VM Sizes&quot;
         /// or &quot;Scheduler Jobs&quot;.
-        /// Serialized Name: Display.resource
         /// </summary>
         public string Resource { get; }
         /// <summary>
@@ -100,7 +93,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// It should be concise (to fit in drop downs) but clear (i.e. self-documenting).
         /// It should use Title Casing.
         /// Prescriptive guidance: Read Create or Update Delete &apos;ActionName&apos;.
-        /// Serialized Name: Display.operation
         /// </summary>
         public string Operation { get; }
         /// <summary>
@@ -116,7 +108,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Prescriptive guidance for namespace:
         /// Read any &apos;display.resource&apos; Create or Update any  &apos;display.resource&apos; Delete any
         ///  &apos;display.resource&apos; &apos;ActionName&apos; any &apos;display.resources&apos;.
-        /// Serialized Name: Display.description
         /// </summary>
         public string Description { get; }
     }

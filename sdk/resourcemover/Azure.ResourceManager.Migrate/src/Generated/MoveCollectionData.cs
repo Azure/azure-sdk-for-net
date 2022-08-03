@@ -29,18 +29,9 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// The etag of the resource.
-        /// Serialized Name: MoveCollection.etag
-        /// </param>
-        /// <param name="identity">
-        /// Defines the MSI properties of the Move Collection.
-        /// Serialized Name: MoveCollection.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </param>
-        /// <param name="properties">
-        /// Defines the move collection properties.
-        /// Serialized Name: MoveCollection.properties
-        /// </param>
+        /// <param name="etag"> The etag of the resource. </param>
+        /// <param name="identity"> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="properties"> Defines the move collection properties. </param>
         internal MoveCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, MoveCollectionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
@@ -48,20 +39,11 @@ namespace Azure.ResourceManager.Migrate
             Properties = properties;
         }
 
-        /// <summary>
-        /// The etag of the resource.
-        /// Serialized Name: MoveCollection.etag
-        /// </summary>
+        /// <summary> The etag of the resource. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Defines the MSI properties of the Move Collection.
-        /// Serialized Name: MoveCollection.identity. Current supported identity types: None, SystemAssigned, UserAssigned
-        /// </summary>
+        /// <summary> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Defines the move collection properties.
-        /// Serialized Name: MoveCollection.properties
-        /// </summary>
+        /// <summary> Defines the move collection properties. </summary>
         public MoveCollectionProperties Properties { get; set; }
     }
 }

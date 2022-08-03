@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Required for resources collection.
-    /// Serialized Name: RequiredForResourcesCollection
-    /// </summary>
+    /// <summary> Required for resources collection. </summary>
     public partial class RequiredForResourcesList
     {
         /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>
-        /// <param name="sourceIds">
-        /// Gets or sets the list of source Ids for which the input resource is required.
-        /// Serialized Name: RequiredForResourcesCollection.sourceIds
-        /// </param>
+        /// <param name="sourceIds"> Gets or sets the list of source Ids for which the input resource is required. </param>
         internal RequiredForResourcesList(IReadOnlyList<string> sourceIds)
         {
             SourceIds = sourceIds;
         }
 
-        /// <summary>
-        /// Gets or sets the list of source Ids for which the input resource is required.
-        /// Serialized Name: RequiredForResourcesCollection.sourceIds
-        /// </summary>
+        /// <summary> Gets or sets the list of source Ids for which the input resource is required. </summary>
         public IReadOnlyList<string> SourceIds { get; }
     }
 }

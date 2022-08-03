@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Operation status REST resource.
-    /// Serialized Name: OperationStatus
-    /// </summary>
+    /// <summary> Operation status REST resource. </summary>
     public partial class MoverOperationStatus
     {
         /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
@@ -21,79 +19,37 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
-        /// <param name="id">
-        /// Resource Id.
-        /// Serialized Name: OperationStatus.id
-        /// </param>
-        /// <param name="name">
-        /// Operation name.
-        /// Serialized Name: OperationStatus.name
-        /// </param>
-        /// <param name="status">
-        /// Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running.
-        /// Serialized Name: OperationStatus.status
-        /// </param>
-        /// <param name="startTime">
-        /// Start time.
-        /// Serialized Name: OperationStatus.startTime
-        /// </param>
-        /// <param name="endTime">
-        /// End time.
-        /// Serialized Name: OperationStatus.endTime
-        /// </param>
-        /// <param name="error">
-        /// Error stating all error details for the operation.
-        /// Serialized Name: OperationStatus.error
-        /// </param>
-        /// <param name="properties">
-        /// Custom data.
-        /// Serialized Name: OperationStatus.properties
-        /// </param>
-        internal MoverOperationStatus(string id, string name, string status, string startTime, string endTime, MoverOperationStatusError error, BinaryData properties)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Operation name. </param>
+        /// <param name="status"> Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running. </param>
+        /// <param name="startOn"> Start time. </param>
+        /// <param name="endOn"> End time. </param>
+        /// <param name="error"> Error stating all error details for the operation. </param>
+        /// <param name="properties"> Custom data. </param>
+        internal MoverOperationStatus(ResourceIdentifier id, string name, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, MoverOperationStatusError error, BinaryData properties)
         {
             Id = id;
             Name = name;
             Status = status;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Error = error;
             Properties = properties;
         }
 
-        /// <summary>
-        /// Resource Id.
-        /// Serialized Name: OperationStatus.id
-        /// </summary>
-        public string Id { get; }
-        /// <summary>
-        /// Operation name.
-        /// Serialized Name: OperationStatus.name
-        /// </summary>
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> Operation name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running.
-        /// Serialized Name: OperationStatus.status
-        /// </summary>
+        /// <summary> Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Start time.
-        /// Serialized Name: OperationStatus.startTime
-        /// </summary>
-        public string StartTime { get; }
-        /// <summary>
-        /// End time.
-        /// Serialized Name: OperationStatus.endTime
-        /// </summary>
-        public string EndTime { get; }
-        /// <summary>
-        /// Error stating all error details for the operation.
-        /// Serialized Name: OperationStatus.error
-        /// </summary>
+        /// <summary> Start time. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> End time. </summary>
+        public DateTimeOffset? EndOn { get; }
+        /// <summary> Error stating all error details for the operation. </summary>
         public MoverOperationStatusError Error { get; }
-        /// <summary>
-        /// Custom data.
-        /// Serialized Name: OperationStatus.properties
-        /// </summary>
+        /// <summary> Custom data. </summary>
         public BinaryData Properties { get; }
     }
 }

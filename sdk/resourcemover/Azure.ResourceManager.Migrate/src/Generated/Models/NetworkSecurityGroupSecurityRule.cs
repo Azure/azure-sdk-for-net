@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Security Rule data model for Network Security Groups.
-    /// Serialized Name: NsgSecurityRule
-    /// </summary>
+    /// <summary> Security Rule data model for Network Security Groups. </summary>
     public partial class NetworkSecurityGroupSecurityRule
     {
         /// <summary> Initializes a new instance of NetworkSecurityGroupSecurityRule. </summary>
@@ -19,56 +16,40 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupSecurityRule. </summary>
-        /// <param name="name">
-        /// Gets or sets the Security rule name.
-        /// Serialized Name: NsgSecurityRule.name
-        /// </param>
+        /// <param name="name"> Gets or sets the Security rule name. </param>
         /// <param name="access">
         /// Gets or sets whether network traffic is allowed or denied.
         /// Possible values are “Allow” and “Deny”.
-        /// Serialized Name: NsgSecurityRule.access
         /// </param>
-        /// <param name="description">
-        /// Gets or sets a description for this rule. Restricted to 140 chars.
-        /// Serialized Name: NsgSecurityRule.description
-        /// </param>
+        /// <param name="description"> Gets or sets a description for this rule. Restricted to 140 chars. </param>
         /// <param name="destinationAddressPrefix">
         /// Gets or sets destination address prefix. CIDR or source IP range.
         ///  A “*” can also be used to match all source IPs. Default tags such
         /// as ‘VirtualNetwork’, ‘AzureLoadBalancer’ and ‘Internet’ can also be used.
-        /// Serialized Name: NsgSecurityRule.destinationAddressPrefix
         /// </param>
         /// <param name="destinationPortRange">
         /// Gets or sets Destination Port or Range. Integer or range between
         /// 0 and 65535. A “*” can also be used to match all ports.
-        /// Serialized Name: NsgSecurityRule.destinationPortRange
         /// </param>
         /// <param name="direction">
         /// Gets or sets the direction of the rule.InBound or Outbound. The
         /// direction specifies if rule will be evaluated on incoming or outgoing traffic.
-        /// Serialized Name: NsgSecurityRule.direction
         /// </param>
         /// <param name="priority">
         /// Gets or sets the priority of the rule. The value can be between
         /// 100 and 4096. The priority number must be unique for each rule in the collection.
         /// The lower the priority number, the higher the priority of the rule.
-        /// Serialized Name: NsgSecurityRule.priority
         /// </param>
-        /// <param name="protocol">
-        /// Gets or sets Network protocol this rule applies to. Can be Tcp, Udp or All(*).
-        /// Serialized Name: NsgSecurityRule.protocol
-        /// </param>
+        /// <param name="protocol"> Gets or sets Network protocol this rule applies to. Can be Tcp, Udp or All(*). </param>
         /// <param name="sourceAddressPrefix">
         /// Gets or sets source address prefix. CIDR or source IP range. A
         /// “*” can also be used to match all source IPs.  Default tags such as ‘VirtualNetwork’,
         /// ‘AzureLoadBalancer’ and ‘Internet’ can also be used. If this is an ingress
         /// rule, specifies where network traffic originates from.
-        /// Serialized Name: NsgSecurityRule.sourceAddressPrefix
         /// </param>
         /// <param name="sourcePortRange">
         /// Gets or sets Source Port or Range. Integer or range between 0 and
         /// 65535. A “*” can also be used to match all ports.
-        /// Serialized Name: NsgSecurityRule.sourcePortRange
         /// </param>
         internal NetworkSecurityGroupSecurityRule(string name, string access, string description, string destinationAddressPrefix, string destinationPortRange, string direction, int? priority, string protocol, string sourceAddressPrefix, string sourcePortRange)
         {
@@ -84,65 +65,49 @@ namespace Azure.ResourceManager.Migrate.Models
             SourcePortRange = sourcePortRange;
         }
 
-        /// <summary>
-        /// Gets or sets the Security rule name.
-        /// Serialized Name: NsgSecurityRule.name
-        /// </summary>
+        /// <summary> Gets or sets the Security rule name. </summary>
         public string Name { get; set; }
         /// <summary>
         /// Gets or sets whether network traffic is allowed or denied.
         /// Possible values are “Allow” and “Deny”.
-        /// Serialized Name: NsgSecurityRule.access
         /// </summary>
         public string Access { get; set; }
-        /// <summary>
-        /// Gets or sets a description for this rule. Restricted to 140 chars.
-        /// Serialized Name: NsgSecurityRule.description
-        /// </summary>
+        /// <summary> Gets or sets a description for this rule. Restricted to 140 chars. </summary>
         public string Description { get; set; }
         /// <summary>
         /// Gets or sets destination address prefix. CIDR or source IP range.
         ///  A “*” can also be used to match all source IPs. Default tags such
         /// as ‘VirtualNetwork’, ‘AzureLoadBalancer’ and ‘Internet’ can also be used.
-        /// Serialized Name: NsgSecurityRule.destinationAddressPrefix
         /// </summary>
         public string DestinationAddressPrefix { get; set; }
         /// <summary>
         /// Gets or sets Destination Port or Range. Integer or range between
         /// 0 and 65535. A “*” can also be used to match all ports.
-        /// Serialized Name: NsgSecurityRule.destinationPortRange
         /// </summary>
         public string DestinationPortRange { get; set; }
         /// <summary>
         /// Gets or sets the direction of the rule.InBound or Outbound. The
         /// direction specifies if rule will be evaluated on incoming or outgoing traffic.
-        /// Serialized Name: NsgSecurityRule.direction
         /// </summary>
         public string Direction { get; set; }
         /// <summary>
         /// Gets or sets the priority of the rule. The value can be between
         /// 100 and 4096. The priority number must be unique for each rule in the collection.
         /// The lower the priority number, the higher the priority of the rule.
-        /// Serialized Name: NsgSecurityRule.priority
         /// </summary>
         public int? Priority { get; set; }
-        /// <summary>
-        /// Gets or sets Network protocol this rule applies to. Can be Tcp, Udp or All(*).
-        /// Serialized Name: NsgSecurityRule.protocol
-        /// </summary>
+        /// <summary> Gets or sets Network protocol this rule applies to. Can be Tcp, Udp or All(*). </summary>
         public string Protocol { get; set; }
         /// <summary>
         /// Gets or sets source address prefix. CIDR or source IP range. A
         /// “*” can also be used to match all source IPs.  Default tags such as ‘VirtualNetwork’,
         /// ‘AzureLoadBalancer’ and ‘Internet’ can also be used. If this is an ingress
         /// rule, specifies where network traffic originates from.
-        /// Serialized Name: NsgSecurityRule.sourceAddressPrefix
         /// </summary>
         public string SourceAddressPrefix { get; set; }
         /// <summary>
         /// Gets or sets Source Port or Range. Integer or range between 0 and
         /// 65535. A “*” can also be used to match all ports.
-        /// Serialized Name: NsgSecurityRule.sourcePortRange
         /// </summary>
         public string SourcePortRange { get; set; }
     }

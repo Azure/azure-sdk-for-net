@@ -8,22 +8,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the request body for discard operation.
-    /// Serialized Name: DiscardRequest
-    /// </summary>
+    /// <summary> Defines the request body for discard operation. </summary>
     public partial class MoverDiscardContent
     {
         /// <summary> Initializes a new instance of MoverDiscardContent. </summary>
-        /// <param name="moveResources">
-        /// Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property.
-        /// Serialized Name: DiscardRequest.moveResources
-        /// </param>
+        /// <param name="moveResources"> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResources"/> is null. </exception>
-        public MoverDiscardContent(IEnumerable<string> moveResources)
+        public MoverDiscardContent(IEnumerable<ResourceIdentifier> moveResources)
         {
             if (moveResources == null)
             {
@@ -33,20 +28,11 @@ namespace Azure.ResourceManager.Migrate.Models
             MoveResources = moveResources.ToList();
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the operation needs to only run pre-requisite.
-        /// Serialized Name: DiscardRequest.validateOnly
-        /// </summary>
-        public bool? ValidateOnly { get; set; }
-        /// <summary>
-        /// Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property.
-        /// Serialized Name: DiscardRequest.moveResources
-        /// </summary>
-        public IList<string> MoveResources { get; }
-        /// <summary>
-        /// Defines the move resource input type.
-        /// Serialized Name: DiscardRequest.moveResourceInputType
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>
+        public bool? IsValidateOnly { get; set; }
+        /// <summary> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </summary>
+        public IList<ResourceIdentifier> MoveResources { get; }
+        /// <summary> Defines the move resource input type. </summary>
         public MoveResourceInputType? MoveResourceInputType { get; set; }
     }
 }

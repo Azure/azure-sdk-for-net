@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the dependency of the move resource.
-    /// Serialized Name: MoveResourceDependency
-    /// </summary>
+    /// <summary> Defines the dependency of the move resource. </summary>
     public partial class MoveResourceDependency
     {
         /// <summary> Initializes a new instance of MoveResourceDependency. </summary>
@@ -21,35 +18,14 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourceDependency. </summary>
-        /// <param name="id">
-        /// Gets the source ARM ID of the dependent resource.
-        /// Serialized Name: MoveResourceDependency.id
-        /// </param>
-        /// <param name="resolutionStatus">
-        /// Gets the dependency resolution status.
-        /// Serialized Name: MoveResourceDependency.resolutionStatus
-        /// </param>
-        /// <param name="resolutionType">
-        /// Defines the resolution type.
-        /// Serialized Name: MoveResourceDependency.resolutionType
-        /// </param>
-        /// <param name="dependencyType">
-        /// Defines the dependency type.
-        /// Serialized Name: MoveResourceDependency.dependencyType
-        /// </param>
-        /// <param name="manualResolution">
-        /// Defines the properties for manual resolution.
-        /// Serialized Name: MoveResourceDependency.manualResolution
-        /// </param>
-        /// <param name="automaticResolution">
-        /// Defines the properties for automatic resolution.
-        /// Serialized Name: MoveResourceDependency.automaticResolution
-        /// </param>
-        /// <param name="isOptional">
-        /// Gets or sets a value indicating whether the dependency is optional.
-        /// Serialized Name: MoveResourceDependency.isOptional
-        /// </param>
-        internal MoveResourceDependency(string id, string resolutionStatus, MoveResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, string isOptional)
+        /// <param name="id"> Gets the source ARM ID of the dependent resource. </param>
+        /// <param name="resolutionStatus"> Gets the dependency resolution status. </param>
+        /// <param name="resolutionType"> Defines the resolution type. </param>
+        /// <param name="dependencyType"> Defines the dependency type. </param>
+        /// <param name="manualResolution"> Defines the properties for manual resolution. </param>
+        /// <param name="automaticResolution"> Defines the properties for automatic resolution. </param>
+        /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
+        internal MoveResourceDependency(ResourceIdentifier id, string resolutionStatus, MoveResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, bool? isOptional)
         {
             Id = id;
             ResolutionStatus = resolutionStatus;
@@ -60,59 +36,34 @@ namespace Azure.ResourceManager.Migrate.Models
             IsOptional = isOptional;
         }
 
-        /// <summary>
-        /// Gets the source ARM ID of the dependent resource.
-        /// Serialized Name: MoveResourceDependency.id
-        /// </summary>
-        public string Id { get; }
-        /// <summary>
-        /// Gets the dependency resolution status.
-        /// Serialized Name: MoveResourceDependency.resolutionStatus
-        /// </summary>
+        /// <summary> Gets the source ARM ID of the dependent resource. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> Gets the dependency resolution status. </summary>
         public string ResolutionStatus { get; }
-        /// <summary>
-        /// Defines the resolution type.
-        /// Serialized Name: MoveResourceDependency.resolutionType
-        /// </summary>
+        /// <summary> Defines the resolution type. </summary>
         public MoveResourceResolutionType? ResolutionType { get; }
-        /// <summary>
-        /// Defines the dependency type.
-        /// Serialized Name: MoveResourceDependency.dependencyType
-        /// </summary>
+        /// <summary> Defines the dependency type. </summary>
         public MoverDependencyType? DependencyType { get; }
-        /// <summary>
-        /// Defines the properties for manual resolution.
-        /// Serialized Name: MoveResourceDependency.manualResolution
-        /// </summary>
+        /// <summary> Defines the properties for manual resolution. </summary>
         internal ManualResolutionProperties ManualResolution { get; }
-        /// <summary>
-        /// Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual.
-        /// Serialized Name: ManualResolutionProperties.targetId
-        /// </summary>
+        /// <summary> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </summary>
         public ResourceIdentifier ManualResolutionTargetId
         {
             get => ManualResolution?.TargetId;
         }
 
-        /// <summary>
-        /// Defines the properties for automatic resolution.
-        /// Serialized Name: MoveResourceDependency.automaticResolution
-        /// </summary>
+        /// <summary> Defines the properties for automatic resolution. </summary>
         internal AutomaticResolutionProperties AutomaticResolution { get; }
         /// <summary>
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
-        /// Serialized Name: AutomaticResolutionProperties.moveResourceId
         /// </summary>
         public string AutomaticResolutionMoveResourceId
         {
             get => AutomaticResolution?.MoveResourceId;
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the dependency is optional.
-        /// Serialized Name: MoveResourceDependency.isOptional
-        /// </summary>
-        public string IsOptional { get; }
+        /// <summary> Gets or sets a value indicating whether the dependency is optional. </summary>
+        public bool? IsOptional { get; }
     }
 }

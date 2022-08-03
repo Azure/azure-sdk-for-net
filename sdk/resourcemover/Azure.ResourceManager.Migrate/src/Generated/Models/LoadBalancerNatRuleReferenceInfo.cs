@@ -6,22 +6,17 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines reference to load balancer NAT rules.
-    /// Serialized Name: LoadBalancerNatRuleReference
-    /// </summary>
+    /// <summary> Defines reference to load balancer NAT rules. </summary>
     public partial class LoadBalancerNatRuleReferenceInfo : ProxyResourceReferenceInfo
     {
         /// <summary> Initializes a new instance of LoadBalancerNatRuleReferenceInfo. </summary>
-        /// <param name="sourceArmResourceId">
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </param>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        public LoadBalancerNatRuleReferenceInfo(string sourceArmResourceId) : base(sourceArmResourceId)
+        public LoadBalancerNatRuleReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
             if (sourceArmResourceId == null)
             {
@@ -30,16 +25,10 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of LoadBalancerNatRuleReferenceInfo. </summary>
-        /// <param name="sourceArmResourceId">
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </param>
-        /// <param name="name">
-        /// Gets the name of the proxy resource on the target side.
-        /// Serialized Name: ProxyResourceReference.name
-        /// </param>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
+        /// <param name="name"> Gets the name of the proxy resource on the target side. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        internal LoadBalancerNatRuleReferenceInfo(string sourceArmResourceId, string name) : base(sourceArmResourceId, name)
+        internal LoadBalancerNatRuleReferenceInfo(ResourceIdentifier sourceArmResourceId, string name) : base(sourceArmResourceId, name)
         {
             if (sourceArmResourceId == null)
             {

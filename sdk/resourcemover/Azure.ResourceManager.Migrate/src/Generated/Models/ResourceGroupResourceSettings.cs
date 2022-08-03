@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the resource group resource settings.
-    /// Serialized Name: ResourceGroupResourceSettings
-    /// </summary>
+    /// <summary> Defines the resource group resource settings. </summary>
     public partial class ResourceGroupResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of ResourceGroupResourceSettings. </summary>
-        /// <param name="targetResourceName">
-        /// Gets or sets the target Resource name.
-        /// Serialized Name: ResourceSettings.targetResourceName
-        /// </param>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public ResourceGroupResourceSettings(string targetResourceName) : base(targetResourceName)
         {
@@ -32,14 +26,8 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of ResourceGroupResourceSettings. </summary>
-        /// <param name="resourceType">
-        /// The resource type. For example, the value can be Microsoft.Compute/virtualMachines.
-        /// Serialized Name: ResourceSettings.resourceType
-        /// </param>
-        /// <param name="targetResourceName">
-        /// Gets or sets the target Resource name.
-        /// Serialized Name: ResourceSettings.targetResourceName
-        /// </param>
+        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         internal ResourceGroupResourceSettings(string resourceType, string targetResourceName) : base(resourceType, targetResourceName)
         {
             ResourceType = resourceType ?? "resourceGroups";

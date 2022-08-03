@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the properties for manual resolution.
-    /// Serialized Name: ManualResolutionProperties
-    /// </summary>
+    /// <summary> Defines the properties for manual resolution. </summary>
     internal partial class ManualResolutionProperties
     {
         /// <summary> Initializes a new instance of ManualResolutionProperties. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of ManualResolutionProperties. </summary>
-        /// <param name="targetId">
-        /// Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual.
-        /// Serialized Name: ManualResolutionProperties.targetId
-        /// </param>
+        /// <param name="targetId"> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </param>
         internal ManualResolutionProperties(ResourceIdentifier targetId)
         {
             TargetId = targetId;
         }
 
-        /// <summary>
-        /// Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual.
-        /// Serialized Name: ManualResolutionProperties.targetId
-        /// </summary>
+        /// <summary> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </summary>
         public ResourceIdentifier TargetId { get; }
     }
 }

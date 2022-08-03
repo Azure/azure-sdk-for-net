@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Operations discovery class.
-    /// Serialized Name: OperationsDiscovery
-    /// </summary>
+    /// <summary> Operations discovery class. </summary>
     public partial class MoverOperationsDiscovery
     {
         /// <summary> Initializes a new instance of MoverOperationsDiscovery. </summary>
@@ -44,31 +41,22 @@ namespace Azure.ResourceManager.Migrate.Models
         /// This API is used to register for their service, and should include details about the
         /// operation (e.g. a localized name for the resource provider + any special
         /// considerations like PII release).
-        /// Serialized Name: OperationsDiscovery.name
         /// </param>
-        /// <param name="isDataAction">
-        /// Indicates whether the operation is a data action
-        /// Serialized Name: OperationsDiscovery.isDataAction
-        /// </param>
+        /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>
         /// <param name="display">
         /// Contains the localized display information for this particular operation / action. These
         /// value will be used by several clients for
         /// (1) custom role definitions for RBAC;
         /// (2) complex query filters for the event service; and
         /// (3) audit history / records for management operations.
-        /// Serialized Name: OperationsDiscovery.display
         /// </param>
         /// <param name="origin">
         /// Gets or sets Origin.
         /// The intended executor of the operation; governs the display of the operation in the
         /// RBAC UX and the audit logs UX.
         /// Default value is &quot;user,system&quot;.
-        /// Serialized Name: OperationsDiscovery.origin
         /// </param>
-        /// <param name="properties">
-        /// ClientDiscovery properties.
-        /// Serialized Name: OperationsDiscovery.properties
-        /// </param>
+        /// <param name="properties"> ClientDiscovery properties. </param>
         internal MoverOperationsDiscovery(string name, bool? isDataAction, MoverDisplayInfo display, string origin, BinaryData properties)
         {
             Name = name;
@@ -101,13 +89,9 @@ namespace Azure.ResourceManager.Migrate.Models
         /// This API is used to register for their service, and should include details about the
         /// operation (e.g. a localized name for the resource provider + any special
         /// considerations like PII release).
-        /// Serialized Name: OperationsDiscovery.name
         /// </summary>
         public string Name { get; }
-        /// <summary>
-        /// Indicates whether the operation is a data action
-        /// Serialized Name: OperationsDiscovery.isDataAction
-        /// </summary>
+        /// <summary> Indicates whether the operation is a data action. </summary>
         public bool? IsDataAction { get; }
         /// <summary>
         /// Contains the localized display information for this particular operation / action. These
@@ -115,7 +99,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// (1) custom role definitions for RBAC;
         /// (2) complex query filters for the event service; and
         /// (3) audit history / records for management operations.
-        /// Serialized Name: OperationsDiscovery.display
         /// </summary>
         public MoverDisplayInfo Display { get; }
         /// <summary>
@@ -123,13 +106,9 @@ namespace Azure.ResourceManager.Migrate.Models
         /// The intended executor of the operation; governs the display of the operation in the
         /// RBAC UX and the audit logs UX.
         /// Default value is &quot;user,system&quot;.
-        /// Serialized Name: OperationsDiscovery.origin
         /// </summary>
         public string Origin { get; }
-        /// <summary>
-        /// ClientDiscovery properties.
-        /// Serialized Name: OperationsDiscovery.properties
-        /// </summary>
+        /// <summary> ClientDiscovery properties. </summary>
         public BinaryData Properties { get; }
     }
 }

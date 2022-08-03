@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the zone redundant resource setting.
-    /// Serialized Name: ZoneRedundant
-    /// </summary>
+    /// <summary> Defines the zone redundant resource setting. </summary>
     public readonly partial struct ResourceZoneRedundantSetting : IEquatable<ResourceZoneRedundantSetting>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
 
-        /// <summary>
-        /// Enable
-        /// Serialized Name: ZoneRedundant.Enable
-        /// </summary>
+        /// <summary> Enable. </summary>
         public static ResourceZoneRedundantSetting Enable { get; } = new ResourceZoneRedundantSetting(EnableValue);
-        /// <summary>
-        /// Disable
-        /// Serialized Name: ZoneRedundant.Disable
-        /// </summary>
+        /// <summary> Disable. </summary>
         public static ResourceZoneRedundantSetting Disable { get; } = new ResourceZoneRedundantSetting(DisableValue);
         /// <summary> Determines if two <see cref="ResourceZoneRedundantSetting"/> values are the same. </summary>
         public static bool operator ==(ResourceZoneRedundantSetting left, ResourceZoneRedundantSetting right) => left.Equals(right);

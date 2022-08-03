@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Unresolved dependency collection.
-    /// Serialized Name: UnresolvedDependencyCollection
-    /// </summary>
+    /// <summary> Unresolved dependency collection. </summary>
     internal partial class MoverUnresolvedDependencyList
     {
         /// <summary> Initializes a new instance of MoverUnresolvedDependencyList. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverUnresolvedDependencyList. </summary>
-        /// <param name="value">
-        /// Gets or sets the list of unresolved dependencies.
-        /// Serialized Name: UnresolvedDependencyCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the value of  next link.
-        /// Serialized Name: UnresolvedDependencyCollection.nextLink
-        /// </param>
-        /// <param name="summaryCollection">
-        /// Gets or sets the list of summary items and the field on which summary is done.
-        /// Serialized Name: UnresolvedDependencyCollection.summaryCollection
-        /// </param>
-        /// <param name="totalCount">
-        /// Gets the total count.
-        /// Serialized Name: UnresolvedDependencyCollection.totalCount
-        /// </param>
+        /// <param name="value"> Gets or sets the list of unresolved dependencies. </param>
+        /// <param name="nextLink"> Gets or sets the value of  next link. </param>
+        /// <param name="summaryCollection"> Gets or sets the list of summary items and the field on which summary is done. </param>
+        /// <param name="totalCount"> Gets the total count. </param>
         internal MoverUnresolvedDependencyList(IReadOnlyList<MoverUnresolvedDependency> value, string nextLink, MoverSummaryList summaryCollection, long? totalCount)
         {
             Value = value;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.Migrate.Models
             TotalCount = totalCount;
         }
 
-        /// <summary>
-        /// Gets or sets the list of unresolved dependencies.
-        /// Serialized Name: UnresolvedDependencyCollection.value
-        /// </summary>
+        /// <summary> Gets or sets the list of unresolved dependencies. </summary>
         public IReadOnlyList<MoverUnresolvedDependency> Value { get; }
-        /// <summary>
-        /// Gets or sets the value of  next link.
-        /// Serialized Name: UnresolvedDependencyCollection.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the value of  next link. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Gets or sets the list of summary items and the field on which summary is done.
-        /// Serialized Name: UnresolvedDependencyCollection.summaryCollection
-        /// </summary>
+        /// <summary> Gets or sets the list of summary items and the field on which summary is done. </summary>
         public MoverSummaryList SummaryCollection { get; }
-        /// <summary>
-        /// Gets the total count.
-        /// Serialized Name: UnresolvedDependencyCollection.totalCount
-        /// </summary>
+        /// <summary> Gets the total count. </summary>
         public long? TotalCount { get; }
     }
 }

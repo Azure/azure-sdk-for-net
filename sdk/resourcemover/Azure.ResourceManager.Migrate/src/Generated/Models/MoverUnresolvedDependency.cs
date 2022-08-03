@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Unresolved dependency.
-    /// Serialized Name: UnresolvedDependency
-    /// </summary>
+    /// <summary> Unresolved dependency. </summary>
     public partial class MoverUnresolvedDependency
     {
         /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
@@ -19,29 +18,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
-        /// <param name="count">
-        /// Gets or sets the count.
-        /// Serialized Name: UnresolvedDependency.count
-        /// </param>
-        /// <param name="id">
-        /// Gets or sets the arm id of the dependency.
-        /// Serialized Name: UnresolvedDependency.id
-        /// </param>
-        internal MoverUnresolvedDependency(int? count, string id)
+        /// <param name="count"> Gets or sets the count. </param>
+        /// <param name="id"> Gets or sets the arm id of the dependency. </param>
+        internal MoverUnresolvedDependency(int? count, ResourceIdentifier id)
         {
             Count = count;
             Id = id;
         }
 
-        /// <summary>
-        /// Gets or sets the count.
-        /// Serialized Name: UnresolvedDependency.count
-        /// </summary>
+        /// <summary> Gets or sets the count. </summary>
         public int? Count { get; }
-        /// <summary>
-        /// Gets or sets the arm id of the dependency.
-        /// Serialized Name: UnresolvedDependency.id
-        /// </summary>
-        public string Id { get; }
+        /// <summary> Gets or sets the arm id of the dependency. </summary>
+        public ResourceIdentifier Id { get; }
     }
 }

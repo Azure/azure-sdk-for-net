@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the provisioning states.
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Defines the provisioning states. </summary>
     public readonly partial struct MoverProvisioningState : IEquatable<MoverProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string CreatingValue = "Creating";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static MoverProvisioningState Succeeded { get; } = new MoverProvisioningState(SucceededValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: ProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static MoverProvisioningState Updating { get; } = new MoverProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static MoverProvisioningState Creating { get; } = new MoverProvisioningState(CreatingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static MoverProvisioningState Failed { get; } = new MoverProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MoverProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MoverProvisioningState left, MoverProvisioningState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Gets or sets the target availability zone.
-    /// Serialized Name: TargetAvailabilityZone
-    /// </summary>
+    /// <summary> Gets or sets the target availability zone. </summary>
     public readonly partial struct MoverTargetAvailabilityZone : IEquatable<MoverTargetAvailabilityZone>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string ThreeValue = "3";
         private const string NAValue = "NA";
 
-        /// <summary>
-        /// 1
-        /// Serialized Name: TargetAvailabilityZone.1
-        /// </summary>
+        /// <summary> 1. </summary>
         public static MoverTargetAvailabilityZone One { get; } = new MoverTargetAvailabilityZone(OneValue);
-        /// <summary>
-        /// 2
-        /// Serialized Name: TargetAvailabilityZone.2
-        /// </summary>
+        /// <summary> 2. </summary>
         public static MoverTargetAvailabilityZone Two { get; } = new MoverTargetAvailabilityZone(TwoValue);
-        /// <summary>
-        /// 3
-        /// Serialized Name: TargetAvailabilityZone.3
-        /// </summary>
+        /// <summary> 3. </summary>
         public static MoverTargetAvailabilityZone Three { get; } = new MoverTargetAvailabilityZone(ThreeValue);
-        /// <summary>
-        /// NA
-        /// Serialized Name: TargetAvailabilityZone.NA
-        /// </summary>
+        /// <summary> NA. </summary>
         public static MoverTargetAvailabilityZone NA { get; } = new MoverTargetAvailabilityZone(NAValue);
         /// <summary> Determines if two <see cref="MoverTargetAvailabilityZone"/> values are the same. </summary>
         public static bool operator ==(MoverTargetAvailabilityZone left, MoverTargetAvailabilityZone right) => left.Equals(right);

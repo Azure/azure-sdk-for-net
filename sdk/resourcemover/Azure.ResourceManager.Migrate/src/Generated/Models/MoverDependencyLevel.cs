@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// The MoverDependencyLevel.
-    /// Serialized Name: DependencyLevel
-    /// </summary>
+    /// <summary> The MoverDependencyLevel. </summary>
     public readonly partial struct MoverDependencyLevel : IEquatable<MoverDependencyLevel>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string DirectValue = "Direct";
         private const string DescendantValue = "Descendant";
 
-        /// <summary>
-        /// Direct
-        /// Serialized Name: DependencyLevel.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static MoverDependencyLevel Direct { get; } = new MoverDependencyLevel(DirectValue);
-        /// <summary>
-        /// Descendant
-        /// Serialized Name: DependencyLevel.Descendant
-        /// </summary>
+        /// <summary> Descendant. </summary>
         public static MoverDependencyLevel Descendant { get; } = new MoverDependencyLevel(DescendantValue);
         /// <summary> Determines if two <see cref="MoverDependencyLevel"/> values are the same. </summary>
         public static bool operator ==(MoverDependencyLevel left, MoverDependencyLevel right) => left.Equals(right);

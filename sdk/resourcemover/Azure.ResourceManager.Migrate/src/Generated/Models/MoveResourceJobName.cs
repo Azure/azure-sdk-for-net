@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the job name.
-    /// Serialized Name: JobName
-    /// </summary>
+    /// <summary> Defines the job name. </summary>
     public readonly partial struct MoveResourceJobName : IEquatable<MoveResourceJobName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Migrate.Models
 
         private const string InitialSyncValue = "InitialSync";
 
-        /// <summary>
-        /// InitialSync
-        /// Serialized Name: JobName.InitialSync
-        /// </summary>
+        /// <summary> InitialSync. </summary>
         public static MoveResourceJobName InitialSync { get; } = new MoveResourceJobName(InitialSyncValue);
         /// <summary> Determines if two <see cref="MoveResourceJobName"/> values are the same. </summary>
         public static bool operator ==(MoveResourceJobName left, MoveResourceJobName right) => left.Equals(right);

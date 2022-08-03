@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the dependency override of the move resource.
-    /// Serialized Name: MoveResourceDependencyOverride
-    /// </summary>
+    /// <summary> Defines the dependency override of the move resource. </summary>
     public partial class MoveResourceDependencyOverride
     {
         /// <summary> Initializes a new instance of MoveResourceDependencyOverride. </summary>
@@ -21,14 +18,10 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourceDependencyOverride. </summary>
-        /// <param name="id">
-        /// Gets or sets the ARM ID of the dependent resource.
-        /// Serialized Name: MoveResourceDependencyOverride.id
-        /// </param>
+        /// <param name="id"> Gets or sets the ARM ID of the dependent resource. </param>
         /// <param name="targetId">
         /// Gets or sets the resource ARM id of either the MoveResource or the resource ARM ID of
         /// the dependent resource.
-        /// Serialized Name: MoveResourceDependencyOverride.targetId
         /// </param>
         internal MoveResourceDependencyOverride(ResourceIdentifier id, ResourceIdentifier targetId)
         {
@@ -36,15 +29,11 @@ namespace Azure.ResourceManager.Migrate.Models
             TargetId = targetId;
         }
 
-        /// <summary>
-        /// Gets or sets the ARM ID of the dependent resource.
-        /// Serialized Name: MoveResourceDependencyOverride.id
-        /// </summary>
+        /// <summary> Gets or sets the ARM ID of the dependent resource. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary>
         /// Gets or sets the resource ARM id of either the MoveResource or the resource ARM ID of
         /// the dependent resource.
-        /// Serialized Name: MoveResourceDependencyOverride.targetId
         /// </summary>
         public ResourceIdentifier TargetId { get; set; }
     }

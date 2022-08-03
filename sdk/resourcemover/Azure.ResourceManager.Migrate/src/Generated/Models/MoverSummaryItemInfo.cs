@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Summary item.
-    /// Serialized Name: Summary
-    /// </summary>
+    /// <summary> Summary item. </summary>
     internal partial class MoverSummaryItemInfo
     {
         /// <summary> Initializes a new instance of MoverSummaryItemInfo. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverSummaryItemInfo. </summary>
-        /// <param name="count">
-        /// Gets the count.
-        /// Serialized Name: Summary.count
-        /// </param>
-        /// <param name="item">
-        /// Gets the item.
-        /// Serialized Name: Summary.item
-        /// </param>
+        /// <param name="count"> Gets the count. </param>
+        /// <param name="item"> Gets the item. </param>
         internal MoverSummaryItemInfo(int? count, string item)
         {
             Count = count;
             Item = item;
         }
 
-        /// <summary>
-        /// Gets the count.
-        /// Serialized Name: Summary.count
-        /// </summary>
+        /// <summary> Gets the count. </summary>
         public int? Count { get; }
-        /// <summary>
-        /// Gets the item.
-        /// Serialized Name: Summary.item
-        /// </summary>
+        /// <summary> Gets the item. </summary>
         public string Item { get; }
     }
 }

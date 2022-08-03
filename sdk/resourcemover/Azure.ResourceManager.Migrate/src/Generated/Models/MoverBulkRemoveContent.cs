@@ -10,32 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the request body for bulk remove of move resources operation.
-    /// Serialized Name: BulkRemoveRequest
-    /// </summary>
+    /// <summary> Defines the request body for bulk remove of move resources operation. </summary>
     public partial class MoverBulkRemoveContent
     {
         /// <summary> Initializes a new instance of MoverBulkRemoveContent. </summary>
         public MoverBulkRemoveContent()
         {
-            MoveResources = new ChangeTrackingList<string>();
+            MoveResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the operation needs to only run pre-requisite.
-        /// Serialized Name: BulkRemoveRequest.validateOnly
-        /// </summary>
-        public bool? ValidateOnly { get; set; }
-        /// <summary>
-        /// Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property.
-        /// Serialized Name: BulkRemoveRequest.moveResources
-        /// </summary>
-        public IList<string> MoveResources { get; }
-        /// <summary>
-        /// Defines the move resource input type.
-        /// Serialized Name: BulkRemoveRequest.moveResourceInputType
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>
+        public bool? IsValidateOnly { get; set; }
+        /// <summary> Gets or sets the list of resource Id&apos;s, by default it accepts move resource id&apos;s unless the input type is switched via moveResourceInputType property. </summary>
+        public IList<ResourceIdentifier> MoveResources { get; }
+        /// <summary> Defines the move resource input type. </summary>
         public MoveResourceInputType? MoveResourceInputType { get; set; }
     }
 }

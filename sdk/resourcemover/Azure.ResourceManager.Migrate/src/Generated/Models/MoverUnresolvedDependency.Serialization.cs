@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static MoverUnresolvedDependency DeserializeMoverUnresolvedDependency(JsonElement element)
         {
             Optional<int> count = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -30,7 +30,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

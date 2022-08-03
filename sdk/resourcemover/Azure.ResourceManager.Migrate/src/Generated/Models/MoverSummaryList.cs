@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Summary Collection.
-    /// Serialized Name: SummaryCollection
-    /// </summary>
+    /// <summary> Summary Collection. </summary>
     internal partial class MoverSummaryList
     {
         /// <summary> Initializes a new instance of MoverSummaryList. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverSummaryList. </summary>
-        /// <param name="fieldName">
-        /// Gets or sets the field name on which summary is done.
-        /// Serialized Name: SummaryCollection.fieldName
-        /// </param>
-        /// <param name="summary">
-        /// Gets or sets the list of summary items.
-        /// Serialized Name: SummaryCollection.summary
-        /// </param>
+        /// <param name="fieldName"> Gets or sets the field name on which summary is done. </param>
+        /// <param name="summary"> Gets or sets the list of summary items. </param>
         internal MoverSummaryList(string fieldName, IReadOnlyList<MoverSummaryItemInfo> summary)
         {
             FieldName = fieldName;
             Summary = summary;
         }
 
-        /// <summary>
-        /// Gets or sets the field name on which summary is done.
-        /// Serialized Name: SummaryCollection.fieldName
-        /// </summary>
+        /// <summary> Gets or sets the field name on which summary is done. </summary>
         public string FieldName { get; }
-        /// <summary>
-        /// Gets or sets the list of summary items.
-        /// Serialized Name: SummaryCollection.summary
-        /// </summary>
+        /// <summary> Gets or sets the list of summary items. </summary>
         public IReadOnlyList<MoverSummaryItemInfo> Summary { get; }
     }
 }

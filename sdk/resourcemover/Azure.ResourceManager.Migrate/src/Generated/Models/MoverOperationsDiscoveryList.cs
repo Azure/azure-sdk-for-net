@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Collection of ClientDiscovery details.
-    /// Serialized Name: OperationsDiscoveryCollection
-    /// </summary>
+    /// <summary> Collection of ClientDiscovery details. </summary>
     internal partial class MoverOperationsDiscoveryList
     {
         /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
-        /// <param name="value">
-        /// Gets or sets the ClientDiscovery details.
-        /// Serialized Name: OperationsDiscoveryCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets or sets the value of next link.
-        /// Serialized Name: OperationsDiscoveryCollection.nextLink
-        /// </param>
+        /// <param name="value"> Gets or sets the ClientDiscovery details. </param>
+        /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal MoverOperationsDiscoveryList(IReadOnlyList<MoverOperationsDiscovery> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets or sets the ClientDiscovery details.
-        /// Serialized Name: OperationsDiscoveryCollection.value
-        /// </summary>
+        /// <summary> Gets or sets the ClientDiscovery details. </summary>
         public IReadOnlyList<MoverOperationsDiscovery> Value { get; }
-        /// <summary>
-        /// Gets or sets the value of next link.
-        /// Serialized Name: OperationsDiscoveryCollection.nextLink
-        /// </summary>
+        /// <summary> Gets or sets the value of next link. </summary>
         public string NextLink { get; }
     }
 }

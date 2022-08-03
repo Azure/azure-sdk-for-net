@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines load balancer frontend IP configuration properties.
-    /// Serialized Name: LBFrontendIPConfigurationResourceSettings
-    /// </summary>
+    /// <summary> Defines load balancer frontend IP configuration properties. </summary>
     public partial class LoadBalancerFrontendIPConfigurationResourceSettings
     {
         /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationResourceSettings. </summary>
@@ -19,28 +18,15 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationResourceSettings. </summary>
-        /// <param name="name">
-        /// Gets or sets the frontend IP configuration name.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.name
-        /// </param>
+        /// <param name="name"> Gets or sets the frontend IP configuration name. </param>
         /// <param name="privateIPAddress">
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
         /// private IP address shall be allocated from the subnet specified in subnetRef.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.privateIpAddress
         /// </param>
-        /// <param name="privateIPAllocationMethod">
-        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.privateIpAllocationMethod
-        /// </param>
-        /// <param name="subnet">
-        /// Defines reference to subnet.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.subnet
-        /// </param>
-        /// <param name="zones">
-        /// Gets or sets the csv list of zones.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.zones
-        /// </param>
-        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, string privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones)
+        /// <param name="privateIPAllocationMethod"> Gets or sets PrivateIP allocation method (Static/Dynamic). </param>
+        /// <param name="subnet"> Defines reference to subnet. </param>
+        /// <param name="zones"> Gets or sets the csv list of zones. </param>
+        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones)
         {
             Name = name;
             PrivateIPAddress = privateIPAddress;
@@ -49,31 +35,18 @@ namespace Azure.ResourceManager.Migrate.Models
             Zones = zones;
         }
 
-        /// <summary>
-        /// Gets or sets the frontend IP configuration name.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.name
-        /// </summary>
+        /// <summary> Gets or sets the frontend IP configuration name. </summary>
         public string Name { get; set; }
         /// <summary>
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
         /// private IP address shall be allocated from the subnet specified in subnetRef.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.privateIpAddress
         /// </summary>
-        public string PrivateIPAddress { get; set; }
-        /// <summary>
-        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.privateIpAllocationMethod
-        /// </summary>
+        public IPAddress PrivateIPAddress { get; set; }
+        /// <summary> Gets or sets PrivateIP allocation method (Static/Dynamic). </summary>
         public string PrivateIPAllocationMethod { get; set; }
-        /// <summary>
-        /// Defines reference to subnet.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.subnet
-        /// </summary>
+        /// <summary> Defines reference to subnet. </summary>
         public SubnetReferenceInfo Subnet { get; set; }
-        /// <summary>
-        /// Gets or sets the csv list of zones.
-        /// Serialized Name: LBFrontendIPConfigurationResourceSettings.zones
-        /// </summary>
+        /// <summary> Gets or sets the csv list of zones. </summary>
         public string Zones { get; set; }
     }
 }

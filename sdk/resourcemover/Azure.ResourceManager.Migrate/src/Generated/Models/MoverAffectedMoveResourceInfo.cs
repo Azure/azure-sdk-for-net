@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// The RP custom operation error info.
-    /// Serialized Name: AffectedMoveResource
-    /// </summary>
+    /// <summary> The RP custom operation error info. </summary>
     public partial class MoverAffectedMoveResourceInfo
     {
         /// <summary> Initializes a new instance of MoverAffectedMoveResourceInfo. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverAffectedMoveResourceInfo. </summary>
-        /// <param name="id">
-        /// The affected move resource id.
-        /// Serialized Name: AffectedMoveResource.id
-        /// </param>
-        /// <param name="sourceId">
-        /// The affected move resource source id.
-        /// Serialized Name: AffectedMoveResource.sourceId
-        /// </param>
-        /// <param name="moveResources">
-        /// The affected move resources.
-        /// Serialized Name: AffectedMoveResource.moveResources
-        /// </param>
+        /// <param name="id"> The affected move resource id. </param>
+        /// <param name="sourceId"> The affected move resource source id. </param>
+        /// <param name="moveResources"> The affected move resources. </param>
         internal MoverAffectedMoveResourceInfo(ResourceIdentifier id, ResourceIdentifier sourceId, IReadOnlyList<MoverAffectedMoveResourceInfo> moveResources)
         {
             Id = id;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Migrate.Models
             MoveResources = moveResources;
         }
 
-        /// <summary>
-        /// The affected move resource id.
-        /// Serialized Name: AffectedMoveResource.id
-        /// </summary>
+        /// <summary> The affected move resource id. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The affected move resource source id.
-        /// Serialized Name: AffectedMoveResource.sourceId
-        /// </summary>
+        /// <summary> The affected move resource source id. </summary>
         public ResourceIdentifier SourceId { get; }
-        /// <summary>
-        /// The affected move resources.
-        /// Serialized Name: AffectedMoveResource.moveResources
-        /// </summary>
+        /// <summary> The affected move resources. </summary>
         public IReadOnlyList<MoverAffectedMoveResourceInfo> MoveResources { get; }
     }
 }

@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Gets or sets the availability set resource settings.
-    /// Serialized Name: AvailabilitySetResourceSettings
-    /// </summary>
+    /// <summary> Gets or sets the availability set resource settings. </summary>
     public partial class MoverAvailabilitySetResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of MoverAvailabilitySetResourceSettings. </summary>
-        /// <param name="targetResourceName">
-        /// Gets or sets the target Resource name.
-        /// Serialized Name: ResourceSettings.targetResourceName
-        /// </param>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public MoverAvailabilitySetResourceSettings(string targetResourceName) : base(targetResourceName)
         {
@@ -35,26 +29,11 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverAvailabilitySetResourceSettings. </summary>
-        /// <param name="resourceType">
-        /// The resource type. For example, the value can be Microsoft.Compute/virtualMachines.
-        /// Serialized Name: ResourceSettings.resourceType
-        /// </param>
-        /// <param name="targetResourceName">
-        /// Gets or sets the target Resource name.
-        /// Serialized Name: ResourceSettings.targetResourceName
-        /// </param>
-        /// <param name="tags">
-        /// Gets or sets the Resource tags.
-        /// Serialized Name: AvailabilitySetResourceSettings.tags
-        /// </param>
-        /// <param name="faultDomain">
-        /// Gets or sets the target fault domain.
-        /// Serialized Name: AvailabilitySetResourceSettings.faultDomain
-        /// </param>
-        /// <param name="updateDomain">
-        /// Gets or sets the target update domain.
-        /// Serialized Name: AvailabilitySetResourceSettings.updateDomain
-        /// </param>
+        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
+        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="faultDomain"> Gets or sets the target fault domain. </param>
+        /// <param name="updateDomain"> Gets or sets the target update domain. </param>
         internal MoverAvailabilitySetResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, int? faultDomain, int? updateDomain) : base(resourceType, targetResourceName)
         {
             Tags = tags;
@@ -63,20 +42,11 @@ namespace Azure.ResourceManager.Migrate.Models
             ResourceType = resourceType ?? "Microsoft.Compute/availabilitySets";
         }
 
-        /// <summary>
-        /// Gets or sets the Resource tags.
-        /// Serialized Name: AvailabilitySetResourceSettings.tags
-        /// </summary>
+        /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Gets or sets the target fault domain.
-        /// Serialized Name: AvailabilitySetResourceSettings.faultDomain
-        /// </summary>
+        /// <summary> Gets or sets the target fault domain. </summary>
         public int? FaultDomain { get; set; }
-        /// <summary>
-        /// Gets or sets the target update domain.
-        /// Serialized Name: AvailabilitySetResourceSettings.updateDomain
-        /// </summary>
+        /// <summary> Gets or sets the target update domain. </summary>
         public int? UpdateDomain { get; set; }
     }
 }

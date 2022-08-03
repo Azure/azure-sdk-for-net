@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             Optional<MoverProvisioningState> provisioningState = default;
             ResourceIdentifier sourceId = default;
-            Optional<string> targetId = default;
-            Optional<string> existingTargetId = default;
+            Optional<ResourceIdentifier> targetId = default;
+            Optional<ResourceIdentifier> existingTargetId = default;
             Optional<MoverResourceSettings> resourceSettings = default;
             Optional<MoverResourceSettings> sourceResourceSettings = default;
             Optional<MoveResourcePropertiesMoveStatus> moveStatus = default;
@@ -73,12 +73,22 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("targetId"))
                 {
-                    targetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("existingTargetId"))
                 {
-                    existingTargetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    existingTargetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceSettings"))

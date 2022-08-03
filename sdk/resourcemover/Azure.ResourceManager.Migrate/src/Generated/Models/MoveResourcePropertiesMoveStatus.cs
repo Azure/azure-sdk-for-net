@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the move resource status.
-    /// Serialized Name: MoveResourcePropertiesMoveStatus
-    /// </summary>
+    /// <summary> Defines the move resource status. </summary>
     public partial class MoveResourcePropertiesMoveStatus : MoveResourceStatus
     {
         /// <summary> Initializes a new instance of MoveResourcePropertiesMoveStatus. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourcePropertiesMoveStatus. </summary>
-        /// <param name="moveState">
-        /// Defines the MoveResource states.
-        /// Serialized Name: MoveResourceStatus.moveState
-        /// </param>
-        /// <param name="jobStatus">
-        /// Defines the job status.
-        /// Serialized Name: MoveResourceStatus.jobStatus
-        /// </param>
-        /// <param name="errors">
-        /// An error response from the azure resource mover service.
-        /// Serialized Name: MoveResourceStatus.errors
-        /// </param>
+        /// <param name="moveState"> Defines the MoveResource states. </param>
+        /// <param name="jobStatus"> Defines the job status. </param>
+        /// <param name="errors"> An error response from the azure resource mover service. </param>
         internal MoveResourcePropertiesMoveStatus(MoveResourceState? moveState, MoveResourceJobStatus jobStatus, MoveResourceError errors) : base(moveState, jobStatus, errors)
         {
         }

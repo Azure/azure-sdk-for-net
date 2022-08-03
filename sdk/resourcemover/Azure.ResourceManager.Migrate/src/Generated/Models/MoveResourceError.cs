@@ -9,10 +9,7 @@ using Azure;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// An error response from the azure resource mover service.
-    /// Serialized Name: MoveResourceError
-    /// </summary>
+    /// <summary> An error response from the azure resource mover service. </summary>
     internal partial class MoveResourceError
     {
         /// <summary> Initializes a new instance of MoveResourceError. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourceError. </summary>
-        /// <param name="properties">
-        /// The move resource error body.
-        /// Serialized Name: MoveResourceError.properties
-        /// </param>
+        /// <param name="properties"> The move resource error body. </param>
         internal MoveResourceError(ResponseError properties)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// The move resource error body.
-        /// Serialized Name: MoveResourceError.properties
-        /// </summary>
+        /// <summary> The move resource error body. </summary>
         public ResponseError Properties { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the job status.
-    /// Serialized Name: JobStatus
-    /// </summary>
+    /// <summary> Defines the job status. </summary>
     public partial class MoveResourceJobStatus
     {
         /// <summary> Initializes a new instance of MoveResourceJobStatus. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourceJobStatus. </summary>
-        /// <param name="jobName">
-        /// Defines the job name.
-        /// Serialized Name: JobStatus.jobName
-        /// </param>
-        /// <param name="jobProgress">
-        /// Gets or sets the monitoring job percentage.
-        /// Serialized Name: JobStatus.jobProgress
-        /// </param>
+        /// <param name="jobName"> Defines the job name. </param>
+        /// <param name="jobProgress"> Gets or sets the monitoring job percentage. </param>
         internal MoveResourceJobStatus(MoveResourceJobName? jobName, string jobProgress)
         {
             JobName = jobName;
             JobProgress = jobProgress;
         }
 
-        /// <summary>
-        /// Defines the job name.
-        /// Serialized Name: JobStatus.jobName
-        /// </summary>
+        /// <summary> Defines the job name. </summary>
         public MoveResourceJobName? JobName { get; }
-        /// <summary>
-        /// Gets or sets the monitoring job percentage.
-        /// Serialized Name: JobStatus.jobProgress
-        /// </summary>
+        /// <summary> Gets or sets the monitoring job percentage. </summary>
         public string JobProgress { get; }
     }
 }

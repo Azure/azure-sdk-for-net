@@ -6,22 +6,17 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines reference to NSG.
-    /// Serialized Name: NsgReference
-    /// </summary>
+    /// <summary> Defines reference to NSG. </summary>
     internal partial class NetworkSecurityGroupResourceReferenceInfo : MoverAzureResourceReferenceInfo
     {
         /// <summary> Initializes a new instance of NetworkSecurityGroupResourceReferenceInfo. </summary>
-        /// <param name="sourceArmResourceId">
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </param>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        public NetworkSecurityGroupResourceReferenceInfo(string sourceArmResourceId) : base(sourceArmResourceId)
+        public NetworkSecurityGroupResourceReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
             if (sourceArmResourceId == null)
             {

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static SubnetReferenceInfo DeserializeSubnetReferenceInfo(JsonElement element)
         {
             Optional<string> name = default;
-            string sourceArmResourceId = default;
+            ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("sourceArmResourceId"))
                 {
-                    sourceArmResourceId = property.Value.GetString();
+                    sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

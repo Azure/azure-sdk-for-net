@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// The operation error info.
-    /// Serialized Name: OperationErrorAdditionalInfo
-    /// </summary>
+    /// <summary> The operation error info. </summary>
     public partial class MoverOperationErrorAdditionalInfo
     {
         /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
@@ -21,34 +18,19 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
-        /// <param name="operationErrorAdditionalInfoType">
-        /// The error type.
-        /// Serialized Name: OperationErrorAdditionalInfo.type
-        /// </param>
-        /// <param name="info">
-        /// The operation error info.
-        /// Serialized Name: OperationErrorAdditionalInfo.info
-        /// </param>
+        /// <param name="operationErrorAdditionalInfoType"> The error type. </param>
+        /// <param name="info"> The operation error info. </param>
         internal MoverOperationErrorAdditionalInfo(string operationErrorAdditionalInfoType, MoveErrorInfo info)
         {
             OperationErrorAdditionalInfoType = operationErrorAdditionalInfoType;
             Info = info;
         }
 
-        /// <summary>
-        /// The error type.
-        /// Serialized Name: OperationErrorAdditionalInfo.type
-        /// </summary>
+        /// <summary> The error type. </summary>
         public string OperationErrorAdditionalInfoType { get; }
-        /// <summary>
-        /// The operation error info.
-        /// Serialized Name: OperationErrorAdditionalInfo.info
-        /// </summary>
+        /// <summary> The operation error info. </summary>
         internal MoveErrorInfo Info { get; }
-        /// <summary>
-        /// The affected move resources.
-        /// Serialized Name: MoveErrorInfo.moveResources
-        /// </summary>
+        /// <summary> The affected move resources. </summary>
         public IReadOnlyList<MoverAffectedMoveResourceInfo> InfoMoveResources
         {
             get => Info?.MoveResources;

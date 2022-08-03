@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Migrate.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidateOnly))
+            if (Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("validateOnly");
-                writer.WriteBooleanValue(ValidateOnly.Value);
+                writer.WriteBooleanValue(IsValidateOnly.Value);
             }
             writer.WritePropertyName("moveResources");
             writer.WriteStartArray();

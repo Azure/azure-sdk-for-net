@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the MoveResource states.
-    /// Serialized Name: MoveState
-    /// </summary>
+    /// <summary> Defines the MoveResource states. </summary>
     public readonly partial struct MoveResourceState : IEquatable<MoveResourceState>
     {
         private readonly string _value;
@@ -41,80 +38,35 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string DeleteSourcePendingValue = "DeleteSourcePending";
         private const string ResourceMoveCompletedValue = "ResourceMoveCompleted";
 
-        /// <summary>
-        /// AssignmentPending
-        /// Serialized Name: MoveState.AssignmentPending
-        /// </summary>
+        /// <summary> AssignmentPending. </summary>
         public static MoveResourceState AssignmentPending { get; } = new MoveResourceState(AssignmentPendingValue);
-        /// <summary>
-        /// PreparePending
-        /// Serialized Name: MoveState.PreparePending
-        /// </summary>
+        /// <summary> PreparePending. </summary>
         public static MoveResourceState PreparePending { get; } = new MoveResourceState(PreparePendingValue);
-        /// <summary>
-        /// PrepareInProgress
-        /// Serialized Name: MoveState.PrepareInProgress
-        /// </summary>
+        /// <summary> PrepareInProgress. </summary>
         public static MoveResourceState PrepareInProgress { get; } = new MoveResourceState(PrepareInProgressValue);
-        /// <summary>
-        /// PrepareFailed
-        /// Serialized Name: MoveState.PrepareFailed
-        /// </summary>
+        /// <summary> PrepareFailed. </summary>
         public static MoveResourceState PrepareFailed { get; } = new MoveResourceState(PrepareFailedValue);
-        /// <summary>
-        /// MovePending
-        /// Serialized Name: MoveState.MovePending
-        /// </summary>
+        /// <summary> MovePending. </summary>
         public static MoveResourceState MovePending { get; } = new MoveResourceState(MovePendingValue);
-        /// <summary>
-        /// MoveInProgress
-        /// Serialized Name: MoveState.MoveInProgress
-        /// </summary>
+        /// <summary> MoveInProgress. </summary>
         public static MoveResourceState MoveInProgress { get; } = new MoveResourceState(MoveInProgressValue);
-        /// <summary>
-        /// MoveFailed
-        /// Serialized Name: MoveState.MoveFailed
-        /// </summary>
+        /// <summary> MoveFailed. </summary>
         public static MoveResourceState MoveFailed { get; } = new MoveResourceState(MoveFailedValue);
-        /// <summary>
-        /// DiscardInProgress
-        /// Serialized Name: MoveState.DiscardInProgress
-        /// </summary>
+        /// <summary> DiscardInProgress. </summary>
         public static MoveResourceState DiscardInProgress { get; } = new MoveResourceState(DiscardInProgressValue);
-        /// <summary>
-        /// DiscardFailed
-        /// Serialized Name: MoveState.DiscardFailed
-        /// </summary>
+        /// <summary> DiscardFailed. </summary>
         public static MoveResourceState DiscardFailed { get; } = new MoveResourceState(DiscardFailedValue);
-        /// <summary>
-        /// CommitPending
-        /// Serialized Name: MoveState.CommitPending
-        /// </summary>
+        /// <summary> CommitPending. </summary>
         public static MoveResourceState CommitPending { get; } = new MoveResourceState(CommitPendingValue);
-        /// <summary>
-        /// CommitInProgress
-        /// Serialized Name: MoveState.CommitInProgress
-        /// </summary>
+        /// <summary> CommitInProgress. </summary>
         public static MoveResourceState CommitInProgress { get; } = new MoveResourceState(CommitInProgressValue);
-        /// <summary>
-        /// CommitFailed
-        /// Serialized Name: MoveState.CommitFailed
-        /// </summary>
+        /// <summary> CommitFailed. </summary>
         public static MoveResourceState CommitFailed { get; } = new MoveResourceState(CommitFailedValue);
-        /// <summary>
-        /// Committed
-        /// Serialized Name: MoveState.Committed
-        /// </summary>
+        /// <summary> Committed. </summary>
         public static MoveResourceState Committed { get; } = new MoveResourceState(CommittedValue);
-        /// <summary>
-        /// DeleteSourcePending
-        /// Serialized Name: MoveState.DeleteSourcePending
-        /// </summary>
+        /// <summary> DeleteSourcePending. </summary>
         public static MoveResourceState DeleteSourcePending { get; } = new MoveResourceState(DeleteSourcePendingValue);
-        /// <summary>
-        /// ResourceMoveCompleted
-        /// Serialized Name: MoveState.ResourceMoveCompleted
-        /// </summary>
+        /// <summary> ResourceMoveCompleted. </summary>
         public static MoveResourceState ResourceMoveCompleted { get; } = new MoveResourceState(ResourceMoveCompletedValue);
         /// <summary> Determines if two <see cref="MoveResourceState"/> values are the same. </summary>
         public static bool operator ==(MoveResourceState left, MoveResourceState right) => left.Equals(right);

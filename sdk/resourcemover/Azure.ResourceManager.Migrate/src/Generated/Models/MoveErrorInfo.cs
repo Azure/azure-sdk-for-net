@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// The move custom error info.
-    /// Serialized Name: MoveErrorInfo
-    /// </summary>
+    /// <summary> The move custom error info. </summary>
     internal partial class MoveErrorInfo
     {
         /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveErrorInfo. </summary>
-        /// <param name="moveResources">
-        /// The affected move resources.
-        /// Serialized Name: MoveErrorInfo.moveResources
-        /// </param>
+        /// <param name="moveResources"> The affected move resources. </param>
         internal MoveErrorInfo(IReadOnlyList<MoverAffectedMoveResourceInfo> moveResources)
         {
             MoveResources = moveResources;
         }
 
-        /// <summary>
-        /// The affected move resources.
-        /// Serialized Name: MoveErrorInfo.moveResources
-        /// </summary>
+        /// <summary> The affected move resources. </summary>
         public IReadOnlyList<MoverAffectedMoveResourceInfo> MoveResources { get; }
     }
 }

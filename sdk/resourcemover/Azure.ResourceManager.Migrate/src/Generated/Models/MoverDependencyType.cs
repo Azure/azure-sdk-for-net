@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the dependency type.
-    /// Serialized Name: DependencyType
-    /// </summary>
+    /// <summary> Defines the dependency type. </summary>
     public readonly partial struct MoverDependencyType : IEquatable<MoverDependencyType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string RequiredForPrepareValue = "RequiredForPrepare";
         private const string RequiredForMoveValue = "RequiredForMove";
 
-        /// <summary>
-        /// RequiredForPrepare
-        /// Serialized Name: DependencyType.RequiredForPrepare
-        /// </summary>
+        /// <summary> RequiredForPrepare. </summary>
         public static MoverDependencyType RequiredForPrepare { get; } = new MoverDependencyType(RequiredForPrepareValue);
-        /// <summary>
-        /// RequiredForMove
-        /// Serialized Name: DependencyType.RequiredForMove
-        /// </summary>
+        /// <summary> RequiredForMove. </summary>
         public static MoverDependencyType RequiredForMove { get; } = new MoverDependencyType(RequiredForMoveValue);
         /// <summary> Determines if two <see cref="MoverDependencyType"/> values are the same. </summary>
         public static bool operator ==(MoverDependencyType left, MoverDependencyType right) => left.Equals(right);

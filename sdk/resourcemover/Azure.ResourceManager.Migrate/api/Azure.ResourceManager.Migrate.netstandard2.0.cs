@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class LoadBalancerBackendAddressPoolReferenceInfo : Azure.ResourceManager.Migrate.Models.ProxyResourceReferenceInfo
     {
-        public LoadBalancerBackendAddressPoolReferenceInfo(string sourceArmResourceId) : base (default(string)) { }
+        public LoadBalancerBackendAddressPoolReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
     }
     public partial class LoadBalancerBackendAddressPoolResourceSettings
     {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         public LoadBalancerFrontendIPConfigurationResourceSettings() { }
         public string Name { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.SubnetReferenceInfo Subnet { get { throw null; } set { } }
         public string Zones { get { throw null; } set { } }
     }
     public partial class LoadBalancerNatRuleReferenceInfo : Azure.ResourceManager.Migrate.Models.ProxyResourceReferenceInfo
     {
-        public LoadBalancerNatRuleReferenceInfo(string sourceArmResourceId) : base (default(string)) { }
+        public LoadBalancerNatRuleReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
     }
     public partial class LoadBalancerResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.Migrate.Models
     public partial class MoverAffectedMoveResourceInfo
     {
         internal MoverAffectedMoveResourceInfo() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoverAffectedMoveResourceInfo> MoveResources { get { throw null; } }
-        public string SourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
     }
     public partial class MoverAvailabilitySetResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
@@ -179,22 +179,22 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class MoverAzureResourceReferenceInfo
     {
-        public MoverAzureResourceReferenceInfo(string sourceArmResourceId) { }
-        public string SourceArmResourceId { get { throw null; } set { } }
+        public MoverAzureResourceReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) { }
+        public Azure.Core.ResourceIdentifier SourceArmResourceId { get { throw null; } set { } }
     }
     public partial class MoverBulkRemoveContent
     {
         public MoverBulkRemoveContent() { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
     }
     public partial class MoverCommitContent
     {
-        public MoverCommitContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
+        public MoverCommitContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoverDependencyLevel : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoverDependencyLevel>
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class MoverDiscardContent
     {
-        public MoverDiscardContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
+        public MoverDiscardContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
     }
     public partial class MoverDisplayInfo
     {
@@ -252,17 +252,17 @@ namespace Azure.ResourceManager.Migrate.Models
         internal MoveResourceDependency() { }
         public string AutomaticResolutionMoveResourceId { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoverDependencyType? DependencyType { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string IsOptional { get { throw null; } }
-        public string ManualResolutionTargetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsOptional { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManualResolutionTargetId { get { throw null; } }
         public string ResolutionStatus { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType? ResolutionType { get { throw null; } }
     }
     public partial class MoveResourceDependencyOverride
     {
         public MoveResourceDependencyOverride() { }
-        public string Id { get { throw null; } set { } }
-        public string TargetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoveResourceInputType : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoveResourceInputType>
@@ -307,18 +307,18 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class MoveResourceProperties
     {
-        public MoveResourceProperties(string sourceId) { }
+        public MoveResourceProperties(Azure.Core.ResourceIdentifier sourceId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoveResourceDependency> DependsOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.MoveResourceDependencyOverride> DependsOnOverrides { get { throw null; } }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
-        public string ExistingTargetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ExistingTargetId { get { throw null; } set { } }
         public bool? IsResolveRequired { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoveResourcePropertiesMoveStatus MoveStatus { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoverResourceSettings ResourceSettings { get { throw null; } set { } }
-        public string SourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoverResourceSettings SourceResourceSettings { get { throw null; } }
-        public string TargetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
     }
     public partial class MoveResourcePropertiesMoveStatus : Azure.ResourceManager.Migrate.Models.MoveResourceStatus
     {
@@ -398,12 +398,12 @@ namespace Azure.ResourceManager.Migrate.Models
     public partial class MoverOperationStatus
     {
         internal MoverOperationStatus() { }
-        public string EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoverOperationStatusError Error { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.BinaryData Properties { get { throw null; } }
-        public string StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
     }
     public partial class MoverOperationStatusError
@@ -416,10 +416,10 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class MoverPrepareContent
     {
-        public MoverPrepareContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
+        public MoverPrepareContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoverProvisioningState : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoverProvisioningState>
@@ -443,10 +443,10 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class MoverResourceMoveContent
     {
-        public MoverResourceMoveContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
+        public MoverResourceMoveContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
     }
     public partial class MoverResourceSettings
     {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         internal MoverUnresolvedDependency() { }
         public int? Count { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
@@ -509,18 +509,18 @@ namespace Azure.ResourceManager.Migrate.Models
     public partial class NicIPConfigurationResourceSettings
     {
         public NicIPConfigurationResourceSettings() { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public bool? Primary { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
-        public string PublicIPSourceArmResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPSourceArmResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.SubnetReferenceInfo Subnet { get { throw null; } set { } }
     }
     public partial class ProxyResourceReferenceInfo : Azure.ResourceManager.Migrate.Models.MoverAzureResourceReferenceInfo
     {
-        public ProxyResourceReferenceInfo(string sourceArmResourceId) : base (default(string)) { }
+        public ProxyResourceReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
         public string Name { get { throw null; } set { } }
     }
     public partial class PublicIPAddressResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
@@ -578,23 +578,23 @@ namespace Azure.ResourceManager.Migrate.Models
     }
     public partial class SubnetReferenceInfo : Azure.ResourceManager.Migrate.Models.ProxyResourceReferenceInfo
     {
-        public SubnetReferenceInfo(string sourceArmResourceId) : base (default(string)) { }
+        public SubnetReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
     }
     public partial class SubnetResourceSettings
     {
         public SubnetResourceSettings() { }
         public string AddressPrefix { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string NetworkSecurityGroupSourceArmResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupSourceArmResourceId { get { throw null; } set { } }
     }
     public partial class VirtualMachineResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public VirtualMachineResourceSettings(string targetResourceName) : base (default(string)) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string TargetAvailabilitySetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetAvailabilitySetId { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone? TargetAvailabilityZone { get { throw null; } set { } }
         public string TargetVmSize { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> UserManagedIdentities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> UserManagedIdentities { get { throw null; } }
     }
     public partial class VirtualNetworkResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {

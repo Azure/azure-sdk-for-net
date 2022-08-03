@@ -9,10 +9,7 @@ using Azure;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the move resource status.
-    /// Serialized Name: MoveResourceStatus
-    /// </summary>
+    /// <summary> Defines the move resource status. </summary>
     public partial class MoveResourceStatus
     {
         /// <summary> Initializes a new instance of MoveResourceStatus. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourceStatus. </summary>
-        /// <param name="moveState">
-        /// Defines the MoveResource states.
-        /// Serialized Name: MoveResourceStatus.moveState
-        /// </param>
-        /// <param name="jobStatus">
-        /// Defines the job status.
-        /// Serialized Name: MoveResourceStatus.jobStatus
-        /// </param>
-        /// <param name="errors">
-        /// An error response from the azure resource mover service.
-        /// Serialized Name: MoveResourceStatus.errors
-        /// </param>
+        /// <param name="moveState"> Defines the MoveResource states. </param>
+        /// <param name="jobStatus"> Defines the job status. </param>
+        /// <param name="errors"> An error response from the azure resource mover service. </param>
         internal MoveResourceStatus(MoveResourceState? moveState, MoveResourceJobStatus jobStatus, MoveResourceError errors)
         {
             MoveState = moveState;
@@ -40,25 +28,13 @@ namespace Azure.ResourceManager.Migrate.Models
             Errors = errors;
         }
 
-        /// <summary>
-        /// Defines the MoveResource states.
-        /// Serialized Name: MoveResourceStatus.moveState
-        /// </summary>
+        /// <summary> Defines the MoveResource states. </summary>
         public MoveResourceState? MoveState { get; }
-        /// <summary>
-        /// Defines the job status.
-        /// Serialized Name: MoveResourceStatus.jobStatus
-        /// </summary>
+        /// <summary> Defines the job status. </summary>
         public MoveResourceJobStatus JobStatus { get; }
-        /// <summary>
-        /// An error response from the azure resource mover service.
-        /// Serialized Name: MoveResourceStatus.errors
-        /// </summary>
+        /// <summary> An error response from the azure resource mover service. </summary>
         internal MoveResourceError Errors { get; }
-        /// <summary>
-        /// The move resource error body.
-        /// Serialized Name: MoveResourceError.properties
-        /// </summary>
+        /// <summary> The move resource error body. </summary>
         public ResponseError ErrorsProperties
         {
             get => Errors?.Properties;

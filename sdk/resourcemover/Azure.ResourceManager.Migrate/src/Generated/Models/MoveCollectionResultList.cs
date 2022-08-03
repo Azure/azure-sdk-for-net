@@ -11,10 +11,7 @@ using Azure.ResourceManager.Migrate;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines the collection of move collections.
-    /// Serialized Name: MoveCollectionResultList
-    /// </summary>
+    /// <summary> Defines the collection of move collections. </summary>
     internal partial class MoveCollectionResultList
     {
         /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveCollectionResultList. </summary>
-        /// <param name="value">
-        /// Gets the list of move collections.
-        /// Serialized Name: MoveCollectionResultList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Gets the value of  next link.
-        /// Serialized Name: MoveCollectionResultList.nextLink
-        /// </param>
+        /// <param name="value"> Gets the list of move collections. </param>
+        /// <param name="nextLink"> Gets the value of  next link. </param>
         internal MoveCollectionResultList(IReadOnlyList<MoveCollectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Gets the list of move collections.
-        /// Serialized Name: MoveCollectionResultList.value
-        /// </summary>
+        /// <summary> Gets the list of move collections. </summary>
         public IReadOnlyList<MoveCollectionData> Value { get; }
-        /// <summary>
-        /// Gets the value of  next link.
-        /// Serialized Name: MoveCollectionResultList.nextLink
-        /// </summary>
+        /// <summary> Gets the value of  next link. </summary>
         public string NextLink { get; }
     }
 }

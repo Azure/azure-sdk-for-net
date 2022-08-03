@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Class for operation status errors.
-    /// Serialized Name: OperationStatusError
-    /// </summary>
+    /// <summary> Class for operation status errors. </summary>
     public partial class MoverOperationStatusError
     {
         /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>
@@ -24,22 +21,10 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: OperationStatusError.code
-        /// </param>
-        /// <param name="message">
-        /// The error message.
-        /// Serialized Name: OperationStatusError.message
-        /// </param>
-        /// <param name="details">
-        /// The error details.
-        /// Serialized Name: OperationStatusError.details
-        /// </param>
-        /// <param name="additionalInfo">
-        /// The additional info.
-        /// Serialized Name: OperationStatusError.additionalInfo
-        /// </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The additional info. </param>
         internal MoverOperationStatusError(string code, string message, IReadOnlyList<MoverOperationStatusError> details, IReadOnlyList<MoverOperationErrorAdditionalInfo> additionalInfo)
         {
             Code = code;
@@ -48,25 +33,13 @@ namespace Azure.ResourceManager.Migrate.Models
             AdditionalInfo = additionalInfo;
         }
 
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: OperationStatusError.code
-        /// </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// The error message.
-        /// Serialized Name: OperationStatusError.message
-        /// </summary>
+        /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary>
-        /// The error details.
-        /// Serialized Name: OperationStatusError.details
-        /// </summary>
+        /// <summary> The error details. </summary>
         public IReadOnlyList<MoverOperationStatusError> Details { get; }
-        /// <summary>
-        /// The additional info.
-        /// Serialized Name: OperationStatusError.additionalInfo
-        /// </summary>
+        /// <summary> The additional info. </summary>
         public IReadOnlyList<MoverOperationErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

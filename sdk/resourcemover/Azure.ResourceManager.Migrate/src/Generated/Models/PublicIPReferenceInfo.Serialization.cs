@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Migrate.Models
 
         internal static PublicIPReferenceInfo DeserializePublicIPReferenceInfo(JsonElement element)
         {
-            string sourceArmResourceId = default;
+            ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceArmResourceId"))
                 {
-                    sourceArmResourceId = property.Value.GetString();
+                    sourceArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

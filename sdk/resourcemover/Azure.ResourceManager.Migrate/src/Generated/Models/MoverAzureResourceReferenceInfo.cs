@@ -6,22 +6,17 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines reference to an Azure resource.
-    /// Serialized Name: AzureResourceReference
-    /// </summary>
+    /// <summary> Defines reference to an Azure resource. </summary>
     public partial class MoverAzureResourceReferenceInfo
     {
         /// <summary> Initializes a new instance of MoverAzureResourceReferenceInfo. </summary>
-        /// <param name="sourceArmResourceId">
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </param>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        public MoverAzureResourceReferenceInfo(string sourceArmResourceId)
+        public MoverAzureResourceReferenceInfo(ResourceIdentifier sourceArmResourceId)
         {
             if (sourceArmResourceId == null)
             {
@@ -31,10 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
             SourceArmResourceId = sourceArmResourceId;
         }
 
-        /// <summary>
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </summary>
-        public string SourceArmResourceId { get; set; }
+        /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
+        public ResourceIdentifier SourceArmResourceId { get; set; }
     }
 }

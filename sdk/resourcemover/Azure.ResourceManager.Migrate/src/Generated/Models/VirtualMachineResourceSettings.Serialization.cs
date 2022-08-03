@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static VirtualMachineResourceSettings DeserializeVirtualMachineResourceSettings(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<string>> userManagedIdentities = default;
+            Optional<IList<ResourceIdentifier>> userManagedIdentities = default;
             Optional<MoverTargetAvailabilityZone> targetAvailabilityZone = default;
             Optional<string> targetVmSize = default;
             Optional<ResourceIdentifier> targetAvailabilitySetId = default;
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     userManagedIdentities = array;
                     continue;

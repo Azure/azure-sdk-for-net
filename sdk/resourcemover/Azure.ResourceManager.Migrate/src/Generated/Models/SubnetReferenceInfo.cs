@@ -6,22 +6,17 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines reference to subnet.
-    /// Serialized Name: SubnetReference
-    /// </summary>
+    /// <summary> Defines reference to subnet. </summary>
     public partial class SubnetReferenceInfo : ProxyResourceReferenceInfo
     {
         /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>
-        /// <param name="sourceArmResourceId">
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </param>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        public SubnetReferenceInfo(string sourceArmResourceId) : base(sourceArmResourceId)
+        public SubnetReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
             if (sourceArmResourceId == null)
             {
@@ -30,16 +25,10 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>
-        /// <param name="sourceArmResourceId">
-        /// Gets the ARM resource ID of the tracked resource being referenced.
-        /// Serialized Name: AzureResourceReference.sourceArmResourceId
-        /// </param>
-        /// <param name="name">
-        /// Gets the name of the proxy resource on the target side.
-        /// Serialized Name: ProxyResourceReference.name
-        /// </param>
+        /// <param name="sourceArmResourceId"> Gets the ARM resource ID of the tracked resource being referenced. </param>
+        /// <param name="name"> Gets the name of the proxy resource on the target side. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
-        internal SubnetReferenceInfo(string sourceArmResourceId, string name) : base(sourceArmResourceId, name)
+        internal SubnetReferenceInfo(ResourceIdentifier sourceArmResourceId, string name) : base(sourceArmResourceId, name)
         {
             if (sourceArmResourceId == null)
             {

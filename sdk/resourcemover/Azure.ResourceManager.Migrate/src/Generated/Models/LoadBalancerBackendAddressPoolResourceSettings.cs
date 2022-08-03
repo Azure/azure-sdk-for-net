@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary>
-    /// Defines load balancer backend address pool properties.
-    /// Serialized Name: LBBackendAddressPoolResourceSettings
-    /// </summary>
+    /// <summary> Defines load balancer backend address pool properties. </summary>
     public partial class LoadBalancerBackendAddressPoolResourceSettings
     {
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolResourceSettings. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolResourceSettings. </summary>
-        /// <param name="name">
-        /// Gets or sets the backend address pool name.
-        /// Serialized Name: LBBackendAddressPoolResourceSettings.name
-        /// </param>
+        /// <param name="name"> Gets or sets the backend address pool name. </param>
         internal LoadBalancerBackendAddressPoolResourceSettings(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// Gets or sets the backend address pool name.
-        /// Serialized Name: LBBackendAddressPoolResourceSettings.name
-        /// </summary>
+        /// <summary> Gets or sets the backend address pool name. </summary>
         public string Name { get; set; }
     }
 }

@@ -16,18 +16,32 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
   AffectedMoveResource.sourceId: -|arm-id
+  AzureResourceReference.sourceArmResourceId: -|arm-id
+  LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
+  BulkRemoveRequest.validateOnly: IsValidateOnly
+  CommitRequest.validateOnly: IsValidateOnly
+  DiscardRequest.validateOnly: IsValidateOnly
+  MoveResourceDependency.id: -|arm-id
+  MoveResourceDependency.isOptional: -|boolean
   MoveResourceDependencyOverride.id: -|arm-id
   MoveResourceDependencyOverride.targetId: -|arm-id
   MoveResourceProperties.sourceId: -|arm-id
+  MoveResourceProperties.targetId: -|arm-id
+  MoveResourceProperties.existingTargetId: -|arm-id
+  NicIpConfigurationResourceSettings.primary: IsValidateOnly
+  NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
+  OperationStatus.endTime: EndOn|datetime
+  OperationStatus.id: -|arm-id
+  OperationStatus.startTime: startOn|datetime
+  PrepareRequest.validateOnly: IsValidateOnly
+  ResourceMoveRequest.validateOnly: IsValidateOnly
+  UnresolvedDependency.id: -|arm-id
+  #ResourceSettings.resourceType: -|resource-type, TODO as this is the discriminator, so codegen failed here is change its type to ResourceType
   VirtualMachineResourceSettings.targetAvailabilitySetId: -|arm-id
-  #ResourceSettings.resourceType: -|resource-type
   AffectedMoveResource: MoverAffectedMoveResourceInfo
   AvailabilitySetResourceSettings: MoverAvailabilitySetResourceSettings
   AzureResourceReference: MoverAzureResourceReferenceInfo
@@ -37,7 +51,6 @@ rename-mapping:
   DependencyType: MoverDependencyType
   DiscardRequest: MoverDiscardContent
   Display: MoverDisplayInfo
-  #Identity: MoveCollectionIdentityProperties
   JobName: MoveResourceJobName
   JobStatus: MoveResourceJobStatus
   LBBackendAddressPoolResourceSettings: LoadBalancerBackendAddressPoolResourceSettings
@@ -73,7 +86,6 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
-  'resourceType': 'resource-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -106,5 +118,11 @@ directive:
     transform: >
       $.Identity.properties.principalId['readOnly'] = true;
       $.Identity.properties.tenantId['readOnly'] = true;
+      $.PrepareRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
+      $.ResourceMoveRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
+      $.CommitRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
+      $.DiscardRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
+      $.BulkRemoveRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
+      $.VirtualMachineResourceSettings.properties.userManagedIdentities.items['x-ms-format'] = 'arm-id';
 
 ```

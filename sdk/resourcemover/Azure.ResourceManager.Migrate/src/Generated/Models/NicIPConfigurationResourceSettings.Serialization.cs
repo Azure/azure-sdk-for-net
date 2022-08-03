@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Migrate.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress");
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -36,10 +37,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 writer.WritePropertyName("subnet");
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("primary");
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsValidateOnly.Value);
             }
             if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
             Optional<SubnetReferenceInfo> subnet = default;
             Optional<bool> primary = default;
@@ -88,7 +89,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"))

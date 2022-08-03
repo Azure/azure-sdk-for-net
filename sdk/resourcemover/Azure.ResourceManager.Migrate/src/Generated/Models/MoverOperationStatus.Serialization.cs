@@ -15,18 +15,23 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         internal static MoverOperationStatus DeserializeMoverOperationStatus(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<string> status = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             Optional<MoverOperationStatusError> error = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -41,12 +46,22 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("error"))
@@ -70,7 +85,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     continue;
                 }
             }
-            return new MoverOperationStatus(id.Value, name.Value, status.Value, startTime.Value, endTime.Value, error.Value, properties.Value);
+            return new MoverOperationStatus(id.Value, name.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), error.Value, properties.Value);
         }
     }
 }
