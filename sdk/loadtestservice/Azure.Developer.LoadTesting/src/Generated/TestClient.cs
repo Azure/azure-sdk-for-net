@@ -19,7 +19,7 @@ namespace Azure.Developer.LoadTesting
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -34,22 +34,21 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Initializes a new instance of TestClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TestClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public TestClient(TokenCredential credential) : this(credential, new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of TestClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TestClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
+        public TestClient(TokenCredential credential, Uri endpoint, AzureLoadTestingClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new AzureLoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,7 +70,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateTestAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = new {};
         /// 
@@ -83,7 +82,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = new {
         ///     description = "<description>",
@@ -98,7 +97,6 @@ namespace Azure.Developer.LoadTesting
         ///                 clientmetric = "<clientmetric>",
         ///                 aggregate = "<aggregate>",
         ///                 condition = "<condition>",
-        ///                 requestName = "<requestName>",
         ///                 value = 123.45d,
         ///                 action = "<action>",
         ///             },
@@ -130,7 +128,6 @@ namespace Azure.Developer.LoadTesting
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
@@ -294,7 +291,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateTest with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = new {};
         /// 
@@ -306,7 +303,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateTest with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = new {
         ///     description = "<description>",
@@ -321,7 +318,6 @@ namespace Azure.Developer.LoadTesting
         ///                 clientmetric = "<clientmetric>",
         ///                 aggregate = "<aggregate>",
         ///                 condition = "<condition>",
-        ///                 requestName = "<requestName>",
         ///                 value = 123.45d,
         ///                 action = "<action>",
         ///             },
@@ -353,7 +349,6 @@ namespace Azure.Developer.LoadTesting
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
@@ -516,7 +511,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteLoadTestAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.DeleteLoadTestAsync("<testId>");
         /// Console.WriteLine(response.Status);
@@ -551,7 +546,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteLoadTest with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.DeleteLoadTest("<testId>");
         /// Console.WriteLine(response.Status);
@@ -586,7 +581,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetLoadTestAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.GetLoadTestAsync("<testId>");
         /// 
@@ -600,7 +595,6 @@ namespace Azure.Developer.LoadTesting
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
@@ -721,7 +715,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetLoadTest with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.GetLoadTest("<testId>");
         /// 
@@ -735,7 +729,6 @@ namespace Azure.Developer.LoadTesting
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
         /// Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
@@ -859,7 +852,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetLoadTestSearchesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.GetLoadTestSearchesAsync();
         /// 
@@ -869,7 +862,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetLoadTestSearchesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.GetLoadTestSearchesAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
         /// 
@@ -883,7 +876,6 @@ namespace Azure.Developer.LoadTesting
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
@@ -1011,7 +1003,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetLoadTestSearches and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.GetLoadTestSearches();
         /// 
@@ -1021,7 +1013,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetLoadTestSearches with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.GetLoadTestSearches("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
         /// 
@@ -1035,7 +1027,6 @@ namespace Azure.Developer.LoadTesting
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientmetric").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
@@ -1149,7 +1140,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
+        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. </summary>
         /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
         /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1163,7 +1154,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1175,7 +1166,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1227,7 +1218,7 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as multipart/form-data. </summary>
+        /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. </summary>
         /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
         /// <param name="fileId"> Unique identifier for test file, must be a valid URL character ^[a-z0-9_-]*$. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -1241,7 +1232,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1253,7 +1244,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1317,7 +1308,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetTestFileAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.GetTestFileAsync("<testId>", "<fileId>");
         /// 
@@ -1378,7 +1369,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetTestFile with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.GetTestFile("<testId>", "<fileId>");
         /// 
@@ -1439,7 +1430,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteTestFileAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.DeleteTestFileAsync("<testId>", "<fileId>");
         /// Console.WriteLine(response.Status);
@@ -1476,7 +1467,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteTestFile with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.DeleteTestFile("<testId>", "<fileId>");
         /// Console.WriteLine(response.Status);
@@ -1513,7 +1504,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAllTestFilesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.GetAllTestFilesAsync("<testId>");
         /// 
@@ -1523,7 +1514,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAllTestFilesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = await client.GetAllTestFilesAsync("<testId>", "<continuationToken>");
         /// 
@@ -1589,7 +1580,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAllTestFiles with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.GetAllTestFiles("<testId>");
         /// 
@@ -1599,7 +1590,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAllTestFiles with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new TestClient(credential);
         /// 
         /// Response response = client.GetAllTestFiles("<testId>", "<continuationToken>");
         /// 
@@ -1659,8 +1650,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1677,8 +1667,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1693,8 +1682,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1709,8 +1697,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/sortAndFilter", false);
             if (orderBy != null)
             {
@@ -1748,8 +1735,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -1772,8 +1758,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -1790,8 +1775,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
@@ -1808,8 +1792,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/loadtests/", false);
             uri.AppendPath(testId, true);
             uri.AppendPath("/files", false);

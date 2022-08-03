@@ -1,22 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Description>This is the LoadTesting client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation LoadTesting for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure LoadTesting</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>annotations</Nullable>
   </PropertyGroup>
 
-  <!-- Shared source from Azure.Core -->
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
+    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
+    <RestoreAdditionalProjectSources>https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json</RestoreAdditionalProjectSources>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220802.2" PrivateAssets="All" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Azure.Core" Version="1.25.0" />
   </ItemGroup>
 
 </Project>

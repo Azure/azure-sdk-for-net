@@ -19,7 +19,7 @@ namespace Azure.Developer.LoadTesting
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -34,22 +34,21 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Initializes a new instance of AppComponentClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AppComponentClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public AppComponentClient(TokenCredential credential) : this(credential, new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AppComponentClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AppComponentClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
+        public AppComponentClient(TokenCredential credential, Uri endpoint, AzureLoadTestingClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new AzureLoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,7 +70,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// var data = new {
         ///     value = new {
@@ -93,7 +92,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// var data = new {
         ///     testId = "<testId>",
@@ -184,7 +183,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// var data = new {
         ///     value = new {
@@ -206,7 +205,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// var data = new {
         ///     testId = "<testId>",
@@ -296,7 +295,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteAppComponentAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = await client.DeleteAppComponentAsync("<name>");
         /// Console.WriteLine(response.Status);
@@ -331,7 +330,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteAppComponent with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = client.DeleteAppComponent("<name>");
         /// Console.WriteLine(response.Status);
@@ -366,7 +365,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAppComponentByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = await client.GetAppComponentByNameAsync("<name>");
         /// 
@@ -429,7 +428,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAppComponentByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = client.GetAppComponentByName("<name>");
         /// 
@@ -491,7 +490,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAppComponentAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = await client.GetAppComponentAsync();
         /// 
@@ -503,7 +502,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAppComponentAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = await client.GetAppComponentAsync("<testRunId>", "<testId>");
         /// 
@@ -563,7 +562,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAppComponent and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = client.GetAppComponent();
         /// 
@@ -575,7 +574,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetAppComponent with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new AppComponentClient("<https://my-service.azure.com>", credential);
+        /// var client = new AppComponentClient(credential);
         /// 
         /// Response response = client.GetAppComponent("<testRunId>", "<testId>");
         /// 
@@ -631,8 +630,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -649,8 +647,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -665,8 +662,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -681,8 +677,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/appcomponents", false);
             if (testRunId != null)
             {

@@ -19,7 +19,7 @@ namespace Azure.Developer.LoadTesting
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -34,22 +34,21 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> Initializes a new instance of ServerMetricsClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ServerMetricsClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public ServerMetricsClient(TokenCredential credential) : this(credential, new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of ServerMetricsClient. </summary>
-        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ServerMetricsClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="endpoint"/> is null. </exception>
+        public ServerMetricsClient(TokenCredential credential, Uri endpoint, AzureLoadTestingClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new AzureLoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -71,7 +70,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// var data = new {};
         /// 
@@ -83,7 +82,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// var data = new {
         ///     testId = "<testId>",
@@ -178,7 +177,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// var data = new {};
         /// 
@@ -190,7 +189,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// var data = new {
         ///     testId = "<testId>",
@@ -284,7 +283,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerMetricsByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = await client.GetServerMetricsByNameAsync("<name>");
         /// 
@@ -347,7 +346,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerMetricsByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = client.GetServerMetricsByName("<name>");
         /// 
@@ -410,7 +409,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteServerMetricsAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = await client.DeleteServerMetricsAsync("<name>");
         /// Console.WriteLine(response.Status);
@@ -445,7 +444,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call DeleteServerMetrics with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = client.DeleteServerMetrics("<name>");
         /// Console.WriteLine(response.Status);
@@ -479,7 +478,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerMetricsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = await client.GetServerMetricsAsync();
         /// 
@@ -489,7 +488,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerMetricsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = await client.GetServerMetricsAsync("<testRunId>", "<testId>");
         /// 
@@ -549,7 +548,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerMetrics and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = client.GetServerMetrics();
         /// 
@@ -559,7 +558,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerMetrics with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = client.GetServerMetrics("<testRunId>", "<testId>");
         /// 
@@ -617,7 +616,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerDefaultMetricsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = await client.GetServerDefaultMetricsAsync();
         /// 
@@ -666,7 +665,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetServerDefaultMetrics and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = client.GetServerDefaultMetrics();
         /// 
@@ -715,7 +714,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetSupportedResourceTypesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = await client.GetSupportedResourceTypesAsync();
         /// 
@@ -759,7 +758,7 @@ namespace Azure.Developer.LoadTesting
         /// This sample shows how to call GetSupportedResourceTypes and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new ServerMetricsClient("<https://my-service.azure.com>", credential);
+        /// var client = new ServerMetricsClient(credential);
         /// 
         /// Response response = client.GetSupportedResourceTypes();
         /// 
@@ -801,8 +800,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -819,8 +817,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -835,8 +832,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/", false);
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -851,8 +847,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig", false);
             if (testRunId != null)
             {
@@ -874,8 +869,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -889,8 +883,7 @@ namespace Azure.Developer.LoadTesting
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/serverMetricsConfig/supportedResourceTypes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
