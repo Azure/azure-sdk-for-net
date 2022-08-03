@@ -92,7 +92,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
 
-            var sameOperation = InstrumentOperation(new CopyModelOperation(operation.Id, nonInstrumentedClient));
+            var sameOperation = InstrumentOperation(new CopyModelToOperation(operation.Id, nonInstrumentedClient));
             await sameOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(sameOperation.HasValue);
