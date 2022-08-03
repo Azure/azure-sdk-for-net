@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "MultiInterfaceClient",
+    "title": "ModelCollectionPropertiesClient",
     "version": "1.0.0",
-    "description": "Illustrates clients generated from a Cadl with multiple interfaces.",
+    "description": "Illustrates input, output, and round-trip models that have properties that are collections of models.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -22,15 +22,39 @@
   ],
   "tags": [],
   "paths": {
-    "/cats": {
+    "/models": {
+      "post": {
+        "operationId": "ModelCollectionProperties_SendCollectionModel",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ModelCollectionModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Http response with status code"
+          },
+          "default": {
+            "description": "A response containing error details.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
+            }
+          }
+        }
+      },
       "get": {
-        "operationId": "Cats_GetCats",
+        "operationId": "ModelCollectionProperties_GetCollectionModel",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Simple model.",
+            "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/Cat"
+              "$ref": "#/definitions/ModelCollectionModel"
             }
           },
           "default": {
@@ -42,71 +66,22 @@
         }
       },
       "put": {
-        "operationId": "Cats_SetCats",
+        "operationId": "ModelCollectionProperties_SetCollectionModel",
         "parameters": [
           {
             "name": "input",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Cat"
+              "$ref": "#/definitions/ModelCollectionModel"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Simple model.",
+            "description": "Simple model with model collection properties",
             "schema": {
-              "$ref": "#/definitions/Cat"
-            }
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/dogs": {
-      "get": {
-        "operationId": "Dogs_GetDogs",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Simple model.",
-            "schema": {
-              "$ref": "#/definitions/Dog"
-            }
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/dogs/models": {
-      "put": {
-        "operationId": "Dogs_SetDogs",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Dog"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Simple model.",
-            "schema": {
-              "$ref": "#/definitions/Dog"
+              "$ref": "#/definitions/ModelCollectionModel"
             }
           },
           "default": {
@@ -181,30 +156,50 @@
         "code"
       ]
     },
-    "Cat": {
+    "ModelCollectionModel": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name"
+        "requiredModelCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimpleModel"
+          },
+          "x-ms-identifiers": [],
+          "x-cadl-name": "SimpleModel[]",
+          "description": "Required collection of models."
+        },
+        "optionalModelCollection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimpleModel"
+          },
+          "x-ms-identifiers": [],
+          "x-cadl-name": "SimpleModel[]",
+          "description": "Optional collection of models."
         }
       },
-      "description": "Simple model.",
+      "description": "Simple model with model collection properties",
       "required": [
-        "name"
+        "requiredModelCollection"
       ]
     },
-    "Dog": {
+    "SimpleModel": {
       "type": "object",
       "properties": {
-        "name": {
+        "requiredString": {
           "type": "string",
-          "description": "Name"
+          "description": "Required string."
+        },
+        "requiredInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Required int."
         }
       },
-      "description": "Simple model.",
+      "description": "Simple model that will appear in a collection.",
       "required": [
-        "name"
+        "requiredString",
+        "requiredInt"
       ]
     }
   },
