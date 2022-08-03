@@ -15,29 +15,29 @@ namespace Azure.ResourceManager.Batch.Models
     {
         /// <summary> Initializes a new instance of BatchAccountAutoStorageConfiguration. </summary>
         /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
-        /// <param name="lastKeySyncOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
+        /// <param name="lastKeySyncedOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
-        public BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, DateTimeOffset lastKeySyncOn) : base(storageAccountId)
+        public BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, DateTimeOffset lastKeySyncedOn) : base(storageAccountId)
         {
             if (storageAccountId == null)
             {
                 throw new ArgumentNullException(nameof(storageAccountId));
             }
 
-            LastKeySyncOn = lastKeySyncOn;
+            LastKeySyncedOn = lastKeySyncedOn;
         }
 
         /// <summary> Initializes a new instance of BatchAccountAutoStorageConfiguration. </summary>
         /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
         /// <param name="authenticationMode"> The authentication mode which the Batch service will use to manage the auto-storage account. </param>
         /// <param name="nodeIdentity"> The identity referenced here must be assigned to pools which have compute nodes that need access to auto-storage. </param>
-        /// <param name="lastKeySyncOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
-        internal BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, BatchAutoStorageAuthenticationMode? authenticationMode, ComputeNodeIdentityReference nodeIdentity, DateTimeOffset lastKeySyncOn) : base(storageAccountId, authenticationMode, nodeIdentity)
+        /// <param name="lastKeySyncedOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
+        internal BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, BatchAutoStorageAuthenticationMode? authenticationMode, ComputeNodeIdentityReference nodeIdentity, DateTimeOffset lastKeySyncedOn) : base(storageAccountId, authenticationMode, nodeIdentity)
         {
-            LastKeySyncOn = lastKeySyncOn;
+            LastKeySyncedOn = lastKeySyncedOn;
         }
 
         /// <summary> The UTC time at which storage keys were last synchronized with the Batch account. </summary>
-        public DateTimeOffset LastKeySyncOn { get; set; }
+        public DateTimeOffset LastKeySyncedOn { get; set; }
     }
 }

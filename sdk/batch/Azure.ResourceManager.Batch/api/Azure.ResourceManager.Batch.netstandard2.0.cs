@@ -418,8 +418,8 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchAccountAutoStorageConfiguration : Azure.ResourceManager.Batch.Models.BatchAccountAutoStorageBaseConfiguration
     {
-        public BatchAccountAutoStorageConfiguration(Azure.Core.ResourceIdentifier storageAccountId, System.DateTimeOffset lastKeySyncOn) : base (default(Azure.Core.ResourceIdentifier)) { }
-        public System.DateTimeOffset LastKeySyncOn { get { throw null; } set { } }
+        public BatchAccountAutoStorageConfiguration(Azure.Core.ResourceIdentifier storageAccountId, System.DateTimeOffset lastKeySyncedOn) : base (default(Azure.Core.ResourceIdentifier)) { }
+        public System.DateTimeOffset LastKeySyncedOn { get { throw null; } set { } }
     }
     public partial class BatchAccountCertificateCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {

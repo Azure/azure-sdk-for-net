@@ -116,7 +116,7 @@ rename-mapping:
   AzureFileShareConfiguration: BatchFileShareConfiguration
   ComputeNodeIdentityReference.resourceId: -|arm-id
   AutoStorageProperties: BatchAccountAutoStorageConfiguration
-  AutoStorageProperties.lastKeySync: LastKeySyncOn
+  AutoStorageProperties.lastKeySync: LastKeySyncedOn
   AutoStorageBaseProperties: BatchAccountAutoStorageBaseConfiguration
   AutoStorageBaseProperties.storageAccountId: -|arm-id
   AutoStorageAuthenticationMode: BatchAutoStorageAuthenticationMode
