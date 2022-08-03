@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Media
         public string AssetName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public int? HlsFragmentsPerTsSegment { get { throw null; } set { } }
+        public int? HttpLiveStreamingFragmentsPerTsSegment { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string ManifestName { get { throw null; } set { } }
         public long? OutputSnapTime { get { throw null; } set { } }

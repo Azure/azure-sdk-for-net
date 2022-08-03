@@ -157,7 +157,7 @@ rename-mapping:
   EnabledProtocols.dash: IsDashEnabled
   EnabledProtocols.hls: IsHttpLiveStreamingEnabled
   EnabledProtocols.smoothStreaming: IsSmoothStreamingEnabled
-  LiveOutput.properties.fragmentsPerTsSegment: HttpLiveStreamingFragmentsPerTsSegment
+  LiveOutput.properties.hls: HttpLiveStreaming
   StorageAuthentication: MediaStorageAuthentication
   ArmStreamingEndpointCapacity: StreamingEndpointCapacity
   ArmStreamingEndpointCurrentSku: StreamingEndpointCurrentSku
