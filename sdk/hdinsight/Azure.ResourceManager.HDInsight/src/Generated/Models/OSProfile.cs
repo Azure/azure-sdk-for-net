@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The Linux operation systems profile.
-    /// Serialized Name: OsProfile
-    /// </summary>
+    /// <summary> The Linux operation systems profile. </summary>
     internal partial class OSProfile
     {
         /// <summary> Initializes a new instance of OSProfile. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of OSProfile. </summary>
-        /// <param name="linuxProfile">
-        /// The Linux OS profile.
-        /// Serialized Name: OsProfile.linuxOperatingSystemProfile
-        /// </param>
+        /// <param name="linuxProfile"> The Linux OS profile. </param>
         internal OSProfile(HDInsightLinuxOSProfile linuxProfile)
         {
             LinuxProfile = linuxProfile;
         }
 
-        /// <summary>
-        /// The Linux OS profile.
-        /// Serialized Name: OsProfile.linuxOperatingSystemProfile
-        /// </summary>
+        /// <summary> The Linux OS profile. </summary>
         public HDInsightLinuxOSProfile LinuxProfile { get; set; }
     }
 }

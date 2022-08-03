@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<HciProvisioningState> provisioningState = default;
             Optional<string> arcInstanceResourceGroup = default;
             Optional<Guid> arcApplicationClientId = default;
             Optional<Guid> arcApplicationTenantId = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("arcInstanceResourceGroup"))

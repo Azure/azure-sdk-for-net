@@ -11,17 +11,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The ip configurations for the private link service.
-    /// Serialized Name: IPConfiguration
-    /// </summary>
+    /// <summary> The ip configurations for the private link service. </summary>
     public partial class HDInsightIPConfiguration
     {
         /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
-        /// <param name="name">
-        /// The name of private link IP configuration.
-        /// Serialized Name: IPConfiguration.name
-        /// </param>
+        /// <param name="name"> The name of private link IP configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightIPConfiguration(string name)
         {
@@ -34,38 +28,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
-        /// <param name="id">
-        /// The private link IP configuration id.
-        /// Serialized Name: IPConfiguration.id
-        /// </param>
-        /// <param name="name">
-        /// The name of private link IP configuration.
-        /// Serialized Name: IPConfiguration.name
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the private link IP configuration.
-        /// Serialized Name: IPConfiguration.type
-        /// </param>
-        /// <param name="provisioningState">
-        /// The private link configuration provisioning state, which only appears in the response.
-        /// Serialized Name: IPConfiguration.properties.provisioningState
-        /// </param>
-        /// <param name="isPrimary">
-        /// Indicates whether this IP configuration is primary for the corresponding NIC.
-        /// Serialized Name: IPConfiguration.properties.primary
-        /// </param>
-        /// <param name="privateIPAddress">
-        /// The IP address.
-        /// Serialized Name: IPConfiguration.properties.privateIPAddress
-        /// </param>
-        /// <param name="privateIPAllocationMethod">
-        /// The method that private IP address is allocated.
-        /// Serialized Name: IPConfiguration.properties.privateIPAllocationMethod
-        /// </param>
-        /// <param name="subnet">
-        /// The subnet resource id.
-        /// Serialized Name: IPConfiguration.properties.subnet
-        /// </param>
+        /// <param name="id"> The private link IP configuration id. </param>
+        /// <param name="name"> The name of private link IP configuration. </param>
+        /// <param name="resourceType"> The type of the private link IP configuration. </param>
+        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
+        /// <param name="isPrimary"> Indicates whether this IP configuration is primary for the corresponding NIC. </param>
+        /// <param name="privateIPAddress"> The IP address. </param>
+        /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
+        /// <param name="subnet"> The subnet resource id. </param>
         internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceIdentifier resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, string privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet)
         {
             Id = id;
@@ -78,45 +48,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             Subnet = subnet;
         }
 
-        /// <summary>
-        /// The private link IP configuration id.
-        /// Serialized Name: IPConfiguration.id
-        /// </summary>
+        /// <summary> The private link IP configuration id. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The name of private link IP configuration.
-        /// Serialized Name: IPConfiguration.name
-        /// </summary>
+        /// <summary> The name of private link IP configuration. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The type of the private link IP configuration.
-        /// Serialized Name: IPConfiguration.type
-        /// </summary>
+        /// <summary> The type of the private link IP configuration. </summary>
         public ResourceIdentifier ResourceType { get; }
-        /// <summary>
-        /// The private link configuration provisioning state, which only appears in the response.
-        /// Serialized Name: IPConfiguration.properties.provisioningState
-        /// </summary>
+        /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>
         public HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Indicates whether this IP configuration is primary for the corresponding NIC.
-        /// Serialized Name: IPConfiguration.properties.primary
-        /// </summary>
+        /// <summary> Indicates whether this IP configuration is primary for the corresponding NIC. </summary>
         public bool? IsPrimary { get; set; }
-        /// <summary>
-        /// The IP address.
-        /// Serialized Name: IPConfiguration.properties.privateIPAddress
-        /// </summary>
+        /// <summary> The IP address. </summary>
         public string PrivateIPAddress { get; set; }
-        /// <summary>
-        /// The method that private IP address is allocated.
-        /// Serialized Name: IPConfiguration.properties.privateIPAllocationMethod
-        /// </summary>
+        /// <summary> The method that private IP address is allocated. </summary>
         public HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
-        /// <summary>
-        /// The subnet resource id.
-        /// Serialized Name: IPConfiguration.properties.subnet
-        /// </summary>
+        /// <summary> The subnet resource id. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The validation error information.
-    /// Serialized Name: ValidationErrorInfo
-    /// </summary>
+    /// <summary> The validation error information. </summary>
     public partial class HDInsightClusterValidationErrorInfo
     {
         /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
@@ -23,22 +20,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: ValidationErrorInfo.code
-        /// </param>
-        /// <param name="message">
-        /// The error message.
-        /// Serialized Name: ValidationErrorInfo.message
-        /// </param>
-        /// <param name="errorResource">
-        /// The error resource.
-        /// Serialized Name: ValidationErrorInfo.errorResource
-        /// </param>
-        /// <param name="messageArguments">
-        /// The message arguments
-        /// Serialized Name: ValidationErrorInfo.messageArguments
-        /// </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="errorResource"> The error resource. </param>
+        /// <param name="messageArguments"> The message arguments. </param>
         internal HDInsightClusterValidationErrorInfo(string code, string message, string errorResource, IReadOnlyList<string> messageArguments)
         {
             Code = code;
@@ -47,25 +32,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             MessageArguments = messageArguments;
         }
 
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: ValidationErrorInfo.code
-        /// </summary>
+        /// <summary> The error code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// The error message.
-        /// Serialized Name: ValidationErrorInfo.message
-        /// </summary>
+        /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary>
-        /// The error resource.
-        /// Serialized Name: ValidationErrorInfo.errorResource
-        /// </summary>
+        /// <summary> The error resource. </summary>
         public string ErrorResource { get; }
-        /// <summary>
-        /// The message arguments
-        /// Serialized Name: ValidationErrorInfo.messageArguments
-        /// </summary>
+        /// <summary> The message arguments. </summary>
         public IReadOnlyList<string> MessageArguments { get; }
     }
 }

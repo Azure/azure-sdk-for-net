@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AccessControl. </summary>
         /// <param name="defaultAction"> The behavior for IP access control in Key Delivery. </param>
         /// <param name="ipAllowList"> The IP allow list for access control in Key Delivery. If the default action is set to &apos;Allow&apos;, the IP allow list must be empty. </param>
-        internal AccessControl(DefaultAction? defaultAction, IList<string> ipAllowList)
+        internal AccessControl(IPAccessControlDefaultAction? defaultAction, IList<string> ipAllowList)
         {
             DefaultAction = defaultAction;
             IPAllowList = ipAllowList;
         }
 
         /// <summary> The behavior for IP access control in Key Delivery. </summary>
-        public DefaultAction? DefaultAction { get; set; }
+        public IPAccessControlDefaultAction? DefaultAction { get; set; }
         /// <summary> The IP allow list for access control in Key Delivery. If the default action is set to &apos;Allow&apos;, the IP allow list must be empty. </summary>
         public IList<string> IPAllowList { get; }
     }

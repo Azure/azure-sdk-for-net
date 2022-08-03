@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The load-based autoscale request parameters
-    /// Serialized Name: AutoscaleCapacity
-    /// </summary>
+    /// <summary> The load-based autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleCapacity
     {
         /// <summary> Initializes a new instance of HDInsightAutoScaleCapacity. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleCapacity. </summary>
-        /// <param name="minInstanceCount">
-        /// The minimum instance count of the cluster
-        /// Serialized Name: AutoscaleCapacity.minInstanceCount
-        /// </param>
-        /// <param name="maxInstanceCount">
-        /// The maximum instance count of the cluster
-        /// Serialized Name: AutoscaleCapacity.maxInstanceCount
-        /// </param>
+        /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
+        /// <param name="maxInstanceCount"> The maximum instance count of the cluster. </param>
         internal HDInsightAutoScaleCapacity(int? minInstanceCount, int? maxInstanceCount)
         {
             MinInstanceCount = minInstanceCount;
             MaxInstanceCount = maxInstanceCount;
         }
 
-        /// <summary>
-        /// The minimum instance count of the cluster
-        /// Serialized Name: AutoscaleCapacity.minInstanceCount
-        /// </summary>
+        /// <summary> The minimum instance count of the cluster. </summary>
         public int? MinInstanceCount { get; set; }
-        /// <summary>
-        /// The maximum instance count of the cluster
-        /// Serialized Name: AutoscaleCapacity.maxInstanceCount
-        /// </summary>
+        /// <summary> The maximum instance count of the cluster. </summary>
         public int? MaxInstanceCount { get; set; }
     }
 }

@@ -1428,6 +1428,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
+        public override Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+        }
+
+        public override void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+        }
+
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new AnalyzeActionsOptions();

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaNameAvailabilityResult>> CheckMediaNameAvailabilityAsync(string locationName, MediaNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaNameAvailabilityResult>> CheckMediaNameAvailabilityAsync(AzureLocation locationName, MediaNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaNameAvailability");
             scope.Start();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaNameAvailabilityResult> CheckMediaNameAvailability(string locationName, MediaNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MediaNameAvailabilityResult> CheckMediaNameAvailability(AzureLocation locationName, MediaNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMediaNameAvailability");
             scope.Start();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaServiceOperationStatus> GetMediaServicesOperationStatus(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServiceOperationStatus> GetMediaServicesOperationStatus(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = MediaServicesOperationStatusesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMediaServicesOperationStatus");
             scope.Start();

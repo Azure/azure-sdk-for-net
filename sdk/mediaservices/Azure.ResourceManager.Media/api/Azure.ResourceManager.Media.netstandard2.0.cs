@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Media
         public string AssetName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public int? HlsFragmentsPerTsSegment { get { throw null; } set { } }
+        public int? HttpLiveStreamingFragmentsPerTsSegment { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string ManifestName { get { throw null; } set { } }
         public long? OutputSnapTime { get { throw null; } set { } }
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.Media
     }
     public static partial class MediaExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Media.Models.MediaNameAvailabilityResult> CheckMediaNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Media.Models.MediaNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaNameAvailabilityResult>> CheckMediaNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Media.Models.MediaNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Media.Models.MediaNameAvailabilityResult> CheckMediaNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Media.Models.MediaNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaNameAvailabilityResult>> CheckMediaNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Media.Models.MediaNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Media.AccountFilterResource GetAccountFilterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.AssetFilterResource GetAssetFilterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.ContentKeyPolicyResource GetContentKeyPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -347,16 +347,16 @@ namespace Azure.ResourceManager.Media
         public static Azure.ResourceManager.Media.MediaPrivateLinkResource GetMediaPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Media.MediaServiceResource> GetMediaService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceResource>> GetMediaServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> GetMediaServiceOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetMediaServiceOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> GetMediaServiceOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetMediaServiceOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Media.MediaServiceOperationResultResource GetMediaServiceOperationResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaServiceOperationResultCollection GetMediaServiceOperationResults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.Media.MediaServiceResource GetMediaServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaServiceCollection GetMediaServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Media.MediaServiceResource> GetMediaServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Media.MediaServiceResource> GetMediaServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Media.Models.MediaServiceOperationStatus> GetMediaServicesOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Media.Models.MediaServiceOperationStatus> GetMediaServicesOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Media.MediaTransformJobResource GetMediaTransformJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaTransformResource GetMediaTransformResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.StreamingEndpointResource GetStreamingEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -399,9 +399,19 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MediaPrivateLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaPrivateLinkResource>, System.Collections.IEnumerable
+    public partial class MediaPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
-        protected MediaPrivateLinkCollection() { }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MediaPrivateLinkResource() { }
+        public virtual Azure.ResourceManager.Media.MediaPrivateLinkResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MediaPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaPrivateLinkResource>, System.Collections.IEnumerable
+    {
+        protected MediaPrivateLinkResourceCollection() { }
         public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -412,22 +422,12 @@ namespace Azure.ResourceManager.Media
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Media.MediaPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MediaPrivateLinkData : Azure.ResourceManager.Models.ResourceData
+    public partial class MediaPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        public MediaPrivateLinkData() { }
+        public MediaPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
-    }
-    public partial class MediaPrivateLinkResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MediaPrivateLinkResource() { }
-        public virtual Azure.ResourceManager.Media.MediaPrivateLinkData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MediaServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaServiceResource>, System.Collections.IEnumerable
     {
@@ -453,17 +453,17 @@ namespace Azure.ResourceManager.Media
         public System.Guid? MediaServiceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaServiceStorageAccount> StorageAccounts { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.StorageAuthentication? StorageAuthentication { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaStorageAuthentication? StorageAuthentication { get { throw null; } set { } }
     }
     public partial class MediaServiceOperationResultCollection : Azure.ResourceManager.ArmCollection
     {
         protected MediaServiceOperationResultCollection() { }
-        public virtual Azure.Response<bool> Exists(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> Get(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetAsync(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> Get(Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetAsync(Azure.Core.AzureLocation locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MediaServiceOperationResultResource : Azure.ResourceManager.ArmResource
     {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Media
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string operationId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation locationName, string operationId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionResource> GetMediaPrivateEndpointConnection(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionResource>> GetMediaPrivateEndpointConnectionAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaPrivateEndpointConnectionCollection GetMediaPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> GetMediaPrivateLink(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource>> GetMediaPrivateLinkAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Media.MediaPrivateLinkCollection GetMediaPrivateLinks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> GetMediaPrivateLinkResource(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource>> GetMediaPrivateLinkResourceAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Media.MediaPrivateLinkResourceCollection GetMediaPrivateLinkResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaTransformResource> GetMediaTransform(string transformName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaTransformResource>> GetMediaTransformAsync(string transformName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaTransformCollection GetMediaTransforms() { throw null; }
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Media
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TransformOutput> Outputs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformOutput> Outputs { get { throw null; } }
     }
     public partial class MediaTransformJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaTransformJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaTransformJobResource>, System.Collections.IEnumerable
     {
@@ -579,12 +579,12 @@ namespace Azure.ResourceManager.Media
         public System.Collections.Generic.IDictionary<string, string> CorrelationData { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.JobInput Input { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.MediaTransformJobInputBasicProperties Input { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JobOutput> Outputs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformJobOutput> Outputs { get { throw null; } }
         public Azure.ResourceManager.Media.Models.TransformOutputsPriority? Priority { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public Azure.ResourceManager.Media.Models.JobState? State { get { throw null; } }
     }
     public partial class MediaTransformJobResource : Azure.ResourceManager.ArmResource
@@ -653,8 +653,8 @@ namespace Azure.ResourceManager.Media
         public long? MaxCacheAge { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StreamingEndpointResourceState? ResourceState { get { throw null; } }
-        public int? ScaleUnits { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.ArmStreamingEndpointCurrentSku Sku { get { throw null; } set { } }
+        public int? ScaleUnitsNumber { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.StreamingEndpointCurrentSku Sku { get { throw null; } set { } }
     }
     public partial class StreamingEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -669,8 +669,8 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.StreamingEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.StreamingEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.ArmStreamingEndpointSkuInfo> GetSupportedSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.ArmStreamingEndpointSkuInfo> GetSupportedSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo> GetSupportedSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.StreamingEndpointSkuInfo> GetSupportedSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.StreamingEndpointResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.StreamingEndpointResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Scale(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.StreamingEntityScaleUnit streamingEntityScaleUnit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -707,9 +707,9 @@ namespace Azure.ResourceManager.Media
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey> ContentKeys { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DefaultContentKeyPolicyName { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Filters { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
         public System.Guid? StreamingLocatorId { get { throw null; } set { } }
         public string StreamingPolicyName { get { throw null; } set { } }
     }
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Media
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DefaultContentKeyPolicyName { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.EnvelopeEncryption EnvelopeEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.EnabledProtocols NoEncryptionEnabledProtocols { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaEnabledProtocols NoEncryptionEnabledProtocols { get { throw null; } set { } }
     }
     public partial class StreamingPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class AccessControl
     {
         public AccessControl() { }
-        public Azure.ResourceManager.Media.Models.DefaultAction? DefaultAction { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> IPAllowList { get { throw null; } }
     }
     public partial class AccountEncryption
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public AkamaiSignatureHeaderAuthenticationKey() { }
         public string Base64Key { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -858,27 +858,6 @@ namespace Azure.ResourceManager.Media.Models
         public static implicit operator Azure.ResourceManager.Media.Models.AnalysisResolution (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.AnalysisResolution left, Azure.ResourceManager.Media.Models.AnalysisResolution right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ArmStreamingEndpointCapacity
-    {
-        internal ArmStreamingEndpointCapacity() { }
-        public int? Default { get { throw null; } }
-        public int? Maximum { get { throw null; } }
-        public int? Minimum { get { throw null; } }
-        public string ScaleType { get { throw null; } }
-    }
-    public partial class ArmStreamingEndpointCurrentSku
-    {
-        public ArmStreamingEndpointCurrentSku() { }
-        public int? Capacity { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-    }
-    public partial class ArmStreamingEndpointSkuInfo
-    {
-        internal ArmStreamingEndpointSkuInfo() { }
-        public Azure.ResourceManager.Media.Models.ArmStreamingEndpointCapacity Capacity { get { throw null; } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
-        public string SkuName { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AssetContainerPermission : System.IEquatable<Azure.ResourceManager.Media.Models.AssetContainerPermission>
@@ -930,9 +909,9 @@ namespace Azure.ResourceManager.Media.Models
         public string AssetName { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DefaultContentKeyPolicyName { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public System.Guid? StreamingLocatorId { get { throw null; } }
         public string StreamingPolicyName { get { throw null; } }
     }
@@ -943,11 +922,11 @@ namespace Azure.ResourceManager.Media.Models
     public partial class AssetTrackOperationStatus
     {
         internal AssetTrackOperationStatus() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public string Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1015,31 +994,10 @@ namespace Azure.ResourceManager.Media.Models
         public AudioTrackDescriptor() { }
         public Azure.ResourceManager.Media.Models.ChannelMapping? ChannelMapping { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BlurType : System.IEquatable<Azure.ResourceManager.Media.Models.BlurType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BlurType(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.BlurType Black { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.BlurType Box { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.BlurType High { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.BlurType Low { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.BlurType Med { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.BlurType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.BlurType left, Azure.ResourceManager.Media.Models.BlurType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.BlurType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.BlurType left, Azure.ResourceManager.Media.Models.BlurType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class BuiltInStandardEncoderPreset : Azure.ResourceManager.Media.Models.MediaPreset
     {
         public BuiltInStandardEncoderPreset(Azure.ResourceManager.Media.Models.EncoderNamedPreset presetName) { }
-        public Azure.ResourceManager.Media.Models.PresetConfigurations Configurations { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.EncoderPresetConfigurations Configurations { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.EncoderNamedPreset PresetName { get { throw null; } set { } }
     }
     public partial class CbcsDrmConfiguration
@@ -1047,13 +1005,13 @@ namespace Azure.ResourceManager.Media.Models
         public CbcsDrmConfiguration() { }
         public Azure.ResourceManager.Media.Models.StreamingPolicyFairPlayConfiguration FairPlay { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration PlayReady { get { throw null; } set { } }
-        public string WidevineCustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        public System.Uri WidevineCustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
     }
     public partial class CencDrmConfiguration
     {
         public CencDrmConfiguration() { }
         public Azure.ResourceManager.Media.Models.StreamingPolicyPlayReadyConfiguration PlayReady { get { throw null; } set { } }
-        public string WidevineCustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        public System.Uri WidevineCustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChannelMapping : System.IEquatable<Azure.ResourceManager.Media.Models.ChannelMapping>
@@ -1091,18 +1049,18 @@ namespace Azure.ResourceManager.Media.Models
     public partial class CommonEncryptionCbcs
     {
         public CommonEncryptionCbcs() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackSelection> ClearTracks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTrackSelection> ClearTracks { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.CbcsDrmConfiguration Drm { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.EnabledProtocols EnabledProtocols { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
     }
     public partial class CommonEncryptionCenc
     {
         public CommonEncryptionCenc() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackSelection> ClearTracks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTrackSelection> ClearTracks { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.CencDrmConfiguration Drm { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.EnabledProtocols EnabledProtocols { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
     }
     public partial class ContentKeyPolicyClearKeyConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration
     {
@@ -1114,8 +1072,8 @@ namespace Azure.ResourceManager.Media.Models
     }
     public partial class ContentKeyPolicyFairPlayConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration
     {
-        public ContentKeyPolicyFairPlayConfiguration(byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration) { }
-        public byte[] Ask { get { throw null; } set { } }
+        public ContentKeyPolicyFairPlayConfiguration(byte[] fairPlayApplicationSecretKey, string fairPlayPfxPassword, string fairPlayPfx, Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration) { }
+        public byte[] FairPlayApplicationSecretKey { get { throw null; } set { } }
         public string FairPlayPfx { get { throw null; } set { } }
         public string FairPlayPfxPassword { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayOfflineRentalConfiguration OfflineRentalConfiguration { get { throw null; } set { } }
@@ -1157,7 +1115,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ContentKeyPolicyPlayReadyConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense> licenses) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicense> Licenses { get { throw null; } }
-        public string ResponseCustomData { get { throw null; } set { } }
+        public System.BinaryData ResponseCustomData { get { throw null; } set { } }
     }
     public partial class ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader : Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation
     {
@@ -1194,9 +1152,9 @@ namespace Azure.ResourceManager.Media.Models
     }
     public partial class ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction
     {
-        public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool bestEffort, int configurationData) { }
-        public bool BestEffort { get { throw null; } set { } }
+        public ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction(bool isBestEffort, int configurationData) { }
         public int ConfigurationData { get { throw null; } set { } }
+        public bool IsBestEffort { get { throw null; } set { } }
     }
     public partial class ContentKeyPolicyPlayReadyLicense
     {
@@ -1205,7 +1163,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.DateTimeOffset? BeginOn { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation ContentKeyLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType ContentType { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public System.TimeSpan? GracePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight PlayRight { get { throw null; } set { } }
@@ -1233,20 +1191,20 @@ namespace Azure.ResourceManager.Media.Models
     }
     public partial class ContentKeyPolicyPlayReadyPlayRight
     {
-        public ContentKeyPolicyPlayReadyPlayRight(bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput) { }
+        public ContentKeyPolicyPlayReadyPlayRight(bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingSetting allowPassingVideoContentToUnknownOutput) { }
         public int? AgcAndColorStripeRestriction { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingSetting AllowPassingVideoContentToUnknownOutput { get { throw null; } set { } }
-        public int? AnalogVideoOpl { get { throw null; } set { } }
-        public int? CompressedDigitalAudioOpl { get { throw null; } set { } }
-        public int? CompressedDigitalVideoOpl { get { throw null; } set { } }
-        public bool DigitalVideoOnlyContentRestriction { get { throw null; } set { } }
+        public int? AnalogVideoOutputProtectionLevel { get { throw null; } set { } }
+        public int? CompressedDigitalAudioOutputProtectionLevel { get { throw null; } set { } }
+        public int? CompressedDigitalVideoOutputProtectionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction ExplicitAnalogTelevisionOutputRestriction { get { throw null; } set { } }
         public System.TimeSpan? FirstPlayExpiration { get { throw null; } set { } }
-        public bool ImageConstraintForAnalogComponentVideoRestriction { get { throw null; } set { } }
-        public bool ImageConstraintForAnalogComputerMonitorRestriction { get { throw null; } set { } }
+        public bool HasDigitalVideoOnlyContentRestriction { get { throw null; } set { } }
+        public bool HasImageConstraintForAnalogComponentVideoRestriction { get { throw null; } set { } }
+        public bool HasImageConstraintForAnalogComputerMonitorRestriction { get { throw null; } set { } }
         public int? ScmsRestriction { get { throw null; } set { } }
-        public int? UncompressedDigitalAudioOpl { get { throw null; } set { } }
-        public int? UncompressedDigitalVideoOpl { get { throw null; } set { } }
+        public int? UncompressedDigitalAudioOutputProtectionLevel { get { throw null; } set { } }
+        public int? UncompressedDigitalVideoOutputProtectionLevel { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentKeyPolicyPlayReadyUnknownOutputPassingSetting : System.IEquatable<Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyUnknownOutputPassingSetting>
@@ -1373,30 +1331,6 @@ namespace Azure.ResourceManager.Media.Models
         public string CrossDomainPolicy { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DefaultAction : System.IEquatable<Azure.ResourceManager.Media.Models.DefaultAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DefaultAction(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.DefaultAction Allow { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.DefaultAction Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.DefaultAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.DefaultAction left, Azure.ResourceManager.Media.Models.DefaultAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.DefaultAction (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.DefaultAction left, Azure.ResourceManager.Media.Models.DefaultAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DefaultKey
-    {
-        public DefaultKey() { }
-        public string Label { get { throw null; } set { } }
-        public string PolicyName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeinterlaceMode : System.IEquatable<Azure.ResourceManager.Media.Models.DeinterlaceMode>
     {
         private readonly object _dummy;
@@ -1459,14 +1393,6 @@ namespace Azure.ResourceManager.Media.Models
         public string Namespace { get { throw null; } }
         public string Token { get { throw null; } }
     }
-    public partial class EnabledProtocols
-    {
-        public EnabledProtocols(bool download, bool dash, bool hls, bool smoothStreaming) { }
-        public bool Dash { get { throw null; } set { } }
-        public bool Download { get { throw null; } set { } }
-        public bool Hls { get { throw null; } set { } }
-        public bool SmoothStreaming { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncoderComplexitySetting : System.IEquatable<Azure.ResourceManager.Media.Models.EncoderComplexitySetting>
     {
@@ -1518,56 +1444,57 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.EncoderNamedPreset left, Azure.ResourceManager.Media.Models.EncoderNamedPreset right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionScheme : System.IEquatable<Azure.ResourceManager.Media.Models.EncryptionScheme>
+    public partial class EncoderPresetConfigurations
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionScheme(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.EncryptionScheme CommonEncryptionCbcs { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.EncryptionScheme CommonEncryptionCenc { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.EncryptionScheme EnvelopeEncryption { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.EncryptionScheme NoEncryption { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.EncryptionScheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.EncryptionScheme left, Azure.ResourceManager.Media.Models.EncryptionScheme right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.EncryptionScheme (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.EncryptionScheme left, Azure.ResourceManager.Media.Models.EncryptionScheme right) { throw null; }
-        public override string ToString() { throw null; }
+        public EncoderPresetConfigurations() { }
+        public Azure.ResourceManager.Media.Models.EncoderComplexitySetting? Complexity { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.InterleaveOutput? InterleaveOutput { get { throw null; } set { } }
+        public float? KeyFrameIntervalInSeconds { get { throw null; } set { } }
+        public int? MaxBitrateBps { get { throw null; } set { } }
+        public int? MaxHeight { get { throw null; } set { } }
+        public int? MaxLayers { get { throw null; } set { } }
+        public int? MinBitrateBps { get { throw null; } set { } }
+        public int? MinHeight { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EntropyMode : System.IEquatable<Azure.ResourceManager.Media.Models.EntropyMode>
+    public partial class EncryptionSchemeDefaultKey
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EntropyMode(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.EntropyMode Cabac { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.EntropyMode Cavlc { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.EntropyMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.EntropyMode left, Azure.ResourceManager.Media.Models.EntropyMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.EntropyMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.EntropyMode left, Azure.ResourceManager.Media.Models.EntropyMode right) { throw null; }
-        public override string ToString() { throw null; }
+        public EncryptionSchemeDefaultKey() { }
+        public string Label { get { throw null; } set { } }
+        public string PolicyName { get { throw null; } set { } }
     }
     public partial class EnvelopeEncryption
     {
         public EnvelopeEncryption() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackSelection> ClearTracks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTrackSelection> ClearTracks { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
-        public string CustomKeyAcquisitionUriTemplate { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.EnabledProtocols EnabledProtocols { get { throw null; } set { } }
+        public System.Uri CustomKeyAcquisitionUriTemplate { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaEnabledProtocols EnabledProtocols { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FaceDetectorBlurType : System.IEquatable<Azure.ResourceManager.Media.Models.FaceDetectorBlurType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FaceDetectorBlurType(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.FaceDetectorBlurType Black { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.FaceDetectorBlurType Box { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.FaceDetectorBlurType High { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.FaceDetectorBlurType Low { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.FaceDetectorBlurType Med { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.FaceDetectorBlurType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.FaceDetectorBlurType left, Azure.ResourceManager.Media.Models.FaceDetectorBlurType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.FaceDetectorBlurType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.FaceDetectorBlurType left, Azure.ResourceManager.Media.Models.FaceDetectorBlurType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class FaceDetectorPreset : Azure.ResourceManager.Media.Models.MediaPreset
     {
         public FaceDetectorPreset() { }
-        public Azure.ResourceManager.Media.Models.BlurType? BlurType { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.FaceDetectorBlurType? BlurType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ExperimentalOptions { get { throw null; } }
         public Azure.ResourceManager.Media.Models.FaceRedactorMode? Mode { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.AnalysisResolution? Resolution { get { throw null; } set { } }
@@ -1631,7 +1558,7 @@ namespace Azure.ResourceManager.Media.Models
         private readonly int _dummyPrimitive;
         public FilterTrackPropertyType(string value) { throw null; }
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType Bitrate { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType FourCC { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType FourCharacterCode { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType Language { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType Name { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.FilterTrackPropertyType Type { get { throw null; } }
@@ -1656,18 +1583,18 @@ namespace Azure.ResourceManager.Media.Models
         public FormatBasicProperties(string filenamePattern) { }
         public string FilenamePattern { get { throw null; } set { } }
     }
-    public partial class FromAllInputFile : Azure.ResourceManager.Media.Models.InputDefinition
+    public partial class FromAllInputFile : Azure.ResourceManager.Media.Models.MediaTransformJobInputDefinition
     {
         public FromAllInputFile() { }
     }
-    public partial class FromEachInputFile : Azure.ResourceManager.Media.Models.InputDefinition
+    public partial class FromEachInputFile : Azure.ResourceManager.Media.Models.MediaTransformJobInputDefinition
     {
         public FromEachInputFile() { }
     }
     public partial class GetContainerSasContent
     {
         public GetContainerSasContent() { }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.AssetContainerPermission? Permissions { get { throw null; } set { } }
     }
     public partial class GetEdgePoliciesContent
@@ -1704,8 +1631,8 @@ namespace Azure.ResourceManager.Media.Models
     {
         public H264Layer(int bitrate) : base (default(int)) { }
         public System.TimeSpan? BufferWindow { get { throw null; } set { } }
-        public float? Crf { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.EntropyMode? EntropyMode { get { throw null; } set { } }
+        public float? ConstantRateFactor { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.LayerEntropyMode? EntropyMode { get { throw null; } set { } }
         public string Level { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.H264VideoProfile? Profile { get { throw null; } set { } }
         public int? ReferenceFrames { get { throw null; } set { } }
@@ -1735,7 +1662,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.H264Complexity? Complexity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.H264Layer> Layers { get { throw null; } }
         public Azure.ResourceManager.Media.Models.H264RateControlMode? RateControlMode { get { throw null; } set { } }
-        public bool? SceneChangeDetection { get { throw null; } set { } }
+        public bool? UseSceneChangeDetection { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct H264VideoProfile : System.IEquatable<Azure.ResourceManager.Media.Models.H264VideoProfile>
@@ -1792,17 +1719,17 @@ namespace Azure.ResourceManager.Media.Models
         public H265Video() { }
         public Azure.ResourceManager.Media.Models.H265Complexity? Complexity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.H265Layer> Layers { get { throw null; } }
-        public bool? SceneChangeDetection { get { throw null; } set { } }
+        public bool? UseSceneChangeDetection { get { throw null; } set { } }
     }
-    public partial class H265VideoLayer : Azure.ResourceManager.Media.Models.LayerProperties
+    public partial class H265VideoLayer : Azure.ResourceManager.Media.Models.VideoOrImageLayerProperties
     {
         public H265VideoLayer(int bitrate) { }
-        public bool? AdaptiveBFrame { get { throw null; } set { } }
         public int? BFrames { get { throw null; } set { } }
         public int Bitrate { get { throw null; } set { } }
         public string FrameRate { get { throw null; } set { } }
         public int? MaxBitrate { get { throw null; } set { } }
         public int? Slices { get { throw null; } set { } }
+        public bool? UseAdaptiveBFrame { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct H265VideoProfile : System.IEquatable<Azure.ResourceManager.Media.Models.H265VideoProfile>
@@ -1827,8 +1754,8 @@ namespace Azure.ResourceManager.Media.Models
     {
         public HlsSettings() { }
         public string Characteristics { get { throw null; } set { } }
-        public bool? Default { get { throw null; } set { } }
-        public bool? Forced { get { throw null; } set { } }
+        public bool? IsDefault { get { throw null; } set { } }
+        public bool? IsForced { get { throw null; } set { } }
     }
     public partial class ImageBasicProperties : Azure.ResourceManager.Media.Models.InputVideoEncodingProperties
     {
@@ -1837,26 +1764,31 @@ namespace Azure.ResourceManager.Media.Models
         public string Start { get { throw null; } set { } }
         public string Step { get { throw null; } set { } }
     }
-    public partial class ImageFormat : Azure.ResourceManager.Media.Models.FormatBasicProperties
-    {
-        public ImageFormat(string filenamePattern) : base (default(string)) { }
-    }
-    public partial class InputDefinition
-    {
-        public InputDefinition() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackDescriptor> IncludedTracks { get { throw null; } }
-    }
-    public partial class InputFile : Azure.ResourceManager.Media.Models.InputDefinition
-    {
-        public InputFile() { }
-        public string Filename { get { throw null; } set { } }
-    }
     public partial class InputVideoEncodingProperties : Azure.ResourceManager.Media.Models.CodecBasicProperties
     {
         public InputVideoEncodingProperties() { }
         public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.StretchMode? StretchMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.VideoSyncMode? SyncMode { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InputVideoStretchMode : System.IEquatable<Azure.ResourceManager.Media.Models.InputVideoStretchMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InputVideoStretchMode(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.InputVideoStretchMode AutoFit { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.InputVideoStretchMode AutoSize { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.InputVideoStretchMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.InputVideoStretchMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.InputVideoStretchMode left, Azure.ResourceManager.Media.Models.InputVideoStretchMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.InputVideoStretchMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.InputVideoStretchMode left, Azure.ResourceManager.Media.Models.InputVideoStretchMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InsightsType : System.IEquatable<Azure.ResourceManager.Media.Models.InsightsType>
@@ -1895,158 +1827,30 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.InterleaveOutput left, Azure.ResourceManager.Media.Models.InterleaveOutput right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IPAccessControlDefaultAction : System.IEquatable<Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IPAccessControlDefaultAction(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction left, Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction left, Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class IPRange
     {
         public IPRange() { }
-        public string Address { get { throw null; } set { } }
+        public System.Net.IPAddress Address { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? SubnetPrefixLength { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsMediaServicePublicNetworkAccessEnabled : System.IEquatable<Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IsMediaServicePublicNetworkAccessEnabled(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled left, Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled left, Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobError
-    {
-        internal JobError() { }
-        public Azure.ResourceManager.Media.Models.JobErrorCategory? Category { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.JobErrorCode? Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.JobErrorDetail> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.JobRetry? Retry { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobErrorCategory : System.IEquatable<Azure.ResourceManager.Media.Models.JobErrorCategory>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobErrorCategory(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.JobErrorCategory Configuration { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCategory Content { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCategory Download { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCategory Service { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCategory Upload { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.JobErrorCategory other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.JobErrorCategory left, Azure.ResourceManager.Media.Models.JobErrorCategory right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.JobErrorCategory (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.JobErrorCategory left, Azure.ResourceManager.Media.Models.JobErrorCategory right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobErrorCode : System.IEquatable<Azure.ResourceManager.Media.Models.JobErrorCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobErrorCode(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode ConfigurationUnsupported { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode ContentMalformed { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode ContentUnsupported { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode DownloadNotAccessible { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode DownloadTransientError { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode ServiceError { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode ServiceTransientError { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode UploadNotAccessible { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobErrorCode UploadTransientError { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.JobErrorCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.JobErrorCode left, Azure.ResourceManager.Media.Models.JobErrorCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.JobErrorCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.JobErrorCode left, Azure.ResourceManager.Media.Models.JobErrorCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobErrorDetail
-    {
-        internal JobErrorDetail() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class JobInput
-    {
-        public JobInput() { }
-    }
-    public partial class JobInputAsset : Azure.ResourceManager.Media.Models.JobInputClip
-    {
-        public JobInputAsset(string assetName) { }
-        public string AssetName { get { throw null; } set { } }
-    }
-    public partial class JobInputClip : Azure.ResourceManager.Media.Models.JobInput
-    {
-        public JobInputClip() { }
-        public Azure.ResourceManager.Media.Models.ClipTime End { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Files { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.InputDefinition> InputDefinitions { get { throw null; } }
-        public string Label { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.ClipTime Start { get { throw null; } set { } }
-    }
-    public partial class JobInputHttp : Azure.ResourceManager.Media.Models.JobInputClip
-    {
-        public JobInputHttp() { }
-        public System.Uri BaseUri { get { throw null; } set { } }
-    }
-    public partial class JobInputs : Azure.ResourceManager.Media.Models.JobInput
-    {
-        public JobInputs() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JobInput> Inputs { get { throw null; } }
-    }
-    public partial class JobInputSequence : Azure.ResourceManager.Media.Models.JobInput
-    {
-        public JobInputSequence() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JobInputClip> Inputs { get { throw null; } }
-    }
-    public partial class JobOutput
-    {
-        public JobOutput() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.JobError Error { get { throw null; } }
-        public string Label { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.MediaPreset PresetOverride { get { throw null; } set { } }
-        public int? Progress { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.JobState? State { get { throw null; } }
-    }
-    public partial class JobOutputAsset : Azure.ResourceManager.Media.Models.JobOutput
-    {
-        public JobOutputAsset(string assetName) { }
-        public string AssetName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobRetry : System.IEquatable<Azure.ResourceManager.Media.Models.JobRetry>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobRetry(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.JobRetry DoNotRetry { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.JobRetry MayRetry { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.JobRetry other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.JobRetry left, Azure.ResourceManager.Media.Models.JobRetry right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.JobRetry (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.JobRetry left, Azure.ResourceManager.Media.Models.JobRetry right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobState : System.IEquatable<Azure.ResourceManager.Media.Models.JobState>
@@ -2071,7 +1875,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.JobState left, Azure.ResourceManager.Media.Models.JobState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JpgFormat : Azure.ResourceManager.Media.Models.ImageFormat
+    public partial class JpgFormat : Azure.ResourceManager.Media.Models.OutputImageFileFormat
     {
         public JpgFormat(string filenamePattern) : base (default(string)) { }
     }
@@ -2081,7 +1885,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JpgLayer> Layers { get { throw null; } }
         public int? SpriteColumn { get { throw null; } set { } }
     }
-    public partial class JpgLayer : Azure.ResourceManager.Media.Models.LayerProperties
+    public partial class JpgLayer : Azure.ResourceManager.Media.Models.VideoOrImageLayerProperties
     {
         public JpgLayer() { }
         public int? Quality { get { throw null; } set { } }
@@ -2092,12 +1896,23 @@ namespace Azure.ResourceManager.Media.Models
         public string CurrentKeyIdentifier { get { throw null; } }
         public string KeyIdentifier { get { throw null; } set { } }
     }
-    public partial class LayerProperties
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LayerEntropyMode : System.IEquatable<Azure.ResourceManager.Media.Models.LayerEntropyMode>
     {
-        public LayerProperties() { }
-        public string Height { get { throw null; } set { } }
-        public string Label { get { throw null; } set { } }
-        public string Width { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LayerEntropyMode(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.LayerEntropyMode ContextAdaptiveBinaryArithmeticCoder { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LayerEntropyMode ContextAdaptiveVariableLengthCoder { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.LayerEntropyMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.LayerEntropyMode left, Azure.ResourceManager.Media.Models.LayerEntropyMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.LayerEntropyMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.LayerEntropyMode left, Azure.ResourceManager.Media.Models.LayerEntropyMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LiveEventActionContent
     {
@@ -2110,7 +1925,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.LiveEventEncodingType? EncodingType { get { throw null; } set { } }
         public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
         public string PresetName { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.StretchMode? StretchMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveEventEncodingType : System.IEquatable<Azure.ResourceManager.Media.Models.LiveEventEncodingType>
@@ -2144,7 +1959,7 @@ namespace Azure.ResourceManager.Media.Models
         public LiveEventInput(Azure.ResourceManager.Media.Models.LiveEventInputProtocol streamingProtocol) { }
         public string AccessToken { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.LiveEventEndpoint> Endpoints { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllow { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllowedIPs { get { throw null; } }
         public System.TimeSpan? KeyFrameIntervalDuration { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.LiveEventInputProtocol StreamingProtocol { get { throw null; } set { } }
     }
@@ -2178,7 +1993,7 @@ namespace Azure.ResourceManager.Media.Models
         public LiveEventPreview() { }
         public string AlternativeMediaId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.LiveEventEndpoint> Endpoints { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllow { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllowedIPs { get { throw null; } }
         public string PreviewLocator { get { throw null; } set { } }
         public string StreamingPolicyName { get { throw null; } set { } }
     }
@@ -2230,6 +2045,14 @@ namespace Azure.ResourceManager.Media.Models
         public static implicit operator Azure.ResourceManager.Media.Models.LiveOutputResourceState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.LiveOutputResourceState left, Azure.ResourceManager.Media.Models.LiveOutputResourceState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class MediaEnabledProtocols
+    {
+        public MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHttpLiveStreamingEnabled, bool isSmoothStreamingEnabled) { }
+        public bool IsDashEnabled { get { throw null; } set { } }
+        public bool IsDownloadEnabled { get { throw null; } set { } }
+        public bool IsHttpLiveStreamingEnabled { get { throw null; } set { } }
+        public bool IsSmoothStreamingEnabled { get { throw null; } set { } }
     }
     public partial class MediaNameAvailabilityContent
     {
@@ -2313,14 +2136,32 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.MediaProvisioningState left, Azure.ResourceManager.Media.Models.MediaProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaPublicNetworkAccessStatus : System.IEquatable<Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaPublicNetworkAccessStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus left, Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus left, Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MediaServiceOperationStatus
     {
         internal MediaServiceOperationStatus() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public string Status { get { throw null; } }
     }
     public partial class MediaServicePatch
@@ -2332,16 +2173,16 @@ namespace Azure.ResourceManager.Media.Models
         public System.Guid? MediaServiceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaPublicNetworkAccessStatus? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaServiceStorageAccount> StorageAccounts { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.StorageAuthentication? StorageAuthentication { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaStorageAuthentication? StorageAuthentication { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class MediaServiceStorageAccount
     {
         public MediaServiceStorageAccount(Azure.ResourceManager.Media.Models.MediaServiceStorageAccountType accountType) { }
         public Azure.ResourceManager.Media.Models.MediaServiceStorageAccountType AccountType { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ResourceIdentity Identity { get { throw null; } set { } }
         public string Status { get { throw null; } }
     }
@@ -2363,6 +2204,192 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.MediaServiceStorageAccountType left, Azure.ResourceManager.Media.Models.MediaServiceStorageAccountType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaStorageAuthentication : System.IEquatable<Azure.ResourceManager.Media.Models.MediaStorageAuthentication>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaStorageAuthentication(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MediaStorageAuthentication ManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaStorageAuthentication System { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MediaStorageAuthentication other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaStorageAuthentication left, Azure.ResourceManager.Media.Models.MediaStorageAuthentication right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MediaStorageAuthentication (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaStorageAuthentication left, Azure.ResourceManager.Media.Models.MediaStorageAuthentication right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MediaTrackSelection
+    {
+        public MediaTrackSelection() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackPropertyCondition> TrackSelections { get { throw null; } }
+    }
+    public partial class MediaTransformJobError
+    {
+        internal MediaTransformJobError() { }
+        public Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory? Category { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode? Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.MediaTransformJobErrorDetail> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.MediaTransformJobRetry? Retry { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaTransformJobErrorCategory : System.IEquatable<Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaTransformJobErrorCategory(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory Configuration { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory Content { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory Download { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory Service { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory Upload { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory left, Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory left, Azure.ResourceManager.Media.Models.MediaTransformJobErrorCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaTransformJobErrorCode : System.IEquatable<Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaTransformJobErrorCode(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode ConfigurationUnsupported { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode ContentMalformed { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode ContentUnsupported { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode DownloadNotAccessible { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode DownloadTransientError { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode ServiceError { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode ServiceTransientError { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode UploadNotAccessible { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode UploadTransientError { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode left, Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode left, Azure.ResourceManager.Media.Models.MediaTransformJobErrorCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MediaTransformJobErrorDetail
+    {
+        internal MediaTransformJobErrorDetail() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class MediaTransformJobInputAsset : Azure.ResourceManager.Media.Models.MediaTransformJobInputClip
+    {
+        public MediaTransformJobInputAsset(string assetName) { }
+        public string AssetName { get { throw null; } set { } }
+    }
+    public partial class MediaTransformJobInputBasicProperties
+    {
+        public MediaTransformJobInputBasicProperties() { }
+    }
+    public partial class MediaTransformJobInputClip : Azure.ResourceManager.Media.Models.MediaTransformJobInputBasicProperties
+    {
+        public MediaTransformJobInputClip() { }
+        public Azure.ResourceManager.Media.Models.ClipTime End { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Files { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformJobInputDefinition> InputDefinitions { get { throw null; } }
+        public string Label { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.ClipTime Start { get { throw null; } set { } }
+    }
+    public partial class MediaTransformJobInputDefinition
+    {
+        public MediaTransformJobInputDefinition() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackDescriptor> IncludedTracks { get { throw null; } }
+    }
+    public partial class MediaTransformJobInputFile : Azure.ResourceManager.Media.Models.MediaTransformJobInputDefinition
+    {
+        public MediaTransformJobInputFile() { }
+        public string Filename { get { throw null; } set { } }
+    }
+    public partial class MediaTransformJobInputHttp : Azure.ResourceManager.Media.Models.MediaTransformJobInputClip
+    {
+        public MediaTransformJobInputHttp() { }
+        public System.Uri BaseUri { get { throw null; } set { } }
+    }
+    public partial class MediaTransformJobInputs : Azure.ResourceManager.Media.Models.MediaTransformJobInputBasicProperties
+    {
+        public MediaTransformJobInputs() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformJobInputBasicProperties> Inputs { get { throw null; } }
+    }
+    public partial class MediaTransformJobInputSequence : Azure.ResourceManager.Media.Models.MediaTransformJobInputBasicProperties
+    {
+        public MediaTransformJobInputSequence() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTransformJobInputClip> Inputs { get { throw null; } }
+    }
+    public partial class MediaTransformJobOutput
+    {
+        public MediaTransformJobOutput() { }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.MediaTransformJobError Error { get { throw null; } }
+        public string Label { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaPreset PresetOverride { get { throw null; } set { } }
+        public int? Progress { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.JobState? State { get { throw null; } }
+    }
+    public partial class MediaTransformJobOutputAsset : Azure.ResourceManager.Media.Models.MediaTransformJobOutput
+    {
+        public MediaTransformJobOutputAsset(string assetName) { }
+        public string AssetName { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaTransformJobRetry : System.IEquatable<Azure.ResourceManager.Media.Models.MediaTransformJobRetry>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaTransformJobRetry(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobRetry DoNotRetry { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformJobRetry MayRetry { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MediaTransformJobRetry other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaTransformJobRetry left, Azure.ResourceManager.Media.Models.MediaTransformJobRetry right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MediaTransformJobRetry (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaTransformJobRetry left, Azure.ResourceManager.Media.Models.MediaTransformJobRetry right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MediaTransformOutput
+    {
+        public MediaTransformOutput(Azure.ResourceManager.Media.Models.MediaPreset preset) { }
+        public Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction? OnError { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaPreset Preset { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.TransformOutputsPriority? RelativePriority { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MediaTransformOutputErrorAction : System.IEquatable<Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MediaTransformOutputErrorAction(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction ContinueJob { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction StopProcessingJob { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction left, Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction left, Azure.ResourceManager.Media.Models.MediaTransformOutputErrorAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class Mp4Format : Azure.ResourceManager.Media.Models.MultiBitrateFormat
     {
         public Mp4Format(string filenamePattern) : base (default(string)) { }
@@ -2370,30 +2397,16 @@ namespace Azure.ResourceManager.Media.Models
     public partial class MultiBitrateFormat : Azure.ResourceManager.Media.Models.FormatBasicProperties
     {
         public MultiBitrateFormat(string filenamePattern) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.OutputFile> OutputFiles { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MultiBitrateOutputFile> OutputFiles { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OnErrorType : System.IEquatable<Azure.ResourceManager.Media.Models.OnErrorType>
+    public partial class MultiBitrateOutputFile
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OnErrorType(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.OnErrorType ContinueJob { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.OnErrorType StopProcessingJob { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.OnErrorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.OnErrorType left, Azure.ResourceManager.Media.Models.OnErrorType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.OnErrorType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.OnErrorType left, Azure.ResourceManager.Media.Models.OnErrorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OutputFile
-    {
-        public OutputFile(System.Collections.Generic.IEnumerable<string> labels) { }
+        public MultiBitrateOutputFile(System.Collections.Generic.IEnumerable<string> labels) { }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
+    }
+    public partial class OutputImageFileFormat : Azure.ResourceManager.Media.Models.FormatBasicProperties
+    {
+        public OutputImageFileFormat(string filenamePattern) : base (default(string)) { }
     }
     public partial class OverlayBasicProperties
     {
@@ -2423,7 +2436,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.PlayerVisibility left, Azure.ResourceManager.Media.Models.PlayerVisibility right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PngFormat : Azure.ResourceManager.Media.Models.ImageFormat
+    public partial class PngFormat : Azure.ResourceManager.Media.Models.OutputImageFileFormat
     {
         public PngFormat(string filenamePattern) : base (default(string)) { }
     }
@@ -2432,7 +2445,7 @@ namespace Azure.ResourceManager.Media.Models
         public PngImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.PngLayer> Layers { get { throw null; } }
     }
-    public partial class PngLayer : Azure.ResourceManager.Media.Models.LayerProperties
+    public partial class PngLayer : Azure.ResourceManager.Media.Models.VideoOrImageLayerProperties
     {
         public PngLayer() { }
     }
@@ -2445,18 +2458,6 @@ namespace Azure.ResourceManager.Media.Models
         public long? PresentationWindowDuration { get { throw null; } set { } }
         public long? StartTimestamp { get { throw null; } set { } }
         public long? Timescale { get { throw null; } set { } }
-    }
-    public partial class PresetConfigurations
-    {
-        public PresetConfigurations() { }
-        public Azure.ResourceManager.Media.Models.EncoderComplexitySetting? Complexity { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.InterleaveOutput? InterleaveOutput { get { throw null; } set { } }
-        public float? KeyFrameIntervalInSeconds { get { throw null; } set { } }
-        public int? MaxBitrateBps { get { throw null; } set { } }
-        public int? MaxHeight { get { throw null; } set { } }
-        public int? MaxLayers { get { throw null; } set { } }
-        public int? MinBitrateBps { get { throw null; } set { } }
-        public int? MinHeight { get { throw null; } set { } }
     }
     public partial class RectangularWindowProperties
     {
@@ -2525,24 +2526,6 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.FilteringOperations Filters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FormatBasicProperties> Formats { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageAuthentication : System.IEquatable<Azure.ResourceManager.Media.Models.StorageAuthentication>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageAuthentication(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.StorageAuthentication ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.StorageAuthentication System { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.StorageAuthentication other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.StorageAuthentication left, Azure.ResourceManager.Media.Models.StorageAuthentication right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.StorageAuthentication (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.StorageAuthentication left, Azure.ResourceManager.Media.Models.StorageAuthentication right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class StorageEncryptedAssetDecryptionInfo
     {
         internal StorageEncryptedAssetDecryptionInfo() { }
@@ -2553,7 +2536,21 @@ namespace Azure.ResourceManager.Media.Models
     {
         public StreamingEndpointAccessControl() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.AkamaiSignatureHeaderAuthenticationKey> AkamaiSignatureHeaderAuthenticationKeyList { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> IPAllow { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.IPRange> AllowedIPs { get { throw null; } }
+    }
+    public partial class StreamingEndpointCapacity
+    {
+        internal StreamingEndpointCapacity() { }
+        public int? Default { get { throw null; } }
+        public int? Maximum { get { throw null; } }
+        public int? Minimum { get { throw null; } }
+        public string ScaleType { get { throw null; } }
+    }
+    public partial class StreamingEndpointCurrentSku
+    {
+        public StreamingEndpointCurrentSku() { }
+        public int? Capacity { get { throw null; } set { } }
+        public string Name { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamingEndpointResourceState : System.IEquatable<Azure.ResourceManager.Media.Models.StreamingEndpointResourceState>
@@ -2577,6 +2574,13 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.StreamingEndpointResourceState left, Azure.ResourceManager.Media.Models.StreamingEndpointResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class StreamingEndpointSkuInfo
+    {
+        internal StreamingEndpointSkuInfo() { }
+        public Azure.ResourceManager.Media.Models.StreamingEndpointCapacity Capacity { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public string SkuName { get { throw null; } }
+    }
     public partial class StreamingEntityScaleUnit
     {
         public StreamingEntityScaleUnit() { }
@@ -2589,7 +2593,7 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingLocatorContentKeyType? KeyType { get { throw null; } }
         public string LabelReferenceInStreamingPolicy { get { throw null; } set { } }
         public string PolicyName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.TrackSelection> Tracks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.MediaTrackSelection> Tracks { get { throw null; } }
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2614,33 +2618,53 @@ namespace Azure.ResourceManager.Media.Models
     public partial class StreamingPath
     {
         internal StreamingPath() { }
-        public Azure.ResourceManager.Media.Models.EncryptionScheme EncryptionScheme { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme EncryptionScheme { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Paths { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StreamingPolicyStreamingProtocol StreamingProtocol { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StreamingPathEncryptionScheme : System.IEquatable<Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StreamingPathEncryptionScheme(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme CommonEncryptionCbcs { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme CommonEncryptionCenc { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme EnvelopeEncryption { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme NoEncryption { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme left, Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme left, Azure.ResourceManager.Media.Models.StreamingPathEncryptionScheme right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StreamingPolicyContentKey
     {
         public StreamingPolicyContentKey() { }
         public string Label { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackSelection> Tracks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaTrackSelection> Tracks { get { throw null; } }
     }
     public partial class StreamingPolicyContentKeys
     {
         public StreamingPolicyContentKeys() { }
-        public Azure.ResourceManager.Media.Models.DefaultKey DefaultKey { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.EncryptionSchemeDefaultKey DefaultKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.StreamingPolicyContentKey> KeyToTrackMappings { get { throw null; } }
     }
     public partial class StreamingPolicyFairPlayConfiguration
     {
         public StreamingPolicyFairPlayConfiguration(bool allowPersistentLicense) { }
         public bool AllowPersistentLicense { get { throw null; } set { } }
-        public string CustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        public System.Uri CustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
     }
     public partial class StreamingPolicyPlayReadyConfiguration
     {
         public StreamingPolicyPlayReadyConfiguration() { }
-        public string CustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
+        public System.Uri CustomLicenseAcquisitionUriTemplate { get { throw null; } set { } }
         public string PlayReadyCustomAttributes { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2680,25 +2704,6 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(Azure.ResourceManager.Media.Models.StreamOptionsFlag left, Azure.ResourceManager.Media.Models.StreamOptionsFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.Media.Models.StreamOptionsFlag (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.StreamOptionsFlag left, Azure.ResourceManager.Media.Models.StreamOptionsFlag right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StretchMode : System.IEquatable<Azure.ResourceManager.Media.Models.StretchMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StretchMode(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.StretchMode AutoFit { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.StretchMode AutoSize { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.StretchMode None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.StretchMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.StretchMode left, Azure.ResourceManager.Media.Models.StretchMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.StretchMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.StretchMode left, Azure.ResourceManager.Media.Models.StretchMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SyncStorageKeysContent
@@ -2768,7 +2773,7 @@ namespace Azure.ResourceManager.Media.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TrackPropertyType(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.TrackPropertyType FourCC { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.TrackPropertyType FourCharacterCode { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.TrackPropertyType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.TrackPropertyType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2779,18 +2784,6 @@ namespace Azure.ResourceManager.Media.Models
         public static implicit operator Azure.ResourceManager.Media.Models.TrackPropertyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.TrackPropertyType left, Azure.ResourceManager.Media.Models.TrackPropertyType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TrackSelection
-    {
-        public TrackSelection() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.TrackPropertyCondition> TrackSelections { get { throw null; } }
-    }
-    public partial class TransformOutput
-    {
-        public TransformOutput(Azure.ResourceManager.Media.Models.MediaPreset preset) { }
-        public Azure.ResourceManager.Media.Models.OnErrorType? OnError { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.MediaPreset Preset { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.TransformOutputsPriority? RelativePriority { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TransformOutputsPriority : System.IEquatable<Azure.ResourceManager.Media.Models.TransformOutputsPriority>
@@ -2825,15 +2818,22 @@ namespace Azure.ResourceManager.Media.Models
         public VideoAnalyzerPreset() { }
         public Azure.ResourceManager.Media.Models.InsightsType? InsightsToExtract { get { throw null; } set { } }
     }
-    public partial class VideoLayer : Azure.ResourceManager.Media.Models.LayerProperties
+    public partial class VideoLayer : Azure.ResourceManager.Media.Models.VideoOrImageLayerProperties
     {
         public VideoLayer(int bitrate) { }
-        public bool? AdaptiveBFrame { get { throw null; } set { } }
         public int? BFrames { get { throw null; } set { } }
         public int Bitrate { get { throw null; } set { } }
         public string FrameRate { get { throw null; } set { } }
         public int? MaxBitrate { get { throw null; } set { } }
         public int? Slices { get { throw null; } set { } }
+        public bool? UseAdaptiveBFrame { get { throw null; } set { } }
+    }
+    public partial class VideoOrImageLayerProperties
+    {
+        public VideoOrImageLayerProperties() { }
+        public string Height { get { throw null; } set { } }
+        public string Label { get { throw null; } set { } }
+        public string Width { get { throw null; } set { } }
     }
     public partial class VideoOverlay : Azure.ResourceManager.Media.Models.OverlayBasicProperties
     {

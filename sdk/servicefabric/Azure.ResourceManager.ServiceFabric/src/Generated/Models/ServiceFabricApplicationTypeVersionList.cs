@@ -11,10 +11,7 @@ using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The list of application type version resources for the specified application type name resource.
-    /// Serialized Name: ApplicationTypeVersionResourceList
-    /// </summary>
+    /// <summary> The list of application type version resources for the specified application type name resource. </summary>
     internal partial class ServiceFabricApplicationTypeVersionList
     {
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionList. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionList. </summary>
-        /// <param name="value"> Serialized Name: ApplicationTypeVersionResourceList.value. </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of application type version list results if there are any.
-        /// Serialized Name: ApplicationTypeVersionResourceList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> URL to get the next set of application type version list results if there are any. </param>
         internal ServiceFabricApplicationTypeVersionList(IReadOnlyList<ServiceFabricApplicationTypeVersionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: ApplicationTypeVersionResourceList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<ServiceFabricApplicationTypeVersionData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of application type version list results if there are any.
-        /// Serialized Name: ApplicationTypeVersionResourceList.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of application type version list results if there are any. </summary>
         public string NextLink { get; }
     }
 }
