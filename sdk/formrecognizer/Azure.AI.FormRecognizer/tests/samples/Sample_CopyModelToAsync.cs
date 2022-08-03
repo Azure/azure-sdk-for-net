@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [RecordedTest]
-        public async Task CopyModelAsync()
+        public async Task CopyModelToAsync()
         {
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
 #if SNIPPET

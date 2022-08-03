@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelOperationCanPollFromNewObject()
+        public async Task CopyModelToOperationCanPollFromNewObject()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var modelId = Recording.GenerateId();
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelOperationPercentageCompletedValue()
+        public async Task CopyModelToOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();

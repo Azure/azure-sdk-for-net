@@ -127,7 +127,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartCopyModelArgumentValidation()
+        public void CopyModelToArgumentValidation()
         {
             var fakeUri = new Uri("https://fake.uri");
             var copyAuth = new CopyAuthorization("<resourceId>", "<region>", "<modelId>", fakeUri, "<accesstoken>", default);

@@ -174,7 +174,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartCopyModelWithError()
+        public void CopyModelToWithError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {

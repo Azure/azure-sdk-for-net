@@ -308,7 +308,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task CopyModel(bool useTokenCredential)
+        public async Task CopyModelTo(bool useTokenCredential)
         {
             var sourceClient = CreateDocumentModelAdministrationClient(useTokenCredential);
             var targetClient = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -353,7 +353,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelWithTags()
+        public async Task CopyModelToWithTags()
         {
             var sourceClient = CreateDocumentModelAdministrationClient();
             var targetClient = CreateDocumentModelAdministrationClient();
@@ -375,7 +375,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelErrorAsync()
+        public async Task CopyModelToErrorAsync()
         {
             var sourceClient = CreateDocumentModelAdministrationClient();
             var targetClient = CreateDocumentModelAdministrationClient();
