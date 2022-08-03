@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationHubNameAvailabilityResult>> CheckNotificationHubNamespaceNameAvailabilityAsync(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceNameAvailability");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationHubNameAvailabilityResult> CheckNotificationHubNamespaceNameAvailability(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceNameAvailability");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceAvailability");
             scope.Start();
             try
             {

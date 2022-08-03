@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="content"> The notificationHub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubNameAvailabilityResult>> CheckNotificationHubNameAvailabilityAsync(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubNameAvailability");
+            using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
             scope.Start();
             try
             {
@@ -353,11 +353,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="content"> The notificationHub name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NotificationHubNameAvailabilityResult> CheckNotificationHubNameAvailability(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubNameAvailability");
+            using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
             scope.Start();
             try
             {

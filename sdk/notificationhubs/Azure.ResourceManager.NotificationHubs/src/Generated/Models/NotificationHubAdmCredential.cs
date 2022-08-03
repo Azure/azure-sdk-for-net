@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub AdmCredential. </summary>
+    /// <summary>
+    /// Description of a NotificationHub AdmCredential.
+    /// Serialized Name: AdmCredential
+    /// </summary>
     public partial class NotificationHubAdmCredential
     {
         /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
-        /// <param name="clientId"> The client identifier. </param>
-        /// <param name="clientSecret"> The credential secret access key. </param>
-        /// <param name="authTokenUri"> The URL of the authorization token. </param>
+        /// <param name="clientId">
+        /// The client identifier.
+        /// Serialized Name: AdmCredential.properties.clientId
+        /// </param>
+        /// <param name="clientSecret">
+        /// The credential secret access key.
+        /// Serialized Name: AdmCredential.properties.clientSecret
+        /// </param>
+        /// <param name="authTokenUri">
+        /// The URL of the authorization token.
+        /// Serialized Name: AdmCredential.properties.authTokenUrl
+        /// </param>
         internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri)
         {
             ClientId = clientId;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             AuthTokenUri = authTokenUri;
         }
 
-        /// <summary> The client identifier. </summary>
+        /// <summary>
+        /// The client identifier.
+        /// Serialized Name: AdmCredential.properties.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> The credential secret access key. </summary>
+        /// <summary>
+        /// The credential secret access key.
+        /// Serialized Name: AdmCredential.properties.clientSecret
+        /// </summary>
         public string ClientSecret { get; set; }
-        /// <summary> The URL of the authorization token. </summary>
+        /// <summary>
+        /// The URL of the authorization token.
+        /// Serialized Name: AdmCredential.properties.authTokenUrl
+        /// </summary>
         public Uri AuthTokenUri { get; set; }
     }
 }

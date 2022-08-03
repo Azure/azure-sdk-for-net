@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Parameters supplied to the Patch Namespace operation. </summary>
+    /// <summary>
+    /// Parameters supplied to the Patch Namespace operation.
+    /// Serialized Name: NamespacePatchParameters
+    /// </summary>
     public partial class NotificationHubNamespacePatch
     {
         /// <summary> Initializes a new instance of NotificationHubNamespacePatch. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
+        /// <summary>
+        /// Resource tags
+        /// Serialized Name: NamespacePatchParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The sku of the created namespace. </summary>
-        public NotificationHubsSku Sku { get; set; }
+        /// <summary>
+        /// The sku of the created namespace
+        /// Serialized Name: NamespacePatchParameters.sku
+        /// </summary>
+        public NotificationHubSku Sku { get; set; }
     }
 }

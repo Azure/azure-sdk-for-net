@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The AuthorizationRuleAccessRight. </summary>
+    /// <summary>
+    /// The AuthorizationRuleAccessRight.
+    /// Serialized Name: AccessRights
+    /// </summary>
     public enum AuthorizationRuleAccessRight
     {
-        /// <summary> Manage. </summary>
+        /// <summary>
+        /// Manage
+        /// Serialized Name: AccessRights.Manage
+        /// </summary>
         Manage,
-        /// <summary> Send. </summary>
+        /// <summary>
+        /// Send
+        /// Serialized Name: AccessRights.Send
+        /// </summary>
         Send,
-        /// <summary> Listen. </summary>
+        /// <summary>
+        /// Listen
+        /// Serialized Name: AccessRights.Listen
+        /// </summary>
         Listen
     }
 }

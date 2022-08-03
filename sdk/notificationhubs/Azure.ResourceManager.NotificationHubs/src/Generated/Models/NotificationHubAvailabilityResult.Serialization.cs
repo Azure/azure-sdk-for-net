@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubNameAvailabilityResult : IUtf8JsonSerializable
+    public partial class NotificationHubAvailabilityResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubNameAvailabilityResult DeserializeNotificationHubNameAvailabilityResult(JsonElement element)
+        internal static NotificationHubAvailabilityResult DeserializeNotificationHubAvailabilityResult(JsonElement element)
         {
             Optional<bool> isAvailiable = default;
-            Optional<NotificationHubsSku> sku = default;
+            Optional<NotificationHubSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = NotificationHubsSku.DeserializeNotificationHubsSku(property.Value);
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     continue;
                 }
             }
-            return new NotificationHubNameAvailabilityResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(isAvailiable), sku.Value);
+            return new NotificationHubAvailabilityResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(isAvailiable), sku.Value);
         }
     }
 }

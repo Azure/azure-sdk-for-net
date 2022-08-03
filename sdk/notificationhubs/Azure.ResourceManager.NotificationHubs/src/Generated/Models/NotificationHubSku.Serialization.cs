@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubsSku : IUtf8JsonSerializable
+    public partial class NotificationHubSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubsSku DeserializeNotificationHubsSku(JsonElement element)
+        internal static NotificationHubSku DeserializeNotificationHubSku(JsonElement element)
         {
-            NotificationHubsSkuName name = default;
+            NotificationHubSkuName name = default;
             Optional<string> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new NotificationHubsSkuName(property.Value.GetString());
+                    name = new NotificationHubSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     continue;
                 }
             }
-            return new NotificationHubsSku(name, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity));
+            return new NotificationHubSku(name, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity));
         }
     }
 }

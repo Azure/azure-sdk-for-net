@@ -612,11 +612,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public virtual async Task<Response<RequiredForResourcesList>> GetRequiredForAsync(string sourceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RequiredForResourcesList>> GetRequiredForResourcesAsync(ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.GetRequiredFor");
+            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.GetRequiredForResources");
             scope.Start();
             try
             {
@@ -638,11 +638,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public virtual Response<RequiredForResourcesList> GetRequiredFor(string sourceId, CancellationToken cancellationToken = default)
+        public virtual Response<RequiredForResourcesList> GetRequiredForResources(ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
-            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.GetRequiredFor");
+            using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.GetRequiredForResources");
             scope.Start();
             try
             {

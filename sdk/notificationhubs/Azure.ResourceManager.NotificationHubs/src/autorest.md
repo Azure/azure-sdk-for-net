@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+mgmt-debug: 
+  show-serialized-names: true
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}: NotificationHubNamespaceAuthorizationRule
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}: NotificationHubAuthorizationRule
@@ -46,18 +49,21 @@ rename-mapping:
   NamespaceResource: NotificationHubNamespace
   NotificationHubResource: NotificationHub
   SharedAccessAuthorizationRuleResource: NotificationHubAuthorizationRule
-  CheckAvailabilityParameters: NotificationHubNameAvailabilityContent
-  CheckAvailabilityResult: NotificationHubNameAvailabilityResult
+  CheckAvailabilityParameters: NotificationHubAvailabilityContent
+  CheckAvailabilityResult: NotificationHubAvailabilityResult
   DebugSendResponse: NotificationHubTestSendResult
   NamespaceListResult: NotificationHubNamespaceListResult
   NamespaceType: NotificationHubNamespaceType
   PnsCredentialsResource: NotificationHubPnsCredentials
   PolicykeyResource: NotificationHubPolicyKey
   ResourceListKeys: NotificationHubResourceKeys
+  Sku: NotificationHubSku
+  SkuName: NotificationHubSkuName
+  SharedAccessAuthorizationRuleCreateOrUpdateParameters: SharedAccessAuthorizationRuleCreateOrUpdateContent
 
 override-operation-name:
-  NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubNameAvailability
-  Namespaces_CheckAvailability: CheckNotificationHubNamespaceNameAvailability
+  NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubAvailability
+  Namespaces_CheckAvailability: CheckNotificationHubNamespaceAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -90,4 +96,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+- from: notificationhubs.json
+  where: $.definitions
+  transform: >
+    $.NotificationHubProperties.properties.name['x-ms-client-name'] = 'NotificationHubName';
+    $.NamespaceProperties.properties.name['x-ms-client-name'] = 'NamespaceName';
 ```

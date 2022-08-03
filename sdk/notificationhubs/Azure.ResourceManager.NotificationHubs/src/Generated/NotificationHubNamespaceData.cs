@@ -29,24 +29,69 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="namePropertiesName"> The name of the namespace. </param>
-        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
-        /// <param name="region"> Specifies the targeted region in which the namespace should be created. It can be any of the following values: Australia East, Australia Southeast, Central US, East US, East US 2, West US, North Central US, South Central US, East Asia, Southeast Asia, Brazil South, Japan East, Japan West, North Europe, West Europe. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="status"> Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting. </param>
-        /// <param name="createdOn"> The time the namespace was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform NotificationHub operations. </param>
-        /// <param name="subscriptionId"> The Id of the Azure subscription associated with the namespace. </param>
-        /// <param name="scaleUnit"> ScaleUnit where the namespace gets created. </param>
-        /// <param name="isEnabled"> Whether or not the namespace is currently enabled. </param>
-        /// <param name="isCritical"> Whether or not the namespace is set as Critical. </param>
-        /// <param name="dataCenter"> Data center for the namespace. </param>
-        /// <param name="namespaceType"> The namespace type. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
-        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string provisioningState, string region, string metricId, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, NotificationHubNamespaceType? namespaceType, NotificationHubsSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="namespaceName">
+        /// The name of the namespace.
+        /// Serialized Name: NamespaceResource.properties.name
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the Namespace.
+        /// Serialized Name: NamespaceResource.properties.provisioningState
+        /// </param>
+        /// <param name="region">
+        /// Specifies the targeted region in which the namespace should be created. It can be any of the following values: Australia East, Australia Southeast, Central US, East US, East US 2, West US, North Central US, South Central US, East Asia, Southeast Asia, Brazil South, Japan East, Japan West, North Europe, West Europe
+        /// Serialized Name: NamespaceResource.properties.region
+        /// </param>
+        /// <param name="metricId">
+        /// Identifier for Azure Insights metrics
+        /// Serialized Name: NamespaceResource.properties.metricId
+        /// </param>
+        /// <param name="status">
+        /// Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting
+        /// Serialized Name: NamespaceResource.properties.status
+        /// </param>
+        /// <param name="createdOn">
+        /// The time the namespace was created.
+        /// Serialized Name: NamespaceResource.properties.createdAt
+        /// </param>
+        /// <param name="updatedOn">
+        /// The time the namespace was updated.
+        /// Serialized Name: NamespaceResource.properties.updatedAt
+        /// </param>
+        /// <param name="serviceBusEndpoint">
+        /// Endpoint you can use to perform NotificationHub operations.
+        /// Serialized Name: NamespaceResource.properties.serviceBusEndpoint
+        /// </param>
+        /// <param name="subscriptionId">
+        /// The Id of the Azure subscription associated with the namespace.
+        /// Serialized Name: NamespaceResource.properties.subscriptionId
+        /// </param>
+        /// <param name="scaleUnit">
+        /// ScaleUnit where the namespace gets created
+        /// Serialized Name: NamespaceResource.properties.scaleUnit
+        /// </param>
+        /// <param name="isEnabled">
+        /// Whether or not the namespace is currently enabled.
+        /// Serialized Name: NamespaceResource.properties.enabled
+        /// </param>
+        /// <param name="isCritical">
+        /// Whether or not the namespace is set as Critical.
+        /// Serialized Name: NamespaceResource.properties.critical
+        /// </param>
+        /// <param name="dataCenter">
+        /// Data center for the namespace
+        /// Serialized Name: NamespaceResource.properties.dataCenter
+        /// </param>
+        /// <param name="namespaceType">
+        /// The namespace type.
+        /// Serialized Name: NamespaceResource.properties.namespaceType
+        /// </param>
+        /// <param name="sku">
+        /// The sku of the created namespace
+        /// Serialized Name: Resource.sku
+        /// </param>
+        internal NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, string provisioningState, string region, string metricId, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, Uri serviceBusEndpoint, string subscriptionId, string scaleUnit, bool? isEnabled, bool? isCritical, string dataCenter, NotificationHubNamespaceType? namespaceType, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
-            NamePropertiesName = namePropertiesName;
+            NamespaceName = namespaceName;
             ProvisioningState = provisioningState;
             Region = region;
             MetricId = metricId;
@@ -63,35 +108,80 @@ namespace Azure.ResourceManager.NotificationHubs
             Sku = sku;
         }
 
-        /// <summary> The name of the namespace. </summary>
-        public string NamePropertiesName { get; set; }
-        /// <summary> Provisioning state of the Namespace. </summary>
+        /// <summary>
+        /// The name of the namespace.
+        /// Serialized Name: NamespaceResource.properties.name
+        /// </summary>
+        public string NamespaceName { get; set; }
+        /// <summary>
+        /// Provisioning state of the Namespace.
+        /// Serialized Name: NamespaceResource.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; set; }
-        /// <summary> Specifies the targeted region in which the namespace should be created. It can be any of the following values: Australia East, Australia Southeast, Central US, East US, East US 2, West US, North Central US, South Central US, East Asia, Southeast Asia, Brazil South, Japan East, Japan West, North Europe, West Europe. </summary>
+        /// <summary>
+        /// Specifies the targeted region in which the namespace should be created. It can be any of the following values: Australia East, Australia Southeast, Central US, East US, East US 2, West US, North Central US, South Central US, East Asia, Southeast Asia, Brazil South, Japan East, Japan West, North Europe, West Europe
+        /// Serialized Name: NamespaceResource.properties.region
+        /// </summary>
         public string Region { get; set; }
-        /// <summary> Identifier for Azure Insights metrics. </summary>
+        /// <summary>
+        /// Identifier for Azure Insights metrics
+        /// Serialized Name: NamespaceResource.properties.metricId
+        /// </summary>
         public string MetricId { get; }
-        /// <summary> Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting. </summary>
+        /// <summary>
+        /// Status of the namespace. It can be any of these values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting
+        /// Serialized Name: NamespaceResource.properties.status
+        /// </summary>
         public string Status { get; set; }
-        /// <summary> The time the namespace was created. </summary>
+        /// <summary>
+        /// The time the namespace was created.
+        /// Serialized Name: NamespaceResource.properties.createdAt
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The time the namespace was updated. </summary>
+        /// <summary>
+        /// The time the namespace was updated.
+        /// Serialized Name: NamespaceResource.properties.updatedAt
+        /// </summary>
         public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary> Endpoint you can use to perform NotificationHub operations. </summary>
+        /// <summary>
+        /// Endpoint you can use to perform NotificationHub operations.
+        /// Serialized Name: NamespaceResource.properties.serviceBusEndpoint
+        /// </summary>
         public Uri ServiceBusEndpoint { get; set; }
-        /// <summary> The Id of the Azure subscription associated with the namespace. </summary>
+        /// <summary>
+        /// The Id of the Azure subscription associated with the namespace.
+        /// Serialized Name: NamespaceResource.properties.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> ScaleUnit where the namespace gets created. </summary>
+        /// <summary>
+        /// ScaleUnit where the namespace gets created
+        /// Serialized Name: NamespaceResource.properties.scaleUnit
+        /// </summary>
         public string ScaleUnit { get; set; }
-        /// <summary> Whether or not the namespace is currently enabled. </summary>
+        /// <summary>
+        /// Whether or not the namespace is currently enabled.
+        /// Serialized Name: NamespaceResource.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Whether or not the namespace is set as Critical. </summary>
+        /// <summary>
+        /// Whether or not the namespace is set as Critical.
+        /// Serialized Name: NamespaceResource.properties.critical
+        /// </summary>
         public bool? IsCritical { get; set; }
-        /// <summary> Data center for the namespace. </summary>
+        /// <summary>
+        /// Data center for the namespace
+        /// Serialized Name: NamespaceResource.properties.dataCenter
+        /// </summary>
         public string DataCenter { get; set; }
-        /// <summary> The namespace type. </summary>
+        /// <summary>
+        /// The namespace type.
+        /// Serialized Name: NamespaceResource.properties.namespaceType
+        /// </summary>
         public NotificationHubNamespaceType? NamespaceType { get; set; }
-        /// <summary> The sku of the created namespace. </summary>
-        public NotificationHubsSku Sku { get; set; }
+        /// <summary>
+        /// The sku of the created namespace
+        /// Serialized Name: Resource.sku
+        /// </summary>
+        public NotificationHubSku Sku { get; set; }
     }
 }

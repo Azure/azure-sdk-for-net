@@ -18,7 +18,6 @@ modelerfour:
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
-  AffectedMoveResource.sourceId: -|arm-id
   AzureResourceReference.sourceArmResourceId: -|arm-id
   LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
@@ -29,7 +28,6 @@ rename-mapping:
   MoveResourceDependency.isOptional: -|boolean
   MoveResourceDependencyOverride.id: -|arm-id
   MoveResourceDependencyOverride.targetId: -|arm-id
-  MoveResourceProperties.sourceId: -|arm-id
   MoveResourceProperties.targetId: -|arm-id
   MoveResourceProperties.existingTargetId: -|arm-id
   NicIpConfigurationResourceSettings.primary: IsValidateOnly
@@ -82,12 +80,16 @@ rename-mapping:
   UnresolvedDependencyCollection: MoverUnresolvedDependencyList
   ZoneRedundant: ResourceZoneRedundantSetting
 
+override-operation-name:
+  MoveCollections_ListRequiredFor: GetRequiredForResources
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'sourceId': 'arm-id'
 
 rename-rules:
   CPU: Cpu

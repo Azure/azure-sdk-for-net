@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateParameters : IUtf8JsonSerializable
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

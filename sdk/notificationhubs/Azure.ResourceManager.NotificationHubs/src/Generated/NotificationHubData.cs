@@ -30,19 +30,49 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="namePropertiesName"> The NotificationHub name. </param>
-        /// <param name="registrationTtl"> The RegistrationTtl of the created NotificationHub. </param>
-        /// <param name="authorizationRules"> The AuthorizationRules of the created NotificationHub. </param>
-        /// <param name="apnsCredential"> The ApnsCredential of the created NotificationHub. </param>
-        /// <param name="wnsCredential"> The WnsCredential of the created NotificationHub. </param>
-        /// <param name="gcmCredential"> The GcmCredential of the created NotificationHub. </param>
-        /// <param name="mpnsCredential"> The MpnsCredential of the created NotificationHub. </param>
-        /// <param name="admCredential"> The AdmCredential of the created NotificationHub. </param>
-        /// <param name="baiduCredential"> The BaiduCredential of the created NotificationHub. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
-        internal NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubsSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="notificationHubName">
+        /// The NotificationHub name.
+        /// Serialized Name: NotificationHubResource.properties.name
+        /// </param>
+        /// <param name="registrationTtl">
+        /// The RegistrationTtl of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.registrationTtl
+        /// </param>
+        /// <param name="authorizationRules">
+        /// The AuthorizationRules of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.authorizationRules
+        /// </param>
+        /// <param name="apnsCredential">
+        /// The ApnsCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.apnsCredential
+        /// </param>
+        /// <param name="wnsCredential">
+        /// The WnsCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.wnsCredential
+        /// </param>
+        /// <param name="gcmCredential">
+        /// The GcmCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.gcmCredential
+        /// </param>
+        /// <param name="mpnsCredential">
+        /// The MpnsCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.mpnsCredential
+        /// </param>
+        /// <param name="admCredential">
+        /// The AdmCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.admCredential
+        /// </param>
+        /// <param name="baiduCredential">
+        /// The BaiduCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.baiduCredential
+        /// </param>
+        /// <param name="sku">
+        /// The sku of the created namespace
+        /// Serialized Name: Resource.sku
+        /// </param>
+        internal NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
-            NamePropertiesName = namePropertiesName;
+            NotificationHubName = notificationHubName;
             RegistrationTtl = registrationTtl;
             AuthorizationRules = authorizationRules;
             ApnsCredential = apnsCredential;
@@ -54,25 +84,55 @@ namespace Azure.ResourceManager.NotificationHubs
             Sku = sku;
         }
 
-        /// <summary> The NotificationHub name. </summary>
-        public string NamePropertiesName { get; set; }
-        /// <summary> The RegistrationTtl of the created NotificationHub. </summary>
+        /// <summary>
+        /// The NotificationHub name.
+        /// Serialized Name: NotificationHubResource.properties.name
+        /// </summary>
+        public string NotificationHubName { get; set; }
+        /// <summary>
+        /// The RegistrationTtl of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.registrationTtl
+        /// </summary>
         public TimeSpan? RegistrationTtl { get; set; }
-        /// <summary> The AuthorizationRules of the created NotificationHub. </summary>
+        /// <summary>
+        /// The AuthorizationRules of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.authorizationRules
+        /// </summary>
         public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
-        /// <summary> The ApnsCredential of the created NotificationHub. </summary>
+        /// <summary>
+        /// The ApnsCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.apnsCredential
+        /// </summary>
         public NotificationHubApnsCredential ApnsCredential { get; set; }
-        /// <summary> The WnsCredential of the created NotificationHub. </summary>
+        /// <summary>
+        /// The WnsCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.wnsCredential
+        /// </summary>
         public NotificationHubWnsCredential WnsCredential { get; set; }
-        /// <summary> The GcmCredential of the created NotificationHub. </summary>
+        /// <summary>
+        /// The GcmCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.gcmCredential
+        /// </summary>
         public NotificationHubGcmCredential GcmCredential { get; set; }
-        /// <summary> The MpnsCredential of the created NotificationHub. </summary>
+        /// <summary>
+        /// The MpnsCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.mpnsCredential
+        /// </summary>
         public NotificationHubMpnsCredential MpnsCredential { get; set; }
-        /// <summary> The AdmCredential of the created NotificationHub. </summary>
+        /// <summary>
+        /// The AdmCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.admCredential
+        /// </summary>
         public NotificationHubAdmCredential AdmCredential { get; set; }
-        /// <summary> The BaiduCredential of the created NotificationHub. </summary>
+        /// <summary>
+        /// The BaiduCredential of the created NotificationHub
+        /// Serialized Name: NotificationHubResource.properties.baiduCredential
+        /// </summary>
         public NotificationHubBaiduCredential BaiduCredential { get; set; }
-        /// <summary> The sku of the created namespace. </summary>
-        public NotificationHubsSku Sku { get; set; }
+        /// <summary>
+        /// The sku of the created namespace
+        /// Serialized Name: Resource.sku
+        /// </summary>
+        public NotificationHubSku Sku { get; set; }
     }
 }

@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The namespace type. </summary>
+    /// <summary>
+    /// The namespace type.
+    /// Serialized Name: NamespaceType
+    /// </summary>
     public enum NotificationHubNamespaceType
     {
-        /// <summary> Messaging. </summary>
+        /// <summary>
+        /// Messaging
+        /// Serialized Name: NamespaceType.Messaging
+        /// </summary>
         Messaging,
-        /// <summary> NotificationHub. </summary>
+        /// <summary>
+        /// NotificationHub
+        /// Serialized Name: NamespaceType.NotificationHub
+        /// </summary>
         NotificationHub
     }
 }

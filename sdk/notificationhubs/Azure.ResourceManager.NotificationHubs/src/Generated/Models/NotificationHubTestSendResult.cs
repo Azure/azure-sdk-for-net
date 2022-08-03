@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub Resource. </summary>
+    /// <summary>
+    /// Description of a NotificationHub Resource.
+    /// Serialized Name: DebugSendResponse
+    /// </summary>
     public partial class NotificationHubTestSendResult : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NotificationHubTestSendResult. </summary>
@@ -28,11 +31,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="success"> successful send. </param>
-        /// <param name="failure"> send failure. </param>
-        /// <param name="results"> actual failure description. </param>
-        /// <param name="sku"> The sku of the created namespace. </param>
-        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, float? success, float? failure, BinaryData results, NotificationHubsSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="success">
+        /// successful send
+        /// Serialized Name: DebugSendResponse.properties.success
+        /// </param>
+        /// <param name="failure">
+        /// send failure
+        /// Serialized Name: DebugSendResponse.properties.failure
+        /// </param>
+        /// <param name="results">
+        /// actual failure description
+        /// Serialized Name: DebugSendResponse.properties.results
+        /// </param>
+        /// <param name="sku">
+        /// The sku of the created namespace
+        /// Serialized Name: Resource.sku
+        /// </param>
+        internal NotificationHubTestSendResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, float? success, float? failure, BinaryData results, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Success = success;
             Failure = failure;
@@ -40,13 +55,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Sku = sku;
         }
 
-        /// <summary> successful send. </summary>
+        /// <summary>
+        /// successful send
+        /// Serialized Name: DebugSendResponse.properties.success
+        /// </summary>
         public float? Success { get; set; }
-        /// <summary> send failure. </summary>
+        /// <summary>
+        /// send failure
+        /// Serialized Name: DebugSendResponse.properties.failure
+        /// </summary>
         public float? Failure { get; set; }
-        /// <summary> actual failure description. </summary>
+        /// <summary>
+        /// actual failure description
+        /// Serialized Name: DebugSendResponse.properties.results
+        /// </summary>
         public BinaryData Results { get; set; }
-        /// <summary> The sku of the created namespace. </summary>
-        public NotificationHubsSku Sku { get; set; }
+        /// <summary>
+        /// The sku of the created namespace
+        /// Serialized Name: Resource.sku
+        /// </summary>
+        public NotificationHubSku Sku { get; set; }
     }
 }

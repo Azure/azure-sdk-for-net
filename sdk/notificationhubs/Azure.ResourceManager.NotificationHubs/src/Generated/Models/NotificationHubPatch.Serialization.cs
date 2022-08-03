@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(NotificationHubName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WriteStringValue(NotificationHubName);
             }
             if (Optional.IsDefined(RegistrationTtl))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubPatch DeserializeNotificationHubPatch(JsonElement element)
         {
-            Optional<NotificationHubsSku> sku = default;
+            Optional<NotificationHubSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = NotificationHubsSku.DeserializeNotificationHubsSku(property.Value);
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

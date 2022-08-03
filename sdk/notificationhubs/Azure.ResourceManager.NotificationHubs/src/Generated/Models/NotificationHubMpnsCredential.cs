@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub MpnsCredential. </summary>
+    /// <summary>
+    /// Description of a NotificationHub MpnsCredential.
+    /// Serialized Name: MpnsCredential
+    /// </summary>
     public partial class NotificationHubMpnsCredential
     {
         /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubMpnsCredential. </summary>
-        /// <param name="mpnsCertificate"> The MPNS certificate. </param>
-        /// <param name="certificateKey"> The certificate key for this credential. </param>
-        /// <param name="thumbprint"> The MPNS certificate Thumbprint. </param>
+        /// <param name="mpnsCertificate">
+        /// The MPNS certificate.
+        /// Serialized Name: MpnsCredential.properties.mpnsCertificate
+        /// </param>
+        /// <param name="certificateKey">
+        /// The certificate key for this credential.
+        /// Serialized Name: MpnsCredential.properties.certificateKey
+        /// </param>
+        /// <param name="thumbprint">
+        /// The MPNS certificate Thumbprint
+        /// Serialized Name: MpnsCredential.properties.thumbprint
+        /// </param>
         internal NotificationHubMpnsCredential(string mpnsCertificate, string certificateKey, BinaryData thumbprint)
         {
             MpnsCertificate = mpnsCertificate;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Thumbprint = thumbprint;
         }
 
-        /// <summary> The MPNS certificate. </summary>
+        /// <summary>
+        /// The MPNS certificate.
+        /// Serialized Name: MpnsCredential.properties.mpnsCertificate
+        /// </summary>
         public string MpnsCertificate { get; set; }
-        /// <summary> The certificate key for this credential. </summary>
+        /// <summary>
+        /// The certificate key for this credential.
+        /// Serialized Name: MpnsCredential.properties.certificateKey
+        /// </summary>
         public string CertificateKey { get; set; }
-        /// <summary> The MPNS certificate Thumbprint. </summary>
+        /// <summary>
+        /// The MPNS certificate Thumbprint
+        /// Serialized Name: MpnsCredential.properties.thumbprint
+        /// </summary>
         public BinaryData Thumbprint { get; set; }
     }
 }
