@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingPolicyContentKey. </summary>
         public StreamingPolicyContentKey()
         {
-            Tracks = new ChangeTrackingList<TrackSelection>();
+            Tracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of StreamingPolicyContentKey. </summary>
         /// <param name="label"> Label can be used to specify Content Key when creating a Streaming Locator. </param>
         /// <param name="policyName"> Policy used by Content Key. </param>
         /// <param name="tracks"> Tracks which use this content key. </param>
-        internal StreamingPolicyContentKey(string label, string policyName, IList<TrackSelection> tracks)
+        internal StreamingPolicyContentKey(string label, string policyName, IList<MediaTrackSelection> tracks)
         {
             Label = label;
             PolicyName = policyName;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Policy used by Content Key. </summary>
         public string PolicyName { get; set; }
         /// <summary> Tracks which use this content key. </summary>
-        public IList<TrackSelection> Tracks { get; }
+        public IList<MediaTrackSelection> Tracks { get; }
     }
 }
