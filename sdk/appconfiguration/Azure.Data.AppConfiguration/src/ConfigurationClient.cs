@@ -136,11 +136,11 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                RequestContent content = CreateContent(setting);
+                using RequestContent content = CreateContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
-                Response response = await PutKeyValueAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+                using Response response = await PutKeyValueAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -193,11 +193,11 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                RequestContent content = CreateContent(setting);
+                using RequestContent content = CreateContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
-                Response response = PutKeyValue(setting.Key, content, contentType, setting.Label, requestOptions, context);
+                using Response response = PutKeyValue(setting.Key, content, contentType, setting.Label, requestOptions, context);
                 switch (response.Status)
                 {
                     case 200:
@@ -439,7 +439,7 @@ namespace Azure.Data.AppConfiguration
                      eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
                 }
                 RequestContext context = CreateContext(cancellationToken);
-                Response response = await DeleteKeyValueAsync(key, label, eTag, context).ConfigureAwait(false);
+                using Response response = await DeleteKeyValueAsync(key, label, eTag, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -472,7 +472,7 @@ namespace Azure.Data.AppConfiguration
                     eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
                 }
                 RequestContext context = CreateContext(cancellationToken);
-                Response response = DeleteKeyValue(key, label, eTag, context);
+                using Response response = DeleteKeyValue(key, label, eTag, context);
 
                 return response.Status switch
                 {
