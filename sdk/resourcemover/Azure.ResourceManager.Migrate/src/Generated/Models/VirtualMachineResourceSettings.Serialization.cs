@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<string>> userManagedIdentities = default;
-            Optional<TargetAvailabilityZone> targetAvailabilityZone = default;
+            Optional<MoverTargetAvailabilityZone> targetAvailabilityZone = default;
             Optional<string> targetVmSize = default;
-            Optional<string> targetAvailabilitySetId = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetAvailabilityZone = new TargetAvailabilityZone(property.Value.GetString());
+                    targetAvailabilityZone = new MoverTargetAvailabilityZone(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmSize"))
@@ -117,7 +117,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("targetAvailabilitySetId"))
                 {
-                    targetAvailabilitySetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceType"))

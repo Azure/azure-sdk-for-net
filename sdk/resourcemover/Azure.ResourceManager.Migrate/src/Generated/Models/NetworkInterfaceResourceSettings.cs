@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the network interface resource settings. </summary>
-    public partial class NetworkInterfaceResourceSettings : ResourceSettings
+    /// <summary>
+    /// Defines the network interface resource settings.
+    /// Serialized Name: NetworkInterfaceResourceSettings
+    /// </summary>
+    public partial class NetworkInterfaceResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public NetworkInterfaceResourceSettings(string targetResourceName) : base(targetResourceName)
         {
@@ -30,11 +36,26 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
-        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <param name="tags"> Gets or sets the Resource tags. </param>
-        /// <param name="ipConfigurations"> Gets or sets the IP configurations of the NIC. </param>
-        /// <param name="enableAcceleratedNetworking"> Gets or sets a value indicating whether accelerated networking is enabled. </param>
+        /// <param name="resourceType">
+        /// The resource type. For example, the value can be Microsoft.Compute/virtualMachines.
+        /// Serialized Name: ResourceSettings.resourceType
+        /// </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
+        /// <param name="tags">
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: NetworkInterfaceResourceSettings.tags
+        /// </param>
+        /// <param name="ipConfigurations">
+        /// Gets or sets the IP configurations of the NIC.
+        /// Serialized Name: NetworkInterfaceResourceSettings.ipConfigurations
+        /// </param>
+        /// <param name="enableAcceleratedNetworking">
+        /// Gets or sets a value indicating whether accelerated networking is enabled.
+        /// Serialized Name: NetworkInterfaceResourceSettings.enableAcceleratedNetworking
+        /// </param>
         internal NetworkInterfaceResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, IList<NicIPConfigurationResourceSettings> ipConfigurations, bool? enableAcceleratedNetworking) : base(resourceType, targetResourceName)
         {
             Tags = tags;
@@ -43,11 +64,20 @@ namespace Azure.ResourceManager.Migrate.Models
             ResourceType = resourceType ?? "Microsoft.Network/networkInterfaces";
         }
 
-        /// <summary> Gets or sets the Resource tags. </summary>
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: NetworkInterfaceResourceSettings.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the IP configurations of the NIC. </summary>
+        /// <summary>
+        /// Gets or sets the IP configurations of the NIC.
+        /// Serialized Name: NetworkInterfaceResourceSettings.ipConfigurations
+        /// </summary>
         public IList<NicIPConfigurationResourceSettings> IPConfigurations { get; }
-        /// <summary> Gets or sets a value indicating whether accelerated networking is enabled. </summary>
+        /// <summary>
+        /// Gets or sets a value indicating whether accelerated networking is enabled.
+        /// Serialized Name: NetworkInterfaceResourceSettings.enableAcceleratedNetworking
+        /// </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
     }
 }

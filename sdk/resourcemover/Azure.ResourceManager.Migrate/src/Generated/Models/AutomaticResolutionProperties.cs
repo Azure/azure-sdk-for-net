@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the properties for automatic resolution. </summary>
+    /// <summary>
+    /// Defines the properties for automatic resolution.
+    /// Serialized Name: AutomaticResolutionProperties
+    /// </summary>
     internal partial class AutomaticResolutionProperties
     {
         /// <summary> Initializes a new instance of AutomaticResolutionProperties. </summary>
@@ -19,6 +22,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="moveResourceId">
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
+        /// Serialized Name: AutomaticResolutionProperties.moveResourceId
         /// </param>
         internal AutomaticResolutionProperties(string moveResourceId)
         {
@@ -28,6 +32,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary>
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
+        /// Serialized Name: AutomaticResolutionProperties.moveResourceId
         /// </summary>
         public string MoveResourceId { get; }
     }

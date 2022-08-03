@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             string sourceRegion = default;
             string targetRegion = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<MoverProvisioningState> provisioningState = default;
             Optional<MoveCollectionPropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new MoverProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"))

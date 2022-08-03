@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the Sql Database resource settings. </summary>
-    public partial class SqlDatabaseResourceSettings : ResourceSettings
+    /// <summary>
+    /// Defines the Sql Database resource settings.
+    /// Serialized Name: SqlDatabaseResourceSettings
+    /// </summary>
+    public partial class SqlDatabaseResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public SqlDatabaseResourceSettings(string targetResourceName) : base(targetResourceName)
         {
@@ -29,20 +35,38 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
-        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <param name="tags"> Gets or sets the Resource tags. </param>
-        /// <param name="zoneRedundant"> Defines the zone redundant resource setting. </param>
-        internal SqlDatabaseResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, ZoneRedundant? zoneRedundant) : base(resourceType, targetResourceName)
+        /// <param name="resourceType">
+        /// The resource type. For example, the value can be Microsoft.Compute/virtualMachines.
+        /// Serialized Name: ResourceSettings.resourceType
+        /// </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
+        /// <param name="tags">
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: SqlDatabaseResourceSettings.tags
+        /// </param>
+        /// <param name="zoneRedundant">
+        /// Defines the zone redundant resource setting.
+        /// Serialized Name: SqlDatabaseResourceSettings.zoneRedundant
+        /// </param>
+        internal SqlDatabaseResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, ResourceZoneRedundantSetting? zoneRedundant) : base(resourceType, targetResourceName)
         {
             Tags = tags;
             ZoneRedundant = zoneRedundant;
             ResourceType = resourceType ?? "Microsoft.Sql/servers/databases";
         }
 
-        /// <summary> Gets or sets the Resource tags. </summary>
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: SqlDatabaseResourceSettings.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Defines the zone redundant resource setting. </summary>
-        public ZoneRedundant? ZoneRedundant { get; set; }
+        /// <summary>
+        /// Defines the zone redundant resource setting.
+        /// Serialized Name: SqlDatabaseResourceSettings.zoneRedundant
+        /// </summary>
+        public ResourceZoneRedundantSetting? ZoneRedundant { get; set; }
     }
 }

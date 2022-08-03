@@ -12,13 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the move resource properties. </summary>
+    /// <summary>
+    /// Defines the move resource properties.
+    /// Serialized Name: MoveResourceProperties
+    /// </summary>
     public partial class MoveResourceProperties
     {
         /// <summary> Initializes a new instance of MoveResourceProperties. </summary>
-        /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
+        /// <param name="sourceId">
+        /// Gets or sets the Source ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.sourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public MoveResourceProperties(string sourceId)
+        public MoveResourceProperties(ResourceIdentifier sourceId)
         {
             if (sourceId == null)
             {
@@ -31,26 +37,55 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of MoveResourceProperties. </summary>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
-        /// <param name="targetId"> Gets or sets the Target ARM Id of the resource. </param>
-        /// <param name="existingTargetId"> Gets or sets the existing target ARM Id of the resource. </param>
+        /// <param name="provisioningState">
+        /// Defines the provisioning states.
+        /// Serialized Name: MoveResourceProperties.provisioningState
+        /// </param>
+        /// <param name="sourceId">
+        /// Gets or sets the Source ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.sourceId
+        /// </param>
+        /// <param name="targetId">
+        /// Gets or sets the Target ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.targetId
+        /// </param>
+        /// <param name="existingTargetId">
+        /// Gets or sets the existing target ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.existingTargetId
+        /// </param>
         /// <param name="resourceSettings">
         /// Gets or sets the resource settings.
-        /// Please note <see cref="ResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
+        /// Serialized Name: MoveResourceProperties.resourceSettings
+        /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
         /// </param>
         /// <param name="sourceResourceSettings">
         /// Gets or sets the source resource settings.
-        /// Please note <see cref="ResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
+        /// Serialized Name: MoveResourceProperties.sourceResourceSettings
+        /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
         /// </param>
-        /// <param name="moveStatus"> Defines the move resource status. </param>
-        /// <param name="dependsOn"> Gets or sets the move resource dependencies. </param>
-        /// <param name="dependsOnOverrides"> Gets or sets the move resource dependencies overrides. </param>
-        /// <param name="isResolveRequired"> Gets a value indicating whether the resolve action is required over the move collection. </param>
-        /// <param name="errors"> Defines the move resource errors. </param>
-        internal MoveResourceProperties(ProvisioningState? provisioningState, string sourceId, string targetId, string existingTargetId, ResourceSettings resourceSettings, ResourceSettings sourceResourceSettings, MoveResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoveResourceDependency> dependsOn, IList<MoveResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
+        /// <param name="moveStatus">
+        /// Defines the move resource status.
+        /// Serialized Name: MoveResourceProperties.moveStatus
+        /// </param>
+        /// <param name="dependsOn">
+        /// Gets or sets the move resource dependencies.
+        /// Serialized Name: MoveResourceProperties.dependsOn
+        /// </param>
+        /// <param name="dependsOnOverrides">
+        /// Gets or sets the move resource dependencies overrides.
+        /// Serialized Name: MoveResourceProperties.dependsOnOverrides
+        /// </param>
+        /// <param name="isResolveRequired">
+        /// Gets a value indicating whether the resolve action is required over the move collection.
+        /// Serialized Name: MoveResourceProperties.isResolveRequired
+        /// </param>
+        /// <param name="errors">
+        /// Defines the move resource errors.
+        /// Serialized Name: MoveResourceProperties.errors
+        /// </param>
+        internal MoveResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, string targetId, string existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoveResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoveResourceDependency> dependsOn, IList<MoveResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -65,37 +100,69 @@ namespace Azure.ResourceManager.Migrate.Models
             Errors = errors;
         }
 
-        /// <summary> Defines the provisioning states. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets or sets the Source ARM Id of the resource. </summary>
-        public string SourceId { get; set; }
-        /// <summary> Gets or sets the Target ARM Id of the resource. </summary>
+        /// <summary>
+        /// Defines the provisioning states.
+        /// Serialized Name: MoveResourceProperties.provisioningState
+        /// </summary>
+        public MoverProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// Gets or sets the Source ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.sourceId
+        /// </summary>
+        public ResourceIdentifier SourceId { get; set; }
+        /// <summary>
+        /// Gets or sets the Target ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.targetId
+        /// </summary>
         public string TargetId { get; }
-        /// <summary> Gets or sets the existing target ARM Id of the resource. </summary>
+        /// <summary>
+        /// Gets or sets the existing target ARM Id of the resource.
+        /// Serialized Name: MoveResourceProperties.existingTargetId
+        /// </summary>
         public string ExistingTargetId { get; set; }
         /// <summary>
         /// Gets or sets the resource settings.
-        /// Please note <see cref="ResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
+        /// Serialized Name: MoveResourceProperties.resourceSettings
+        /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
         /// </summary>
-        public ResourceSettings ResourceSettings { get; set; }
+        public MoverResourceSettings ResourceSettings { get; set; }
         /// <summary>
         /// Gets or sets the source resource settings.
-        /// Please note <see cref="ResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
+        /// Serialized Name: MoveResourceProperties.sourceResourceSettings
+        /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="VirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
         /// </summary>
-        public ResourceSettings SourceResourceSettings { get; }
-        /// <summary> Defines the move resource status. </summary>
+        public MoverResourceSettings SourceResourceSettings { get; }
+        /// <summary>
+        /// Defines the move resource status.
+        /// Serialized Name: MoveResourceProperties.moveStatus
+        /// </summary>
         public MoveResourcePropertiesMoveStatus MoveStatus { get; }
-        /// <summary> Gets or sets the move resource dependencies. </summary>
+        /// <summary>
+        /// Gets or sets the move resource dependencies.
+        /// Serialized Name: MoveResourceProperties.dependsOn
+        /// </summary>
         public IReadOnlyList<MoveResourceDependency> DependsOn { get; }
-        /// <summary> Gets or sets the move resource dependencies overrides. </summary>
+        /// <summary>
+        /// Gets or sets the move resource dependencies overrides.
+        /// Serialized Name: MoveResourceProperties.dependsOnOverrides
+        /// </summary>
         public IList<MoveResourceDependencyOverride> DependsOnOverrides { get; }
-        /// <summary> Gets a value indicating whether the resolve action is required over the move collection. </summary>
+        /// <summary>
+        /// Gets a value indicating whether the resolve action is required over the move collection.
+        /// Serialized Name: MoveResourceProperties.isResolveRequired
+        /// </summary>
         public bool? IsResolveRequired { get; }
-        /// <summary> Defines the move resource errors. </summary>
+        /// <summary>
+        /// Defines the move resource errors.
+        /// Serialized Name: MoveResourceProperties.errors
+        /// </summary>
         internal MoveResourcePropertiesErrors Errors { get; }
-        /// <summary> The move resource error body. </summary>
+        /// <summary>
+        /// The move resource error body.
+        /// Serialized Name: MoveResourceError.properties
+        /// </summary>
         public ResponseError ErrorsProperties
         {
             get => Errors?.Properties;

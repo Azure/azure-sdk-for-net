@@ -24,13 +24,19 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Defines the move resource properties. </param>
+        /// <param name="properties">
+        /// Defines the move resource properties.
+        /// Serialized Name: MoveResource.properties
+        /// </param>
         internal MoveResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MoveResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Defines the move resource properties. </summary>
+        /// <summary>
+        /// Defines the move resource properties.
+        /// Serialized Name: MoveResource.properties
+        /// </summary>
         public MoveResourceProperties Properties { get; set; }
     }
 }

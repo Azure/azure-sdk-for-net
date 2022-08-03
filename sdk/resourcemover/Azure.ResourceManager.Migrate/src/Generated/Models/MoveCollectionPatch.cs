@@ -7,10 +7,14 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the request body for updating move collection. </summary>
+    /// <summary>
+    /// Defines the request body for updating move collection.
+    /// Serialized Name: UpdateMoveCollectionRequest
+    /// </summary>
     public partial class MoveCollectionPatch
     {
         /// <summary> Initializes a new instance of MoveCollectionPatch. </summary>
@@ -19,9 +23,15 @@ namespace Azure.ResourceManager.Migrate.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Gets or sets the Resource tags. </summary>
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: UpdateMoveCollectionRequest.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Defines the MSI properties of the Move Collection. </summary>
-        public Identity Identity { get; set; }
+        /// <summary>
+        /// Defines the MSI properties of the Move Collection.
+        /// Serialized Name: UpdateMoveCollectionRequest.identity. Current supported identity types: None, SystemAssigned, UserAssigned
+        /// </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

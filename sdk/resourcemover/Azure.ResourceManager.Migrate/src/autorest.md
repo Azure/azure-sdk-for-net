@@ -16,12 +16,64 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  AffectedMoveResource.id: -|arm-id
+  AffectedMoveResource.sourceId: -|arm-id
+  ManualResolutionProperties.targetId: -|arm-id
+  MoveResourceDependencyOverride.id: -|arm-id
+  MoveResourceDependencyOverride.targetId: -|arm-id
+  MoveResourceProperties.sourceId: -|arm-id
+  VirtualMachineResourceSettings.targetAvailabilitySetId: -|arm-id
+  #ResourceSettings.resourceType: -|resource-type
+  AffectedMoveResource: MoverAffectedMoveResourceInfo
+  AvailabilitySetResourceSettings: MoverAvailabilitySetResourceSettings
+  AzureResourceReference: MoverAzureResourceReferenceInfo
+  BulkRemoveRequest: MoverBulkRemoveContent
+  CommitRequest: MoverCommitContent
+  DependencyLevel: MoverDependencyLevel
+  DependencyType: MoverDependencyType
+  DiscardRequest: MoverDiscardContent
+  Display: MoverDisplayInfo
+  #Identity: MoveCollectionIdentityProperties
+  JobName: MoveResourceJobName
+  JobStatus: MoveResourceJobStatus
+  LBBackendAddressPoolResourceSettings: LoadBalancerBackendAddressPoolResourceSettings
+  LBFrontendIPConfigurationResourceSettings: LoadBalancerFrontendIPConfigurationResourceSettings
+  LoadBalancerBackendAddressPoolReference: LoadBalancerBackendAddressPoolReferenceInfo
+  LoadBalancerNatRuleReference: LoadBalancerNatRuleReferenceInfo
+  MoveResourceCollection: MoveResourceList
+  MoveState: MoveResourceState
+  NsgReference: NetworkSecurityGroupResourceReferenceInfo
+  NsgSecurityRule: NetworkSecurityGroupSecurityRule
+  OperationErrorAdditionalInfo: MoverOperationErrorAdditionalInfo
+  OperationsDiscovery: MoverOperationsDiscovery
+  OperationsDiscoveryCollection: MoverOperationsDiscoveryList
+  OperationStatus: MoverOperationStatus
+  OperationStatusError: MoverOperationStatusError
+  PrepareRequest: MoverPrepareRequest
+  ProvisioningState: MoverProvisioningState
+  ProxyResourceReference: ProxyResourceReferenceInfo
+  PublicIpReference: PublicIpReferenceInfo
+  RequiredForResourcesCollection: RequiredForResourcesList
+  ResolutionType: MoveResourceResolutionType
+  ResourceMoveRequest: MoverResourceMoveRequest
+  ResourceSettings: MoverResourceSettings
+  SubnetReference: SubnetReferenceInfo
+  Summary: MoverSummaryItemInfo
+  SummaryCollection: MoverSummaryList
+  TargetAvailabilityZone: MoverTargetAvailabilityZone
+  UnresolvedDependency: MoverUnresolvedDependency
+  UnresolvedDependencyCollection: MoverUnresolvedDependencyList
+  ZoneRedundant: ResourceZoneRedundantSetting
 
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'resourceType': 'resource-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -47,5 +99,12 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - from: resourcemovercollection.json
+    where: $.definitions
+    transform: >
+      $.Identity.properties.principalId['readOnly'] = true;
+      $.Identity.properties.tenantId['readOnly'] = true;
 
 ```

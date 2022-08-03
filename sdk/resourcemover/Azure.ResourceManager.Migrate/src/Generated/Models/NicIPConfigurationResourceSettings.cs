@@ -10,26 +10,53 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines NIC IP configuration properties. </summary>
+    /// <summary>
+    /// Defines NIC IP configuration properties.
+    /// Serialized Name: NicIpConfigurationResourceSettings
+    /// </summary>
     public partial class NicIPConfigurationResourceSettings
     {
         /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
         public NicIPConfigurationResourceSettings()
         {
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolReference>();
-            LoadBalancerNatRules = new ChangeTrackingList<LoadBalancerNatRuleReference>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>();
+            LoadBalancerNatRules = new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>();
         }
 
         /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
-        /// <param name="name"> Gets or sets the IP configuration name. </param>
-        /// <param name="privateIPAddress"> Gets or sets the private IP address of the network interface IP Configuration. </param>
-        /// <param name="privateIPAllocationMethod"> Gets or sets the private IP address allocation method. </param>
-        /// <param name="subnet"> Defines reference to subnet. </param>
-        /// <param name="primary"> Gets or sets a value indicating whether this IP configuration is the primary. </param>
-        /// <param name="loadBalancerBackendAddressPools"> Gets or sets the references of the load balancer backend address pools. </param>
-        /// <param name="loadBalancerNatRules"> Gets or sets the references of the load balancer NAT rules. </param>
-        /// <param name="publicIP"> Defines reference to a public IP. </param>
-        internal NicIPConfigurationResourceSettings(string name, string privateIPAddress, string privateIPAllocationMethod, SubnetReference subnet, bool? primary, IList<LoadBalancerBackendAddressPoolReference> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReference> loadBalancerNatRules, PublicIPReference publicIP)
+        /// <param name="name">
+        /// Gets or sets the IP configuration name.
+        /// Serialized Name: NicIpConfigurationResourceSettings.name
+        /// </param>
+        /// <param name="privateIPAddress">
+        /// Gets or sets the private IP address of the network interface IP Configuration.
+        /// Serialized Name: NicIpConfigurationResourceSettings.privateIpAddress
+        /// </param>
+        /// <param name="privateIPAllocationMethod">
+        /// Gets or sets the private IP address allocation method.
+        /// Serialized Name: NicIpConfigurationResourceSettings.privateIpAllocationMethod
+        /// </param>
+        /// <param name="subnet">
+        /// Defines reference to subnet.
+        /// Serialized Name: NicIpConfigurationResourceSettings.subnet
+        /// </param>
+        /// <param name="primary">
+        /// Gets or sets a value indicating whether this IP configuration is the primary.
+        /// Serialized Name: NicIpConfigurationResourceSettings.primary
+        /// </param>
+        /// <param name="loadBalancerBackendAddressPools">
+        /// Gets or sets the references of the load balancer backend address pools.
+        /// Serialized Name: NicIpConfigurationResourceSettings.loadBalancerBackendAddressPools
+        /// </param>
+        /// <param name="loadBalancerNatRules">
+        /// Gets or sets the references of the load balancer NAT rules.
+        /// Serialized Name: NicIpConfigurationResourceSettings.loadBalancerNatRules
+        /// </param>
+        /// <param name="publicIP">
+        /// Defines reference to a public IP.
+        /// Serialized Name: NicIpConfigurationResourceSettings.publicIp
+        /// </param>
+        internal NicIPConfigurationResourceSettings(string name, string privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? primary, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP)
         {
             Name = name;
             PrivateIPAddress = privateIPAddress;
@@ -41,27 +68,54 @@ namespace Azure.ResourceManager.Migrate.Models
             PublicIP = publicIP;
         }
 
-        /// <summary> Gets or sets the IP configuration name. </summary>
+        /// <summary>
+        /// Gets or sets the IP configuration name.
+        /// Serialized Name: NicIpConfigurationResourceSettings.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the private IP address of the network interface IP Configuration. </summary>
+        /// <summary>
+        /// Gets or sets the private IP address of the network interface IP Configuration.
+        /// Serialized Name: NicIpConfigurationResourceSettings.privateIpAddress
+        /// </summary>
         public string PrivateIPAddress { get; set; }
-        /// <summary> Gets or sets the private IP address allocation method. </summary>
+        /// <summary>
+        /// Gets or sets the private IP address allocation method.
+        /// Serialized Name: NicIpConfigurationResourceSettings.privateIpAllocationMethod
+        /// </summary>
         public string PrivateIPAllocationMethod { get; set; }
-        /// <summary> Defines reference to subnet. </summary>
-        public SubnetReference Subnet { get; set; }
-        /// <summary> Gets or sets a value indicating whether this IP configuration is the primary. </summary>
+        /// <summary>
+        /// Defines reference to subnet.
+        /// Serialized Name: NicIpConfigurationResourceSettings.subnet
+        /// </summary>
+        public SubnetReferenceInfo Subnet { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this IP configuration is the primary.
+        /// Serialized Name: NicIpConfigurationResourceSettings.primary
+        /// </summary>
         public bool? Primary { get; set; }
-        /// <summary> Gets or sets the references of the load balancer backend address pools. </summary>
-        public IList<LoadBalancerBackendAddressPoolReference> LoadBalancerBackendAddressPools { get; }
-        /// <summary> Gets or sets the references of the load balancer NAT rules. </summary>
-        public IList<LoadBalancerNatRuleReference> LoadBalancerNatRules { get; }
-        /// <summary> Defines reference to a public IP. </summary>
-        internal PublicIPReference PublicIP { get; set; }
-        /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
+        /// <summary>
+        /// Gets or sets the references of the load balancer backend address pools.
+        /// Serialized Name: NicIpConfigurationResourceSettings.loadBalancerBackendAddressPools
+        /// </summary>
+        public IList<LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get; }
+        /// <summary>
+        /// Gets or sets the references of the load balancer NAT rules.
+        /// Serialized Name: NicIpConfigurationResourceSettings.loadBalancerNatRules
+        /// </summary>
+        public IList<LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get; }
+        /// <summary>
+        /// Defines reference to a public IP.
+        /// Serialized Name: NicIpConfigurationResourceSettings.publicIp
+        /// </summary>
+        internal PublicIPReferenceInfo PublicIP { get; set; }
+        /// <summary>
+        /// Gets the ARM resource ID of the tracked resource being referenced.
+        /// Serialized Name: AzureResourceReference.sourceArmResourceId
+        /// </summary>
         public string PublicIPSourceArmResourceId
         {
             get => PublicIP is null ? default : PublicIP.SourceArmResourceId;
-            set => PublicIP = new PublicIPReference(value);
+            set => PublicIP = new PublicIPReferenceInfo(value);
         }
     }
 }

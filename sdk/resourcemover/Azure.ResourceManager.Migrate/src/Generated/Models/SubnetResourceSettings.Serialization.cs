@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             Optional<string> name = default;
             Optional<string> addressPrefix = default;
-            Optional<NsgReference> networkSecurityGroup = default;
+            Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkSecurityGroup = NsgReference.DeserializeNsgReference(property.Value);
+                    networkSecurityGroup = NetworkSecurityGroupResourceReferenceInfo.DeserializeNetworkSecurityGroupResourceReferenceInfo(property.Value);
                     continue;
                 }
             }

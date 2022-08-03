@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the disk encryption set resource settings. </summary>
-    public partial class DiskEncryptionSetResourceSettings : ResourceSettings
+    /// <summary>
+    /// Defines the disk encryption set resource settings.
+    /// Serialized Name: DiskEncryptionSetResourceSettings
+    /// </summary>
+    public partial class DiskEncryptionSetResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public DiskEncryptionSetResourceSettings(string targetResourceName) : base(targetResourceName)
         {
@@ -26,8 +32,14 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionSetResourceSettings. </summary>
-        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="resourceType">
+        /// The resource type. For example, the value can be Microsoft.Compute/virtualMachines.
+        /// Serialized Name: ResourceSettings.resourceType
+        /// </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
         internal DiskEncryptionSetResourceSettings(string resourceType, string targetResourceName) : base(resourceType, targetResourceName)
         {
             ResourceType = resourceType ?? "Microsoft.Compute/diskEncryptionSets";

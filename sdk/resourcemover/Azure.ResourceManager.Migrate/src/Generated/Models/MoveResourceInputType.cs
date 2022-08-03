@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the move resource input type. </summary>
+    /// <summary>
+    /// Defines the move resource input type.
+    /// Serialized Name: MoveResourceInputType
+    /// </summary>
     public readonly partial struct MoveResourceInputType : IEquatable<MoveResourceInputType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string MoveResourceIdValue = "MoveResourceId";
         private const string MoveResourceSourceIdValue = "MoveResourceSourceId";
 
-        /// <summary> MoveResourceId. </summary>
+        /// <summary>
+        /// MoveResourceId
+        /// Serialized Name: MoveResourceInputType.MoveResourceId
+        /// </summary>
         public static MoveResourceInputType MoveResourceId { get; } = new MoveResourceInputType(MoveResourceIdValue);
-        /// <summary> MoveResourceSourceId. </summary>
+        /// <summary>
+        /// MoveResourceSourceId
+        /// Serialized Name: MoveResourceInputType.MoveResourceSourceId
+        /// </summary>
         public static MoveResourceInputType MoveResourceSourceId { get; } = new MoveResourceInputType(MoveResourceSourceIdValue);
         /// <summary> Determines if two <see cref="MoveResourceInputType"/> values are the same. </summary>
         public static bool operator ==(MoveResourceInputType left, MoveResourceInputType right) => left.Equals(right);

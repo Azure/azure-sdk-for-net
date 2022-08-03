@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             Optional<string> id = default;
             Optional<string> resolutionStatus = default;
-            Optional<ResolutionType> resolutionType = default;
-            Optional<DependencyType> dependencyType = default;
+            Optional<MoveResourceResolutionType> resolutionType = default;
+            Optional<MoverDependencyType> dependencyType = default;
             Optional<ManualResolutionProperties> manualResolution = default;
             Optional<AutomaticResolutionProperties> automaticResolution = default;
             Optional<string> isOptional = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resolutionType = new ResolutionType(property.Value.GetString());
+                    resolutionType = new MoveResourceResolutionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependencyType"))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dependencyType = new DependencyType(property.Value.GetString());
+                    dependencyType = new MoverDependencyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("manualResolution"))

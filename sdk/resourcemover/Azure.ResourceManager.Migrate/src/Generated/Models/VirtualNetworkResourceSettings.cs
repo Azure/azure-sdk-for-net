@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the virtual network resource settings. </summary>
-    public partial class VirtualNetworkResourceSettings : ResourceSettings
+    /// <summary>
+    /// Defines the virtual network resource settings.
+    /// Serialized Name: VirtualNetworkResourceSettings
+    /// </summary>
+    public partial class VirtualNetworkResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of VirtualNetworkResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
         public VirtualNetworkResourceSettings(string targetResourceName) : base(targetResourceName)
         {
@@ -32,19 +38,36 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkResourceSettings. </summary>
-        /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="resourceType">
+        /// The resource type. For example, the value can be Microsoft.Compute/virtualMachines.
+        /// Serialized Name: ResourceSettings.resourceType
+        /// </param>
+        /// <param name="targetResourceName">
+        /// Gets or sets the target Resource name.
+        /// Serialized Name: ResourceSettings.targetResourceName
+        /// </param>
+        /// <param name="tags">
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: VirtualNetworkResourceSettings.tags
+        /// </param>
         /// <param name="enableDdosProtection">
         /// Gets or sets a value indicating whether gets or sets whether the
         /// DDOS protection should be switched on.
+        /// Serialized Name: VirtualNetworkResourceSettings.enableDdosProtection
         /// </param>
-        /// <param name="addressSpace"> Gets or sets the address prefixes for the virtual network. </param>
+        /// <param name="addressSpace">
+        /// Gets or sets the address prefixes for the virtual network.
+        /// Serialized Name: VirtualNetworkResourceSettings.addressSpace
+        /// </param>
         /// <param name="dnsServers">
         /// Gets or sets DHCPOptions that contains an array of DNS servers available to VMs
         /// deployed in the virtual network.
+        /// Serialized Name: VirtualNetworkResourceSettings.dnsServers
         /// </param>
-        /// <param name="subnets"> Gets or sets List of subnets in a VirtualNetwork. </param>
+        /// <param name="subnets">
+        /// Gets or sets List of subnets in a VirtualNetwork.
+        /// Serialized Name: VirtualNetworkResourceSettings.subnets
+        /// </param>
         internal VirtualNetworkResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, bool? enableDdosProtection, IList<string> addressSpace, IList<string> dnsServers, IList<SubnetResourceSettings> subnets) : base(resourceType, targetResourceName)
         {
             Tags = tags;
@@ -55,21 +78,32 @@ namespace Azure.ResourceManager.Migrate.Models
             ResourceType = resourceType ?? "Microsoft.Network/virtualNetworks";
         }
 
-        /// <summary> Gets or sets the Resource tags. </summary>
+        /// <summary>
+        /// Gets or sets the Resource tags.
+        /// Serialized Name: VirtualNetworkResourceSettings.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// Gets or sets a value indicating whether gets or sets whether the
         /// DDOS protection should be switched on.
+        /// Serialized Name: VirtualNetworkResourceSettings.enableDdosProtection
         /// </summary>
         public bool? EnableDdosProtection { get; set; }
-        /// <summary> Gets or sets the address prefixes for the virtual network. </summary>
+        /// <summary>
+        /// Gets or sets the address prefixes for the virtual network.
+        /// Serialized Name: VirtualNetworkResourceSettings.addressSpace
+        /// </summary>
         public IList<string> AddressSpace { get; }
         /// <summary>
         /// Gets or sets DHCPOptions that contains an array of DNS servers available to VMs
         /// deployed in the virtual network.
+        /// Serialized Name: VirtualNetworkResourceSettings.dnsServers
         /// </summary>
         public IList<string> DnsServers { get; }
-        /// <summary> Gets or sets List of subnets in a VirtualNetwork. </summary>
+        /// <summary>
+        /// Gets or sets List of subnets in a VirtualNetwork.
+        /// Serialized Name: VirtualNetworkResourceSettings.subnets
+        /// </summary>
         public IList<SubnetResourceSettings> Subnets { get; }
     }
 }

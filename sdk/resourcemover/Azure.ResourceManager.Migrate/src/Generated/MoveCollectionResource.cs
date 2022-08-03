@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.Migrate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Delete");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,14 +211,14 @@ namespace Azure.ResourceManager.Migrate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Delete");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -288,16 +288,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_Prepare
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The PrepareContent to use. </param>
+        /// <param name="content"> The MoverPrepareContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> PrepareAsync(WaitUntil waitUntil, PrepareContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> PrepareAsync(WaitUntil waitUntil, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Prepare");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.PrepareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,16 +315,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_Prepare
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The PrepareContent to use. </param>
+        /// <param name="content"> The MoverPrepareContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> Prepare(WaitUntil waitUntil, PrepareContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> Prepare(WaitUntil waitUntil, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Prepare");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.Prepare(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreatePrepareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -342,16 +342,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_InitiateMove
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The ResourceMoveContent to use. </param>
+        /// <param name="content"> The MoverResourceMoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> InitiateMoveAsync(WaitUntil waitUntil, ResourceMoveContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> InitiateMoveAsync(WaitUntil waitUntil, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.InitiateMove");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.InitiateMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -369,16 +369,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_InitiateMove
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The ResourceMoveContent to use. </param>
+        /// <param name="content"> The MoverResourceMoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> InitiateMove(WaitUntil waitUntil, ResourceMoveContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> InitiateMove(WaitUntil waitUntil, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.InitiateMove");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.InitiateMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateInitiateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -396,16 +396,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_Commit
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The CommitContent to use. </param>
+        /// <param name="content"> The MoverCommitContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> CommitAsync(WaitUntil waitUntil, CommitContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> CommitAsync(WaitUntil waitUntil, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Commit");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.CommitAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -423,16 +423,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_Commit
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The CommitContent to use. </param>
+        /// <param name="content"> The MoverCommitContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> Commit(WaitUntil waitUntil, CommitContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> Commit(WaitUntil waitUntil, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Commit");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.Commit(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -450,16 +450,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_Discard
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The DiscardContent to use. </param>
+        /// <param name="content"> The MoverDiscardContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> DiscardAsync(WaitUntil waitUntil, DiscardContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> DiscardAsync(WaitUntil waitUntil, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Discard");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.DiscardAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -477,16 +477,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_Discard
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The DiscardContent to use. </param>
+        /// <param name="content"> The MoverDiscardContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> Discard(WaitUntil waitUntil, DiscardContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> Discard(WaitUntil waitUntil, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.Discard");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.Discard(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateDiscardRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -505,14 +505,14 @@ namespace Azure.ResourceManager.Migrate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> ResolveDependenciesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> ResolveDependenciesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.ResolveDependencies");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.ResolveDependenciesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -531,14 +531,14 @@ namespace Azure.ResourceManager.Migrate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> ResolveDependencies(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> ResolveDependencies(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.ResolveDependencies");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.ResolveDependencies(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateResolveDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -556,16 +556,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_BulkRemove
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The BulkRemoveContent to use. </param>
+        /// <param name="content"> The MoverBulkRemoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatus>> BulkRemoveAsync(WaitUntil waitUntil, BulkRemoveContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MoverOperationStatus>> BulkRemoveAsync(WaitUntil waitUntil, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.BulkRemove");
             scope.Start();
             try
             {
                 var response = await _moveCollectionRestClient.BulkRemoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -583,16 +583,16 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: MoveCollections_BulkRemove
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The BulkRemoveContent to use. </param>
+        /// <param name="content"> The MoverBulkRemoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatus> BulkRemove(WaitUntil waitUntil, BulkRemoveContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MoverOperationStatus> BulkRemove(WaitUntil waitUntil, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _moveCollectionClientDiagnostics.CreateScope("MoveCollectionResource.BulkRemove");
             scope.Start();
             try
             {
                 var response = _moveCollectionRestClient.BulkRemove(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MigrateArmOperation<OperationStatus>(new OperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MigrateArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moveCollectionClientDiagnostics, Pipeline, _moveCollectionRestClient.CreateBulkRemoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public virtual async Task<Response<RequiredForResourcesCollection>> GetRequiredForAsync(string sourceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RequiredForResourcesList>> GetRequiredForAsync(string sourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public virtual Response<RequiredForResourcesCollection> GetRequiredFor(string sourceId, CancellationToken cancellationToken = default)
+        public virtual Response<RequiredForResourcesList> GetRequiredFor(string sourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
@@ -665,10 +665,10 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UnresolvedDependency> GetUnresolvedDependenciesAsync(DependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<UnresolvedDependency>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MoverUnresolvedDependency>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoveCollectionResource.GetUnresolvedDependencies");
                 scope.Start();
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Migrate
                     throw;
                 }
             }
-            async Task<Page<UnresolvedDependency>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MoverUnresolvedDependency>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoveCollectionResource.GetUnresolvedDependencies");
                 scope.Start();
@@ -710,10 +710,10 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UnresolvedDependency> GetUnresolvedDependencies(DependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<UnresolvedDependency> FirstPageFunc(int? pageSizeHint)
+            Page<MoverUnresolvedDependency> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoveCollectionResource.GetUnresolvedDependencies");
                 scope.Start();
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Migrate
                     throw;
                 }
             }
-            Page<UnresolvedDependency> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MoverUnresolvedDependency> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoveCollectionResource.GetUnresolvedDependencies");
                 scope.Start();

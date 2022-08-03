@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Migrate.Models
 {
-    /// <summary> Defines the virtual network subnets resource settings. </summary>
+    /// <summary>
+    /// Defines the virtual network subnets resource settings.
+    /// Serialized Name: SubnetResourceSettings
+    /// </summary>
     public partial class SubnetResourceSettings
     {
         /// <summary> Initializes a new instance of SubnetResourceSettings. </summary>
@@ -16,27 +19,48 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Initializes a new instance of SubnetResourceSettings. </summary>
-        /// <param name="name"> Gets or sets the Subnet name. </param>
-        /// <param name="addressPrefix"> Gets or sets address prefix for the subnet. </param>
-        /// <param name="networkSecurityGroup"> Defines reference to NSG. </param>
-        internal SubnetResourceSettings(string name, string addressPrefix, NsgReference networkSecurityGroup)
+        /// <param name="name">
+        /// Gets or sets the Subnet name.
+        /// Serialized Name: SubnetResourceSettings.name
+        /// </param>
+        /// <param name="addressPrefix">
+        /// Gets or sets address prefix for the subnet.
+        /// Serialized Name: SubnetResourceSettings.addressPrefix
+        /// </param>
+        /// <param name="networkSecurityGroup">
+        /// Defines reference to NSG.
+        /// Serialized Name: SubnetResourceSettings.networkSecurityGroup
+        /// </param>
+        internal SubnetResourceSettings(string name, string addressPrefix, NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup)
         {
             Name = name;
             AddressPrefix = addressPrefix;
             NetworkSecurityGroup = networkSecurityGroup;
         }
 
-        /// <summary> Gets or sets the Subnet name. </summary>
+        /// <summary>
+        /// Gets or sets the Subnet name.
+        /// Serialized Name: SubnetResourceSettings.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets address prefix for the subnet. </summary>
+        /// <summary>
+        /// Gets or sets address prefix for the subnet.
+        /// Serialized Name: SubnetResourceSettings.addressPrefix
+        /// </summary>
         public string AddressPrefix { get; set; }
-        /// <summary> Defines reference to NSG. </summary>
-        internal NsgReference NetworkSecurityGroup { get; set; }
-        /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
+        /// <summary>
+        /// Defines reference to NSG.
+        /// Serialized Name: SubnetResourceSettings.networkSecurityGroup
+        /// </summary>
+        internal NetworkSecurityGroupResourceReferenceInfo NetworkSecurityGroup { get; set; }
+        /// <summary>
+        /// Gets the ARM resource ID of the tracked resource being referenced.
+        /// Serialized Name: AzureResourceReference.sourceArmResourceId
+        /// </summary>
         public string NetworkSecurityGroupSourceArmResourceId
         {
             get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.SourceArmResourceId;
-            set => NetworkSecurityGroup = new NsgReference(value);
+            set => NetworkSecurityGroup = new NetworkSecurityGroupResourceReferenceInfo(value);
         }
     }
 }

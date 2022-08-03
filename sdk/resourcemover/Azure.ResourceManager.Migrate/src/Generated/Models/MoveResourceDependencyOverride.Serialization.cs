@@ -30,18 +30,28 @@ namespace Azure.ResourceManager.Migrate.Models
 
         internal static MoveResourceDependencyOverride DeserializeMoveResourceDependencyOverride(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> targetId = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> targetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetId"))
                 {
-                    targetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
