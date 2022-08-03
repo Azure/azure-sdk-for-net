@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The refresh parameters for any/all updatable user defined functions present in the job config. </summary>
+    /// <summary>
+    /// The refresh parameters for any/all updatable user defined functions present in the job config.
+    /// Serialized Name: RefreshConfiguration
+    /// </summary>
     public partial class RefreshConfiguration
     {
         /// <summary> Initializes a new instance of RefreshConfiguration. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of RefreshConfiguration. </summary>
-        /// <param name="pathPattern"> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </param>
-        /// <param name="dateFormat"> The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead. </param>
-        /// <param name="timeFormat"> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </param>
-        /// <param name="refreshInterval"> The refresh interval. </param>
-        /// <param name="refreshType"> This property indicates which data refresh option to use, Blocking or Nonblocking. </param>
+        /// <param name="pathPattern">
+        /// The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example.
+        /// Serialized Name: RefreshConfiguration.pathPattern
+        /// </param>
+        /// <param name="dateFormat">
+        /// The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead.
+        /// Serialized Name: RefreshConfiguration.dateFormat
+        /// </param>
+        /// <param name="timeFormat">
+        /// The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead.
+        /// Serialized Name: RefreshConfiguration.timeFormat
+        /// </param>
+        /// <param name="refreshInterval">
+        /// The refresh interval.
+        /// Serialized Name: RefreshConfiguration.refreshInterval
+        /// </param>
+        /// <param name="refreshType">
+        /// This property indicates which data refresh option to use, Blocking or Nonblocking.
+        /// Serialized Name: RefreshConfiguration.refreshType
+        /// </param>
         internal RefreshConfiguration(string pathPattern, string dateFormat, string timeFormat, string refreshInterval, RefreshType? refreshType)
         {
             PathPattern = pathPattern;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             RefreshType = refreshType;
         }
 
-        /// <summary> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </summary>
+        /// <summary>
+        /// The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example.
+        /// Serialized Name: RefreshConfiguration.pathPattern
+        /// </summary>
         public string PathPattern { get; set; }
-        /// <summary> The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead. </summary>
+        /// <summary>
+        /// The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead.
+        /// Serialized Name: RefreshConfiguration.dateFormat
+        /// </summary>
         public string DateFormat { get; set; }
-        /// <summary> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </summary>
+        /// <summary>
+        /// The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead.
+        /// Serialized Name: RefreshConfiguration.timeFormat
+        /// </summary>
         public string TimeFormat { get; set; }
-        /// <summary> The refresh interval. </summary>
+        /// <summary>
+        /// The refresh interval.
+        /// Serialized Name: RefreshConfiguration.refreshInterval
+        /// </summary>
         public string RefreshInterval { get; set; }
-        /// <summary> This property indicates which data refresh option to use, Blocking or Nonblocking. </summary>
+        /// <summary>
+        /// This property indicates which data refresh option to use, Blocking or Nonblocking.
+        /// Serialized Name: RefreshConfiguration.refreshType
+        /// </summary>
         public RefreshType? RefreshType { get; set; }
     }
 }

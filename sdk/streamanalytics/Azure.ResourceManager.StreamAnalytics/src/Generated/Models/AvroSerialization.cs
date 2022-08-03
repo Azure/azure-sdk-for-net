@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in Avro format. </summary>
+    /// <summary>
+    /// Describes how data from an input is serialized or how data is serialized when written to an output in Avro format.
+    /// Serialized Name: AvroSerialization
+    /// </summary>
     public partial class AvroSerialization : Serialization
     {
         /// <summary> Initializes a new instance of AvroSerialization. </summary>
@@ -19,15 +22,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AvroSerialization. </summary>
-        /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="properties"> The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="eventSerializationType">
+        /// Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Serialization.type
+        /// </param>
+        /// <param name="properties">
+        /// The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AvroSerialization.properties
+        /// </param>
         internal AvroSerialization(EventSerializationType eventSerializationType, BinaryData properties) : base(eventSerializationType)
         {
             Properties = properties;
             EventSerializationType = eventSerializationType;
         }
 
-        /// <summary> The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AvroSerialization.properties
+        /// </summary>
         public BinaryData Properties { get; set; }
     }
 }

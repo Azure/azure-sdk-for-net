@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> An error produced by the compiler. </summary>
+    /// <summary>
+    /// An error produced by the compiler.
+    /// Serialized Name: QueryCompilationError
+    /// </summary>
     public partial class QueryCompilationError
     {
         /// <summary> Initializes a new instance of QueryCompilationError. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of QueryCompilationError. </summary>
-        /// <param name="message"> The content of the error message. </param>
-        /// <param name="startLine"> Describes the error location in the original query. Not set if isGlobal is true. </param>
-        /// <param name="startColumn"> Describes the error location in the original query. Not set if isGlobal is true. </param>
-        /// <param name="endLine"> Describes the error location in the original query. Not set if isGlobal is true. </param>
-        /// <param name="endColumn"> Describes the error location in the original query. Not set if isGlobal is true. </param>
-        /// <param name="isGlobal"> Whether the error is not for a specific part but for the entire query. </param>
+        /// <param name="message">
+        /// The content of the error message.
+        /// Serialized Name: QueryCompilationError.message
+        /// </param>
+        /// <param name="startLine">
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.startLine
+        /// </param>
+        /// <param name="startColumn">
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.startColumn
+        /// </param>
+        /// <param name="endLine">
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.endLine
+        /// </param>
+        /// <param name="endColumn">
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.endColumn
+        /// </param>
+        /// <param name="isGlobal">
+        /// Whether the error is not for a specific part but for the entire query.
+        /// Serialized Name: QueryCompilationError.isGlobal
+        /// </param>
         internal QueryCompilationError(string message, int? startLine, int? startColumn, int? endLine, int? endColumn, bool? isGlobal)
         {
             Message = message;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             IsGlobal = isGlobal;
         }
 
-        /// <summary> The content of the error message. </summary>
+        /// <summary>
+        /// The content of the error message.
+        /// Serialized Name: QueryCompilationError.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> Describes the error location in the original query. Not set if isGlobal is true. </summary>
+        /// <summary>
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.startLine
+        /// </summary>
         public int? StartLine { get; }
-        /// <summary> Describes the error location in the original query. Not set if isGlobal is true. </summary>
+        /// <summary>
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.startColumn
+        /// </summary>
         public int? StartColumn { get; }
-        /// <summary> Describes the error location in the original query. Not set if isGlobal is true. </summary>
+        /// <summary>
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.endLine
+        /// </summary>
         public int? EndLine { get; }
-        /// <summary> Describes the error location in the original query. Not set if isGlobal is true. </summary>
+        /// <summary>
+        /// Describes the error location in the original query. Not set if isGlobal is true.
+        /// Serialized Name: QueryCompilationError.endColumn
+        /// </summary>
         public int? EndColumn { get; }
-        /// <summary> Whether the error is not for a specific part but for the entire query. </summary>
+        /// <summary>
+        /// Whether the error is not for a specific part but for the entire query.
+        /// Serialized Name: QueryCompilationError.isGlobal
+        /// </summary>
         public bool? IsGlobal { get; }
     }
 }

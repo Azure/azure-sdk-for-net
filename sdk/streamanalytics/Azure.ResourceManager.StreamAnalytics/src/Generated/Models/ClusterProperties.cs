@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The properties associated with a Stream Analytics cluster. </summary>
+    /// <summary>
+    /// The properties associated with a Stream Analytics cluster.
+    /// Serialized Name: ClusterProperties
+    /// </summary>
     public partial class ClusterProperties
     {
         /// <summary> Initializes a new instance of ClusterProperties. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ClusterProperties. </summary>
-        /// <param name="createdOn"> The date this cluster was created. </param>
-        /// <param name="clusterId"> Unique identifier for the cluster. </param>
-        /// <param name="provisioningState"> The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled. </param>
-        /// <param name="capacityAllocated"> Represents the number of streaming units currently being used on the cluster. </param>
-        /// <param name="capacityAssigned"> Represents the sum of the SUs of all streaming jobs associated with the cluster. If all of the jobs were running, this would be the capacity allocated. </param>
+        /// <param name="createdOn">
+        /// The date this cluster was created.
+        /// Serialized Name: ClusterProperties.createdDate
+        /// </param>
+        /// <param name="clusterId">
+        /// Unique identifier for the cluster.
+        /// Serialized Name: ClusterProperties.clusterId
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled
+        /// Serialized Name: ClusterProperties.provisioningState
+        /// </param>
+        /// <param name="capacityAllocated">
+        /// Represents the number of streaming units currently being used on the cluster.
+        /// Serialized Name: ClusterProperties.capacityAllocated
+        /// </param>
+        /// <param name="capacityAssigned">
+        /// Represents the sum of the SUs of all streaming jobs associated with the cluster. If all of the jobs were running, this would be the capacity allocated.
+        /// Serialized Name: ClusterProperties.capacityAssigned
+        /// </param>
         internal ClusterProperties(DateTimeOffset? createdOn, string clusterId, ClusterProvisioningState? provisioningState, int? capacityAllocated, int? capacityAssigned)
         {
             CreatedOn = createdOn;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             CapacityAssigned = capacityAssigned;
         }
 
-        /// <summary> The date this cluster was created. </summary>
+        /// <summary>
+        /// The date this cluster was created.
+        /// Serialized Name: ClusterProperties.createdDate
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Unique identifier for the cluster. </summary>
+        /// <summary>
+        /// Unique identifier for the cluster.
+        /// Serialized Name: ClusterProperties.clusterId
+        /// </summary>
         public string ClusterId { get; }
-        /// <summary> The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled. </summary>
+        /// <summary>
+        /// The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled
+        /// Serialized Name: ClusterProperties.provisioningState
+        /// </summary>
         public ClusterProvisioningState? ProvisioningState { get; }
-        /// <summary> Represents the number of streaming units currently being used on the cluster. </summary>
+        /// <summary>
+        /// Represents the number of streaming units currently being used on the cluster.
+        /// Serialized Name: ClusterProperties.capacityAllocated
+        /// </summary>
         public int? CapacityAllocated { get; }
-        /// <summary> Represents the sum of the SUs of all streaming jobs associated with the cluster. If all of the jobs were running, this would be the capacity allocated. </summary>
+        /// <summary>
+        /// Represents the sum of the SUs of all streaming jobs associated with the cluster. If all of the jobs were running, this would be the capacity allocated.
+        /// Serialized Name: ClusterProperties.capacityAssigned
+        /// </summary>
         public int? CapacityAssigned { get; }
     }
 }

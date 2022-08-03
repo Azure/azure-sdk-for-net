@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The inputs for the Azure Machine Learning Studio endpoint. </summary>
+    /// <summary>
+    /// The inputs for the Azure Machine Learning Studio endpoint.
+    /// Serialized Name: AzureMachineLearningStudioInputs
+    /// </summary>
     public partial class AzureMachineLearningStudioInputs
     {
         /// <summary> Initializes a new instance of AzureMachineLearningStudioInputs. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureMachineLearningStudioInputs. </summary>
-        /// <param name="name"> The name of the input. This is the name provided while authoring the endpoint. </param>
-        /// <param name="columnNames"> A list of input columns for the Azure Machine Learning Studio endpoint. </param>
+        /// <param name="name">
+        /// The name of the input. This is the name provided while authoring the endpoint.
+        /// Serialized Name: AzureMachineLearningStudioInputs.name
+        /// </param>
+        /// <param name="columnNames">
+        /// A list of input columns for the Azure Machine Learning Studio endpoint.
+        /// Serialized Name: AzureMachineLearningStudioInputs.columnNames
+        /// </param>
         internal AzureMachineLearningStudioInputs(string name, IList<AzureMachineLearningStudioInputColumn> columnNames)
         {
             Name = name;
             ColumnNames = columnNames;
         }
 
-        /// <summary> The name of the input. This is the name provided while authoring the endpoint. </summary>
+        /// <summary>
+        /// The name of the input. This is the name provided while authoring the endpoint.
+        /// Serialized Name: AzureMachineLearningStudioInputs.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> A list of input columns for the Azure Machine Learning Studio endpoint. </summary>
+        /// <summary>
+        /// A list of input columns for the Azure Machine Learning Studio endpoint.
+        /// Serialized Name: AzureMachineLearningStudioInputs.columnNames
+        /// </summary>
         public IList<AzureMachineLearningStudioInputColumn> ColumnNames { get; }
     }
 }

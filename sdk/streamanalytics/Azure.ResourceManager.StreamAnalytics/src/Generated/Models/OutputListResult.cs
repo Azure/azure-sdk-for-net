@@ -11,7 +11,10 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Object containing a list of outputs under a streaming job. </summary>
+    /// <summary>
+    /// Object containing a list of outputs under a streaming job.
+    /// Serialized Name: OutputListResult
+    /// </summary>
     internal partial class OutputListResult
     {
         /// <summary> Initializes a new instance of OutputListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of OutputListResult. </summary>
-        /// <param name="value"> A list of outputs under a streaming job. Populated by a &apos;List&apos; operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// A list of outputs under a streaming job. Populated by a &apos;List&apos; operation.
+        /// Serialized Name: OutputListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: OutputListResult.nextLink
+        /// </param>
         internal OutputListResult(IReadOnlyList<StreamingJobOutputData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of outputs under a streaming job. Populated by a &apos;List&apos; operation. </summary>
+        /// <summary>
+        /// A list of outputs under a streaming job. Populated by a &apos;List&apos; operation.
+        /// Serialized Name: OutputListResult.value
+        /// </summary>
         public IReadOnlyList<StreamingJobOutputData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: OutputListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

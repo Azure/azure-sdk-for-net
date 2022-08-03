@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Indicates the policy to apply to events that arrive at the output and cannot be written to the external storage due to being malformed (missing column values, column values of wrong type or size). </summary>
+    /// <summary>
+    /// Indicates the policy to apply to events that arrive at the output and cannot be written to the external storage due to being malformed (missing column values, column values of wrong type or size).
+    /// Serialized Name: OutputErrorPolicy
+    /// </summary>
     public readonly partial struct OutputErrorPolicy : IEquatable<OutputErrorPolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string StopValue = "Stop";
         private const string DropValue = "Drop";
 
-        /// <summary> Stop. </summary>
+        /// <summary>
+        /// Stop
+        /// Serialized Name: OutputErrorPolicy.Stop
+        /// </summary>
         public static OutputErrorPolicy Stop { get; } = new OutputErrorPolicy(StopValue);
-        /// <summary> Drop. </summary>
+        /// <summary>
+        /// Drop
+        /// Serialized Name: OutputErrorPolicy.Drop
+        /// </summary>
         public static OutputErrorPolicy Drop { get; } = new OutputErrorPolicy(DropValue);
         /// <summary> Determines if two <see cref="OutputErrorPolicy"/> values are the same. </summary>
         public static bool operator ==(OutputErrorPolicy left, OutputErrorPolicy right) => left.Equals(right);

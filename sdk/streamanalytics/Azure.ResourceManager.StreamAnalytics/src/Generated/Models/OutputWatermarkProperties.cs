@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Settings which determine whether to send watermarks to downstream. </summary>
+    /// <summary>
+    /// Settings which determine whether to send watermarks to downstream.
+    /// Serialized Name: OutputWatermarkProperties
+    /// </summary>
     public partial class OutputWatermarkProperties
     {
         /// <summary> Initializes a new instance of OutputWatermarkProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of OutputWatermarkProperties. </summary>
-        /// <param name="watermarkMode"> The output watermark mode. </param>
-        /// <param name="maxWatermarkDifferenceAcrossPartitions"> Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined. </param>
+        /// <param name="watermarkMode">
+        /// The output watermark mode.
+        /// Serialized Name: OutputWatermarkProperties.watermarkMode
+        /// </param>
+        /// <param name="maxWatermarkDifferenceAcrossPartitions">
+        /// Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined.
+        /// Serialized Name: OutputWatermarkProperties.maxWatermarkDifferenceAcrossPartitions
+        /// </param>
         internal OutputWatermarkProperties(OutputWatermarkMode? watermarkMode, string maxWatermarkDifferenceAcrossPartitions)
         {
             WatermarkMode = watermarkMode;
             MaxWatermarkDifferenceAcrossPartitions = maxWatermarkDifferenceAcrossPartitions;
         }
 
-        /// <summary> The output watermark mode. </summary>
+        /// <summary>
+        /// The output watermark mode.
+        /// Serialized Name: OutputWatermarkProperties.watermarkMode
+        /// </summary>
         public OutputWatermarkMode? WatermarkMode { get; set; }
-        /// <summary> Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined. </summary>
+        /// <summary>
+        /// Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined.
+        /// Serialized Name: OutputWatermarkProperties.maxWatermarkDifferenceAcrossPartitions
+        /// </summary>
         public string MaxWatermarkDifferenceAcrossPartitions { get; set; }
     }
 }

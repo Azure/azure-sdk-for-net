@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Indicates the policy to apply to events that arrive out of order in the input event stream. </summary>
+    /// <summary>
+    /// Indicates the policy to apply to events that arrive out of order in the input event stream.
+    /// Serialized Name: EventsOutOfOrderPolicy
+    /// </summary>
     public readonly partial struct EventsOutOfOrderPolicy : IEquatable<EventsOutOfOrderPolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string AdjustValue = "Adjust";
         private const string DropValue = "Drop";
 
-        /// <summary> Adjust. </summary>
+        /// <summary>
+        /// Adjust
+        /// Serialized Name: EventsOutOfOrderPolicy.Adjust
+        /// </summary>
         public static EventsOutOfOrderPolicy Adjust { get; } = new EventsOutOfOrderPolicy(AdjustValue);
-        /// <summary> Drop. </summary>
+        /// <summary>
+        /// Drop
+        /// Serialized Name: EventsOutOfOrderPolicy.Drop
+        /// </summary>
         public static EventsOutOfOrderPolicy Drop { get; } = new EventsOutOfOrderPolicy(DropValue);
         /// <summary> Determines if two <see cref="EventsOutOfOrderPolicy"/> values are the same. </summary>
         public static bool operator ==(EventsOutOfOrderPolicy left, EventsOutOfOrderPolicy right) => left.Equals(right);

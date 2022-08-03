@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes an Event Hub output data source. </summary>
+    /// <summary>
+    /// Describes an Event Hub output data source.
+    /// Serialized Name: EventHubV2OutputDataSource
+    /// </summary>
     public partial class EventHubV2OutputDataSource : OutputDataSource
     {
         /// <summary> Initializes a new instance of EventHubV2OutputDataSource. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of EventHubV2OutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="sharedAccessPolicyKey"> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="authenticationMode"> Authentication Mode. </param>
-        /// <param name="eventHubName"> The name of the Event Hub. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="partitionCount"> The partition count of the event hub data source. Range 1 - 256. </param>
-        /// <param name="partitionKey"> The key/column that is used to determine to which partition to send event data. </param>
-        /// <param name="propertyColumns"> The properties associated with this Event Hub output. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="serviceBusNamespace">
+        /// The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.serviceBusNamespace
+        /// </param>
+        /// <param name="sharedAccessPolicyName">
+        /// The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.sharedAccessPolicyName
+        /// </param>
+        /// <param name="sharedAccessPolicyKey">
+        /// The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.sharedAccessPolicyKey
+        /// </param>
+        /// <param name="authenticationMode">
+        /// Authentication Mode.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.authenticationMode
+        /// </param>
+        /// <param name="eventHubName">
+        /// The name of the Event Hub. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.eventHubName
+        /// </param>
+        /// <param name="partitionCount">
+        /// The partition count of the event hub data source. Range 1 - 256.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.partitionCount
+        /// </param>
+        /// <param name="partitionKey">
+        /// The key/column that is used to determine to which partition to send event data.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.partitionKey
+        /// </param>
+        /// <param name="propertyColumns">
+        /// The properties associated with this Event Hub output.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.propertyColumns
+        /// </param>
         internal EventHubV2OutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, AuthenticationMode? authenticationMode, string eventHubName, int? partitionCount, string partitionKey, IList<string> propertyColumns) : base(outputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
@@ -43,21 +73,45 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.EventHub/EventHub";
         }
 
-        /// <summary> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.serviceBusNamespace
+        /// </summary>
         public string ServiceBusNamespace { get; set; }
-        /// <summary> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.sharedAccessPolicyName
+        /// </summary>
         public string SharedAccessPolicyName { get; set; }
-        /// <summary> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.sharedAccessPolicyKey
+        /// </summary>
         public string SharedAccessPolicyKey { get; set; }
-        /// <summary> Authentication Mode. </summary>
+        /// <summary>
+        /// Authentication Mode.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.authenticationMode
+        /// </summary>
         public AuthenticationMode? AuthenticationMode { get; set; }
-        /// <summary> The name of the Event Hub. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the Event Hub. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.eventHubName
+        /// </summary>
         public string EventHubName { get; set; }
-        /// <summary> The partition count of the event hub data source. Range 1 - 256. </summary>
+        /// <summary>
+        /// The partition count of the event hub data source. Range 1 - 256.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.partitionCount
+        /// </summary>
         public int? PartitionCount { get; set; }
-        /// <summary> The key/column that is used to determine to which partition to send event data. </summary>
+        /// <summary>
+        /// The key/column that is used to determine to which partition to send event data.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.partitionKey
+        /// </summary>
         public string PartitionKey { get; set; }
-        /// <summary> The properties associated with this Event Hub output. </summary>
+        /// <summary>
+        /// The properties associated with this Event Hub output.
+        /// Serialized Name: EventHubV2OutputDataSource.properties.propertyColumns
+        /// </summary>
         public IList<string> PropertyColumns { get; }
     }
 }

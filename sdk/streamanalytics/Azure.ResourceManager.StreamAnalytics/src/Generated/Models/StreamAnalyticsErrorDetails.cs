@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Common error details representation. </summary>
+    /// <summary>
+    /// Common error details representation.
+    /// Serialized Name: StreamAnalyticsErrorDetails
+    /// </summary>
     public partial class StreamAnalyticsErrorDetails
     {
         /// <summary> Initializes a new instance of StreamAnalyticsErrorDetails. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsErrorDetails. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="target"> Error target. </param>
-        /// <param name="message"> Error message. </param>
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: StreamAnalyticsErrorDetails.code
+        /// </param>
+        /// <param name="target">
+        /// Error target.
+        /// Serialized Name: StreamAnalyticsErrorDetails.target
+        /// </param>
+        /// <param name="message">
+        /// Error message.
+        /// Serialized Name: StreamAnalyticsErrorDetails.message
+        /// </param>
         internal StreamAnalyticsErrorDetails(string code, string target, string message)
         {
             Code = code;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Message = message;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: StreamAnalyticsErrorDetails.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Error target. </summary>
+        /// <summary>
+        /// Error target.
+        /// Serialized Name: StreamAnalyticsErrorDetails.target
+        /// </summary>
         public string Target { get; }
-        /// <summary> Error message. </summary>
+        /// <summary>
+        /// Error message.
+        /// Serialized Name: StreamAnalyticsErrorDetails.message
+        /// </summary>
         public string Message { get; }
     }
 }

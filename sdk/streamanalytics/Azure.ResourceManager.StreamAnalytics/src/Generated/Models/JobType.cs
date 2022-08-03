@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes the type of the job. Valid modes are `Cloud` and &apos;Edge&apos;. </summary>
+    /// <summary>
+    /// Describes the type of the job. Valid modes are `Cloud` and &apos;Edge&apos;.
+    /// Serialized Name: JobType
+    /// </summary>
     public readonly partial struct JobType : IEquatable<JobType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string CloudValue = "Cloud";
         private const string EdgeValue = "Edge";
 
-        /// <summary> Cloud. </summary>
+        /// <summary>
+        /// Cloud
+        /// Serialized Name: JobType.Cloud
+        /// </summary>
         public static JobType Cloud { get; } = new JobType(CloudValue);
-        /// <summary> Edge. </summary>
+        /// <summary>
+        /// Edge
+        /// Serialized Name: JobType.Edge
+        /// </summary>
         public static JobType Edge { get; } = new JobType(EdgeValue);
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);

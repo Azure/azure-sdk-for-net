@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The query compilation object which defines the input, output, and transformation for the query compilation. </summary>
+    /// <summary>
+    /// The query compilation object which defines the input, output, and transformation for the query compilation.
+    /// Serialized Name: CompileQuery
+    /// </summary>
     public partial class CompileQuery
     {
         /// <summary> Initializes a new instance of CompileQuery. </summary>
-        /// <param name="query"> The query to compile. </param>
-        /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and &apos;Edge&apos;. </param>
+        /// <param name="query">
+        /// The query to compile.
+        /// Serialized Name: CompileQuery.query
+        /// </param>
+        /// <param name="jobType">
+        /// Describes the type of the job. Valid values are `Cloud` and &apos;Edge&apos;.
+        /// Serialized Name: CompileQuery.jobType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public CompileQuery(string query, JobType jobType)
         {
@@ -31,15 +40,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             JobType = jobType;
         }
 
-        /// <summary> The query to compile. </summary>
+        /// <summary>
+        /// The query to compile.
+        /// Serialized Name: CompileQuery.query
+        /// </summary>
         public string Query { get; }
-        /// <summary> The inputs for the query compilation. </summary>
+        /// <summary>
+        /// The inputs for the query compilation.
+        /// Serialized Name: CompileQuery.inputs
+        /// </summary>
         public IList<QueryInput> Inputs { get; }
-        /// <summary> The functions for the query compilation. </summary>
+        /// <summary>
+        /// The functions for the query compilation.
+        /// Serialized Name: CompileQuery.functions
+        /// </summary>
         public IList<QueryFunction> Functions { get; }
-        /// <summary> Describes the type of the job. Valid values are `Cloud` and &apos;Edge&apos;. </summary>
+        /// <summary>
+        /// Describes the type of the job. Valid values are `Cloud` and &apos;Edge&apos;.
+        /// Serialized Name: CompileQuery.jobType
+        /// </summary>
         public JobType JobType { get; }
-        /// <summary> The query to compile. </summary>
+        /// <summary>
+        /// The query to compile.
+        /// Serialized Name: CompileQuery.compatibilityLevel
+        /// </summary>
         public CompatibilityLevel? CompatibilityLevel { get; set; }
     }
 }

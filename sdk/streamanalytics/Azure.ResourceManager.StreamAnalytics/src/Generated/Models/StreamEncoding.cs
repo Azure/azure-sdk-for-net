@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output. </summary>
+    /// <summary>
+    /// Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output.
+    /// Serialized Name: Encoding
+    /// </summary>
     public readonly partial struct StreamEncoding : IEquatable<StreamEncoding>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         private const string UTF8Value = "UTF8";
 
-        /// <summary> UTF8. </summary>
+        /// <summary>
+        /// UTF8
+        /// Serialized Name: Encoding.UTF8
+        /// </summary>
         public static StreamEncoding UTF8 { get; } = new StreamEncoding(UTF8Value);
         /// <summary> Determines if two <see cref="StreamEncoding"/> values are the same. </summary>
         public static bool operator ==(StreamEncoding left, StreamEncoding right) => left.Equals(right);

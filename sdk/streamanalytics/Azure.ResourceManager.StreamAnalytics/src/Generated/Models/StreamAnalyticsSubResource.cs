@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The base sub-resource model definition. </summary>
+    /// <summary>
+    /// The base sub-resource model definition.
+    /// Serialized Name: SubResource
+    /// </summary>
     public partial class StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="id">
+        /// Resource Id
+        /// Serialized Name: SubResource.id
+        /// </param>
+        /// <param name="name">
+        /// Resource name
+        /// Serialized Name: SubResource.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type
+        /// Serialized Name: SubResource.type
+        /// </param>
         internal StreamAnalyticsSubResource(string id, string name, string resourceType)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Resource Id. </summary>
+        /// <summary>
+        /// Resource Id
+        /// Serialized Name: SubResource.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Resource name. </summary>
+        /// <summary>
+        /// Resource name
+        /// Serialized Name: SubResource.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Resource type. </summary>
+        /// <summary>
+        /// Resource type
+        /// Serialized Name: SubResource.type
+        /// </summary>
         public string ResourceType { get; }
     }
 }

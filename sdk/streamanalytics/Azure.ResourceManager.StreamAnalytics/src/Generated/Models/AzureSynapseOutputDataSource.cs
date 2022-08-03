@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes an Azure Synapse output data source. </summary>
+    /// <summary>
+    /// Describes an Azure Synapse output data source.
+    /// Serialized Name: AzureSynapseOutputDataSource
+    /// </summary>
     public partial class AzureSynapseOutputDataSource : OutputDataSource
     {
         /// <summary> Initializes a new instance of AzureSynapseOutputDataSource. </summary>
@@ -17,13 +20,34 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureSynapseOutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="table"> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="user"> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="authenticationMode"> Authentication Mode. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="server">
+        /// The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.server
+        /// </param>
+        /// <param name="database">
+        /// The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.database
+        /// </param>
+        /// <param name="table">
+        /// The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.table
+        /// </param>
+        /// <param name="user">
+        /// The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.user
+        /// </param>
+        /// <param name="password">
+        /// The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.password
+        /// </param>
+        /// <param name="authenticationMode">
+        /// Authentication Mode.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.authenticationMode
+        /// </param>
         internal AzureSynapseOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             Server = server;
@@ -35,17 +59,35 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.Sql/Server/DataWarehouse";
         }
 
-        /// <summary> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.server
+        /// </summary>
         public string Server { get; set; }
-        /// <summary> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.database
+        /// </summary>
         public string Database { get; set; }
-        /// <summary> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.table
+        /// </summary>
         public string Table { get; set; }
-        /// <summary> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.user
+        /// </summary>
         public string User { get; set; }
-        /// <summary> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.password
+        /// </summary>
         public string Password { get; set; }
-        /// <summary> Authentication Mode. </summary>
+        /// <summary>
+        /// Authentication Mode.
+        /// Serialized Name: AzureSynapseOutputDataSource.properties.authenticationMode
+        /// </summary>
         public AuthenticationMode? AuthenticationMode { get; set; }
     }
 }

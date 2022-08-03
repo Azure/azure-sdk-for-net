@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The parameters needed to retrieve the default function definition for an Azure Machine Learning Studio function. </summary>
+    /// <summary>
+    /// The parameters needed to retrieve the default function definition for an Azure Machine Learning Studio function.
+    /// Serialized Name: AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters
+    /// </summary>
     public partial class AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
     {
         /// <summary> Initializes a new instance of AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BindingType = "Microsoft.MachineLearning/WebService";
         }
 
-        /// <summary> The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs. </summary>
+        /// <summary>
+        /// The Request-Response execute endpoint of the Azure Machine Learning Studio. Find out more here: https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-consume-web-services#request-response-service-rrs
+        /// Serialized Name: AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters.bindingRetrievalProperties.executeEndpoint
+        /// </summary>
         public string ExecuteEndpoint { get; set; }
-        /// <summary> The function type. </summary>
-        public UdfType? UdfType { get; set; }
+        /// <summary>
+        /// The function type.
+        /// Serialized Name: AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters.bindingRetrievalProperties.udfType
+        /// </summary>
+        public FunctionUdfType? UdfType { get; set; }
     }
 }

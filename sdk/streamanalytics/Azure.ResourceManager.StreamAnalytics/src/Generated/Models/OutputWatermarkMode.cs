@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The output watermark mode. </summary>
+    /// <summary>
+    /// The output watermark mode.
+    /// Serialized Name: OutputWatermarkMode
+    /// </summary>
     public readonly partial struct OutputWatermarkMode : IEquatable<OutputWatermarkMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string SendCurrentPartitionWatermarkValue = "SendCurrentPartitionWatermark";
         private const string SendLowestWatermarkAcrossPartitionsValue = "SendLowestWatermarkAcrossPartitions";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: OutputWatermarkMode.None
+        /// </summary>
         public static OutputWatermarkMode None { get; } = new OutputWatermarkMode(NoneValue);
-        /// <summary> SendCurrentPartitionWatermark. </summary>
+        /// <summary>
+        /// SendCurrentPartitionWatermark
+        /// Serialized Name: OutputWatermarkMode.SendCurrentPartitionWatermark
+        /// </summary>
         public static OutputWatermarkMode SendCurrentPartitionWatermark { get; } = new OutputWatermarkMode(SendCurrentPartitionWatermarkValue);
-        /// <summary> SendLowestWatermarkAcrossPartitions. </summary>
+        /// <summary>
+        /// SendLowestWatermarkAcrossPartitions
+        /// Serialized Name: OutputWatermarkMode.SendLowestWatermarkAcrossPartitions
+        /// </summary>
         public static OutputWatermarkMode SendLowestWatermarkAcrossPartitions { get; } = new OutputWatermarkMode(SendLowestWatermarkAcrossPartitionsValue);
         /// <summary> Determines if two <see cref="OutputWatermarkMode"/> values are the same. </summary>
         public static bool operator ==(OutputWatermarkMode left, OutputWatermarkMode right) => left.Equals(right);

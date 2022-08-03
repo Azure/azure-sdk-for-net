@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Indicates the type of data refresh option. </summary>
+    /// <summary>
+    /// Indicates the type of data refresh option.
+    /// Serialized Name: RefreshType
+    /// </summary>
     public readonly partial struct RefreshType : IEquatable<RefreshType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string BlockingValue = "Blocking";
         private const string NonblockingValue = "Nonblocking";
 
-        /// <summary> Static. </summary>
+        /// <summary>
+        /// Static
+        /// Serialized Name: RefreshType.Static
+        /// </summary>
         public static RefreshType Static { get; } = new RefreshType(StaticValue);
-        /// <summary> RefreshPeriodicallyWithFull. </summary>
+        /// <summary>
+        /// RefreshPeriodicallyWithFull
+        /// Serialized Name: RefreshType.RefreshPeriodicallyWithFull
+        /// </summary>
         public static RefreshType RefreshPeriodicallyWithFull { get; } = new RefreshType(RefreshPeriodicallyWithFullValue);
-        /// <summary> RefreshPeriodicallyWithDelta. </summary>
+        /// <summary>
+        /// RefreshPeriodicallyWithDelta
+        /// Serialized Name: RefreshType.RefreshPeriodicallyWithDelta
+        /// </summary>
         public static RefreshType RefreshPeriodicallyWithDelta { get; } = new RefreshType(RefreshPeriodicallyWithDeltaValue);
-        /// <summary> Blocking. </summary>
+        /// <summary>
+        /// Blocking
+        /// Serialized Name: RefreshType.Blocking
+        /// </summary>
         public static RefreshType Blocking { get; } = new RefreshType(BlockingValue);
-        /// <summary> Nonblocking. </summary>
+        /// <summary>
+        /// Nonblocking
+        /// Serialized Name: RefreshType.Nonblocking
+        /// </summary>
         public static RefreshType Nonblocking { get; } = new RefreshType(NonblockingValue);
         /// <summary> Determines if two <see cref="RefreshType"/> values are the same. </summary>
         public static bool operator ==(RefreshType left, RefreshType right) => left.Equals(right);

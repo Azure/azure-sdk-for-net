@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Specifies the SKU name of the cluster. Required on PUT (CreateOrUpdate) requests. </summary>
+    /// <summary>
+    /// Specifies the SKU name of the cluster. Required on PUT (CreateOrUpdate) requests.
+    /// Serialized Name: ClusterSkuName
+    /// </summary>
     public readonly partial struct ClusterSkuName : IEquatable<ClusterSkuName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary> The default SKU. </summary>
+        /// <summary>
+        /// The default SKU.
+        /// Serialized Name: ClusterSkuName.Default
+        /// </summary>
         public static ClusterSkuName Default { get; } = new ClusterSkuName(DefaultValue);
         /// <summary> Determines if two <see cref="ClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(ClusterSkuName left, ClusterSkuName right) => left.Equals(right);

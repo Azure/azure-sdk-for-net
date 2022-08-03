@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The status of the query testing request. </summary>
+    /// <summary>
+    /// The status of the query testing request.
+    /// Serialized Name: QueryTestingResultStatus
+    /// </summary>
     public readonly partial struct QueryTestingResultStatus : IEquatable<QueryTestingResultStatus>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string TimeoutValue = "Timeout";
         private const string UnknownErrorValue = "UnknownError";
 
-        /// <summary> The query testing operation was initiated. </summary>
+        /// <summary>
+        /// The query testing operation was initiated.
+        /// Serialized Name: QueryTestingResultStatus.Started
+        /// </summary>
         public static QueryTestingResultStatus Started { get; } = new QueryTestingResultStatus(StartedValue);
-        /// <summary> The query testing operation succeeded. </summary>
+        /// <summary>
+        /// The query testing operation succeeded.
+        /// Serialized Name: QueryTestingResultStatus.Success
+        /// </summary>
         public static QueryTestingResultStatus Success { get; } = new QueryTestingResultStatus(SuccessValue);
-        /// <summary> The query testing operation failed due to a compiler error. </summary>
+        /// <summary>
+        /// The query testing operation failed due to a compiler error.
+        /// Serialized Name: QueryTestingResultStatus.CompilerError
+        /// </summary>
         public static QueryTestingResultStatus CompilerError { get; } = new QueryTestingResultStatus(CompilerErrorValue);
-        /// <summary> The query testing operation failed due to a runtime error. </summary>
+        /// <summary>
+        /// The query testing operation failed due to a runtime error.
+        /// Serialized Name: QueryTestingResultStatus.RuntimeError
+        /// </summary>
         public static QueryTestingResultStatus RuntimeError { get; } = new QueryTestingResultStatus(RuntimeErrorValue);
-        /// <summary> The query testing operation failed due to a timeout. </summary>
+        /// <summary>
+        /// The query testing operation failed due to a timeout.
+        /// Serialized Name: QueryTestingResultStatus.Timeout
+        /// </summary>
         public static QueryTestingResultStatus Timeout { get; } = new QueryTestingResultStatus(TimeoutValue);
-        /// <summary> The query testing operation failed due to an unknown error . </summary>
+        /// <summary>
+        /// The query testing operation failed due to an unknown error .
+        /// Serialized Name: QueryTestingResultStatus.UnknownError
+        /// </summary>
         public static QueryTestingResultStatus UnknownError { get; } = new QueryTestingResultStatus(UnknownErrorValue);
         /// <summary> Determines if two <see cref="QueryTestingResultStatus"/> values are the same. </summary>
         public static bool operator ==(QueryTestingResultStatus left, QueryTestingResultStatus right) => left.Equals(right);

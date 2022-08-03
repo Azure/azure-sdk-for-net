@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class TestDatasourceResult
+    public partial class StreamAnalyticsTestResult
     {
-        internal static TestDatasourceResult DeserializeTestDatasourceResult(JsonElement element)
+        internal static StreamAnalyticsTestResult DeserializeStreamAnalyticsTestResult(JsonElement element)
         {
-            Optional<TestDatasourceResultStatus> status = default;
+            Optional<StreamAnalyticsTestResultStatus> status = default;
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new TestDatasourceResultStatus(property.Value.GetString());
+                    status = new StreamAnalyticsTestResultStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new TestDatasourceResult(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToNullable(status));
+            return new StreamAnalyticsTestResult(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToNullable(status));
         }
     }
 }

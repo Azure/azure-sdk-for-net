@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes a Service Bus Topic output data source. </summary>
+    /// <summary>
+    /// Describes a Service Bus Topic output data source.
+    /// Serialized Name: ServiceBusTopicOutputDataSource
+    /// </summary>
     public partial class ServiceBusTopicOutputDataSource : OutputDataSource
     {
         /// <summary> Initializes a new instance of ServiceBusTopicOutputDataSource. </summary>
@@ -22,14 +25,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ServiceBusTopicOutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="sharedAccessPolicyKey"> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="authenticationMode"> Authentication Mode. </param>
-        /// <param name="topicName"> The name of the Service Bus Topic. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="propertyColumns"> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </param>
-        /// <param name="systemPropertyColumns"> The system properties associated with the Service Bus Topic Output. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="serviceBusNamespace">
+        /// The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.serviceBusNamespace
+        /// </param>
+        /// <param name="sharedAccessPolicyName">
+        /// The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.sharedAccessPolicyName
+        /// </param>
+        /// <param name="sharedAccessPolicyKey">
+        /// The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.sharedAccessPolicyKey
+        /// </param>
+        /// <param name="authenticationMode">
+        /// Authentication Mode.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.authenticationMode
+        /// </param>
+        /// <param name="topicName">
+        /// The name of the Service Bus Topic. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.topicName
+        /// </param>
+        /// <param name="propertyColumns">
+        /// A string array of the names of output columns to be attached to Service Bus messages as custom properties.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.propertyColumns
+        /// </param>
+        /// <param name="systemPropertyColumns">
+        /// The system properties associated with the Service Bus Topic Output. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.systemPropertyColumns
+        /// </param>
         internal ServiceBusTopicOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, AuthenticationMode? authenticationMode, string topicName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
@@ -42,19 +69,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.ServiceBus/Topic";
         }
 
-        /// <summary> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.serviceBusNamespace
+        /// </summary>
         public string ServiceBusNamespace { get; set; }
-        /// <summary> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.sharedAccessPolicyName
+        /// </summary>
         public string SharedAccessPolicyName { get; set; }
-        /// <summary> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.sharedAccessPolicyKey
+        /// </summary>
         public string SharedAccessPolicyKey { get; set; }
-        /// <summary> Authentication Mode. </summary>
+        /// <summary>
+        /// Authentication Mode.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.authenticationMode
+        /// </summary>
         public AuthenticationMode? AuthenticationMode { get; set; }
-        /// <summary> The name of the Service Bus Topic. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the Service Bus Topic. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.topicName
+        /// </summary>
         public string TopicName { get; set; }
-        /// <summary> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </summary>
+        /// <summary>
+        /// A string array of the names of output columns to be attached to Service Bus messages as custom properties.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.propertyColumns
+        /// </summary>
         public IList<string> PropertyColumns { get; }
-        /// <summary> The system properties associated with the Service Bus Topic Output. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </summary>
+        /// <summary>
+        /// The system properties associated with the Service Bus Topic Output. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc.
+        /// Serialized Name: ServiceBusTopicOutputDataSource.properties.systemPropertyColumns
+        /// </summary>
         public IDictionary<string, string> SystemPropertyColumns { get; }
     }
 }

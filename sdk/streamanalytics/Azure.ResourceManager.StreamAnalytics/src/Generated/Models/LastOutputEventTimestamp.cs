@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> An output event timestamp. </summary>
+    /// <summary>
+    /// An output event timestamp.
+    /// Serialized Name: LastOutputEventTimestamp
+    /// </summary>
     public partial class LastOutputEventTimestamp
     {
         /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of LastOutputEventTimestamp. </summary>
-        /// <param name="lastOutputEventTime"> The last output event time. </param>
-        /// <param name="lastUpdateTime"> The time that the last update happened. </param>
+        /// <param name="lastOutputEventTime">
+        /// The last output event time.
+        /// Serialized Name: LastOutputEventTimestamp.lastOutputEventTime
+        /// </param>
+        /// <param name="lastUpdateTime">
+        /// The time that the last update happened.
+        /// Serialized Name: LastOutputEventTimestamp.lastUpdateTime
+        /// </param>
         internal LastOutputEventTimestamp(string lastOutputEventTime, string lastUpdateTime)
         {
             LastOutputEventTime = lastOutputEventTime;
             LastUpdateTime = lastUpdateTime;
         }
 
-        /// <summary> The last output event time. </summary>
+        /// <summary>
+        /// The last output event time.
+        /// Serialized Name: LastOutputEventTimestamp.lastOutputEventTime
+        /// </summary>
         public string LastOutputEventTime { get; }
-        /// <summary> The time that the last update happened. </summary>
+        /// <summary>
+        /// The time that the last update happened.
+        /// Serialized Name: LastOutputEventTimestamp.lastUpdateTime
+        /// </summary>
         public string LastUpdateTime { get; }
     }
 }

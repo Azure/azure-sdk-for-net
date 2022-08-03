@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The name of the SKU. Required on PUT (CreateOrReplace) requests. </summary>
+    /// <summary>
+    /// The name of the SKU. Required on PUT (CreateOrReplace) requests.
+    /// Serialized Name: SkuName
+    /// </summary>
     public readonly partial struct StreamAnalyticsSkuName : IEquatable<StreamAnalyticsSkuName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         private const string StandardValue = "Standard";
 
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: SkuName.Standard
+        /// </summary>
         public static StreamAnalyticsSkuName Standard { get; } = new StreamAnalyticsSkuName(StandardValue);
         /// <summary> Determines if two <see cref="StreamAnalyticsSkuName"/> values are the same. </summary>
         public static bool operator ==(StreamAnalyticsSkuName left, StreamAnalyticsSkuName right) => left.Equals(right);

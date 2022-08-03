@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Condition applicable to the resource, or to the job overall, that warrant customer attention. </summary>
+    /// <summary>
+    /// Condition applicable to the resource, or to the job overall, that warrant customer attention.
+    /// Serialized Name: DiagnosticCondition
+    /// </summary>
     public partial class DiagnosticCondition
     {
         /// <summary> Initializes a new instance of DiagnosticCondition. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticCondition. </summary>
-        /// <param name="since"> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </param>
-        /// <param name="code"> The opaque diagnostic code. </param>
-        /// <param name="message"> The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request. </param>
+        /// <param name="since">
+        /// The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time.
+        /// Serialized Name: DiagnosticCondition.since
+        /// </param>
+        /// <param name="code">
+        /// The opaque diagnostic code.
+        /// Serialized Name: DiagnosticCondition.code
+        /// </param>
+        /// <param name="message">
+        /// The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request.
+        /// Serialized Name: DiagnosticCondition.message
+        /// </param>
         internal DiagnosticCondition(string since, string code, string message)
         {
             Since = since;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Message = message;
         }
 
-        /// <summary> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </summary>
+        /// <summary>
+        /// The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time.
+        /// Serialized Name: DiagnosticCondition.since
+        /// </summary>
         public string Since { get; }
-        /// <summary> The opaque diagnostic code. </summary>
+        /// <summary>
+        /// The opaque diagnostic code.
+        /// Serialized Name: DiagnosticCondition.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request. </summary>
+        /// <summary>
+        /// The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request.
+        /// Serialized Name: DiagnosticCondition.message
+        /// </summary>
         public string Message { get; }
     }
 }

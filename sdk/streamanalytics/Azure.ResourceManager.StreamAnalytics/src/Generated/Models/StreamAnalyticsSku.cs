@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The properties that are associated with a SKU. </summary>
+    /// <summary>
+    /// The properties that are associated with a SKU.
+    /// Serialized Name: Sku
+    /// </summary>
     internal partial class StreamAnalyticsSku
     {
         /// <summary> Initializes a new instance of StreamAnalyticsSku. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsSku. </summary>
-        /// <param name="name"> The name of the SKU. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="name">
+        /// The name of the SKU. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Sku.name
+        /// </param>
         internal StreamAnalyticsSku(StreamAnalyticsSkuName? name)
         {
             Name = name;
         }
 
-        /// <summary> The name of the SKU. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the SKU. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Sku.name
+        /// </summary>
         public StreamAnalyticsSkuName? Name { get; set; }
     }
 }

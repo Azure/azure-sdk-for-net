@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes the current quota for the subscription. </summary>
+    /// <summary>
+    /// Describes the current quota for the subscription.
+    /// Serialized Name: SubscriptionQuota
+    /// </summary>
     public partial class SubscriptionQuota : StreamAnalyticsSubResource
     {
         /// <summary> Initializes a new instance of SubscriptionQuota. </summary>
@@ -16,20 +19,41 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionQuota. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="maxCount"> The max permitted usage of this resource. </param>
-        /// <param name="currentCount"> The current usage of this resource. </param>
+        /// <param name="id">
+        /// Resource Id
+        /// Serialized Name: SubResource.id
+        /// </param>
+        /// <param name="name">
+        /// Resource name
+        /// Serialized Name: SubResource.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type
+        /// Serialized Name: SubResource.type
+        /// </param>
+        /// <param name="maxCount">
+        /// The max permitted usage of this resource.
+        /// Serialized Name: SubscriptionQuota.properties.maxCount
+        /// </param>
+        /// <param name="currentCount">
+        /// The current usage of this resource.
+        /// Serialized Name: SubscriptionQuota.properties.currentCount
+        /// </param>
         internal SubscriptionQuota(string id, string name, string resourceType, int? maxCount, int? currentCount) : base(id, name, resourceType)
         {
             MaxCount = maxCount;
             CurrentCount = currentCount;
         }
 
-        /// <summary> The max permitted usage of this resource. </summary>
+        /// <summary>
+        /// The max permitted usage of this resource.
+        /// Serialized Name: SubscriptionQuota.properties.maxCount
+        /// </summary>
         public int? MaxCount { get; }
-        /// <summary> The current usage of this resource. </summary>
+        /// <summary>
+        /// The current usage of this resource.
+        /// Serialized Name: SubscriptionQuota.properties.currentCount
+        /// </summary>
         public int? CurrentCount { get; }
     }
 }

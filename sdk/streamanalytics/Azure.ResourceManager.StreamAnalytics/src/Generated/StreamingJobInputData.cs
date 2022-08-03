@@ -18,11 +18,21 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> Initializes a new instance of StreamingJobInputData. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="id">
+        /// Resource Id
+        /// Serialized Name: SubResource.id
+        /// </param>
+        /// <param name="name">
+        /// Resource name
+        /// Serialized Name: SubResource.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type
+        /// Serialized Name: SubResource.type
+        /// </param>
         /// <param name="properties">
         /// The properties that are associated with an input. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Input.properties
         /// Please note <see cref="InputProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ReferenceInputProperties"/> and <see cref="StreamInputProperties"/>.
         /// </param>
@@ -33,6 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// The properties that are associated with an input. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Input.properties
         /// Please note <see cref="InputProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ReferenceInputProperties"/> and <see cref="StreamInputProperties"/>.
         /// </summary>

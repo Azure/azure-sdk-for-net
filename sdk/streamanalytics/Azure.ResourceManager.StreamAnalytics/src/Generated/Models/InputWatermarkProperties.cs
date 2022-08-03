@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Settings which determine whether to read watermark events. </summary>
+    /// <summary>
+    /// Settings which determine whether to read watermark events.
+    /// Serialized Name: InputWatermarkProperties
+    /// </summary>
     internal partial class InputWatermarkProperties
     {
         /// <summary> Initializes a new instance of InputWatermarkProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of InputWatermarkProperties. </summary>
-        /// <param name="watermarkMode"> The input watermark mode. </param>
+        /// <param name="watermarkMode">
+        /// The input watermark mode.
+        /// Serialized Name: InputWatermarkProperties.watermarkMode
+        /// </param>
         internal InputWatermarkProperties(InputWatermarkMode? watermarkMode)
         {
             WatermarkMode = watermarkMode;
         }
 
-        /// <summary> The input watermark mode. </summary>
+        /// <summary>
+        /// The input watermark mode.
+        /// Serialized Name: InputWatermarkProperties.watermarkMode
+        /// </summary>
         public InputWatermarkMode? WatermarkMode { get; set; }
     }
 }

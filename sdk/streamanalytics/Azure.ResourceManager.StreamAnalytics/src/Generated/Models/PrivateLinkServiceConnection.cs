@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A grouping of information about the connection to the remote resource. </summary>
+    /// <summary>
+    /// A grouping of information about the connection to the remote resource.
+    /// Serialized Name: PrivateLinkServiceConnection
+    /// </summary>
     public partial class PrivateLinkServiceConnection
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
-        /// <param name="privateLinkServiceId"> The resource id of the private link service. Required on PUT (CreateOrUpdate) requests. </param>
-        /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests. </param>
-        /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the private remote resource. </param>
+        /// <param name="privateLinkServiceId">
+        /// The resource id of the private link service. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.privateLinkServiceId
+        /// </param>
+        /// <param name="groupIds">
+        /// The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.groupIds
+        /// </param>
+        /// <param name="requestMessage">
+        /// A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.requestMessage
+        /// </param>
+        /// <param name="privateLinkServiceConnectionState">
+        /// A collection of read-only information about the state of the connection to the private remote resource.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.privateLinkServiceConnectionState
+        /// </param>
         internal PrivateLinkServiceConnection(string privateLinkServiceId, IList<string> groupIds, string requestMessage, PrivateLinkConnectionState privateLinkServiceConnectionState)
         {
             PrivateLinkServiceId = privateLinkServiceId;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
-        /// <summary> The resource id of the private link service. Required on PUT (CreateOrUpdate) requests. </summary>
+        /// <summary>
+        /// The resource id of the private link service. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.privateLinkServiceId
+        /// </summary>
         public string PrivateLinkServiceId { get; set; }
-        /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests. </summary>
+        /// <summary>
+        /// The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.groupIds
+        /// </summary>
         public IList<string> GroupIds { get; }
-        /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>
+        /// <summary>
+        /// A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.requestMessage
+        /// </summary>
         public string RequestMessage { get; }
-        /// <summary> A collection of read-only information about the state of the connection to the private remote resource. </summary>
+        /// <summary>
+        /// A collection of read-only information about the state of the connection to the private remote resource.
+        /// Serialized Name: PrivateLinkServiceConnection.properties.privateLinkServiceConnectionState
+        /// </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

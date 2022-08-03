@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The properties associated with a private endpoint. </summary>
+    /// <summary>
+    /// The properties associated with a private endpoint.
+    /// Serialized Name: PrivateEndpointProperties
+    /// </summary>
     public partial class PrivateEndpointProperties
     {
         /// <summary> Initializes a new instance of PrivateEndpointProperties. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointProperties. </summary>
-        /// <param name="createdDate"> The date when this private endpoint was created. </param>
-        /// <param name="manualPrivateLinkServiceConnections"> A list of connections to the remote resource. Immutable after it is set. </param>
+        /// <param name="createdDate">
+        /// The date when this private endpoint was created.
+        /// Serialized Name: PrivateEndpointProperties.createdDate
+        /// </param>
+        /// <param name="manualPrivateLinkServiceConnections">
+        /// A list of connections to the remote resource. Immutable after it is set.
+        /// Serialized Name: PrivateEndpointProperties.manualPrivateLinkServiceConnections
+        /// </param>
         internal PrivateEndpointProperties(string createdDate, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections)
         {
             CreatedDate = createdDate;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
         }
 
-        /// <summary> The date when this private endpoint was created. </summary>
+        /// <summary>
+        /// The date when this private endpoint was created.
+        /// Serialized Name: PrivateEndpointProperties.createdDate
+        /// </summary>
         public string CreatedDate { get; }
-        /// <summary> A list of connections to the remote resource. Immutable after it is set. </summary>
+        /// <summary>
+        /// A list of connections to the remote resource. Immutable after it is set.
+        /// Serialized Name: PrivateEndpointProperties.manualPrivateLinkServiceConnections
+        /// </summary>
         public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
     }
 }

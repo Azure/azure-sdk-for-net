@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Authentication Mode. Valid modes are `ConnectionString`, `Msi` and &apos;UserToken&apos;. </summary>
+    /// <summary>
+    /// Authentication Mode. Valid modes are `ConnectionString`, `Msi` and &apos;UserToken&apos;.
+    /// Serialized Name: AuthenticationMode
+    /// </summary>
     public readonly partial struct AuthenticationMode : IEquatable<AuthenticationMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string UserTokenValue = "UserToken";
         private const string ConnectionStringValue = "ConnectionString";
 
-        /// <summary> Msi. </summary>
+        /// <summary>
+        /// Msi
+        /// Serialized Name: AuthenticationMode.Msi
+        /// </summary>
         public static AuthenticationMode Msi { get; } = new AuthenticationMode(MsiValue);
-        /// <summary> UserToken. </summary>
+        /// <summary>
+        /// UserToken
+        /// Serialized Name: AuthenticationMode.UserToken
+        /// </summary>
         public static AuthenticationMode UserToken { get; } = new AuthenticationMode(UserTokenValue);
-        /// <summary> ConnectionString. </summary>
+        /// <summary>
+        /// ConnectionString
+        /// Serialized Name: AuthenticationMode.ConnectionString
+        /// </summary>
         public static AuthenticationMode ConnectionString { get; } = new AuthenticationMode(ConnectionStringValue);
         /// <summary> Determines if two <see cref="AuthenticationMode"/> values are the same. </summary>
         public static bool operator ==(AuthenticationMode left, AuthenticationMode right) => left.Equals(right);

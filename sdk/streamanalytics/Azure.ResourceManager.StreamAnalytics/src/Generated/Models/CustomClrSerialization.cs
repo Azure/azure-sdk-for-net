@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in custom format. </summary>
+    /// <summary>
+    /// Describes how data from an input is serialized or how data is serialized when written to an output in custom format.
+    /// Serialized Name: CustomClrSerialization
+    /// </summary>
     public partial class CustomClrSerialization : Serialization
     {
         /// <summary> Initializes a new instance of CustomClrSerialization. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of CustomClrSerialization. </summary>
-        /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="serializationDllPath"> The serialization library path. </param>
-        /// <param name="serializationClassName"> The serialization class name. </param>
+        /// <param name="eventSerializationType">
+        /// Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Serialization.type
+        /// </param>
+        /// <param name="serializationDllPath">
+        /// The serialization library path.
+        /// Serialized Name: CustomClrSerialization.properties.serializationDllPath
+        /// </param>
+        /// <param name="serializationClassName">
+        /// The serialization class name.
+        /// Serialized Name: CustomClrSerialization.properties.serializationClassName
+        /// </param>
         internal CustomClrSerialization(EventSerializationType eventSerializationType, string serializationDllPath, string serializationClassName) : base(eventSerializationType)
         {
             SerializationDllPath = serializationDllPath;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             EventSerializationType = eventSerializationType;
         }
 
-        /// <summary> The serialization library path. </summary>
+        /// <summary>
+        /// The serialization library path.
+        /// Serialized Name: CustomClrSerialization.properties.serializationDllPath
+        /// </summary>
         public string SerializationDllPath { get; set; }
-        /// <summary> The serialization class name. </summary>
+        /// <summary>
+        /// The serialization class name.
+        /// Serialized Name: CustomClrSerialization.properties.serializationClassName
+        /// </summary>
         public string SerializationClassName { get; set; }
     }
 }

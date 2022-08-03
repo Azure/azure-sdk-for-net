@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The binding to a JavaScript function. </summary>
+    /// <summary>
+    /// The binding to a JavaScript function.
+    /// Serialized Name: JavaScriptFunctionBinding
+    /// </summary>
     public partial class JavaScriptFunctionBinding : FunctionBinding
     {
         /// <summary> Initializes a new instance of JavaScriptFunctionBinding. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of JavaScriptFunctionBinding. </summary>
-        /// <param name="functionBindingType"> Indicates the function binding type. </param>
-        /// <param name="script"> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </param>
+        /// <param name="functionBindingType">
+        /// Indicates the function binding type.
+        /// Serialized Name: FunctionBinding.type
+        /// </param>
+        /// <param name="script">
+        /// The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;
+        /// Serialized Name: JavaScriptFunctionBinding.properties.script
+        /// </param>
         internal JavaScriptFunctionBinding(string functionBindingType, string script) : base(functionBindingType)
         {
             Script = script;
             FunctionBindingType = functionBindingType ?? "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
-        /// <summary> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </summary>
+        /// <summary>
+        /// The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;
+        /// Serialized Name: JavaScriptFunctionBinding.properties.script
+        /// </summary>
         public string Script { get; set; }
     }
 }

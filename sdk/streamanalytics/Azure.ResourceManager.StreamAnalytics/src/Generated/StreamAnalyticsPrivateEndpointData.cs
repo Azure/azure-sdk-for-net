@@ -25,17 +25,29 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The properties associated with a private endpoint. </param>
-        /// <param name="etag"> Unique opaque string (generally a GUID) that represents the metadata state of the resource (private endpoint) and changes whenever the resource is updated. Required on PUT (CreateOrUpdate) requests. </param>
+        /// <param name="properties">
+        /// The properties associated with a private endpoint.
+        /// Serialized Name: PrivateEndpoint.properties
+        /// </param>
+        /// <param name="etag">
+        /// Unique opaque string (generally a GUID) that represents the metadata state of the resource (private endpoint) and changes whenever the resource is updated. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: PrivateEndpoint.etag
+        /// </param>
         internal StreamAnalyticsPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
         }
 
-        /// <summary> The properties associated with a private endpoint. </summary>
+        /// <summary>
+        /// The properties associated with a private endpoint.
+        /// Serialized Name: PrivateEndpoint.properties
+        /// </summary>
         public PrivateEndpointProperties Properties { get; set; }
-        /// <summary> Unique opaque string (generally a GUID) that represents the metadata state of the resource (private endpoint) and changes whenever the resource is updated. Required on PUT (CreateOrUpdate) requests. </summary>
+        /// <summary>
+        /// Unique opaque string (generally a GUID) that represents the metadata state of the resource (private endpoint) and changes whenever the resource is updated. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: PrivateEndpoint.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

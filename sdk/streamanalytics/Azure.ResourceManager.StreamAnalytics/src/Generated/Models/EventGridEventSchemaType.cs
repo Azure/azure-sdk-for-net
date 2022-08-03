@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Supported Event Grid schema types. </summary>
+    /// <summary>
+    /// Supported Event Grid schema types.
+    /// Serialized Name: EventGridEventSchemaType
+    /// </summary>
     public readonly partial struct EventGridEventSchemaType : IEquatable<EventGridEventSchemaType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string EventGridEventSchemaValue = "EventGridEventSchema";
         private const string CloudEventSchemaValue = "CloudEventSchema";
 
-        /// <summary> EventGridEventSchema. </summary>
+        /// <summary>
+        /// EventGridEventSchema
+        /// Serialized Name: EventGridEventSchemaType.EventGridEventSchema
+        /// </summary>
         public static EventGridEventSchemaType EventGridEventSchema { get; } = new EventGridEventSchemaType(EventGridEventSchemaValue);
-        /// <summary> CloudEventSchema. </summary>
+        /// <summary>
+        /// CloudEventSchema
+        /// Serialized Name: EventGridEventSchemaType.CloudEventSchema
+        /// </summary>
         public static EventGridEventSchemaType CloudEventSchema { get; } = new EventGridEventSchemaType(CloudEventSchemaValue);
         /// <summary> Determines if two <see cref="EventGridEventSchemaType"/> values are the same. </summary>
         public static bool operator ==(EventGridEventSchemaType left, EventGridEventSchemaType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests. </summary>
+    /// <summary>
+    /// Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests.
+    /// Serialized Name: CompressionType
+    /// </summary>
     public readonly partial struct CompressionType : IEquatable<CompressionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string GZipValue = "GZip";
         private const string DeflateValue = "Deflate";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: CompressionType.None
+        /// </summary>
         public static CompressionType None { get; } = new CompressionType(NoneValue);
-        /// <summary> GZip. </summary>
+        /// <summary>
+        /// GZip
+        /// Serialized Name: CompressionType.GZip
+        /// </summary>
         public static CompressionType GZip { get; } = new CompressionType(GZipValue);
-        /// <summary> Deflate. </summary>
+        /// <summary>
+        /// Deflate
+        /// Serialized Name: CompressionType.Deflate
+        /// </summary>
         public static CompressionType Deflate { get; } = new CompressionType(DeflateValue);
         /// <summary> Determines if two <see cref="CompressionType"/> values are the same. </summary>
         public static bool operator ==(CompressionType left, CompressionType right) => left.Equals(right);

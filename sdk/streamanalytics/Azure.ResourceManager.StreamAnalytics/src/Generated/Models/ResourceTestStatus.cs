@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes the status of the test operation along with error information, if applicable. </summary>
+    /// <summary>
+    /// Describes the status of the test operation along with error information, if applicable.
+    /// Serialized Name: ResourceTestStatus
+    /// </summary>
     public partial class ResourceTestStatus
     {
         /// <summary> Initializes a new instance of ResourceTestStatus. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ResourceTestStatus. </summary>
-        /// <param name="status"> The status of the test operation. </param>
-        /// <param name="code"> Error code associated with the error that occurred. </param>
-        /// <param name="message"> Describes the error in detail. </param>
+        /// <param name="status">
+        /// The status of the test operation.
+        /// Serialized Name: ResourceTestStatus.status
+        /// </param>
+        /// <param name="code">
+        /// Error code associated with the error that occurred.
+        /// Serialized Name: ResourceTestStatus.error.code
+        /// </param>
+        /// <param name="message">
+        /// Describes the error in detail.
+        /// Serialized Name: ResourceTestStatus.error.message
+        /// </param>
         internal ResourceTestStatus(string status, string code, string message)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Message = message;
         }
 
-        /// <summary> The status of the test operation. </summary>
+        /// <summary>
+        /// The status of the test operation.
+        /// Serialized Name: ResourceTestStatus.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> Error code associated with the error that occurred. </summary>
+        /// <summary>
+        /// Error code associated with the error that occurred.
+        /// Serialized Name: ResourceTestStatus.error.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Describes the error in detail. </summary>
+        /// <summary>
+        /// Describes the error in detail.
+        /// Serialized Name: ResourceTestStatus.error.message
+        /// </summary>
         public string Message { get; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Object containing a list of inputs under a streaming job. </summary>
+    /// <summary>
+    /// Object containing a list of inputs under a streaming job.
+    /// Serialized Name: InputListResult
+    /// </summary>
     internal partial class InputListResult
     {
         /// <summary> Initializes a new instance of InputListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of InputListResult. </summary>
-        /// <param name="value"> A list of inputs under a streaming job. Populated by a &apos;List&apos; operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// A list of inputs under a streaming job. Populated by a &apos;List&apos; operation.
+        /// Serialized Name: InputListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: InputListResult.nextLink
+        /// </param>
         internal InputListResult(IReadOnlyList<StreamingJobInputData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of inputs under a streaming job. Populated by a &apos;List&apos; operation. </summary>
+        /// <summary>
+        /// A list of inputs under a streaming job. Populated by a &apos;List&apos; operation.
+        /// Serialized Name: InputListResult.value
+        /// </summary>
         public IReadOnlyList<StreamingJobInputData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: InputListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. . </summary>
+    /// <summary>
+    /// Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this requires the user to also specify jobStorageAccount property. .
+    /// Serialized Name: ContentStoragePolicy
+    /// </summary>
     public readonly partial struct ContentStoragePolicy : IEquatable<ContentStoragePolicy>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string SystemAccountValue = "SystemAccount";
         private const string JobStorageAccountValue = "JobStorageAccount";
 
-        /// <summary> SystemAccount. </summary>
+        /// <summary>
+        /// SystemAccount
+        /// Serialized Name: ContentStoragePolicy.SystemAccount
+        /// </summary>
         public static ContentStoragePolicy SystemAccount { get; } = new ContentStoragePolicy(SystemAccountValue);
-        /// <summary> JobStorageAccount. </summary>
+        /// <summary>
+        /// JobStorageAccount
+        /// Serialized Name: ContentStoragePolicy.JobStorageAccount
+        /// </summary>
         public static ContentStoragePolicy JobStorageAccount { get; } = new ContentStoragePolicy(JobStorageAccountValue);
         /// <summary> Determines if two <see cref="ContentStoragePolicy"/> values are the same. </summary>
         public static bool operator ==(ContentStoragePolicy left, ContentStoragePolicy right) => left.Equals(right);

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The parameters needed to retrieve the default function definition for a JavaScript function. </summary>
+    /// <summary>
+    /// The parameters needed to retrieve the default function definition for a JavaScript function.
+    /// Serialized Name: JavaScriptFunctionRetrieveDefaultDefinitionParameters
+    /// </summary>
     public partial class JavaScriptFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
     {
         /// <summary> Initializes a new instance of JavaScriptFunctionRetrieveDefaultDefinitionParameters. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BindingType = "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
-        /// <summary> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </summary>
+        /// <summary>
+        /// The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;.
+        /// Serialized Name: JavaScriptFunctionRetrieveDefaultDefinitionParameters.bindingRetrievalProperties.script
+        /// </summary>
         public string Script { get; set; }
-        /// <summary> The function type. </summary>
-        public UdfType? UdfType { get; set; }
+        /// <summary>
+        /// The function type.
+        /// Serialized Name: JavaScriptFunctionRetrieveDefaultDefinitionParameters.bindingRetrievalProperties.udfType
+        /// </summary>
+        public FunctionUdfType? UdfType { get; set; }
     }
 }

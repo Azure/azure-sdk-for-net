@@ -11,15 +11,33 @@ using System.Linq;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A function for the query compilation. </summary>
+    /// <summary>
+    /// A function for the query compilation.
+    /// Serialized Name: QueryFunction
+    /// </summary>
     public partial class QueryFunction
     {
         /// <summary> Initializes a new instance of QueryFunction. </summary>
-        /// <param name="name"> The name of the function. </param>
-        /// <param name="queryFunctionType"> The type of the function. </param>
-        /// <param name="bindingType"> The type of the function binding. </param>
-        /// <param name="inputs"> The inputs for the function. </param>
-        /// <param name="output"> An output for the function. </param>
+        /// <param name="name">
+        /// The name of the function.
+        /// Serialized Name: QueryFunction.name
+        /// </param>
+        /// <param name="queryFunctionType">
+        /// The type of the function.
+        /// Serialized Name: QueryFunction.type
+        /// </param>
+        /// <param name="bindingType">
+        /// The type of the function binding.
+        /// Serialized Name: QueryFunction.bindingType
+        /// </param>
+        /// <param name="inputs">
+        /// The inputs for the function.
+        /// Serialized Name: QueryFunction.inputs
+        /// </param>
+        /// <param name="output">
+        /// An output for the function.
+        /// Serialized Name: QueryFunction.output
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="queryFunctionType"/>, <paramref name="bindingType"/>, <paramref name="inputs"/> or <paramref name="output"/> is null. </exception>
         public QueryFunction(string name, string queryFunctionType, string bindingType, IEnumerable<FunctionInput> inputs, FunctionOutput output)
         {
@@ -51,17 +69,35 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Output = output;
         }
 
-        /// <summary> The name of the function. </summary>
+        /// <summary>
+        /// The name of the function.
+        /// Serialized Name: QueryFunction.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The type of the function. </summary>
+        /// <summary>
+        /// The type of the function.
+        /// Serialized Name: QueryFunction.type
+        /// </summary>
         public string QueryFunctionType { get; }
-        /// <summary> The type of the function binding. </summary>
+        /// <summary>
+        /// The type of the function binding.
+        /// Serialized Name: QueryFunction.bindingType
+        /// </summary>
         public string BindingType { get; }
-        /// <summary> The inputs for the function. </summary>
+        /// <summary>
+        /// The inputs for the function.
+        /// Serialized Name: QueryFunction.inputs
+        /// </summary>
         public IList<FunctionInput> Inputs { get; }
-        /// <summary> An output for the function. </summary>
+        /// <summary>
+        /// An output for the function.
+        /// Serialized Name: QueryFunction.output
+        /// </summary>
         internal FunctionOutput Output { get; }
-        /// <summary> The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </summary>
+        /// <summary>
+        /// The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx
+        /// Serialized Name: FunctionOutput.dataType
+        /// </summary>
         public string OutputDataType
         {
             get => Output?.DataType;

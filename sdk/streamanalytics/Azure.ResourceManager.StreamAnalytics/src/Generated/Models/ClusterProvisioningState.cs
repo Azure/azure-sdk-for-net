@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled. </summary>
+    /// <summary>
+    /// The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled
+    /// Serialized Name: ClusterProvisioningState
+    /// </summary>
     public readonly partial struct ClusterProvisioningState : IEquatable<ClusterProvisioningState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string CanceledValue = "Canceled";
         private const string InProgressValue = "InProgress";
 
-        /// <summary> The cluster provisioning succeeded. </summary>
+        /// <summary>
+        /// The cluster provisioning succeeded.
+        /// Serialized Name: ClusterProvisioningState.Succeeded
+        /// </summary>
         public static ClusterProvisioningState Succeeded { get; } = new ClusterProvisioningState(SucceededValue);
-        /// <summary> The cluster provisioning failed. </summary>
+        /// <summary>
+        /// The cluster provisioning failed.
+        /// Serialized Name: ClusterProvisioningState.Failed
+        /// </summary>
         public static ClusterProvisioningState Failed { get; } = new ClusterProvisioningState(FailedValue);
-        /// <summary> The cluster provisioning was canceled. </summary>
+        /// <summary>
+        /// The cluster provisioning was canceled.
+        /// Serialized Name: ClusterProvisioningState.Canceled
+        /// </summary>
         public static ClusterProvisioningState Canceled { get; } = new ClusterProvisioningState(CanceledValue);
-        /// <summary> The cluster provisioning was inprogress. </summary>
+        /// <summary>
+        /// The cluster provisioning was inprogress.
+        /// Serialized Name: ClusterProvisioningState.InProgress
+        /// </summary>
         public static ClusterProvisioningState InProgress { get; } = new ClusterProvisioningState(InProgressValue);
         /// <summary> Determines if two <see cref="ClusterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ClusterProvisioningState left, ClusterProvisioningState right) => left.Equals(right);

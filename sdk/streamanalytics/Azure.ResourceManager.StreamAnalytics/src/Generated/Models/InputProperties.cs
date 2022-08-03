@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
     /// The properties that are associated with an input.
+    /// Serialized Name: InputProperties
     /// Please note <see cref="InputProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ReferenceInputProperties"/> and <see cref="StreamInputProperties"/>.
     /// </summary>
@@ -23,17 +24,36 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of InputProperties. </summary>
-        /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="inputPropertiesType">
+        /// Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: InputProperties.type
+        /// </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: InputProperties.serialization
         /// Please note <see cref="Serialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroSerialization"/>, <see cref="CsvSerialization"/>, <see cref="CustomClrSerialization"/>, <see cref="JsonSerialization"/> and <see cref="ParquetSerialization"/>.
         /// </param>
-        /// <param name="diagnostics"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
-        /// <param name="etag"> The current entity tag for the input. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
-        /// <param name="compression"> Describes how input data is compressed. </param>
-        /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
-        /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
+        /// <param name="diagnostics">
+        /// Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention.
+        /// Serialized Name: InputProperties.diagnostics
+        /// </param>
+        /// <param name="etag">
+        /// The current entity tag for the input. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency.
+        /// Serialized Name: InputProperties.etag
+        /// </param>
+        /// <param name="compression">
+        /// Describes how input data is compressed
+        /// Serialized Name: InputProperties.compression
+        /// </param>
+        /// <param name="partitionKey">
+        /// partitionKey Describes a key in the input data which is used for partitioning the input data
+        /// Serialized Name: InputProperties.partitionKey
+        /// </param>
+        /// <param name="watermarkSettings">
+        /// Settings which determine whether to read watermark events.
+        /// Serialized Name: InputProperties.watermarkSettings
+        /// </param>
         internal InputProperties(string inputPropertiesType, Serialization serialization, Diagnostics diagnostics, ETag? etag, Compression compression, string partitionKey, InputWatermarkProperties watermarkSettings)
         {
             InputPropertiesType = inputPropertiesType;
@@ -45,27 +65,46 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             WatermarkSettings = watermarkSettings;
         }
 
-        /// <summary> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: InputProperties.type
+        /// </summary>
         internal string InputPropertiesType { get; set; }
         /// <summary>
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: InputProperties.serialization
         /// Please note <see cref="Serialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroSerialization"/>, <see cref="CsvSerialization"/>, <see cref="CustomClrSerialization"/>, <see cref="JsonSerialization"/> and <see cref="ParquetSerialization"/>.
         /// </summary>
         public Serialization Serialization { get; set; }
-        /// <summary> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </summary>
+        /// <summary>
+        /// Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention.
+        /// Serialized Name: InputProperties.diagnostics
+        /// </summary>
         internal Diagnostics Diagnostics { get; }
-        /// <summary> A collection of zero or more conditions applicable to the resource, or to the job overall, that warrant customer attention. </summary>
+        /// <summary>
+        /// A collection of zero or more conditions applicable to the resource, or to the job overall, that warrant customer attention.
+        /// Serialized Name: Diagnostics.conditions
+        /// </summary>
         public IReadOnlyList<DiagnosticCondition> DiagnosticsConditions
         {
             get => Diagnostics?.Conditions;
         }
 
-        /// <summary> The current entity tag for the input. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
+        /// <summary>
+        /// The current entity tag for the input. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency.
+        /// Serialized Name: InputProperties.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Describes how input data is compressed. </summary>
+        /// <summary>
+        /// Describes how input data is compressed
+        /// Serialized Name: InputProperties.compression
+        /// </summary>
         internal Compression Compression { get; set; }
-        /// <summary> Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Compression.type
+        /// </summary>
         public CompressionType? CompressionType
         {
             get => Compression is null ? default(CompressionType?) : Compression.CompressionType;
@@ -75,11 +114,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
         }
 
-        /// <summary> partitionKey Describes a key in the input data which is used for partitioning the input data. </summary>
+        /// <summary>
+        /// partitionKey Describes a key in the input data which is used for partitioning the input data
+        /// Serialized Name: InputProperties.partitionKey
+        /// </summary>
         public string PartitionKey { get; set; }
-        /// <summary> Settings which determine whether to read watermark events. </summary>
+        /// <summary>
+        /// Settings which determine whether to read watermark events.
+        /// Serialized Name: InputProperties.watermarkSettings
+        /// </summary>
         internal InputWatermarkProperties WatermarkSettings { get; set; }
-        /// <summary> The input watermark mode. </summary>
+        /// <summary>
+        /// The input watermark mode.
+        /// Serialized Name: InputWatermarkProperties.watermarkMode
+        /// </summary>
         public InputWatermarkMode? WatermarkMode
         {
             get => WatermarkSettings is null ? default : WatermarkSettings.WatermarkMode;

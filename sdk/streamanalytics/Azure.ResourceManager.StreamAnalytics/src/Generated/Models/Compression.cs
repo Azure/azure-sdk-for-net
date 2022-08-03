@@ -7,17 +7,26 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes how input data is compressed. </summary>
+    /// <summary>
+    /// Describes how input data is compressed
+    /// Serialized Name: Compression
+    /// </summary>
     internal partial class Compression
     {
         /// <summary> Initializes a new instance of Compression. </summary>
-        /// <param name="compressionType"> Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="compressionType">
+        /// Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Compression.type
+        /// </param>
         public Compression(CompressionType compressionType)
         {
             CompressionType = compressionType;
         }
 
-        /// <summary> Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// Indicates the type of compression that the input uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Compression.type
+        /// </summary>
         public CompressionType CompressionType { get; set; }
     }
 }

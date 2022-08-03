@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(WaitUntil waitUntil, AzureLocation location, TestQueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<QueryTestingResult>> TestQuerySubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQueryContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestQuerySubscription");
             scope.Start();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> The query testing object that defines the input, output, and transformation for the query testing. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<QueryTestingResult> TestQuerySubscription(WaitUntil waitUntil, AzureLocation location, TestQueryContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<QueryTestingResult> TestQuerySubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQueryContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestQuerySubscription");
             scope.Start();
@@ -363,14 +363,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestDatasourceResult>> TestInputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, TestInputContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StreamAnalyticsTestResult>> TestInputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestInputContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestInputSubscription");
             scope.Start();
             try
             {
                 var response = await SubscriptionsRestClient.TestInputAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<TestDatasourceResult>(new TestDatasourceResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestInputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsTestResult>(new StreamAnalyticsTestResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestInputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,14 +391,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestDatasourceResult> TestInputSubscription(WaitUntil waitUntil, AzureLocation location, TestInputContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StreamAnalyticsTestResult> TestInputSubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestInputContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestInputSubscription");
             scope.Start();
             try
             {
                 var response = SubscriptionsRestClient.TestInput(Id.SubscriptionId, location, content, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<TestDatasourceResult>(new TestDatasourceResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestInputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsTestResult>(new StreamAnalyticsTestResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestInputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -419,14 +419,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestDatasourceResult>> TestOutputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, TestOutputContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StreamAnalyticsTestResult>> TestOutputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutputContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestOutputSubscription");
             scope.Start();
             try
             {
                 var response = await SubscriptionsRestClient.TestOutputAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<TestDatasourceResult>(new TestDatasourceResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestOutputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsTestResult>(new StreamAnalyticsTestResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestOutputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -447,14 +447,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="content"> Defines the necessary parameters for testing the Stream Analytics output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestDatasourceResult> TestOutputSubscription(WaitUntil waitUntil, AzureLocation location, TestOutputContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StreamAnalyticsTestResult> TestOutputSubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutputContent content, CancellationToken cancellationToken = default)
         {
             using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.TestOutputSubscription");
             scope.Start();
             try
             {
                 var response = SubscriptionsRestClient.TestOutput(Id.SubscriptionId, location, content, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<TestDatasourceResult>(new TestDatasourceResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestOutputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsTestResult>(new StreamAnalyticsTestResultOperationSource(), SubscriptionsClientDiagnostics, Pipeline, SubscriptionsRestClient.CreateTestOutputRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

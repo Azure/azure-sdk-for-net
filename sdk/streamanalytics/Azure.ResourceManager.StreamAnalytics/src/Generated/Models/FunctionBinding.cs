@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
     /// The physical binding of the function. For example, in the Azure Machine Learning web service’s case, this describes the endpoint.
+    /// Serialized Name: FunctionBinding
     /// Please note <see cref="FunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureMachineLearningStudioFunctionBinding"/>, <see cref="AzureMachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of FunctionBinding. </summary>
-        /// <param name="functionBindingType"> Indicates the function binding type. </param>
+        /// <param name="functionBindingType">
+        /// Indicates the function binding type.
+        /// Serialized Name: FunctionBinding.type
+        /// </param>
         internal FunctionBinding(string functionBindingType)
         {
             FunctionBindingType = functionBindingType;
         }
 
-        /// <summary> Indicates the function binding type. </summary>
+        /// <summary>
+        /// Indicates the function binding type.
+        /// Serialized Name: FunctionBinding.type
+        /// </summary>
         internal string FunctionBindingType { get; set; }
     }
 }

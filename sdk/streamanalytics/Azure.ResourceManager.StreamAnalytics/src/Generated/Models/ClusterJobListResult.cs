@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A list of streaming jobs. Populated by a List operation. </summary>
+    /// <summary>
+    /// A list of streaming jobs. Populated by a List operation.
+    /// Serialized Name: ClusterJobListResult
+    /// </summary>
     internal partial class ClusterJobListResult
     {
         /// <summary> Initializes a new instance of ClusterJobListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ClusterJobListResult. </summary>
-        /// <param name="value"> A list of streaming jobs. </param>
-        /// <param name="nextLink"> The URL to fetch the next set of streaming jobs. </param>
+        /// <param name="value">
+        /// A list of streaming jobs.
+        /// Serialized Name: ClusterJobListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to fetch the next set of streaming jobs.
+        /// Serialized Name: ClusterJobListResult.nextLink
+        /// </param>
         internal ClusterJobListResult(IReadOnlyList<ClusterJob> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of streaming jobs. </summary>
+        /// <summary>
+        /// A list of streaming jobs.
+        /// Serialized Name: ClusterJobListResult.value
+        /// </summary>
         public IReadOnlyList<ClusterJob> Value { get; }
-        /// <summary> The URL to fetch the next set of streaming jobs. </summary>
+        /// <summary>
+        /// The URL to fetch the next set of streaming jobs.
+        /// Serialized Name: ClusterJobListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

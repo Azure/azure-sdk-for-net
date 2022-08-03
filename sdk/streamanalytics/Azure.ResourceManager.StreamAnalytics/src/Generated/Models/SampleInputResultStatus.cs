@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The status of the sample input request. </summary>
+    /// <summary>
+    /// The status of the sample input request.
+    /// Serialized Name: SampleInputResultStatus
+    /// </summary>
     public readonly partial struct SampleInputResultStatus : IEquatable<SampleInputResultStatus>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string NoEventsFoundInRangeValue = "NoEventsFoundInRange";
         private const string ErrorConnectingToInputValue = "ErrorConnectingToInput";
 
-        /// <summary> The sample input operation successfully read all the events in the range. </summary>
+        /// <summary>
+        /// The sample input operation successfully read all the events in the range.
+        /// Serialized Name: SampleInputResultStatus.ReadAllEventsInRange
+        /// </summary>
         public static SampleInputResultStatus ReadAllEventsInRange { get; } = new SampleInputResultStatus(ReadAllEventsInRangeValue);
-        /// <summary> The sample input operation found no events in the range. </summary>
+        /// <summary>
+        /// The sample input operation found no events in the range.
+        /// Serialized Name: SampleInputResultStatus.NoEventsFoundInRange
+        /// </summary>
         public static SampleInputResultStatus NoEventsFoundInRange { get; } = new SampleInputResultStatus(NoEventsFoundInRangeValue);
-        /// <summary> The sample input operation failed to connect to the input. </summary>
+        /// <summary>
+        /// The sample input operation failed to connect to the input.
+        /// Serialized Name: SampleInputResultStatus.ErrorConnectingToInput
+        /// </summary>
         public static SampleInputResultStatus ErrorConnectingToInput { get; } = new SampleInputResultStatus(ErrorConnectingToInputValue);
         /// <summary> Determines if two <see cref="SampleInputResultStatus"/> values are the same. </summary>
         public static bool operator ==(SampleInputResultStatus left, SampleInputResultStatus right) => left.Equals(right);

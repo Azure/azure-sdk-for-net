@@ -11,7 +11,10 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A list of clusters populated by a &apos;list&apos; operation. </summary>
+    /// <summary>
+    /// A list of clusters populated by a &apos;list&apos; operation.
+    /// Serialized Name: ClusterListResult
+    /// </summary>
     internal partial class ClusterListResult
     {
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
-        /// <param name="value"> A list of clusters. </param>
-        /// <param name="nextLink"> The URL to fetch the next set of clusters. </param>
+        /// <param name="value">
+        /// A list of clusters.
+        /// Serialized Name: ClusterListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to fetch the next set of clusters.
+        /// Serialized Name: ClusterListResult.nextLink
+        /// </param>
         internal ClusterListResult(IReadOnlyList<StreamAnalyticsClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of clusters. </summary>
+        /// <summary>
+        /// A list of clusters.
+        /// Serialized Name: ClusterListResult.value
+        /// </summary>
         public IReadOnlyList<StreamAnalyticsClusterData> Value { get; }
-        /// <summary> The URL to fetch the next set of clusters. </summary>
+        /// <summary>
+        /// The URL to fetch the next set of clusters.
+        /// Serialized Name: ClusterListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

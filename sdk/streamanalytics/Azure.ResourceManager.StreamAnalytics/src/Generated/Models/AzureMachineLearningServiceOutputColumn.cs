@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes an output column for the Azure Machine Learning web service endpoint. </summary>
+    /// <summary>
+    /// Describes an output column for the Azure Machine Learning web service endpoint.
+    /// Serialized Name: AzureMachineLearningServiceOutputColumn
+    /// </summary>
     public partial class AzureMachineLearningServiceOutputColumn
     {
         /// <summary> Initializes a new instance of AzureMachineLearningServiceOutputColumn. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureMachineLearningServiceOutputColumn. </summary>
-        /// <param name="name"> The name of the output column. </param>
-        /// <param name="dataType"> The (Azure Machine Learning supported) data type of the output column. </param>
-        /// <param name="mapTo"> The zero based index of the function parameter this input maps to. </param>
+        /// <param name="name">
+        /// The name of the output column.
+        /// Serialized Name: AzureMachineLearningServiceOutputColumn.name
+        /// </param>
+        /// <param name="dataType">
+        /// The (Azure Machine Learning supported) data type of the output column.
+        /// Serialized Name: AzureMachineLearningServiceOutputColumn.dataType
+        /// </param>
+        /// <param name="mapTo">
+        /// The zero based index of the function parameter this input maps to.
+        /// Serialized Name: AzureMachineLearningServiceOutputColumn.mapTo
+        /// </param>
         internal AzureMachineLearningServiceOutputColumn(string name, string dataType, int? mapTo)
         {
             Name = name;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             MapTo = mapTo;
         }
 
-        /// <summary> The name of the output column. </summary>
+        /// <summary>
+        /// The name of the output column.
+        /// Serialized Name: AzureMachineLearningServiceOutputColumn.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The (Azure Machine Learning supported) data type of the output column. </summary>
+        /// <summary>
+        /// The (Azure Machine Learning supported) data type of the output column.
+        /// Serialized Name: AzureMachineLearningServiceOutputColumn.dataType
+        /// </summary>
         public string DataType { get; set; }
-        /// <summary> The zero based index of the function parameter this input maps to. </summary>
+        /// <summary>
+        /// The zero based index of the function parameter this input maps to.
+        /// Serialized Name: AzureMachineLearningServiceOutputColumn.mapTo
+        /// </summary>
         public int? MapTo { get; set; }
     }
 }

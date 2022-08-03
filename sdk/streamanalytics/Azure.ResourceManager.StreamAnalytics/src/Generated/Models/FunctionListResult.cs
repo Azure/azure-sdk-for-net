@@ -11,7 +11,10 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Object containing a list of functions under a streaming job. </summary>
+    /// <summary>
+    /// Object containing a list of functions under a streaming job.
+    /// Serialized Name: FunctionListResult
+    /// </summary>
     internal partial class FunctionListResult
     {
         /// <summary> Initializes a new instance of FunctionListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of FunctionListResult. </summary>
-        /// <param name="value"> A list of functions under a streaming job. Populated by a &apos;List&apos; operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// A list of functions under a streaming job. Populated by a &apos;List&apos; operation.
+        /// Serialized Name: FunctionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: FunctionListResult.nextLink
+        /// </param>
         internal FunctionListResult(IReadOnlyList<StreamingJobFunctionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of functions under a streaming job. Populated by a &apos;List&apos; operation. </summary>
+        /// <summary>
+        /// A list of functions under a streaming job. Populated by a &apos;List&apos; operation.
+        /// Serialized Name: FunctionListResult.value
+        /// </summary>
         public IReadOnlyList<StreamingJobFunctionData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: FunctionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

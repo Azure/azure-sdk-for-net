@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> An input for the query compilation. </summary>
+    /// <summary>
+    /// An input for the query compilation.
+    /// Serialized Name: QueryInput
+    /// </summary>
     public partial class QueryInput
     {
         /// <summary> Initializes a new instance of QueryInput. </summary>
-        /// <param name="name"> The name of the input. </param>
-        /// <param name="queryInputType"> The type of the input, can be Stream or Reference. </param>
+        /// <param name="name">
+        /// The name of the input.
+        /// Serialized Name: QueryInput.name
+        /// </param>
+        /// <param name="queryInputType">
+        /// The type of the input, can be Stream or Reference.
+        /// Serialized Name: QueryInput.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="queryInputType"/> is null. </exception>
         public QueryInput(string name, string queryInputType)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             QueryInputType = queryInputType;
         }
 
-        /// <summary> The name of the input. </summary>
+        /// <summary>
+        /// The name of the input.
+        /// Serialized Name: QueryInput.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The type of the input, can be Stream or Reference. </summary>
+        /// <summary>
+        /// The type of the input, can be Stream or Reference.
+        /// Serialized Name: QueryInput.type
+        /// </summary>
         public string QueryInputType { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes one input parameter of a function. </summary>
+    /// <summary>
+    /// Describes one input parameter of a function.
+    /// Serialized Name: FunctionInput
+    /// </summary>
     public partial class FunctionInput
     {
         /// <summary> Initializes a new instance of FunctionInput. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of FunctionInput. </summary>
-        /// <param name="dataType"> The (Azure Stream Analytics supported) data type of the function input parameter. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </param>
-        /// <param name="isConfigurationParameter"> A flag indicating if the parameter is a configuration parameter. True if this input parameter is expected to be a constant. Default is false. </param>
+        /// <param name="dataType">
+        /// The (Azure Stream Analytics supported) data type of the function input parameter. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx
+        /// Serialized Name: FunctionInput.dataType
+        /// </param>
+        /// <param name="isConfigurationParameter">
+        /// A flag indicating if the parameter is a configuration parameter. True if this input parameter is expected to be a constant. Default is false.
+        /// Serialized Name: FunctionInput.isConfigurationParameter
+        /// </param>
         internal FunctionInput(string dataType, bool? isConfigurationParameter)
         {
             DataType = dataType;
             IsConfigurationParameter = isConfigurationParameter;
         }
 
-        /// <summary> The (Azure Stream Analytics supported) data type of the function input parameter. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </summary>
+        /// <summary>
+        /// The (Azure Stream Analytics supported) data type of the function input parameter. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx
+        /// Serialized Name: FunctionInput.dataType
+        /// </summary>
         public string DataType { get; set; }
-        /// <summary> A flag indicating if the parameter is a configuration parameter. True if this input parameter is expected to be a constant. Default is false. </summary>
+        /// <summary>
+        /// A flag indicating if the parameter is a configuration parameter. True if this input parameter is expected to be a constant. Default is false.
+        /// Serialized Name: FunctionInput.isConfigurationParameter
+        /// </summary>
         public bool? IsConfigurationParameter { get; set; }
     }
 }

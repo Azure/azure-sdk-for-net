@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The input watermark mode. </summary>
+    /// <summary>
+    /// The input watermark mode.
+    /// Serialized Name: InputWatermarkMode
+    /// </summary>
     public readonly partial struct InputWatermarkMode : IEquatable<InputWatermarkMode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string NoneValue = "None";
         private const string ReadWatermarkValue = "ReadWatermark";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: InputWatermarkMode.None
+        /// </summary>
         public static InputWatermarkMode None { get; } = new InputWatermarkMode(NoneValue);
-        /// <summary> ReadWatermark. </summary>
+        /// <summary>
+        /// ReadWatermark
+        /// Serialized Name: InputWatermarkMode.ReadWatermark
+        /// </summary>
         public static InputWatermarkMode ReadWatermark { get; } = new InputWatermarkMode(ReadWatermarkValue);
         /// <summary> Determines if two <see cref="InputWatermarkMode"/> values are the same. </summary>
         public static bool operator ==(InputWatermarkMode left, InputWatermarkMode right) => left.Equals(right);

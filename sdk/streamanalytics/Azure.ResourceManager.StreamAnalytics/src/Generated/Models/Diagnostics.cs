@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </summary>
+    /// <summary>
+    /// Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention.
+    /// Serialized Name: Diagnostics
+    /// </summary>
     internal partial class Diagnostics
     {
         /// <summary> Initializes a new instance of Diagnostics. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of Diagnostics. </summary>
-        /// <param name="conditions"> A collection of zero or more conditions applicable to the resource, or to the job overall, that warrant customer attention. </param>
+        /// <param name="conditions">
+        /// A collection of zero or more conditions applicable to the resource, or to the job overall, that warrant customer attention.
+        /// Serialized Name: Diagnostics.conditions
+        /// </param>
         internal Diagnostics(IReadOnlyList<DiagnosticCondition> conditions)
         {
             Conditions = conditions;
         }
 
-        /// <summary> A collection of zero or more conditions applicable to the resource, or to the job overall, that warrant customer attention. </summary>
+        /// <summary>
+        /// A collection of zero or more conditions applicable to the resource, or to the job overall, that warrant customer attention.
+        /// Serialized Name: Diagnostics.conditions
+        /// </summary>
         public IReadOnlyList<DiagnosticCondition> Conditions { get; }
     }
 }

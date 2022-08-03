@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes a blob output data source. </summary>
+    /// <summary>
+    /// Describes a blob output data source.
+    /// Serialized Name: BlobOutputDataSource
+    /// </summary>
     public partial class BlobOutputDataSource : OutputDataSource
     {
         /// <summary> Initializes a new instance of BlobOutputDataSource. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of BlobOutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="storageAccounts"> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="container"> The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="pathPattern"> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </param>
-        /// <param name="dateFormat"> The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead. </param>
-        /// <param name="timeFormat"> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </param>
-        /// <param name="authenticationMode"> Authentication Mode. </param>
-        /// <param name="blobPathPrefix"> Blob path prefix. </param>
-        /// <param name="blobWriteMode"> Blob write mode. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="storageAccounts">
+        /// A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: BlobOutputDataSource.properties.storageAccounts
+        /// </param>
+        /// <param name="container">
+        /// The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: BlobOutputDataSource.properties.container
+        /// </param>
+        /// <param name="pathPattern">
+        /// The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example.
+        /// Serialized Name: BlobOutputDataSource.properties.pathPattern
+        /// </param>
+        /// <param name="dateFormat">
+        /// The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead.
+        /// Serialized Name: BlobOutputDataSource.properties.dateFormat
+        /// </param>
+        /// <param name="timeFormat">
+        /// The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead.
+        /// Serialized Name: BlobOutputDataSource.properties.timeFormat
+        /// </param>
+        /// <param name="authenticationMode">
+        /// Authentication Mode.
+        /// Serialized Name: BlobOutputDataSource.properties.authenticationMode
+        /// </param>
+        /// <param name="blobPathPrefix">
+        /// Blob path prefix.
+        /// Serialized Name: BlobOutputDataSource.properties.blobPathPrefix
+        /// </param>
+        /// <param name="blobWriteMode">
+        /// Blob write mode.
+        /// Serialized Name: BlobOutputDataSource.properties.blobWriteMode
+        /// </param>
         internal BlobOutputDataSource(string outputDataSourceType, IList<StorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, AuthenticationMode? authenticationMode, string blobPathPrefix, BlobWriteMode? blobWriteMode) : base(outputDataSourceType)
         {
             StorageAccounts = storageAccounts;
@@ -43,21 +73,45 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.Storage/Blob";
         }
 
-        /// <summary> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: BlobOutputDataSource.properties.storageAccounts
+        /// </summary>
         public IList<StorageAccount> StorageAccounts { get; }
-        /// <summary> The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: BlobOutputDataSource.properties.container
+        /// </summary>
         public string Container { get; set; }
-        /// <summary> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </summary>
+        /// <summary>
+        /// The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example.
+        /// Serialized Name: BlobOutputDataSource.properties.pathPattern
+        /// </summary>
         public string PathPattern { get; set; }
-        /// <summary> The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead. </summary>
+        /// <summary>
+        /// The date format. Wherever {date} appears in pathPattern, the value of this property is used as the date format instead.
+        /// Serialized Name: BlobOutputDataSource.properties.dateFormat
+        /// </summary>
         public string DateFormat { get; set; }
-        /// <summary> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </summary>
+        /// <summary>
+        /// The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead.
+        /// Serialized Name: BlobOutputDataSource.properties.timeFormat
+        /// </summary>
         public string TimeFormat { get; set; }
-        /// <summary> Authentication Mode. </summary>
+        /// <summary>
+        /// Authentication Mode.
+        /// Serialized Name: BlobOutputDataSource.properties.authenticationMode
+        /// </summary>
         public AuthenticationMode? AuthenticationMode { get; set; }
-        /// <summary> Blob path prefix. </summary>
+        /// <summary>
+        /// Blob path prefix.
+        /// Serialized Name: BlobOutputDataSource.properties.blobPathPrefix
+        /// </summary>
         public string BlobPathPrefix { get; set; }
-        /// <summary> Blob write mode. </summary>
+        /// <summary>
+        /// Blob write mode.
+        /// Serialized Name: BlobOutputDataSource.properties.blobWriteMode
+        /// </summary>
         public BlobWriteMode? BlobWriteMode { get; set; }
     }
 }

@@ -29,9 +29,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU of the cluster. This determines the size/capacity of the cluster. Required on PUT (CreateOrUpdate) requests. </param>
-        /// <param name="etag"> The current entity tag for the cluster. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
-        /// <param name="properties"> The properties associated with a Stream Analytics cluster. </param>
+        /// <param name="sku">
+        /// The SKU of the cluster. This determines the size/capacity of the cluster. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: Cluster.sku
+        /// </param>
+        /// <param name="etag">
+        /// The current entity tag for the cluster. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency.
+        /// Serialized Name: Cluster.etag
+        /// </param>
+        /// <param name="properties">
+        /// The properties associated with a Stream Analytics cluster.
+        /// Serialized Name: Cluster.properties
+        /// </param>
         internal StreamAnalyticsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterSku sku, ETag? etag, ClusterProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
@@ -39,11 +48,20 @@ namespace Azure.ResourceManager.StreamAnalytics
             Properties = properties;
         }
 
-        /// <summary> The SKU of the cluster. This determines the size/capacity of the cluster. Required on PUT (CreateOrUpdate) requests. </summary>
+        /// <summary>
+        /// The SKU of the cluster. This determines the size/capacity of the cluster. Required on PUT (CreateOrUpdate) requests.
+        /// Serialized Name: Cluster.sku
+        /// </summary>
         public ClusterSku Sku { get; set; }
-        /// <summary> The current entity tag for the cluster. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </summary>
+        /// <summary>
+        /// The current entity tag for the cluster. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency.
+        /// Serialized Name: Cluster.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> The properties associated with a Stream Analytics cluster. </summary>
+        /// <summary>
+        /// The properties associated with a Stream Analytics cluster.
+        /// Serialized Name: Cluster.properties
+        /// </summary>
         public ClusterProperties Properties { get; set; }
     }
 }

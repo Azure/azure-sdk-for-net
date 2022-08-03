@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The result of the query compilation request. </summary>
+    /// <summary>
+    /// The result of the query compilation request.
+    /// Serialized Name: QueryCompilationResult
+    /// </summary>
     public partial class QueryCompilationResult
     {
         /// <summary> Initializes a new instance of QueryCompilationResult. </summary>
@@ -24,11 +27,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of QueryCompilationResult. </summary>
-        /// <param name="errors"> Error messages produced by the compiler. </param>
-        /// <param name="warnings"> Warning messages produced by the compiler. </param>
-        /// <param name="inputs"> All input names used by the query. </param>
-        /// <param name="outputs"> All output names used by the query. </param>
-        /// <param name="functions"> All function names used by the query. </param>
+        /// <param name="errors">
+        /// Error messages produced by the compiler.
+        /// Serialized Name: QueryCompilationResult.errors
+        /// </param>
+        /// <param name="warnings">
+        /// Warning messages produced by the compiler.
+        /// Serialized Name: QueryCompilationResult.warnings
+        /// </param>
+        /// <param name="inputs">
+        /// All input names used by the query.
+        /// Serialized Name: QueryCompilationResult.inputs
+        /// </param>
+        /// <param name="outputs">
+        /// All output names used by the query.
+        /// Serialized Name: QueryCompilationResult.outputs
+        /// </param>
+        /// <param name="functions">
+        /// All function names used by the query.
+        /// Serialized Name: QueryCompilationResult.functions
+        /// </param>
         internal QueryCompilationResult(IReadOnlyList<QueryCompilationError> errors, IReadOnlyList<string> warnings, IReadOnlyList<string> inputs, IReadOnlyList<string> outputs, IReadOnlyList<string> functions)
         {
             Errors = errors;
@@ -38,15 +56,30 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Functions = functions;
         }
 
-        /// <summary> Error messages produced by the compiler. </summary>
+        /// <summary>
+        /// Error messages produced by the compiler.
+        /// Serialized Name: QueryCompilationResult.errors
+        /// </summary>
         public IReadOnlyList<QueryCompilationError> Errors { get; }
-        /// <summary> Warning messages produced by the compiler. </summary>
+        /// <summary>
+        /// Warning messages produced by the compiler.
+        /// Serialized Name: QueryCompilationResult.warnings
+        /// </summary>
         public IReadOnlyList<string> Warnings { get; }
-        /// <summary> All input names used by the query. </summary>
+        /// <summary>
+        /// All input names used by the query.
+        /// Serialized Name: QueryCompilationResult.inputs
+        /// </summary>
         public IReadOnlyList<string> Inputs { get; }
-        /// <summary> All output names used by the query. </summary>
+        /// <summary>
+        /// All output names used by the query.
+        /// Serialized Name: QueryCompilationResult.outputs
+        /// </summary>
         public IReadOnlyList<string> Outputs { get; }
-        /// <summary> All function names used by the query. </summary>
+        /// <summary>
+        /// All function names used by the query.
+        /// Serialized Name: QueryCompilationResult.functions
+        /// </summary>
         public IReadOnlyList<string> Functions { get; }
     }
 }

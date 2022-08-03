@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.StreamAnalytics
         public static Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationResource GetStreamingJobTransformationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.SampleInputResult> SampleInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.SampleContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.SampleInputResult>> SampleInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.SampleContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult> TestInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult>> TestInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult> TestOutputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestOutputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResult>> TestOutputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestOutputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult> TestQuerySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult>> TestQuerySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.TestQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResult> TestInputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResult>> TestInputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestInputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResult> TestOutputSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestOutputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResult>> TestOutputSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestOutputContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult> TestQuerySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.QueryTestingResult>> TestQuerySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StreamAnalyticsPrivateEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource>, System.Collections.IEnumerable
     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy? EventsOutOfOrderPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.ExternalStorageAccount Externals { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData> Functions { get { throw null; } }
-        public Azure.ResourceManager.StreamAnalytics.Models.ManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData> Inputs { get { throw null; } }
         public string JobId { get { throw null; } }
         public string JobState { get { throw null; } }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters() { }
         public string ExecuteEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType? UdfType { get { throw null; } set { } }
     }
     public partial class AzureMachineLearningServiceInputColumn
     {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters() { }
         public string ExecuteEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType? UdfType { get { throw null; } set { } }
     }
     public partial class AzureMachineLearningStudioInputColumn
     {
@@ -693,13 +693,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Class { get { throw null; } set { } }
         public string DllPath { get { throw null; } set { } }
         public string Method { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.UpdateMode? UpdateMode { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode? UpdateMode { get { throw null; } set { } }
     }
     public partial class CSharpFunctionRetrieveDefaultDefinitionParameters : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
     {
         public CSharpFunctionRetrieveDefaultDefinitionParameters() { }
         public string Script { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType? UdfType { get { throw null; } set { } }
     }
     public partial class CsvSerialization : Azure.ResourceManager.StreamAnalytics.Models.Serialization
     {
@@ -858,6 +858,41 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public FunctionRetrieveDefaultDefinitionContent() { }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FunctionUdfType : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FunctionUdfType(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType Scalar { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType left, Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType left, Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FunctionUpdateMode : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FunctionUpdateMode(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode Refreshable { get { throw null; } }
+        public static Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode Static { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode left, Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode left, Azure.ResourceManager.StreamAnalytics.Models.FunctionUpdateMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class GatewayMessageBusOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.OutputDataSource
     {
         public GatewayMessageBusOutputDataSource() { }
@@ -914,7 +949,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public JavaScriptFunctionRetrieveDefaultDefinitionParameters() { }
         public string Script { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.FunctionUdfType? UdfType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobState : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.JobState>
@@ -993,14 +1028,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal LastOutputEventTimestamp() { }
         public string LastOutputEventTime { get { throw null; } }
         public string LastUpdateTime { get { throw null; } }
-    }
-    public partial class ManagedIdentity
-    {
-        public ManagedIdentity() { }
-        public string IdentityType { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-        public System.BinaryData UserAssignedIdentities { get { throw null; } set { } }
     }
     public partial class OutputDataSource
     {
@@ -1364,6 +1391,46 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } }
     }
+    public partial class StreamAnalyticsTestInputContent
+    {
+        public StreamAnalyticsTestInputContent(Azure.ResourceManager.StreamAnalytics.StreamingJobInputData input) { }
+        public Azure.ResourceManager.StreamAnalytics.StreamingJobInputData Input { get { throw null; } }
+    }
+    public partial class StreamAnalyticsTestOutputContent
+    {
+        public StreamAnalyticsTestOutputContent(Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData output) { }
+        public Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData Output { get { throw null; } }
+    }
+    public partial class StreamAnalyticsTestQueryContent
+    {
+        public StreamAnalyticsTestQueryContent(Azure.ResourceManager.StreamAnalytics.StreamingJobData streamingJob) { }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.StreamingJobData StreamingJob { get { throw null; } }
+        public System.Uri WriteUri { get { throw null; } set { } }
+    }
+    public partial class StreamAnalyticsTestResult : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsError
+    {
+        internal StreamAnalyticsTestResult() { }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus? Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StreamAnalyticsTestResultStatus : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StreamAnalyticsTestResultStatus(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus TestFailed { get { throw null; } }
+        public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus TestSucceeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsTestResultStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamEncoding : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamEncoding>
     {
@@ -1395,85 +1462,5 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public SubscriptionQuota() { }
         public int? CurrentCount { get { throw null; } }
         public int? MaxCount { get { throw null; } }
-    }
-    public partial class TestDatasourceResult : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsError
-    {
-        internal TestDatasourceResult() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus? Status { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TestDatasourceResultStatus : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TestDatasourceResultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus TestFailed { get { throw null; } }
-        public static Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus TestSucceeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus left, Azure.ResourceManager.StreamAnalytics.Models.TestDatasourceResultStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TestInputContent
-    {
-        public TestInputContent(Azure.ResourceManager.StreamAnalytics.StreamingJobInputData input) { }
-        public Azure.ResourceManager.StreamAnalytics.StreamingJobInputData Input { get { throw null; } }
-    }
-    public partial class TestOutputContent
-    {
-        public TestOutputContent(Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData output) { }
-        public Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData Output { get { throw null; } }
-    }
-    public partial class TestQueryContent
-    {
-        public TestQueryContent(Azure.ResourceManager.StreamAnalytics.StreamingJobData streamingJob) { }
-        public Azure.ResourceManager.StreamAnalytics.Models.TestQueryDiagnostics Diagnostics { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.StreamingJobData StreamingJob { get { throw null; } }
-    }
-    public partial class TestQueryDiagnostics
-    {
-        public TestQueryDiagnostics(System.Uri writeUri) { }
-        public string Path { get { throw null; } set { } }
-        public System.Uri WriteUri { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UdfType : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.UdfType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UdfType(string value) { throw null; }
-        public static Azure.ResourceManager.StreamAnalytics.Models.UdfType Scalar { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.UdfType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.UdfType left, Azure.ResourceManager.StreamAnalytics.Models.UdfType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.UdfType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.UdfType left, Azure.ResourceManager.StreamAnalytics.Models.UdfType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UpdateMode : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.UpdateMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UpdateMode(string value) { throw null; }
-        public static Azure.ResourceManager.StreamAnalytics.Models.UpdateMode Refreshable { get { throw null; } }
-        public static Azure.ResourceManager.StreamAnalytics.Models.UpdateMode Static { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.UpdateMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.UpdateMode left, Azure.ResourceManager.StreamAnalytics.Models.UpdateMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.UpdateMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.UpdateMode left, Azure.ResourceManager.StreamAnalytics.Models.UpdateMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The current execution state of the streaming job. </summary>
+    /// <summary>
+    /// The current execution state of the streaming job.
+    /// Serialized Name: JobState
+    /// </summary>
     public readonly partial struct JobState : IEquatable<JobState>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string RestartingValue = "Restarting";
         private const string ScalingValue = "Scaling";
 
-        /// <summary> The job is currently in the Created state. </summary>
+        /// <summary>
+        /// The job is currently in the Created state.
+        /// Serialized Name: JobState.Created
+        /// </summary>
         public static JobState Created { get; } = new JobState(CreatedValue);
-        /// <summary> The job is currently in the Starting state. </summary>
+        /// <summary>
+        /// The job is currently in the Starting state.
+        /// Serialized Name: JobState.Starting
+        /// </summary>
         public static JobState Starting { get; } = new JobState(StartingValue);
-        /// <summary> The job is currently in the Running state. </summary>
+        /// <summary>
+        /// The job is currently in the Running state.
+        /// Serialized Name: JobState.Running
+        /// </summary>
         public static JobState Running { get; } = new JobState(RunningValue);
-        /// <summary> The job is currently in the Stopping state. </summary>
+        /// <summary>
+        /// The job is currently in the Stopping state.
+        /// Serialized Name: JobState.Stopping
+        /// </summary>
         public static JobState Stopping { get; } = new JobState(StoppingValue);
-        /// <summary> The job is currently in the Stopped state. </summary>
+        /// <summary>
+        /// The job is currently in the Stopped state.
+        /// Serialized Name: JobState.Stopped
+        /// </summary>
         public static JobState Stopped { get; } = new JobState(StoppedValue);
-        /// <summary> The job is currently in the Deleting state. </summary>
+        /// <summary>
+        /// The job is currently in the Deleting state.
+        /// Serialized Name: JobState.Deleting
+        /// </summary>
         public static JobState Deleting { get; } = new JobState(DeletingValue);
-        /// <summary> The job is currently in the Failed state. </summary>
+        /// <summary>
+        /// The job is currently in the Failed state.
+        /// Serialized Name: JobState.Failed
+        /// </summary>
         public static JobState Failed { get; } = new JobState(FailedValue);
-        /// <summary> The job is currently in the Degraded state. </summary>
+        /// <summary>
+        /// The job is currently in the Degraded state.
+        /// Serialized Name: JobState.Degraded
+        /// </summary>
         public static JobState Degraded { get; } = new JobState(DegradedValue);
-        /// <summary> The job is currently in the Restarting state. </summary>
+        /// <summary>
+        /// The job is currently in the Restarting state.
+        /// Serialized Name: JobState.Restarting
+        /// </summary>
         public static JobState Restarting { get; } = new JobState(RestartingValue);
-        /// <summary> The job is currently in the Scaling state. </summary>
+        /// <summary>
+        /// The job is currently in the Scaling state.
+        /// Serialized Name: JobState.Scaling
+        /// </summary>
         public static JobState Scaling { get; } = new JobState(ScalingValue);
         /// <summary> Determines if two <see cref="JobState"/> values are the same. </summary>
         public static bool operator ==(JobState left, JobState right) => left.Equals(right);

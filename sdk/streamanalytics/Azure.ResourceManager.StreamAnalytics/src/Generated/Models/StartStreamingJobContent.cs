@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Parameters supplied to the Start Streaming Job operation. </summary>
+    /// <summary>
+    /// Parameters supplied to the Start Streaming Job operation.
+    /// Serialized Name: StartStreamingJobParameters
+    /// </summary>
     public partial class StartStreamingJobContent
     {
         /// <summary> Initializes a new instance of StartStreamingJobContent. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
         }
 
-        /// <summary> Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting point of the output event stream should start whenever the job is started, start at a custom user time stamp specified via the outputStartTime property, or start from the last event output time. </summary>
+        /// <summary>
+        /// Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting point of the output event stream should start whenever the job is started, start at a custom user time stamp specified via the outputStartTime property, or start from the last event output time.
+        /// Serialized Name: StartStreamingJobParameters.outputStartMode
+        /// </summary>
         public OutputStartMode? OutputStartMode { get; set; }
-        /// <summary> Value is either an ISO-8601 formatted time stamp that indicates the starting point of the output event stream, or null to indicate that the output event stream will start whenever the streaming job is started. This property must have a value if outputStartMode is set to CustomTime. </summary>
+        /// <summary>
+        /// Value is either an ISO-8601 formatted time stamp that indicates the starting point of the output event stream, or null to indicate that the output event stream will start whenever the streaming job is started. This property must have a value if outputStartMode is set to CustomTime.
+        /// Serialized Name: StartStreamingJobParameters.outputStartTime
+        /// </summary>
         public DateTimeOffset? OutputStartOn { get; set; }
     }
 }

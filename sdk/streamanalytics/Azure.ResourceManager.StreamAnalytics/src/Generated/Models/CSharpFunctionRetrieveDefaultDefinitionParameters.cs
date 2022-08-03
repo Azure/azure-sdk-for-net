@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The parameters needed to retrieve the default function definition for a CSharp function. </summary>
+    /// <summary>
+    /// The parameters needed to retrieve the default function definition for a CSharp function.
+    /// Serialized Name: CSharpFunctionRetrieveDefaultDefinitionParameters
+    /// </summary>
     public partial class CSharpFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
     {
         /// <summary> Initializes a new instance of CSharpFunctionRetrieveDefaultDefinitionParameters. </summary>
@@ -16,9 +19,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BindingType = "Microsoft.StreamAnalytics/CLRUdf";
         }
 
-        /// <summary> The CSharp code containing a single function definition. </summary>
+        /// <summary>
+        /// The CSharp code containing a single function definition.
+        /// Serialized Name: CSharpFunctionRetrieveDefaultDefinitionParameters.bindingRetrievalProperties.script
+        /// </summary>
         public string Script { get; set; }
-        /// <summary> The function type. </summary>
-        public UdfType? UdfType { get; set; }
+        /// <summary>
+        /// The function type.
+        /// Serialized Name: CSharpFunctionRetrieveDefaultDefinitionParameters.bindingRetrievalProperties.udfType
+        /// </summary>
+        public FunctionUdfType? UdfType { get; set; }
     }
 }

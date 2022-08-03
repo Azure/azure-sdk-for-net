@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A collection of read-only information about the state of the connection to the private remote resource. </summary>
+    /// <summary>
+    /// A collection of read-only information about the state of the connection to the private remote resource.
+    /// Serialized Name: PrivateLinkConnectionState
+    /// </summary>
     public partial class PrivateLinkConnectionState
     {
         /// <summary> Initializes a new instance of PrivateLinkConnectionState. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the remote resource/service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <param name="status">
+        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the remote resource/service.
+        /// Serialized Name: PrivateLinkConnectionState.status
+        /// </param>
+        /// <param name="description">
+        /// The reason for approval/rejection of the connection.
+        /// Serialized Name: PrivateLinkConnectionState.description
+        /// </param>
+        /// <param name="actionsRequired">
+        /// A message indicating if changes on the service provider require any updates on the consumer.
+        /// Serialized Name: PrivateLinkConnectionState.actionsRequired
+        /// </param>
         internal PrivateLinkConnectionState(string status, string description, string actionsRequired)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the remote resource/service. </summary>
+        /// <summary>
+        /// Indicates whether the connection has been Approved/Rejected/Removed by the owner of the remote resource/service.
+        /// Serialized Name: PrivateLinkConnectionState.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The reason for approval/rejection of the connection. </summary>
+        /// <summary>
+        /// The reason for approval/rejection of the connection.
+        /// Serialized Name: PrivateLinkConnectionState.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        /// <summary>
+        /// A message indicating if changes on the service provider require any updates on the consumer.
+        /// Serialized Name: PrivateLinkConnectionState.actionsRequired
+        /// </summary>
         public string ActionsRequired { get; }
     }
 }

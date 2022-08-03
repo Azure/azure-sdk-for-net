@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Result of the GetQuotas operation. It contains a list of quotas for the subscription in a particular region. </summary>
+    /// <summary>
+    /// Result of the GetQuotas operation. It contains a list of quotas for the subscription in a particular region.
+    /// Serialized Name: SubscriptionQuotasListResult
+    /// </summary>
     internal partial class SubscriptionQuotasListResult
     {
         /// <summary> Initializes a new instance of SubscriptionQuotasListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionQuotasListResult. </summary>
-        /// <param name="value"> List of quotas for the subscription in a particular region. </param>
+        /// <param name="value">
+        /// List of quotas for the subscription in a particular region.
+        /// Serialized Name: SubscriptionQuotasListResult.value
+        /// </param>
         internal SubscriptionQuotasListResult(IReadOnlyList<SubscriptionQuota> value)
         {
             Value = value;
         }
 
-        /// <summary> List of quotas for the subscription in a particular region. </summary>
+        /// <summary>
+        /// List of quotas for the subscription in a particular region.
+        /// Serialized Name: SubscriptionQuotasListResult.value
+        /// </summary>
         public IReadOnlyList<SubscriptionQuota> Value { get; }
     }
 }

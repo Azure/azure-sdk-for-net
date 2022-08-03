@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
     /// Describes the data source that output will be written to.
+    /// Serialized Name: OutputDataSource
     /// Please note <see cref="OutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="AzureFunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="AzureDataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="AzureSynapseOutputDataSource"/>, <see cref="AzureSqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="AzureTableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of OutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
         internal OutputDataSource(string outputDataSourceType)
         {
             OutputDataSourceType = outputDataSourceType;
         }
 
-        /// <summary> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </summary>
         internal string OutputDataSourceType { get; set; }
     }
 }

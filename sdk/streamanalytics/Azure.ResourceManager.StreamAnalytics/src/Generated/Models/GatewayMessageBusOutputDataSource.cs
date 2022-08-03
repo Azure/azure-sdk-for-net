@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes a Gateway Message Bus output data source. </summary>
+    /// <summary>
+    /// Describes a Gateway Message Bus output data source.
+    /// Serialized Name: GatewayMessageBusOutputDataSource
+    /// </summary>
     public partial class GatewayMessageBusOutputDataSource : OutputDataSource
     {
         /// <summary> Initializes a new instance of GatewayMessageBusOutputDataSource. </summary>
@@ -17,15 +20,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of GatewayMessageBusOutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="topic"> The name of the Service Bus topic. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="topic">
+        /// The name of the Service Bus topic.
+        /// Serialized Name: GatewayMessageBusOutputDataSource.properties.topic
+        /// </param>
         internal GatewayMessageBusOutputDataSource(string outputDataSourceType, string topic) : base(outputDataSourceType)
         {
             Topic = topic;
             OutputDataSourceType = outputDataSourceType ?? "GatewayMessageBus";
         }
 
-        /// <summary> The name of the Service Bus topic. </summary>
+        /// <summary>
+        /// The name of the Service Bus topic.
+        /// Serialized Name: GatewayMessageBusOutputDataSource.properties.topic
+        /// </summary>
         public string Topic { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Controls certain runtime behaviors of the streaming job. </summary>
+    /// <summary>
+    /// Controls certain runtime behaviors of the streaming job.
+    /// Serialized Name: CompatibilityLevel
+    /// </summary>
     public readonly partial struct CompatibilityLevel : IEquatable<CompatibilityLevel>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string One0Value = "1.0";
         private const string One2Value = "1.2";
 
-        /// <summary> 1.0. </summary>
+        /// <summary>
+        /// 1.0
+        /// Serialized Name: CompatibilityLevel.1.0
+        /// </summary>
         public static CompatibilityLevel One0 { get; } = new CompatibilityLevel(One0Value);
-        /// <summary> 1.2. </summary>
+        /// <summary>
+        /// 1.2
+        /// Serialized Name: CompatibilityLevel.1.2
+        /// </summary>
         public static CompatibilityLevel One2 { get; } = new CompatibilityLevel(One2Value);
         /// <summary> Determines if two <see cref="CompatibilityLevel"/> values are the same. </summary>
         public static bool operator ==(CompatibilityLevel left, CompatibilityLevel right) => left.Equals(right);

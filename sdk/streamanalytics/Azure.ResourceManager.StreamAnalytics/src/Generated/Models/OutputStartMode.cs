@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting point of the output event stream should start whenever the job is started, start at a custom user time stamp specified via the outputStartTime property, or start from the last event output time. </summary>
+    /// <summary>
+    /// Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting point of the output event stream should start whenever the job is started, start at a custom user time stamp specified via the outputStartTime property, or start from the last event output time.
+    /// Serialized Name: OutputStartMode
+    /// </summary>
     public readonly partial struct OutputStartMode : IEquatable<OutputStartMode>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string CustomTimeValue = "CustomTime";
         private const string LastOutputEventTimeValue = "LastOutputEventTime";
 
-        /// <summary> JobStartTime. </summary>
+        /// <summary>
+        /// JobStartTime
+        /// Serialized Name: OutputStartMode.JobStartTime
+        /// </summary>
         public static OutputStartMode JobStartTime { get; } = new OutputStartMode(JobStartTimeValue);
-        /// <summary> CustomTime. </summary>
+        /// <summary>
+        /// CustomTime
+        /// Serialized Name: OutputStartMode.CustomTime
+        /// </summary>
         public static OutputStartMode CustomTime { get; } = new OutputStartMode(CustomTimeValue);
-        /// <summary> LastOutputEventTime. </summary>
+        /// <summary>
+        /// LastOutputEventTime
+        /// Serialized Name: OutputStartMode.LastOutputEventTime
+        /// </summary>
         public static OutputStartMode LastOutputEventTime { get; } = new OutputStartMode(LastOutputEventTimeValue);
         /// <summary> Determines if two <see cref="OutputStartMode"/> values are the same. </summary>
         public static bool operator ==(OutputStartMode left, OutputStartMode right) => left.Equals(right);

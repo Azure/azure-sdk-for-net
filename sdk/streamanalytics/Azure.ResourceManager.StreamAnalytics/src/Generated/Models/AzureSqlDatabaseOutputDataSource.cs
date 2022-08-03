@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes an Azure SQL database output data source. </summary>
+    /// <summary>
+    /// Describes an Azure SQL database output data source.
+    /// Serialized Name: AzureSqlDatabaseOutputDataSource
+    /// </summary>
     public partial class AzureSqlDatabaseOutputDataSource : OutputDataSource
     {
         /// <summary> Initializes a new instance of AzureSqlDatabaseOutputDataSource. </summary>
@@ -17,15 +20,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of AzureSqlDatabaseOutputDataSource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="user"> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="table"> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="maxBatchCount"> Max Batch count for write to Sql database, the default value is 10,000. Optional on PUT requests. </param>
-        /// <param name="maxWriterCount"> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </param>
-        /// <param name="authenticationMode"> Authentication Mode. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="server">
+        /// The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.server
+        /// </param>
+        /// <param name="database">
+        /// The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.database
+        /// </param>
+        /// <param name="user">
+        /// The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.user
+        /// </param>
+        /// <param name="password">
+        /// The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.password
+        /// </param>
+        /// <param name="table">
+        /// The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.table
+        /// </param>
+        /// <param name="maxBatchCount">
+        /// Max Batch count for write to Sql database, the default value is 10,000. Optional on PUT requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.maxBatchCount
+        /// </param>
+        /// <param name="maxWriterCount">
+        /// Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.maxWriterCount
+        /// </param>
+        /// <param name="authenticationMode">
+        /// Authentication Mode.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.authenticationMode
+        /// </param>
         internal AzureSqlDatabaseOutputDataSource(string outputDataSourceType, string server, string database, string user, string password, string table, float? maxBatchCount, float? maxWriterCount, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             Server = server;
@@ -39,21 +69,45 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = outputDataSourceType ?? "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.server
+        /// </summary>
         public string Server { get; set; }
-        /// <summary> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.database
+        /// </summary>
         public string Database { get; set; }
-        /// <summary> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.user
+        /// </summary>
         public string User { get; set; }
-        /// <summary> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.password
+        /// </summary>
         public string Password { get; set; }
-        /// <summary> The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The name of the table in the Azure SQL database. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.table
+        /// </summary>
         public string Table { get; set; }
-        /// <summary> Max Batch count for write to Sql database, the default value is 10,000. Optional on PUT requests. </summary>
+        /// <summary>
+        /// Max Batch count for write to Sql database, the default value is 10,000. Optional on PUT requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.maxBatchCount
+        /// </summary>
         public float? MaxBatchCount { get; set; }
-        /// <summary> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </summary>
+        /// <summary>
+        /// Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.maxWriterCount
+        /// </summary>
         public float? MaxWriterCount { get; set; }
-        /// <summary> Authentication Mode. </summary>
+        /// <summary>
+        /// Authentication Mode.
+        /// Serialized Name: AzureSqlDatabaseOutputDataSource.properties.authenticationMode
+        /// </summary>
         public AuthenticationMode? AuthenticationMode { get; set; }
     }
 }

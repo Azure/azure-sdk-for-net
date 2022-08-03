@@ -11,7 +11,10 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A list of private endpoints. </summary>
+    /// <summary>
+    /// A list of private endpoints.
+    /// Serialized Name: PrivateEndpointListResult
+    /// </summary>
     internal partial class PrivateEndpointListResult
     {
         /// <summary> Initializes a new instance of PrivateEndpointListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointListResult. </summary>
-        /// <param name="value"> A list of private endpoints. </param>
-        /// <param name="nextLink"> The URL to fetch the next set of private endpoints. </param>
+        /// <param name="value">
+        /// A list of private endpoints.
+        /// Serialized Name: PrivateEndpointListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to fetch the next set of private endpoints.
+        /// Serialized Name: PrivateEndpointListResult.nextLink
+        /// </param>
         internal PrivateEndpointListResult(IReadOnlyList<StreamAnalyticsPrivateEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of private endpoints. </summary>
+        /// <summary>
+        /// A list of private endpoints.
+        /// Serialized Name: PrivateEndpointListResult.value
+        /// </summary>
         public IReadOnlyList<StreamAnalyticsPrivateEndpointData> Value { get; }
-        /// <summary> The URL to fetch the next set of private endpoints. </summary>
+        /// <summary>
+        /// The URL to fetch the next set of private endpoints.
+        /// Serialized Name: PrivateEndpointListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

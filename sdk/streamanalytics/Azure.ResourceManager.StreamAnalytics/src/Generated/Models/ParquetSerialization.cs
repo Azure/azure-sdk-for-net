@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in Parquet format. </summary>
+    /// <summary>
+    /// Describes how data from an input is serialized or how data is serialized when written to an output in Parquet format.
+    /// Serialized Name: ParquetSerialization
+    /// </summary>
     public partial class ParquetSerialization : Serialization
     {
         /// <summary> Initializes a new instance of ParquetSerialization. </summary>
@@ -19,15 +22,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ParquetSerialization. </summary>
-        /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="properties"> The properties that are associated with the Parquet serialization type. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="eventSerializationType">
+        /// Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Serialization.type
+        /// </param>
+        /// <param name="properties">
+        /// The properties that are associated with the Parquet serialization type. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ParquetSerialization.properties
+        /// </param>
         internal ParquetSerialization(EventSerializationType eventSerializationType, BinaryData properties) : base(eventSerializationType)
         {
             Properties = properties;
             EventSerializationType = eventSerializationType;
         }
 
-        /// <summary> The properties that are associated with the Parquet serialization type. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// The properties that are associated with the Parquet serialization type. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: ParquetSerialization.properties
+        /// </summary>
         public BinaryData Properties { get; set; }
     }
 }

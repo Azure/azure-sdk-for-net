@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes a raw output data source. This data source type is only applicable/usable when using the query testing API. You cannot create a job with this data source type or add an output of this data source type to an existing job. </summary>
+    /// <summary>
+    /// Describes a raw output data source. This data source type is only applicable/usable when using the query testing API. You cannot create a job with this data source type or add an output of this data source type to an existing job.
+    /// Serialized Name: RawOutputDatasource
+    /// </summary>
     public partial class RawOutputDatasource : OutputDataSource
     {
         /// <summary> Initializes a new instance of RawOutputDatasource. </summary>
@@ -19,15 +22,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of RawOutputDatasource. </summary>
-        /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="payloadUri"> The SAS URL to a blob where the output should be written. If this property is not set, output data will be written into a temporary storage, and a SAS URL to that temporary storage will be included in the result. </param>
+        /// <param name="outputDataSourceType">
+        /// Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: OutputDataSource.type
+        /// </param>
+        /// <param name="payloadUri">
+        /// The SAS URL to a blob where the output should be written. If this property is not set, output data will be written into a temporary storage, and a SAS URL to that temporary storage will be included in the result.
+        /// Serialized Name: RawOutputDatasource.properties.payloadUri
+        /// </param>
         internal RawOutputDatasource(string outputDataSourceType, Uri payloadUri) : base(outputDataSourceType)
         {
             PayloadUri = payloadUri;
             OutputDataSourceType = outputDataSourceType ?? "Raw";
         }
 
-        /// <summary> The SAS URL to a blob where the output should be written. If this property is not set, output data will be written into a temporary storage, and a SAS URL to that temporary storage will be included in the result. </summary>
+        /// <summary>
+        /// The SAS URL to a blob where the output should be written. If this property is not set, output data will be written into a temporary storage, and a SAS URL to that temporary storage will be included in the result.
+        /// Serialized Name: RawOutputDatasource.properties.payloadUri
+        /// </summary>
         public Uri PayloadUri { get; set; }
     }
 }

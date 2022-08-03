@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The storage account where the custom code artifacts are located. </summary>
+    /// <summary>
+    /// The storage account where the custom code artifacts are located.
+    /// Serialized Name: External
+    /// </summary>
     public partial class ExternalStorageAccount
     {
         /// <summary> Initializes a new instance of ExternalStorageAccount. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ExternalStorageAccount. </summary>
-        /// <param name="storageAccount"> The properties that are associated with an Azure Storage account. </param>
-        /// <param name="container"> The UserCustomCode container. </param>
-        /// <param name="path"> The UserCustomCode path. </param>
-        /// <param name="refreshConfiguration"> The refresh parameters for any/all updatable user defined functions present in the job config. </param>
+        /// <param name="storageAccount">
+        /// The properties that are associated with an Azure Storage account
+        /// Serialized Name: External.storageAccount
+        /// </param>
+        /// <param name="container">
+        /// The UserCustomCode container.
+        /// Serialized Name: External.container
+        /// </param>
+        /// <param name="path">
+        /// The UserCustomCode path.
+        /// Serialized Name: External.path
+        /// </param>
+        /// <param name="refreshConfiguration">
+        /// The refresh parameters for any/all updatable user defined functions present in the job config.
+        /// Serialized Name: External.refreshConfiguration
+        /// </param>
         internal ExternalStorageAccount(StorageAccount storageAccount, string container, string path, RefreshConfiguration refreshConfiguration)
         {
             StorageAccount = storageAccount;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             RefreshConfiguration = refreshConfiguration;
         }
 
-        /// <summary> The properties that are associated with an Azure Storage account. </summary>
+        /// <summary>
+        /// The properties that are associated with an Azure Storage account
+        /// Serialized Name: External.storageAccount
+        /// </summary>
         public StorageAccount StorageAccount { get; set; }
-        /// <summary> The UserCustomCode container. </summary>
+        /// <summary>
+        /// The UserCustomCode container.
+        /// Serialized Name: External.container
+        /// </summary>
         public string Container { get; set; }
-        /// <summary> The UserCustomCode path. </summary>
+        /// <summary>
+        /// The UserCustomCode path.
+        /// Serialized Name: External.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> The refresh parameters for any/all updatable user defined functions present in the job config. </summary>
+        /// <summary>
+        /// The refresh parameters for any/all updatable user defined functions present in the job config.
+        /// Serialized Name: External.refreshConfiguration
+        /// </summary>
         public RefreshConfiguration RefreshConfiguration { get; set; }
     }
 }

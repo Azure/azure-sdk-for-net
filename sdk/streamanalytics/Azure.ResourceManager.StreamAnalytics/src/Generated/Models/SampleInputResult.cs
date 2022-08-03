@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The result of the sample input request. </summary>
+    /// <summary>
+    /// The result of the sample input request.
+    /// Serialized Name: SampleInputResult
+    /// </summary>
     public partial class SampleInputResult : StreamAnalyticsError
     {
         /// <summary> Initializes a new instance of SampleInputResult. </summary>
@@ -21,14 +24,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of SampleInputResult. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="target"> Error target. </param>
-        /// <param name="details"> Error details. </param>
-        /// <param name="status"> The status of the sample input request. </param>
-        /// <param name="diagnostics"> Diagnostics messages. E.g. message indicating some partitions from the input have no data. </param>
-        /// <param name="eventsDownloadUri"> A SAS URL to download the sampled input data. </param>
-        /// <param name="lastArrivalTime"> The timestamp for the last event in the data. It is in DateTime format. </param>
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: StreamAnalyticsError.error.code
+        /// </param>
+        /// <param name="message">
+        /// Error message.
+        /// Serialized Name: StreamAnalyticsError.error.message
+        /// </param>
+        /// <param name="target">
+        /// Error target.
+        /// Serialized Name: StreamAnalyticsError.error.target
+        /// </param>
+        /// <param name="details">
+        /// Error details.
+        /// Serialized Name: StreamAnalyticsError.error.details
+        /// </param>
+        /// <param name="status">
+        /// The status of the sample input request.
+        /// Serialized Name: SampleInputResult.status
+        /// </param>
+        /// <param name="diagnostics">
+        /// Diagnostics messages. E.g. message indicating some partitions from the input have no data.
+        /// Serialized Name: SampleInputResult.diagnostics
+        /// </param>
+        /// <param name="eventsDownloadUri">
+        /// A SAS URL to download the sampled input data.
+        /// Serialized Name: SampleInputResult.eventsDownloadUrl
+        /// </param>
+        /// <param name="lastArrivalTime">
+        /// The timestamp for the last event in the data. It is in DateTime format.
+        /// Serialized Name: SampleInputResult.lastArrivalTime
+        /// </param>
         internal SampleInputResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, SampleInputResultStatus? status, IReadOnlyList<string> diagnostics, Uri eventsDownloadUri, string lastArrivalTime) : base(code, message, target, details)
         {
             Status = status;
@@ -37,13 +64,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             LastArrivalTime = lastArrivalTime;
         }
 
-        /// <summary> The status of the sample input request. </summary>
+        /// <summary>
+        /// The status of the sample input request.
+        /// Serialized Name: SampleInputResult.status
+        /// </summary>
         public SampleInputResultStatus? Status { get; }
-        /// <summary> Diagnostics messages. E.g. message indicating some partitions from the input have no data. </summary>
+        /// <summary>
+        /// Diagnostics messages. E.g. message indicating some partitions from the input have no data.
+        /// Serialized Name: SampleInputResult.diagnostics
+        /// </summary>
         public IReadOnlyList<string> Diagnostics { get; }
-        /// <summary> A SAS URL to download the sampled input data. </summary>
+        /// <summary>
+        /// A SAS URL to download the sampled input data.
+        /// Serialized Name: SampleInputResult.eventsDownloadUrl
+        /// </summary>
         public Uri EventsDownloadUri { get; }
-        /// <summary> The timestamp for the last event in the data. It is in DateTime format. </summary>
+        /// <summary>
+        /// The timestamp for the last event in the data. It is in DateTime format.
+        /// Serialized Name: SampleInputResult.lastArrivalTime
+        /// </summary>
         public string LastArrivalTime { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in JSON format. </summary>
+    /// <summary>
+    /// Describes how data from an input is serialized or how data is serialized when written to an output in JSON format.
+    /// Serialized Name: JsonSerialization
+    /// </summary>
     public partial class JsonSerialization : Serialization
     {
         /// <summary> Initializes a new instance of JsonSerialization. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of JsonSerialization. </summary>
-        /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="encoding"> Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="format"> This property only applies to JSON serialization of outputs only. It is not applicable to inputs. This property specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. Default value is &apos;lineSeparated&apos; if left null. </param>
+        /// <param name="eventSerializationType">
+        /// Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: Serialization.type
+        /// </param>
+        /// <param name="encoding">
+        /// Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: JsonSerialization.properties.encoding
+        /// </param>
+        /// <param name="format">
+        /// This property only applies to JSON serialization of outputs only. It is not applicable to inputs. This property specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. Default value is &apos;lineSeparated&apos; if left null.
+        /// Serialized Name: JsonSerialization.properties.format
+        /// </param>
         internal JsonSerialization(EventSerializationType eventSerializationType, StreamEncoding? encoding, JsonOutputSerializationFormat? format) : base(eventSerializationType)
         {
             Encoding = encoding;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             EventSerializationType = eventSerializationType;
         }
 
-        /// <summary> Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output. Required on PUT (CreateOrReplace) requests. </summary>
+        /// <summary>
+        /// Specifies the encoding of the incoming data in the case of input and the encoding of outgoing data in the case of output. Required on PUT (CreateOrReplace) requests.
+        /// Serialized Name: JsonSerialization.properties.encoding
+        /// </summary>
         public StreamEncoding? Encoding { get; set; }
-        /// <summary> This property only applies to JSON serialization of outputs only. It is not applicable to inputs. This property specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. Default value is &apos;lineSeparated&apos; if left null. </summary>
+        /// <summary>
+        /// This property only applies to JSON serialization of outputs only. It is not applicable to inputs. This property specifies the format of the JSON the output will be written in. The currently supported values are &apos;lineSeparated&apos; indicating the output will be formatted by having each JSON object separated by a new line and &apos;array&apos; indicating the output will be formatted as an array of JSON objects. Default value is &apos;lineSeparated&apos; if left null.
+        /// Serialized Name: JsonSerialization.properties.format
+        /// </summary>
         public JsonOutputSerializationFormat? Format { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Describes the output of a function. </summary>
+    /// <summary>
+    /// Describes the output of a function.
+    /// Serialized Name: FunctionOutput
+    /// </summary>
     public partial class FunctionOutput
     {
         /// <summary> Initializes a new instance of FunctionOutput. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of FunctionOutput. </summary>
-        /// <param name="dataType"> The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </param>
+        /// <param name="dataType">
+        /// The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx
+        /// Serialized Name: FunctionOutput.dataType
+        /// </param>
         internal FunctionOutput(string dataType)
         {
             DataType = dataType;
         }
 
-        /// <summary> The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </summary>
+        /// <summary>
+        /// The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx
+        /// Serialized Name: FunctionOutput.dataType
+        /// </summary>
         public string DataType { get; set; }
     }
 }

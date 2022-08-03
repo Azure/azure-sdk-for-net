@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A streaming job. </summary>
+    /// <summary>
+    /// A streaming job.
+    /// Serialized Name: ClusterJob
+    /// </summary>
     public partial class ClusterJob
     {
         /// <summary> Initializes a new instance of ClusterJob. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of ClusterJob. </summary>
-        /// <param name="id"> Resource ID of the streaming job. </param>
-        /// <param name="streamingUnits"> The number of streaming units that are used by the streaming job. </param>
-        /// <param name="jobState"> The current execution state of the streaming job. </param>
+        /// <param name="id">
+        /// Resource ID of the streaming job.
+        /// Serialized Name: ClusterJob.id
+        /// </param>
+        /// <param name="streamingUnits">
+        /// The number of streaming units that are used by the streaming job.
+        /// Serialized Name: ClusterJob.streamingUnits
+        /// </param>
+        /// <param name="jobState">
+        /// The current execution state of the streaming job.
+        /// Serialized Name: ClusterJob.jobState
+        /// </param>
         internal ClusterJob(string id, int? streamingUnits, JobState? jobState)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             JobState = jobState;
         }
 
-        /// <summary> Resource ID of the streaming job. </summary>
+        /// <summary>
+        /// Resource ID of the streaming job.
+        /// Serialized Name: ClusterJob.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The number of streaming units that are used by the streaming job. </summary>
+        /// <summary>
+        /// The number of streaming units that are used by the streaming job.
+        /// Serialized Name: ClusterJob.streamingUnits
+        /// </summary>
         public int? StreamingUnits { get; }
-        /// <summary> The current execution state of the streaming job. </summary>
+        /// <summary>
+        /// The current execution state of the streaming job.
+        /// Serialized Name: ClusterJob.jobState
+        /// </summary>
         public JobState? JobState { get; }
     }
 }

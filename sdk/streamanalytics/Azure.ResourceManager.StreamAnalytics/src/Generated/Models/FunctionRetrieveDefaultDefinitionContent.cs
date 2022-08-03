@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
     /// Parameters used to specify the type of function to retrieve the default definition for.
+    /// Serialized Name: FunctionRetrieveDefaultDefinitionParameters
     /// Please note <see cref="FunctionRetrieveDefaultDefinitionContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters"/>, <see cref="AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters"/>, <see cref="CSharpFunctionRetrieveDefaultDefinitionParameters"/> and <see cref="JavaScriptFunctionRetrieveDefaultDefinitionParameters"/>.
     /// </summary>
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
         }
 
-        /// <summary> Indicates the function binding type. </summary>
+        /// <summary>
+        /// Indicates the function binding type.
+        /// Serialized Name: FunctionRetrieveDefaultDefinitionParameters.bindingType
+        /// </summary>
         internal string BindingType { get; set; }
     }
 }
