@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<double> apiTime = default;
             Optional<double> serviceTime = default;
             Optional<string> apiRegion = default;
-            Optional<string> subscriptionId = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
             Optional<string> requestId = default;
             Optional<int> requestSize = default;
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("subscriptionId"))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requestId"))

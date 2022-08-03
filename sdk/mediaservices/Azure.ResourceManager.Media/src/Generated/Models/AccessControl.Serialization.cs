@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AccessControl DeserializeAccessControl(JsonElement element)
         {
-            Optional<DefaultAction> defaultAction = default;
+            Optional<IPAccessControlDefaultAction> defaultAction = default;
             Optional<IList<string>> ipAllowList = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultAction = new DefaultAction(property.Value.GetString());
+                    defaultAction = new IPAccessControlDefaultAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipAllowList"))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media
     public partial class MediaServiceOperationResultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaServiceOperationResultResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string operationId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string operationId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}";
             return new ResourceIdentifier(resourceId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, response.Value), response.GetRawResponse());
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Media
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Media
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Media
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Media
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Media
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _mediaServiceOperationResultMediaServicesOperationResultsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Media
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var originalResponse = _mediaServiceOperationResultMediaServicesOperationResultsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 return Response.FromValue(new MediaServiceOperationResultResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
