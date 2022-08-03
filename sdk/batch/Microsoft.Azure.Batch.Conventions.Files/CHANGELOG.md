@@ -31,7 +31,7 @@ The changes incorporated in this version are the product of migrating from the d
 - JobOutputStorage
   - Replaced all instances of `CloudStorageAccount` with **BlobServiceClient**
   - Replaced all instances of `CloudBlobContainer` with **BlobContainerClient**
-  - Removed the `IRetryPolicy` reference from the constructors as it is no longer supported in the new storage sdk. If you wish to specify how retry attempts are made, you will have to do so by specifying the `Retry` property within the `BlobClientOptions` passed into the **BlobServiceClient** object. More information can be found [here](https://docs.microsoft.com/en-us/dotnet/api/azure.storage.blobs.blobclientoptions?view=azure-dotnet)
+  - Removed the `IRetryPolicy` reference from the constructors as it is no longer supported in the new storage sdk. If you wish to specify how retry attempts are made, you will have to do so by specifying the `Retry` property within the `BlobClientOptions` passed into the **BlobServiceClient** object. More information can be found [here](https://docs.microsoft.com/dotnet/api/azure.storage.blobs.blobclientoptions)
     - Renamed the `GetOutputAsync` method to **GetOutput** as the method is no longer asynchronous, also removed the `CancellationToken` parameter.
 
 - OutputFileReference
@@ -42,7 +42,7 @@ The changes incorporated in this version are the product of migrating from the d
 - TaskOutputStorage
   - Replaced all instances of `CloudStorageAccount` with **BlobServiceClient**
   - Replaced all instances of `CloudBlobContainer` with **BlobContainerClient**
-  - Removed the `IRetryPolicy` reference from the constructors as it is no longer supported in the new storage sdk. If you wish to specify how retry attempts are made, you will have to do so by specifying the `Retry` property within the `BlobClientOptions` passed into the **BlobServiceClient** object. More information can be found [here](https://docs.microsoft.com/en-us/dotnet/api/azure.storage.blobs.blobclientoptions?view=azure-dotnet)
+  - Removed the `IRetryPolicy` reference from the constructors as it is no longer supported in the new storage sdk. If you wish to specify how retry attempts are made, you will have to do so by specifying the `Retry` property within the `BlobClientOptions` passed into the **BlobServiceClient** object. More information can be found [here](https://docs.microsoft.com/dotnet/api/azure.storage.blobs.blobclientoptions)
   - Renamed the `GetOutputAsync` method to **GetOutput** as the method is no longer asynchronous, also removed the `CancellationToken` parameter.
 
 - TrackedFile
