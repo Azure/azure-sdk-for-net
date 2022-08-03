@@ -55,7 +55,7 @@ callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.
 CreateCallResult createCallResult = await callingServerClient.CreateCallAsync(
     source: callSource,
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    callbackUri: new Uri(TestEnvironment.AppCallbackUrl)
+    callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl)
     );
 Console.WriteLine($"Call connection id: {createCallResult.CallProperties.CallConnectionId}");
 ```
