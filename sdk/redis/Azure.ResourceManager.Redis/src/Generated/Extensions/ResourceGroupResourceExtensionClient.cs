@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Gets a collection of RedisResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
-        public virtual RedisCollection GetRedis()
+        public virtual RedisCollection GetAllRedis()
         {
             return GetCachedClient(Client => new RedisCollection(Client, Id));
         }

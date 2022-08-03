@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="commissionedState">The commissioned state of the
         /// Custom IP Prefix. Possible values include: 'Provisioning',
         /// 'Provisioned', 'Commissioning', 'Commissioned', 'Decommissioning',
-        /// 'Deprovisioning'</param>
+        /// 'Deprovisioning', 'CommissionedNoInternetAdvertise'</param>
+        /// <param name="noInternetAdvertise">Whether to Advertise the range to
+        /// Internet.</param>
         /// <param name="publicIpPrefixes">The list of all referenced
         /// PublicIpPrefixes.</param>
         /// <param name="resourceGuid">The resource GUID property of the custom
@@ -68,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="zones">A list of availability zones denoting the IP
         /// allocated for the resource needs to come from.</param>
-        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), SubResource customIpPrefixParent = default(SubResource), IList<SubResource> childCustomIpPrefixes = default(IList<SubResource>), string commissionedState = default(string), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
+        public CustomIpPrefix(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), string cidr = default(string), string signedMessage = default(string), string authorizationMessage = default(string), SubResource customIpPrefixParent = default(SubResource), IList<SubResource> childCustomIpPrefixes = default(IList<SubResource>), string commissionedState = default(string), bool? noInternetAdvertise = default(bool?), IList<SubResource> publicIpPrefixes = default(IList<SubResource>), string resourceGuid = default(string), string failedReason = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             ExtendedLocation = extendedLocation;
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.Network.Models
             CustomIpPrefixParent = customIpPrefixParent;
             ChildCustomIpPrefixes = childCustomIpPrefixes;
             CommissionedState = commissionedState;
+            NoInternetAdvertise = noInternetAdvertise;
             PublicIpPrefixes = publicIpPrefixes;
             ResourceGuid = resourceGuid;
             FailedReason = failedReason;
@@ -133,10 +136,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the commissioned state of the Custom IP Prefix.
         /// Possible values include: 'Provisioning', 'Provisioned',
         /// 'Commissioning', 'Commissioned', 'Decommissioning',
-        /// 'Deprovisioning'
+        /// 'Deprovisioning', 'CommissionedNoInternetAdvertise'
         /// </summary>
         [JsonProperty(PropertyName = "properties.commissionedState")]
         public string CommissionedState { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to Advertise the range to Internet.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.noInternetAdvertise")]
+        public bool? NoInternetAdvertise { get; set; }
 
         /// <summary>
         /// Gets the list of all referenced PublicIpPrefixes.

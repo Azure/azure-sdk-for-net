@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> productId = default;
             Optional<string> userId = default;
             Optional<string> method = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<string> ipAddress = default;
             Optional<string> backendResponseCode = default;
             Optional<int> responseCode = default;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipAddress"))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, method.Value, url.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
+            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, method.Value, uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
         }
     }
 }

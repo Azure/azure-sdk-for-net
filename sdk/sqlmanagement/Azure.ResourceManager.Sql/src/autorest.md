@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
+tag: package-composite-v5
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -19,8 +20,10 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'keyId': 'Uri'
   '*ResourceId': 'arm-id'
   '*SubnetId': 'arm-id'
   'subnetId': 'arm-id'
@@ -36,18 +39,25 @@ format-by-name-rules:
   'recoveryServicesRecoveryPointId': 'arm-id'
   'syncAgentId': 'arm-id'
   'oldServerDnsAliasId': 'arm-id'
+  'failoverGroupId': 'arm-id'
   'partnerLocation': 'azure-location'
   'defaultSecondaryLocation': 'azure-location'
+  'privateLinkServiceId': 'arm-id'
+  'resourceType': 'resource-type'
+  'clientIP': 'ip-address'
 
 keep-plural-enums:
-  - DiffBackupIntervalInHours
+- DiffBackupIntervalInHours
+
+keep-plural-resource-data:
+- MaintenanceWindows
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -58,12 +68,65 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
+  SQL: Sql
+  DTU: Dtu
+  GEO: Geo
+  GRS: Grs
+  LRS: Lrs
+  ZRS: Zrs
+  Hierarchyid: HierarchyId
+  CP1CIAS: Cp1CiAs
+  CatchUP: CatchUp
+  CCN: Ccn
+  SSN: Ssn
 
+prepend-rp-prefix:
+  - DatabaseAutomaticTuning
+  - DatabaseBlobAuditingPolicy
+  - DatabaseSecurityAlertPolicy
+  - TimeZone
+  - Metric
+  - MetricListResult
+  - MetricAvalability
+  - MetricName
+  - MetricType
+  - MetricValue
+  - MetricDefinition
+  - Server
+  - Database
+  - DayOfWeek
+  - ServerAutomaticTuning
+  - ServerAzureADAdministrator
+  - ServerAzureADOnlyAuthentication
+  - ServerBlobAuditingPolicy
+  - ServerCommunicationLink
+  - ServerConnectionPolicy
+  - ServerDnsAlias
+  - ServerKey
+  - ServerSecurityAlertPolicy
+  - ServerTrustGroup
+  - ServerVulnerabilityAssessment
+  - ServicePrincipal
+  - ServicePrincipalType
+  - FirewallRule
+  - AdministratorName
+  - AdministratorType
+  - CapabilityGroup
+  - CapabilityStatus
+  - LocationCapabilities
+  - ColumnDataType
+  - DatabaseState
+  - DatabaseStatus
+  - ResourceMoveDefinition
+  - ServerUsage
+  - AdvisorStatus
+  - Advisor
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -74,7 +137,7 @@ list-exception:
 no-property-type-replacement: ResourceMoveDefinition
 
 override-operation-name:
-  ServerTrustGroups_ListByInstance: GetServerTrustGroups
+  ServerTrustGroups_ListByInstance: GetSqlServerTrustGroups
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
@@ -83,6 +146,7 @@ override-operation-name:
   Metrics_ListElasticPool: GetMetrics
   MetricDefinitions_ListElasticPool: GetMetricDefinitions
   Capabilities_ListByLocation: GetCapabilitiesByLocation
+  Servers_CheckNameAvailability: CheckSqlServerNameAvailability
 
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
@@ -93,6 +157,33 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}: ResourceGroupLongTermRetentionManagedInstanceBackup
   /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: SubscriptionLongTermRetentionBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}: ResourceGroupLongTermRetentionBackup
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}: SqlServerJobExecution
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}: SqlServerJobExecutionStep
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}: SqlServerJobExecutionStepTarget
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/steps/{stepName}: SqlServerJobStep
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}: SqlServerJobVersionStep
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}: SqlDatabaseAdvisor
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}: SqlDatabaseSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}: SqlDatabaseTable
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}: SqlDatabaseColumn
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}: SqlDatabaseSensitivityLabel
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}: SqlDatabaseVulnerabilityAssessment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}: SqlDatabaseVulnerabilityAssessmentRuleBaseline
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: SqlDatabaseVulnerabilityAssessmentScan
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverTrustCertificates/{certificateName}: ManagedInstanceServerTrustCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}: ManagedBackupShortTermRetentionPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}: ManagedDatabaseSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}: ManagedDatabaseTable
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}: ManagedDatabaseColumn
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}: ManagedDatabaseSensitivityLabel
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}: ManagedDatabaseVulnerabilityAssessment
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}: ManagedDatabaseVulnerabilityAssessmentRuleBaseline
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: ManagedDatabaseVulnerabilityAssessmentScan
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}: SqlServerAdvisor
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}: SqlServerVirtualNetworkRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}: SqlServerDatabaseReplicationLink
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}: SqlServerDatabaseRestorePoint
+  
 
 rename-mapping:
   CopyLongTermRetentionBackupParameters: CopyLongTermRetentionBackupContent
@@ -101,17 +192,70 @@ rename-mapping:
   Usage: InstancePoolUsage
   Usage.type: ResourceType
   UsageListResult: InstancePoolUsageListResult
-  TimeZone: SqlTimeZone
-  Metric: SqlMetric
-  Server: SqlServer
-  Database: SqlDatabase
-  Job: SqlJob
   SyncGroupsType: SyncGroupLogType
   SampleName: SampleSchemaName
-  DayOfWeek: SqlDayOfWeek
   ManagedInstancePrivateEndpointConnection.properties.privateLinkServiceConnectionState: ConnectionState
   RestorePoint.properties.restorePointCreationDate: restorePointCreatedOn
+  Job: SqlServerJob
+  JobAgent: SqlServerJobAgent
+  JobVersion: SqlServerJobVersion
+  JobCredential: SqlServerJobCredential
+  JobTargetGroup: SqlServerJobTargetGroup
+  JobSchedule: SqlServerJobSchedule
+  JobScheduleType: SqlServerJobScheduleType
+  JobExecution: SqlServerJobExecution
+  JobStep: SqlServerJobStep
+  LedgerDigestUploads: LedgerDigestUpload
+  ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
+  ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
+  CheckNameAvailabilityReason: SqlNameUnavailableReason
+  CheckNameAvailabilityResourceType: SqlNameAvailabilityResourceType
+  CheckNameAvailabilityRequest: SqlNameAvailabilityContent
+  CreateMode: SqlDatabaseCreateMode
+  OperationMode: DatabaseExtensionOperationMode
+  ProvisioningState: JobExecutionProvisioningState
+  UnitType: SqlMetricUnitType
+  UnitDefinitionType: SqlMetricDefinitionUnitType
+  ManagedDatabaseUpdate.properties.autoCompleteRestore: AllowAutoCompleteRestore
+  ManagedDatabase.properties.autoCompleteRestore: AllowAutoCompleteRestore
+  ManagedInstanceAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerAzureADAdministrator.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerAzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ManagedInstanceExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  ServerExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
+  SyncGroup.properties.enableConflictLogging: IsConflictLoggingEnabled
+  PrincipalType: SqlServerPrincipalType
+  IsRetryable: ActionRetryableState
+  ExportDatabaseDefinition: DatabaseExportDefinition
+  ImportNewDatabaseDefinition: DatabaseImportDefinition
+  PartnerInfo: PartnerServerInfo
+  ReplicationMode: DistributedAvailabilityGroupReplicationMode
+  ReplicationState: ReplicationLinkState
+  ServerInfo: ServerTrustGroupServerInfo
+  DatabaseExtensions: SqlDatabaseExtension
+  DatabaseOperation: DatabaseOperationData
+  ServerOperation: ServerOperationData
+  ElasticPoolOperation: ElasticPoolOperationData
+  UpdateManagedInstanceDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
+  VirtualNetworkRule: SqlServerVirtualNetworkRule
+  VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
+  MetricAvailability: SqlMetricAvailability
+  PrivateEndpointConnectionProperties: ServerPrivateEndpointConnectionProperties
+  PrivateEndpointProvisioningState: SqlPrivateEndpointProvisioningState
+  PrivateLinkServiceConnectionStateActionsRequire: SqlPrivateLinkServiceConnectionActionsRequired
+  PrivateLinkServiceConnectionStateStatus: SqlPrivateLinkServiceConnectionStatus
+  SecurityAlertPolicyName: SqlSecurityAlertPolicyName
+  ServerKeyType: SqlServerKeyType
+  ServerPrivateEndpointConnection: SqlServerPrivateEndpointConnection
+  ReplicationLink: SqlServerDatabaseReplicationLink
+  ReplicationRole: SqlServerDatabaseReplicationRole
+  ServerVersionCapability: SqlServerVersionCapability
+  RestorePoint: SqlServerDatabaseRestorePoint
+  BackupStorageRedundancy: SqlBackupStorageRedundancy
+  PrimaryAggregationType: SqlMetricPrimaryAggregationType
 
+prompted-enum-values:
+  - Default
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.
@@ -232,4 +376,70 @@ directive:
       transform: >
           $['x-ms-format'] = 'arm-id'
       reason: Only update the format of properties named 'restorableDroppedDatabaseId'. There is also a path parameter with the same name and should remain a string.
-```
+    - from: swagger-document
+      where: $.definitions..emailAccountAdmins
+      transform: >
+          $['x-ms-client-name'] = 'SendToEmailAccountAdmins'
+    - from: swagger-document
+      where: $.definitions..lastChecked
+      transform: >
+          $['x-ms-client-name'] = 'LastCheckedOn'
+    - from: swagger-document
+      where: $.definitions..memoryOptimized
+      transform: >
+          $['x-ms-client-name'] = 'IsMemoryOptimized'
+    - from: swagger-document
+      where: $.definitions..zoneRedundant
+      transform: >
+          $['x-ms-client-name'] = 'IsZoneRedundant'
+    - from: swagger-document
+      where: $.definitions..autoRotationEnabled
+      transform: >
+          $['x-ms-client-name'] = 'IsAutoRotationEnabled'
+    - from: swagger-document
+      where: $.definitions..publicDataEndpointEnabled
+      transform: >
+          $['x-ms-client-name'] = 'IsPublicDataEndpointEnabled'
+    - from: LocationCapabilities.json
+      where: $.definitions.ManagedInstanceVcoresCapability.properties
+      transform: >
+          $.instancePoolSupported['x-ms-client-name'] = 'IsInstancePoolSupported';
+          $.standaloneSupported['x-ms-client-name'] = 'IsStandaloneSupported';
+    - from: swagger-document
+      where: $.definitions..enabled
+      transform: >
+          if ($['type'] === 'boolean')
+              $['x-ms-client-name'] = 'IsEnabled'
+    - from: swagger-document
+      where: $.definitions.ResourceWithWritableName
+      transform: >
+              $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Servers.json
+      where: $.definitions.CheckNameAvailabilityResponse
+      transform: >
+          $['x-ms-client-name'] = 'SqlNameAvailabilityResponse';
+          $.properties.available['x-ms-client-name'] = 'IsAvailable';
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstancePecProperty
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Databases.json
+      where: $.definitions.ResourceMoveDefinition
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: FailoverGroups.json
+      where: $.definitions.PartnerInfo
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: Servers.json
+      where: $.definitions.ServerPrivateEndpointConnection
+      transform: >
+          $.properties.id['x-ms-format'] = 'arm-id';
+    - from: SyncAgents.json
+      where: $.definitions.SyncAgentLinkedDatabaseProperties
+      transform: >
+          $.properties.databaseId['format'] = 'uuid';
+    - from: Jobs.json
+      where: $.definitions
+      transform: >
+          $.JobSchedule.properties.interval['format'] = 'duration';

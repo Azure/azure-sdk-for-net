@@ -93,44 +93,18 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a ManagementPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
-        /// <returns> Returns a <see cref="ManagementPolicyResource" /> object. </returns>
-        public virtual ManagementPolicyResource GetManagementPolicy()
+        /// <summary> Gets an object representing a StorageAccountManagementPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource" /> object. </returns>
+        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
         {
-            return new ManagementPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/managementPolicies/default"));
+            return new StorageAccountManagementPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/managementPolicies/default"));
         }
 
-        /// <summary> Gets a collection of BlobInventoryPolicyResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of BlobInventoryPolicyResources and their operations over a BlobInventoryPolicyResource. </returns>
-        public virtual BlobInventoryPolicyCollection GetBlobInventoryPolicies()
+        /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it in the StorageAccount. </summary>
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
         {
-            return GetCachedClient(Client => new BlobInventoryPolicyCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the blob inventory policy associated with the specified storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}
-        /// Operation Id: BlobInventoryPolicies_Get
-        /// </summary>
-        /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BlobInventoryPolicyResource>> GetBlobInventoryPolicyAsync(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetBlobInventoryPolicies().GetAsync(blobInventoryPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the blob inventory policy associated with the specified storage account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}
-        /// Operation Id: BlobInventoryPolicies_Get
-        /// </summary>
-        /// <param name="blobInventoryPolicyName"> The name of the storage account blob inventory policy. It should always be &apos;default&apos;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<BlobInventoryPolicyResource> GetBlobInventoryPolicy(BlobInventoryPolicyName blobInventoryPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetBlobInventoryPolicies().Get(blobInventoryPolicyName, cancellationToken);
+            return new BlobInventoryPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/inventoryPolicies/default"));
         }
 
         /// <summary> Gets a collection of StoragePrivateEndpointConnectionResources in the StorageAccount. </summary>
@@ -207,11 +181,11 @@ namespace Azure.ResourceManager.Storage
             return GetObjectReplicationPolicies().Get(objectReplicationPolicyId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocalUserResources in the StorageAccount. </summary>
-        /// <returns> An object representing collection of LocalUserResources and their operations over a LocalUserResource. </returns>
-        public virtual LocalUserCollection GetLocalUsers()
+        /// <summary> Gets a collection of StorageAccountLocalUserResources in the StorageAccount. </summary>
+        /// <returns> An object representing collection of StorageAccountLocalUserResources and their operations over a StorageAccountLocalUserResource. </returns>
+        public virtual StorageAccountLocalUserCollection GetStorageAccountLocalUsers()
         {
-            return GetCachedClient(Client => new LocalUserCollection(Client, Id));
+            return GetCachedClient(Client => new StorageAccountLocalUserCollection(Client, Id));
         }
 
         /// <summary>
@@ -224,9 +198,9 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LocalUserResource>> GetLocalUserAsync(string username, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountLocalUserResource>> GetStorageAccountLocalUserAsync(string username, CancellationToken cancellationToken = default)
         {
-            return await GetLocalUsers().GetAsync(username, cancellationToken).ConfigureAwait(false);
+            return await GetStorageAccountLocalUsers().GetAsync(username, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -239,9 +213,9 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LocalUserResource> GetLocalUser(string username, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountLocalUserResource> GetStorageAccountLocalUser(string username, CancellationToken cancellationToken = default)
         {
-            return GetLocalUsers().Get(username, cancellationToken);
+            return GetStorageAccountLocalUsers().Get(username, cancellationToken);
         }
 
         /// <summary> Gets a collection of EncryptionScopeResources in the StorageAccount. </summary>
@@ -470,20 +444,25 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountListKeysResult>> GetKeysAsync(ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
-            scope.Start();
-            try
+            async Task<Page<StorageAccountKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _storageAccountRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _storageAccountRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -493,20 +472,25 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountListKeysResult> GetKeys(ListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
-            scope.Start();
-            try
+            Page<StorageAccountKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _storageAccountRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = _storageAccountRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -517,22 +501,27 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StorageAccountListKeysResult>> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
-            scope.Start();
-            try
+            async Task<Page<StorageAccountKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _storageAccountRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
+                scope.Start();
+                try
+                {
+                    var response = await _storageAccountRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -543,22 +532,27 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StorageAccountListKeysResult> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
-            scope.Start();
-            try
+            Page<StorageAccountKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _storageAccountRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
+                scope.Start();
+                try
+                {
+                    var response = _storageAccountRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -569,7 +563,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ListAccountSasResponse>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -595,7 +589,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ListAccountSasResponse> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -621,7 +615,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ListServiceSasResponse>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -647,7 +641,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ListServiceSasResponse> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -726,11 +720,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="requestType"> Required. Hierarchical namespace migration type can either be a hierarchical namespace validation request &apos;HnsOnValidationRequest&apos; or a hydration request &apos;HnsOnHydrationRequest&apos;. The validation request will validate the migration whereas the hydration request will migrate the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
-        public virtual async Task<ArmOperation> HierarchicalNamespaceMigrationAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(requestType, nameof(requestType));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.HierarchicalNamespaceMigration");
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
             try
             {
@@ -756,11 +750,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="requestType"> Required. Hierarchical namespace migration type can either be a hierarchical namespace validation request &apos;HnsOnValidationRequest&apos; or a hydration request &apos;HnsOnHydrationRequest&apos;. The validation request will validate the migration whereas the hydration request will migrate the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestType"/> is null. </exception>
-        public virtual ArmOperation HierarchicalNamespaceMigration(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+        public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(requestType, nameof(requestType));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.HierarchicalNamespaceMigration");
+            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.EnableHierarchicalNamespace");
             scope.Start();
             try
             {
@@ -939,10 +933,10 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: PrivateLinkResources_ListByStorageAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StoragePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StoragePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StoragePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StoragePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("StorageAccountResource.GetPrivateLinkResources");
                 scope.Start();
@@ -966,10 +960,10 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: PrivateLinkResources_ListByStorageAccount
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StoragePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StoragePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<StoragePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<StoragePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("StorageAccountResource.GetPrivateLinkResources");
                 scope.Start();

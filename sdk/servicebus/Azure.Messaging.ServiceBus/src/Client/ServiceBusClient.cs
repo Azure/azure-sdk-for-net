@@ -17,6 +17,13 @@ namespace Azure.Messaging.ServiceBus
     /// same AMQP connection. Disposing the <see cref="ServiceBusClient"/> will cause the AMQP
     /// connection to close.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusClient" /> is safe to cache and use for the lifetime of an
+    /// application, which is the best practice when the application is making use of Service Bus
+    /// regularly or semi-regularly.  The client is responsible for ensuring efficient network, CPU,
+    /// and memory use.  Calling <see cref="DisposeAsync" /> as the application is shutting down
+    /// will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///</remarks>
     public class ServiceBusClient : IAsyncDisposable
     {
         private readonly ServiceBusClientOptions _options;

@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleAssociationData DeserializeDataCollectionRuleAssociationData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<string> dataCollectionRuleId = default;
-            Optional<string> dataCollectionEndpointId = default;
-            Optional<KnownDataCollectionRuleAssociationProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> dataCollectionRuleId = default;
+            Optional<ResourceIdentifier> dataCollectionEndpointId = default;
+            Optional<DataCollectionRuleAssociationProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -103,12 +103,22 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("dataCollectionRuleId"))
                         {
-                            dataCollectionRuleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataCollectionRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataCollectionEndpointId"))
                         {
-                            dataCollectionEndpointId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataCollectionEndpointId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -118,14 +128,14 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KnownDataCollectionRuleAssociationProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataCollectionRuleAssociationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(eTag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

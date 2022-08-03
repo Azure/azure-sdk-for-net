@@ -1,14 +1,10 @@
 # Release History
 
-## 0.3.0-beta.4 (Unreleased)
-
-### Features Added
+## 0.3.0-beta.4 (2022-07-29)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `ServiceVersion` enum values are now pascal case.
 
 ## 0.3.0-beta.3 (2022-05-11)
 

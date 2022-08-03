@@ -2497,11 +2497,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeResourceSku> GetResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ComputeResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {
@@ -2516,7 +2516,7 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<ComputeResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {
@@ -2541,11 +2541,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeResourceSku> GetResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ComputeResourceSku> GetComputeResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             Page<ComputeResourceSku> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {
@@ -2560,7 +2560,7 @@ namespace Azure.ResourceManager.Compute
             }
             Page<ComputeResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
+                using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetComputeResourceSkus");
                 scope.Start();
                 try
                 {

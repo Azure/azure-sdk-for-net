@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="tenantId"> The tenant id of the system assigned identity which is used by master components. </param>
         /// <param name="resourceIdentityType"> For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </param>
         /// <param name="userAssignedIdentities"> The keys must be ARM resource IDs in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
-        internal ManagedClusterIdentity(string principalId, Guid? tenantId, ResourceIdentityType? resourceIdentityType, IDictionary<string, ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities)
+        internal ManagedClusterIdentity(Guid? principalId, Guid? tenantId, ResourceIdentityType? resourceIdentityType, IDictionary<string, ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The principal id of the system assigned identity which is used by master components. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> The tenant id of the system assigned identity which is used by master components. </summary>
         public Guid? TenantId { get; }
         /// <summary> For more information see [use managed identities in AKS](https://docs.microsoft.com/azure/aks/use-managed-identity). </summary>

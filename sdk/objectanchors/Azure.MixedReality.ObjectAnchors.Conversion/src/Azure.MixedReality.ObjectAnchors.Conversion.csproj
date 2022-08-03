@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.0.1" />
+    <PackageReference Include="Azure.MixedReality.Authentication" VersionOverride="1.1.0" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

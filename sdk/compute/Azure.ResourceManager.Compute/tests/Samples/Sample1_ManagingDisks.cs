@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             {
                 Sku = new DiskSku()
                 {
-                    Name = DiskStorageAccountType.StandardLRS
+                    Name = DiskStorageAccountType.StandardLrs
                 },
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,

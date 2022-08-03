@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStringValue(EncryptionCertificateName);
             }
             writer.WritePropertyName("enableNRRForInboundEncodedMessages");
-            writer.WriteBooleanValue(EnableNRRForInboundEncodedMessages);
+            writer.WriteBooleanValue(EnableNrrForInboundEncodedMessages);
             writer.WritePropertyName("enableNRRForInboundDecodedMessages");
-            writer.WriteBooleanValue(EnableNRRForInboundDecodedMessages);
+            writer.WriteBooleanValue(EnableNrrForInboundDecodedMessages);
             writer.WritePropertyName("enableNRRForOutboundMDN");
-            writer.WriteBooleanValue(EnableNRRForOutboundMDN);
+            writer.WriteBooleanValue(EnableNrrForOutboundMdn);
             writer.WritePropertyName("enableNRRForOutboundEncodedMessages");
-            writer.WriteBooleanValue(EnableNRRForOutboundEncodedMessages);
+            writer.WriteBooleanValue(EnableNrrForOutboundEncodedMessages);
             writer.WritePropertyName("enableNRRForOutboundDecodedMessages");
-            writer.WriteBooleanValue(EnableNRRForOutboundDecodedMessages);
+            writer.WriteBooleanValue(EnableNrrForOutboundDecodedMessages);
             writer.WritePropertyName("enableNRRForInboundMDN");
-            writer.WriteBooleanValue(EnableNRRForInboundMDN);
+            writer.WriteBooleanValue(EnableNrrForInboundMdn);
             if (Optional.IsDefined(Sha2AlgorithmFormat))
             {
                 writer.WritePropertyName("sha2AlgorithmFormat");
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Logic.Models
             bool overrideGroupSigningCertificate = default;
             Optional<string> signingCertificateName = default;
             Optional<string> encryptionCertificateName = default;
-            bool enableNRRForInboundEncodedMessages = default;
-            bool enableNRRForInboundDecodedMessages = default;
-            bool enableNRRForOutboundMDN = default;
-            bool enableNRRForOutboundEncodedMessages = default;
-            bool enableNRRForOutboundDecodedMessages = default;
-            bool enableNRRForInboundMDN = default;
+            bool enableNrrForInboundEncodedMessages = default;
+            bool enableNrrForInboundDecodedMessages = default;
+            bool enableNrrForOutboundMdn = default;
+            bool enableNrrForOutboundEncodedMessages = default;
+            bool enableNrrForOutboundDecodedMessages = default;
+            bool enableNrrForInboundMdn = default;
             Optional<string> sha2AlgorithmFormat = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -78,32 +78,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("enableNRRForInboundEncodedMessages"))
                 {
-                    enableNRRForInboundEncodedMessages = property.Value.GetBoolean();
+                    enableNrrForInboundEncodedMessages = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableNRRForInboundDecodedMessages"))
                 {
-                    enableNRRForInboundDecodedMessages = property.Value.GetBoolean();
+                    enableNrrForInboundDecodedMessages = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableNRRForOutboundMDN"))
                 {
-                    enableNRRForOutboundMDN = property.Value.GetBoolean();
+                    enableNrrForOutboundMdn = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableNRRForOutboundEncodedMessages"))
                 {
-                    enableNRRForOutboundEncodedMessages = property.Value.GetBoolean();
+                    enableNrrForOutboundEncodedMessages = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableNRRForOutboundDecodedMessages"))
                 {
-                    enableNRRForOutboundDecodedMessages = property.Value.GetBoolean();
+                    enableNrrForOutboundDecodedMessages = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableNRRForInboundMDN"))
                 {
-                    enableNRRForInboundMDN = property.Value.GetBoolean();
+                    enableNrrForInboundMdn = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sha2AlgorithmFormat"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new AS2SecuritySettings(overrideGroupSigningCertificate, signingCertificateName.Value, encryptionCertificateName.Value, enableNRRForInboundEncodedMessages, enableNRRForInboundDecodedMessages, enableNRRForOutboundMDN, enableNRRForOutboundEncodedMessages, enableNRRForOutboundDecodedMessages, enableNRRForInboundMDN, sha2AlgorithmFormat.Value);
+            return new AS2SecuritySettings(overrideGroupSigningCertificate, signingCertificateName.Value, encryptionCertificateName.Value, enableNrrForInboundEncodedMessages, enableNrrForInboundDecodedMessages, enableNrrForOutboundMdn, enableNrrForOutboundEncodedMessages, enableNrrForOutboundDecodedMessages, enableNrrForInboundMdn, sha2AlgorithmFormat.Value);
         }
     }
 }

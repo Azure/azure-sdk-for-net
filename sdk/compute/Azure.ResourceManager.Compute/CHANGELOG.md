@@ -1,30 +1,59 @@
 # Release History
 
-## 1.0.0-beta.10 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Base type of `VirtualMachineScaleSetVmExtensionData` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryApplicationPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryImagePatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Type `GalleryUpdateResourceData` was removed.
-- Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
-- Type `ApiError` renamed to `ComputeApiError`.
-- Type `ApiErrorBase` renamed to `ComputeApiErrorBase`.
-- Type `DeleteOption` renamed to `ComputeDeleteOption`.
-- Type `UsageName` renamed to `ComputeUsageName`.
-- Type `UsageUnit` renamed to `ComputeUsageUnit`.
-- Type `UserArtifactManage` renamed to `UserArtifactManagement`.
-- Method `CloudServiceCollection.CreateOrUpdate` and `CloudServiceCollection.CreateOrUpdateAsync` now required the parameter `data`.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-07-11)
+
+This is the first stable release of the Compute Management client library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Compute` / `VirtualMachine` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+- Correct inherits
+  - Base type of `VirtualMachineScaleSetVmExtensionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryApplicationPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryImagePatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `GalleryPatch` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Type `GalleryUpdateResourceData` was removed.
+  - Base type of `VirtualMachineScaleSetExtensionPatch ` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Base type of `VirtualMachineScaleSetVmExtensionPatch  ` changed to `Azure.ResourceManager.Models.ResourceData`.
+  - Type `ApiError` renamed to `ComputeApiError`.
+  - Type `ApiErrorBase` renamed to `ComputeApiErrorBase`.
+  - Type `DeleteOption` renamed to `ComputeDeleteOption`.
+  - Type `UsageName` renamed to `ComputeUsageName`.
+  - Type `UsageUnit` renamed to `ComputeUsageUnit`.
+  - Type `UserArtifactManage` renamed to `UserArtifactManagement`.
+- Method `CloudServiceCollection.CreateOrUpdate` and `CloudServiceCollection.CreateOrUpdateAsync` now required the parameter `data`.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.9 (2022-06-13)
 

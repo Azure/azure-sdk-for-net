@@ -25,10 +25,10 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   be used for reading and processing events for the majority of scenarios.  The partition receiver is
     ///   intended to enable scenarios with special needs which require more direct control.</para>
     ///
-    ///   <para>The <see cref="PartitionReceiver" /> is safe to cache and use for the lifetime of an application, and that is best practice when the application
-    ///   reads events regularly or semi-regularly.  The receiver holds responsibility for efficient resource management, working to keep resource usage low during
-    ///   periods of inactivity and manage health during periods of higher use.  Calling either the <see cref="CloseAsync" /> or <see cref="DisposeAsync" />
-    ///   method as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.</para>
+    ///   <para>The <see cref="PartitionReceiver" /> is safe to cache and use for the lifetime of an application, and which is the best practice when the application
+    ///   reads events regularly or semi-regularly.  The receiver is responsible for ensuring efficient network, CPU, and memory use.  Calling either
+    ///   <see cref="CloseAsync" /> or <see cref="DisposeAsync" /> as the application is shutting down will ensure that network resources and other unmanaged
+    ///   objects are properly cleaned up.</para>
     /// </remarks>
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>

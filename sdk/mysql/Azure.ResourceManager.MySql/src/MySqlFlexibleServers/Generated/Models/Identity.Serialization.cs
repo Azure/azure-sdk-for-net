@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static Identity DeserializeIdentity(JsonElement element)
         {
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ManagedServiceIdentityType> type = default;
             Optional<IDictionary<string, BinaryData>> userAssignedIdentities = default;
@@ -50,7 +50,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
@@ -89,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new Identity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new Identity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

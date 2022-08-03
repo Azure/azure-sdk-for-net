@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Flag to indicate whether Free Tier is enabled. </summary>
-        public bool? EnableFreeTier { get; set; }
+        public bool? IsFreeTierEnabled { get; set; }
         /// <summary> API specific properties. Currently, supported only for MongoDB API. </summary>
         internal ApiProperties ApiProperties { get; set; }
         /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Flag to indicate whether to enable storage analytics. </summary>
-        public bool? EnableAnalyticalStorage { get; set; }
+        public bool? IsAnalyticalStorageEnabled { get; set; }
         /// <summary> Analytical storage specific properties. </summary>
         internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration { get; set; }
         /// <summary> Describes the types of schema for analytical storage. </summary>

@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationToPurchaseExchange DeserializeReservationToPurchaseExchange(JsonElement element)
         {
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationId = default;
+            Optional<ResourceIdentifier> reservationOrderId = default;
+            Optional<ResourceIdentifier> reservationId = default;
             Optional<PurchaseRequestContent> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
             Optional<OperationStatus> status = default;
@@ -23,12 +23,22 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 if (property.NameEquals("reservationOrderId"))
                 {
-                    reservationOrderId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    reservationOrderId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reservationId"))
                 {
-                    reservationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    reservationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
