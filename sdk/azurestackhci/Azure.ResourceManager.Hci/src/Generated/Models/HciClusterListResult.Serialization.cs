@@ -12,9 +12,9 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class ClusterList
+    internal partial class HciClusterListResult
     {
-        internal static ClusterList DeserializeClusterList(JsonElement element)
+        internal static HciClusterListResult DeserializeHciClusterListResult(JsonElement element)
         {
             Optional<IReadOnlyList<HciClusterData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ClusterList(Optional.ToList(value), nextLink.Value);
+            return new HciClusterListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

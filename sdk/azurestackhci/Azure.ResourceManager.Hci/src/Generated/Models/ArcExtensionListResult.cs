@@ -12,18 +12,18 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> List of Extensions in HCI cluster. </summary>
-    internal partial class ExtensionList
+    internal partial class ArcExtensionListResult
     {
-        /// <summary> Initializes a new instance of ExtensionList. </summary>
-        internal ExtensionList()
+        /// <summary> Initializes a new instance of ArcExtensionListResult. </summary>
+        internal ArcExtensionListResult()
         {
             Value = new ChangeTrackingList<ArcExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionList. </summary>
+        /// <summary> Initializes a new instance of ArcExtensionListResult. </summary>
         /// <param name="value"> List of Extensions in HCI cluster. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ExtensionList(IReadOnlyList<ArcExtensionData> value, string nextLink)
+        internal ArcExtensionListResult(IReadOnlyList<ArcExtensionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

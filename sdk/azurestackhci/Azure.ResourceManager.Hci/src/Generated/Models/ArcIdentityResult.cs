@@ -10,19 +10,19 @@ using System;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> ArcIdentity details. </summary>
-    public partial class ArcIdentityResponse
+    public partial class ArcIdentityResult
     {
-        /// <summary> Initializes a new instance of ArcIdentityResponse. </summary>
-        internal ArcIdentityResponse()
+        /// <summary> Initializes a new instance of ArcIdentityResult. </summary>
+        internal ArcIdentityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcIdentityResponse. </summary>
+        /// <summary> Initializes a new instance of ArcIdentityResult. </summary>
         /// <param name="arcApplicationClientId"></param>
         /// <param name="arcApplicationTenantId"></param>
         /// <param name="arcServicePrincipalObjectId"></param>
         /// <param name="arcApplicationObjectId"></param>
-        internal ArcIdentityResponse(Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId)
+        internal ArcIdentityResult(Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId)
         {
             ArcApplicationClientId = arcApplicationClientId;
             ArcApplicationTenantId = arcApplicationTenantId;

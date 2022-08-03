@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ClusterIdentityResponse
+    public partial class HciClusterIdentityResult
     {
-        internal static ClusterIdentityResponse DeserializeClusterIdentityResponse(JsonElement element)
+        internal static HciClusterIdentityResult DeserializeHciClusterIdentityResult(JsonElement element)
         {
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ClusterIdentityResponse(Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadServicePrincipalObjectId), Optional.ToNullable(aadApplicationObjectId));
+            return new HciClusterIdentityResult(Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadServicePrincipalObjectId), Optional.ToNullable(aadApplicationObjectId));
         }
     }
 }

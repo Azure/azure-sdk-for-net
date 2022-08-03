@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ClusterReportedProperties
+    public partial class HciClusterReportedProperties
     {
-        internal static ClusterReportedProperties DeserializeClusterReportedProperties(JsonElement element)
+        internal static HciClusterReportedProperties DeserializeHciClusterReportedProperties(JsonElement element)
         {
             Optional<string> clusterName = default;
             Optional<Guid> clusterId = default;
             Optional<string> clusterVersion = default;
-            Optional<IReadOnlyList<ClusterNode>> nodes = default;
+            Optional<IReadOnlyList<HciClusterNode>> nodes = default;
             Optional<DateTimeOffset> lastUpdated = default;
-            Optional<ImdsAttestation> imdsAttestation = default;
-            Optional<DiagnosticLevel> diagnosticLevel = default;
+            Optional<ImdsAttestationState> imdsAttestation = default;
+            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ClusterNode> array = new List<ClusterNode>();
+                    List<HciClusterNode> array = new List<HciClusterNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterNode.DeserializeClusterNode(item));
+                        array.Add(HciClusterNode.DeserializeHciClusterNode(item));
                     }
                     nodes = array;
                     continue;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    imdsAttestation = new ImdsAttestation(property.Value.GetString());
+                    imdsAttestation = new ImdsAttestationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diagnosticLevel"))
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diagnosticLevel = new DiagnosticLevel(property.Value.GetString());
+                    diagnosticLevel = new HciClusterDiagnosticLevel(property.Value.GetString());
                     continue;
                 }
             }
-            return new ClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel));
+            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel));
         }
     }
 }

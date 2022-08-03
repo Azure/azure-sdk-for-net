@@ -10,19 +10,19 @@ using System;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Cluster Identity details. </summary>
-    public partial class ClusterIdentityResponse
+    public partial class HciClusterIdentityResult
     {
-        /// <summary> Initializes a new instance of ClusterIdentityResponse. </summary>
-        internal ClusterIdentityResponse()
+        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        internal HciClusterIdentityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterIdentityResponse. </summary>
+        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
         /// <param name="aadClientId"></param>
         /// <param name="aadTenantId"></param>
         /// <param name="aadServicePrincipalObjectId"></param>
         /// <param name="aadApplicationObjectId"></param>
-        internal ClusterIdentityResponse(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId)
+        internal HciClusterIdentityResult(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId)
         {
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;

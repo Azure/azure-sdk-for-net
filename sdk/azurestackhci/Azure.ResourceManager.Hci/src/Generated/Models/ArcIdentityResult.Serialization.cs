@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ArcIdentityResponse
+    public partial class ArcIdentityResult
     {
-        internal static ArcIdentityResponse DeserializeArcIdentityResponse(JsonElement element)
+        internal static ArcIdentityResult DeserializeArcIdentityResult(JsonElement element)
         {
             Optional<Guid> arcApplicationClientId = default;
             Optional<Guid> arcApplicationTenantId = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ArcIdentityResponse(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId));
+            return new ArcIdentityResult(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId));
         }
     }
 }

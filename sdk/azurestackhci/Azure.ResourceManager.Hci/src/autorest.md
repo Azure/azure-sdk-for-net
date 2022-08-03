@@ -51,12 +51,28 @@ rename-rules:
 
 prepend-rp-prefix:
   - Cluster
+  - ProvisioningState
+  - ClusterDesiredProperties
+  - ClusterNode
+  - ClusterReportedProperties
 rename-mapping:
   Extension: ArcExtension
   Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
+  Extension.properties.extensionParameters.type: ArcExtensionType
   Status: HciClusterStatus
   ClusterReportedProperties.clusterId: -|uuid
   Cluster.properties.cloudId: -|uuid
+  ArcIdentityResponse: ArcIdentityResult
+  ClusterIdentityResponse: HciClusterIdentityResult
+  ClusterReportedProperties.lastUpdated: LastUpdatedOn
+  ClusterList: HciClusterListResult
+  DiagnosticLevel: HciClusterDiagnosticLevel
+  ExtensionAggregateState: ArcExtensionAggregateState
+  ExtensionList: ArcExtensionListResult
+  ImdsAttestation: ImdsAttestationState
+  PasswordCredential: ArcSettingPasswordCredential
+  UploadCertificateRequest: HciClusterCertificateContent
+  RawCertificateData: HciClusterRawCertificate
 
 directive:
   - from: swagger-document
