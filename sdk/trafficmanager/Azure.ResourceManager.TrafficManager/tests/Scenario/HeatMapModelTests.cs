@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 {
     public sealed class HeatMapModelTests : TrafficManagerManagementTestBase
     {
-        private const string ProfileWithHeatmapResrouceGroupName = "dialtone-traffic-manager";
+        private const string ProfileWithHeatmapResoruceGroupName = "dialtone-traffic-manager";
         private const string ProfileWithHeatmapName = "az-int-int-msftmetrics";
 
         private SubscriptionResource _subscription;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                 Client,
                 HeatMapModelResource.CreateResourceIdentifier(
                     _subscription.Data.SubscriptionId,
-                    ProfileWithHeatmapResrouceGroupName,
+                    ProfileWithHeatmapResoruceGroupName,
                     ProfileWithHeatmapName,
                     Models.HeatMapType.Default));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                 Client,
                 ProfileResource.CreateResourceIdentifier(
                     _subscription.Data.SubscriptionId,
-                    ProfileWithHeatmapResrouceGroupName,
+                    ProfileWithHeatmapResoruceGroupName,
                     ProfileWithHeatmapName));
 
         /// <summary>

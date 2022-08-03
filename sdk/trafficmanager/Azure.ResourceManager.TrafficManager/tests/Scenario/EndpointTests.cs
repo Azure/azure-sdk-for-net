@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        public async Task UpdateOnCollecitonTest()
+        public async Task UpdateOnCollectionTest()
         {
             ProfileResource profileResource = await GetDefaultProfile();
             EndpointCollection endpointCollection = profileResource.GetEndpoints();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        public async Task GetOnCollecitonTest()
+        public async Task GetOnCollectionTest()
         {
             ProfileResource profileResource = await GetDefaultProfile();
             EndpointCollection endpointCollection = profileResource.GetEndpoints();

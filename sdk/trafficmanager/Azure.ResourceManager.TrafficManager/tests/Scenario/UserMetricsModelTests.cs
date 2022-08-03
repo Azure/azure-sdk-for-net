@@ -8,7 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.TrafficManager.Tests.Scenario
+namespace Azure.ResourceManager.TrafficManager.Tests
 {
     public sealed class UserMetricsModelTests : TrafficManagerManagementTestBase
     {

@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-569c06090cbc7849af68eaa59e60e7f1-fe0608f6f02eef43-00",
-        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.0.0-alpha.20220630.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "f576b00eafe210adf2ea2ba6f2ad44ae",
+        "traceparent": "00-899e8e52bc92a44087cebfdd5ab5b6aa-1ece816e9049f149-00",
+        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.0.0-alpha.20220802.1 (.NET Framework 4.8.9032.0; Microsoft Windows 10.0.22622 )",
+        "x-ms-client-request-id": "698d5c735682f61a9fd0618a2fec1562",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,15 +18,15 @@
         "Cache-Control": "private",
         "Content-Length": "16124",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 30 Jun 2022 17:43:16 GMT",
+        "Date": "Wed, 03 Aug 2022 05:17:17 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1169c51d-8523-4fee-9315-58170408d792",
+        "x-ms-correlation-request-id": "abb16cab-36ba-42de-9660-2955a73d2a1a",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "f576b00e-afe2-10ad-f2ea-2ba6f2ad44ae",
-        "x-ms-routing-request-id": "WESTUS:20220630T174317Z:1169c51d-8523-4fee-9315-58170408d792",
+        "x-ms-request-id": "698d5c73-5682-f61a-9fd0-618a2fec1562",
+        "x-ms-routing-request-id": "WESTUS2:20220803T051717Z:abb16cab-36ba-42de-9660-2955a73d2a1a",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -1722,8 +1722,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": null,
-    "RandomSeed": "467824152",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "150038270",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "fb9e7fe1-af44-47ef-852d-2d086a069327"
   }

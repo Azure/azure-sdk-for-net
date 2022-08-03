@@ -12,7 +12,6 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e78997
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
- 
 
 rename-rules:
   CPU: Cpu
@@ -56,7 +55,7 @@ directive:
       delete $["schema"]
      
 #TODO: excluding since the following REST endpoints do not have GetAll method.
-#TODO: e.g. The ResourceCollection EndpointCollection (RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}) does not have a GetAll method
+#TODO: e.g. The EndpointCollection (RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}) does not have a GetAll method
 list-exception:
  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName} 
  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}

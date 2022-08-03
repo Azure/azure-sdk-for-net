@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.TrafficManager.Tests.Scenario
+namespace Azure.ResourceManager.TrafficManager.Tests
 {
     public sealed class TrafficManagerGeographicHierarchyTests : TrafficManagerManagementTestBase
     {
