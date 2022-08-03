@@ -53,4 +53,7 @@ rename-mapping:
   DataDisk: BatchVirtualMachineDataDisk
   NetworkProfile: BatchVirtualMachineNetworkProfile
   CachingType: BatchDiskCachingType
+
+mgmt-debug:
+  show-serialized-names: true
 ```
