@@ -5,22 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Cluster Identity details. </summary>
-    public partial class ClusterIdentityResponse
+    public partial class HciClusterIdentityResult
     {
-        /// <summary> Initializes a new instance of ClusterIdentityResponse. </summary>
-        internal ClusterIdentityResponse()
+        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        internal HciClusterIdentityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterIdentityResponse. </summary>
+        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
         /// <param name="aadClientId"></param>
         /// <param name="aadTenantId"></param>
         /// <param name="aadServicePrincipalObjectId"></param>
         /// <param name="aadApplicationObjectId"></param>
-        internal ClusterIdentityResponse(string aadClientId, string aadTenantId, string aadServicePrincipalObjectId, string aadApplicationObjectId)
+        internal HciClusterIdentityResult(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId)
         {
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;
@@ -29,12 +31,12 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the aad client id. </summary>
-        public string AadClientId { get; }
+        public Guid? AadClientId { get; }
         /// <summary> Gets the aad tenant id. </summary>
-        public string AadTenantId { get; }
+        public Guid? AadTenantId { get; }
         /// <summary> Gets the aad service principal object id. </summary>
-        public string AadServicePrincipalObjectId { get; }
+        public Guid? AadServicePrincipalObjectId { get; }
         /// <summary> Gets the aad application object id. </summary>
-        public string AadApplicationObjectId { get; }
+        public Guid? AadApplicationObjectId { get; }
     }
 }

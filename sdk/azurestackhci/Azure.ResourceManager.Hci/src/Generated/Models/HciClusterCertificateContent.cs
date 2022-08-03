@@ -9,23 +9,23 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The UploadCertificateContent. </summary>
-    public partial class UploadCertificateContent
+    /// <summary> The HciClusterCertificateContent. </summary>
+    public partial class HciClusterCertificateContent
     {
-        /// <summary> Initializes a new instance of UploadCertificateContent. </summary>
-        public UploadCertificateContent()
+        /// <summary> Initializes a new instance of HciClusterCertificateContent. </summary>
+        public HciClusterCertificateContent()
         {
         }
 
         /// <summary> Gets or sets the properties. </summary>
-        internal RawCertificateData Properties { get; set; }
+        internal HciClusterRawCertificate Properties { get; set; }
         /// <summary> Gets the certificates. </summary>
         public IList<string> Certificates
         {
             get
             {
                 if (Properties is null)
-                    Properties = new RawCertificateData();
+                    Properties = new HciClusterRawCertificate();
                 return Properties.Certificates;
             }
         }

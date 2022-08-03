@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ClusterDesiredProperties : IUtf8JsonSerializable
+    public partial class HciClusterDesiredProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterDesiredProperties DeserializeClusterDesiredProperties(JsonElement element)
+        internal static HciClusterDesiredProperties DeserializeHciClusterDesiredProperties(JsonElement element)
         {
             Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<DiagnosticLevel> diagnosticLevel = default;
+            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("windowsServerSubscription"))
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Hci.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diagnosticLevel = new DiagnosticLevel(property.Value.GetString());
+                    diagnosticLevel = new HciClusterDiagnosticLevel(property.Value.GetString());
                     continue;
                 }
             }
-            return new ClusterDesiredProperties(Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(diagnosticLevel));
+            return new HciClusterDesiredProperties(Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(diagnosticLevel));
         }
     }
 }

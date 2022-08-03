@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ClusterNode
+    public partial class HciClusterNode
     {
-        internal static ClusterNode DeserializeClusterNode(JsonElement element)
+        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element)
         {
             Optional<string> name = default;
             Optional<float> id = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), manufacturer.Value, model.Value, osName.Value, osVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB));
+            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), manufacturer.Value, model.Value, osName.Value, osVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB));
         }
     }
 }

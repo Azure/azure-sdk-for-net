@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The RawCertificateData. </summary>
-    internal partial class RawCertificateData
+    /// <summary> The HciClusterRawCertificate. </summary>
+    internal partial class HciClusterRawCertificate
     {
-        /// <summary> Initializes a new instance of RawCertificateData. </summary>
-        public RawCertificateData()
+        /// <summary> Initializes a new instance of HciClusterRawCertificate. </summary>
+        public HciClusterRawCertificate()
         {
             Certificates = new ChangeTrackingList<string>();
         }

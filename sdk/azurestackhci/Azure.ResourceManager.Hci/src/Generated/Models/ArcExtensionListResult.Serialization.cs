@@ -12,9 +12,9 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class ExtensionList
+    internal partial class ArcExtensionListResult
     {
-        internal static ExtensionList DeserializeExtensionList(JsonElement element)
+        internal static ArcExtensionListResult DeserializeArcExtensionListResult(JsonElement element)
         {
             Optional<IReadOnlyList<ArcExtensionData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ExtensionList(Optional.ToList(value), nextLink.Value);
+            return new ArcExtensionListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

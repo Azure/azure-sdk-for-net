@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Cluster node details. </summary>
-    public partial class ClusterNode
+    public partial class HciClusterNode
     {
-        /// <summary> Initializes a new instance of ClusterNode. </summary>
-        internal ClusterNode()
+        /// <summary> Initializes a new instance of HciClusterNode. </summary>
+        internal HciClusterNode()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterNode. </summary>
+        /// <summary> Initializes a new instance of HciClusterNode. </summary>
         /// <param name="name"> Name of the cluster node. </param>
         /// <param name="id"> Id of the node in the cluster. </param>
         /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="serialNumber"> Immutable id of the cluster node. </param>
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        internal ClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, string manufacturer, string model, string osName, string osVersion, string serialNumber, float? coreCount, float? memoryInGiB)
+        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, string manufacturer, string model, string osName, string osVersion, string serialNumber, float? coreCount, float? memoryInGiB)
         {
             Name = name;
             Id = id;

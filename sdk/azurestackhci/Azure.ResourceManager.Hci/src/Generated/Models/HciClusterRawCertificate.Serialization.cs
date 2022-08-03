@@ -10,15 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class UploadCertificateContent : IUtf8JsonSerializable
+    internal partial class HciClusterRawCertificate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                writer.WritePropertyName("certificates");
+                writer.WriteStartArray();
+                foreach (var item in Certificates)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

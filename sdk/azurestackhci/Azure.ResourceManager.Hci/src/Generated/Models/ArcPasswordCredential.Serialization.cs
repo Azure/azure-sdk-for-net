@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PasswordCredential
+    public partial class ArcPasswordCredential
     {
-        internal static PasswordCredential DeserializePasswordCredential(JsonElement element)
+        internal static ArcPasswordCredential DeserializeArcPasswordCredential(JsonElement element)
         {
             Optional<string> secretText = default;
             Optional<string> keyId = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime));
+            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime));
         }
     }
 }

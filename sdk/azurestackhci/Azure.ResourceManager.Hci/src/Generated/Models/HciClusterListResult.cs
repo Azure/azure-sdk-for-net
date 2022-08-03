@@ -12,18 +12,18 @@ using Azure.ResourceManager.Hci;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> List of clusters. </summary>
-    internal partial class ClusterList
+    internal partial class HciClusterListResult
     {
-        /// <summary> Initializes a new instance of ClusterList. </summary>
-        internal ClusterList()
+        /// <summary> Initializes a new instance of HciClusterListResult. </summary>
+        internal HciClusterListResult()
         {
             Value = new ChangeTrackingList<HciClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Initializes a new instance of HciClusterListResult. </summary>
         /// <param name="value"> List of clusters. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ClusterList(IReadOnlyList<HciClusterData> value, string nextLink)
+        internal HciClusterListResult(IReadOnlyList<HciClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
