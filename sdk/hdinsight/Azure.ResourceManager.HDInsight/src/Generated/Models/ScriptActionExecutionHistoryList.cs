@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The list script execution history response.
-    /// Serialized Name: ScriptActionExecutionHistoryList
-    /// </summary>
+    /// <summary> The list script execution history response. </summary>
     internal partial class ScriptActionExecutionHistoryList
     {
         /// <summary> Initializes a new instance of ScriptActionExecutionHistoryList. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActionExecutionHistoryList. </summary>
-        /// <param name="value">
-        /// The list of persisted script action details for the cluster.
-        /// Serialized Name: ScriptActionExecutionHistoryList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: ScriptActionExecutionHistoryList.nextLink
-        /// </param>
+        /// <param name="value"> The list of persisted script action details for the cluster. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal ScriptActionExecutionHistoryList(IReadOnlyList<RuntimeScriptActionDetail> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of persisted script action details for the cluster.
-        /// Serialized Name: ScriptActionExecutionHistoryList.value
-        /// </summary>
+        /// <summary> The list of persisted script action details for the cluster. </summary>
         public IReadOnlyList<RuntimeScriptActionDetail> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: ScriptActionExecutionHistoryList.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

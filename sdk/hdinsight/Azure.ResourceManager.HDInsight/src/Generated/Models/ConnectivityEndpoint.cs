@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The connectivity properties
-    /// Serialized Name: ConnectivityEndpoint
-    /// </summary>
+    /// <summary> The connectivity properties. </summary>
     public partial class ConnectivityEndpoint
     {
         /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
-        /// <param name="name">
-        /// The name of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.name
-        /// </param>
-        /// <param name="protocol">
-        /// The protocol of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.protocol
-        /// </param>
-        /// <param name="location">
-        /// The location of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.location
-        /// </param>
-        /// <param name="port">
-        /// The port to connect to.
-        /// Serialized Name: ConnectivityEndpoint.port
-        /// </param>
-        /// <param name="privateIPAddress">
-        /// The private ip address of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.privateIPAddress
-        /// </param>
+        /// <param name="name"> The name of the endpoint. </param>
+        /// <param name="protocol"> The protocol of the endpoint. </param>
+        /// <param name="location"> The location of the endpoint. </param>
+        /// <param name="port"> The port to connect to. </param>
+        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
         internal ConnectivityEndpoint(string name, string protocol, AzureLocation? location, int? port, string privateIPAddress)
         {
             Name = name;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateIPAddress = privateIPAddress;
         }
 
-        /// <summary>
-        /// The name of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.name
-        /// </summary>
+        /// <summary> The name of the endpoint. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The protocol of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.protocol
-        /// </summary>
+        /// <summary> The protocol of the endpoint. </summary>
         public string Protocol { get; set; }
-        /// <summary>
-        /// The location of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.location
-        /// </summary>
+        /// <summary> The location of the endpoint. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// The port to connect to.
-        /// Serialized Name: ConnectivityEndpoint.port
-        /// </summary>
+        /// <summary> The port to connect to. </summary>
         public int? Port { get; set; }
-        /// <summary>
-        /// The private ip address of the endpoint.
-        /// Serialized Name: ConnectivityEndpoint.privateIPAddress
-        /// </summary>
+        /// <summary> The private ip address of the endpoint. </summary>
         public string PrivateIPAddress { get; set; }
     }
 }

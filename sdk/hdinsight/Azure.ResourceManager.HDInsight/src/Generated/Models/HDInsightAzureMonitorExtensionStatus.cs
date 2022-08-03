@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The azure monitor status response.
-    /// Serialized Name: AzureMonitorResponse
-    /// </summary>
+    /// <summary> The azure monitor status response. </summary>
     public partial class HDInsightAzureMonitorExtensionStatus
     {
         /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionStatus. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionStatus. </summary>
-        /// <param name="isClusterMonitoringEnabled">
-        /// The status of the monitor on the HDInsight cluster.
-        /// Serialized Name: AzureMonitorResponse.clusterMonitoringEnabled
-        /// </param>
-        /// <param name="workspaceId">
-        /// The workspace ID of the monitor on the HDInsight cluster.
-        /// Serialized Name: AzureMonitorResponse.workspaceId
-        /// </param>
-        /// <param name="selectedConfigurations">
-        /// The selected configurations.
-        /// Serialized Name: AzureMonitorResponse.selectedConfigurations
-        /// </param>
+        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
+        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
+        /// <param name="selectedConfigurations"> The selected configurations. </param>
         internal HDInsightAzureMonitorExtensionStatus(bool? isClusterMonitoringEnabled, string workspaceId, HDInsightAzureMonitorSelectedConfigurations selectedConfigurations)
         {
             IsClusterMonitoringEnabled = isClusterMonitoringEnabled;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             SelectedConfigurations = selectedConfigurations;
         }
 
-        /// <summary>
-        /// The status of the monitor on the HDInsight cluster.
-        /// Serialized Name: AzureMonitorResponse.clusterMonitoringEnabled
-        /// </summary>
+        /// <summary> The status of the monitor on the HDInsight cluster. </summary>
         public bool? IsClusterMonitoringEnabled { get; }
-        /// <summary>
-        /// The workspace ID of the monitor on the HDInsight cluster.
-        /// Serialized Name: AzureMonitorResponse.workspaceId
-        /// </summary>
+        /// <summary> The workspace ID of the monitor on the HDInsight cluster. </summary>
         public string WorkspaceId { get; }
-        /// <summary>
-        /// The selected configurations.
-        /// Serialized Name: AzureMonitorResponse.selectedConfigurations
-        /// </summary>
+        /// <summary> The selected configurations. </summary>
         public HDInsightAzureMonitorSelectedConfigurations SelectedConfigurations { get; }
     }
 }
