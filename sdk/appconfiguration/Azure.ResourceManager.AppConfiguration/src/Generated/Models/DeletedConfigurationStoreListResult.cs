@@ -11,7 +11,10 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> List of deleted configuration stores. </summary>
+    /// <summary>
+    /// List of deleted configuration stores
+    /// Serialized Name: DeletedConfigurationStoreListResult
+    /// </summary>
     internal partial class DeletedConfigurationStoreListResult
     {
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
-        /// <param name="value"> The list of deleted configuration store. </param>
-        /// <param name="nextLink"> The URL to get the next set of deleted configuration stores. </param>
+        /// <param name="value">
+        /// The list of deleted configuration store.
+        /// Serialized Name: DeletedConfigurationStoreListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of deleted configuration stores.
+        /// Serialized Name: DeletedConfigurationStoreListResult.nextLink
+        /// </param>
         internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of deleted configuration store. </summary>
+        /// <summary>
+        /// The list of deleted configuration store.
+        /// Serialized Name: DeletedConfigurationStoreListResult.value
+        /// </summary>
         public IReadOnlyList<DeletedConfigurationStoreData> Value { get; }
-        /// <summary> The URL to get the next set of deleted configuration stores. </summary>
+        /// <summary>
+        /// The URL to get the next set of deleted configuration stores.
+        /// Serialized Name: DeletedConfigurationStoreListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

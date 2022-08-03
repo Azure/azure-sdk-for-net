@@ -26,12 +26,30 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="configurationStoreId"> The resource id of the original configuration store. </param>
-        /// <param name="location"> The location of the original configuration store. </param>
-        /// <param name="deletedOn"> The deleted date. </param>
-        /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
-        /// <param name="tags"> Tags of the original configuration store. </param>
-        /// <param name="purgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
+        /// <param name="configurationStoreId">
+        /// The resource id of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.configurationStoreId
+        /// </param>
+        /// <param name="location">
+        /// The location of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.location
+        /// </param>
+        /// <param name="deletedOn">
+        /// The deleted date.
+        /// Serialized Name: DeletedConfigurationStore.properties.deletionDate
+        /// </param>
+        /// <param name="scheduledPurgeOn">
+        /// The scheduled purged date.
+        /// Serialized Name: DeletedConfigurationStore.properties.scheduledPurgeDate
+        /// </param>
+        /// <param name="tags">
+        /// Tags of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.tags
+        /// </param>
+        /// <param name="purgeProtectionEnabled">
+        /// Purge protection status of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.purgeProtectionEnabled
+        /// </param>
         internal DeletedConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled) : base(id, name, resourceType, systemData)
         {
             ConfigurationStoreId = configurationStoreId;
@@ -42,17 +60,35 @@ namespace Azure.ResourceManager.AppConfiguration
             PurgeProtectionEnabled = purgeProtectionEnabled;
         }
 
-        /// <summary> The resource id of the original configuration store. </summary>
+        /// <summary>
+        /// The resource id of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.configurationStoreId
+        /// </summary>
         public string ConfigurationStoreId { get; }
-        /// <summary> The location of the original configuration store. </summary>
+        /// <summary>
+        /// The location of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The deleted date. </summary>
+        /// <summary>
+        /// The deleted date.
+        /// Serialized Name: DeletedConfigurationStore.properties.deletionDate
+        /// </summary>
         public DateTimeOffset? DeletedOn { get; }
-        /// <summary> The scheduled purged date. </summary>
+        /// <summary>
+        /// The scheduled purged date.
+        /// Serialized Name: DeletedConfigurationStore.properties.scheduledPurgeDate
+        /// </summary>
         public DateTimeOffset? ScheduledPurgeOn { get; }
-        /// <summary> Tags of the original configuration store. </summary>
+        /// <summary>
+        /// Tags of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.tags
+        /// </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> Purge protection status of the original configuration store. </summary>
+        /// <summary>
+        /// Purge protection status of the original configuration store.
+        /// Serialized Name: DeletedConfigurationStore.properties.purgeProtectionEnabled
+        /// </summary>
         public bool? PurgeProtectionEnabled { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to check the availability of a resource name. </summary>
+    /// <summary>
+    /// The result of a request to check the availability of a resource name.
+    /// Serialized Name: NameAvailabilityStatus
+    /// </summary>
     public partial class NameAvailabilityStatus
     {
         /// <summary> Initializes a new instance of NameAvailabilityStatus. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of NameAvailabilityStatus. </summary>
-        /// <param name="nameAvailable"> The value indicating whether the resource name is available. </param>
-        /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>
-        /// <param name="reason"> If any, the reason that the name is not available. </param>
+        /// <param name="nameAvailable">
+        /// The value indicating whether the resource name is available.
+        /// Serialized Name: NameAvailabilityStatus.nameAvailable
+        /// </param>
+        /// <param name="message">
+        /// If any, the error message that provides more detail for the reason that the name is not available.
+        /// Serialized Name: NameAvailabilityStatus.message
+        /// </param>
+        /// <param name="reason">
+        /// If any, the reason that the name is not available.
+        /// Serialized Name: NameAvailabilityStatus.reason
+        /// </param>
         internal NameAvailabilityStatus(bool? nameAvailable, string message, string reason)
         {
             NameAvailable = nameAvailable;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Reason = reason;
         }
 
-        /// <summary> The value indicating whether the resource name is available. </summary>
+        /// <summary>
+        /// The value indicating whether the resource name is available.
+        /// Serialized Name: NameAvailabilityStatus.nameAvailable
+        /// </summary>
         public bool? NameAvailable { get; }
-        /// <summary> If any, the error message that provides more detail for the reason that the name is not available. </summary>
+        /// <summary>
+        /// If any, the error message that provides more detail for the reason that the name is not available.
+        /// Serialized Name: NameAvailabilityStatus.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> If any, the reason that the name is not available. </summary>
+        /// <summary>
+        /// If any, the reason that the name is not available.
+        /// Serialized Name: NameAvailabilityStatus.reason
+        /// </summary>
         public string Reason { get; }
     }
 }

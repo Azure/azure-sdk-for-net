@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The encryption settings for a configuration store. </summary>
+    /// <summary>
+    /// The encryption settings for a configuration store.
+    /// Serialized Name: EncryptionProperties
+    /// </summary>
     internal partial class EncryptionProperties
     {
         /// <summary> Initializes a new instance of EncryptionProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionProperties. </summary>
-        /// <param name="keyVaultProperties"> Key vault properties. </param>
+        /// <param name="keyVaultProperties">
+        /// Key vault properties.
+        /// Serialized Name: EncryptionProperties.keyVaultProperties
+        /// </param>
         internal EncryptionProperties(KeyVaultProperties keyVaultProperties)
         {
             KeyVaultProperties = keyVaultProperties;
         }
 
-        /// <summary> Key vault properties. </summary>
+        /// <summary>
+        /// Key vault properties.
+        /// Serialized Name: EncryptionProperties.keyVaultProperties
+        /// </summary>
         public KeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The resource type to check for name availability. </summary>
+    /// <summary>
+    /// The resource type to check for name availability.
+    /// Serialized Name: ConfigurationResourceType
+    /// </summary>
     public readonly partial struct ConfigurationResourceType : IEquatable<ConfigurationResourceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         private const string MicrosoftAppConfigurationConfigurationStoresValue = "Microsoft.AppConfiguration/configurationStores";
 
-        /// <summary> Microsoft.AppConfiguration/configurationStores. </summary>
+        /// <summary>
+        /// Microsoft.AppConfiguration/configurationStores
+        /// Serialized Name: ConfigurationResourceType.Microsoft.AppConfiguration/configurationStores
+        /// </summary>
         public static ConfigurationResourceType MicrosoftAppConfigurationConfigurationStores { get; } = new ConfigurationResourceType(MicrosoftAppConfigurationConfigurationStoresValue);
         /// <summary> Determines if two <see cref="ConfigurationResourceType"/> values are the same. </summary>
         public static bool operator ==(ConfigurationResourceType left, ConfigurationResourceType right) => left.Equals(right);

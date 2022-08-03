@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to list API keys. </summary>
+    /// <summary>
+    /// The result of a request to list API keys.
+    /// Serialized Name: ApiKeyListResult
+    /// </summary>
     internal partial class ApiKeyListResult
     {
         /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
-        /// <param name="value"> The collection value. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
+        /// <param name="value">
+        /// The collection value.
+        /// Serialized Name: ApiKeyListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI that can be used to request the next set of paged results.
+        /// Serialized Name: ApiKeyListResult.nextLink
+        /// </param>
         internal ApiKeyListResult(IReadOnlyList<ApiKey> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The collection value. </summary>
+        /// <summary>
+        /// The collection value.
+        /// Serialized Name: ApiKeyListResult.value
+        /// </summary>
         public IReadOnlyList<ApiKey> Value { get; }
-        /// <summary> The URI that can be used to request the next set of paged results. </summary>
+        /// <summary>
+        /// The URI that can be used to request the next set of paged results.
+        /// Serialized Name: ApiKeyListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

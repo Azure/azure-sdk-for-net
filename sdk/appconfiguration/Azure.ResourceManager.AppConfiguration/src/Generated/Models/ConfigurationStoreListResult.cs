@@ -11,7 +11,10 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to list configuration stores. </summary>
+    /// <summary>
+    /// The result of a request to list configuration stores.
+    /// Serialized Name: ConfigurationStoreListResult
+    /// </summary>
     internal partial class ConfigurationStoreListResult
     {
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
-        /// <param name="value"> The collection value. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
+        /// <param name="value">
+        /// The collection value.
+        /// Serialized Name: ConfigurationStoreListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI that can be used to request the next set of paged results.
+        /// Serialized Name: ConfigurationStoreListResult.nextLink
+        /// </param>
         internal ConfigurationStoreListResult(IReadOnlyList<ConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The collection value. </summary>
+        /// <summary>
+        /// The collection value.
+        /// Serialized Name: ConfigurationStoreListResult.value
+        /// </summary>
         public IReadOnlyList<ConfigurationStoreData> Value { get; }
-        /// <summary> The URI that can be used to request the next set of paged results. </summary>
+        /// <summary>
+        /// The URI that can be used to request the next set of paged results.
+        /// Serialized Name: ConfigurationStoreListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

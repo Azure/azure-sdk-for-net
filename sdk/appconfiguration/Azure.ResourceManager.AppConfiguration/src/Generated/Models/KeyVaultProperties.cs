@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
+    /// <summary>
+    /// Settings concerning key vault encryption for a configuration store.
+    /// Serialized Name: KeyVaultProperties
+    /// </summary>
     public partial class KeyVaultProperties
     {
         /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
-        /// <param name="keyIdentifier"> The URI of the key vault key used to encrypt data. </param>
-        /// <param name="identityClientId"> The client id of the identity which will be used to access key vault. </param>
+        /// <param name="keyIdentifier">
+        /// The URI of the key vault key used to encrypt data.
+        /// Serialized Name: KeyVaultProperties.keyIdentifier
+        /// </param>
+        /// <param name="identityClientId">
+        /// The client id of the identity which will be used to access key vault.
+        /// Serialized Name: KeyVaultProperties.identityClientId
+        /// </param>
         internal KeyVaultProperties(string keyIdentifier, string identityClientId)
         {
             KeyIdentifier = keyIdentifier;
             IdentityClientId = identityClientId;
         }
 
-        /// <summary> The URI of the key vault key used to encrypt data. </summary>
+        /// <summary>
+        /// The URI of the key vault key used to encrypt data.
+        /// Serialized Name: KeyVaultProperties.keyIdentifier
+        /// </summary>
         public string KeyIdentifier { get; set; }
-        /// <summary> The client id of the identity which will be used to access key vault. </summary>
+        /// <summary>
+        /// The client id of the identity which will be used to access key vault.
+        /// Serialized Name: KeyVaultProperties.identityClientId
+        /// </summary>
         public string IdentityClientId { get; set; }
     }
 }

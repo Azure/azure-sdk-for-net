@@ -26,9 +26,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The list of required DNS zone names of the private link resource. </param>
+        /// <param name="groupId">
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </param>
+        /// <param name="requiredZoneNames">
+        /// The list of required DNS zone names of the private link resource.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </param>
         internal AppConfigurationPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
@@ -36,11 +45,20 @@ namespace Azure.ResourceManager.AppConfiguration
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary> The private link resource group id. </summary>
+        /// <summary>
+        /// The private link resource group id.
+        /// Serialized Name: PrivateLinkResource.properties.groupId
+        /// </summary>
         public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
+        /// <summary>
+        /// The private link resource required member names.
+        /// Serialized Name: PrivateLinkResource.properties.requiredMembers
+        /// </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The list of required DNS zone names of the private link resource. </summary>
+        /// <summary>
+        /// The list of required DNS zone names of the private link resource.
+        /// Serialized Name: PrivateLinkResource.properties.requiredZoneNames
+        /// </summary>
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

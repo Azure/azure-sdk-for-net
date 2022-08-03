@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> Parameters used for checking whether a resource name is available. </summary>
+    /// <summary>
+    /// Parameters used for checking whether a resource name is available.
+    /// Serialized Name: CheckNameAvailabilityParameters
+    /// </summary>
     public partial class CheckNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
-        /// <param name="name"> The name to check for availability. </param>
-        /// <param name="resourceType"> The resource type to check for name availability. </param>
+        /// <param name="name">
+        /// The name to check for availability.
+        /// Serialized Name: CheckNameAvailabilityParameters.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type to check for name availability.
+        /// Serialized Name: CheckNameAvailabilityParameters.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailabilityContent(string name, ConfigurationResourceType resourceType)
         {
@@ -27,9 +36,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> The name to check for availability. </summary>
+        /// <summary>
+        /// The name to check for availability.
+        /// Serialized Name: CheckNameAvailabilityParameters.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The resource type to check for name availability. </summary>
+        /// <summary>
+        /// The resource type to check for name availability.
+        /// Serialized Name: CheckNameAvailabilityParameters.type
+        /// </summary>
         public ConfigurationResourceType ResourceType { get; }
     }
 }

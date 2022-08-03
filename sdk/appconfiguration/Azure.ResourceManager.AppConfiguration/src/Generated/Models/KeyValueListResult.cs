@@ -11,7 +11,10 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to list key-values. </summary>
+    /// <summary>
+    /// The result of a request to list key-values.
+    /// Serialized Name: KeyValueListResult
+    /// </summary>
     internal partial class KeyValueListResult
     {
         /// <summary> Initializes a new instance of KeyValueListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of KeyValueListResult. </summary>
-        /// <param name="value"> The collection value. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
+        /// <param name="value">
+        /// The collection value.
+        /// Serialized Name: KeyValueListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI that can be used to request the next set of paged results.
+        /// Serialized Name: KeyValueListResult.nextLink
+        /// </param>
         internal KeyValueListResult(IReadOnlyList<KeyValueData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The collection value. </summary>
+        /// <summary>
+        /// The collection value.
+        /// Serialized Name: KeyValueListResult.value
+        /// </summary>
         public IReadOnlyList<KeyValueData> Value { get; }
-        /// <summary> The URI that can be used to request the next set of paged results. </summary>
+        /// <summary>
+        /// The URI that can be used to request the next set of paged results.
+        /// Serialized Name: KeyValueListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

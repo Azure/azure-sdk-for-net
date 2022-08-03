@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The parameters used to regenerate an API key. </summary>
+    /// <summary>
+    /// The parameters used to regenerate an API key.
+    /// Serialized Name: RegenerateKeyParameters
+    /// </summary>
     public partial class RegenerateKeyContent
     {
         /// <summary> Initializes a new instance of RegenerateKeyContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         {
         }
 
-        /// <summary> The id of the key to regenerate. </summary>
+        /// <summary>
+        /// The id of the key to regenerate.
+        /// Serialized Name: RegenerateKeyParameters.id
+        /// </summary>
         public string Id { get; set; }
     }
 }
