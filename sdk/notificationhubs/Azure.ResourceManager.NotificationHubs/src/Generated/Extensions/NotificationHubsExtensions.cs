@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NotificationHubNameAvailabilityResult>> CheckAvailabilityNamespaceAsync(this SubscriptionResource subscriptionResource, NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<NotificationHubNameAvailabilityResult>> CheckNotificationHubNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckAvailabilityNamespaceAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckNotificationHubNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NotificationHubNameAvailabilityResult> CheckAvailabilityNamespace(this SubscriptionResource subscriptionResource, NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<NotificationHubNameAvailabilityResult> CheckNotificationHubNamespaceNameAvailability(this SubscriptionResource subscriptionResource, NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckAvailabilityNamespace(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckNotificationHubNamespaceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>

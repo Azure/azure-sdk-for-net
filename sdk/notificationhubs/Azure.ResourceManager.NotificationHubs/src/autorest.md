@@ -57,6 +57,7 @@ rename-mapping:
 
 override-operation-name:
   NotificationHubs_CheckNotificationHubAvailability: CheckNotificationHubNameAvailability
+  Namespaces_CheckAvailability: CheckNotificationHubNamespaceNameAvailability
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationHubNameAvailabilityResult>> CheckAvailabilityNamespaceAsync(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubNameAvailabilityResult>> CheckNotificationHubNamespaceNameAvailabilityAsync(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvailabilityNamespace");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceNameAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="content"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationHubNameAvailabilityResult> CheckAvailabilityNamespace(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubNameAvailabilityResult> CheckNotificationHubNamespaceNameAvailability(NotificationHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckAvailabilityNamespace");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNotificationHubNamespaceNameAvailability");
             scope.Start();
             try
             {
