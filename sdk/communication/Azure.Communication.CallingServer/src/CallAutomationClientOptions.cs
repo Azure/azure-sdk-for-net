@@ -11,7 +11,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The latest version of the Calling Server.
     /// </summary>
-    public class CallingServerClientOptions : ClientOptions
+    public class CallAutomationClientOptions : ClientOptions
     {
         /// <summary>
         /// The latest version of the CallingServer service.
@@ -21,9 +21,9 @@ namespace Azure.Communication.CallingServer
         internal string ApiVersion { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CallingServerClientOptions"/>.
+        /// Initializes a new instance of the <see cref="CallAutomationClientOptions"/>.
         /// </summary>
-        public CallingServerClientOptions(ServiceVersion version = LatestVersion)
+        public CallAutomationClientOptions(ServiceVersion version = LatestVersion)
         {
             ApiVersion = version switch
             {

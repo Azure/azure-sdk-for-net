@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The Azure Communication Services Calling Server client.
     /// </summary>
-    public class CallingServerClient
+    public class CallAutomationClient
     {
         internal readonly string _resourceEndpoint;
         internal readonly ClientDiagnostics _clientDiagnostics;
@@ -27,45 +27,45 @@ namespace Azure.Communication.CallingServer
         internal ServerCallsRestClient ServerCallsRestClient { get; }
 
         #region public constructors
-        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public CallingServerClient(string connectionString)
+        public CallAutomationClient(string connectionString)
             : this(
                   ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                  new CallingServerClientOptions())
+                  new CallAutomationClientOptions())
         { }
 
-        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallingServerClient(string connectionString, CallingServerClientOptions options)
+        public CallAutomationClient(string connectionString, CallAutomationClientOptions options)
             : this(
                   ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                   Argument.CheckNotNull(options, nameof(options)))
         { }
 
-        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options = default)
+        public CallAutomationClient(Uri endpoint, TokenCredential credential, CallAutomationClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
-                options ?? new CallingServerClientOptions())
+                options ?? new CallAutomationClientOptions())
         { }
         #endregion
 
         #region private constructors
-        private CallingServerClient(ConnectionString connectionString, CallingServerClientOptions options)
+        private CallAutomationClient(ConnectionString connectionString, CallAutomationClientOptions options)
             : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
         { }
 
-        private CallingServerClient(string endpoint, TokenCredential tokenCredential, CallingServerClientOptions options)
+        private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
             : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
         { }
 
-        private CallingServerClient(string endpoint, HttpPipeline httpPipeline, CallingServerClientOptions options)
+        private CallAutomationClient(string endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint;
@@ -76,7 +76,7 @@ namespace Azure.Communication.CallingServer
             ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
-        private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
+        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
         : this(
         endpoint: endpoint.AbsoluteUri,
         httpPipeline: options.CustomBuildHttpPipeline(connectionString),
@@ -84,8 +84,8 @@ namespace Azure.Communication.CallingServer
         { }
         #endregion
 
-        /// <summary>Initializes a new instance of <see cref="CallingServerClient"/> for mocking.</summary>
-        protected CallingServerClient()
+        /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>
+        protected CallAutomationClient()
         {
             _pipeline = null;
             _resourceEndpoint = null;
@@ -103,7 +103,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response<AnswerCallResult>> AnswerCallAsync(string incomingCallContext, Uri callbackEndpoint, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual Response<AnswerCallResult> AnswerCall(string incomingCallContext, Uri callbackEndpoint, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(AnswerCall)}");
             scope.Start();
             try
             {
@@ -159,7 +159,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
         public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
@@ -186,7 +186,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
         public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RedirectCall)}");
             scope.Start();
             try
             {
@@ -212,7 +212,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
@@ -238,7 +238,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
         public virtual Response RejectCall(string incomingCallContext, CallRejectReason callRejectReason, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(RejectCall)}");
             scope.Start();
             try
             {
@@ -267,7 +267,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
         public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint, string subject = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
         public virtual Response<CreateCallResult> CreateCall(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackEndpoint, string subject = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
@@ -332,7 +332,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id for the GetCallConnection instance. </param>
         public virtual CallConnection GetCallConnection(string callConnectionId)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallConnection)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnection)}");
             scope.Start();
             try
             {
@@ -348,7 +348,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of GetCallRecording. <see cref="CallRecording"/>.</summary>
         public virtual CallRecording GetCallRecording()
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(GetCallRecording)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallRecording)}");
             scope.Start();
             try
             {
