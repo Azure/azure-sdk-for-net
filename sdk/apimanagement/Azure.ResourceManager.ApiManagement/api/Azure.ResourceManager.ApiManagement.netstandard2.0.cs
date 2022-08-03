@@ -4245,7 +4245,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public double? ServiceTimeAvg { get { throw null; } }
         public double? ServiceTimeMax { get { throw null; } }
         public double? ServiceTimeMin { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubscriptionResourceId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string UserId { get { throw null; } }
         public string Zip { get { throw null; } }
@@ -4284,7 +4284,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public int? ResponseCode { get { throw null; } }
         public int? ResponseSize { get { throw null; } }
         public double? ServiceTime { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubscriptionResourceId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public string UserId { get { throw null; } }
