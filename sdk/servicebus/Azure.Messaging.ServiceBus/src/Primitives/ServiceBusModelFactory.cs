@@ -557,11 +557,18 @@ namespace Azure.Messaging.ServiceBus
             ///
             public override IReadOnlyCollection<T> AsReadOnly<T>()
             {
-                if (typeof(T) != typeof(AmqpMessage))
+                if (typeof(T) == typeof(AmqpMessage))
+                {
+                    return (IReadOnlyCollection<T>)_batchMessages;
+                }
+                else if (typeof(T) == typeof(ServiceBusMessage))
+                {
+                    return (IReadOnlyCollection<T>)_backingStore;
+                }
+                else
                 {
                     throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
                 }
-                return _batchMessages as IReadOnlyCollection<T>;
             }
 
             /// <summary>

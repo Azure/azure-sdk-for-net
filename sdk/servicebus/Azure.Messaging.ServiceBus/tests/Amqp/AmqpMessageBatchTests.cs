@@ -253,7 +253,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             };
 
             var batch = new AmqpMessageBatch(mockMessageConverter, options);
-            Assert.That(() => batch.AsReadOnly<ServiceBusMessage>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsReadOnly<AmqpMessageBatch>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             public Func<IEnumerable<AmqpMessage>, AmqpMessage> BuildBatchFromAmqpMessagesHandler = (_s) => Mock.Of<AmqpMessage>();
             public override AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage source) => BuildAmqpMessageFromSBMessageHandler(source);
             public override AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
-            public override AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<AmqpMessage> source) => BuildBatchFromAmqpMessagesHandler(source);
+            public override AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, ServiceBusMessage firstMessage, bool forceBatch) => BuildBatchFromAmqpMessagesHandler(source);
             public override AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, Boolean forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
             public override AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false) => BuildAmqpMessageFromSBMessageHandler(source);
         }

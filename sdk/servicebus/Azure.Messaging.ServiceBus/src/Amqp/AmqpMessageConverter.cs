@@ -82,41 +82,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="source">The set of messages to use as the body of the batch message.</param>
+        /// <param name="firstMessage">The first message being sent in the batch.</param>
+        /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        public virtual AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<AmqpMessage> source)
+        public virtual AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, ServiceBusMessage firstMessage, bool forceBatch)
         {
-            AmqpMessage batchEnvelope = null;
-
-            if (source.Count == 1)
-            {
-                foreach (AmqpMessage amqpMessage in source)
-                {
-                    batchEnvelope = amqpMessage.Clone();
-                }
-            }
-            else
-            {
-                var messageData = new Data[source.Count];
-                var messageNum = 0;
-
-                foreach (var amqpMessage in source)
-                {
-                    amqpMessage.Batchable = true;
-
-                    using var messageStream = amqpMessage.ToStream();
-                    messageData[messageNum] = new Data { Value = ReadStreamToArraySegment(messageStream) };
-
-                    ++messageNum;
-                }
-
-                batchEnvelope = AmqpMessage.Create(messageData);
-                batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
-            }
-
-            batchEnvelope.Batchable = true;
-            return batchEnvelope;
+            return BuildAmqpBatchFromMessages(source.ToList<AmqpMessage>(), firstMessage, forceBatch);
         }
 
         /// <summary>

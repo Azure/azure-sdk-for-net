@@ -212,12 +212,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, messageBatch) = value;
+                    var messageBatchEnumerator = messageBatch.AsReadOnly<ServiceBusMessage>().GetEnumerator();
+                    messageBatchEnumerator.MoveNext();
                     await sender.SendBatchInternalAsync(
-                        messageBatch,
+                        messageBatch.AsReadOnly<AmqpMessage>(),
+                        messageBatchEnumerator.Current,
                         timeout,
                         token).ConfigureAwait(false);
                 },
-                (this, messageBatch.AsReadOnly<AmqpMessage>()),
+                (this, messageBatch),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -228,10 +231,31 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="messages"></param>
         /// <param name="timeout"></param>
+        /// <param name="firstMessage"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
             IReadOnlyCollection<AmqpMessage> messages,
+            ServiceBusMessage firstMessage,
+            TimeSpan timeout,
+            CancellationToken cancellationToken)
+        {
+            using (AmqpMessage batchMessage = MessageConverter.BuildAmqpBatchFromMessages(messages, firstMessage, false))
+            {
+                await SendBatchInternalAsync(batchMessage, timeout, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        ///    Sends a set of messages to the associated Queue/Topic using a batched approach.
+        /// </summary>
+        ///
+        /// <param name="batchMessage">A batch of messages to send represented as a <see cref="AmqpMessage"/>.</param>
+        /// <param name="timeout"></param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        internal virtual async Task SendBatchInternalAsync(
+            AmqpMessage batchMessage,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -239,43 +263,40 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                using (AmqpMessage batchMessage = MessageConverter.BuildAmqpBatchFromMessage(messages))
+                string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
+
+                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                Transaction ambientTransaction = Transaction.Current;
+                if (ambientTransaction != null)
                 {
-                    string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
+                    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
+                        ambientTransaction,
+                        _connectionScope,
+                        timeout).ConfigureAwait(false);
+                }
 
-                    ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-                    Transaction ambientTransaction = Transaction.Current;
-                    if (ambientTransaction != null)
-                    {
-                        transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
-                            ambientTransaction,
-                            _connectionScope,
-                            timeout).ConfigureAwait(false);
-                    }
+                link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken).ConfigureAwait(false);
 
-                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken).ConfigureAwait(false);
+                // Validate that the message is not too large to send.  This is done after the link is created to ensure
+                // that the maximum message size is known, as it is dictated by the service using the link.
 
-                    // Validate that the message is not too large to send.  This is done after the link is created to ensure
-                    // that the maximum message size is known, as it is dictated by the service using the link.
+                if (batchMessage.SerializedMessageSize > MaxMessageSize)
+                {
+                    throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
+                }
 
-                    if (batchMessage.SerializedMessageSize > MaxMessageSize)
-                    {
-                        throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
-                    }
+                // Attempt to send the message batch.
 
-                    // Attempt to send the message batch.
+                var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
+                Outcome outcome = await link.SendMessageAsync(
+                    batchMessage,
+                    deliveryTag,
+                    transactionId,
+                    cancellationToken).ConfigureAwait(false);
 
-                    var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                    Outcome outcome = await link.SendMessageAsync(
-                        batchMessage,
-                        deliveryTag,
-                        transactionId,
-                        cancellationToken).ConfigureAwait(false);
-
-                    if (outcome.DescriptorCode != Accepted.Code)
-                    {
-                        throw (outcome as Rejected)?.Error.ToMessagingContractException();
-                    }
+                if (outcome.DescriptorCode != Accepted.Code)
+                {
+                    throw (outcome as Rejected)?.Error.ToMessagingContractException();
                 }
             }
             catch (Exception exception)
@@ -307,28 +328,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, messages) = value;
-                    var amqpMessages = new AmqpMessage[messages.Count];
-
-                    var index = 0;
-                    foreach (var serviceBusMessage in messages)
-                    {
-                        amqpMessages[index] = sender.MessageConverter.SBMessageToAmqpMessage(serviceBusMessage);
-                        ++index;
-                    }
-                    try
-                    {
-                        await sender.SendBatchInternalAsync(
-                        amqpMessages,
+                    await sender.SendBatchInternalAsync(
+                        sender.MessageConverter.BuildAmqpBatchFromMessage(messages, false),
                         timeout,
                         token).ConfigureAwait(false);
-                    }
-                    finally
-                    {
-                        foreach (var amqpMessage in amqpMessages)
-                        {
-                            amqpMessage.Dispose();
-                        }
-                    }
                 },
                 (this, messages),
             _connectionScope,

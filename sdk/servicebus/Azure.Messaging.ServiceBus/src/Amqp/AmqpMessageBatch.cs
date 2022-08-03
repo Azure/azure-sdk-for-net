@@ -71,6 +71,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private List<AmqpMessage> BatchMessages { get; } = new List<AmqpMessage>();
 
         /// <summary>
+        ///   The set of <see cref="ServiceBusMessage"/>'s that have been added to the batch.
+        /// </summary>
+        ///
+        private List<ServiceBusMessage> ServiceBusMessages { get; } = new List<ServiceBusMessage>();
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpMessageBatch"/> class.
         /// </summary>
         ///
@@ -110,12 +116,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
                 // message which will be used to populate properties on the batch envelope.
-                amqpMessage = MessageConverter.BatchSBMessagesAsAmqpMessage(message, forceBatch: true);
+                var reserveOverheadMessage = MessageConverter.BuildAmqpBatchFromMessages(Array.Empty<AmqpMessage>(), message, forceBatch: true);
+                _sizeBytes += reserveOverheadMessage.SerializedMessageSize;
             }
-            else
-            {
-                amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
-            }
+            amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
 
             // Calculate the size for the message, based on the AMQP message size and accounting for a
             // bit of reserved overhead size.
@@ -134,6 +138,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _sizeBytes = size;
             BatchMessages.Add(amqpMessage);
+            ServiceBusMessages.Add(message);
 
             return true;
         }
@@ -150,6 +155,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 message.Dispose();
             }
             BatchMessages.Clear();
+            ServiceBusMessages.Clear();
             _sizeBytes = 0;
         }
 
@@ -164,12 +170,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override IReadOnlyCollection<T> AsReadOnly<T>()
         {
-            if (typeof(T) != typeof(AmqpMessage))
+            if (typeof(T) == typeof(AmqpMessage))
+            {
+                return (IReadOnlyCollection<T>)BatchMessages;
+            }
+            else if (typeof(T) == typeof(ServiceBusMessage))
+            {
+                return (IReadOnlyCollection<T>)ServiceBusMessages;
+            }
+            else
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
-
-            return (IReadOnlyCollection<T>) BatchMessages;
         }
 
         /// <summary>
