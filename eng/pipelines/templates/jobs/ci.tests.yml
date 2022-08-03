@@ -65,7 +65,7 @@ jobs:
           NuGetCacheKey: Test
       - script: >-
           dotnet test eng/service.proj
-          --filter "(TestCategory!=Manually) & (TestCategory!=Live) $(AdditionalTestFilters)"
+          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
           --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes

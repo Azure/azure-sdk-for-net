@@ -31,6 +31,7 @@ namespace Azure.Template.Tests
         }
 
         [RecordedTest]
+        [Category("FooBar")]
         public async Task CanGetSecret()
         {
             TemplateClient client = CreateClient();
