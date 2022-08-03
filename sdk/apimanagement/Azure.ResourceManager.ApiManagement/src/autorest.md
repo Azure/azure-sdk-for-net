@@ -236,6 +236,8 @@ rename-mapping:
   TermsOfServiceProperties.enabled: IsEnabled
   TermsOfServiceProperties.consentRequired: IsConsentRequired
   SchemaType: ApiSchemaType
+  RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
+  ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
@@ -285,7 +287,6 @@ directive:
       $.AccessInformationCreateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
       $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
       $.AccessInformationUpdateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
-      $.ReportRecordContract.properties.subscriptionId['x-ms-format'] = 'arm-id';
   - from: apimskus.json
     where: $.definitions
     transform: >
