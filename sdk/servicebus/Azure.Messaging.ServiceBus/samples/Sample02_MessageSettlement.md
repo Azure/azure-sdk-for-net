@@ -1,7 +1,6 @@
 # Settling Messages
 
-This sample demonstrates how to [settle](https://docs.microsoft.
-com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) 
+This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) 
 received messages. Message settlement can only be used when using a receiver in [PeekLock]
 (https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement
 #peeklock) mode, which is the default behavior. In order for the settlement operation to be successful, the message must be locked. By default, received messages will be locked for 30 seconds. This can be configured via the portal or when creating the queue or subscription using the `ServiceBusAdministrationClient` or by using the [Azure Resource Manager library](https://www.nuget.org/packages/Azure.ResourceManager.ServiceBus). Additionally, it is possible to extend the lock for an already received message by using the `RenewMessageLockAsync` method.
