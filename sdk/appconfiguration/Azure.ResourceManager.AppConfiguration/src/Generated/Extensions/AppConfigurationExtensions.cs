@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppConfiguration
             );
         }
 
-        /// <summary> Gets a collection of DeletedConfigurationStoreResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of DeletedAppConfigurationStoreResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DeletedConfigurationStoreResources and their operations over a DeletedConfigurationStoreResource. </returns>
-        public static DeletedConfigurationStoreCollection GetDeletedConfigurationStores(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
+        public static DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetDeletedConfigurationStores();
+            return GetExtensionClient(subscriptionResource).GetDeletedAppConfigurationStores();
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedConfigurationStoreResource>> GetDeletedConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetDeletedConfigurationStores().GetAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetDeletedAppConfigurationStores().GetAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedConfigurationStoreResource> GetDeletedConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
+        public static Response<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetDeletedConfigurationStores().Get(location, configStoreName, cancellationToken);
+            return subscriptionResource.GetDeletedAppConfigurationStores().Get(location, configStoreName, cancellationToken);
         }
 
         /// <summary>
@@ -198,20 +198,20 @@ namespace Azure.ResourceManager.AppConfiguration
         }
         #endregion
 
-        #region DeletedConfigurationStoreResource
+        #region DeletedAppConfigurationStoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedConfigurationStoreResource" /> object. </returns>
-        public static DeletedConfigurationStoreResource GetDeletedConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource" /> object. </returns>
+        public static DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DeletedConfigurationStoreResource.ValidateResourceId(id);
-                return new DeletedConfigurationStoreResource(client, id);
+                DeletedAppConfigurationStoreResource.ValidateResourceId(id);
+                return new DeletedAppConfigurationStoreResource(client, id);
             }
             );
         }
@@ -255,20 +255,20 @@ namespace Azure.ResourceManager.AppConfiguration
         }
         #endregion
 
-        #region KeyValueResource
+        #region AppConfigurationKeyValueResource
         /// <summary>
-        /// Gets an object representing a <see cref="KeyValueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyValueResource.CreateResourceIdentifier" /> to create a <see cref="KeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KeyValueResource" /> object. </returns>
-        public static KeyValueResource GetKeyValueResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource" /> object. </returns>
+        public static AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                KeyValueResource.ValidateResourceId(id);
-                return new KeyValueResource(client, id);
+                AppConfigurationKeyValueResource.ValidateResourceId(id);
+                return new AppConfigurationKeyValueResource(client, id);
             }
             );
         }

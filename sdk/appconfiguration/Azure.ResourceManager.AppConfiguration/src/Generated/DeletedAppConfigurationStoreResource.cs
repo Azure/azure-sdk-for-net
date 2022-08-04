@@ -19,46 +19,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A Class representing a DeletedConfigurationStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedConfigurationStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedConfigurationStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedConfigurationStore method.
+    /// A Class representing a DeletedAppConfigurationStore along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedAppConfigurationStoreResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDeletedAppConfigurationStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedAppConfigurationStore method.
     /// </summary>
-    public partial class DeletedConfigurationStoreResource : ArmResource
+    public partial class DeletedAppConfigurationStoreResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeletedConfigurationStoreResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DeletedAppConfigurationStoreResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string configStoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _deletedConfigurationStoreConfigurationStoresClientDiagnostics;
-        private readonly ConfigurationStoresRestOperations _deletedConfigurationStoreConfigurationStoresRestClient;
-        private readonly DeletedConfigurationStoreData _data;
+        private readonly ClientDiagnostics _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics;
+        private readonly ConfigurationStoresRestOperations _deletedAppConfigurationStoreConfigurationStoresRestClient;
+        private readonly DeletedAppConfigurationStoreData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedConfigurationStoreResource"/> class for mocking. </summary>
-        protected DeletedConfigurationStoreResource()
+        /// <summary> Initializes a new instance of the <see cref="DeletedAppConfigurationStoreResource"/> class for mocking. </summary>
+        protected DeletedAppConfigurationStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DeletedAppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeletedConfigurationStoreResource(ArmClient client, DeletedConfigurationStoreData data) : this(client, data.Id)
+        internal DeletedAppConfigurationStoreResource(ArmClient client, DeletedAppConfigurationStoreData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedAppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeletedConfigurationStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DeletedAppConfigurationStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedConfigurationStoreConfigurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deletedConfigurationStoreConfigurationStoresApiVersion);
-            _deletedConfigurationStoreConfigurationStoresRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedConfigurationStoreConfigurationStoresApiVersion);
+            _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string deletedAppConfigurationStoreConfigurationStoresApiVersion);
+            _deletedAppConfigurationStoreConfigurationStoresRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedAppConfigurationStoreConfigurationStoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DeletedConfigurationStoreData Data
+        public virtual DeletedAppConfigurationStoreData Data
         {
             get
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_GetDeleted
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedConfigurationStoreResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedAppConfigurationStoreResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.Get");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.Get");
             scope.Start();
             try
             {
-                var response = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: ConfigurationStores_GetDeleted
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedConfigurationStoreResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DeletedAppConfigurationStoreResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.Get");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.Get");
             scope.Start();
             try
             {
-                var response = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> PurgeDeletedAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.PurgeDeleted");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.PurgeDeleted");
             scope.Start();
             try
             {
-                var response = await _deletedConfigurationStoreConfigurationStoresRestClient.PurgeDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation(_deletedConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _deletedConfigurationStoreConfigurationStoresRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _deletedAppConfigurationStoreConfigurationStoresRestClient.PurgeDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation(_deletedAppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _deletedAppConfigurationStoreConfigurationStoresRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation PurgeDeleted(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.PurgeDeleted");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.PurgeDeleted");
             scope.Start();
             try
             {
-                var response = _deletedConfigurationStoreConfigurationStoresRestClient.PurgeDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new AppConfigurationArmOperation(_deletedConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _deletedConfigurationStoreConfigurationStoresRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _deletedAppConfigurationStoreConfigurationStoresRestClient.PurgeDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var operation = new AppConfigurationArmOperation(_deletedAppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _deletedAppConfigurationStoreConfigurationStoresRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -197,20 +197,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DeletedConfigurationStoreResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedAppConfigurationStoreResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.AddTag");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DeletedConfigurationStoreResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedAppConfigurationStoreResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.AddTag");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,11 +258,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DeletedConfigurationStoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedAppConfigurationStoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.SetTags");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.SetTags");
             scope.Start();
             try
             {
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,11 +288,11 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DeletedConfigurationStoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedAppConfigurationStoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.SetTags");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.SetTags");
             scope.Start();
             try
             {
@@ -300,8 +300,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DeletedConfigurationStoreResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedAppConfigurationStoreResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.RemoveTag");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _deletedConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -347,19 +347,19 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DeletedConfigurationStoreResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedAppConfigurationStoreResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deletedConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedConfigurationStoreResource.RemoveTag");
+            using var scope = _deletedAppConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("DeletedAppConfigurationStoreResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _deletedConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                return Response.FromValue(new DeletedConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _deletedAppConfigurationStoreConfigurationStoresRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                return Response.FromValue(new DeletedAppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

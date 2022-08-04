@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAppConfigurationPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KeyValueResources in the AppConfigurationStore. </summary>
-        /// <returns> An object representing collection of KeyValueResources and their operations over a KeyValueResource. </returns>
-        public virtual KeyValueCollection GetKeyValues()
+        /// <summary> Gets a collection of AppConfigurationKeyValueResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationKeyValueResources and their operations over a AppConfigurationKeyValueResource. </returns>
+        public virtual AppConfigurationKeyValueCollection GetAppConfigurationKeyValues()
         {
-            return GetCachedClient(Client => new KeyValueCollection(Client, Id));
+            return GetCachedClient(Client => new AppConfigurationKeyValueCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<KeyValueResource>> GetKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAppConfigurationKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
-            return await GetKeyValues().GetAsync(keyValueName, cancellationToken).ConfigureAwait(false);
+            return await GetAppConfigurationKeyValues().GetAsync(keyValueName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<KeyValueResource> GetKeyValue(string keyValueName, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationKeyValueResource> GetAppConfigurationKeyValue(string keyValueName, CancellationToken cancellationToken = default)
         {
-            return GetKeyValues().Get(keyValueName, cancellationToken);
+            return GetAppConfigurationKeyValues().Get(keyValueName, cancellationToken);
         }
 
         /// <summary>

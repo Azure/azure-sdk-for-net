@@ -11,10 +11,7 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// A list of private link resources.
-    /// Serialized Name: PrivateLinkResourceListResult
-    /// </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class AppConfigurationPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceListResult. </summary>
-        /// <param name="value">
-        /// The collection value.
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI that can be used to request the next set of paged results.
-        /// Serialized Name: PrivateLinkResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The collection value. </param>
+        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal AppConfigurationPrivateLinkResourceListResult(IReadOnlyList<AppConfigurationPrivateLinkResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The collection value.
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </summary>
+        /// <summary> The collection value. </summary>
         public IReadOnlyList<AppConfigurationPrivateLinkResourceData> Value { get; }
-        /// <summary>
-        /// The URI that can be used to request the next set of paged results.
-        /// Serialized Name: PrivateLinkResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }
     }
 }

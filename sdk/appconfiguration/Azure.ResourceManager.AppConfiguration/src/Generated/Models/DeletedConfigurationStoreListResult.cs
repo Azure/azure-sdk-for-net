@@ -11,42 +11,27 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// List of deleted configuration stores
-    /// Serialized Name: DeletedConfigurationStoreListResult
-    /// </summary>
+    /// <summary> List of deleted configuration stores. </summary>
     internal partial class DeletedConfigurationStoreListResult
     {
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
         internal DeletedConfigurationStoreListResult()
         {
-            Value = new ChangeTrackingList<DeletedConfigurationStoreData>();
+            Value = new ChangeTrackingList<DeletedAppConfigurationStoreData>();
         }
 
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
-        /// <param name="value">
-        /// The list of deleted configuration store.
-        /// Serialized Name: DeletedConfigurationStoreListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of deleted configuration stores.
-        /// Serialized Name: DeletedConfigurationStoreListResult.nextLink
-        /// </param>
-        internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedConfigurationStoreData> value, string nextLink)
+        /// <param name="value"> The list of deleted configuration store. </param>
+        /// <param name="nextLink"> The URL to get the next set of deleted configuration stores. </param>
+        internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedAppConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of deleted configuration store.
-        /// Serialized Name: DeletedConfigurationStoreListResult.value
-        /// </summary>
-        public IReadOnlyList<DeletedConfigurationStoreData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of deleted configuration stores.
-        /// Serialized Name: DeletedConfigurationStoreListResult.nextLink
-        /// </summary>
+        /// <summary> The list of deleted configuration store. </summary>
+        public IReadOnlyList<DeletedAppConfigurationStoreData> Value { get; }
+        /// <summary> The URL to get the next set of deleted configuration stores. </summary>
         public string NextLink { get; }
     }
 }

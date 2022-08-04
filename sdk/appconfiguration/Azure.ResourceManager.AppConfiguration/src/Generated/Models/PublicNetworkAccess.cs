@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-    /// Serialized Name: PublicNetworkAccess
-    /// </summary>
+    /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
     public readonly partial struct PublicNetworkAccess : IEquatable<PublicNetworkAccess>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: PublicNetworkAccess.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static PublicNetworkAccess Enabled { get; } = new PublicNetworkAccess(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: PublicNetworkAccess.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static PublicNetworkAccess Disabled { get; } = new PublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="PublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(PublicNetworkAccess left, PublicNetworkAccess right) => left.Equals(right);

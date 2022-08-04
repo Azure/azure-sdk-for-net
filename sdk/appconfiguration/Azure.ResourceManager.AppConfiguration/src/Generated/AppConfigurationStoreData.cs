@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.AppConfiguration
     {
         /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The sku of the configuration store.
-        /// Serialized Name: ConfigurationStore.sku
-        /// </param>
+        /// <param name="sku"> The sku of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AppConfigurationStoreData(AzureLocation location, AppConfigurationSku sku) : base(location)
         {
@@ -41,54 +38,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The managed identity information, if configured.
-        /// Serialized Name: ConfigurationStore.identity
-        /// </param>
-        /// <param name="sku">
-        /// The sku of the configuration store.
-        /// Serialized Name: ConfigurationStore.sku
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the configuration store.
-        /// Serialized Name: ConfigurationStore.properties.provisioningState
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of configuration store.
-        /// Serialized Name: ConfigurationStore.properties.creationDate
-        /// </param>
-        /// <param name="endpoint">
-        /// The DNS endpoint where the configuration store API will be available.
-        /// Serialized Name: ConfigurationStore.properties.endpoint
-        /// </param>
-        /// <param name="encryption">
-        /// The encryption settings of the configuration store.
-        /// Serialized Name: ConfigurationStore.properties.encryption
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// The list of private endpoint connections that are set up for this resource.
-        /// Serialized Name: ConfigurationStore.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-        /// Serialized Name: ConfigurationStore.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="disableLocalAuth">
-        /// Disables all authentication methods other than AAD authentication.
-        /// Serialized Name: ConfigurationStore.properties.disableLocalAuth
-        /// </param>
-        /// <param name="softDeleteRetentionInDays">
-        /// The amount of time in days that the configuration store will be retained when it is soft deleted.
-        /// Serialized Name: ConfigurationStore.properties.softDeleteRetentionInDays
-        /// </param>
-        /// <param name="enablePurgeProtection">
-        /// Property specifying whether protection against purge is enabled for this configuration store.
-        /// Serialized Name: ConfigurationStore.properties.enablePurgeProtection
-        /// </param>
-        /// <param name="createMode">
-        /// Indicates whether the configuration store need to be recovered.
-        /// Serialized Name: ConfigurationStore.properties.createMode
-        /// </param>
+        /// <param name="identity"> The managed identity information, if configured. </param>
+        /// <param name="sku"> The sku of the configuration store. </param>
+        /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
+        /// <param name="createdOn"> The creation date of configuration store. </param>
+        /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
+        /// <param name="encryption"> The encryption settings of the configuration store. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
+        /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
+        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
         internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -105,50 +66,26 @@ namespace Azure.ResourceManager.AppConfiguration
             CreateMode = createMode;
         }
 
-        /// <summary>
-        /// The managed identity information, if configured.
-        /// Serialized Name: ConfigurationStore.identity
-        /// </summary>
+        /// <summary> The managed identity information, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The sku of the configuration store.
-        /// Serialized Name: ConfigurationStore.sku
-        /// </summary>
+        /// <summary> The sku of the configuration store. </summary>
         internal AppConfigurationSku Sku { get; set; }
-        /// <summary>
-        /// The SKU name of the configuration store.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> The SKU name of the configuration store. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
             set => Sku = new AppConfigurationSku(value);
         }
 
-        /// <summary>
-        /// The provisioning state of the configuration store.
-        /// Serialized Name: ConfigurationStore.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the configuration store. </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The creation date of configuration store.
-        /// Serialized Name: ConfigurationStore.properties.creationDate
-        /// </summary>
+        /// <summary> The creation date of configuration store. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The DNS endpoint where the configuration store API will be available.
-        /// Serialized Name: ConfigurationStore.properties.endpoint
-        /// </summary>
+        /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
         public string Endpoint { get; }
-        /// <summary>
-        /// The encryption settings of the configuration store.
-        /// Serialized Name: ConfigurationStore.properties.encryption
-        /// </summary>
+        /// <summary> The encryption settings of the configuration store. </summary>
         internal Models.EncryptionProperties Encryption { get; set; }
-        /// <summary>
-        /// Key vault properties.
-        /// Serialized Name: EncryptionProperties.keyVaultProperties
-        /// </summary>
+        /// <summary> Key vault properties. </summary>
         public Models.KeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
@@ -160,35 +97,17 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// The list of private endpoint connections that are set up for this resource.
-        /// Serialized Name: ConfigurationStore.properties.privateEndpointConnections
-        /// </summary>
+        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
         public IReadOnlyList<PrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
-        /// <summary>
-        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-        /// Serialized Name: ConfigurationStore.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Disables all authentication methods other than AAD authentication.
-        /// Serialized Name: ConfigurationStore.properties.disableLocalAuth
-        /// </summary>
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
-        /// <summary>
-        /// The amount of time in days that the configuration store will be retained when it is soft deleted.
-        /// Serialized Name: ConfigurationStore.properties.softDeleteRetentionInDays
-        /// </summary>
+        /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
         public int? SoftDeleteRetentionInDays { get; set; }
-        /// <summary>
-        /// Property specifying whether protection against purge is enabled for this configuration store.
-        /// Serialized Name: ConfigurationStore.properties.enablePurgeProtection
-        /// </summary>
+        /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         public bool? EnablePurgeProtection { get; set; }
-        /// <summary>
-        /// Indicates whether the configuration store need to be recovered.
-        /// Serialized Name: ConfigurationStore.properties.createMode
-        /// </summary>
+        /// <summary> Indicates whether the configuration store need to be recovered. </summary>
         public CreateMode? CreateMode { get; set; }
     }
 }

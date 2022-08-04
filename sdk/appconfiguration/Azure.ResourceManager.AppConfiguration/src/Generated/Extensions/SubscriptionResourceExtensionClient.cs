@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeletedConfigurationStoreResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of DeletedConfigurationStoreResources and their operations over a DeletedConfigurationStoreResource. </returns>
-        public virtual DeletedConfigurationStoreCollection GetDeletedConfigurationStores()
+        /// <summary> Gets a collection of DeletedAppConfigurationStoreResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
+        public virtual DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores()
         {
-            return GetCachedClient(Client => new DeletedConfigurationStoreCollection(Client, Id));
+            return GetCachedClient(Client => new DeletedAppConfigurationStoreCollection(Client, Id));
         }
 
         /// <summary>

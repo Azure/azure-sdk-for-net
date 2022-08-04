@@ -13,52 +13,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class KeyValueData : IUtf8JsonSerializable
+    public partial class DeletedAppConfigurationStoreData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(ContentType))
-            {
-                writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
-        internal static KeyValueData DeserializeKeyValueData(JsonElement element)
+        internal static DeletedAppConfigurationStoreData DeserializeDeletedAppConfigurationStoreData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<string> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> locked = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> configurationStoreId = default;
+            Optional<AzureLocation> location = default;
+            Optional<DateTimeOffset> deletionDate = default;
+            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<bool> purgeProtectionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -95,49 +63,39 @@ namespace Azure.ResourceManager.AppConfiguration
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("key"))
+                        if (property0.NameEquals("configurationStoreId"))
                         {
-                            key = property0.Value.GetString();
+                            configurationStoreId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("label"))
-                        {
-                            label = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("value"))
-                        {
-                            value = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("contentType"))
-                        {
-                            contentType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("eTag"))
-                        {
-                            eTag = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModified"))
+                        if (property0.NameEquals("location"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModified = property0.Value.GetDateTimeOffset("O");
+                            location = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("locked"))
+                        if (property0.NameEquals("deletionDate"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            locked = property0.Value.GetBoolean();
+                            deletionDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("scheduledPurgeDate"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            scheduledPurgeDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("tags"))
@@ -155,11 +113,21 @@ namespace Azure.ResourceManager.AppConfiguration
                             tags = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("purgeProtectionEnabled"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            purgeProtectionEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new KeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
+            return new DeletedAppConfigurationStoreData(id, name, type, systemData.Value, configurationStoreId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled));
         }
     }
 }

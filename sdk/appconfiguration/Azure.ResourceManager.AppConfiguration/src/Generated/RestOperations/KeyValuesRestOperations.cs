@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyValueData>> GetAsync(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppConfigurationKeyValueData>> GetAsync(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        KeyValueData value = default;
+                        AppConfigurationKeyValueData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValueData.DeserializeKeyValueData(document.RootElement);
+                        value = AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyValueData)null, message.Response);
+                    return Response.FromValue((AppConfigurationKeyValueData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyValueData> Get(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, CancellationToken cancellationToken = default)
+        public Response<AppConfigurationKeyValueData> Get(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,19 +198,19 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        KeyValueData value = default;
+                        AppConfigurationKeyValueData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValueData.DeserializeKeyValueData(document.RootElement);
+                        value = AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((KeyValueData)null, message.Response);
+                    return Response.FromValue((AppConfigurationKeyValueData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, AppConfigurationKeyValueData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KeyValueData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppConfigurationKeyValueData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, AppConfigurationKeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        KeyValueData value = default;
+                        AppConfigurationKeyValueData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyValueData.DeserializeKeyValueData(document.RootElement);
+                        value = AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/>, <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KeyValueData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, KeyValueData data, CancellationToken cancellationToken = default)
+        public Response<AppConfigurationKeyValueData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string configStoreName, string keyValueName, AppConfigurationKeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        KeyValueData value = default;
+                        AppConfigurationKeyValueData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyValueData.DeserializeKeyValueData(document.RootElement);
+                        value = AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

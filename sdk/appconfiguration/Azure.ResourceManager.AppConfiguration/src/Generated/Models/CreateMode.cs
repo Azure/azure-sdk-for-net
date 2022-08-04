@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// Indicates whether the configuration store need to be recovered.
-    /// Serialized Name: CreateMode
-    /// </summary>
+    /// <summary> Indicates whether the configuration store need to be recovered. </summary>
     public enum CreateMode
     {
-        /// <summary>
-        /// Recover
-        /// Serialized Name: CreateMode.Recover
-        /// </summary>
+        /// <summary> Recover. </summary>
         Recover,
-        /// <summary>
-        /// Default
-        /// Serialized Name: CreateMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         Default
     }
 }

@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedConfigurationStoreData>> GetDeletedAsync(string subscriptionId, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeletedAppConfigurationStoreData>> GetDeletedAsync(string subscriptionId, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
@@ -776,13 +776,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        DeletedConfigurationStoreData value = default;
+                        DeletedAppConfigurationStoreData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeletedConfigurationStoreData.DeserializeDeletedConfigurationStoreData(document.RootElement);
+                        value = DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeletedConfigurationStoreData)null, message.Response);
+                    return Response.FromValue((DeletedAppConfigurationStoreData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedConfigurationStoreData> GetDeleted(string subscriptionId, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
+        public Response<DeletedAppConfigurationStoreData> GetDeleted(string subscriptionId, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
@@ -806,13 +806,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        DeletedConfigurationStoreData value = default;
+                        DeletedAppConfigurationStoreData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeletedConfigurationStoreData.DeserializeDeletedConfigurationStoreData(document.RootElement);
+                        value = DeletedAppConfigurationStoreData.DeserializeDeletedAppConfigurationStoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeletedConfigurationStoreData)null, message.Response);
+                    return Response.FromValue((DeletedAppConfigurationStoreData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

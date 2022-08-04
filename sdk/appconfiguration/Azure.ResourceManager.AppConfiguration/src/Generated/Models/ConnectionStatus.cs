@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// The private link service connection status.
-    /// Serialized Name: ConnectionStatus
-    /// </summary>
+    /// <summary> The private link service connection status. </summary>
     public readonly partial struct ConnectionStatus : IEquatable<ConnectionStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: ConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static ConnectionStatus Pending { get; } = new ConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: ConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static ConnectionStatus Approved { get; } = new ConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: ConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static ConnectionStatus Rejected { get; } = new ConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: ConnectionStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static ConnectionStatus Disconnected { get; } = new ConnectionStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="ConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ConnectionStatus left, ConnectionStatus right) => left.Equals(right);

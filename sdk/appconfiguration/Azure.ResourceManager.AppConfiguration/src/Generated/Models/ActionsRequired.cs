@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// Any action that is required beyond basic workflow (approve/ reject/ disconnect)
-    /// Serialized Name: ActionsRequired
-    /// </summary>
+    /// <summary> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </summary>
     public readonly partial struct ActionsRequired : IEquatable<ActionsRequired>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private const string NoneValue = "None";
         private const string RecreateValue = "Recreate";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ActionsRequired.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static ActionsRequired None { get; } = new ActionsRequired(NoneValue);
-        /// <summary>
-        /// Recreate
-        /// Serialized Name: ActionsRequired.Recreate
-        /// </summary>
+        /// <summary> Recreate. </summary>
         public static ActionsRequired Recreate { get; } = new ActionsRequired(RecreateValue);
         /// <summary> Determines if two <see cref="ActionsRequired"/> values are the same. </summary>
         public static bool operator ==(ActionsRequired left, ActionsRequired right) => left.Equals(right);

@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// Describes a configuration store SKU.
-    /// Serialized Name: Sku
-    /// </summary>
+    /// <summary> Describes a configuration store SKU. </summary>
     public partial class AppConfigurationSku
     {
         /// <summary> Initializes a new instance of AppConfigurationSku. </summary>
-        /// <param name="name">
-        /// The SKU name of the configuration store.
-        /// Serialized Name: Sku.name
-        /// </param>
+        /// <param name="name"> The SKU name of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppConfigurationSku(string name)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Name = name;
         }
 
-        /// <summary>
-        /// The SKU name of the configuration store.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> The SKU name of the configuration store. </summary>
         public string Name { get; set; }
     }
 }

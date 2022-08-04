@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static KeyValueListResult DeserializeKeyValueListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KeyValueData>> value = default;
+            Optional<IReadOnlyList<AppConfigurationKeyValueData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyValueData> array = new List<KeyValueData>();
+                    List<AppConfigurationKeyValueData> array = new List<AppConfigurationKeyValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyValueData.DeserializeKeyValueData(item));
+                        array.Add(AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(item));
                     }
                     value = array;
                     continue;

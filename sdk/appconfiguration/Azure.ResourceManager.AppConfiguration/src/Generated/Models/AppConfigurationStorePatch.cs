@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// The parameters for updating a configuration store.
-    /// Serialized Name: ConfigurationStoreUpdateParameters
-    /// </summary>
+    /// <summary> The parameters for updating a configuration store. </summary>
     public partial class AppConfigurationStorePatch
     {
         /// <summary> Initializes a new instance of AppConfigurationStorePatch. </summary>
@@ -23,40 +20,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// The managed identity information for the configuration store.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.identity
-        /// </summary>
+        /// <summary> The managed identity information for the configuration store. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// The SKU of the configuration store.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.sku
-        /// </summary>
+        /// <summary> The SKU of the configuration store. </summary>
         internal AppConfigurationSku Sku { get; set; }
-        /// <summary>
-        /// The SKU name of the configuration store.
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> The SKU name of the configuration store. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
             set => Sku = new AppConfigurationSku(value);
         }
 
-        /// <summary>
-        /// The ARM resource tags.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.tags
-        /// </summary>
+        /// <summary> The ARM resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The encryption settings of the configuration store.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.properties.encryption
-        /// </summary>
+        /// <summary> The encryption settings of the configuration store. </summary>
         internal EncryptionProperties Encryption { get; set; }
-        /// <summary>
-        /// Key vault properties.
-        /// Serialized Name: EncryptionProperties.keyVaultProperties
-        /// </summary>
+        /// <summary> Key vault properties. </summary>
         public KeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
@@ -68,20 +47,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
         }
 
-        /// <summary>
-        /// Disables all authentication methods other than AAD authentication.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.properties.disableLocalAuth
-        /// </summary>
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
-        /// <summary>
-        /// Control permission for data plane traffic coming from public networks while private endpoint is enabled.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Property specifying whether protection against purge is enabled for this configuration store.
-        /// Serialized Name: ConfigurationStoreUpdateParameters.properties.enablePurgeProtection
-        /// </summary>
+        /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         public bool? EnablePurgeProtection { get; set; }
     }
 }

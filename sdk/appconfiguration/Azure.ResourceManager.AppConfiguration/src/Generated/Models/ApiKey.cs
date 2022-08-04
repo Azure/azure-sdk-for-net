@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary>
-    /// An API key used for authenticating with a configuration store endpoint.
-    /// Serialized Name: ApiKey
-    /// </summary>
+    /// <summary> An API key used for authenticating with a configuration store endpoint. </summary>
     public partial class ApiKey
     {
         /// <summary> Initializes a new instance of ApiKey. </summary>
@@ -21,30 +18,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Initializes a new instance of ApiKey. </summary>
-        /// <param name="id">
-        /// The key ID.
-        /// Serialized Name: ApiKey.id
-        /// </param>
-        /// <param name="name">
-        /// A name for the key describing its usage.
-        /// Serialized Name: ApiKey.name
-        /// </param>
-        /// <param name="value">
-        /// The value of the key that is used for authentication purposes.
-        /// Serialized Name: ApiKey.value
-        /// </param>
-        /// <param name="connectionString">
-        /// A connection string that can be used by supporting clients for authentication.
-        /// Serialized Name: ApiKey.connectionString
-        /// </param>
-        /// <param name="lastModified">
-        /// The last time any of the key&apos;s properties were modified.
-        /// Serialized Name: ApiKey.lastModified
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether this key can only be used for read operations.
-        /// Serialized Name: ApiKey.readOnly
-        /// </param>
+        /// <param name="id"> The key ID. </param>
+        /// <param name="name"> A name for the key describing its usage. </param>
+        /// <param name="value"> The value of the key that is used for authentication purposes. </param>
+        /// <param name="connectionString"> A connection string that can be used by supporting clients for authentication. </param>
+        /// <param name="lastModified"> The last time any of the key&apos;s properties were modified. </param>
+        /// <param name="readOnly"> Whether this key can only be used for read operations. </param>
         internal ApiKey(string id, string name, string value, string connectionString, DateTimeOffset? lastModified, bool? readOnly)
         {
             Id = id;
@@ -55,35 +34,17 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             ReadOnly = readOnly;
         }
 
-        /// <summary>
-        /// The key ID.
-        /// Serialized Name: ApiKey.id
-        /// </summary>
+        /// <summary> The key ID. </summary>
         public string Id { get; }
-        /// <summary>
-        /// A name for the key describing its usage.
-        /// Serialized Name: ApiKey.name
-        /// </summary>
+        /// <summary> A name for the key describing its usage. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The value of the key that is used for authentication purposes.
-        /// Serialized Name: ApiKey.value
-        /// </summary>
+        /// <summary> The value of the key that is used for authentication purposes. </summary>
         public string Value { get; }
-        /// <summary>
-        /// A connection string that can be used by supporting clients for authentication.
-        /// Serialized Name: ApiKey.connectionString
-        /// </summary>
+        /// <summary> A connection string that can be used by supporting clients for authentication. </summary>
         public string ConnectionString { get; }
-        /// <summary>
-        /// The last time any of the key&apos;s properties were modified.
-        /// Serialized Name: ApiKey.lastModified
-        /// </summary>
+        /// <summary> The last time any of the key&apos;s properties were modified. </summary>
         public DateTimeOffset? LastModified { get; }
-        /// <summary>
-        /// Whether this key can only be used for read operations.
-        /// Serialized Name: ApiKey.readOnly
-        /// </summary>
+        /// <summary> Whether this key can only be used for read operations. </summary>
         public bool? ReadOnly { get; }
     }
 }
