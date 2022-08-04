@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal IotHubSkuDescription() { }
         public Azure.ResourceManager.IotHub.Models.IotHubCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.IotHubSkuInfo Sku { get { throw null; } }
     }
     public partial class IotHubSkuInfo
