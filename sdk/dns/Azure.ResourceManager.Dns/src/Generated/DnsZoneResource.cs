@@ -8,16 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
-
-[assembly: CodeGenSuppressType("DnsZoneResource")]
 
 namespace Azure.ResourceManager.Dns
 {
@@ -97,7 +95,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetAResources in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetAResources and their operations over a RecordSetAResource. </returns>
-        public virtual RecordSetACollection GetRecordSetACollection()
+        public virtual RecordSetACollection GetRecordSetAs()
         {
             return GetCachedClient(Client => new RecordSetACollection(Client, Id));
         }
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual async Task<Response<RecordSetAResource>> GetRecordSetAAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return await GetRecordSetACollection().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+            return await GetRecordSetAs().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,7 +125,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual Response<RecordSetAResource> GetRecordSetA(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return GetRecordSetACollection().Get(relativeRecordSetName, cancellationToken);
+            return GetRecordSetAs().Get(relativeRecordSetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RecordSetAaaaResources in the DnsZone. </summary>
@@ -272,7 +270,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetNSResources in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetNSResources and their operations over a RecordSetNSResource. </returns>
-        public virtual RecordSetNSCollection GetRecordSetNS()
+        public virtual RecordSetNSCollection GetRecordSetNs()
         {
             return GetCachedClient(Client => new RecordSetNSCollection(Client, Id));
         }
@@ -288,7 +286,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual async Task<Response<RecordSetNSResource>> GetRecordSetNSAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return await GetRecordSetNS().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+            return await GetRecordSetNs().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -302,7 +300,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual Response<RecordSetNSResource> GetRecordSetNS(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return GetRecordSetNS().Get(relativeRecordSetName, cancellationToken);
+            return GetRecordSetNs().Get(relativeRecordSetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RecordSetPtrResources in the DnsZone. </summary>
@@ -498,7 +496,7 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
         /// Operation Id: Zones_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always delete the current zone. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
@@ -525,7 +523,7 @@ namespace Azure.ResourceManager.Dns
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
         /// Operation Id: Zones_Delete
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always delete the current zone. Specify the last-seen etag value to prevent accidentally deleting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
@@ -548,6 +546,60 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
+        /// Updates a DNS zone. Does not modify DNS records within the zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
+        /// Operation Id: Zones_Update
+        /// </summary>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<DnsZoneResource>> UpdateAsync(DnsZonePatch patch, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _dnsZoneZonesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a DNS zone. Does not modify DNS records within the zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}
+        /// Operation Id: Zones_Update
+        /// </summary>
+        /// <param name="patch"> Parameters supplied to the Update operation. </param>
+        /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<DnsZoneResource> Update(DnsZonePatch patch, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _dnsZoneZonesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
+                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Lists all record sets in a DNS zone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets
         /// Operation Id: RecordSets_ListByDnsZone
@@ -555,17 +607,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecordSetAResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecordSetAResource> GetRecordSetsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecordSetData> GetRecordSetsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecordSetAResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RecordSetData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetsRestClient.ListARecordByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recordSetsRestClient.ListByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -573,14 +625,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<RecordSetAResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RecordSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetsRestClient.ListARecordByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recordSetsRestClient.ListByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -599,17 +651,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecordSetAResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecordSetAResource> GetRecordSets(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordSetData> GetRecordSets(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<RecordSetAResource> FirstPageFunc(int? pageSizeHint)
+            Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetsRestClient.ListARecordByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recordSetsRestClient.ListByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -617,14 +669,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<RecordSetAResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetsRestClient.ListARecordByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recordSetsRestClient.ListByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -643,17 +695,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecordSetAResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecordSetAResource> GetAllRecordSetsAsync(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecordSetData> GetAllRecordSetsAsync(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecordSetAResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RecordSetData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetsRestClient.ListAllARecordByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recordSetsRestClient.ListAllByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -661,14 +713,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            async Task<Page<RecordSetAResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RecordSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = await _recordSetsRestClient.ListAllARecordByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _recordSetsRestClient.ListAllByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -687,17 +739,17 @@ namespace Azure.ResourceManager.Dns
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecordSetAResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecordSetAResource> GetAllRecordSets(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordSetData> GetAllRecordSets(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
         {
-            Page<RecordSetAResource> FirstPageFunc(int? pageSizeHint)
+            Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetsRestClient.ListAllARecordByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recordSetsRestClient.ListAllByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -705,14 +757,14 @@ namespace Azure.ResourceManager.Dns
                     throw;
                 }
             }
-            Page<RecordSetAResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
                 scope.Start();
                 try
                 {
-                    var response = _recordSetsRestClient.ListAllARecordByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecordSetAResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _recordSetsRestClient.ListAllByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
