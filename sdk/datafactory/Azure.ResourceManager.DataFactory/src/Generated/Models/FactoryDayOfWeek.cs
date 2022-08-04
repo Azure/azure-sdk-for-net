@@ -7,8 +7,8 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The DaysOfWeek. </summary>
-    public enum DaysOfWeek
+    /// <summary> The FactoryDayOfWeek. </summary>
+    public enum FactoryDayOfWeek
     {
         /// <summary> Sunday. </summary>
         Sunday,
