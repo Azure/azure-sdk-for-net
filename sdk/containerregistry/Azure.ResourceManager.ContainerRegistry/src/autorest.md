@@ -188,8 +188,6 @@ rename-mapping:
   Status: ContainerRegistryResourceStatus
   Variant: ContainerRegistryCpuVariant
   Actor: ContainerRegistryWebhookEventActor
-  IdentityProperties: ContainerRegistryManagedIdentity
-  ResourceIdentityType: ContainerRegistryManagedIdentityType
   NetworkRuleBypassOptions: ContainerRegistryNetworkRuleBypassOption
   PlatformUpdateParameters: ContainerRegistryPlatformUpdateContent
   RegistryListResult: ContainerRegistryListResult
@@ -208,5 +206,11 @@ directive:
   - rename-operation:
       from: Registries_ScheduleRun
       to: Schedules_ScheduleRun
-
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.IdentityProperties.properties.principalId.readOnly = true;
+      $.IdentityProperties.properties.tenantId.readOnly = true;
+      $.UserIdentityProperties.properties.principalId.readOnly = true;
+      $.UserIdentityProperties.properties.clientId.readOnly = true;
 ```

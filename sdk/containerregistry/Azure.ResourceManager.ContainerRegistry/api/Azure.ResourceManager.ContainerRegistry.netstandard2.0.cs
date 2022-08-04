@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DataEndpointHostNames { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAdminUserEnabled { get { throw null; } set { } }
         public bool? IsDataEndpointEnabled { get { throw null; } set { } }
         public string LoginServer { get { throw null; } }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public string AgentPoolName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsSystemTask { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties Platform { get { throw null; } set { } }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         public ContainerRegistryTaskRunData() { }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent RunRequest { get { throw null; } set { } }
@@ -805,21 +805,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword> Passwords { get { throw null; } }
         public string Username { get { throw null; } }
     }
-    public partial class ContainerRegistryManagedIdentity
-    {
-        public ContainerRegistryManagedIdentity() { }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentityType? IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Models.UserIdentityProperties> UserAssignedIdentities { get { throw null; } }
-    }
-    public enum ContainerRegistryManagedIdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
-        SystemAssignedUserAssigned = 3,
-    }
     public partial class ContainerRegistryNameAvailabilityContent
     {
         public ContainerRegistryNameAvailabilityContent(string name) { }
@@ -939,7 +924,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryPatch() { }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAdminUserEnabled { get { throw null; } set { } }
         public bool? IsDataEndpointEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get { throw null; } set { } }
@@ -1296,7 +1281,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public int? AgentCpu { get { throw null; } set { } }
         public string AgentPoolName { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunCredentials Credentials { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformUpdateContent Platform { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus? Status { get { throw null; } set { } }
@@ -1315,7 +1300,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryTaskRunPatch() { }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent RunRequest { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1722,11 +1707,5 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal SourceUploadDefinition() { }
         public string RelativePath { get { throw null; } }
         public System.Uri UploadUri { get { throw null; } }
-    }
-    public partial class UserIdentityProperties
-    {
-        public UserIdentityProperties() { }
-        public string ClientId { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } set { } }
     }
 }
