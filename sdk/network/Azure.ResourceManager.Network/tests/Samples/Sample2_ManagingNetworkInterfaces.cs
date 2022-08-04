@@ -51,6 +51,21 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             };
             PublicIPAddressResource publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(WaitUntil.Completed, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
+            VirtualNetworkCollection virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
+
+            string vnetName = "myVnet";
+
+            // Use the same location as the resource group
+            VirtualNetworkData input = new VirtualNetworkData()
+            {
+                Location = resourceGroup.Data.Location,
+                AddressPrefixes = { "10.0.0.0/16", },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
+                Subnets = { new SubnetData() { Name = "mySubnet", AddressPrefix = "10.0.1.0/24", } }
+            };
+
+            VirtualNetworkResource virtualNetwork = await virtualNetworkCollection.CreateOrUpdate(WaitUntil.Completed, vnetName, input).WaitForCompletionAsync();
+
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
             string networkInterfaceName = "myNetworkInterface";
             NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
@@ -85,9 +100,9 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
             AsyncPageable<NetworkInterfaceResource> response = networkInterfaceCollection.GetAllAsync();
-            await foreach (NetworkInterfaceResource virtualNetwork in response)
+            await foreach (NetworkInterfaceResource networkInterface in response)
             {
-                Console.WriteLine(virtualNetwork.Data.Name);
+                Console.WriteLine(networkInterface.Data.Name);
             }
             #endregion
         }
@@ -99,8 +114,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             #region Snippet:Managing_Networks_GetANetworkInterface
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-            NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
-            Console.WriteLine(virtualNetwork.Data.Name);
+            NetworkInterfaceResource networkInterface = await networkInterfaceCollection.GetAsync("myNetworkInterface");
+            Console.WriteLine(networkInterface.Data.Name);
             #endregion
         }
 
@@ -111,8 +126,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             #region Snippet:Managing_Networks_DeleteANetworkInterface
             NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
-            NetworkInterfaceResource virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
-            await virtualNetwork.DeleteAsync(WaitUntil.Completed);
+            NetworkInterfaceResource networkInterface = await networkInterfaceCollection.GetAsync("myNetworkInterface");
+            await networkInterface.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
 
