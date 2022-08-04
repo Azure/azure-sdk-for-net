@@ -100,6 +100,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
+            MessageConverter = new AmqpMessageConverter();
+
             ServiceEndpoint = new UriBuilder
             {
                 Scheme = options.TransportType.GetUriScheme(),
@@ -126,7 +128,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 options.EnableCrossEntityTransactions,
                 options.RetryOptions.TryTimeout,
                 TransportMetrics);
-            MessageConverter = new AmqpMessageConverter();
         }
 
         /// <summary>
