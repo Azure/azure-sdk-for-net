@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartBuildModelCanAuthenticateWithTokenCredential()
+        public async Task BuildModelCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential: true);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -50,12 +50,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             await client.DeleteModelAsync(modelId);
         }
 
-        #region StartBuildModel
+        #region BuildModel
 
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartBuildModel(bool singlePage)
+        public async Task BuildModel(bool singlePage)
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(singlePage ? TestEnvironment.BlobContainerSasUrl : TestEnvironment.MultipageBlobContainerSasUrl);
@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartBuildModelWithNeuralBuildMode()
+        public async Task BuildModelWithNeuralBuildMode()
         {
             // Test takes too long to finish running, and seems to cause multiple failures in our
             // live test pipeline. Until we find a way to run it without flakiness, this test will
@@ -112,7 +112,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartBuildModelSucceedsWithValidPrefix()
+        public async Task BuildModelSucceedsWithValidPrefix()
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -126,7 +126,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         [RecordedTest]
         [Ignore("https://github.com/azure/azure-sdk-for-net/issues/28272")]
-        public void StartBuildModelFailsWithInvalidPrefix()
+        public void BuildModelFailsWithInvalidPrefix()
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -137,7 +137,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartBuildModelWithTags()
+        public async Task BuildModelWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -158,7 +158,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public void StartBuildModelError()
+        public void BuildModelError()
         {
             var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("InvalidArgument", ex.ErrorCode);
         }
 
-        #endregion StartBuildModel
+        #endregion BuildModel
 
         #region management ops
 

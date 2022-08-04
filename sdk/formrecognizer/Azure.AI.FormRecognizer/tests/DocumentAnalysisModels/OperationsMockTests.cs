@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartAnalyzeDocumentWithError()
+        public void AnalyzeDocumentWithError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartBuildModelWithError()
+        public void BuildModelWithError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
