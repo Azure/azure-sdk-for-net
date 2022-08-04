@@ -102,7 +102,7 @@ See examples:
 
 Collection properties do not have setters.  This is because we need to be able to use our own collection types, for example to track changes made to a collection.  If collection properties were settable, callers would be able to overwrite the internal collection types.  There is [C# syntax for initializing collection read-only properties](https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization) that callers can use to initialize collections properties.
 
-- GitHub issue: [autorest.csharp #2515](https://github.com/Azure/autorest.csharp/issues/2515)
+GitHub issue: [autorest.csharp #2515](https://github.com/Azure/autorest.csharp/issues/2515)
 
 #### Collection property types
 
@@ -114,13 +114,13 @@ The type of a collection property will be generated follows:
 
 Collection type can be overridden in a Cadl sidecar file (generator config) based on architect feedback.
 
-- GitHub issue: [autorest.csharp #2513](https://github.com/Azure/autorest.csharp/issues/2513)
+GitHub issue: [autorest.csharp #2513](https://github.com/Azure/autorest.csharp/issues/2513)
 
 #### Collections of models
 
 Properties that are collections of models are treated as any other collection of reference types.  Models implement IUtf8JsonSerializable to enable serialization.
 
-- GitHub issue: [autorest.csharp #2490](https://github.com/Azure/autorest.csharp/issues/2490)
+GitHub issue: [autorest.csharp #2490](https://github.com/Azure/autorest.csharp/issues/2490)
 
 ### Enums
 
