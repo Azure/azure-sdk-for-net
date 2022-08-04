@@ -60,47 +60,13 @@ namespace Azure.Monitor.Ingestion
             return message;
         }
 
-        ///// <summary>
-        ///// test
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="logEntries"></param>
-        ///// <returns></returns>
-        //public static IEnumerable<(BinaryData Data, int Start)> Batching<T>(IEnumerable<T> logEntries)
-        //{
-        //    //TODO: use Array pool instead
-        //    MemoryStream stream = new MemoryStream(_singleUploadThreshold);
-        //    WriteMemory(stream, BinaryData.FromString("[").ToMemory());
-        //    int start = 0;
-        //    int entryCount = 0;
-        //    foreach (var log in logEntries)
-        //    {
-        //        BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
-
-        //        var memory = entry.ToMemory();
-        //        if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
-        //        {
-        //            WriteMemory(stream, BinaryData.FromString("]").ToMemory());
-        //            yield return (BinaryData.FromStream(stream), start);
-        //            start = entryCount;
-        //        }
-        //        else
-        //        {
-        //            stream.Position = 0;
-        //        }
-        //        WriteMemory(stream, memory);
-        //        WriteMemory(stream, BinaryData.FromString(",").ToMemory());
-        //        entryCount++;
-        //    }
-        //}
-
         /// <summary>
-        /// test
+        /// Hidden method for batching data
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="logEntries"></param>
         /// <returns></returns>
-        public static IEnumerable<BinaryData> Batching<T>(IEnumerable<T> logEntries)
+        internal static IEnumerable<BinaryData> Batching<T>(IEnumerable<T> logEntries)
         {
             //TODO: use Array pool instead
             MemoryStream stream = new MemoryStream(_singleUploadThreshold);
@@ -133,71 +99,37 @@ namespace Azure.Monitor.Ingestion
                 entryCount++;
             }
         }
+
         private static void WriteMemory(MemoryStream stream, ReadOnlyMemory<byte> memory)
         {
             stream.Write(memory.ToArray(), 0, memory.Length); //TODO: fix ToArray
         }
 
-        ///// <summary>
-        ///// Overload upload
-        ///// </summary>
-        ///// <param name="ruleId"></param>
-        ///// <param name="streamName"></param>
-        ///// <param name="logEntries"></param>
-        ///// <param name="cancellationToken"></param>
-        //public virtual void Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-        //    Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
-        //    Argument.AssertNotNullOrEmpty(logEntries, nameof(logEntries));
-
-        //    using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
-        //    scope.Start();
-        //    try
-        //    {
-        //        foreach (var partition in Batching(logEntries))
-        //        {
-        //            // Upload it in a single request
-        //            //using HttpMessage message = CreateUploadRequest(ruleId, streamName, Batching.Data, "gzip", context); //TODO: catch errors and correlate with Batching.start
-        //            Upload(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken});
-        //        }
-        //        //var binaryData = BinaryData.FromObjectAsJson(logEntries);
-        //        // If we can compute the size and it's small enough
-        //        //if (TryGetLength(binaryData.ToStream(), out long length) && length < _singleUploadThreshold)
-        //        //{
-        //        //    // Upload it in a single request
-        //        //    using HttpMessage message = CreateUploadRequest(ruleId, streamName, BinaryData.FromObjectAsJson(logEntries), "gzip", context);
-        //        //}
-
-        //        // Otherwise stage individual blocks one at a time.  It's not as
-        //        // fast as a parallel upload, but you get the benefit of the retry
-        //        // policy working on a single block instead of the entire stream.
-        //        //return UploadInSequence(
-        //        //    content,
-        //        //    blockSize,
-        //        //    blobHttpHeaders,
-        //        //    metadata,
-        //        //    conditions,
-        //        //    progressHandler,
-        //        //    accessTier,
-        //        //    cancellationToken);
-        //        ////using HttpMessage message = CreateUploadRequest(ruleId, streamName, BinaryData.FromObjectAsJson(logEntries), "gzip", context);
-        //        //return _pipeline.ProcessMessage(message, context);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        scope.Failed(e);
-        //        throw;
-        //    }
-        //}
-
-        /// <summary>
-        /// Overload upload
-        /// </summary>
-        /// <param name="ruleId"></param>
-        /// <param name="streamName"></param>
-        /// <param name="logEntries"></param>
+        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
+        /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
+        /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
+        /// <param name="logEntries"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logEntries"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Upload with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new LogsIngestionClient(endpoint, credential);
+        ///
+        /// var data = new[] {
+        ///     new {}
+        /// };
+        ///
+        /// Response response = client.Upload("<ruleId>", "<streamName>", data);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
@@ -222,13 +154,31 @@ namespace Azure.Monitor.Ingestion
             return null;
         }
 
-        /// <summary>
-        /// Overload upload
-        /// </summary>
-        /// <param name="ruleId"></param>
-        /// <param name="streamName"></param>
-        /// <param name="logEntries"></param>
+        /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
+        /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
+        /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
+        /// <param name="logEntries"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="logEntries"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Upload with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var client = new LogsIngestionClient(endpoint, credential);
+        ///
+        /// var data = new[] {
+        ///     new {}
+        /// };
+        ///
+        /// Response response = client.Upload("<ruleId>", "<streamName>", data);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        /// <remarks> See error response code and error response message for more detail. </remarks>
         public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
