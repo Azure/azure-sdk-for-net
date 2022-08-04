@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Media.csproj" />
+    <ProjectReference Include="..\..\..\storage\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj" />
   </ItemGroup>
 </Project>
