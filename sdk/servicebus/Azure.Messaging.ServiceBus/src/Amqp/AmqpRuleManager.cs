@@ -105,11 +105,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     _identifier,
                     timeout,
                     CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
         }
 
         /// <summary>
