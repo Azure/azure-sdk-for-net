@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
 
@@ -20,7 +22,9 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         private async Task<CommitmentPlanResource> CreateCommitmentPlanAsync(string planName)
         {
             var accountContainer = (await CreateResourceGroupAsync()).GetAccounts();
-            var accountInput = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
+            var accountInput = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
+            accountInput.Sku = new CognitiveServicesSku("s0");
+            accountInput.Kind = "OpenAI";
             var lro = await accountContainer.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), accountInput);
             var account = lro.Value;
             var container = account.GetCommitmentPlans();
@@ -30,6 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
 
         [TestCase]
+        [Ignore("The subscription does not have QuotaId/Feature required by SKU 'S0' from kind 'OpenAI'")]
         public async Task CommitmentPlanResourceApiTests()
         {
             //1.Get

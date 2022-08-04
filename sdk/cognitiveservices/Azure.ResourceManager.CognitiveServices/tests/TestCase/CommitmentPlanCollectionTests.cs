@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         }
 
         [TestCase]
+        [Ignore("The subscription does not have QuotaId/Feature required by SKU 'S0' from kind 'OpenAI'")]
         public async Task CommitmentPlanCollectionApiTests()
         {
             //1.CreateOrUpdate

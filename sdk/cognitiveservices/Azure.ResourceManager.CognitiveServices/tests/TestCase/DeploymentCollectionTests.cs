@@ -15,21 +15,22 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
     public class DeploymentCollectionTests : CognitiveServicesManagementTestBase
     {
         public DeploymentCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         private async Task<DeploymentCollection> GetDeploymentCollectionAsync()
         {
             var container = (await CreateResourceGroupAsync()).GetAccounts();
-            var input = ResourceDataHelper.GetBasicAccountData(AzureLocation.EastUS);
+            var input = ResourceDataHelper.GetBasicAccountData(AzureLocation.WestUS2);
             input.Kind = "OpenAI";
-            input.Sku = new CognitiveServicesSku("s0");
+            input.Sku = new CognitiveServicesSku("f0");
             var account = (await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input)).Value;
             return account.GetDeployments();
         }
 
         [TestCase]
+        [Ignore("The subscription does not have QuotaId/Feature required by SKU 'S0' from kind 'OpenAI'")]
         public async Task DeploymentCollectionApiTests()
         {
             //1.CreateOrUpdate
