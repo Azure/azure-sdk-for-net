@@ -188,8 +188,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
-            return new TelemetryItem(TraceHelper.s_telemetryItem_Name[activity.GetTelemetryType()], activity, ref monitorTags, null, null, null);
+            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "Dependency";
+            return new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
         }
 
         private class MockFileProvider : PersistentBlobProvider

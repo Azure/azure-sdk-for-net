@@ -19,12 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static readonly IReadOnlyDictionary<TelemetryType, string> s_telemetryItem_Name = new Dictionary<TelemetryType, string>
-        {
-            [TelemetryType.Request] = "Request",
-            [TelemetryType.Dependency] = "RemoteDependency",
-        };
-
         internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
@@ -33,7 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(s_telemetryItem_Name[activity.GetTelemetryType()], activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "Dependency";
+                telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
@@ -180,22 +175,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
         {
-            if (activity.Events.Any())
+            if (!activity.Events.Any())
             {
-                foreach (var evnt in activity.Events)
+                return;
+            }
+
+            foreach (var evnt in activity.Events)
+            {
+                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                 {
-                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                    try
                     {
-                        try
-                        {
-                            var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
-                            SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
-                            telemetryItems.Add(exceptionTelemetryItem);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractExceptionFromActivityEvent", ex);
-                        }
+                        var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                        SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
+                        telemetryItems.Add(exceptionTelemetryItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractExceptionFromActivityEvent", ex);
                     }
                 }
             }
@@ -235,7 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             List<TelemetryExceptionDetails> exceptions = new List<TelemetryExceptionDetails>();
             exceptions.Add(exceptionDetails);
 
-            TelemetryExceptionData exceptionData = new TelemetryExceptionData(2, exceptions);
+            TelemetryExceptionData exceptionData = new TelemetryExceptionData(Version, exceptions);
 
             exceptionTelemetryItem.Data = new MonitorBase
             {
