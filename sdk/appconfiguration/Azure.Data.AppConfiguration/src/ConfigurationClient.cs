@@ -40,6 +40,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
         public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
+           : this(new Uri(ConnectionString.Parse(connectionString).GetRequired("Endpoint")), (string)null, options)
         {
             if (connectionString == null)
                 throw new ArgumentNullException(nameof(connectionString));
@@ -50,6 +51,7 @@ namespace Azure.Data.AppConfiguration
 
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
+            _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options);
         }
@@ -85,7 +87,7 @@ namespace Azure.Data.AppConfiguration
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] {new CustomHeadersPolicy(), new ApiVersionPolicy(options.Version)},
+                new HttpPipelinePolicy[] {new CustomHeadersPolicy()},
                 new HttpPipelinePolicy[] {authenticationPolicy, syncTokenPolicy},
                 new ResponseClassifier());
         }
