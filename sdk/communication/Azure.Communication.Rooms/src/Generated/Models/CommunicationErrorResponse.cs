@@ -7,25 +7,25 @@
 
 using System;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
     {
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
-        /// <param name="communicationError"> The Communication Services error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationError"/> is null. </exception>
-        internal CommunicationErrorResponse(CommunicationError communicationError)
+        /// <param name="error"> The Communication Services error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
+        internal CommunicationErrorResponse(CommunicationError error)
         {
-            if (communicationError == null)
+            if (error == null)
             {
-                throw new ArgumentNullException(nameof(communicationError));
+                throw new ArgumentNullException(nameof(error));
             }
 
-            CommunicationError = communicationError;
+            Error = error;
         }
 
         /// <summary> The Communication Services error. </summary>
-        public CommunicationError CommunicationError { get; }
+        public CommunicationError Error { get; }
     }
 }

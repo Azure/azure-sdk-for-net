@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
     internal partial class UpdateRoomRequest : IUtf8JsonSerializable
     {
@@ -25,16 +25,20 @@ namespace Azure.Communication.Rooms.Models
                 writer.WritePropertyName("validUntil");
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
+            if (Optional.IsDefined(RoomJoinPolicy))
+            {
+                writer.WritePropertyName("roomJoinPolicy");
+                writer.WriteStringValue(RoomJoinPolicy.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants");
-                writer.WriteStartObject();
+                writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }

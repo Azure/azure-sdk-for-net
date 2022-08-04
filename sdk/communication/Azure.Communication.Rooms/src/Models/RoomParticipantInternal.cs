@@ -3,12 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
-    /// <summary>
-    /// A participant of the room.
-    /// </summary>
-    [CodeGenModel("RoomParticipantInternal")]
+    [CodeGenModel("RoomParticipant")]
     internal partial class RoomParticipantInternal
     {
     }

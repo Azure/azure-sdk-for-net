@@ -9,29 +9,31 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
     /// <summary> The meeting room. </summary>
-    internal partial class RoomModel
+    internal partial class RoomModelInternal
     {
-        /// <summary> Initializes a new instance of RoomModel. </summary>
-        internal RoomModel()
+        /// <summary> Initializes a new instance of RoomModelInternal. </summary>
+        internal RoomModelInternal()
         {
-            Participants = new ChangeTrackingDictionary<string, RoomParticipantInternal>();
+            Participants = new ChangeTrackingList<RoomParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of RoomModel. </summary>
+        /// <summary> Initializes a new instance of RoomModelInternal. </summary>
         /// <param name="id"> Unique identifier of a room. This id is server generated. </param>
         /// <param name="createdDateTime"> The timestamp when the room was created at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="participants"> Collection of identities invited to the room. </param>
-        internal RoomModel(string id, DateTimeOffset? createdDateTime, DateTimeOffset? validFrom, DateTimeOffset? validUntil, IReadOnlyDictionary<string, RoomParticipantInternal> participants)
+        /// <param name="roomJoinPolicy"> The Policy based on which Participants can join a room. </param>
+        /// <param name="participants"> Collection of room participants. </param>
+        internal RoomModelInternal(string id, DateTimeOffset? createdDateTime, DateTimeOffset? validFrom, DateTimeOffset? validUntil, RoomJoinPolicy? roomJoinPolicy, IReadOnlyList<RoomParticipantInternal> participants)
         {
             Id = id;
             CreatedDateTime = createdDateTime;
             ValidFrom = validFrom;
             ValidUntil = validUntil;
+            RoomJoinPolicy = roomJoinPolicy;
             Participants = participants;
         }
 
@@ -43,7 +45,9 @@ namespace Azure.Communication.Rooms.Models
         public DateTimeOffset? ValidFrom { get; }
         /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidUntil { get; }
-        /// <summary> Collection of identities invited to the room. </summary>
-        public IReadOnlyDictionary<string, RoomParticipantInternal> Participants { get; }
+        /// <summary> The Policy based on which Participants can join a room. </summary>
+        public RoomJoinPolicy? RoomJoinPolicy { get; }
+        /// <summary> Collection of room participants. </summary>
+        public IReadOnlyList<RoomParticipantInternal> Participants { get; }
     }
 }

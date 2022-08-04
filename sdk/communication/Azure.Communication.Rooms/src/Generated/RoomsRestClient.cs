@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.Rooms.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -39,7 +40,7 @@ namespace Azure.Communication.Rooms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateRoomRequest(CreateRoomRequest createRoomRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateCreateRoomRequest(Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent, DateTimeOffset? validFrom, DateTimeOffset? validUntil, RoomJoinPolicy? roomJoinPolicy, IEnumerable<RoomParticipantInternal> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,36 +58,47 @@ namespace Azure.Communication.Rooms
             {
                 request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "O");
             }
-            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
+            CreateRoomRequest createRoomRequest = new CreateRoomRequest()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                RoomJoinPolicy = roomJoinPolicy
+            };
+            if (participants != null)
+            {
+                foreach (var value in participants)
+                {
+                    createRoomRequest.Participants.Add(value);
+                }
+            }
+            var model = createRoomRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createRoomRequest);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
         /// <summary> Creates a new room. </summary>
-        /// <param name="createRoomRequest"> The create room request body. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
+        /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="roomJoinPolicy"> The Policy based on which Participants can join a room. </param>
+        /// <param name="participants"> (Optional) Collection of participants invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createRoomRequest"/> is null. </exception>
-        public async Task<Response<RoomModel>> CreateRoomAsync(CreateRoomRequest createRoomRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoomModelInternal>> CreateRoomAsync(Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, RoomJoinPolicy? roomJoinPolicy = null, IEnumerable<RoomParticipantInternal> participants = null, CancellationToken cancellationToken = default)
         {
-            if (createRoomRequest == null)
-            {
-                throw new ArgumentNullException(nameof(createRoomRequest));
-            }
-
-            using var message = CreateCreateRoomRequest(createRoomRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateCreateRoomRequest(repeatabilityRequestID, repeatabilityFirstSent, validFrom, validUntil, roomJoinPolicy, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 201:
                     {
-                        RoomModel value = default;
+                        RoomModelInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoomModel.DeserializeRoomModel(document.RootElement);
+                        value = RoomModelInternal.DeserializeRoomModelInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,27 +107,24 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary> Creates a new room. </summary>
-        /// <param name="createRoomRequest"> The create room request body. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. </param>
+        /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="roomJoinPolicy"> The Policy based on which Participants can join a room. </param>
+        /// <param name="participants"> (Optional) Collection of participants invited to the room. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createRoomRequest"/> is null. </exception>
-        public Response<RoomModel> CreateRoom(CreateRoomRequest createRoomRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<RoomModelInternal> CreateRoom(Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, RoomJoinPolicy? roomJoinPolicy = null, IEnumerable<RoomParticipantInternal> participants = null, CancellationToken cancellationToken = default)
         {
-            if (createRoomRequest == null)
-            {
-                throw new ArgumentNullException(nameof(createRoomRequest));
-            }
-
-            using var message = CreateCreateRoomRequest(createRoomRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateCreateRoomRequest(repeatabilityRequestID, repeatabilityFirstSent, validFrom, validUntil, roomJoinPolicy, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 201:
                     {
-                        RoomModel value = default;
+                        RoomModelInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoomModel.DeserializeRoomModel(document.RootElement);
+                        value = RoomModelInternal.DeserializeRoomModelInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,15 +143,15 @@ namespace Azure.Communication.Rooms
             uri.AppendPath(roomId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves an existing room by Id. </summary>
+        /// <summary> Retrieves an existing room by id. </summary>
         /// <param name="roomId"> The id of the room requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public async Task<Response<RoomModel>> GetRoomAsync(string roomId, CancellationToken cancellationToken = default)
+        public async Task<Response<RoomModelInternal>> GetRoomAsync(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
@@ -155,9 +164,9 @@ namespace Azure.Communication.Rooms
             {
                 case 200:
                     {
-                        RoomModel value = default;
+                        RoomModelInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoomModel.DeserializeRoomModel(document.RootElement);
+                        value = RoomModelInternal.DeserializeRoomModelInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,11 +174,11 @@ namespace Azure.Communication.Rooms
             }
         }
 
-        /// <summary> Retrieves an existing room by Id. </summary>
+        /// <summary> Retrieves an existing room by id. </summary>
         /// <param name="roomId"> The id of the room requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public Response<RoomModel> GetRoom(string roomId, CancellationToken cancellationToken = default)
+        public Response<RoomModelInternal> GetRoom(string roomId, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
@@ -182,9 +191,9 @@ namespace Azure.Communication.Rooms
             {
                 case 200:
                     {
-                        RoomModel value = default;
+                        RoomModelInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoomModel.DeserializeRoomModel(document.RootElement);
+                        value = RoomModelInternal.DeserializeRoomModelInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,7 +201,7 @@ namespace Azure.Communication.Rooms
             }
         }
 
-        internal HttpMessage CreateUpdateRoomRequest(string roomId, UpdateRoomRequest patchRoomRequest)
+        internal HttpMessage CreateUpdateRoomRequest(string roomId, DateTimeOffset? validFrom, DateTimeOffset? validUntil, RoomJoinPolicy? roomJoinPolicy, IEnumerable<RoomParticipantInternal> participants)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -203,38 +212,52 @@ namespace Azure.Communication.Rooms
             uri.AppendPath(roomId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            if (patchRoomRequest != null)
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            UpdateRoomRequest updateRoomRequest = new UpdateRoomRequest()
             {
-                request.Headers.Add("Content-Type", "application/merge-patch+json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(patchRoomRequest);
-                request.Content = content;
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                RoomJoinPolicy = roomJoinPolicy
+            };
+            if (participants != null)
+            {
+                foreach (var value in participants)
+                {
+                    updateRoomRequest.Participants.Add(value);
+                }
             }
+            var model = updateRoomRequest;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
             return message;
         }
 
         /// <summary> Update a room with given changes. </summary>
         /// <param name="roomId"> The id of the room requested. </param>
-        /// <param name="patchRoomRequest"> The UpdateRoomRequest to use. </param>
+        /// <param name="validFrom"> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="roomJoinPolicy"> The Policy based on which Participants can join a room. </param>
+        /// <param name="participants"> Collection of room participants. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public async Task<Response<RoomModel>> UpdateRoomAsync(string roomId, UpdateRoomRequest patchRoomRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoomModelInternal>> UpdateRoomAsync(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, RoomJoinPolicy? roomJoinPolicy = null, IEnumerable<RoomParticipantInternal> participants = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
                 throw new ArgumentNullException(nameof(roomId));
             }
 
-            using var message = CreateUpdateRoomRequest(roomId, patchRoomRequest);
+            using var message = CreateUpdateRoomRequest(roomId, validFrom, validUntil, roomJoinPolicy, participants);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RoomModel value = default;
+                        RoomModelInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoomModel.DeserializeRoomModel(document.RootElement);
+                        value = RoomModelInternal.DeserializeRoomModelInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,25 +267,28 @@ namespace Azure.Communication.Rooms
 
         /// <summary> Update a room with given changes. </summary>
         /// <param name="roomId"> The id of the room requested. </param>
-        /// <param name="patchRoomRequest"> The UpdateRoomRequest to use. </param>
+        /// <param name="validFrom"> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="roomJoinPolicy"> The Policy based on which Participants can join a room. </param>
+        /// <param name="participants"> Collection of room participants. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
-        public Response<RoomModel> UpdateRoom(string roomId, UpdateRoomRequest patchRoomRequest = null, CancellationToken cancellationToken = default)
+        public Response<RoomModelInternal> UpdateRoom(string roomId, DateTimeOffset? validFrom = null, DateTimeOffset? validUntil = null, RoomJoinPolicy? roomJoinPolicy = null, IEnumerable<RoomParticipantInternal> participants = null, CancellationToken cancellationToken = default)
         {
             if (roomId == null)
             {
                 throw new ArgumentNullException(nameof(roomId));
             }
 
-            using var message = CreateUpdateRoomRequest(roomId, patchRoomRequest);
+            using var message = CreateUpdateRoomRequest(roomId, validFrom, validUntil, roomJoinPolicy, participants);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RoomModel value = default;
+                        RoomModelInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoomModel.DeserializeRoomModel(document.RootElement);
+                        value = RoomModelInternal.DeserializeRoomModelInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -286,7 +312,7 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary> Delete a room. </summary>
-        /// <param name="roomId"> The id of the room requested. </param>
+        /// <param name="roomId"> The id of the room to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         public async Task<Response> DeleteRoomAsync(string roomId, CancellationToken cancellationToken = default)
@@ -308,7 +334,7 @@ namespace Azure.Communication.Rooms
         }
 
         /// <summary> Delete a room. </summary>
-        /// <param name="roomId"> The id of the room requested. </param>
+        /// <param name="roomId"> The id of the room to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         public Response DeleteRoom(string roomId, CancellationToken cancellationToken = default)
@@ -324,6 +350,331 @@ namespace Azure.Communication.Rooms
             {
                 case 204:
                     return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetParticipantsRequest(string roomId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendPath("/participants", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get participants in a room. </summary>
+        /// <param name="roomId"> The id of the room to get participants from. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        public async Task<Response<ParticipantsCollectionInternal>> GetParticipantsAsync(string roomId, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+
+            using var message = CreateGetParticipantsRequest(roomId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Get participants in a room. </summary>
+        /// <param name="roomId"> The id of the room to get participants from. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
+        public Response<ParticipantsCollectionInternal> GetParticipants(string roomId, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+
+            using var message = CreateGetParticipantsRequest(roomId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateAddParticipantsRequest(string roomId, IEnumerable<RoomParticipantInternal> participants)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendPath("/participants:add", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new AddParticipantsRequest(participants.ToList());
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Adds participants to a room. If participants already exist, no change occurs. </summary>
+        /// <param name="roomId"> Room id to add participants. </param>
+        /// <param name="participants"> Participants to add to a room. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response<ParticipantsCollectionInternal>> AddParticipantsAsync(string roomId, IEnumerable<RoomParticipantInternal> participants, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+            if (participants == null)
+            {
+                throw new ArgumentNullException(nameof(participants));
+            }
+
+            using var message = CreateAddParticipantsRequest(roomId, participants);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Adds participants to a room. If participants already exist, no change occurs. </summary>
+        /// <param name="roomId"> Room id to add participants. </param>
+        /// <param name="participants"> Participants to add to a room. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="participants"/> is null. </exception>
+        public Response<ParticipantsCollectionInternal> AddParticipants(string roomId, IEnumerable<RoomParticipantInternal> participants, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+            if (participants == null)
+            {
+                throw new ArgumentNullException(nameof(participants));
+            }
+
+            using var message = CreateAddParticipantsRequest(roomId, participants);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateParticipantsRequest(string roomId, IEnumerable<RoomParticipantInternal> participants)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendPath("/participants:update", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new UpdateParticipantsRequest(participants.ToList());
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Update participants in a room. </summary>
+        /// <param name="roomId"> The room id. </param>
+        /// <param name="participants"> Participants to update in a room. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response<ParticipantsCollectionInternal>> UpdateParticipantsAsync(string roomId, IEnumerable<RoomParticipantInternal> participants, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+            if (participants == null)
+            {
+                throw new ArgumentNullException(nameof(participants));
+            }
+
+            using var message = CreateUpdateParticipantsRequest(roomId, participants);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Update participants in a room. </summary>
+        /// <param name="roomId"> The room id. </param>
+        /// <param name="participants"> Participants to update in a room. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="participants"/> is null. </exception>
+        public Response<ParticipantsCollectionInternal> UpdateParticipants(string roomId, IEnumerable<RoomParticipantInternal> participants, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+            if (participants == null)
+            {
+                throw new ArgumentNullException(nameof(participants));
+            }
+
+            using var message = CreateUpdateParticipantsRequest(roomId, participants);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateRemoveParticipantsRequest(string roomId, IEnumerable<RoomParticipantInternal> participants)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendPath("/participants:remove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var model = new RemoveParticipantsRequest(participants.ToList());
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Remove participants from a room. </summary>
+        /// <param name="roomId"> Room id to remove the participants from. </param>
+        /// <param name="participants"> Participants to be removed from a room. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="participants"/> is null. </exception>
+        public async Task<Response<ParticipantsCollectionInternal>> RemoveParticipantsAsync(string roomId, IEnumerable<RoomParticipantInternal> participants, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+            if (participants == null)
+            {
+                throw new ArgumentNullException(nameof(participants));
+            }
+
+            using var message = CreateRemoveParticipantsRequest(roomId, participants);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Remove participants from a room. </summary>
+        /// <param name="roomId"> Room id to remove the participants from. </param>
+        /// <param name="participants"> Participants to be removed from a room. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> or <paramref name="participants"/> is null. </exception>
+        public Response<ParticipantsCollectionInternal> RemoveParticipants(string roomId, IEnumerable<RoomParticipantInternal> participants, CancellationToken cancellationToken = default)
+        {
+            if (roomId == null)
+            {
+                throw new ArgumentNullException(nameof(roomId));
+            }
+            if (participants == null)
+            {
+                throw new ArgumentNullException(nameof(participants));
+            }
+
+            using var message = CreateRemoveParticipantsRequest(roomId, participants);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ParticipantsCollectionInternal value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ParticipantsCollectionInternal.DeserializeParticipantsCollectionInternal(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

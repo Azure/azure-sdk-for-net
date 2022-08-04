@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
     /// <summary> Request payload for creating new room. </summary>
     internal partial class CreateRoomRequest
@@ -17,14 +17,16 @@ namespace Azure.Communication.Rooms.Models
         /// <summary> Initializes a new instance of CreateRoomRequest. </summary>
         public CreateRoomRequest()
         {
-            Participants = new ChangeTrackingDictionary<string, RoomParticipantInternal>();
+            Participants = new ChangeTrackingList<RoomParticipantInternal>();
         }
 
         /// <summary> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidFrom { get; set; }
         /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ValidUntil { get; set; }
-        /// <summary> (Optional) Collection of identities invited to the room. </summary>
-        public IDictionary<string, RoomParticipantInternal> Participants { get; }
+        /// <summary> The Policy based on which Participants can join a room. </summary>
+        public RoomJoinPolicy? RoomJoinPolicy { get; set; }
+        /// <summary> (Optional) Collection of participants invited to the room. </summary>
+        public IList<RoomParticipantInternal> Participants { get; }
     }
 }

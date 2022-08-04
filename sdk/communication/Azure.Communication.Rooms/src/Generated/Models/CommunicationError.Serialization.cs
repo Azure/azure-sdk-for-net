@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
     internal partial class CommunicationError
     {
@@ -19,7 +19,7 @@ namespace Azure.Communication.Rooms.Models
             string message = default;
             Optional<string> target = default;
             Optional<IReadOnlyList<CommunicationError>> details = default;
-            Optional<CommunicationError> innerError = default;
+            Optional<CommunicationError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -52,18 +52,18 @@ namespace Azure.Communication.Rooms.Models
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("innerError"))
+                if (property.NameEquals("innererror"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innerError = DeserializeCommunicationError(property.Value);
+                    innererror = DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innerError.Value);
+            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

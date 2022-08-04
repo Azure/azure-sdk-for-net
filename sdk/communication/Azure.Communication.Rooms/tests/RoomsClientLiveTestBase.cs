@@ -10,16 +10,19 @@ using Azure.Core.TestFramework;
 using Azure.Communication.Identity;
 using System.Threading.Tasks;
 using static Azure.Communication.Rooms.RoomsClientOptions;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.Rooms.Tests
 {
     public class RoomsClientLiveTestBase : RecordedTestBase<RoomsClientTestEnvironment>
     {
+        private const string DateTimeStampRegEx = @"[0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z";
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             IgnoredHeaders.Add("Repeatability-Request-ID");
             IgnoredHeaders.Add("Repeatability-First-Sent");
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx, SanitizeValue));
         }
         protected RoomsClient CreateInstrumentedRoomsClient(ServiceVersion version)
         {

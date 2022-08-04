@@ -1,38 +1,50 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using Azure.Communication.Rooms.Models;
 
-namespace Azure.Communication.Rooms.Models
+namespace Azure.Communication.Rooms
 {
-    /// <summary>
-    /// An Azure Communication Services Room Participant.
-    /// </summary>
+    /// <summary> A participant of the room. </summary>
     public partial class RoomParticipant
     {
-        /// <summary>
-        /// An Azure Communication Services Room.
-        /// </summary>
-        /// <param name="identifier">I</param>
-        /// <param name="roleName"></param>
-        public RoomParticipant(string identifier, string roleName)
+        /// <summary> Initializes a new instance of RoomParticipant. </summary>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
+        public RoomParticipant(CommunicationIdentifier communicationIdentifier)
         {
-            Identifier = identifier;
-            RoleName = roleName;
+            if (communicationIdentifier == null)
+            {
+                throw new ArgumentNullException(nameof(communicationIdentifier));
+            }
+
+            CommunicationIdentifier = communicationIdentifier;
         }
 
-        /// <summary> The identifer of participant in Acs User Identifer format. </summary>
-        public string Identifier { get; set; }
-        /// <summary> The prebuilt role name. </summary>
-        public string RoleName { get; set; }
+        /// <summary> Initializes a new instance of RoomParticipant. </summary>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <param name="role"> Role Name. </param>
+        public RoomParticipant(CommunicationIdentifier communicationIdentifier, RoleType role)
+        {
+            CommunicationIdentifier = communicationIdentifier;
+            Role = role;
+        }
+
+        internal RoomParticipant(RoomParticipantInternal roomParticipantInternal)
+        {
+            CommunicationIdentifier = CommunicationIdentifierSerializer.Deserialize(roomParticipantInternal.CommunicationIdentifier);
+            Role = roomParticipantInternal.Role;
+        }
+
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        public CommunicationIdentifier CommunicationIdentifier { get;}
+        /// <summary> Role Name. </summary>
+        public RoleType? Role { get; set; }
 
         internal RoomParticipantInternal ToRoomParticipantInternal()
         {
-            if (String.IsNullOrEmpty(RoleName))
-            {
-                return null;
-            }
-            return new RoomParticipantInternal(RoleName);
+            return new RoomParticipantInternal(CommunicationIdentifierSerializer.Serialize(CommunicationIdentifier), Role);
         }
     }
 }

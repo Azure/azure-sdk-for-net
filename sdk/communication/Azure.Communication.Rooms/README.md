@@ -18,7 +18,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`RoomsClient` provides the functionality to create, update, get, delete rooms.
+`RoomsClient` provides the functionality to create room, update room, get room, delete room, add participants, remove participant, update participant and get participants.
 
 ### Using statements
 ```C# Snippet:Azure_Communication_Rooms_Tests_UsingStatements
@@ -47,8 +47,8 @@ A `RequestFailedException` is thrown as a service response for any unsuccessful 
 try
 {
     RoomRequest request = new RoomRequest();
-    Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(request);
-    CommunicationRoom createRoomResult = createRoomResponse.Value;
+    Response<RoomModel> createRoomResponse = await roomsClient.CreateRoomAsync(request);
+    RoomModel createRoomResult = createRoomResponse.Value;
 }
 catch (RequestFailedException ex)
 {
