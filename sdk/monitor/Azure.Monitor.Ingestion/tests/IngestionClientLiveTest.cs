@@ -20,7 +20,7 @@ namespace Azure.Monitor.Ingestion.Tests
 {
     public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
     {
-        public IngestionClientLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public IngestionClientLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
