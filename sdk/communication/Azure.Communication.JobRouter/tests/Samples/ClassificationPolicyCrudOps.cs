@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,16 +18,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public void ClassificationPolicyCrud()
         {
-#if !SNIPPET
             // create a client
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-#endif
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateClassificationPolicy
 
-            var classificationPolicyId = "my-classification-policy";
+            string classificationPolicyId = "my-classification-policy";
 
-            var classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
+            Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
                 options: new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = "Sample classification policy",
@@ -97,7 +96,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicy
 
-            var queriedClassificationPolicy = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
+            Response<ClassificationPolicy> queriedClassificationPolicy = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
 
             Console.WriteLine($"Successfully fetched classification policy with id: {queriedClassificationPolicy.Value.Id}");
 
@@ -105,7 +104,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicy
 
-            var updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(
+            Response<ClassificationPolicy> updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(
                 new UpdateClassificationPolicyOptions(classificationPolicyId)
                 {
                     PrioritizationRule = new ExpressionRule("If(job.HighPriority = \"true\", 50, 10)")
@@ -148,10 +147,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies
 
-            var classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
-            foreach (var asPage in classificationPolicies.AsPages(pageSizeHint: 10))
+            Pageable<ClassificationPolicyItem> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
+            foreach (Page<ClassificationPolicyItem> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
             {
-                foreach (var policy in asPage.Values)
+                foreach (ClassificationPolicyItem? policy in asPage.Values)
                 {
                     Console.WriteLine($"Listing classification policy with id: {policy.ClassificationPolicy.Id}");
                 }

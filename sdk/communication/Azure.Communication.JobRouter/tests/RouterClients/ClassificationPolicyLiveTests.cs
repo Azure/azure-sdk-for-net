@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
     public class ClassificationPolicyLiveTests : RouterLiveTestBase
     {
-        /// <inheritdoc />
         public ClassificationPolicyLiveTests(bool isAsync) : base(isAsync)
         {
         }

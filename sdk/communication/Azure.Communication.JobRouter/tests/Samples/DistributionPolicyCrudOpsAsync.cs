@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,16 +18,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task DistributionPolicyCrud()
         {
-#if !SNIPPET
             // create a client
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-#endif
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateDistributionPolicy_Async
 
-            var distributionPolicyId = "my-distribution-policy";
+            string distributionPolicyId = "my-distribution-policy";
 
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(1),
@@ -42,7 +41,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicy_Async
 
-            var queriedDistributionPolicy = await routerAdministrationClient.GetDistributionPolicyAsync(distributionPolicyId);
+            Response<DistributionPolicy> queriedDistributionPolicy = await routerAdministrationClient.GetDistributionPolicyAsync(distributionPolicyId);
 
             Console.WriteLine($"Successfully fetched distribution policy with id: {queriedDistributionPolicy.Value.Id}");
 
@@ -50,7 +49,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy_Async
 
-            var updatedDistributionPolicy = await routerAdministrationClient.UpdateDistributionPolicyAsync(
+            Response<DistributionPolicy> updatedDistributionPolicy = await routerAdministrationClient.UpdateDistributionPolicyAsync(
                 new UpdateDistributionPolicyOptions(distributionPolicyId)
                 {
                     // you can update one or more properties of distribution policy
@@ -63,10 +62,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies_Async
 
-            var distributionPolicies = routerAdministrationClient.GetDistributionPoliciesAsync();
-            await foreach (var asPage in distributionPolicies.AsPages(pageSizeHint: 10))
+            AsyncPageable<DistributionPolicyItem> distributionPolicies = routerAdministrationClient.GetDistributionPoliciesAsync();
+            await foreach (Page<DistributionPolicyItem> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
             {
-                foreach (var policy in asPage.Values)
+                foreach (DistributionPolicyItem? policy in asPage.Values)
                 {
                     Console.WriteLine($"Listing distribution policy with id: {policy.DistributionPolicy.Id}");
                 }

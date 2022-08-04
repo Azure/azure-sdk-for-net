@@ -4,6 +4,7 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -11,26 +12,26 @@ using Azure.Communication.JobRouter;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create an exception policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateExceptionPolicy_Async
-var exceptionPolicyId = "my-exception-policy";
+string exceptionPolicyId = "my-exception-policy";
 
 // we are going to create 2 rules:
-// 1. `EscalateJobOnQueueOverFlowTrigger`: triggers when queue has more than 10 jobs already en-queued,
+// 1. EscalateJobOnQueueOverFlowTrigger: triggers when queue has more than 10 jobs already en-queued,
 //                                         then reclassifies job adding additional labels on the job.
-// 2. `EscalateJobOnWaitTimeExceededTrigger`: triggers when job has waited in the queue for more than 10 minutes,
+// 2. EscalateJobOnWaitTimeExceededTrigger: triggers when job has waited in the queue for more than 10 minutes,
 //                                            then reclassifies job adding additional labels on the job
 
 // define exception trigger for queue over flow
-var queueLengthExceptionTrigger = new QueueLengthExceptionTrigger(10);
+QueueLengthExceptionTrigger queueLengthExceptionTrigger = new QueueLengthExceptionTrigger(10);
 
 // define exception actions that needs to be executed when trigger condition is satisfied
-var escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
+ReclassifyExceptionAction escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
     classificationPolicyId: "escalation-on-q-over-flow",
     labelsToUpsert: new Dictionary<string, LabelValue>()
     {
@@ -39,11 +40,11 @@ var escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
     });
 
 // define second exception trigger for wait time
-var waitTimeExceptionTrigger = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(10));
+WaitTimeExceptionTrigger waitTimeExceptionTrigger = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(10));
 
 // define exception actions that needs to be executed when trigger condition is satisfied
 
-var escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
+ReclassifyExceptionAction escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
     classificationPolicyId: "escalation-on-wait-time-exceeded",
     labelsToUpsert: new Dictionary<string, LabelValue>()
     {
@@ -52,7 +53,7 @@ var escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
     });
 
 // define exception rule
-var exceptionRule = new Dictionary<string, ExceptionRule>()
+Dictionary<string, ExceptionRule> exceptionRule = new Dictionary<string, ExceptionRule>()
 {
     ["EscalateJobOnQueueOverFlowTrigger"] = new ExceptionRule(
         trigger: queueLengthExceptionTrigger,
@@ -68,7 +69,7 @@ var exceptionRule = new Dictionary<string, ExceptionRule>()
         })
 };
 
-var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
+Response<ExceptionPolicy> exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
     new CreateExceptionPolicyOptions(
             exceptionPolicyId: exceptionPolicyId,
             exceptionRules: exceptionRule) // this is optional
@@ -83,7 +84,7 @@ Console.WriteLine($"Exception Policy successfully created with id: {exceptionPol
 ## Get a exception policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicy_Async
-var queriedExceptionPolicy = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
+Response<ExceptionPolicy> queriedExceptionPolicy = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
 
 Console.WriteLine($"Successfully fetched exception policy with id: {queriedExceptionPolicy.Value.Id}");
 ```
@@ -92,17 +93,17 @@ Console.WriteLine($"Successfully fetched exception policy with id: {queriedExcep
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicy_Async
 // we are going to
-// 1. Add an exception rule: `EscalateJobOnWaitTimeExceededTrigger2Min`: triggers when job has waited in the queue for more than 2 minutes,
+// 1. Add an exception rule: EscalateJobOnWaitTimeExceededTrigger2Min: triggers when job has waited in the queue for more than 2 minutes,
 //                                                                       then reclassifies job adding additional labels on the job
-// 2. Modify an existing rule: `EscalateJobOnQueueOverFlowTrigger`: change `threshold` to 100
-// 3. Delete an exception rule: `EscalateJobOnWaitTimeExceededTrigger` to be deleted
+// 2. Modify an existing rule: EscalateJobOnQueueOverFlowTrigger: change 'threshold' to 100
+// 3. Delete an exception rule: EscalateJobOnWaitTimeExceededTrigger to be deleted
 
 // let's define the new rule to be added
 // define exception trigger
-var escalateJobOnWaitTimeExceed2 = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(2));
+WaitTimeExceptionTrigger escalateJobOnWaitTimeExceed2 = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(2));
 
 // define exception action
-var escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
+ReclassifyExceptionAction escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
     classificationPolicyId: "escalation-on-wait-time-exceeded",
     labelsToUpsert: new Dictionary<string, LabelValue>()
     {
@@ -110,7 +111,7 @@ var escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
         ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
     });
 
-var updateExceptionPolicy = await routerClient.UpdateExceptionPolicyAsync(
+Response<ExceptionPolicy> updateExceptionPolicy = await routerClient.UpdateExceptionPolicyAsync(
     new UpdateExceptionPolicyOptions(exceptionPolicyId)
     {
         // you can update one or more properties of exception policy - here we are adding one additional exception rule
@@ -145,10 +146,10 @@ Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been suc
 ## List exception policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies_Async
-var exceptionPolicies = routerClient.GetExceptionPoliciesAsync();
-await foreach (var asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
+AsyncPageable<ExceptionPolicyItem> exceptionPolicies = routerClient.GetExceptionPoliciesAsync();
+await foreach (Page<ExceptionPolicyItem> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (var policy in asPage.Values)
+    foreach (ExceptionPolicyItem? policy in asPage.Values)
     {
         Console.WriteLine($"Listing exception policy with id: {policy.ExceptionPolicy.Id}");
     }

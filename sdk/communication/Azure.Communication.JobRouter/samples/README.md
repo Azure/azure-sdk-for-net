@@ -5,7 +5,6 @@ languages:
 products:
 - azure
 - azure-communication-services
-# - azure-communication-services-job-router
 name: Azure.Communication.JobRouter samples for .NET
 description: Samples for the Azure.Communication.JobRouter client library
 ---
@@ -34,7 +33,6 @@ description: Samples for the Azure.Communication.JobRouter client library
   - Using Exception Policy
     - [Trigger exception with WaitTimeExceptionTrigger][waitTimeExceptionTriggerAsync]
     - [Trigger exception with QueueLengthExceptionTrigger][queueLengthExceptionTriggerAsync]
-
 
 <!-- LINKS -->
 [classificationPolicyCrudOps]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/samples/ClassificationPolicyCrud.md

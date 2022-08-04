@@ -92,14 +92,14 @@ using Azure.Core.Pipeline;
             RestClient = new JobRouterRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
-        #endregion
-
         /// <summary>Initializes a new instance of <see cref="RouterClient"/> for mocking.</summary>
         protected RouterClient()
         {
             _clientDiagnostics = null;
             RestClient = null;
         }
+
+        #endregion
 
         #region Job
 

@@ -4,6 +4,7 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -11,8 +12,8 @@ using Azure.Communication.JobRouter;
 Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Enqueue job to a queue using classification policy and queue id
@@ -31,48 +32,48 @@ var routerAdministrationClient = new RouterAdministrationClient(Environment.GetE
 // 1. Job1 is enqueued in Queue1
 // 2. Job2 is enqueued in Queue2
 
-var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(distributionPolicyId: "distribution-policy-id-2", offerTtl: TimeSpan.FromSeconds(30), mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
     }
     );
 
-var queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
     });
 
-var queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_XBox",
     });
 
-var cp1QueueLabelAttachments = new List<QueueSelectorAttachment>()
+List<QueueSelectorAttachment> cp1QueueLabelAttachments = new List<QueueSelectorAttachment>()
 {
     new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
 };
-var cp1 = await routerAdministrationClient.CreateClassificationPolicyAsync(
+Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-o365")
     {
         Name = "Classification_Policy_O365",
         QueueSelectors = cp1QueueLabelAttachments,
     });
 
-var cp2QueueLabelAttachments = new List<QueueSelectorAttachment>()
+List<QueueSelectorAttachment> cp2QueueLabelAttachments = new List<QueueSelectorAttachment>()
 {
     new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
 };
-var cp2 = await routerAdministrationClient.CreateClassificationPolicyAsync(
+Response<ClassificationPolicy> cp2 = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-xbox")
     {
         Name = "Classification_Policy_XBox",
         QueueSelectors = cp2QueueLabelAttachments,
     });
 
-var jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobO365",
         channelId: "general",
@@ -81,7 +82,7 @@ var jobO365 = await routerClient.CreateJobAsync(
         ChannelReference = "12345",
     });
 
-var jobXbox = await routerClient.CreateJobAsync(
+Response<RouterJob> jobXbox = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobXbox",
         channelId: "general",
@@ -91,8 +92,8 @@ var jobXbox = await routerClient.CreateJobAsync(
     });
 
 
-var jobO365Result = await routerClient.GetJobAsync(jobO365.Value.Id);
-var jobXBoxResult = await routerClient.GetJobAsync(jobXbox.Value.Id);
+Response<RouterJob> jobO365Result = await routerClient.GetJobAsync(jobO365.Value.Id);
+Response<RouterJob> jobXBoxResult = await routerClient.GetJobAsync(jobXbox.Value.Id);
 
 Console.WriteLine($"O365 job has been enqueued in queue: {queue1.Value.Id}. Status: {jobO365Result.Value.QueueId == queue1.Value.Id}");
 Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Status: {jobXBoxResult.Value.QueueId == queue2.Value.Id}");
@@ -120,7 +121,7 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 // 1. Job1 is enqueued in Queue1
 // 2. Job2 is enqueued in Queue2
 
-var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: "distribution-policy-id-3",
         offerTtl: TimeSpan.FromSeconds(30),
@@ -130,7 +131,7 @@ var distributionPolicy = await routerAdministrationClient.CreateDistributionPoli
     }
 );
 
-var queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -142,7 +143,7 @@ var queue1 = await routerAdministrationClient.CreateQueueAsync(
         }
     });
 
-var queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -154,7 +155,7 @@ var queue2 = await routerAdministrationClient.CreateQueueAsync(
         }
     });
 
-var queueSelectorAttachments = new List<QueueSelectorAttachment>()
+List<QueueSelectorAttachment> queueSelectorAttachments = new List<QueueSelectorAttachment>()
 {
     new ConditionalQueueSelectorAttachment(
         condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
@@ -170,14 +171,14 @@ var queueSelectorAttachments = new List<QueueSelectorAttachment>()
         })
 };
 
-var classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
+Response<ClassificationPolicy> classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
     {
         Name = "Classification_Policy_O365_And_XBox",
         QueueSelectors = queueSelectorAttachments,
     });
 
-var jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobO365",
         channelId: "general",
@@ -192,7 +193,7 @@ var jobO365 = await routerClient.CreateJobAsync(
         },
     });
 
-var jobXbox = await routerClient.CreateJobAsync(
+Response<RouterJob> jobXbox = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobXbox",
         channelId: "general",
@@ -208,8 +209,8 @@ var jobXbox = await routerClient.CreateJobAsync(
     });
 
 
-var jobO365Result = await routerClient.GetJobAsync(jobO365.Value.Id);
-var jobXBoxResult = await routerClient.GetJobAsync(jobXbox.Value.Id);
+Response<RouterJob> jobO365Result = await routerClient.GetJobAsync(jobO365.Value.Id);
+Response<RouterJob> jobXBoxResult = await routerClient.GetJobAsync(jobXbox.Value.Id);
 
 Console.WriteLine($"O365 job has been enqueued in queue: {queue1.Value.Id}. Status: {jobO365Result.Value.QueueId == queue1.Value.Id}");
 Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Status: {jobXBoxResult.Value.QueueId == queue2.Value.Id}");
@@ -240,7 +241,7 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 // 2. Job2 is enqueued in Queue2
 // 3. Job3 is enqueued in Queue3
 
-var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: "distribution-policy-id-4",
         offerTtl: TimeSpan.FromSeconds(30),
@@ -250,7 +251,7 @@ var distributionPolicy = await routerAdministrationClient.CreateDistributionPoli
     }
     );
 
-var queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -264,7 +265,7 @@ var queue1 = await routerAdministrationClient.CreateQueueAsync(
         },
     });
 
-var queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -278,7 +279,7 @@ var queue2 = await routerAdministrationClient.CreateQueueAsync(
         },
     });
 
-var queue3 = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-3",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -292,21 +293,21 @@ var queue3 = await routerAdministrationClient.CreateQueueAsync(
         },
     });
 
-var queueSelectorAttachments = new List<QueueSelectorAttachment>()
+List<QueueSelectorAttachment> queueSelectorAttachments = new List<QueueSelectorAttachment>()
 {
     new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
     new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
     new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
 };
 
-var classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
+Response<ClassificationPolicy> classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
     {
         Name = "Classification_Policy_O365_EMEA_NA",
         QueueSelectors = queueSelectorAttachments,
     });
 
-var jobENEmea = await routerClient.CreateJobAsync(
+Response<RouterJob> jobENEmea = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobENEmea",
         channelId: "general",
@@ -323,7 +324,7 @@ var jobENEmea = await routerClient.CreateJobAsync(
         },
     });
 
-var jobFREmea = await routerClient.CreateJobAsync(
+Response<RouterJob> jobFREmea = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobFREmea",
         channelId: "general",
@@ -340,7 +341,7 @@ var jobFREmea = await routerClient.CreateJobAsync(
         },
     });
 
-var jobENNa = await routerClient.CreateJobAsync(
+Response<RouterJob> jobENNa = await routerClient.CreateJobAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobENNa",
         channelId: "general",
@@ -358,9 +359,9 @@ var jobENNa = await routerClient.CreateJobAsync(
     });
 
 
-var jobENEmeaResult = await routerClient.GetJobAsync(jobENEmea.Value.Id);
-var jobFREmeaResult = await routerClient.GetJobAsync(jobFREmea.Value.Id);
-var jobENNaResult = await routerClient.GetJobAsync(jobENNa.Value.Id);
+Response<RouterJob> jobENEmeaResult = await routerClient.GetJobAsync(jobENEmea.Value.Id);
+Response<RouterJob> jobFREmeaResult = await routerClient.GetJobAsync(jobFREmea.Value.Id);
+Response<RouterJob> jobENNaResult = await routerClient.GetJobAsync(jobENNa.Value.Id);
 
 Console.WriteLine($"O365 EN EMEA job has been enqueued in queue: {queue1.Value.Id}. Status: {jobENEmeaResult.Value.QueueId == queue1.Value.Id}");
 Console.WriteLine($"O365 FR EMEA job has been enqueued in queue: {queue2.Value.Id}. Status: {jobFREmeaResult.Value.QueueId == queue2.Value.Id}");

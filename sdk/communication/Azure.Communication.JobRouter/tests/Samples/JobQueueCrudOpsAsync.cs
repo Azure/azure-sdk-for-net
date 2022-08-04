@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,22 +19,20 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task JobQueueCrud()
         {
-#if !SNIPPET
             // create a client
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
 
-            var distributionPolicyId = "distribution-policy-id";
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "distribution-policy-id";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(5), new LongestIdleMode()));
-#endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateJobQueue_Async
 
             // set `distributionPolicyId` to an existing distribution policy
-            var jobQueueId = "job-queue-id";
+            string jobQueueId = "job-queue-id";
 
-            var jobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(jobQueueId, distributionPolicyId)
                 {
                     Name = "My job queue"
@@ -45,7 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueue_Async
 
-            var queriedJobQueue = await routerAdministrationClient.GetQueueAsync(jobQueueId);
+            Response<JobQueue> queriedJobQueue = await routerAdministrationClient.GetQueueAsync(jobQueueId);
 
             Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.Id}");
 
@@ -53,7 +52,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat_Async
 
-            var queueStatistics = await routerClient.GetQueueStatisticsAsync(queueId: jobQueueId);
+            Response<QueueStatistics> queueStatistics = await routerClient.GetQueueStatisticsAsync(queueId: jobQueueId);
 
             Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 
@@ -61,7 +60,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue_Async
 
-            var updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
+            Response<JobQueue> updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
                 options: new UpdateQueueOptions(jobQueueId)
                 {
                     Labels = new Dictionary<string, LabelValue>()
@@ -74,10 +73,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues_Async
 
-            var jobQueues = routerAdministrationClient.GetQueuesAsync();
-            await foreach (var asPage in jobQueues.AsPages(pageSizeHint: 10))
+            AsyncPageable<JobQueueItem> jobQueues = routerAdministrationClient.GetQueuesAsync();
+            await foreach (Page<JobQueueItem> asPage in jobQueues.AsPages(pageSizeHint: 10))
             {
-                foreach (var policy in asPage.Values)
+                foreach (JobQueueItem? policy in asPage.Values)
                 {
                     Console.WriteLine($"Listing job queue with id: {policy.JobQueue.Id}");
                 }

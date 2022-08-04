@@ -92,14 +92,14 @@ namespace Azure.Communication.JobRouter
             RestClient = new JobRouterAdministrationRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
-        #endregion private constructors
-
         /// <summary>Initializes a new instance of <see cref="RouterAdministrationClient"/> for mocking.</summary>
         protected RouterAdministrationClient()
         {
             _clientDiagnostics = null;
             RestClient = null;
         }
+
+        #endregion private constructors
 
         #region ClassificationPolicy
 

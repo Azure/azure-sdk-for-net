@@ -2,7 +2,7 @@
 
 This package contains a C# SDK for Azure Communication Services for JobRouter.
 
-[Source code][source] | [Package (NuGet)]<!-- [https://www.nuget.org/packages/Azure.Communication.JobRouter]--> | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][https://www.nuget.org] | [Product documentation][product_docs]
 
 
 ## Getting started
@@ -24,13 +24,15 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ### Create a JobRouter Client
 
 This will allow you to interact with the JobRouter Service
-```C#
-var routerClient new RouterClient("<Communication Service Connection String>");
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 
@@ -86,7 +88,7 @@ An exception policy controls the behavior of a Job based on a trigger and execut
 Before we can create a Queue, we need a Distribution Policy.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
-var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: "distribution-policy-1",
         offerTtl: TimeSpan.FromDays(1),
@@ -97,7 +99,7 @@ var distributionPolicy = await routerAdministrationClient.CreateDistributionPoli
 ### Queue
 Next, we can create the queue.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-var queue = await routerAdministrationClient.CreateQueueAsync(
+Response<JobQueue> queue = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -107,7 +109,7 @@ var queue = await routerAdministrationClient.CreateQueueAsync(
 ### Job
 Now, we can submit a job directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
-var job = await routerClient.CreateJobAsync(
+Response<RouterJob> job = await routerClient.CreateJobAsync(
     new CreateJobOptions(
         jobId: "jobId-1",
         channelId: "my-channel",
@@ -125,7 +127,7 @@ var job = await routerClient.CreateJobAsync(
 ### Worker
 Now, we register a worker to receive work from that queue, with a label of `Some-Skill` equal to 11.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
-var worker = await routerClient.CreateWorkerAsync(
+Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
     new CreateWorkerOptions(
         workerId: "worker-1",
         totalCapacity: 1)
@@ -191,8 +193,8 @@ foreach (EventGridEvent egEvent in egEvents)
 
 However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
-var result = await routerClient.GetWorkerAsync(worker.Value.Id);
-foreach (var offer in result.Value.Offers)
+Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
+foreach (JobOffer? offer in result.Value.Offers)
 {
     Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
 }
@@ -202,25 +204,25 @@ foreach (var offer in result.Value.Offers)
 Once a worker receives an offer, it can take two possible actions: accept or decline. We are going to accept the offer.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 // fetching the offer id
-var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
+JobOffer jobOffer = result.Value.Offers.First(x => x.JobId == job.Value.Id);
 
-var offerId = jobOffer!.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
+string offerId = jobOffer.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
 
 // accepting the offer sent to `worker-1`
-var acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, offerId);
+Response<AcceptJobOfferResult> acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, offerId);
 
 Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
 Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");
 
 // verify job assignment is populated when querying job
-var updatedJob = await routerClient.GetJobAsync(job.Value.Id);
+Response<RouterJob> updatedJob = await routerClient.GetJobAsync(job.Value.Id);
 Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == RouterJobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
 ```
 
 ### Completing a job
 Once the worker is done with the job, the worker has to mark the job as `completed`.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
-var completeJob = await routerClient.CompleteJobAsync(
+Response<CompleteJobResult> completeJob = await routerClient.CompleteJobAsync(
     options: new CompleteJobOptions(
             jobId: job.Value.Id,
             assignmentId: acceptJobOfferResult.Value.AssignmentId)
@@ -234,7 +236,7 @@ Console.WriteLine($"Job has been successfully completed: {completeJob.GetRawResp
 ### Closing a job
 After a job has been completed, the worker can perform wrap up actions to the job before closing the job and finally releasing its capacity to accept more incoming jobs
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
-var closeJob = await routerClient.CloseJobAsync(
+Response<CloseJobResult> closeJob = await routerClient.CloseJobAsync(
     options: new CloseJobOptions(
         jobId: job.Value.Id,
         assignmentId: acceptJobOfferResult.Value.AssignmentId)

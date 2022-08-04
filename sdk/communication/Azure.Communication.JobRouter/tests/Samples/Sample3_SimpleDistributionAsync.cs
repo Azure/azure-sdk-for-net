@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -31,25 +32,25 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Worker1 (who had registered earlier) will get the offer for the job
 
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
             // Create distribution policy
-            var distributionPolicyId = "distribution-policy-id-5";
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "distribution-policy-id-5";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId, offerTtl: TimeSpan.FromMinutes(5), mode: new LongestIdleMode()) { Name = "Simple longest idle" });
 
             // Create queue
-            var queueId = "queue-id-1";
-            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            string queueId = "queue-id-1";
+            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
-            var worker1Id = "worker-id-1";
-            var worker2Id = "worker-id-2";
+            string worker1Id = "worker-id-1";
+            string worker2Id = "worker-id-2";
 
-            var worker1 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -60,7 +61,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
                 });
 
-            var worker2 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -78,23 +79,23 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             worker2 = await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(worker2Id) { AvailableForOffers = true });
 
             // Create a job
-            var jobId = "job-id-1";
-            var job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId));
+            string jobId = "job-id-1";
+            Response<RouterJob> job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId));
 
 #if !SNIPPET
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var worker1Dto = await routerClient.GetWorkerAsync(worker1Id);
+                Response<RouterWorker> worker1Dto = await routerClient.GetWorkerAsync(worker1Id);
                 condition = worker1Dto.Value.Offers.Any(offer => offer.JobId == jobId);
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif
 
-            var queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
-            var queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
+            Response<RouterWorker> queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
+            Response<RouterWorker> queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
 
             // Worker1 would have got the first offer
             Console.WriteLine($"Worker 1 has successfully received offer for job: {queriedWorker1.Value.Offers.Any(offer => offer.JobId == jobId)}"); // true
@@ -120,26 +121,26 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Worker1 will get the offer for job1
             // Worker2 will get the offer for job2
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
             // Create distribution policy
-            var distributionPolicyId = "distribution-policy-id-6";
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "distribution-policy-id-6";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(5),
                     mode: new RoundRobinMode()) { Name = "Simple round robin" });
 
             // Create queue
-            var queueId = "queue-id-1";
-            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
+            string queueId = "queue-id-1";
+            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
-            var worker1Id = "worker-id-1";
-            var worker2Id = "worker-id-2";
+            string worker1Id = "worker-id-1";
+            string worker2Id = "worker-id-2";
 
-            var worker1 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -151,7 +152,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     AvailableForOffers = true,  // register worker upon creation
                 });
 
-            var worker2 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -161,28 +162,28 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             // Setting up two identical jobs
-            var job1Id = "job-id-1";
-            var job2Id = "job-id-2";
+            string job1Id = "job-id-1";
+            string job2Id = "job-id-2";
 
-            var job1 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job1Id, channelId: "general", queueId: queueId));
-            var job2 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job2Id, channelId: "general", queueId: queueId));
+            Response<RouterJob> job1 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job1Id, channelId: "general", queueId: queueId));
+            Response<RouterJob> job2 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job2Id, channelId: "general", queueId: queueId));
 
 #if !SNIPPET
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var worker1Dto = await routerClient.GetWorkerAsync(worker1Id);
-                var worker2Dto = await routerClient.GetWorkerAsync(worker2Id);
+                Response<RouterWorker> worker1Dto = await routerClient.GetWorkerAsync(worker1Id);
+                Response<RouterWorker> worker2Dto = await routerClient.GetWorkerAsync(worker2Id);
                 condition = worker1Dto.Value.Offers.Any(offer => offer.JobId == job1Id)
                             && worker2Dto.Value.Offers.Any(offer => offer.JobId == job2Id);
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif
 
-            var queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
-            var queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
+            Response<RouterWorker> queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
+            Response<RouterWorker> queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
 
             // Worker1 would have got the first offer
             Console.WriteLine($"Worker 1 has successfully received offer for job1: {queriedWorker1.Value.Offers.Any(offer => offer.JobId == job1Id)}"); // true
@@ -217,29 +218,29 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Worker2 will get the first offer for the job (complete label overlap + complete worker selector matched)
             // Worker3 will not get the offer for the job (partial label overlap + partial worker selector match)
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
             // Create distribution policy
-            var distributionPolicyId = "distribution-policy-id-7";
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "distribution-policy-id-7";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(5),
                     mode: new BestWorkerMode()) { Name = "Default best worker mode" });
 
             // Create queue
-            var queueId = "queue-id-1";
-            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            string queueId = "queue-id-1";
+            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
             // Setting up 3 workers with different labels
-            var worker1Id = "worker-id-1";
-            var worker2Id = "worker-id-2";
-            var worker3Id = "worker-id-3";
+            string worker1Id = "worker-id-1";
+            string worker2Id = "worker-id-2";
+            string worker3Id = "worker-id-3";
 
-            var worker1 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -259,7 +260,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     }
                 });
 
-            var worker2 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -276,7 +277,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     }
                 });
 
-            var worker3 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker3Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -293,8 +294,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     }
                 });
 
-            var jobId = "job-id-1";
-            var job = await routerClient.CreateJobAsync(
+            string jobId = "job-id-1";
+            Response<RouterJob> job = await routerClient.CreateJobAsync(
                 options: new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId)
                 {
                     Labels = new Dictionary<string, LabelValue>()
@@ -313,19 +314,19 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var worker2Dto = await routerClient.GetWorkerAsync(worker2Id);
+                Response<RouterWorker> worker2Dto = await routerClient.GetWorkerAsync(worker2Id);
                 condition = worker2Dto.Value.Offers.Any(offer => offer.JobId == jobId);
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif
 
-            var queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
-            var queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
-            var queriedWorker3 = await routerClient.GetWorkerAsync(worker3Id);
+            Response<RouterWorker> queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
+            Response<RouterWorker> queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
+            Response<RouterWorker> queriedWorker3 = await routerClient.GetWorkerAsync(worker3Id);
 
             // Worker1 would have got the first offer
             Console.WriteLine($"Worker 1 has not received an offer for job: {queriedWorker1.Value.Offers.All(offer => offer.JobId != jobId)}"); // true
@@ -352,28 +353,28 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Both Worker1 and Worker2 will get offer for the job
 
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
             // Create distribution policy
-            var distributionPolicyId = "distribution-policy-id-8";
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "distribution-policy-id-8";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(5),
                     mode: new LongestIdleMode(minConcurrentOffers: 1, maxConcurrentOffers: 2)) { Name = "Simple longest idle" });
 
             // Create queue
-            var queueId = "queue-id-1";
-            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            string queueId = "queue-id-1";
+            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
-            var worker1Id = "worker-id-1";
-            var worker2Id = "worker-id-2";
+            string worker1Id = "worker-id-1";
+            string worker2Id = "worker-id-2";
 
-            var worker1 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -385,7 +386,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     AvailableForOffers = true,
                 });
 
-            var worker2 = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
@@ -395,23 +396,23 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             // Create a job
-            var jobId = "job-id-1";
-            var job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId));
+            string jobId = "job-id-1";
+            Response<RouterJob> job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId));
 
 #if !SNIPPET
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var worker1Dto = await routerClient.GetWorkerAsync(worker1Id);
+                Response<RouterWorker> worker1Dto = await routerClient.GetWorkerAsync(worker1Id);
                 condition = worker1Dto.Value.Offers.Any(offer => offer.JobId == jobId);
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif
 
-            var queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
-            var queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
+            Response<RouterWorker> queriedWorker1 = await routerClient.GetWorkerAsync(worker1Id);
+            Response<RouterWorker> queriedWorker2 = await routerClient.GetWorkerAsync(worker2Id);
 
             // Worker1 would have got the first offer
             Console.WriteLine($"Worker 1 has successfully received offer for job: {queriedWorker1.Value.Offers.Any(offer => offer.JobId == jobId)}"); // true

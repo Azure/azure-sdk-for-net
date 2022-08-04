@@ -4,6 +4,7 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -11,8 +12,8 @@ using Azure.Communication.JobRouter;
 Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Using WaitTimeExceptionTrigger to trigger job reclassification
@@ -30,24 +31,24 @@ var routerAdministrationClient = new RouterAdministrationClient(Environment.GetE
 // 3. Job waits for 30 seconds before exception policy hits
 
 // Create distribution policy
-var distributionPolicyId = "distribution-policy-id-9";
+string distributionPolicyId = "distribution-policy-id-9";
 
-var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId,
+Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId,
     offerTtl: TimeSpan.FromSeconds(5),
     mode: new RoundRobinMode()));
 
 // Create fallback queue
-var fallbackQueueId = "fallback-q-id";
-var fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+string fallbackQueueId = "fallback-q-id";
+Response<JobQueue> fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
     queueId: fallbackQueueId,
     distributionPolicyId: distributionPolicyId));
 
 // Create exception policy
 // define trigger
-var trigger = new WaitTimeExceptionTrigger(TimeSpan.FromSeconds(30)); // triggered after 5 minutes
+WaitTimeExceptionTrigger trigger = new WaitTimeExceptionTrigger(TimeSpan.FromSeconds(30)); // triggered after 5 minutes
 
 // define exception action
-var action = new ManualReclassifyExceptionAction(
+ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
     queueId: fallbackQueueId,
     priority: 100,
     workerSelectors: new List<WorkerSelector>()
@@ -55,8 +56,8 @@ var action = new ManualReclassifyExceptionAction(
         new WorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true))
     });
 
-var exceptionPolicyId = "execption-policy-id";
-var exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
+string exceptionPolicyId = "execption-policy-id";
+Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
     exceptionPolicyId: exceptionPolicyId,
     exceptionRules: new Dictionary<string, ExceptionRule>()
     {
@@ -69,8 +70,8 @@ var exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsyn
     }));
 
 // Create initial queue
-var jobQueueId = "job-queue-id";
-var jobQueue = await routerAdministrationClient.CreateQueueAsync(
+string jobQueueId = "job-queue-id";
+Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
     options: new CreateQueueOptions(
         queueId: jobQueueId,
         distributionPolicyId: distributionPolicyId)
@@ -79,13 +80,13 @@ var jobQueue = await routerAdministrationClient.CreateQueueAsync(
     });
 
 // create job
-var jobId = "router-job-id";
-var job = await routerClient.CreateJobAsync(new CreateJobOptions(
+string jobId = "router-job-id";
+Response<RouterJob> job = await routerClient.CreateJobAsync(new CreateJobOptions(
     jobId: jobId,
     channelId: "general",
     queueId: jobQueueId));
 
-var queriedJob = await routerClient.GetJobAsync(jobId);
+Response<RouterJob> queriedJob = await routerClient.GetJobAsync(jobId);
 
 Console.WriteLine($"Job has been enqueued initially to queue with id: {jobQueueId}");
 

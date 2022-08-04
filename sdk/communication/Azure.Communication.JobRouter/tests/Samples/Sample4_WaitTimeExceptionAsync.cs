@@ -31,28 +31,28 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 3. Job waits for 30 seconds before exception policy hits
 
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
             // Create distribution policy
-            var distributionPolicyId = "distribution-policy-id-9";
+            string distributionPolicyId = "distribution-policy-id-9";
 
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId,
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId,
                 offerTtl: TimeSpan.FromSeconds(5),
                 mode: new RoundRobinMode()));
 
             // Create fallback queue
-            var fallbackQueueId = "fallback-q-id";
-            var fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            string fallbackQueueId = "fallback-q-id";
+            Response<JobQueue> fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: fallbackQueueId,
                 distributionPolicyId: distributionPolicyId));
 
             // Create exception policy
             // define trigger
-            var trigger = new WaitTimeExceptionTrigger(TimeSpan.FromSeconds(30)); // triggered after 5 minutes
+            WaitTimeExceptionTrigger trigger = new WaitTimeExceptionTrigger(TimeSpan.FromSeconds(30)); // triggered after 5 minutes
 
             // define exception action
-            var action = new ManualReclassifyExceptionAction(
+            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
                 queueId: fallbackQueueId,
                 priority: 100,
                 workerSelectors: new List<WorkerSelector>()
@@ -60,8 +60,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     new WorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true))
                 });
 
-            var exceptionPolicyId = "execption-policy-id";
-            var exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
+            string exceptionPolicyId = "execption-policy-id";
+            Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,
                 exceptionRules: new Dictionary<string, ExceptionRule>()
                 {
@@ -74,8 +74,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 }));
 
             // Create initial queue
-            var jobQueueId = "job-queue-id";
-            var jobQueue = await routerAdministrationClient.CreateQueueAsync(
+            string jobQueueId = "job-queue-id";
+            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(
                     queueId: jobQueueId,
                     distributionPolicyId: distributionPolicyId)
@@ -84,13 +84,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             // create job
-            var jobId = "router-job-id";
-            var job = await routerClient.CreateJobAsync(new CreateJobOptions(
+            string jobId = "router-job-id";
+            Response<RouterJob> job = await routerClient.CreateJobAsync(new CreateJobOptions(
                 jobId: jobId,
                 channelId: "general",
                 queueId: jobQueueId));
 
-            var queriedJob = await routerClient.GetJobAsync(jobId);
+            Response<RouterJob> queriedJob = await routerClient.GetJobAsync(jobId);
 
             Console.WriteLine($"Job has been enqueued initially to queue with id: {jobQueueId}");
 
@@ -102,11 +102,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var jobDto = await routerClient.GetJobAsync(job.Value.Id);
+                Response<RouterJob> jobDto = await routerClient.GetJobAsync(job.Value.Id);
                 condition = jobDto.Value.JobStatus == RouterJobStatus.Queued && jobDto.Value.QueueId == fallbackQueueId;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }

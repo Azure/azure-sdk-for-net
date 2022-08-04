@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -17,22 +18,21 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public void RouterCrudOps()
         {
-#if !SNIPPET
             // create a client
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-#endif
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterJob
             // We need to create a distribution policy + queue as a pre-requisite to start creating job
             // We are going to create a distribution policy with a simple longest idle distribution mode
-            var distributionPolicy =
+            Response<DistributionPolicy> distributionPolicy =
                 routerAdministrationClient.CreateDistributionPolicy(new CreateDistributionPolicyOptions("distribution-policy-id", TimeSpan.FromMinutes(5), new LongestIdleMode()));
 
-            var jobQueue = routerAdministrationClient.CreateQueue(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
+            Response<JobQueue> jobQueue = routerAdministrationClient.CreateQueue(new CreateQueueOptions("job-queue-id", distributionPolicy.Value.Id));
 
-            var jobId = "router-job-id";
+            string jobId = "router-job-id";
 
-            var job = routerClient.CreateJob(
+            Response<RouterJob> job = routerClient.CreateJob(
                 options: new CreateJobOptions(
                     jobId: jobId,
                     channelId: "general",
@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Alternatively, a job can also be created while specifying a classification policy
             // As a pre-requisite, we would need to create a classification policy first
-            var classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
+            Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
                 new CreateClassificationPolicyOptions("classification-policy-id")
                 {
                     QueueSelectors = new List<QueueSelectorAttachment>()
@@ -57,9 +57,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     PrioritizationRule = new StaticRule(new LabelValue(10))
                 });
 
-            var jobWithCpId = "job-with-cp-id";
+            string jobWithCpId = "job-with-cp-id";
 
-            var jobWithCp = routerClient.CreateJob(
+            Response<RouterJob> jobWithCp = routerClient.CreateJob(
                 options: new CreateJobWithClassificationPolicyOptions(
                         jobId: jobWithCpId,
                         channelId: "general",
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJob
 
-            var queriedJob = routerClient.GetJob(jobId);
+            Response<RouterJob> queriedJob = routerClient.GetJob(jobId);
 
             Console.WriteLine($"Successfully retrieved job with id: {queriedJob.Value.Id}"); // "router-job-id"
 
@@ -82,7 +82,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobPosition
 
-            var jobPositionDetails = routerClient.GetQueuePosition(jobId);
+            Response<JobPositionDetails> jobPositionDetails = routerClient.GetQueuePosition(jobId);
 
             Console.WriteLine($"Job position for id `{jobPositionDetails.Value.JobId}` successfully retrieved. JobPosition: {jobPositionDetails.Value.Position}");
 
@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterJob
 
-            var updatedJob = routerClient.UpdateJob(
+            Response<RouterJob> updatedJob = routerClient.UpdateJob(
                 options: new UpdateJobOptions(jobId: jobId)
                 {
                     // one or more job properties can be updated
@@ -103,14 +103,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob
 
-            var reclassifyJob = routerClient.ReclassifyJob(jobWithCpId);
+            Response<ReclassifyJobResult> reclassifyJob = routerClient.ReclassifyJob(jobWithCpId);
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_AcceptJobOffer
 
             // in order for the jobs to be router to a worker, we would need to create a worker with the appropriate queue and channel association
-            var worker = routerClient.CreateWorker(
+            Response<RouterWorker> worker = routerClient.CreateWorker(
                 options: new CreateWorkerOptions(
                     workerId: "router-worker-id",
                     totalCapacity: 100)
@@ -135,15 +135,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 Task.Delay(TimeSpan.FromSeconds(1));
             }
 
-            var queriedWorker = routerClient.GetWorker(worker.Value.Id);
+            Response<RouterWorker> queriedWorker = routerClient.GetWorker(worker.Value.Id);
 
-            var issuedOffer = queriedWorker.Value.Offers.First(offer => offer.JobId == jobId);
+            JobOffer? issuedOffer = queriedWorker.Value.Offers.First(offer => offer.JobId == jobId);
 
             Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.Id} and offer expiry time: {issuedOffer.ExpiryTimeUtc}");
 
             // now we accept the offer
 
-            var acceptedJobOffer = routerClient.AcceptJobOffer(worker.Value.Id, issuedOffer.Id);
+            Response<AcceptJobOfferResult> acceptedJobOffer = routerClient.AcceptJobOffer(worker.Value.Id, issuedOffer.Id);
 
             // job has been assigned to the worker
 
@@ -158,7 +158,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // A worker can also choose to decline an offer
 
-            var declineOffer = routerClient.DeclineJobOffer(worker.Value.Id, issuedOffer.Id);
+            Response<DeclineJobOfferResult> declineOffer = routerClient.DeclineJobOffer(worker.Value.Id, issuedOffer.Id);
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
 
@@ -166,7 +166,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Once a worker completes the job, it needs to mark the job as completed
 
-            var completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
+            Response<CompleteJobResult> completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
             queriedJob = routerClient.GetJob(jobId);
             Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.JobStatus}"); // "Completed"
@@ -175,7 +175,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
 
-            var closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
+            Response<CloseJobResult> closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
             queriedJob = routerClient.GetJob(jobId);
             Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.JobStatus}"); // "Closed"
@@ -184,10 +184,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
 
-            var routerJobs = routerClient.GetJobs();
-            foreach (var asPage in routerJobs.AsPages(pageSizeHint: 10))
+            Pageable<RouterJobItem> routerJobs = routerClient.GetJobs();
+            foreach (Page<RouterJobItem> asPage in routerJobs.AsPages(pageSizeHint: 10))
             {
-                foreach (var _job in asPage.Values)
+                foreach (RouterJobItem? _job in asPage.Values)
                 {
                     Console.WriteLine($"Listing router job with id: {_job.RouterJob.Id}");
                 }

@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
     public class DistributionPolicyLiveTests : RouterLiveTestBase
     {
-        /// <inheritdoc />
         public DistributionPolicyLiveTests(bool isAsync) : base(isAsync)
         {
         }
@@ -151,7 +150,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             scoringRule = ((BestWorkerMode)bestWorkerModeDistributionPolicy.Mode).ScoringRule;
             Assert.NotNull(scoringRule);
             azureFuncScoringRule = (FunctionRule)scoringRule;
-            // Assert.AreEqual("https://my.function.app/api/myfunction?code=Kg==", azureFuncScoringRule.FunctionAppUrl);
+            Assert.AreEqual("https://my.function.app/api/myfunction?code=Kg==", azureFuncScoringRule.FunctionUri.ToString());
             Assert.IsNotNull(azureFuncScoringRule.Credential);
 
             if (Mode != RecordedTestMode.Playback)

@@ -4,6 +4,7 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -11,16 +12,16 @@ using Azure.Communication.JobRouter;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a distribution policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateDistributionPolicy
-var distributionPolicyId = "my-distribution-policy";
+string distributionPolicyId = "my-distribution-policy";
 
-var distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
+Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerTtl: TimeSpan.FromMinutes(1),
@@ -36,7 +37,7 @@ Console.WriteLine($"Distribution Policy successfully created with id: {distribut
 ## Get a distribution policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicy
-var queriedDistributionPolicy = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
+Response<DistributionPolicy> queriedDistributionPolicy = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
 
 Console.WriteLine($"Successfully fetched distribution policy with id: {queriedDistributionPolicy.Value.Id}");
 ```
@@ -44,7 +45,7 @@ Console.WriteLine($"Successfully fetched distribution policy with id: {queriedDi
 ## Update a distribution policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy
-var updatedDistributionPolicy = routerAdministrationClient.UpdateDistributionPolicy(
+Response<DistributionPolicy> updatedDistributionPolicy = routerAdministrationClient.UpdateDistributionPolicy(
     new UpdateDistributionPolicyOptions(distributionPolicyId)
     {
         // you can update one or more properties of distribution policy
@@ -57,10 +58,10 @@ Console.WriteLine($"Distribution policy successfully update with new distributio
 ## List distribution policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies
-var distributionPolicies = routerAdministrationClient.GetDistributionPolicies();
-foreach (var asPage in distributionPolicies.AsPages(pageSizeHint: 10))
+Pageable<DistributionPolicyItem> distributionPolicies = routerAdministrationClient.GetDistributionPolicies();
+foreach (Page<DistributionPolicyItem> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (var policy in asPage.Values)
+    foreach (DistributionPolicyItem? policy in asPage.Values)
     {
         Console.WriteLine($"Listing distribution policy with id: {policy.DistributionPolicy.Id}");
     }

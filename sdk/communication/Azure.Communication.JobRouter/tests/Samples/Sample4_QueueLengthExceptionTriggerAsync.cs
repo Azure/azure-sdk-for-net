@@ -33,33 +33,33 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 4. Attempt to enqueue Job11 to Q1
 
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
 
             // create a distribution policy (this will be referenced by both primary queue and backup queue)
-            var distributionPolicyId = "distribution-policy-id";
+            string distributionPolicyId = "distribution-policy-id";
 
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
                 distributionPolicyId: distributionPolicyId,
                 offerTtl: TimeSpan.FromMinutes(5),
                 mode: new LongestIdleMode()));
 
             // create backup queue
-            var backupJobQueueId = "job-queue-2";
+            string backupJobQueueId = "job-queue-2";
 
-            var backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<JobQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: backupJobQueueId,
                 distributionPolicyId: distributionPolicyId));
 
             // create exception policy with QueueLengthExceptionTrigger (set threshold to 10) with ManuallyReclassifyAction
-            var exceptionPolicyId = "exception-policy-id";
+            string exceptionPolicyId = "exception-policy-id";
 
             // --- define trigger
-            var trigger = new QueueLengthExceptionTrigger(10);
+            QueueLengthExceptionTrigger trigger = new QueueLengthExceptionTrigger(10);
 
             // --- define action
-            var action = new ManualReclassifyExceptionAction(
+            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
                 queueId: backupJobQueueId,
                 priority: 10,
                 workerSelectors: new List<WorkerSelector>()
@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     new WorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
                 });
 
-            var exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
+            Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,
                 exceptionRules: new Dictionary<string, ExceptionRule>()
                 {
@@ -81,34 +81,34 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // create primary queue
 
-            var activeJobQueueId = "active-job-queue";
+            string activeJobQueueId = "active-job-queue";
 
-            var activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<JobQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(queueId: activeJobQueueId, distributionPolicyId: distributionPolicyId) { ExceptionPolicyId = exceptionPolicyId });
 
             // create 10 jobs to fill in primary queue
 
-            var listOfJobs = new List<RouterJob>();
+            List<RouterJob> listOfJobs = new List<RouterJob>();
             for (int i = 0; i < 10; i++)
             {
-                var jobId = $"jobId-{i}";
-                var job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: activeJobQueueId));
+                string jobId = $"jobId-{i}";
+                Response<RouterJob> job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: activeJobQueueId));
                 listOfJobs.Add(job);
             }
 
 #if !SNIPPET
-            var pollingTasks = new List<Task>();
+            List<Task> pollingTasks = new List<Task>();
 
             foreach (RouterJob routerJob in listOfJobs)
             {
                 pollingTasks.Add(Task.Run(async () =>
                 {
                     bool condition = false;
-                    var startTime = DateTimeOffset.UtcNow;
-                    var maxWaitTime = TimeSpan.FromSeconds(10);
+                    DateTimeOffset startTime = DateTimeOffset.UtcNow;
+                    TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
                     while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
                     {
-                        var jobDto = await routerClient.GetJobAsync(routerJob.Id);
+                        Response<RouterJob> jobDto = await routerClient.GetJobAsync(routerJob.Id);
                         condition = jobDto.Value.JobStatus == RouterJobStatus.Queued;
                         await Task.Delay(TimeSpan.FromSeconds(1));
                     }
@@ -119,16 +119,16 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 #endif
 
             // create 11th job
-            var job11Id = "jobId-11";
-            var job11 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job11Id, channelId: "general", queueId: activeJobQueueId));
+            string job11Id = "jobId-11";
+            Response<RouterJob> job11 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job11Id, channelId: "general", queueId: activeJobQueueId));
 
 #if !SNIPPET
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var jobDto = await routerClient.GetJobAsync(job11.Value.Id);
+                Response<RouterJob> jobDto = await routerClient.GetJobAsync(job11.Value.Id);
                 condition = jobDto.Value.JobStatus == RouterJobStatus.Queued && jobDto.Value.QueueId == backupJobQueueId;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
@@ -136,7 +136,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Job 11 would have triggered the exception policy action, and Job 11 would have been en-queued in backup job queue
 
-            var queriedJob = await routerClient.GetJobAsync(job11Id);
+            Response<RouterJob> queriedJob = await routerClient.GetJobAsync(job11Id);
 
             Console.WriteLine($"Job 11 has been en-queued in the backup queue: {queriedJob.Value.QueueId == backupJobQueueId}"); // true
             Console.WriteLine($"Job 11 has priority of 10: {queriedJob.Value.Priority == 10}"); // true

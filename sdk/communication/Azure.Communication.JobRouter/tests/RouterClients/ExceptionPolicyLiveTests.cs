@@ -14,7 +14,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 {
     public class ExceptionPolicyLiveTests : RouterLiveTestBase
     {
-        /// <inheritdoc />
         public ExceptionPolicyLiveTests(bool isAsync) : base(isAsync)
         {
         }

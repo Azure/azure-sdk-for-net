@@ -19,8 +19,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task Scenario1()
         {
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministration = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministration = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyStaticRule
@@ -30,8 +30,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Hence, when the job will be created it will have a queueId assigned to it
 
             // define the classification policy
-            var classificationPolicyId = "static-priority";
-            var classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
+            string classificationPolicyId = "static-priority";
+            Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
                     PrioritizationRule = new StaticRule(new LabelValue(10))
@@ -42,8 +42,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // setting up queue
 
             // Create distribution policy for queue
-            var distributionPolicyId = "longest-idle-distribution";
-            var distributionPolicy = await routerAdministration.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "longest-idle-distribution";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministration.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(5),
@@ -52,15 +52,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Distribution policy successfully created with id: {distributionPolicy.Value.Id}");
 
             // Create queue
-            var jobQueueId = "my-default-queue";
-            var jobQueue =
+            string jobQueueId = "my-default-queue";
+            Response<JobQueue> jobQueue =
                 await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
             Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
 
             // Create a job
 
-            var job = await routerClient.CreateJobAsync(
+            Response<RouterJob> job = await routerClient.CreateJobAsync(
                 options: new CreateJobWithClassificationPolicyOptions(
                     jobId: "demo-job-id",
                     channelId: "Voip",
@@ -74,11 +74,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 #if !SNIPPET
 
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var jobDto = await routerClient.GetJobAsync(job.Value.Id);
+                Response<RouterJob> jobDto = await routerClient.GetJobAsync(job.Value.Id);
                 condition = jobDto.Value.JobStatus == RouterJobStatus.Queued;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
@@ -86,7 +86,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // After a few seconds, the job would have successfully classified and queued
 
-            var queriedJob = await routerClient.GetJobAsync(job.Value.Id);
+            Response<RouterJob> queriedJob = await routerClient.GetJobAsync(job.Value.Id);
 
             Console.WriteLine($"Job has been successfully queued: {queriedJob.Value.JobStatus == RouterJobStatus.Queued}");
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob.Value.QueueId == jobQueueId}");
@@ -99,8 +99,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task Scenario2()
         {
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministration = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministration = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRule
@@ -110,8 +110,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Hence, when the job will be created it will have a queueId assigned to it
 
             // define the classification policy
-            var classificationPolicyId = "expression-priority";
-            var classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
+            string classificationPolicyId = "expression-priority";
+            Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
                     PrioritizationRule = new ExpressionRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
@@ -122,8 +122,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // setting up queue
 
             // Create distribution policy for queue
-            var distributionPolicyId = "longest-idle-distribution";
-            var distributionPolicy = await routerAdministration.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "longest-idle-distribution";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministration.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(5),
@@ -132,15 +132,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Distribution policy successfully created with id: {distributionPolicy.Value.Id}");
 
             // Create queue
-            var jobQueueId = "my-default-queue";
-            var jobQueue =
+            string jobQueueId = "my-default-queue";
+            Response<JobQueue> jobQueue =
                 await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
             Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
 
             // Create a job
 
-            var job1 = await routerClient.CreateJobAsync(
+            Response<RouterJob> job1 = await routerClient.CreateJobAsync(
                 options: new CreateJobWithClassificationPolicyOptions(
                     jobId: "demo-job-id-1",
                     channelId: "Voip",
@@ -155,7 +155,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Console.WriteLine($"Job has been successfully created with id: {job1.Value.Id}, and status: {job1.Value.JobStatus}"); // Status: PendingClassification
 
-            var job2 = await routerClient.CreateJobAsync(
+            Response<RouterJob> job2 = await routerClient.CreateJobAsync(
                 options: new CreateJobWithClassificationPolicyOptions(
                     jobId: "demo-job-id-2",
                     channelId: "Voip",
@@ -173,12 +173,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 #if !SNIPPET
 
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var job1Dto = await routerClient.GetJobAsync(job1.Value.Id);
-                var job2Dto = await routerClient.GetJobAsync(job2.Value.Id);
+                Response<RouterJob> job1Dto = await routerClient.GetJobAsync(job1.Value.Id);
+                Response<RouterJob> job2Dto = await routerClient.GetJobAsync(job2.Value.Id);
                 condition = job1Dto.Value.JobStatus == RouterJobStatus.Queued && job2Dto.Value.JobStatus == RouterJobStatus.Queued;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
@@ -186,13 +186,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // After a few seconds, both jobs would have successfully classified and queued
 
-            var queriedJob1 = await routerClient.GetJobAsync(job1.Value.Id);
+            Response<RouterJob> queriedJob1 = await routerClient.GetJobAsync(job1.Value.Id);
 
             Console.WriteLine($"Job has been successfully queued: {queriedJob1.Value.JobStatus == RouterJobStatus.Queued}");
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob1.Value.QueueId == jobQueueId}");
             Console.WriteLine($"Job has been assigned a priority value: {queriedJob1.Value.Priority}"); // 1
 
-            var queriedJob2 = await routerClient.GetJobAsync(job1.Value.Id);
+            Response<RouterJob> queriedJob2 = await routerClient.GetJobAsync(job1.Value.Id);
 
             Console.WriteLine($"Job has been successfully queued: {queriedJob2.Value.JobStatus == RouterJobStatus.Queued}");
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob2.Value.QueueId == jobQueueId}");
@@ -205,8 +205,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         public async Task Scenario3()
         {
 #if !SNIPPET
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministration = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministration = new RouterAdministrationClient("<< CONNECTION STRING >>");
 #endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRule
@@ -216,8 +216,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Hence, when the job will be created it will have a queueId assigned to it
 
             // define the classification policy
-            var classificationPolicyId = "expression-priority";
-            var classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
+            string classificationPolicyId = "expression-priority";
+            Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
                     PrioritizationRule = new FunctionRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
@@ -228,8 +228,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // setting up queue
 
             // Create distribution policy for queue
-            var distributionPolicyId = "longest-idle-distribution";
-            var distributionPolicy = await routerAdministration.CreateDistributionPolicyAsync(
+            string distributionPolicyId = "longest-idle-distribution";
+            Response<DistributionPolicy> distributionPolicy = await routerAdministration.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerTtl: TimeSpan.FromMinutes(5),
@@ -238,15 +238,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Console.WriteLine($"Distribution policy successfully created with id: {distributionPolicy.Value.Id}");
 
             // Create queue
-            var jobQueueId = "my-default-queue";
-            var jobQueue =
+            string jobQueueId = "my-default-queue";
+            Response<JobQueue> jobQueue =
                 await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
             Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
 
             // Create a job
 
-            var job1 = await routerClient.CreateJobAsync(
+            Response<RouterJob> job1 = await routerClient.CreateJobAsync(
                 options: new CreateJobWithClassificationPolicyOptions(
                     jobId: "demo-job-id-1",
                     channelId: "Voip",
@@ -261,7 +261,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Console.WriteLine($"Job has been successfully created with id: {job1.Value.Id}, and status: {job1.Value.JobStatus}"); // Status: PendingClassification
 
-            var job2 = await routerClient.CreateJobAsync(
+            Response<RouterJob> job2 = await routerClient.CreateJobAsync(
                 options: new CreateJobWithClassificationPolicyOptions(
                     jobId: "demo-job-id-2",
                     channelId: "Voip",
@@ -279,12 +279,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 #if !SNIPPET
 
             bool condition = false;
-            var startTime = DateTimeOffset.UtcNow;
-            var maxWaitTime = TimeSpan.FromSeconds(10);
+            DateTimeOffset startTime = DateTimeOffset.UtcNow;
+            TimeSpan maxWaitTime = TimeSpan.FromSeconds(10);
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
-                var job1Dto = await routerClient.GetJobAsync(job1.Value.Id);
-                var job2Dto = await routerClient.GetJobAsync(job2.Value.Id);
+                Response<RouterJob> job1Dto = await routerClient.GetJobAsync(job1.Value.Id);
+                Response<RouterJob> job2Dto = await routerClient.GetJobAsync(job2.Value.Id);
                 condition = job1Dto.Value.JobStatus == RouterJobStatus.Queued && job2Dto.Value.JobStatus == RouterJobStatus.Queued;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
@@ -292,13 +292,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // After a few seconds, both jobs would have successfully classified and queued
 
-            var queriedJob1 = await routerClient.GetJobAsync(job1.Value.Id);
+            Response<RouterJob> queriedJob1 = await routerClient.GetJobAsync(job1.Value.Id);
 
             Console.WriteLine($"Job has been successfully queued: {queriedJob1.Value.JobStatus == RouterJobStatus.Queued}");
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob1.Value.QueueId == jobQueueId}");
             Console.WriteLine($"Job has been assigned a priority value: {queriedJob1.Value.Priority}"); // 1
 
-            var queriedJob2 = await routerClient.GetJobAsync(job1.Value.Id);
+            Response<RouterJob> queriedJob2 = await routerClient.GetJobAsync(job1.Value.Id);
 
             Console.WriteLine($"Job has been successfully queued: {queriedJob2.Value.JobStatus == RouterJobStatus.Queued}");
             Console.WriteLine($"Job has been queue in `{jobQueueId}`: {queriedJob2.Value.QueueId == jobQueueId}");

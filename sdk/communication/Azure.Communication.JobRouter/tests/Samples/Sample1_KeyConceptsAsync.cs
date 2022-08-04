@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
@@ -24,13 +24,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient_Async
 
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
-            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: "distribution-policy-1",
                     offerTtl: TimeSpan.FromDays(1),
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-            var queue = await routerAdministrationClient.CreateQueueAsync(
+            Response<JobQueue> queue = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
-            var job = await routerClient.CreateJobAsync(
+            Response<RouterJob> job = await routerClient.CreateJobAsync(
                 new CreateJobOptions(
                     jobId: "jobId-1",
                     channelId: "my-channel",
@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
-            var worker = await routerClient.CreateWorkerAsync(
+            Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(
                     workerId: "worker-1",
                     totalCapacity: 1)
@@ -83,8 +83,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
-            var result = await routerClient.GetWorkerAsync(worker.Value.Id);
-            foreach (var offer in result.Value.Offers)
+            Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
+            foreach (JobOffer? offer in result.Value.Offers)
             {
                 Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
             }
@@ -93,25 +93,25 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 
             // fetching the offer id
-            var jobOffer = result.Value.Offers.FirstOrDefault(x => x.JobId == job.Value.Id);
+            JobOffer jobOffer = result.Value.Offers.First(x => x.JobId == job.Value.Id);
 
-            var offerId = jobOffer!.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
+            string offerId = jobOffer.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
 
             // accepting the offer sent to `worker-1`
-            var acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, offerId);
+            Response<AcceptJobOfferResult> acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, offerId);
 
             Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
             Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");
 
             // verify job assignment is populated when querying job
-            var updatedJob = await routerClient.GetJobAsync(job.Value.Id);
+            Response<RouterJob> updatedJob = await routerClient.GetJobAsync(job.Value.Id);
             Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == RouterJobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
 
-            var completeJob = await routerClient.CompleteJobAsync(
+            Response<CompleteJobResult> completeJob = await routerClient.CompleteJobAsync(
                 options: new CompleteJobOptions(
                         jobId: job.Value.Id,
                         assignmentId: acceptJobOfferResult.Value.AssignmentId)
@@ -125,7 +125,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
 
-            var closeJob = await routerClient.CloseJobAsync(
+            Response<CloseJobResult> closeJob = await routerClient.CloseJobAsync(
                 options: new CloseJobOptions(
                     jobId: job.Value.Id,
                     assignmentId: acceptJobOfferResult.Value.AssignmentId)

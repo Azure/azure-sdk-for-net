@@ -4,6 +4,7 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -11,16 +12,16 @@ using Azure.Communication.JobRouter;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a classification policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateClassificationPolicy
-var classificationPolicyId = "my-classification-policy";
+string classificationPolicyId = "my-classification-policy";
 
-var classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
+Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
     options: new CreateClassificationPolicyOptions(classificationPolicyId)
     {
         Name = "Sample classification policy",
@@ -91,7 +92,7 @@ var classificationPolicy = routerAdministrationClient.CreateClassificationPolicy
 ## Get a classification policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicy
-var queriedClassificationPolicy = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
+Response<ClassificationPolicy> queriedClassificationPolicy = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
 
 Console.WriteLine($"Successfully fetched classification policy with id: {queriedClassificationPolicy.Value.Id}");
 ```
@@ -99,7 +100,7 @@ Console.WriteLine($"Successfully fetched classification policy with id: {queried
 ## Update a classification policy
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicy
-var updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(
+Response<ClassificationPolicy> updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(
     new UpdateClassificationPolicyOptions(classificationPolicyId)
     {
         PrioritizationRule = new ExpressionRule("If(job.HighPriority = \"true\", 50, 10)")
@@ -142,10 +143,10 @@ var updatedClassificationPolicy = routerAdministrationClient.UpdateClassificatio
 ## List classification policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies
-var classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
-foreach (var asPage in classificationPolicies.AsPages(pageSizeHint: 10))
+Pageable<ClassificationPolicyItem> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
+foreach (Page<ClassificationPolicyItem> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (var policy in asPage.Values)
+    foreach (ClassificationPolicyItem? policy in asPage.Values)
     {
         Console.WriteLine($"Listing classification policy with id: {policy.ClassificationPolicy.Id}");
     }

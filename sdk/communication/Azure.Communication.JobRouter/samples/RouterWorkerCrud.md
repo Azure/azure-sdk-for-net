@@ -4,6 +4,7 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
+using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -11,16 +12,16 @@ using Azure.Communication.JobRouter;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
-var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a worker
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker
-var routerWorkerId = "my-router-worker";
+string routerWorkerId = "my-router-worker";
 
-var worker = routerClient.CreateWorker(
+Response<RouterWorker> worker = routerClient.CreateWorker(
     new CreateWorkerOptions(
             workerId: routerWorkerId,
             totalCapacity: 100)
@@ -57,7 +58,7 @@ Console.WriteLine($"Router worker successfully created with id: {worker.Value.Id
 ## Get a worker
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorker
-var queriedWorker = routerClient.GetWorker(routerWorkerId);
+Response<RouterWorker> queriedWorker = routerClient.GetWorker(routerWorkerId);
 
 Console.WriteLine($"Successfully fetched worker with id: {queriedWorker.Value.Id}");
 Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.QueueAssignments.Values.ToList()}");
@@ -73,7 +74,7 @@ Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.QueueAss
 // 4. Add a new label: `Xbox_Support_EN` and set value true
 // 5. Increase capacityCostPerJob for channel `WebChatEscalated` to 50
 
-var updateWorker = routerClient.UpdateWorker(
+Response<RouterWorker> updateWorker = routerClient.UpdateWorker(
     new UpdateWorkerOptions(routerWorkerId)
     {
         QueueIds = new Dictionary<string, QueueAssignment?>()
@@ -117,10 +118,10 @@ Console.WriteLine($"Worker successfully de-registered with status set to: {updat
 ## List workers
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorkers
-var workers = routerClient.GetWorkers();
-foreach (var asPage in workers.AsPages(pageSizeHint: 10))
+Pageable<RouterWorkerItem> workers = routerClient.GetWorkers();
+foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
 {
-    foreach (var workerPaged in asPage.Values)
+    foreach (RouterWorkerItem? workerPaged in asPage.Values)
     {
         Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
     }
@@ -132,9 +133,9 @@ workers = routerClient.GetWorkers(new GetWorkersOptions()
     ChannelId = "Voip", Status = WorkerStateSelector.All
 });
 
-foreach (var asPage in workers.AsPages(pageSizeHint: 10))
+foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
 {
-    foreach (var workerPaged in asPage.Values)
+    foreach (RouterWorkerItem? workerPaged in asPage.Values)
     {
         Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
     }
