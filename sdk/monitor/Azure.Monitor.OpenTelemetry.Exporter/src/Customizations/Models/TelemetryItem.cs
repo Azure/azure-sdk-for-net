@@ -16,11 +16,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryItem
     {
         private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
-        internal static readonly IReadOnlyDictionary<TelemetryType, string> s_telemetryItem_Name_Mapping = new Dictionary<TelemetryType, string>
-        {
-            [TelemetryType.Request] = "Request",
-            [TelemetryType.Dependency] = "RemoteDependency",
-        };
 
         public TelemetryItem(string name, Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
             this(name, FormatUtcTimestamp(activity.StartTimeUtc))

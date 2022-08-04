@@ -19,6 +19,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
+        internal static readonly IReadOnlyDictionary<TelemetryType, string> s_telemetryItem_Name = new Dictionary<TelemetryType, string>
+        {
+            [TelemetryType.Request] = "Request",
+            [TelemetryType.Dependency] = "RemoteDependency",
+        };
+
         internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, string roleName, string roleInstance, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
@@ -27,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                telemetryItem = new TelemetryItem(TelemetryItem.s_telemetryItem_Name_Mapping[activity.GetTelemetryType()], activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(s_telemetryItem_Name[activity.GetTelemetryType()], activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
                 {
