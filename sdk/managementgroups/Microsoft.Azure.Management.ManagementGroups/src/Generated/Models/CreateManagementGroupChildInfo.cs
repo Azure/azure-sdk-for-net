@@ -40,16 +40,13 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <param name="name">The name of the child entity.</param>
         /// <param name="displayName">The friendly name of the child
         /// resource.</param>
-        /// <param name="roles">The roles definitions associated with the
-        /// management group.</param>
         /// <param name="children">The list of children.</param>
-        public CreateManagementGroupChildInfo(string type = default(string), string id = default(string), string name = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), IList<CreateManagementGroupChildInfo> children = default(IList<CreateManagementGroupChildInfo>))
+        public CreateManagementGroupChildInfo(string type = default(string), string id = default(string), string name = default(string), string displayName = default(string), IList<CreateManagementGroupChildInfo> children = default(IList<CreateManagementGroupChildInfo>))
         {
             Type = type;
             Id = id;
             Name = name;
             DisplayName = displayName;
-            Roles = roles;
             Children = children;
             CustomInit();
         }
@@ -64,9 +61,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         /// <remarks>
         /// The fully qualified resource type which includes provider namespace
-        /// (e.g. /providers/Microsoft.Management/managementGroups). Possible
-        /// values include: '/providers/Microsoft.Management/managementGroups',
-        /// '/subscriptions'
+        /// (e.g. Microsoft.Management/managementGroups). Possible values
+        /// include: 'Microsoft.Management/managementGroups', '/subscriptions'
         /// </remarks>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
@@ -90,12 +86,6 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; private set; }
-
-        /// <summary>
-        /// Gets the roles definitions associated with the management group.
-        /// </summary>
-        [JsonProperty(PropertyName = "roles")]
-        public IList<string> Roles { get; private set; }
 
         /// <summary>
         /// Gets the list of children.

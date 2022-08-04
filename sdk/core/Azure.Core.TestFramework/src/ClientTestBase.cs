@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -21,7 +22,11 @@ namespace Azure.Core.TestFramework
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
         private static Dictionary<Type, Exception> s_clientValidation = new Dictionary<Type, Exception>();
+#if NETFRAMEWORK
+        private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 15;
+#else
         private const int GLOBAL_TEST_TIMEOUT_IN_SECONDS = 10;
+#endif
         private const int GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS = 5;
         public bool IsAsync { get; }
 
@@ -31,6 +36,8 @@ namespace Azure.Core.TestFramework
         {
             IsAsync = isAsync;
         }
+
+        protected IReadOnlyCollection<IInterceptor> AdditionalInterceptors { get; set; }
 
         protected virtual DateTime TestStartTime => TestExecutionContext.CurrentContext.StartTime;
 
@@ -47,9 +54,13 @@ namespace Azure.Core.TestFramework
             var timeout = TestEnvironment.GlobalIsRunningInCI ? GLOBAL_TEST_TIMEOUT_IN_SECONDS : GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS;
             if (duration > TimeSpan.FromSeconds(timeout))
             {
-                executionContext.CurrentResult.SetResult(
-                    ResultState.Failure,
-                    $"Test exceeded global time limit of {timeout} seconds. Duration: {duration}");
+                string message = $"Test exceeded global time limit of {timeout} seconds. Duration: {duration} ";
+                if (this is RecordedTestBase &&
+                    !executionContext.CurrentTest.GetCustomAttributes<RecordedTestAttribute>(true).Any())
+                {
+                    message += Environment.NewLine + "Replace the [Test] attribute with the [RecordedTest] attribute in your test to allow an automatic retry for timeouts.";
+                }
+                throw new TestTimeoutException(message);
             }
         }
 
@@ -136,8 +147,19 @@ namespace Azure.Core.TestFramework
 
         protected internal virtual object InstrumentOperation(Type operationType, object operation)
         {
-            return operation;
+            var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
+
+            // The assumption is that any recorded or live tests deriving from RecordedTestBase, and that any unit tests deriving directly from ClientTestBase are equivalent to playback.
+            var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationInterceptor(RecordedTestMode.Playback) }).ToArray();
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] { typeof(IInstrumented) },
+                operation,
+                interceptorArray);
         }
+
+        protected internal T InstrumentOperation<T>(T operation) where T : Operation =>
+            (T)InstrumentOperation(typeof(T), operation);
 
         protected T GetOriginal<T>(T instrumented)
         {

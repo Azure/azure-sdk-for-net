@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.Shares
                     FilePermissionKey = response.Headers.FilePermissionKey,
                     FileCreatedOn = response.Headers.FileCreationTime,
                     FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileCreationTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 }
@@ -228,7 +228,7 @@ namespace Azure.Storage.Files.Shares
                     FilePermissionKey = response.Headers.FilePermissionKey,
                     FileCreatedOn = response.Headers.FileCreationTime,
                     FileLastWrittenOn = response.Headers.FileLastWriteTime,
-                    FileChangedOn = response.Headers.FileLastWriteTime,
+                    FileChangedOn = response.Headers.FileChangeTime,
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 }

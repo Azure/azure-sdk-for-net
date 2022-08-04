@@ -19,5 +19,7 @@ namespace Microsoft.Azure.SignalR.Tests.Common
         {
             return GetFakeConnectionString(count).Select(connectionString => new ServiceEndpoint(connectionString));
         }
+
+        public static string GetFakeConnectionString() => $"Endpoint=http://localhost{StaticRandom.Next(0, 9999)};AccessKey={FakeAccessKey};Version=1.0;";
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the TriggeredJobHistory data model. </summary>
-    public partial class TriggeredJobHistoryData : ProxyOnlyResource
+    public partial class TriggeredJobHistoryData : ResourceData
     {
         /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
         public TriggeredJobHistoryData()
@@ -24,16 +24,19 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="runs"> List of triggered web job runs. </param>
-        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IList<TriggeredJobRun> runs) : base(id, name, type, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal TriggeredJobHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TriggeredJobRun> runs, string kind) : base(id, name, resourceType, systemData)
         {
             Runs = runs;
+            Kind = kind;
         }
 
         /// <summary> List of triggered web job runs. </summary>
         public IList<TriggeredJobRun> Runs { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

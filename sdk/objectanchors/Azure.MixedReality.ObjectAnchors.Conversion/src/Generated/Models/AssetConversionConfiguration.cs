@@ -17,14 +17,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     {
 
         /// <summary> Initializes a new instance of AssetConversionConfiguration. </summary>
-        /// <param name="assetDimensionsWrapper"></param>
-        /// <param name="boundingBoxCenterWrapper"></param>
-        /// <param name="gravityWrapper"></param>
+        /// <param name="assetDimensionsWrapper"> Dimensions of the asset. </param>
+        /// <param name="boundingBoxCenterWrapper"> BoundingBoxCenter of the asset. </param>
+        /// <param name="gravityWrapper"> Gravity vector with respect to object&apos;s nominal position. </param>
         /// <param name="keyFrameIndexes"> Indices of Key Frames. </param>
         /// <param name="groundTruthTrajectoryCameraPoses"> Ground truth trajectory. </param>
-        /// <param name="principalAxisWrapper"></param>
+        /// <param name="principalAxisWrapper"> Orientation of model&apos;s bounding box. </param>
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
-        /// <param name="supportingPlaneWrapper"></param>
+        /// <param name="supportingPlaneWrapper"> Definition of supporting plane. </param>
         /// <param name="testTrajectoryCameraPoses"> Test Trajectory. </param>
         internal AssetConversionConfiguration(Vector3 assetDimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IReadOnlyList<int> keyFrameIndexes, IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses, Quaternion principalAxisWrapper, float scale, Vector4 supportingPlaneWrapper, IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses)
         {

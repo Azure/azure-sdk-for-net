@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCrossConnectionPeeringOperationSource : IOperationSource<ExpressRouteCrossConnectionPeering>
+    internal class ExpressRouteCrossConnectionPeeringOperationSource : IOperationSource<ExpressRouteCrossConnectionPeeringResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRouteCrossConnectionPeering IOperationSource<ExpressRouteCrossConnectionPeering>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCrossConnectionPeeringResource IOperationSource<ExpressRouteCrossConnectionPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement);
-            return new ExpressRouteCrossConnectionPeering(_client, data);
+            return new ExpressRouteCrossConnectionPeeringResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteCrossConnectionPeering> IOperationSource<ExpressRouteCrossConnectionPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCrossConnectionPeeringResource> IOperationSource<ExpressRouteCrossConnectionPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteCrossConnectionPeeringData.DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement);
-            return new ExpressRouteCrossConnectionPeering(_client, data);
+            return new ExpressRouteCrossConnectionPeeringResource(_client, data);
         }
     }
 }

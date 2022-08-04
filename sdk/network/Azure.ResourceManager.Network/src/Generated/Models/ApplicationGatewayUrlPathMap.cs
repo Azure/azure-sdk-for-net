@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> UrlPathMaps give a url path to the backend mapping information for PathBasedRouting. </summary>
-    public partial class ApplicationGatewayUrlPathMap : SubResource
+    public partial class ApplicationGatewayUrlPathMap : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
         public ApplicationGatewayUrlPathMap()
@@ -22,20 +23,18 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the URL path map that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
         /// <param name="defaultBackendAddressPool"> Default backend address pool resource of URL path map. </param>
         /// <param name="defaultBackendHttpSettings"> Default backend http settings resource of URL path map. </param>
         /// <param name="defaultRewriteRuleSet"> Default Rewrite rule set resource of URL path map. </param>
         /// <param name="defaultRedirectConfiguration"> Default redirect configuration resource of URL path map. </param>
         /// <param name="pathRules"> Path rule of URL path map resource. </param>
         /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        internal ApplicationGatewayUrlPathMap(string id, string name, string etag, string type, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            Type = type;
+            ETag = etag;
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
             DefaultRewriteRuleSet = defaultRewriteRuleSet;
@@ -44,23 +43,67 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the URL path map that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public ETag? ETag { get; }
         /// <summary> Default backend address pool resource of URL path map. </summary>
-        public WritableSubResource DefaultBackendAddressPool { get; set; }
+        internal WritableSubResource DefaultBackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultBackendAddressPoolId
+        {
+            get => DefaultBackendAddressPool is null ? default : DefaultBackendAddressPool.Id;
+            set
+            {
+                if (DefaultBackendAddressPool is null)
+                    DefaultBackendAddressPool = new WritableSubResource();
+                DefaultBackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> Default backend http settings resource of URL path map. </summary>
-        public WritableSubResource DefaultBackendHttpSettings { get; set; }
+        internal WritableSubResource DefaultBackendHttpSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultBackendHttpSettingsId
+        {
+            get => DefaultBackendHttpSettings is null ? default : DefaultBackendHttpSettings.Id;
+            set
+            {
+                if (DefaultBackendHttpSettings is null)
+                    DefaultBackendHttpSettings = new WritableSubResource();
+                DefaultBackendHttpSettings.Id = value;
+            }
+        }
+
         /// <summary> Default Rewrite rule set resource of URL path map. </summary>
-        public WritableSubResource DefaultRewriteRuleSet { get; set; }
+        internal WritableSubResource DefaultRewriteRuleSet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultRewriteRuleSetId
+        {
+            get => DefaultRewriteRuleSet is null ? default : DefaultRewriteRuleSet.Id;
+            set
+            {
+                if (DefaultRewriteRuleSet is null)
+                    DefaultRewriteRuleSet = new WritableSubResource();
+                DefaultRewriteRuleSet.Id = value;
+            }
+        }
+
         /// <summary> Default redirect configuration resource of URL path map. </summary>
-        public WritableSubResource DefaultRedirectConfiguration { get; set; }
+        internal WritableSubResource DefaultRedirectConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultRedirectConfigurationId
+        {
+            get => DefaultRedirectConfiguration is null ? default : DefaultRedirectConfiguration.Id;
+            set
+            {
+                if (DefaultRedirectConfiguration is null)
+                    DefaultRedirectConfiguration = new WritableSubResource();
+                DefaultRedirectConfiguration.Id = value;
+            }
+        }
+
         /// <summary> Path rule of URL path map resource. </summary>
         public IList<ApplicationGatewayPathRule> PathRules { get; }
         /// <summary> The provisioning state of the URL path map resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

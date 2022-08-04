@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
-    public partial class CsmOperationDescriptionProperties
+    internal partial class CsmOperationDescriptionProperties
     {
         /// <summary> Initializes a new instance of CsmOperationDescriptionProperties. </summary>
         internal CsmOperationDescriptionProperties()

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateIndicatorWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateIndicatorWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// View a threat intelligence indicator by name.
         /// </summary>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThreatIntelligenceInformation>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a threat intelligence indicator.
         /// </summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ThreatIntelligenceInformation>> ReplaceTagsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ThreatIntelligenceInformation>> ReplaceTagsWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceReplaceTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Query threat intelligence indicators as per filtering criteria.
         /// </summary>

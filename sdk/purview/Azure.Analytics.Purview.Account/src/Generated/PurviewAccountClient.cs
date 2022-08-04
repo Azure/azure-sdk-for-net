@@ -39,15 +39,23 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewAccountClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options = null)
+        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewAccountClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -55,89 +63,130 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get an account. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAccountPropertiesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAccountPropertiesAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("location").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("cloudConnectors").GetProperty("awsExternalId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdByObjectId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("catalog").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("guardian").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("scan").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResourceGroupName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("eventHubNamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("storageAccount").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateEndpoint").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("publicNetworkAccess").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -159,89 +208,130 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get an account. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAccountProperties and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAccountProperties();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("location").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("cloudConnectors").GetProperty("awsExternalId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdByObjectId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("catalog").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("guardian").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("scan").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResourceGroupName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("eventHubNamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("storageAccount").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateEndpoint").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("publicNetworkAccess").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -263,96 +353,157 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Updates an account. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateAccountPropertiesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateAccountPropertiesAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     friendlyName = "<friendlyName>",
+        /// };
+        /// 
+        /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("location").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("cloudConnectors").GetProperty("awsExternalId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdByObjectId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("catalog").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("guardian").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("scan").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResourceGroupName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("eventHubNamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("storageAccount").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateEndpoint").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("publicNetworkAccess").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>DataPlaneAccountUpdateParameters</c>:
         /// <code>{
-        ///   friendlyName: string
+        ///   friendlyName: string, # Optional. The friendly name for the azure resource.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -376,96 +527,157 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Updates an account. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateAccountProperties and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateAccountProperties with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     friendlyName = "<friendlyName>",
+        /// };
+        /// 
+        /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("principalId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("tenantId").ToString());
+        /// Console.WriteLine(result.GetProperty("identity").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("location").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("cloudConnectors").GetProperty("awsExternalId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdByObjectId").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("catalog").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("guardian").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("endpoints").GetProperty("scan").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResourceGroupName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("eventHubNamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("managedResources").GetProperty("storageAccount").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateEndpoint").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("actionsRequired").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("privateLinkServiceConnectionState").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("privateEndpointConnections")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("publicNetworkAccess").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("capacity").ToString());
+        /// Console.WriteLine(result.GetProperty("sku").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>DataPlaneAccountUpdateParameters</c>:
         /// <code>{
-        ///   friendlyName: string
+        ///   friendlyName: string, # Optional. The friendly name for the azure resource.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>Account</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. Gets or sets the identifier.
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. Service principal object Id
+        ///     tenantId: string, # Optional. Tenant Id
+        ///     type: &quot;SystemAssigned&quot;, # Optional. Identity Type
+        ///   }, # Optional. Identity Info on the tracked resource
+        ///   location: string, # Optional. Gets or sets the location.
+        ///   name: string, # Optional. Gets or sets the name.
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        ///     }, # Optional. Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.
+        ///     createdAt: string (ISO 8601 Format), # Optional. Gets the time at which the entity was created.
+        ///     createdBy: string, # Optional. Gets the creator of the entity.
+        ///     createdByObjectId: string, # Optional. Gets the creators of the entity&apos;s object id.
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. Gets the catalog endpoint.
+        ///       guardian: string, # Optional. Gets the guardian endpoint.
+        ///       scan: string, # Optional. Gets the scan endpoint.
+        ///     }, # Optional. The URIs that are the public endpoints of the account.
+        ///     friendlyName: string, # Optional. Gets or sets the friendly name.
+        ///     managedResourceGroupName: string, # Optional. Gets or sets the managed resource group name
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. Gets the managed event hub namespace resource identifier.
+        ///       resourceGroup: string, # Optional. Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.
+        ///       storageAccount: string, # Optional. Gets the managed storage account resource identifier.
+        ///     }, # Optional. Gets the resource identifiers of the managed resources.
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. Gets or sets the identifier.
+        ///         name: string, # Optional. Gets or sets the name.
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. The private endpoint identifier.
+        ///           }, # Optional. The private endpoint information.
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. The required actions.
+        ///             description: string, # Optional. The description.
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. The status.
+        ///           }, # Optional. The private link service connection state.
+        ///           provisioningState: string, # Optional. The provisioning state.
+        ///         }, # Optional. The connection identifier.
+        ///         type: string, # Optional. Gets or sets the type.
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. Gets the private endpoint connections information.
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. Gets or sets the state of the provisioning.
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. Gets or sets the public network access.
+        ///   }, # Optional. Gets or sets the properties.
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. Gets or sets the sku capacity. Possible values include: 4, 16
+        ///     name: &quot;Standard&quot;, # Optional. Gets or sets the sku name.
+        ///   }, # Optional. Gets or sets the Sku.
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Metadata pertaining to creation and last modification of the resource.
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Tags on the azure resource.
+        ///   type: string, # Optional. Gets or sets the type.
         /// }
         /// </code>
         /// 
@@ -489,29 +701,32 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> List the authorization keys associated with this account. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAccessKeysAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAccessKeysAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
+        /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -533,29 +748,32 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> List the authorization keys associated with this account. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAccessKeys and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAccessKeys();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
+        /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -577,36 +795,59 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call RegenerateAccessKeyAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call RegenerateAccessKeyAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keyType = "PrimaryAtlasKafkaKey",
+        /// };
+        /// 
+        /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
+        /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AccessKeyOptions</c>:
         /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -630,36 +871,59 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Regenerate the authorization keys associated with this data catalog. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call RegenerateAccessKey and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call RegenerateAccessKey with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keyType = "PrimaryAtlasKafkaKey",
+        /// };
+        /// 
+        /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("atlasKafkaPrimaryEndpoint").ToString());
+        /// Console.WriteLine(result.GetProperty("atlasKafkaSecondaryEndpoint").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AccessKeyOptions</c>:
         /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. The access key type.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AccessKeys</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. Gets or sets the primary connection string.
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. Gets or sets the secondary connection string.
         /// }
         /// </code>
         /// 
@@ -684,56 +948,81 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> List the collections in the account. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       name: string,
-        ///       parentCollection: {
-        ///         referenceName: string,
-        ///         type: string
-        ///       },
-        ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format),
-        ///         createdBy: string,
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///         lastModifiedAt: string (ISO 8601 Format),
-        ///         lastModifiedBy: string,
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///       }
-        ///     }
-        ///   ]
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetCollectionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetCollectionsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetCollectionsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetCollectionsAsync("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionListValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
+        ///   parentCollection: {
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetCollectionsAsync(string skipToken = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewAccountClient.GetCollections");
+            return GetCollectionsImplementationAsync("PurviewAccountClient.GetCollections", skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetCollectionsImplementationAsync(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -750,56 +1039,81 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> List the collections in the account. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       name: string,
-        ///       parentCollection: {
-        ///         referenceName: string,
-        ///         type: string
-        ///       },
-        ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format),
-        ///         createdBy: string,
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///         lastModifiedAt: string (ISO 8601 Format),
-        ///         lastModifiedBy: string,
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///       }
-        ///     }
-        ///   ]
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetCollections and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetCollections())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetCollections with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetCollections("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("collectionProvisioningState").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("friendlyName").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentCollection").GetProperty("referenceName").ToString());
+        ///     Console.WriteLine(result.GetProperty("parentCollection").GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("createdAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("createdByType").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("systemData").GetProperty("lastModifiedByType").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>CollectionListValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. Gets the state of the provisioning.
+        ///   description: string, # Optional. Gets or sets the description.
+        ///   friendlyName: string, # Optional. Gets or sets the friendly name of the collection.
+        ///   name: string, # Optional. Gets the name.
+        ///   parentCollection: {
+        ///     referenceName: string, # Optional. Gets or sets the reference name.
+        ///     type: string, # Optional. Gets the reference type property.
+        ///   }, # Optional. Gets or sets the parent collection reference.
+        ///   systemData: {
+        ///     createdAt: string (ISO 8601 Format), # Optional. The timestamp of resource creation (UTC).
+        ///     createdBy: string, # Optional. The identity that created the resource.
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that created the resource.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. The timestamp of the last modification the resource (UTC).
+        ///     lastModifiedBy: string, # Optional. The identity that last modified the resource.
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. The type of identity that last modified the resource.
+        ///   }, # Optional. Gets the system data that contains information about who and when created and updated the resource.
         /// }
         /// </code>
         /// 
         /// </remarks>
         public virtual Pageable<BinaryData> GetCollections(string skipToken = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewAccountClient.GetCollections");
+            return GetCollectionsImplementation("PurviewAccountClient.GetCollections", skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetCollectionsImplementation(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -816,130 +1130,228 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format),
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///       },
-        ///       name: string,
-        ///       pathPatternConfig: {
-        ///         acceptedPatterns: [
-        ///           {
-        ///             createdBy: string,
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             path: string
-        ///           }
-        ///         ],
-        ///         complexReplacers: [
-        ///           {
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             typeName: string
-        ///           }
-        ///         ],
-        ///         createdBy: string,
-        ///         enableDefaultPatterns: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         normalizationRules: [
-        ///           {
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             dynamicReplacement: boolean,
-        ///             entityTypes: [string],
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             regex: {
-        ///               maxDigits: number,
-        ///               maxLetters: number,
-        ///               minDashes: number,
-        ///               minDigits: number,
-        ///               minDigitsOrLetters: number,
-        ///               minDots: number,
-        ///               minHex: number,
-        ///               minLetters: number,
-        ///               minUnderscores: number,
-        ///               options: number,
-        ///               regexStr: string
-        ///             },
-        ///             replaceWith: string,
-        ///             version: number
-        ///           }
-        ///         ],
-        ///         regexReplacers: [
-        ///           {
-        ///             condition: string,
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             doNotReplaceRegex: FastRegex,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             regex: FastRegex,
-        ///             replaceWith: string
-        ///           }
-        ///         ],
-        ///         rejectedPatterns: [Filter],
-        ///         scopedRules: [
-        ///           {
-        ///             bindingUrl: string,
-        ///             rules: [
-        ///               {
-        ///                 displayName: string,
-        ///                 isResourceSet: boolean,
-        ///                 lastUpdatedTimestamp: number,
-        ///                 name: string,
-        ///                 qualifiedName: string
-        ///               }
-        ///             ],
-        ///             storeType: string
-        ///           }
-        ///         ],
-        ///         version: number
-        ///       }
-        ///     }
-        ///   ]
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetResourceSetRulesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetResourceSetRulesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetResourceSetRulesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetResourceSetRulesAsync("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("typeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("dynamicReplacement").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("entityTypes")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("condition").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("bindingUrl").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("isResourceSet").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfigListValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
         ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
+        ///         regex: {
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string, # Required.
+        ///         rules: [
+        ///           {
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
+        ///           }
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetResourceSetRulesAsync(string skipToken = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            return GetResourceSetRulesImplementationAsync("PurviewAccountClient.GetResourceSetRules", skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetResourceSetRulesImplementationAsync(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -956,130 +1368,228 @@ namespace Azure.Analytics.Purview.Account
 
         /// <summary> Get a resource set config service model. </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
-        ///   value: [
-        ///     {
-        ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format),
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///       },
-        ///       name: string,
-        ///       pathPatternConfig: {
-        ///         acceptedPatterns: [
-        ///           {
-        ///             createdBy: string,
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             path: string
-        ///           }
-        ///         ],
-        ///         complexReplacers: [
-        ///           {
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             typeName: string
-        ///           }
-        ///         ],
-        ///         createdBy: string,
-        ///         enableDefaultPatterns: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         normalizationRules: [
-        ///           {
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             dynamicReplacement: boolean,
-        ///             entityTypes: [string],
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             regex: {
-        ///               maxDigits: number,
-        ///               maxLetters: number,
-        ///               minDashes: number,
-        ///               minDigits: number,
-        ///               minDigitsOrLetters: number,
-        ///               minDots: number,
-        ///               minHex: number,
-        ///               minLetters: number,
-        ///               minUnderscores: number,
-        ///               options: number,
-        ///               regexStr: string
-        ///             },
-        ///             replaceWith: string,
-        ///             version: number
-        ///           }
-        ///         ],
-        ///         regexReplacers: [
-        ///           {
-        ///             condition: string,
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             doNotReplaceRegex: FastRegex,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             regex: FastRegex,
-        ///             replaceWith: string
-        ///           }
-        ///         ],
-        ///         rejectedPatterns: [Filter],
-        ///         scopedRules: [
-        ///           {
-        ///             bindingUrl: string,
-        ///             rules: [
-        ///               {
-        ///                 displayName: string,
-        ///                 isResourceSet: boolean,
-        ///                 lastUpdatedTimestamp: number,
-        ///                 name: string,
-        ///                 qualifiedName: string
-        ///               }
-        ///             ],
-        ///             storeType: string
-        ///           }
-        ///         ],
-        ///         version: number
-        ///       }
-        ///     }
-        ///   ]
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetResourceSetRules and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetResourceSetRules())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
         /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// ]]></code>
+        /// This sample shows how to call GetResourceSetRules with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetResourceSetRules("<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        ///     Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("typeName").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("dynamicReplacement").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("entityTypes")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("condition").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disabled").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("options").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("replaceWith").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("createdBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("filterType").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("modifiedBy").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("path").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("bindingUrl").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("isResourceSet").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
+        ///     Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for one item in the pageable response.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfigListValue</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
+        ///   advancedResourceSet: {
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
+        ///   pathPatternConfig: {
+        ///     acceptedPatterns: [
         ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     complexReplacers: [
+        ///       {
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
+        ///     normalizationRules: [
+        ///       {
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
+        ///         regex: {
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     regexReplacers: [
+        ///       {
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///       }
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
+        ///     scopedRules: [
+        ///       {
+        ///         bindingUrl: string, # Required.
+        ///         rules: [
+        ///           {
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
+        ///           }
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
         /// </remarks>
         public virtual Pageable<BinaryData> GetResourceSetRules(string skipToken = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewAccountClient.GetResourceSetRules");
+            return GetResourceSetRulesImplementation("PurviewAccountClient.GetResourceSetRules", skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetResourceSetRulesImplementation(string diagnosticsScopeName, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1115,7 +1625,7 @@ namespace Azure.Analytics.Purview.Account
 
         internal HttpMessage CreateGetAccountPropertiesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1124,13 +1634,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -1141,13 +1650,12 @@ namespace Azure.Analytics.Purview.Account
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetAccessKeysRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1156,13 +1664,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1173,13 +1680,12 @@ namespace Azure.Analytics.Purview.Account
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCollectionsRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1192,13 +1698,12 @@ namespace Azure.Analytics.Purview.Account
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetResourceSetRulesRequest(string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1211,13 +1716,12 @@ namespace Azure.Analytics.Purview.Account
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1225,13 +1729,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetResourceSetRulesNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1239,22 +1742,10 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

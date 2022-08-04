@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets size
         /// </summary>
         /// <remarks>
-        /// Provisioned size of the pool (in bytes). Allowed values are in 4TiB
+        /// Provisioned size of the pool (in bytes). Allowed values are in 1TiB
         /// chunks (value must be multiply of 4398046511104).
         /// </remarks>
         [JsonProperty(PropertyName = "properties.size")]
@@ -108,25 +108,5 @@ namespace Microsoft.Azure.Management.NetApp.Models
         [JsonProperty(PropertyName = "properties.qosType")]
         public string QosType { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Size != null)
-            {
-                if (Size > 549755813888000)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Size", 549755813888000);
-                }
-                if (Size < 4398046511104)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Size", 4398046511104);
-                }
-            }
-        }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class ManagedInstanceEncryptionProtectorTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public ManagedInstanceEncryptionProtectorTests(bool isAsync)
             : base(isAsync)
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [Test]
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 ServerKeyName = "ServiceManaged",
                 ServerKeyType =  "ServiceManaged",
-                AutoRotationEnabled = false,
+                IsAutoRotationEnabled = false,
             };
-            var encryption = await collection.CreateOrUpdateAsync(true, encryptionProtectorName, data);
+            var encryption = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionProtectorName, data);
             Assert.IsNotNull(encryption.Value.Data);
             Assert.AreEqual(encryptionProtectorName, encryption.Value.Data.Name);
             Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyName);
             Assert.AreEqual("ServiceManaged", encryption.Value.Data.ServerKeyType.ToString());
-            Assert.AreEqual(false, encryption.Value.Data.AutoRotationEnabled);
+            Assert.AreEqual(false, encryption.Value.Data.IsAutoRotationEnabled);
 
             // 2.CheckIfExist
             Assert.IsTrue(await collection.ExistsAsync(encryptionProtectorName));
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(encryptionProtectorName, getEncryption.Value.Data.Name);
             Assert.AreEqual("ServiceManaged", getEncryption.Value.Data.ServerKeyName);
             Assert.AreEqual("ServiceManaged", getEncryption.Value.Data.ServerKeyType.ToString());
-            Assert.AreEqual(false, getEncryption.Value.Data.AutoRotationEnabled);
+            Assert.AreEqual(false, getEncryption.Value.Data.IsAutoRotationEnabled);
 
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();

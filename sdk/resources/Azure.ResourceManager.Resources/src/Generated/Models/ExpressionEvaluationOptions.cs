@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. </summary>
-    public partial class ExpressionEvaluationOptions
+    internal partial class ExpressionEvaluationOptions
     {
         /// <summary> Initializes a new instance of ExpressionEvaluationOptions. </summary>
         public ExpressionEvaluationOptions()
@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
-        public ExpressionEvaluationOptionsScopeType? Scope { get; set; }
+        public ExpressionEvaluationScope? Scope { get; set; }
     }
 }

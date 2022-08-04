@@ -230,6 +230,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceCounters SearchServiceCounters(
             SearchResourceCounter documentCounter,
             SearchResourceCounter indexCounter,
@@ -238,7 +239,28 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter,
             SearchResourceCounter skillsetCounter) =>
-            new SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
+            SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="aliasCounter"> Total number of aliases. </param>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        public static SearchServiceCounters SearchServiceCounters(
+            SearchResourceCounter aliasCounter,
+            SearchResourceCounter documentCounter,
+            SearchResourceCounter indexCounter,
+            SearchResourceCounter indexerCounter,
+            SearchResourceCounter dataSourceCounter,
+            SearchResourceCounter storageSizeCounter,
+            SearchResourceCounter synonymMapCounter,
+            SearchResourceCounter skillsetCounter) =>
+            new(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -297,12 +319,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
-        /// <param name="additionalProperties"> . </param>
-        /// <returns> A new FacetResult instance for mocking. </returns>
-        public static FacetResult FacetResult(
-            long? count,
-            IReadOnlyDictionary<string, object> additionalProperties) =>
-            new FacetResult(count, additionalProperties);
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
+        /// <example>
+        /// This sample shows how to mock <see cref="Models.FacetResult"/> type.
+        /// <code><![CDATA[
+        /// var count = 2;
+        /// var additionalProperties = new Dictionary<string, object>()
+        /// {
+        ///      ["value"] = "Luxury"
+        /// }
+        /// var facetResult = SearchModelFactory.FacetResult(count, additionalProperties);
+        /// Assert.AreEqual(count, facetResult.Count);
+        ///
+        /// var additionalProperty = additionalProperties.First();
+        /// Assert.AreEqual(additionalProperty.Value, facetResult.TryGetValue(additionalProperty.Key, out object value) ? value : null);
+        /// ]]></code>
+        /// </example>
+        /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
+        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new FacetResult(count, additionalProperties);
+        }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>

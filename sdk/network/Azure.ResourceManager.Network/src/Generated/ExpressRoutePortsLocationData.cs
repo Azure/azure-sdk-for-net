@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRoutePortsLocation data model. </summary>
-    public partial class ExpressRoutePortsLocationData : Resource
+    public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
         public ExpressRoutePortsLocationData()
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="address"> Address of peering location. </param>
         /// <param name="contact"> Contact details of peering locations. </param>
         /// <param name="availableBandwidths"> The inventory of available ExpressRoutePort bandwidths. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port location resource. </param>
-        internal ExpressRoutePortsLocationData(string id, string name, string type, string location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Address = address;
             Contact = contact;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The inventory of available ExpressRoutePort bandwidths. </summary>
         public IList<ExpressRoutePortsLocationBandwidths> AvailableBandwidths { get; }
         /// <summary> The provisioning state of the express route port location resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

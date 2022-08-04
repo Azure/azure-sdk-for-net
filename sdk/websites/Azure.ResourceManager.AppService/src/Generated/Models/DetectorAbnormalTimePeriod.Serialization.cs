@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Message))
             {
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Solutions))
             {

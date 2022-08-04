@@ -1,14 +1,45 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- Stopped populating CloudEvents Distributed Tracing extension when distributed tracing is disabled.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.11.0 (2022-07-07)
+
+### Features Added
+
+- Added support for sending events to partner channels.
+
+## 4.11.0-beta.2 (2022-05-10)
+
+### Breaking Changes
+
+- Removed `SendCloudEventsOptions` type in favor of a string parameter that can be used to specify the channel name.
+
+## 4.11.0-beta.1 (2022-04-07)
+
+### Features Added
+
+- Added Partner Topic support for channels
+
+## 4.10.0 (2022-04-05)
+
+### Features Added
+
+- Added Healthcare events
+
+## 4.9.0 (2022-03-08)
+
+### Features Added
+
+- Added new enum values for `MediaJobErrorCategory` and `MediaJobErrorCode`.
 
 ## 4.8.2 (2022-02-08)
 

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AzureFirewall NAT Rule Collection Action. </summary>
-    public partial class AzureFirewallNatRCAction
+    internal partial class AzureFirewallNatRCAction
     {
         /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
         public AzureFirewallNatRCAction()
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
-        /// <param name="type"> The type of action. </param>
-        internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? type)
+        /// <param name="actionType"> The type of action. </param>
+        internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? actionType)
         {
-            Type = type;
+            ActionType = actionType;
         }
 
         /// <summary> The type of action. </summary>
-        public AzureFirewallNatRCActionType? Type { get; set; }
+        public AzureFirewallNatRCActionType? ActionType { get; set; }
     }
 }

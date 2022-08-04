@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Optional transactional hashing options.
         /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
 
         internal bool AllowModifications { get; }
 

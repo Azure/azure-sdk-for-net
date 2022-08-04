@@ -1,25 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "258",
+        "Accept": "application/json",
+        "Content-Length": "257",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-25d41f390b5c314fbb04872ddc526638-4f6a9f8447a22841-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "c99cb42a5a82e854b9e5b6d84f7b86ab",
+        "traceparent": "00-8f16a738604eb13085e377e463855f5e-d69616042ff919d2-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "70cd34dffa94f6a677ed191adcd92448",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "displayName": "AnalyzeOperationBatchWithErrorTest",
         "analysisInput": {
           "documents": [
             {
@@ -29,22 +24,20 @@
             }
           ]
         },
-        "tasks": {
-          "keyPhraseExtractionTasks": [
-            {
-              "parameters": {
-                "model-version": "InvalidVersion"
-              }
-            }
-          ]
-        },
-        "displayName": "AnalyzeOperationBatchWithErrorTest"
+        "tasks": [
+          {
+            "parameters": {
+              "modelVersion": "InvalidVersion"
+            },
+            "kind": "KeyPhraseExtraction"
+          }
+        ]
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "ec0097a4-2b2d-437a-aaa0-f72222efb7e0",
+        "apim-request-id": "8b0a6735-7798-40b6-931d-6d36bee44217",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:03:55 GMT",
+        "Date": "Thu, 21 Jul 2022 23:21:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -56,15 +49,15 @@
           "message": "Invalid parameter in request",
           "innererror": {
             "code": "InvalidParameterValue",
-            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01,2021-05-01."
+            "message": "Job task parameter value InvalidVersion is not supported for model-version parameter for job task type KeyPhraseExtraction. Supported values latest,2019-10-01,2020-07-01,2021-06-01,2022-07-01."
           }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "776948702",
+    "RandomSeed": "1317191405",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

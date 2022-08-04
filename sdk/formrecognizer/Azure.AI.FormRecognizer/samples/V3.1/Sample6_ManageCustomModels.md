@@ -50,7 +50,7 @@ await foreach (CustomFormModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 TrainingOperation operation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false, "My new model");
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
 CustomFormModel model = operationResponse.Value;
@@ -106,7 +106,7 @@ foreach (CustomFormModelInfo modelInfo in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 TrainingOperation operation = client.StartTraining(trainingFileUri, useTrainingLabels: false, "My new model");
 Response<CustomFormModel> operationResponse = await operation.WaitForCompletionAsync();
 CustomFormModel model = operationResponse.Value;

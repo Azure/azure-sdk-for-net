@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpProtocols))
+            if (Optional.IsCollectionDefined(IPProtocols))
             {
                 writer.WritePropertyName("ipProtocols");
                 writer.WriteStartArray();
-                foreach (var item in IpProtocols)
+                foreach (var item in IPProtocols)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpGroups)
+                foreach (var item in SourceIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIpGroups))
+            if (Optional.IsCollectionDefined(DestinationIPGroups))
             {
                 writer.WritePropertyName("destinationIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in DestinationIpGroups)
+                foreach (var item in DestinationIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> sourceAddresses = default;
             Optional<IList<string>> destinationAddresses = default;
             Optional<IList<string>> destinationPorts = default;
-            Optional<IList<string>> sourceIpGroups = default;
-            Optional<IList<string>> destinationIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
+            Optional<IList<string>> destinationIPGroups = default;
             Optional<IList<string>> destinationFqdns = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("destinationIpGroups"))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    destinationIpGroups = array;
+                    destinationIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("destinationFqdns"))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(sourceIpGroups), Optional.ToList(destinationIpGroups), Optional.ToList(destinationFqdns));
+            return new NetworkRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), Optional.ToList(destinationFqdns));
         }
     }
 }

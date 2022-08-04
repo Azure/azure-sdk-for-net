@@ -2128,7 +2128,7 @@
               "Provider": "Microsoft DocumentDB",
               "Resource": "Database Account",
               "Operation": "Microsoft.DocumentDB/locations/deleteVirtualNetworkOrSubnets/action",
-              "Description": "Notifies Microsoft.DocumentDB that VirtualNetwork or Subnet is being deleted"
+              "Description": "Notifies Microsoft.DocumentDB that VirtualNetworkResource or Subnet is being deleted"
             }
           },
           {

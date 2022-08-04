@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("saDataSizeKilobytes");
             writer.WriteNumberValue(SaDataSizeKilobytes);
             writer.WritePropertyName("ipsecEncryption");
-            writer.WriteStringValue(IpsecEncryption.ToString());
+            writer.WriteStringValue(IPsecEncryption.ToString());
             writer.WritePropertyName("ipsecIntegrity");
-            writer.WriteStringValue(IpsecIntegrity.ToString());
+            writer.WriteStringValue(IPsecIntegrity.ToString());
             writer.WritePropertyName("ikeEncryption");
             writer.WriteStringValue(IkeEncryption.ToString());
             writer.WritePropertyName("ikeIntegrity");
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             int saLifeTimeSeconds = default;
             int saDataSizeKilobytes = default;
-            IpsecEncryption ipsecEncryption = default;
-            IpsecIntegrity ipsecIntegrity = default;
+            IPsecEncryption ipsecEncryption = default;
+            IPsecIntegrity ipsecIntegrity = default;
             IkeEncryption ikeEncryption = default;
             IkeIntegrity ikeIntegrity = default;
-            DhGroup dhGroup = default;
+            DHGroup dhGroup = default;
             PfsGroup pfsGroup = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipsecEncryption"))
                 {
-                    ipsecEncryption = new IpsecEncryption(property.Value.GetString());
+                    ipsecEncryption = new IPsecEncryption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipsecIntegrity"))
                 {
-                    ipsecIntegrity = new IpsecIntegrity(property.Value.GetString());
+                    ipsecIntegrity = new IPsecIntegrity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ikeEncryption"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("dhGroup"))
                 {
-                    dhGroup = new DhGroup(property.Value.GetString());
+                    dhGroup = new DHGroup(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("pfsGroup"))

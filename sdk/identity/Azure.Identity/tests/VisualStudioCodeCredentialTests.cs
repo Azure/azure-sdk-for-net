@@ -15,6 +15,26 @@ namespace Azure.Identity.Tests
         public VisualStudioCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
+            var environment = new IdentityTestEnvironment();
+            var vscOptions = new VisualStudioCodeCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled },
+                TenantId = environment.TenantId,
+                Transport = new MockTransport()
+            };
+
+            return InstrumentClient(
+                new VisualStudioCodeCredential(
+                    vscOptions,
+                    null,
+                    mockPublicMsalClient,
+                    CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
+                    new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -25,7 +45,7 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public async Task AuthenticateWithVsCodeCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
-            using var env = new TestEnvVar(new Dictionary<string, string> {{"TENANT_ID", TenantId}});
+            using var env = new TestEnvVar(new Dictionary<string, string> { { "TENANT_ID", TenantId } });
             var environment = new IdentityTestEnvironment();
             var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
@@ -48,7 +68,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
         {
-            var credential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions{ IsLoggingPIIEnabled = isLoggingPIIEnabled});
+            var credential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
 
             Assert.NotNull(credential.Client);
             Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);

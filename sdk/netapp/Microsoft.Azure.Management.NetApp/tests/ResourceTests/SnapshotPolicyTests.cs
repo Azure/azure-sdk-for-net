@@ -198,7 +198,6 @@ namespace NetApp.Tests.ResourceTests
                 var snapshotPolicy = CreatePolicy(ResourceUtils.location, ResourceUtils.snapshotPolicyName1);
                 var createSnapshotPolicy = netAppMgmtClient.SnapshotPolicies.Create(snapshotPolicy, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.snapshotPolicyName1);
 
-
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag1", "Value1");
 

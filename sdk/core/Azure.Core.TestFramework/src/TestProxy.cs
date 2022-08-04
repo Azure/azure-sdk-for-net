@@ -24,8 +24,7 @@ namespace Azure.Core.TestFramework
     {
         private static readonly string s_dotNetExe;
 
-        public const string DevCertIssuer = "CN=localhost";
-
+        // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
         public const string IpAddress = "127.0.0.1";
 
         public int? ProxyPortHttp => _proxyPortHttp;
@@ -59,7 +58,7 @@ namespace Azure.Core.TestFramework
             bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
         }
 
-        private TestProxy(string proxyPath)
+        private TestProxy(string proxyPath, bool debugMode = false)
         {
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -92,22 +91,29 @@ namespace Azure.Core.TestFramework
                         _errorBuffer.AppendLine(error);
                     }
                 });
-
-            int lines = 0;
-            while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
+            if (debugMode)
             {
-                string outputLine = _testProxyProcess.StandardOutput.ReadLine();
-                // useful for debugging
-                TestContext.Progress.WriteLine(outputLine);
-
-                if (ProxyPortHttp == null && TryParsePort(outputLine, "http", out _proxyPortHttp))
+                _proxyPortHttp = 5000;
+                _proxyPortHttps = 5001;
+            }
+            else
+            {
+                int lines = 0;
+                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
                 {
-                    continue;
-                }
+                    string outputLine = _testProxyProcess.StandardOutput.ReadLine();
+                    // useful for debugging
+                    TestContext.Progress.WriteLine(outputLine);
 
-                if (_proxyPortHttps == null && TryParsePort(outputLine, "https", out _proxyPortHttps))
-                {
-                    continue;
+                    if (ProxyPortHttp == null && TryParsePort(outputLine, "http", out _proxyPortHttp))
+                    {
+                        continue;
+                    }
+
+                    if (_proxyPortHttps == null && TryParsePort(outputLine, "https", out _proxyPortHttps))
+                    {
+                        continue;
+                    }
                 }
             }
 
@@ -121,10 +127,7 @@ namespace Azure.Core.TestFramework
             }
 
             var options = new TestProxyClientOptions();
-            Client = new TestProxyRestClient(
-                new ClientDiagnostics(new TestProxyClientOptions()),
-                HttpPipelineBuilder.Build(options),
-                new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
+            Client = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
 
             // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
             // start timing out. This only seems to happen when not specifying a port.
@@ -138,7 +141,12 @@ namespace Azure.Core.TestFramework
                 });
         }
 
-        public static TestProxy Start()
+        /// <summary>
+        /// Starts the test proxy
+        /// </summary>
+        /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
+        /// <returns>The started TestProxy instance.</returns>
+        public static TestProxy Start(bool debugMode = false)
         {
             if (_shared != null)
             {
@@ -154,7 +162,8 @@ namespace Azure.Core.TestFramework
                         .Assembly
                         .GetCustomAttributes<AssemblyMetadataAttribute>()
                         .Single(a => a.Key == "TestProxyPath")
-                        .Value);
+                        .Value,
+                        debugMode);
 
                     AppDomain.CurrentDomain.DomainUnload += (_, _) =>
                     {

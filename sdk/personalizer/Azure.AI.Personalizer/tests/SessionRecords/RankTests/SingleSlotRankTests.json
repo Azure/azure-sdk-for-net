@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/rank",
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.3/rank",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -60,7 +60,7 @@
       }
     },
     {
-      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/rank",
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.3/rank",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -158,7 +158,7 @@
       }
     },
     {
-      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.1/rank",
+      "RequestUri": "https://singleslotrecordsdktests.cognitiveservices.azure.com/personalizer/v1.1-preview.3/rank",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class WorkloadClassifierOperationSource : IOperationSource<WorkloadClassifier>
+    internal class WorkloadClassifierOperationSource : IOperationSource<WorkloadClassifierResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        WorkloadClassifier IOperationSource<WorkloadClassifier>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadClassifierResource IOperationSource<WorkloadClassifierResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
-            return new WorkloadClassifier(_client, data);
+            return new WorkloadClassifierResource(_client, data);
         }
 
-        async ValueTask<WorkloadClassifier> IOperationSource<WorkloadClassifier>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadClassifierResource> IOperationSource<WorkloadClassifierResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadClassifierData.DeserializeWorkloadClassifierData(document.RootElement);
-            return new WorkloadClassifier(_client, data);
+            return new WorkloadClassifierResource(_client, data);
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the list of gallery applications that should be made available to the VM/VMSS. </summary>
-    public partial class ApplicationProfile
+    internal partial class ApplicationProfile
     {
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>
         public ApplicationProfile()
         {
-            GalleryApplications = new ChangeTrackingList<VmGalleryApplication>();
+            GalleryApplications = new ChangeTrackingList<VirtualMachineGalleryApplication>();
         }
 
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        internal ApplicationProfile(IList<VmGalleryApplication> galleryApplications)
+        internal ApplicationProfile(IList<VirtualMachineGalleryApplication> galleryApplications)
         {
             GalleryApplications = galleryApplications;
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VmGalleryApplication> GalleryApplications { get; }
+        public IList<VirtualMachineGalleryApplication> GalleryApplications { get; }
     }
 }

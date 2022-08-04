@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of MongoDBDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal MongoDBDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBDatabasePropertiesResource resource, MongoDBDatabasePropertiesOptions options) : base(id, name, type, systemData, tags, location)
+        internal MongoDBDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBDatabaseResourceInfo resource, MongoDBDatabasePropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public MongoDBDatabasePropertiesResource Resource { get; set; }
+        public ExtendedMongoDBDatabaseResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public MongoDBDatabasePropertiesOptions Options { get; set; }
+        public MongoDBDatabasePropertiesConfig Options { get; set; }
     }
 }

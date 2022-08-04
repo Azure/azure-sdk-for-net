@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </summary>
         public PatchSettings PatchSettings { get; set; }
         /// <summary> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </summary>
-        public WinRMConfiguration WinRM { get; set; }
+        internal WinRMConfiguration WinRM { get; set; }
+        /// <summary> The list of Windows Remote Management listeners. </summary>
+        public IList<WinRMListener> WinRMListeners
+        {
+            get
+            {
+                if (WinRM is null)
+                    WinRM = new WinRMConfiguration();
+                return WinRM.Listeners;
+            }
+        }
     }
 }

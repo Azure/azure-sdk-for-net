@@ -18,10 +18,6 @@ namespace Azure.Storage.Blobs.Models
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (accessPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicy));
-            }
 
             Id = id;
             AccessPolicy = accessPolicy;

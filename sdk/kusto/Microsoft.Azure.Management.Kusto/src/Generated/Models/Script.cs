@@ -32,15 +32,21 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the Script class.
         /// </summary>
-        /// <param name="scriptUrl">The url to the KQL script blob
-        /// file.</param>
-        /// <param name="scriptUrlSasToken">The SaS token.</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="scriptUrl">The url to the KQL script blob file. Must
+        /// not be used together with scriptContent property</param>
+        /// <param name="scriptUrlSasToken">The SaS token that provide read
+        /// access to the file which contain the script. Must be provided when
+        /// using scriptUrl property.</param>
+        /// <param name="scriptContent">The script content. This property
+        /// should be used when the script is provide inline and not through
+        /// file in a SA. Must not be used together with scriptUrl and
+        /// scriptUrlSasToken properties.</param>
         /// <param name="forceUpdateTag">A unique string. If changed the script
         /// will be applied again.</param>
         /// <param name="continueOnErrors">Flag that indicates whether to
@@ -48,11 +54,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
-        public Script(string scriptUrl, string scriptUrlSasToken, string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), bool? continueOnErrors = default(bool?), string provisioningState = default(string), SystemData systemData = default(SystemData))
+        public Script(string id = default(string), string name = default(string), string type = default(string), string scriptUrl = default(string), string scriptUrlSasToken = default(string), string scriptContent = default(string), string forceUpdateTag = default(string), bool? continueOnErrors = default(bool?), string provisioningState = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             ScriptUrl = scriptUrl;
             ScriptUrlSasToken = scriptUrlSasToken;
+            ScriptContent = scriptContent;
             ForceUpdateTag = forceUpdateTag;
             ContinueOnErrors = continueOnErrors;
             ProvisioningState = provisioningState;
@@ -66,16 +73,27 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the url to the KQL script blob file.
+        /// Gets or sets the url to the KQL script blob file. Must not be used
+        /// together with scriptContent property
         /// </summary>
         [JsonProperty(PropertyName = "properties.scriptUrl")]
         public string ScriptUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the SaS token.
+        /// Gets or sets the SaS token that provide read access to the file
+        /// which contain the script. Must be provided when using scriptUrl
+        /// property.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scriptUrlSasToken")]
         public string ScriptUrlSasToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the script content. This property should be used when
+        /// the script is provide inline and not through file in a SA. Must not
+        /// be used together with scriptUrl and scriptUrlSasToken properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scriptContent")]
+        public string ScriptContent { get; set; }
 
         /// <summary>
         /// Gets or sets a unique string. If changed the script will be applied
@@ -104,22 +122,5 @@ namespace Microsoft.Azure.Management.Kusto.Models
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ScriptUrl == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScriptUrl");
-            }
-            if (ScriptUrlSasToken == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScriptUrlSasToken");
-            }
-        }
     }
 }

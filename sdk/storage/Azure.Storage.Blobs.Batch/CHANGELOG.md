@@ -1,14 +1,22 @@
 # Release History
 
-## 12.8.0-beta.4 (Unreleased)
+## 12.11.0-beta.1 (Unreleased)
+- Added support for service version 2021-10-04.
 
-### Features Added
+## 12.10.0 (2022-07-07)
+- Includes all features from 12.10.0-beta.1.
 
-### Breaking Changes
+## 12.10.0-beta.1 (2022-06-15)
+- Added support for service version 2021-08-06.
 
-### Bugs Fixed
+## 12.9.0 (2022-05-02)
+- Includes all features from 12.9.0-beta.1.
 
-### Other Changes
+## 12.9.0-beta.1 (2022-04-12)
+- Added support for service version 2021-06-08.
+
+## 12.8.0 (2022-03-10)
+- Includes all features from 12.8.0-beta.1, 12.8.0-beta.2, and 12.8.0-beta.3
 
 ## 12.8.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of VMwareClusterData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="datastoreIds"> Gets or sets the datastore ARM ids. </param>
         /// <param name="networkIds"> Gets or sets the network ARM ids. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState) : base(id, name, type, systemData, tags, location)
+        internal VMwareClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<ResourceStatus> statuses, string customResourceName, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;

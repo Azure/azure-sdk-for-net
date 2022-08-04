@@ -285,8 +285,37 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathItem
         /// <summary>
-        /// Creates a new <see cref="PathItem"/> instance for mocking.
+        /// Creates a new PathItem instance for mocking.
         /// </summary>
+        public static PathItem PathItem(
+            string name,
+            bool? isDirectory,
+            DateTimeOffset lastModified,
+            ETag eTag,
+            long? contentLength,
+            string owner,
+            string group,
+            string permissions,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? expiresOn)
+            => new PathItem()
+            {
+                Name = name,
+                IsDirectory = isDirectory,
+                LastModified = lastModified,
+                ETag = eTag,
+                ContentLength = contentLength,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions,
+                CreatedOn = createdOn,
+                ExpiresOn = expiresOn
+            };
+
+        /// <summary>
+        /// Creates a new PathItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PathItem PathItem(
             string name,
             bool? isDirectory,

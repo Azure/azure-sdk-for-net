@@ -105,11 +105,32 @@ namespace Azure.AI.Language.QuestionAnswering
         public Azure.AI.Language.QuestionAnswering.MetadataFilter MetadataFilter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourceFilter { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QuestionAnsweringAudience : System.IEquatable<Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QuestionAnsweringAudience(string value) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience AzureChina { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience left, Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience right) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience left, Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class QuestionAnsweringClient
     {
         protected QuestionAnsweringClient() { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public QuestionAnsweringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options) { }
+        public QuestionAnsweringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public QuestionAnsweringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.AnswersResult> GetAnswers(int qnaId, Azure.AI.Language.QuestionAnswering.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.AnswersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.QuestionAnswering.AnswersResult> GetAnswers(string question, Azure.AI.Language.QuestionAnswering.QuestionAnsweringProject project, Azure.AI.Language.QuestionAnswering.AnswersOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -125,6 +146,7 @@ namespace Azure.AI.Language.QuestionAnswering
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
         public QuestionAnsweringClientOptions(Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion version = Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions.ServiceVersion.V2021_10_01) { }
+        public Azure.AI.Language.QuestionAnswering.QuestionAnsweringAudience? Audience { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -193,18 +215,21 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
     public partial class QuestionAnsweringProjectsClient
     {
         protected QuestionAnsweringProjectsClient() { }
-        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options = null) { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options) { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddFeedback(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddFeedbackAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateProject(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateProjectAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> DeleteProject(bool waitForCompletion, string projectName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteProject(Azure.WaitUntil waitUntil, string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteProjectAsync(Azure.WaitUntil waitUntil, string projectName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeployProject(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeployProjectAsync(Azure.WaitUntil waitUntil, string projectName, string deploymentName, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Export(Azure.WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ExportAsync(Azure.WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetDeleteStatus(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDeleteStatusAsync(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetDeployments(string projectName, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
@@ -229,12 +254,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateQnasStatusAsync(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetUpdateSourcesStatus(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUpdateSourcesStatusAsync(string projectName, string jobId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Import(bool waitForCompletion, string projectName, Azure.Core.RequestContent content, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportAsync(bool waitForCompletion, string projectName, Azure.Core.RequestContent content, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> UpdateQnas(bool waitForCompletion, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> UpdateSources(bool waitForCompletion, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> Import(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ImportAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, string format = null, string assetKind = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> UpdateQnas(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateQnasAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> UpdateSources(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> UpdateSourcesAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateSynonyms(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSynonymsAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }

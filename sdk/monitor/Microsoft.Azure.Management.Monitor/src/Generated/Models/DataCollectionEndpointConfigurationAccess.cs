@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// The endpoint used by agents to access their configuration.
+    /// The endpoint used by clients to access their configuration.
     /// </summary>
     public partial class DataCollectionEndpointConfigurationAccess : ConfigurationAccessEndpointSpec
     {

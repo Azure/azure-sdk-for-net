@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,16 +22,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Initializes a new instance of CostInformation. </summary>
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
-        /// <param name="billingInfoUrl"> Default url to display billing information. </param>
-        internal CostInformation(IReadOnlyList<BillingMeterDetails> billingMeterDetails, string billingInfoUrl)
+        /// <param name="billingInfoUri"> Default url to display billing information. </param>
+        internal CostInformation(IReadOnlyList<BillingMeterDetails> billingMeterDetails, Uri billingInfoUri)
         {
             BillingMeterDetails = billingMeterDetails;
-            BillingInfoUrl = billingInfoUrl;
+            BillingInfoUri = billingInfoUri;
         }
 
         /// <summary> Details on the various billing aspects for the product system. </summary>
         public IReadOnlyList<BillingMeterDetails> BillingMeterDetails { get; }
         /// <summary> Default url to display billing information. </summary>
-        public string BillingInfoUrl { get; }
+        public Uri BillingInfoUri { get; }
     }
 }

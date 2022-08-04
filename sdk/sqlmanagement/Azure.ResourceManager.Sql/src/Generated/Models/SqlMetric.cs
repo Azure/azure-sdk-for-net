@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetric. </summary>
         internal SqlMetric()
         {
-            MetricValues = new ChangeTrackingList<MetricValue>();
+            MetricValues = new ChangeTrackingList<SqlMetricValue>();
         }
 
         /// <summary> Initializes a new instance of SqlMetric. </summary>
-        /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
-        /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
+        /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
+        /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time step to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
-        internal SqlMetric(DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, UnitType? unit, MetricName name, IReadOnlyList<MetricValue> metricValues)
+        internal SqlMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, SqlMetricUnitType? unit, SqlMetricName name, IReadOnlyList<SqlMetricValue> metricValues)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             TimeGrain = timeGrain;
             Unit = unit;
             Name = name;
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The time step to be used to summarize the metric values. </summary>
         public string TimeGrain { get; }
         /// <summary> The unit of the metric. </summary>
-        public UnitType? Unit { get; }
+        public SqlMetricUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
-        public MetricName Name { get; }
+        public SqlMetricName Name { get; }
         /// <summary> The metric values for the specified time window and timestep. </summary>
-        public IReadOnlyList<MetricValue> MetricValues { get; }
+        public IReadOnlyList<SqlMetricValue> MetricValues { get; }
     }
 }

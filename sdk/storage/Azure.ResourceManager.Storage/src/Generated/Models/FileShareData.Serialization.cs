@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -37,10 +38,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("shareQuota");
                 writer.WriteNumberValue(ShareQuota.Value);
             }
-            if (Optional.IsDefined(EnabledProtocols))
+            if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols");
-                writer.WriteStringValue(EnabledProtocols.Value.ToString());
+                writer.WriteStringValue(EnabledProtocol.Value.ToString());
             }
             if (Optional.IsDefined(RootSquash))
             {
@@ -68,34 +69,39 @@ namespace Azure.ResourceManager.Storage
 
         internal static FileShareData DeserializeFileShareData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<int> shareQuota = default;
-            Optional<EnabledProtocols> enabledProtocols = default;
+            Optional<FileShareEnabledProtocol> enabledProtocols = default;
             Optional<RootSquashType> rootSquash = default;
             Optional<string> version = default;
             Optional<bool> deleted = default;
             Optional<DateTimeOffset> deletedTime = default;
             Optional<int> remainingRetentionDays = default;
-            Optional<ShareAccessTier> accessTier = default;
+            Optional<FileShareAccessTier> accessTier = default;
             Optional<DateTimeOffset> accessTierChangeTime = default;
             Optional<string> accessTierStatus = default;
             Optional<long> shareUsageBytes = default;
-            Optional<LeaseStatus> leaseStatus = default;
-            Optional<LeaseState> leaseState = default;
-            Optional<LeaseDuration> leaseDuration = default;
-            Optional<IList<SignedIdentifier>> signedIdentifiers = default;
+            Optional<StorageLeaseStatus> leaseStatus = default;
+            Optional<StorageLeaseState> leaseState = default;
+            Optional<StorageLeaseDurationType> leaseDuration = default;
+            Optional<IList<StorageSignedIdentifier>> signedIdentifiers = default;
             Optional<DateTimeOffset> snapshotTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -110,11 +116,16 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -169,7 +180,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enabledProtocols = new EnabledProtocols(property0.Value.GetString());
+                            enabledProtocols = new FileShareEnabledProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("rootSquash"))
@@ -224,7 +235,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessTier = new ShareAccessTier(property0.Value.GetString());
+                            accessTier = new FileShareAccessTier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accessTierChangeTime"))
@@ -259,7 +270,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseStatus = new LeaseStatus(property0.Value.GetString());
+                            leaseStatus = new StorageLeaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseState"))
@@ -269,7 +280,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseState = new LeaseState(property0.Value.GetString());
+                            leaseState = new StorageLeaseState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseDuration"))
@@ -279,7 +290,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseDuration = new LeaseDuration(property0.Value.GetString());
+                            leaseDuration = new StorageLeaseDurationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("signedIdentifiers"))
@@ -289,10 +300,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SignedIdentifier> array = new List<SignedIdentifier>();
+                            List<StorageSignedIdentifier> array = new List<StorageSignedIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignedIdentifier.DeserializeSignedIdentifier(item));
+                                array.Add(StorageSignedIdentifier.DeserializeStorageSignedIdentifier(item));
                             }
                             signedIdentifiers = array;
                             continue;
@@ -311,7 +322,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new FileShareData(id, name, type, systemData, etag.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToList(signedIdentifiers), Optional.ToNullable(snapshotTime));
+            return new FileShareData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(metadata), Optional.ToNullable(shareQuota), Optional.ToNullable(enabledProtocols), Optional.ToNullable(rootSquash), version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), Optional.ToNullable(accessTier), Optional.ToNullable(accessTierChangeTime), accessTierStatus.Value, Optional.ToNullable(shareUsageBytes), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToList(signedIdentifiers), Optional.ToNullable(snapshotTime), Optional.ToNullable(etag));
         }
     }
 }

@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> snapshot = default;
             Optional<WritableSubResource> managedDisk = default;
             Optional<Uri> blobUri = default;
-            Optional<CachingTypes> caching = default;
+            Optional<CachingType> caching = default;
             Optional<int> diskSizeGB = default;
-            Optional<StorageAccountTypes> storageAccountType = default;
+            Optional<StorageAccountType> storageAccountType = default;
             Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        blobUri = null;
                         continue;
                     }
                     blobUri = new Uri(property.Value.GetString());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingTypes();
+                    caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageAccountType = new StorageAccountTypes(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSet"))

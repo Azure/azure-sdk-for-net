@@ -32,9 +32,6 @@ At some later time, another client can retrieve the persisted operation Id and c
 and check for status or wait for completion.
 
 ```C# Snippet:ResumeRestoreAsync
-// Construct a new KeyVaultBackupClient or use an existing one.
-KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
-
 // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
 KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
 

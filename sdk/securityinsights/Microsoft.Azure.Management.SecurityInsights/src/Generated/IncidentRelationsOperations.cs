@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// IncidentRelationsOperations operations.
     /// </summary>
-    internal partial class IncidentRelationsOperations : IServiceOperations<SecurityInsightsClient>, IIncidentRelationsOperations
+    internal partial class IncidentRelationsOperations : IServiceOperations<SecurityInsights>, IIncidentRelationsOperations
     {
         /// <summary>
         /// Initializes a new instance of the IncidentRelationsOperations class.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal IncidentRelationsOperations(SecurityInsightsClient client)
+        internal IncidentRelationsOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -47,9 +47,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Gets all incident relations.

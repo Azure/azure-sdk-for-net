@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -51,17 +52,29 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(MainTemplate))
             {
                 writer.WritePropertyName("mainTemplate");
-                writer.WriteObjectValue(MainTemplate);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MainTemplate);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MainTemplate.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(UiFormDefinition))
             {
                 writer.WritePropertyName("uiFormDefinition");
-                writer.WriteObjectValue(UiFormDefinition);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(UiFormDefinition);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(UiFormDefinition.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -69,22 +82,22 @@ namespace Azure.ResourceManager.Resources
 
         internal static TemplateSpecVersionData DeserializeTemplateSpecVersionData(JsonElement element)
         {
-            string location = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<IList<LinkedTemplateArtifact>> linkedTemplates = default;
-            Optional<object> metadata = default;
-            Optional<object> mainTemplate = default;
-            Optional<object> uiFormDefinition = default;
+            Optional<BinaryData> metadata = default;
+            Optional<BinaryData> mainTemplate = default;
+            Optional<BinaryData> uiFormDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -114,11 +127,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -158,7 +176,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = property0.Value.GetObject();
+                            metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mainTemplate"))
@@ -168,7 +186,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mainTemplate = property0.Value.GetObject();
+                            mainTemplate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("uiFormDefinition"))
@@ -178,14 +196,14 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            uiFormDefinition = property0.Value.GetObject();
+                            uiFormDefinition = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new TemplateSpecVersionData(id, name, type, systemData, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value);
+            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, Optional.ToList(linkedTemplates), metadata.Value, mainTemplate.Value, uiFormDefinition.Value);
         }
     }
 }

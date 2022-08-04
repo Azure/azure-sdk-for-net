@@ -34,10 +34,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="streams">List of streams for this data flow.</param>
         /// <param name="destinations">List of destinations for this data
         /// flow.</param>
-        public DataFlow(IList<string> streams = default(IList<string>), IList<string> destinations = default(IList<string>))
+        /// <param name="transformKql">The KQL query to transform stream
+        /// data.</param>
+        /// <param name="outputStream">The output stream of the transform. Only
+        /// required if the transform changes data to a different
+        /// stream.</param>
+        public DataFlow(IList<string> streams = default(IList<string>), IList<string> destinations = default(IList<string>), string transformKql = default(string), string outputStream = default(string))
         {
             Streams = streams;
             Destinations = destinations;
+            TransformKql = transformKql;
+            OutputStream = outputStream;
             CustomInit();
         }
 
@@ -57,6 +64,19 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "destinations")]
         public IList<string> Destinations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the KQL query to transform stream data.
+        /// </summary>
+        [JsonProperty(PropertyName = "transformKql")]
+        public string TransformKql { get; set; }
+
+        /// <summary>
+        /// Gets or sets the output stream of the transform. Only required if
+        /// the transform changes data to a different stream.
+        /// </summary>
+        [JsonProperty(PropertyName = "outputStream")]
+        public string OutputStream { get; set; }
 
     }
 }

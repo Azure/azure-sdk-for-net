@@ -1,8 +1,41 @@
 # Release History
 
-## 5.2.0-beta.3 (Unreleased)
+## 5.2.0-beta.4 (Unreleased)
 
 ### Features Added
+
+- Added `AnalyzeActionsOperation.Cancel` and `CancelAsync` to cancel a batch of actions.
+- Added `AnalyzeActionsResult.AnalyzeHealthcareEntitiesResults` to get healthcare entities from a batch of actions.
+- Added `TextAnalyticsActions.AnalyzeHealthcareEntitiesActions` to analyze healthcare entities in a batch of actions.
+
+### Breaking Changes
+
+- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `ClassifyDocumentResult`.
+- Removed Extractive Text Summarization and related models. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
+- Removed Extractive Text Summarization, Multi Label Classification, and Single Label Classification from legacy client library.
+- Removed `HealthcareTaskParameters.FhirVersion` and `AnalyzeHealthcareEntitiesResult.FhirBundle`. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
+- Renamed `LabelClassifyResult.Classifications` to `LabelClassifyResult.ClassificationCategories`.
+- Renamed `MultiCategoryClassifyAction` to `MultiLabelClassifyAction`.
+- Renamed `MultiCategoryClassifyActionResult` to `MultiLabelClassifyActionResult`.
+- Renamed `MultiCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `MultiCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
+- Renamed `SingleCategoryClassifyAction` to `SingleLabelClassifyAction`.
+- Renamed `SingleCategoryClassifyActionResult` to `SingleLabelClassifyActionResult`.
+- Renamed `SingleCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `SingleCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
+
+### Bugs Fixed
+
+### Other Changes
+
+- We are now targeting the service version `2022-05-01` API as the default instead of `3.2-preview.2`.
+- The legacy client library is now targeting the service version `3.1`.
+
+## 5.2.0-beta.3 (2022-05-18)
+
+### Features Added
+- Added keyword argument `FhirVersion` to `AnalyzeHealthcareEntitiesOptions`. Use the keyword to indicate the version for the property `AnalyzeHealthcareEntitiesResult.FhirBundle`  that represents a FHIR compatible object for consumption in other Healthcare tools.
+- Added property `FhirBundle` to `AnalyzeHealthcareEntitiesResult`.
 
 ### Breaking Changes
 - Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
@@ -10,8 +43,10 @@
 ### Bugs Fixed
 - Long-Running operation rehydration has been patched to stop throwing a `NullReferenceException`. Issue [24692](https://github.com/Azure/azure-sdk-for-net/issues/24692).
 - TextAnalyticsAudience has been added to allow the user to select the Azure cloud where the resource is located. Issue [18520](https://github.com/Azure/azure-sdk-for-net/issues/18520).
+- In `AnalyzeHealthcareEntitiesOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore. PR [28375](https://github.com/Azure/azure-sdk-for-net/pull/28375)
 
 ### Other Changes
+This is the first version of the client library that targets the Azure Cognitive Service for Language APIs which includes the existing text analysis and natural language processing features found in the Text Analytics client library. In addition, the service API has changed from semantic to date-based versioning. This version of the client library defaults to the latest supported API version, which currently is `2022-04-01-preview`.
 
 ## 5.1.1 (2021-11-19)
 ### Breaking changes

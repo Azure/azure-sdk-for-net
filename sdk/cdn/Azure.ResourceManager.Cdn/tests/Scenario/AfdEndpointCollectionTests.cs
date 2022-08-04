@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfileResource, afdEndpointName);
             Assert.AreEqual(afdEndpointName, afdEndpointInstance.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().CreateOrUpdateAsync(true, null, afdEndpointInstance.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().CreateOrUpdateAsync(true, afdEndpointName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, null, afdEndpointInstance.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, afdEndpointName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            _ = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            _ = await CreateAfdEndpoint(afdProfileResource, afdEndpointName);
             int count = 0;
-            await foreach (var tempAFDEndpoint in afdProfile.GetAfdEndpoints().GetAllAsync())
+            await foreach (var tempAFDEndpoint in afdProfileResource.GetFrontDoorEndpoints().GetAllAsync())
             {
                 count++;
             }
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            AfdEndpoint getAfdEndpointInstance = await afdProfile.GetAfdEndpoints().GetAsync(afdEndpointName);
+            FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfileResource, afdEndpointName);
+            FrontDoorEndpointResource getAfdEndpointInstance = await afdProfileResource.GetFrontDoorEndpoints().GetAsync(afdEndpointName);
             ResourceDataHelper.AssertValidAfdEndpoint(afdEndpointInstance, getAfdEndpointInstance);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdEndpoints().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfileResource.GetFrontDoorEndpoints().GetAsync(null));
         }
     }
 }

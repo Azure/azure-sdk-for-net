@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         public EdgeNode()
         {
-            IpAddressGroups = new ChangeTrackingList<IpAddressGroup>();
+            IPAddressGroups = new ChangeTrackingList<IPAddressGroup>();
         }
 
         /// <summary> Initializes a new instance of EdgeNode. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="ipAddressGroups"> List of ip address groups. </param>
-        internal EdgeNode(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<IpAddressGroup> ipAddressGroups) : base(id, name, type, systemData)
+        internal EdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<IPAddressGroup> ipAddressGroups) : base(id, name, resourceType, systemData)
         {
-            IpAddressGroups = ipAddressGroups;
+            IPAddressGroups = ipAddressGroups;
         }
 
         /// <summary> List of ip address groups. </summary>
-        public IList<IpAddressGroup> IpAddressGroups { get; }
+        public IList<IPAddressGroup> IPAddressGroups { get; }
     }
 }

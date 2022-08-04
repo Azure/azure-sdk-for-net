@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetDedicatedHostGroupCollectionAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await collection.CreateOrUpdateAsync(true, groupName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
             var group = lro.Value;
             Assert.AreEqual(groupName, group.Data.Name);
         }
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetDedicatedHostGroupCollectionAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await collection.CreateOrUpdateAsync(true, groupName, input);
-            DedicatedHostGroup group1 = lro.Value;
-            DedicatedHostGroup group2 = await collection.GetAsync(groupName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
+            DedicatedHostGroupResource group1 = lro.Value;
+            DedicatedHostGroupResource group2 = await collection.GetAsync(groupName);
             ResourceDataHelper.AssertGroup(group1.Data, group2.Data);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetDedicatedHostGroupCollectionAsync();
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await collection.CreateOrUpdateAsync(true, groupName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
             var group = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(groupName));
             Assert.IsFalse(await collection.ExistsAsync(groupName + "1"));
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = await GetDedicatedHostGroupCollectionAsync();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testDHG-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testDHG-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testDHG-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testDHG-"), input);
             int count = 0;
             await foreach (var group in collection.GetAllAsync())
             {
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Compute.Tests
             var groupName1 = Recording.GenerateAssetName("testDHG-");
             var groupName2 = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            _ = await collection.CreateOrUpdateAsync(true, groupName1, input);
-            _ = await collection.CreateOrUpdateAsync(true, groupName2, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName1, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName2, input);
 
-            DedicatedHostGroup group1 = null, group2 = null;
+            DedicatedHostGroupResource group1 = null, group2 = null;
             await foreach (var group in DefaultSubscription.GetDedicatedHostGroupsAsync())
             {
                 if (group.Data.Name == groupName1)

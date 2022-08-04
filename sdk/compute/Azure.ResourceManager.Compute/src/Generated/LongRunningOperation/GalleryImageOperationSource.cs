@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class GalleryImageOperationSource : IOperationSource<GalleryImage>
+    internal class GalleryImageOperationSource : IOperationSource<GalleryImageResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        GalleryImage IOperationSource<GalleryImage>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryImageResource IOperationSource<GalleryImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
-            return new GalleryImage(_client, data);
+            return new GalleryImageResource(_client, data);
         }
 
-        async ValueTask<GalleryImage> IOperationSource<GalleryImage>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryImageResource> IOperationSource<GalleryImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GalleryImageData.DeserializeGalleryImageData(document.RootElement);
-            return new GalleryImage(_client, data);
+            return new GalleryImageResource(_client, data);
         }
     }
 }

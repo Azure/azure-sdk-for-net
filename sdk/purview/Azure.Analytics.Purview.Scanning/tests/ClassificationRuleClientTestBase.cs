@@ -11,14 +11,9 @@ namespace Azure.Analytics.Purview.Scanning.Tests
 {
     public class ClassificationRuleClientTestBase : RecordedTestBase<PurviewScanningTestEnvironment>
     {
-        public ClassificationRuleClientTestBase(bool isAsync) : base(isAsync)
+        public ClassificationRuleClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-
-        public ClassificationRuleClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
 
         public PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName)

@@ -28,10 +28,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
         private static readonly SemaphoreSlim s_semaphore = new SemaphoreSlim(1, 1);
 
+        internal const string FAKE_HOST = "fakeHost.api.wus2.timeseriesinsights.azure.com";
+
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-            Sanitizer = new TestUrlSanitizer();
+            ReplacementHost = FAKE_HOST;
         }
 
         [SetUp]

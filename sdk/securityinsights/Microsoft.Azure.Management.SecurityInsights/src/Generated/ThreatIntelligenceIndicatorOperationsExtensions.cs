@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceProperties'>
             /// Properties of threat intelligence indicators to create and update.
             /// </param>
-            public static ThreatIntelligenceInformation CreateIndicator(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties)
+            public static ThreatIntelligenceInformation CreateIndicator(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModel threatIntelligenceProperties)
             {
                 return operations.CreateIndicatorAsync(resourceGroupName, workspaceName, threatIntelligenceProperties).GetAwaiter().GetResult();
             }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> CreateIndicatorAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> CreateIndicatorAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateIndicatorWithHttpMessagesAsync(resourceGroupName, workspaceName, threatIntelligenceProperties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceProperties'>
             /// Properties of threat intelligence indicators to create and update.
             /// </param>
-            public static ThreatIntelligenceInformation Create(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties)
+            public static ThreatIntelligenceInformation Create(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceProperties)
             {
                 return operations.CreateAsync(resourceGroupName, workspaceName, name, threatIntelligenceProperties).GetAwaiter().GetResult();
             }
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> CreateAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> CreateAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceProperties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, workspaceName, name, threatIntelligenceProperties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='threatIntelligenceReplaceTags'>
             /// Tags in the threat intelligence indicator to be replaced.
             /// </param>
-            public static ThreatIntelligenceInformation ReplaceTags(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags)
+            public static ThreatIntelligenceInformation ReplaceTags(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceReplaceTags)
             {
                 return operations.ReplaceTagsAsync(resourceGroupName, workspaceName, name, threatIntelligenceReplaceTags).GetAwaiter().GetResult();
             }
@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ThreatIntelligenceInformation> ReplaceTagsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModelForRequestBody threatIntelligenceReplaceTags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ThreatIntelligenceInformation> ReplaceTagsAsync(this IThreatIntelligenceIndicatorOperations operations, string resourceGroupName, string workspaceName, string name, ThreatIntelligenceIndicatorModel threatIntelligenceReplaceTags, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ReplaceTagsWithHttpMessagesAsync(resourceGroupName, workspaceName, name, threatIntelligenceReplaceTags, null, cancellationToken).ConfigureAwait(false))
                 {

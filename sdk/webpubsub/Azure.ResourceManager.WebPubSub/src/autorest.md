@@ -5,191 +5,136 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 library-name: WebPubSub
+namespace: Azure.ResourceManager.WebPubSub
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47b551f58ee1b24f4783c2e927b1673b39d87348/specification/webpubsub/resource-manager/readme.md
 tag: package-2021-10-01
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-namespace: Azure.ResourceManager.WebPubSub
 modelerfour:
-  lenient-model-deduplication: true
-  naming:
-    override:
-      ACLAction: AclAction
-      networkACLs: networkAcls
-      NetworkACL: NetworkAcl
-      PrivateEndpointACL: PrivateEndpointAcl
-      WebPubSubNetworkACLs: WebPubSubNetworkAcls
-      SharedPrivateLinkResourceStatus: SharedPrivateLinkStatus
-      PrivateLinkResource: PrivateLink
-      PrivateLinkResourceList: PrivateLinkList
-      PrivateLinkResourceProperties: PrivateLinkProperties
-      shareablePrivateLinkResourceTypes: shareablePrivateLinkTypes
-      ShareablePrivateLinkResourceType: ShareablePrivateLinkType
-      ShareablePrivateLinkResourceProperties: ShareablePrivateLinkProperties
-      ResourceSku: WebPubSubSku
-model-namespace: false
+  flatten-payloads: false
+
 no-property-type-replacement: PrivateEndpoint
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+  ACL: Acl
+  ACLs: Acls
+
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
-  # Change SharedPrivateLinkResource to SharedPrivateLink
-  ## rename models
+  - rename-model:
+      from: PrivateLinkResource
+      to: WebPubSubPrivateLink
   - rename-model:
       from: SharedPrivateLinkResource
-      to: SharedPrivateLink
+      to: WebPubSubSharedPrivateLink
   - rename-model:
-      from: SharedPrivateLinkResourceList
-      to: SharedPrivateLinkList 
+      from: NameAvailability
+      to: WebPubSubNameAvailability
   - rename-model:
-      from: SharedPrivateLinkResourceProperties
-      to: SharedPrivateLinkProperties 
-  # - rename-model:
-  #     from: SharedPrivateLinkResourceStatus
-  #     to: SharedPrivateLinkStatus 
-  - rename-model:
-      from: sharedPrivateLinkResources
-      to: sharedPrivateLinks 
-  - from: swagger-document
-    where: $.definitions.SharedPrivateLink
-    transform: $.properties.properties.$ref = "#/definitions/SharedPrivateLinkProperties"
-  - from: swagger-document
-    where: $.definitions.SharedPrivateLinkList
-    transform: $.properties.value.items.$ref = "#/definitions/SharedPrivateLink" 
-  # - from: swagger-document
-  #   where: $.definitions.SharedPrivateLinkProperties
-  #   transform: $.properties.status.$ref = "#/definitions/SharedPrivateLinkStatus" 
-  # - from: swagger-document
-  #   where: $.definitions.SharedPrivateLinkStatus
-  #   transform: $.x-ms-enum.name = "SharedPrivateLinkStatus" 
-
-  ## rename paths
-  - from: swagger-document
-    where: $.paths
-    transform: >
-      for (var key in $) {
-          const newKey = key.replace('sharedPrivateLinkResourceName', 'sharedPrivateLinkName');
-          if (newKey !== key) {
-              $[newKey] = $[key]
-              delete $[key]
-          }
-      }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources'].get
-    transform: $.operationId = "WebPubSubSharedPrivateLinks_List"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources'].get.responses.200.schema
-    transform: $.$ref = "#/definitions/SharedPrivateLinkList"
-
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].get
-    transform: $.operationId = "WebPubSubSharedPrivateLinks_Get"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].get.parameters
-    transform: >
-        $[0] = {
-            "name": "sharedPrivateLinkName",
-            "in": "path",
-            "description": "The name of the shared private link",
-            "required": true,
-            "type": "string"
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].get.responses.200.schema
-    transform: $.$ref = "#/definitions/SharedPrivateLink"
-
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put
-    transform: $.operationId = "WebPubSubSharedPrivateLinks_CreateOrUpdate"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put
-    transform: $.parameters[0].name = "sharedPrivateLinkName"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put.parameters
-    transform:  >
-        $[0] = {
-            "name": "sharedPrivateLinkName",
-            "in": "path",
-            "description": "The name of the shared private link",
-            "required": true,
-            "type": "string"
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put.parameters
-    transform:  >
-        $[1] = {
-            "name": "parameters",
-            "in": "body",
-            "description": "The shared private link",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/SharedPrivateLink"
-            }
-        }
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put.responses.200.schema
-    transform: $.$ref = "#/definitions/SharedPrivateLink"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put.responses.201.schema
-    transform: $.$ref = "#/definitions/SharedPrivateLink"
-
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].delete
-    transform: $.operationId = "WebPubSubSharedPrivateLinks_Delete"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].delete
-    transform: $.parameters[0].name = "sharedPrivateLinkName"
-
-  # Change WebPubSubResource to WebPubSub
+      from: NameAvailabilityParameters
+      to: WebPubSubNameAvailabilityParameters
   - rename-model:
       from: WebPubSubResource
       to: WebPubSub
   - rename-model:
-      from: WebPubSubResourceList
-      to: WebPubSubList
-  - from: swagger-document
-    where: $.definitions.WebPubSubList
-    transform: $.properties.value.items.$ref = "#/definitions/WebPubSub"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub'].get.responses.200.schema
-    transform: $.$ref = "#/definitions/WebPubSubList"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub'].get.responses.200.schema
-    transform: $.$ref = "#/definitions/WebPubSubList"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].get.responses.200.schema
-    transform: $.$ref = "#/definitions/WebPubSub"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].put
-    transform: $.parameters[0].schema.$ref = "#/definitions/WebPubSub"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].put.responses.200.schema
-    transform: $.$ref = "#/definitions/WebPubSub"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].put.responses.201.schema
-    transform: $.$ref = "#/definitions/WebPubSub"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].patch
-    transform: $.parameters[0].schema.$ref = "#/definitions/WebPubSub"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}'].patch.responses.200.schema
-    transform: $.$ref = "#/definitions/WebPubSub"
+      from: ShareablePrivateLinkResourceType
+      to: ShareablePrivateLinkType
+  - rename-model:
+      from: ShareablePrivateLinkResourceProperties
+      to: ShareablePrivateLinkProperties
 
-  # Change NetworkACL to NetworkAcl
-  - from: swagger-document
-    where: $.definitions.WebPubSubProperties.properties.networkACLs
-    transform: $.description = "Network Acls"
+  - from: webpubsub.json
+    where: $.definitions.PrivateLinkResourceProperties.properties.shareablePrivateLinkResourceTypes
+    transform: $["x-ms-client-name"] = "shareablePrivateLinkTypes"
+  - from: webpubsub.json
+    where: $.definitions.PrivateLinkServiceConnectionStatus
+    transform: $["x-ms-enum"].name = "WebPubSubPrivateLinkServiceConnectionStatus"
+  - from: webpubsub.json
+    where: $.definitions.ProvisioningState
+    transform: $["x-ms-enum"].name = "WebPubSubProvisioningState"
+  - from: webpubsub.json
+    where: $.definitions.SharedPrivateLinkResourceStatus
+    transform: $["x-ms-enum"].name = "WebPubSubSharedPrivateLinkStatus"
+  - from: webpubsub.json
+    where: $.definitions.Sku.properties.resourceType
+    transform: $['x-ms-format']= "resource-type"
 
-  # Delete LRO [WebPubSub] prefix
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources'].get
-    transform: $.operationId = "SharedPrivateLinks_List"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].get
-    transform: $.operationId = "SharedPrivateLinks_Get"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].put
-    transform: $.operationId = "SharedPrivateLinks_CreateOrUpdate"
-  - from: swagger-document
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkName}'].delete
-    transform: $.operationId = "SharedPrivateLinks_Delete"
+  # rename classes with common names
+  - rename-model:
+      from: Sku
+      to: WebPubSubSku
+  - rename-model:
+      from: ResourceSku
+      to: BillingInfoSku
+  - rename-model:
+      from: SkuCapacity
+      to: WebPubSubSkuCapacity
+  - rename-model:
+      from: NetworkACL
+      to:  PublicNetworkAcls
+  - rename-model:
+      from: EventHandler
+      to:  WebPubSubEventHandler
+  - from: webpubsub.json
+    where: $.definitions.ScaleType
+    transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
+  - from: webpubsub.json
+    where: $.definitions.KeyType
+    transform: $['x-ms-enum'].name = 'WebPubSubKeyType'
+
+  # Change type to ResourceIdentifier
+  - from: webpubsub.json
+    where: $.definitions.SharedPrivateLinkResourceProperties.properties.privateLinkResourceId
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: webpubsub.json
+    where: $.definitions.PrivateEndpoint.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+  - from: webpubsub.json
+    where: $.definitions.SignalRServiceUsage.properties.id
+    transform: $['x-ms-format'] = 'arm-id'
+
+  # Rename some class names of boolean types
+  - from: webpubsub.json
+    where: $.definitions.WebPubSubTlsSettings.properties.clientCertEnabled
+    transform: $["x-ms-client-name"] = 'isClientCertEnabled'
+  - from: webpubsub.json
+    where: $.definitions.WebPubSubProperties.properties.disableAadAuth
+    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
+  - from: webpubsub.json
+    where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
+    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
 ```

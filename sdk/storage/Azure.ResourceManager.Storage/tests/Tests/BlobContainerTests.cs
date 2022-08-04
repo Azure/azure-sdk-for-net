@@ -12,21 +12,21 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class BlobContainerTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private StorageAccount _storageAccount;
-        private BlobService _blobService;
+        private ResourceGroupResource _resourceGroup;
+        private StorageAccountResource _storageAccount;
+        private BlobServiceResource _blobService;
         private BlobContainerCollection _blobContainerCollection;
         public BlobContainerTests(bool async) : base(async)
         {
         }
 
         [SetUp]
-        public async Task createStorageAccountAndGetBlobContainerContainer()
+        public async Task CreateStorageAccountAndGetBlobContainerContainer()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(true, accountName, GetDefaultStorageAccountParameters())).Value;
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
             _blobService = _storageAccount.GetBlobService();
             _blobService = await _blobService.GetAsync();
             _blobContainerCollection = _blobService.GetBlobContainers();
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Storage.Tests
             if (_resourceGroup != null)
             {
                 StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-                await foreach (StorageAccount account in storageAccountCollection.GetAllAsync())
+                await foreach (StorageAccountResource account in storageAccountCollection.GetAllAsync())
                 {
-                    await account.DeleteAsync(true);
+                    await account.DeleteAsync(WaitUntil.Completed);
                 }
                 _resourceGroup = null;
                 _storageAccount = null;
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create blob container
             string containerName = Recording.GenerateAssetName("testblob");
-            BlobContainer container1 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData())).Value;
             Assert.IsNotNull(container1);
             Assert.AreEqual(container1.Id.Name, containerName);
 
             //validate if created successfully
-            BlobContainer container2 = await _blobContainerCollection.GetAsync(containerName);
+            BlobContainerResource container2 = await _blobContainerCollection.GetAsync(containerName);
             AssertBlobContainerEqual(container1, container2);
             Assert.IsTrue(await _blobContainerCollection.ExistsAsync(containerName));
             Assert.IsFalse(await _blobContainerCollection.ExistsAsync(containerName + "1"));
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.False(containerData.HasImmutabilityPolicy);
 
             //delete blob container
-            ArmOperation blobContainerDeleteOperation = await container1.DeleteAsync(true);
+            ArmOperation blobContainerDeleteOperation = await container1.DeleteAsync(WaitUntil.Completed);
             await blobContainerDeleteOperation.WaitForCompletionResponseAsync();
 
             //validate if deleted successfully
-            BlobContainer blobContainer3 = await _blobContainerCollection.GetIfExistsAsync(containerName);
-            Assert.IsNull(blobContainer3);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _blobContainerCollection.GetAsync(containerName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _blobContainerCollection.ExistsAsync(containerName));
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task GetBlobContainer()
         {
             string containerName = Recording.GenerateAssetName("testblob");
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData())).Value;
 
             Assert.IsEmpty(container.Data.Metadata);
             Assert.Null(container.Data.PublicAccess);
@@ -94,35 +94,35 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(new List<string> { "tag1", "tag2", "tag3" }, legalHold.Tags);
 
             ImmutabilityPolicyData immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
-            ImmutabilityPolicy immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, immutabilityPolicyModel)).Value;
+            ImmutabilityPolicyResource immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, immutabilityPolicyModel)).Value;
             Assert.NotNull(immutabilityPolicy.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
-            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.Etag);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value);
             Assert.NotNull(immutabilityPolicy.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.Data.State);
 
             immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 100 };
-            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(immutabilityPolicy.Data.Etag, parameters: immutabilityPolicyModel);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value, data: immutabilityPolicyModel);
             Assert.NotNull(immutabilityPolicy.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(100, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.Data.State);
 
             container = await container.GetAsync();
             Assert.IsEmpty(container.Data.Metadata);
-            Assert.AreEqual(PublicAccess.None, container.Data.PublicAccess);
+            Assert.AreEqual(StoragePublicAccessType.None, container.Data.PublicAccess);
             Assert.AreEqual(3, container.Data.ImmutabilityPolicy.UpdateHistory.Count);
-            Assert.AreEqual(ImmutabilityPolicyUpdateType.Put, container.Data.ImmutabilityPolicy.UpdateHistory[0].Update);
-            Assert.AreEqual(ImmutabilityPolicyUpdateType.Lock, container.Data.ImmutabilityPolicy.UpdateHistory[1].Update);
-            Assert.AreEqual(ImmutabilityPolicyUpdateType.Extend, container.Data.ImmutabilityPolicy.UpdateHistory[2].Update);
+            Assert.AreEqual(ImmutabilityPolicyUpdateType.Put, container.Data.ImmutabilityPolicy.UpdateHistory[0].UpdateType);
+            Assert.AreEqual(ImmutabilityPolicyUpdateType.Lock, container.Data.ImmutabilityPolicy.UpdateHistory[1].UpdateType);
+            Assert.AreEqual(ImmutabilityPolicyUpdateType.Extend, container.Data.ImmutabilityPolicy.UpdateHistory[2].UpdateType);
             Assert.IsTrue(container.Data.LegalHold.HasLegalHold);
             Assert.AreEqual(3, container.Data.LegalHold.Tags.Count);
             Assert.AreEqual("tag1", container.Data.LegalHold.Tags[0].Tag);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Tests
             legalHold = await container.ClearLegalHoldAsync(legalHold);
             Assert.IsFalse(legalHold.HasLegalHold);
 
-            await container.DeleteAsync(true);
+            await container.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //create two blob containers
             string containerName1 = Recording.GenerateAssetName("testblob1");
             string containerName2 = Recording.GenerateAssetName("testblob2");
-            BlobContainer container1 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName1, new BlobContainerData())).Value;
-            BlobContainer container2 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName2, new BlobContainerData())).Value;
+            BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName1, new BlobContainerData())).Value;
+            BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
 
             //validate if there are two containers
-            BlobContainer container3 = null;
-            BlobContainer container4 = null;
+            BlobContainerResource container3 = null;
+            BlobContainerResource container4 = null;
             int count = 0;
-            await foreach (BlobContainer container in _blobContainerCollection.GetAllAsync())
+            await foreach (BlobContainerResource container in _blobContainerCollection.GetAllAsync())
             {
                 count++;
                 if (container.Id.Name == containerName1)
@@ -169,19 +169,19 @@ namespace Azure.ResourceManager.Storage.Tests
             //create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
 
             //update metadata, public access
-            BlobContainerData containerData = container.Data;
-            containerData.Metadata.Add("key1", "value1");
-            containerData.PublicAccess = PublicAccess.Container;
-            BlobContainer container1 = await container.UpdateAsync(containerData);
+            BlobContainerData update = container.Data;
+            update.Metadata.Add("key1", "value1");
+            update.PublicAccess = StoragePublicAccessType.Container;
+            BlobContainerResource container1 = await container.UpdateAsync(update);
 
             //validate
             Assert.NotNull(container1);
             Assert.NotNull(container1.Data.Metadata);
             Assert.AreEqual(container1.Data.Metadata["key1"], "value1");
-            Assert.AreEqual(PublicAccess.Container, container.Data.PublicAccess);
+            Assert.AreEqual(StoragePublicAccessType.Container, container.Data.PublicAccess);
             Assert.False(container1.Data.HasLegalHold);
             Assert.False(container1.Data.HasImmutabilityPolicy);
         }
@@ -193,26 +193,26 @@ namespace Azure.ResourceManager.Storage.Tests
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
 
             //create immutability policy
-            ImmutabilityPolicyData immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
-            ImmutabilityPolicy immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: immutabilityPolicyModel)).Value;
+            ImmutabilityPolicyData immutabilityPolicyData = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
+            ImmutabilityPolicyResource immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, data: immutabilityPolicyData)).Value;
 
             //validate
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //delete immutability policy
-            immutabilityPolicyModel = (await immutabilityPolicy.DeleteAsync(true, immutabilityPolicy.Data.Etag)).Value.Data;
+            immutabilityPolicyData = (await immutabilityPolicy.DeleteAsync(WaitUntil.Completed, immutabilityPolicy.Data.ETag.Value)).Value.Data;
 
             //validate
-            Assert.NotNull(immutabilityPolicyModel.Type);
-            Assert.NotNull(immutabilityPolicyModel.Name);
-            Assert.AreEqual(0, immutabilityPolicyModel.ImmutabilityPeriodSinceCreationInDays);
+            Assert.NotNull(immutabilityPolicyData.ResourceType);
+            Assert.NotNull(immutabilityPolicyData.Name);
+            Assert.AreEqual(0, immutabilityPolicyData.ImmutabilityPeriodSinceCreationInDays);
         }
 
         [Test]
@@ -222,36 +222,36 @@ namespace Azure.ResourceManager.Storage.Tests
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
 
             //create immutability policy
-            ImmutabilityPolicyData immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
-            ImmutabilityPolicy immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, immutabilityPolicyModel)).Value;
+            ImmutabilityPolicyData immutabilityPolicyData = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
+            ImmutabilityPolicyResource immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, immutabilityPolicyData)).Value;
 
             //validate
             Assert.NotNull(immutabilityPolicy.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //update immutability policy
-            immutabilityPolicyModel = new ImmutabilityPolicyData()
+            immutabilityPolicyData = new ImmutabilityPolicyData()
             {
                 ImmutabilityPeriodSinceCreationInDays = 5,
                 AllowProtectedAppendWrites = true
             };
-            immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, immutabilityPolicyModel, immutabilityPolicy.Data.Etag)).Value;
+            immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, immutabilityPolicyData, immutabilityPolicy.Data.ETag)).Value;
             Assert.NotNull(immutabilityPolicy.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(5, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
             Assert.IsTrue(immutabilityPolicy.Data.AllowProtectedAppendWrites);
 
-            immutabilityPolicy = await container.GetImmutabilityPolicy().GetAsync(immutabilityPolicy.Data.Etag);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().GetAsync(immutabilityPolicy.Data.ETag);
             Assert.NotNull(immutabilityPolicy.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(5, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
@@ -263,38 +263,38 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task LockImmutabilityPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
 
             //create immutability policy
-            ImmutabilityPolicyData immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
-            ImmutabilityPolicy immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: immutabilityPolicyModel)).Value;
+            ImmutabilityPolicyData immutabilityPolicyData = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
+            ImmutabilityPolicyResource immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, immutabilityPolicyData)).Value;
 
             //validate
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //lock immutability policy
-            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Data.Etag);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value);
 
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.Data.State);
 
-            await container.DeleteAsync(true);
+            await container.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -302,47 +302,47 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task ExtendImmutabilityPolicy()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
 
             //create immutability policy
-            ImmutabilityPolicyData immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
-            ImmutabilityPolicy immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: immutabilityPolicyModel)).Value;
+            ImmutabilityPolicyData immutabilityPolicyData = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 3 };
+            ImmutabilityPolicyResource immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, data: immutabilityPolicyData)).Value;
 
             //validate
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
 
             //lock immutability policy
-            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Data.Etag);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().LockImmutabilityPolicyAsync(immutabilityPolicy.Data.ETag.Value);
 
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(3, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.Data.State);
 
             //extend immutability policy
-            immutabilityPolicyModel = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 100 };
-            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Data.Etag, parameters: immutabilityPolicyModel);
+            immutabilityPolicyData = new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 100 };
+            immutabilityPolicy = await container.GetImmutabilityPolicy().ExtendImmutabilityPolicyAsync(ifMatch: immutabilityPolicy.Data.ETag.Value, data: immutabilityPolicyData);
 
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(100, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Locked, immutabilityPolicy.Data.State);
-            await container.DeleteAsync(true);
+            await container.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Storage.Tests
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
 
             //set legal hold
             LegalHold legalHoldModel = new LegalHold(new List<string> { "tag1", "tag2", "tag3" });
@@ -369,34 +369,26 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.False(legalHold.HasLegalHold);
             Assert.AreEqual(0, legalHold.Tags.Count);
         }
-        //[Test]
-        //[RecordedTest]
-        //public async Task ListBlobService()
-        //{
-        //    List<BlobService> blobServices = await _blobServiceCollection.GetAllAsync().ToEnumerableAsync();
-        //    Assert.AreEqual(1, blobServices.Count);
-        //    Assert.AreEqual("default", blobServices[0].Data.Name);
-        //}
 
         [Test]
         [RecordedTest]
         public async Task UpdateBlobService()
         {
             //validate current file service properties
-            Assert.False(_blobService.Data.DeleteRetentionPolicy.Enabled);
+            Assert.False(_blobService.Data.DeleteRetentionPolicy.IsEnabled);
             Assert.Null(_blobService.Data.DeleteRetentionPolicy.Days);
 
             //update delete retention policy
             BlobServiceData serviceData = _blobService.Data;
             serviceData.DeleteRetentionPolicy = new DeleteRetentionPolicy
             {
-                Enabled = true,
+                IsEnabled = true,
                 Days = 100
             };
-            BlobService service = (await _blobService.CreateOrUpdateAsync(true, serviceData)).Value;
+            BlobServiceResource service = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, serviceData)).Value;
 
             //validate update
-            Assert.True(service.Data.DeleteRetentionPolicy.Enabled);
+            Assert.True(service.Data.DeleteRetentionPolicy.IsEnabled);
             Assert.AreEqual(service.Data.DeleteRetentionPolicy.Days, 100);
         }
 
@@ -407,15 +399,15 @@ namespace Azure.ResourceManager.Storage.Tests
             // create a blob container
             string containerName = Recording.GenerateAssetName("testblob");
             BlobContainerData data = new BlobContainerData();
-            BlobContainer container = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData())).Value;
-            ImmutabilityPolicyData immutabilityPolicyModel = new ImmutabilityPolicyData()
+            BlobContainerResource container = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, data)).Value;
+            ImmutabilityPolicyData immutabilityPolicyData = new ImmutabilityPolicyData()
             {
                 ImmutabilityPeriodSinceCreationInDays = 4,
                 AllowProtectedAppendWrites = true
             };
-            ImmutabilityPolicy immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: immutabilityPolicyModel)).Value;
+            ImmutabilityPolicyResource immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, immutabilityPolicyData)).Value;
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(4, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
@@ -423,17 +415,17 @@ namespace Azure.ResourceManager.Storage.Tests
 
             immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays = 5;
             immutabilityPolicy.Data.AllowProtectedAppendWrites = false;
-            immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: immutabilityPolicy.Data, ifMatch: immutabilityPolicy.Data.Etag)).Value;
+            immutabilityPolicy = (await container.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, immutabilityPolicy.Data, ifMatch: immutabilityPolicy.Data.ETag)).Value;
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(5, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
             Assert.False(immutabilityPolicy.Data.AllowProtectedAppendWrites.Value);
 
-            immutabilityPolicy = await container.GetImmutabilityPolicy().GetAsync(immutabilityPolicy.Data.Etag);
+            immutabilityPolicy = await container.GetImmutabilityPolicy().GetAsync(immutabilityPolicy.Data.ETag);
             Assert.NotNull(immutabilityPolicy.Data.Id);
-            Assert.NotNull(immutabilityPolicy.Data.Type);
+            Assert.NotNull(immutabilityPolicy.Data.ResourceType);
             Assert.NotNull(immutabilityPolicy.Data.Name);
             Assert.AreEqual(5, immutabilityPolicy.Data.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Data.State);
@@ -447,12 +439,12 @@ namespace Azure.ResourceManager.Storage.Tests
             //create 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
             string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCreateParameters createParameters = GetDefaultStorageAccountParameters(kind: Kind.StorageV2);
-            StorageAccount sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName1, createParameters)).Value;
-            StorageAccount destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(true, accountName2, createParameters)).Value;
+            StorageAccountCreateOrUpdateContent createContent = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
+            StorageAccountResource sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName1, createContent)).Value;
+            StorageAccountResource destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createContent)).Value;
 
             //update 2 accounts properties
-            var updateparameter = new StorageAccountUpdateOptions
+            var updateparameter = new StorageAccountPatch
             {
                 AllowCrossTenantReplication = true,
                 EnableHttpsTrafficOnly = true
@@ -460,103 +452,109 @@ namespace Azure.ResourceManager.Storage.Tests
             destAccount = await destAccount.UpdateAsync(updateparameter);
             sourceAccount = await sourceAccount.UpdateAsync(updateparameter);
 
-            BlobService blobService1 = await destAccount.GetBlobService().GetAsync();
+            BlobServiceResource blobService1 = await destAccount.GetBlobService().GetAsync();
             BlobContainerCollection blobContainerCollection1 = blobService1.GetBlobContainers();
-            BlobService blobService2 = await destAccount.GetBlobService().GetAsync();
+            BlobServiceResource blobService2 = await destAccount.GetBlobService().GetAsync();
             BlobContainerCollection blobContainerCollection2 = blobService2.GetBlobContainers();
 
             //enable changefeed and versoning
             blobService1.Data.IsVersioningEnabled = true;
-            await blobService1.CreateOrUpdateAsync(true, blobService1.Data);
+            await blobService1.CreateOrUpdateAsync(WaitUntil.Completed, blobService1.Data);
 
             //create 2 pairs of source and dest blob containers
             string containerName1 = Recording.GenerateAssetName("testblob1");
             string containerName2 = Recording.GenerateAssetName("testblob2");
             string containerName3 = Recording.GenerateAssetName("testblob3");
             string containerName4 = Recording.GenerateAssetName("testblob4");
-            BlobContainer container1 = (await blobContainerCollection1.CreateOrUpdateAsync(true, containerName1, new BlobContainerData())).Value;
-            BlobContainer container2 = (await blobContainerCollection2.CreateOrUpdateAsync(true, containerName2, new BlobContainerData())).Value;
-            BlobContainer container3 = (await blobContainerCollection1.CreateOrUpdateAsync(true, containerName3, new BlobContainerData())).Value;
-            BlobContainer container4 = (await blobContainerCollection2.CreateOrUpdateAsync(true, containerName4, new BlobContainerData())).Value;
+            BlobContainerResource container1 = (await blobContainerCollection1.CreateOrUpdateAsync(WaitUntil.Completed, containerName1, new BlobContainerData())).Value;
+            BlobContainerResource container2 = (await blobContainerCollection2.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
+            BlobContainerResource container3 = (await blobContainerCollection1.CreateOrUpdateAsync(WaitUntil.Completed, containerName3, new BlobContainerData())).Value;
+            BlobContainerResource container4 = (await blobContainerCollection2.CreateOrUpdateAsync(WaitUntil.Completed, containerName4, new BlobContainerData())).Value;
 
             //prepare rules and policy
-            ObjectReplicationPolicyData parameter = new ObjectReplicationPolicyData()
-            {
-                SourceAccount = sourceAccount.Id.Name,
-                DestinationAccount = destAccount.Id.Name
-            };
             List<string> prefix = new List<string>();
             prefix.Add("aa");
             prefix.Add("bc d");
             prefix.Add("123");
             string minCreationTime = "2021-03-19T16:06:00Z";
-            List<ObjectReplicationPolicyRule> rules = new List<ObjectReplicationPolicyRule>();
-            parameter.Rules.Add(
-                new ObjectReplicationPolicyRule(containerName1, containerName2)
+            ObjectReplicationPolicyData parameter = new ObjectReplicationPolicyData()
+            {
+                SourceAccount = sourceAccount.Id.Name,
+                DestinationAccount = destAccount.Id.Name,
+                Rules =
                 {
-                    Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime),
+                    new ObjectReplicationPolicyRule(containerName1, containerName2)
+                    {
+                        Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime),
+                    },
+                    new ObjectReplicationPolicyRule(containerName3, containerName4),
                 }
-            );
-            parameter.Rules.Add(
-                new ObjectReplicationPolicyRule(containerName3, containerName4)
-            );
+            };
 
             //create policy
             ObjectReplicationPolicyCollection objectReplicationPolicyCollection = destAccount.GetObjectReplicationPolicies();
-            ObjectReplicationPolicy objectReplicationPolicy = (await objectReplicationPolicyCollection.CreateOrUpdateAsync(true, "default", parameter)).Value;
+            ObjectReplicationPolicyResource objectReplicationPolicy = (await objectReplicationPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, "default", parameter)).Value;
             Assert.NotNull(objectReplicationPolicy);
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
 
             //get policy
-            List<ObjectReplicationPolicy> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
+            List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
             objectReplicationPolicy = policies[0];
             Assert.NotNull(objectReplicationPolicy);
             Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
 
             //delete policy
-            await objectReplicationPolicy.DeleteAsync(true);
+            await objectReplicationPolicy.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
         [RecordedTest]
         public async Task BlobServiceCors()
         {
-            BlobServiceData properties2 = new BlobServiceData();
-            properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
-            properties2.DeleteRetentionPolicy.Enabled = true;
-            properties2.DeleteRetentionPolicy.Days = 300;
-            properties2.DefaultServiceVersion = "2017-04-17";
-            properties2.Cors = new CorsRules();
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
-                100, new string[] { "x-ms-meta-*" },
-                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
-                ));
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "*" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
-                2, new string[] { "*" },
-                new string[] { "*" }
-                ));
-            properties2.Cors.CorsRulesValue.Add(new CorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
-                2000, new string[] { "x-ms-meta-12345675754564*" },
-                new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
-                ));
+            BlobServiceData blobServiceData = new BlobServiceData()
+            {
+                DeleteRetentionPolicy = new DeleteRetentionPolicy()
+                {
+                    IsEnabled = true,
+                    Days = 300,
+                },
+                DefaultServiceVersion = "2017-04-17",
+                Cors = new StorageCorsRules()
+                {
+                    CorsRules =
+                    {
+                        new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
+                            100,
+                            new[] { "x-ms-meta-*" },
+                            new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }),
+                        new StorageCorsRule(new[] { "*" },
+                            new[] { CorsRuleAllowedMethod.Get },
+                            2,
+                            new[] { "*" },
+                            new[] { "*" }),
+                        new StorageCorsRule(new[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
+                            new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put, CorsRuleAllowedMethod.Post },
+                            2000,
+                            new[] { "x-ms-meta-12345675754564*" },
+                            new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
+                    }
+                }
+            };
+            _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, blobServiceData)).Value;
 
-            _blobService = (await _blobService.CreateOrUpdateAsync(true, properties2)).Value;
-            BlobServiceData properties3 = _blobService.Data;
-            Assert.IsTrue(properties3.DeleteRetentionPolicy.Enabled);
-            Assert.AreEqual(300, properties3.DeleteRetentionPolicy.Days);
-            Assert.AreEqual("2017-04-17", properties3.DefaultServiceVersion);
+            Assert.AreEqual(blobServiceData.DeleteRetentionPolicy.IsEnabled, _blobService.Data.DeleteRetentionPolicy.IsEnabled);
+            Assert.AreEqual(blobServiceData.DeleteRetentionPolicy.Days, _blobService.Data.DeleteRetentionPolicy.Days);
+            Assert.AreEqual(blobServiceData.DefaultServiceVersion, _blobService.Data.DefaultServiceVersion);
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties3.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(blobServiceData.Cors.CorsRules.Count, _blobService.Data.Cors.CorsRules.Count);
+            for (int i = 0; i < blobServiceData.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
-                CorsRule getRule = properties3.Cors.CorsRulesValue[i];
+                var putRule = blobServiceData.Cors.CorsRules[i];
+                var getRule = _blobService.Data.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -567,17 +565,16 @@ namespace Azure.ResourceManager.Storage.Tests
 
             _blobService = await _blobService.GetAsync();
 
-            BlobServiceData properties4 = _blobService.Data;
-            Assert.IsTrue(properties4.DeleteRetentionPolicy.Enabled);
-            Assert.AreEqual(300, properties4.DeleteRetentionPolicy.Days);
-            Assert.AreEqual("2017-04-17", properties4.DefaultServiceVersion);
+            Assert.AreEqual(blobServiceData.DeleteRetentionPolicy.IsEnabled, _blobService.Data.DeleteRetentionPolicy.IsEnabled);
+            Assert.AreEqual(blobServiceData.DeleteRetentionPolicy.Days, _blobService.Data.DeleteRetentionPolicy.Days);
+            Assert.AreEqual(blobServiceData.DefaultServiceVersion, _blobService.Data.DefaultServiceVersion);
 
             //validate CORS rules
-            Assert.AreEqual(properties2.Cors.CorsRulesValue.Count, properties4.Cors.CorsRulesValue.Count);
-            for (int i = 0; i < properties2.Cors.CorsRulesValue.Count; i++)
+            Assert.AreEqual(blobServiceData.Cors.CorsRules.Count, _blobService.Data.Cors.CorsRules.Count);
+            for (int i = 0; i < blobServiceData.Cors.CorsRules.Count; i++)
             {
-                CorsRule putRule = properties2.Cors.CorsRulesValue[i];
-                CorsRule getRule = properties4.Cors.CorsRulesValue[i];
+                var putRule = blobServiceData.Cors.CorsRules[i];
+                var getRule = _blobService.Data.Cors.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -592,9 +589,9 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainerSoftDelete()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
@@ -602,29 +599,29 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //enable container softdelete
             properties.ContainerDeleteRetentionPolicy = new DeleteRetentionPolicy();
-            properties.ContainerDeleteRetentionPolicy.Enabled = true;
+            properties.ContainerDeleteRetentionPolicy.IsEnabled = true;
             properties.ContainerDeleteRetentionPolicy.Days = 30;
-            _blobService = (await _blobService.CreateOrUpdateAsync(true, properties)).Value;
+            _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, properties)).Value;
 
             //create two blob containers and delete 1
             string containerName1 = Recording.GenerateAssetName("testblob1");
             string containerName2 = Recording.GenerateAssetName("testblob2");
-            BlobContainer container1 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName1, new BlobContainerData())).Value;
-            BlobContainer container2 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName2, new BlobContainerData())).Value;
-            await container2.DeleteAsync(true);
+            BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName1, new BlobContainerData())).Value;
+            BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, new BlobContainerData())).Value;
+            await container2.DeleteAsync(WaitUntil.Completed);
 
             //list delete included
-            List<BlobContainer> blobContainers = await _blobContainerCollection.GetAllAsync(include: ListContainersInclude.Deleted).ToEnumerableAsync();
+            List<BlobContainerResource> blobContainers = await _blobContainerCollection.GetAllAsync(include: BlobContainerState.Deleted).ToEnumerableAsync();
             Assert.AreEqual(2, blobContainers.Count);
-            foreach (BlobContainer con in blobContainers)
+            foreach (BlobContainerResource con in blobContainers)
             {
                 if (con.Data.Name == containerName1)
                 {
-                    Assert.IsFalse(con.Data.Deleted);
+                    Assert.IsFalse(con.Data.IsDeleted);
                 }
                 else
                 {
-                    Assert.IsTrue(con.Data.Deleted);
+                    Assert.IsTrue(con.Data.IsDeleted);
                     Assert.NotNull(con.Data.RemainingRetentionDays);
                 }
             }
@@ -635,10 +632,10 @@ namespace Azure.ResourceManager.Storage.Tests
             //disable container softdelete
             properties = _blobService.Data;
             properties.ContainerDeleteRetentionPolicy = new DeleteRetentionPolicy();
-            properties.DeleteRetentionPolicy.Enabled = false;
-            _blobService = (await _blobService.CreateOrUpdateAsync(true, properties)).Value;
+            properties.DeleteRetentionPolicy.IsEnabled = false;
+            _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, properties)).Value;
             properties = _blobService.Data;
-            Assert.IsFalse(properties.ContainerDeleteRetentionPolicy.Enabled);
+            Assert.IsFalse(properties.ContainerDeleteRetentionPolicy.IsEnabled);
         }
 
         [Test]
@@ -647,23 +644,23 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task PITR()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
 
             BlobServiceData properties = _blobService.Data;
             properties.DeleteRetentionPolicy = new DeleteRetentionPolicy();
-            properties.DeleteRetentionPolicy.Enabled = true;
+            properties.DeleteRetentionPolicy.IsEnabled = true;
             properties.DeleteRetentionPolicy.Days = 30;
-            properties.ChangeFeed = new ChangeFeed();
-            properties.ChangeFeed.Enabled = true;
+            properties.ChangeFeed = new BlobServiceChangeFeed();
+            properties.ChangeFeed.IsEnabled = true;
             properties.IsVersioningEnabled = true;
-            properties.RestorePolicy = new RestorePolicyProperties(true) { Days = 5 };
+            properties.RestorePolicy = new RestorePolicy(true) { Days = 5 };
 
-            _blobService = (await _blobService.CreateOrUpdateAsync(true, properties)).Value;
+            _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, properties)).Value;
 
             if (Mode != RecordedTestMode.Playback)
             {
@@ -671,17 +668,19 @@ namespace Azure.ResourceManager.Storage.Tests
             }
 
             //create restore ranges
-            List<Models.BlobRestoreRange> ranges = new List<Models.BlobRestoreRange>();
-            ranges.Add(new Models.BlobRestoreRange("", "container1/blob1"));
-            ranges.Add(new Models.BlobRestoreRange("container1/blob2", "container2/blob3"));
-            ranges.Add(new Models.BlobRestoreRange("container3/blob3", ""));
-
             //start restore
-            Models.BlobRestoreParameters parameters = new Models.BlobRestoreParameters(Recording.Now.AddSeconds(-1).ToUniversalTime(), ranges);
-            ArmOperation<BlobRestoreStatus> restoreOperation = _storageAccount.RestoreBlobRanges(false, parameters);
+            BlobRestoreContent restoreContent = new BlobRestoreContent(
+                Recording.Now.AddSeconds(-1).ToUniversalTime(),
+                new List<BlobRestoreRange>()
+                {
+                    new BlobRestoreRange("", "container1/blob1"),
+                    new BlobRestoreRange("container1/blob2", "container2/blob3"),
+                    new BlobRestoreRange("container3/blob3", "")
+                });
+            ArmOperation<BlobRestoreStatus> restoreOperation = await _storageAccount.RestoreBlobRangesAsync(WaitUntil.Started, restoreContent);
 
             //wait for restore completion
-            Models.BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
+            BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
 
             Assert.IsTrue(restoreStatus.Status == BlobRestoreProgressStatus.Complete || restoreStatus.Status == BlobRestoreProgressStatus.InProgress);
         }
@@ -692,9 +691,9 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task BlobContainersVLW()
         {
             //update storage account to v2
-            StorageAccountUpdateOptions updateParameters = new StorageAccountUpdateOptions()
+            StorageAccountPatch updateParameters = new StorageAccountPatch()
             {
-                Kind = Kind.StorageV2
+                Kind = StorageKind.StorageV2
             };
             _storageAccount = await _storageAccount.UpdateAsync(updateParameters);
             _blobService = await _blobService.GetAsync();
@@ -702,25 +701,25 @@ namespace Azure.ResourceManager.Storage.Tests
             //enable blob versioning
             BlobServiceData properties = _blobService.Data;
             properties.IsVersioningEnabled = true;
-            _blobService = (await _blobService.CreateOrUpdateAsync(true, properties)).Value;
+            _blobService = (await _blobService.CreateOrUpdateAsync(WaitUntil.Completed, properties)).Value;
             Assert.IsTrue(properties.IsVersioningEnabled);
 
             //create container with VLW
             string containerName1 = Recording.GenerateAssetName("testblob1");
-            BlobContainerData parameters1 = new BlobContainerData() { ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning() { Enabled = true } };
-            BlobContainer container1 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName1, parameters1)).Value;
-            Assert.IsTrue(container1.Data.ImmutableStorageWithVersioning.Enabled);
+            BlobContainerData parameters1 = new BlobContainerData() { ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning() { IsEnabled = true } };
+            BlobContainerResource container1 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName1, parameters1)).Value;
+            Assert.IsTrue(container1.Data.ImmutableStorageWithVersioning.IsEnabled);
             Assert.IsNull(container1.Data.ImmutableStorageWithVersioning.MigrationState);
 
             //update container to enabled  Immutability Policy
             string containerName2 = Recording.GenerateAssetName("testblob2");
             BlobContainerData parameters2 = new BlobContainerData();
-            BlobContainer container2 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName2, parameters2)).Value;
-            await container2.GetImmutabilityPolicy().CreateOrUpdateAsync(true, parameters: new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 1 });
+            BlobContainerResource container2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName2, parameters2)).Value;
+            await container2.GetImmutabilityPolicy().CreateOrUpdateAsync(WaitUntil.Completed, data: new ImmutabilityPolicyData() { ImmutabilityPeriodSinceCreationInDays = 1 });
 
-            await container2.ObjectLevelWormAsync(true);
+            await container2.EnableVersionLevelImmutabilityAsync(WaitUntil.Completed);
             container2 = await container2.GetAsync();
-            Assert.IsTrue(container2.Data.ImmutableStorageWithVersioning.Enabled);
+            Assert.IsTrue(container2.Data.ImmutableStorageWithVersioning.IsEnabled);
             Assert.AreEqual("Completed", container2.Data.ImmutableStorageWithVersioning.MigrationState);
         }
 
@@ -733,22 +732,22 @@ namespace Azure.ResourceManager.Storage.Tests
             string scopeName2 = "testscope2";
             EncryptionScopeData data = new EncryptionScopeData()
             {
-                Source = EncryptionScopeSource.MicrosoftStorage,
+                Source = EncryptionScopeSource.Storage,
                 State = EncryptionScopeState.Enabled
             };
-            await _storageAccount.GetEncryptionScopes().CreateOrUpdateAsync(true, scopeName1, data);
-            await _storageAccount.GetEncryptionScopes().CreateOrUpdateAsync(true, scopeName2, data);
+            await _storageAccount.GetEncryptionScopes().CreateOrUpdateAsync(WaitUntil.Completed, scopeName1, data);
+            await _storageAccount.GetEncryptionScopes().CreateOrUpdateAsync(WaitUntil.Completed, scopeName2, data);
 
             //create container
             string containerName = Recording.GenerateAssetName("container");
-            BlobContainer blobContainer = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName1, DenyEncryptionScopeOverride = false })).Value;
+            BlobContainerResource blobContainer = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName1, PreventEncryptionScopeOverride = false })).Value;
             Assert.AreEqual(scopeName1, blobContainer.Data.DefaultEncryptionScope);
-            Assert.False(blobContainer.Data.DenyEncryptionScopeOverride.Value);
+            Assert.False(blobContainer.Data.PreventEncryptionScopeOverride.Value);
 
             //Update container not support Encryption scope
-            BlobContainer blobContainer2 = (await _blobContainerCollection.CreateOrUpdateAsync(true, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName2, DenyEncryptionScopeOverride = true })).Value;
+            BlobContainerResource blobContainer2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName2, PreventEncryptionScopeOverride = true })).Value;
             Assert.AreEqual(scopeName2, blobContainer2.Data.DefaultEncryptionScope);
-            Assert.True(blobContainer2.Data.DenyEncryptionScopeOverride.Value);
+            Assert.True(blobContainer2.Data.PreventEncryptionScopeOverride.Value);
         }
     }
 }

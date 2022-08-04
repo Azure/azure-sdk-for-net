@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called &apos;CapacityReservationSupported&apos; set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public CapacityReservationData(AzureLocation location, Models.Sku sku) : base(location)
+        public CapacityReservationData(AzureLocation location, ComputeSku sku) : base(location)
         {
             if (sku == null)
             {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Compute
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
-            VirtualMachinesAssociated = new ChangeTrackingList<Resources.Models.SubResource>();
+            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -44,33 +44,37 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zones"> Availability Zone to use for this capacity reservation. The zone has to be single value and also should be part for the list of zones specified during the capacity reservation group creation. The zone can be assigned only during creation. If not provided, the reservation supports only non-zonal deployments. If provided, enforces VM/VMSS using this capacity reservation to be in same zone. </param>
         /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
         /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
-        /// <param name="provisioningTime"> The date time when the capacity reservation was last updated. </param>
+        /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningTime, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, type, systemData, tags, location)
+        /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
+        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IList<string> zones, string reservationId, IReadOnlyList<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
             ReservationId = reservationId;
             VirtualMachinesAssociated = virtualMachinesAssociated;
-            ProvisioningTime = provisioningTime;
+            ProvisioningOn = provisioningOn;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            TimeCreated = timeCreated;
         }
 
         /// <summary> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called &apos;CapacityReservationSupported&apos; set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </summary>
-        public Models.Sku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
         /// <summary> Availability Zone to use for this capacity reservation. The zone has to be single value and also should be part for the list of zones specified during the capacity reservation group creation. The zone can be assigned only during creation. If not provided, the reservation supports only non-zonal deployments. If provided, enforces VM/VMSS using this capacity reservation to be in same zone. </summary>
         public IList<string> Zones { get; }
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
         public string ReservationId { get; }
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The date time when the capacity reservation was last updated. </summary>
-        public DateTimeOffset? ProvisioningTime { get; }
+        public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Capacity reservation instance view. </summary>
         public CapacityReservationInstanceView InstanceView { get; }
+        /// <summary> Specifies the time at which the Capacity Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        public DateTimeOffset? TimeCreated { get; }
     }
 }

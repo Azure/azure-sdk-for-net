@@ -15,8 +15,11 @@ namespace Azure.AI.Personalizer.Models
         {
         }
 
+        /// <summary> Gets the service. </summary>
         public string Service { get; }
+        /// <summary> Gets the api status. </summary>
         public string ApiStatus { get; }
+        /// <summary> Gets the api status message. </summary>
         public string ApiStatusMessage { get; }
     }
 }

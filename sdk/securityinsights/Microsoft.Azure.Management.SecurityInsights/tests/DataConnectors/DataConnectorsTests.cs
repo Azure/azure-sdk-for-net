@@ -2,12 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -28,7 +22,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
         [Fact]
         public void DataConnectors_List()
         {
-            Thread.Sleep(3000);
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
@@ -37,7 +30,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 {
                     DataTypes = new AlertsDataTypeOfDataConnector() { Alerts = new DataConnectorDataTypeCommon() { State = "enabled" } },
                     SubscriptionId = TestHelper.TestEnvironment.SubscriptionId.ToString()
-
                 };
 
                 SecurityInsightsClient.DataConnectors.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, DataConnectorId, DataConnectorBody);

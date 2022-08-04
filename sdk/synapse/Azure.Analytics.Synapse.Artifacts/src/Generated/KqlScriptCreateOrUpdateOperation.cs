@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a KQL Script. </summary>
     public partial class KqlScriptCreateOrUpdateOperation : Operation<KqlScriptResource>, IOperationSource<KqlScriptResource>
     {
-        private readonly OperationInternals<KqlScriptResource> _operation;
+        private readonly OperationInternal<KqlScriptResource> _operation;
 
         /// <summary> Initializes a new instance of KqlScriptCreateOrUpdateOperation for mocking. </summary>
         protected KqlScriptCreateOrUpdateOperation()
@@ -28,11 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal KqlScriptCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<KqlScriptResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "KqlScriptCreateOrUpdateOperation");
+            IOperation<KqlScriptResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            _operation = new OperationInternal<KqlScriptResource>(clientDiagnostics, nextLinkOperation, response, "KqlScriptCreateOrUpdateOperation");
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override KqlScriptResource Value => _operation.Value;
@@ -44,13 +47,19 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<KqlScriptResource> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<KqlScriptResource> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<KqlScriptResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

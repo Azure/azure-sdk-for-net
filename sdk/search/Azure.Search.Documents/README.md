@@ -425,8 +425,8 @@ support for async APIs as well.  You'll generally just add an `Async` suffix to
 the name of the method and `await` it.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
-await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+SearchResults<Hotel> searchResponse = await client.SearchAsync<Hotel>("luxury");
+await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 {
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.Id}: {doc.Name}");
@@ -454,6 +454,8 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 
 You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
 deeper into the requests you're making against the service.
+
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ## Next steps
 

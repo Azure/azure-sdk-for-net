@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service extension profile. </summary>
-    public partial class CloudServiceExtensionProfile
+    internal partial class CloudServiceExtensionProfile
     {
         /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>
         public CloudServiceExtensionProfile()
         {
-            Extensions = new ChangeTrackingList<Extension>();
+            Extensions = new ChangeTrackingList<CloudServiceExtension>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>
         /// <param name="extensions"> List of extensions for the cloud service. </param>
-        internal CloudServiceExtensionProfile(IList<Extension> extensions)
+        internal CloudServiceExtensionProfile(IList<CloudServiceExtension> extensions)
         {
             Extensions = extensions;
         }
 
         /// <summary> List of extensions for the cloud service. </summary>
-        public IList<Extension> Extensions { get; }
+        public IList<CloudServiceExtension> Extensions { get; }
     }
 }

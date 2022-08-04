@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
 {
     public class Sample1_ManagingManagedInstance
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            SubscriptionResource subscription = armClient.GetDefaultSubscription();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             this.resourceGroup = resourceGroup;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 Location = AzureLocation.WestUS2,
             };
             string networkSecurityGroupName = "myNetworkSecurityGroup";
-            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             RouteTableData routeTableData = new RouteTableData()
@@ -55,16 +55,12 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 Location = AzureLocation.WestUS2,
             };
             string routeTableName = "myRouteTable";
-            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
+            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
 
             //3. create vnet(subnet binding NetworkSecurityGroup and RouteTable)
             var vnetData = new VirtualNetworkData()
             {
                 Location = AzureLocation.WestUS2,
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData()
@@ -73,16 +69,17 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                            new ServiceDelegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
-                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
                     }
                 },
             };
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
             string vnetName = "myVnet";
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
-            string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
+            ResourceIdentifier subnetId = new ResourceIdentifier($"{vnet.Value.Data.Id}/subnets/ManagedInstance");
 
             //4. create ManagedInstance
             ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
@@ -90,16 +87,15 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 AdministratorLogin = "myAdministratorLogin",
                 AdministratorLoginPassword = "abcdef123456789*",
                 SubnetId = subnetId,
-                PublicDataEndpointEnabled = false,
-                MaintenanceConfigurationId = "/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+                IsPublicDataEndpointEnabled = false,
+                MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"),
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                StorageAccountType = new StorageAccountType("GRS"),
-                ZoneRedundant = false,
+                IsZoneRedundant = false,
             };
             string managedInstanceName = "myManagedInstance";
-            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
-            ManagedInstance managedInstance = managedInstanceLro.Value;
+            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
+            ManagedInstanceResource managedInstance = managedInstanceLro.Value;
             #endregion
         }
 
@@ -110,8 +106,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_ListAllManagedInstances
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-            AsyncPageable<ManagedInstance> response = managedInstanceCollection.GetAllAsync();
-            await foreach (ManagedInstance managedInstance in response)
+            AsyncPageable<ManagedInstanceResource> response = managedInstanceCollection.GetAllAsync();
+            await foreach (ManagedInstanceResource managedInstance in response)
             {
                 Console.WriteLine(managedInstance.Data.Name);
             }
@@ -125,28 +121,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_GetAManagedInstance
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-            ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+            ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
             Console.WriteLine(managedInstance.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Sql_GetAManagedInstanceIfExists
-            ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
-
-            ManagedInstance managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
-            if (managedInstance != null)
-            {
-                Console.WriteLine(managedInstance.Data.Name);
-            }
-
-            if (await managedInstanceCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
             #endregion
         }
 
@@ -157,8 +133,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_DeleteAManagedInstance
             ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-            ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
-            await managedInstance.DeleteAsync(true);
+            ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+            await managedInstance.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
     }

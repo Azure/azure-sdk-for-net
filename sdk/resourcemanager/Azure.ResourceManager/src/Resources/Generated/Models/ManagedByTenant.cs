@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about a tenant managing the subscription. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of ManagedByTenant. </summary>
         /// <param name="tenantId"> The tenant ID of the managing tenant. This is a GUID. </param>
-        internal ManagedByTenant(string tenantId)
+        internal ManagedByTenant(Guid? tenantId)
         {
             TenantId = tenantId;
         }
 
         /// <summary> The tenant ID of the managing tenant. This is a GUID. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

@@ -15,6 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> SniEnabled. </summary>
         SniEnabled,
         /// <summary> IpBasedEnabled. </summary>
-        IpBasedEnabled
+        IPBasedEnabled
     }
 }

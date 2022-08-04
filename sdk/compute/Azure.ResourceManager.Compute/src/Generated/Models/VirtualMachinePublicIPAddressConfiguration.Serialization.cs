@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dnsSettings");
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags");
                 writer.WriteStartArray();
-                foreach (var item in IpTags)
+                foreach (var item in IPTags)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachinePublicIPAddressConfiguration DeserializeVirtualMachinePublicIPAddressConfiguration(JsonElement element)
         {
             string name = default;
-            Optional<PublicIPAddressSku> sku = default;
+            Optional<ComputePublicIPAddressSku> sku = default;
             Optional<int> idleTimeoutInMinutes = default;
-            Optional<DeleteOptions> deleteOption = default;
+            Optional<ComputeDeleteOption> deleteOption = default;
             Optional<VirtualMachinePublicIPAddressDnsSettingsConfiguration> dnsSettings = default;
-            Optional<IList<VirtualMachineIpTag>> ipTags = default;
+            Optional<IList<VirtualMachineIPTag>> ipTags = default;
             Optional<WritableSubResource> publicIPPrefix = default;
-            Optional<IPVersions> publicIPAddressVersion = default;
+            Optional<IPVersion> publicIPAddressVersion = default;
             Optional<PublicIPAllocationMethod> publicIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = PublicIPAddressSku.DeserializePublicIPAddressSku(property.Value);
+                    sku = ComputePublicIPAddressSku.DeserializeComputePublicIPAddressSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
+                            deleteOption = new ComputeDeleteOption(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dnsSettings"))
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VirtualMachineIpTag> array = new List<VirtualMachineIpTag>();
+                            List<VirtualMachineIPTag> array = new List<VirtualMachineIPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineIpTag.DeserializeVirtualMachineIpTag(item));
+                                array.Add(VirtualMachineIPTag.DeserializeVirtualMachineIPTag(item));
                             }
                             ipTags = array;
                             continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicIPAddressVersion = new IPVersions(property0.Value.GetString());
+                            publicIPAddressVersion = new IPVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAllocationMethod"))

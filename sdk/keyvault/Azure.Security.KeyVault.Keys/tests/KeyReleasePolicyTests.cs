@@ -79,6 +79,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             using MemoryStream ms = new();
 
+#if SNIPPET
+            KeyVaultKey key = null;
+#endif
+
             #region Snippet:KeyReleasePolicy_ToStream
 #if SNIPPET
             KeyReleasePolicy policy = key.Properties.ReleasePolicy;

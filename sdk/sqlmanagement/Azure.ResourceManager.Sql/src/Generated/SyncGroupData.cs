@@ -23,48 +23,48 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SyncGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="sku"> The name and capacity of the SKU. </param>
         /// <param name="interval"> Sync interval of the sync group. </param>
-        /// <param name="lastSyncTime"> Last sync time of the sync group. </param>
+        /// <param name="lastSyncOn"> Last sync time of the sync group. </param>
         /// <param name="conflictResolutionPolicy"> Conflict resolution policy of the sync group. </param>
         /// <param name="syncDatabaseId"> ARM resource id of the sync database in the sync group. </param>
         /// <param name="hubDatabaseUserName"> User name for the sync group hub database credential. </param>
         /// <param name="hubDatabasePassword"> Password for the sync group hub database credential. </param>
         /// <param name="syncState"> Sync state of the sync group. </param>
         /// <param name="schema"> Sync schema of the sync group. </param>
-        /// <param name="enableConflictLogging"> If conflict logging is enabled. </param>
+        /// <param name="isConflictLoggingEnabled"> If conflict logging is enabled. </param>
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Models.Sku sku, int? interval, DateTimeOffset? lastSyncTime, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, type, systemData)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Interval = interval;
-            LastSyncTime = lastSyncTime;
+            LastSyncOn = lastSyncOn;
             ConflictResolutionPolicy = conflictResolutionPolicy;
             SyncDatabaseId = syncDatabaseId;
             HubDatabaseUserName = hubDatabaseUserName;
             HubDatabasePassword = hubDatabasePassword;
             SyncState = syncState;
             Schema = schema;
-            EnableConflictLogging = enableConflictLogging;
+            IsConflictLoggingEnabled = isConflictLoggingEnabled;
             ConflictLoggingRetentionInDays = conflictLoggingRetentionInDays;
             UsePrivateLinkConnection = usePrivateLinkConnection;
             PrivateEndpointName = privateEndpointName;
         }
 
         /// <summary> The name and capacity of the SKU. </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Sync interval of the sync group. </summary>
         public int? Interval { get; set; }
         /// <summary> Last sync time of the sync group. </summary>
-        public DateTimeOffset? LastSyncTime { get; }
+        public DateTimeOffset? LastSyncOn { get; }
         /// <summary> Conflict resolution policy of the sync group. </summary>
         public SyncConflictResolutionPolicy? ConflictResolutionPolicy { get; set; }
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
-        public string SyncDatabaseId { get; set; }
+        public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> User name for the sync group hub database credential. </summary>
         public string HubDatabaseUserName { get; set; }
         /// <summary> Password for the sync group hub database credential. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Sync schema of the sync group. </summary>
         public SyncGroupSchema Schema { get; set; }
         /// <summary> If conflict logging is enabled. </summary>
-        public bool? EnableConflictLogging { get; set; }
+        public bool? IsConflictLoggingEnabled { get; set; }
         /// <summary> Conflict logging retention period. </summary>
         public int? ConflictLoggingRetentionInDays { get; set; }
         /// <summary> If use private link connection is enabled. </summary>

@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="serverCertificate">Registered Server
         /// Certificate</param>
         /// <param name="agentVersion">Registered Server Agent Version</param>
@@ -73,8 +75,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="monitoringConfiguration">Monitoring
         /// Configuration</param>
         /// <param name="serverName">Server name</param>
-        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), string serverCertificate = default(string), string agentVersion = default(string), string agentVersionStatus = default(string), System.DateTime? agentVersionExpirationDate = default(System.DateTime?), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringEndpointUri = default(string), string monitoringConfiguration = default(string), string serverName = default(string))
-            : base(id, name, type)
+        public RegisteredServer(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string serverCertificate = default(string), string agentVersion = default(string), string agentVersionStatus = default(string), System.DateTime? agentVersionExpirationDate = default(System.DateTime?), string serverOSVersion = default(string), int? serverManagementErrorCode = default(int?), string lastHeartBeat = default(string), string provisioningState = default(string), string serverRole = default(string), string clusterId = default(string), string clusterName = default(string), string serverId = default(string), string storageSyncServiceUid = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string), string discoveryEndpointUri = default(string), string resourceLocation = default(string), string serviceLocation = default(string), string friendlyName = default(string), string managementEndpointUri = default(string), string monitoringEndpointUri = default(string), string monitoringConfiguration = default(string), string serverName = default(string))
+            : base(id, name, type, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;

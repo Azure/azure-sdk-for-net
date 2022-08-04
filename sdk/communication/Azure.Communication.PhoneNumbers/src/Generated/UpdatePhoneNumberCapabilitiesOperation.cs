@@ -18,12 +18,13 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Updates the capabilities of a phone number. </summary>
     public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<PurchasedPhoneNumber>, IOperationSource<PurchasedPhoneNumber>
     {
-        private readonly OperationInternals<PurchasedPhoneNumber> _operation;
+        private readonly OperationInternal<PurchasedPhoneNumber> _operation;
 
         /// <summary> Initializes a new instance of UpdatePhoneNumberCapabilitiesOperation for mocking. </summary>
         protected UpdatePhoneNumberCapabilitiesOperation()
         {
         }
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override PurchasedPhoneNumber Value => _operation.Value;
@@ -35,13 +36,19 @@ namespace Azure.Communication.PhoneNumbers
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PurchasedPhoneNumber> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PurchasedPhoneNumber> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response<PurchasedPhoneNumber>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);

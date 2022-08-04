@@ -15,6 +15,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
@@ -55,7 +56,7 @@ namespace SignalRServiceExtension.Tests
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration["AzureSignalRConnectionString:serviceUri"] = "https://abc.com";
-            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, new EndpointRouterDecorator());
+            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
             var myHub = new MyHub(serviceManagerStore);
             Assert.Equal("MyHub", myHub.HubName);
         }
@@ -73,7 +74,7 @@ namespace SignalRServiceExtension.Tests
         public void TestCustomSignalRConnectionAttribute()
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, new EndpointRouterDecorator());
+            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
 
             Assert.Throws<InvalidOperationException>(() => new CustomConnectionHub(serviceManagerStore));
 
@@ -86,7 +87,7 @@ namespace SignalRServiceExtension.Tests
         public void TestWithoutSignalRConnectionAttribute()
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, new EndpointRouterDecorator());
+            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
 
             Assert.Throws<InvalidOperationException>(() => new MyHub(serviceManagerStore));
 

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteGatewayList
+    internal partial class ExpressRouteGatewayList
     {
         internal static ExpressRouteGatewayList DeserializeExpressRouteGatewayList(JsonElement element)
         {

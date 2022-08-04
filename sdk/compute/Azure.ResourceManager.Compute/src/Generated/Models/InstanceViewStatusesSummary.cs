@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Instance view statuses. </summary>
-    public partial class InstanceViewStatusesSummary
+    internal partial class InstanceViewStatusesSummary
     {
         /// <summary> Initializes a new instance of InstanceViewStatusesSummary. </summary>
         internal InstanceViewStatusesSummary()
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of InstanceViewStatusesSummary. </summary>
-        /// <param name="statusesSummary"></param>
+        /// <param name="statusesSummary"> The summary. </param>
         internal InstanceViewStatusesSummary(IReadOnlyList<StatusCodeCount> statusesSummary)
         {
             StatusesSummary = statusesSummary;
         }
 
-        /// <summary> Gets the statuses summary. </summary>
+        /// <summary> The summary. </summary>
         public IReadOnlyList<StatusCodeCount> StatusesSummary { get; }
     }
 }

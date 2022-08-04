@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class NotebookWorkspaceTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccount _databaseAccount;
+        private CosmosDBAccountResource _databaseAccount;
 
         private const string WorkspaceName = "default";
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB)).Id;
             await StopSessionRecordingAsync();

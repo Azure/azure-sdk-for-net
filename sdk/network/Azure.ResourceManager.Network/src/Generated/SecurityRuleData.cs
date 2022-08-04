@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the SecurityRule data model. </summary>
-    public partial class SecurityRuleData : SubResource
+    public partial class SecurityRuleData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>
         public SecurityRuleData()
@@ -27,9 +28,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> The type of the resource. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sourcePortRange"> The source port or range. Integer or range between 0 and 65535. Asterisk &apos;*&apos; can also be used to match all ports. </param>
@@ -46,11 +47,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="priority"> The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </param>
         /// <param name="provisioningState"> The provisioning state of the security rule resource. </param>
-        internal SecurityRuleData(string id, string name, string etag, string type, string description, SecurityRuleProtocol? protocol, string sourcePortRange, string destinationPortRange, string sourceAddressPrefix, IList<string> sourceAddressPrefixes, IList<ApplicationSecurityGroupData> sourceApplicationSecurityGroups, string destinationAddressPrefix, IList<string> destinationAddressPrefixes, IList<ApplicationSecurityGroupData> destinationApplicationSecurityGroups, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityRuleAccess? access, int? priority, SecurityRuleDirection? direction, ProvisioningState? provisioningState) : base(id)
+        internal SecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string description, SecurityRuleProtocol? protocol, string sourcePortRange, string destinationPortRange, string sourceAddressPrefix, IList<string> sourceAddressPrefixes, IList<ApplicationSecurityGroupData> sourceApplicationSecurityGroups, string destinationAddressPrefix, IList<string> destinationAddressPrefixes, IList<ApplicationSecurityGroupData> destinationApplicationSecurityGroups, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityRuleAccess? access, int? priority, SecurityRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            Type = type;
+            ETag = etag;
             Description = description;
             Protocol = protocol;
             SourcePortRange = sourcePortRange;
@@ -69,12 +68,8 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> The type of the resource. </summary>
-        public string Type { get; set; }
+        public ETag? ETag { get; }
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         public string Description { get; set; }
         /// <summary> Network protocol this rule applies to. </summary>
@@ -106,6 +101,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </summary>
         public SecurityRuleDirection? Direction { get; set; }
         /// <summary> The provisioning state of the security rule resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

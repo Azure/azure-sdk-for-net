@@ -28,7 +28,7 @@ This sample illustrates querying the IoT Hub service to obtain the connection st
 
 To quickly create the needed IoT Hub resource in Azure and to receive a connection string for it, you can deploy our sample template by clicking:
 
-[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FAzure%2Fazure-sdk-for-net%2Ftree%2Fmaster%2Fsamples%2F%2Fiothub-connect-to-eventhubs%2Fsample-resources.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FAzure%2Fazure-sdk-for-net%2Ftree%2Fmaster%2Fsamples%2F%2Fiothub-connect-to-eventhubs%2Fsample-resources.json)
 
 ## References
 

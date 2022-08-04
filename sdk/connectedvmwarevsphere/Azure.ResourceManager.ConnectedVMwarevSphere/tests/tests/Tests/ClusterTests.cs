@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
@@ -30,14 +31,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(true, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
         }
@@ -51,14 +52,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(true, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             // get cluster
@@ -75,19 +76,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(true, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             // check for exists cluster
-            cluster1 = await _clusterCollection.GetIfExistsAsync(clusterName);
-            Assert.AreEqual(cluster1.Id.Name, clusterName);
+            bool exists = await _clusterCollection.ExistsAsync(clusterName);
+            Assert.IsTrue(exists);
         }
 
         [TestCase]
@@ -99,14 +100,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(true, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             int count = 0;
@@ -126,14 +127,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var clusterBody = new VMwareClusterData(DefaultLocation);
             clusterBody.MoRefId = "domain-c7";
             clusterBody.VCenterId = VcenterId;
             clusterBody.ExtendedLocation = _extendedLocation;
             // create cluster
-            VMwareCluster cluster1 = (await _clusterCollection.CreateOrUpdateAsync(true, clusterName, clusterBody)).Value;
+            VMwareClusterResource cluster1 = (await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterBody)).Value;
             Assert.IsNotNull(cluster1);
             Assert.AreEqual(cluster1.Id.Name, clusterName);
             cluster1 = null;

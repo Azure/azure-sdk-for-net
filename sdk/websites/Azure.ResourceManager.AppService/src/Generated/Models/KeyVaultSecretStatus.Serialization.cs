@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public static string ToSerialString(this KeyVaultSecretStatus value) => value switch
         {
+            KeyVaultSecretStatus.Unknown => "Unknown",
             KeyVaultSecretStatus.Initialized => "Initialized",
             KeyVaultSecretStatus.WaitingOnCertificateOrder => "WaitingOnCertificateOrder",
             KeyVaultSecretStatus.Succeeded => "Succeeded",
@@ -23,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
             KeyVaultSecretStatus.KeyVaultSecretDoesNotExist => "KeyVaultSecretDoesNotExist",
             KeyVaultSecretStatus.UnknownError => "UnknownError",
             KeyVaultSecretStatus.ExternalPrivateKey => "ExternalPrivateKey",
-            KeyVaultSecretStatus.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSecretStatus value.")
         };
 
         public static KeyVaultSecretStatus ToKeyVaultSecretStatus(this string value)
         {
+            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.Unknown;
             if (string.Equals(value, "Initialized", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.Initialized;
             if (string.Equals(value, "WaitingOnCertificateOrder", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.WaitingOnCertificateOrder;
             if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.Succeeded;
@@ -39,7 +40,6 @@ namespace Azure.ResourceManager.AppService.Models
             if (string.Equals(value, "KeyVaultSecretDoesNotExist", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.KeyVaultSecretDoesNotExist;
             if (string.Equals(value, "UnknownError", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.UnknownError;
             if (string.Equals(value, "ExternalPrivateKey", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.ExternalPrivateKey;
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultSecretStatus.Unknown;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSecretStatus value.");
         }
     }

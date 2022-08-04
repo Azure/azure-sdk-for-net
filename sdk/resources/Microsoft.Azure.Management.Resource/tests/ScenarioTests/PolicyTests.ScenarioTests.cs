@@ -7,7 +7,6 @@ namespace Policy.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-
     using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Azure.Management.ManagementGroups;
     using Microsoft.Azure.Management.ManagementGroups.Models;
@@ -664,7 +663,8 @@ namespace Policy.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context, delegatingHandler);
 
                 // make a management group
-                var managementGroupName = TestUtilities.GenerateName();
+                //var managementGroupName = TestUtilities.GenerateName();
+                var managementGroupName = "azsmnet2902";
                 var thisTestName = TestUtilities.GetCurrentMethodName();
                 var managementGroup = this.CreateManagementGroup(managementGroupsClient, managementGroupName, thisTestName);
 
@@ -711,7 +711,8 @@ namespace Policy.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context, delegatingHandler);
 
                 // make a management group
-                var managementGroupName = TestUtilities.GenerateName();
+                //var managementGroupName = TestUtilities.GenerateName();
+                var managementGroupName = "azsmnet2337";
                 var thisTestName = TestUtilities.GetCurrentMethodName();
                 var managementGroup = this.CreateManagementGroup(managementGroupsClient, managementGroupName, thisTestName);
 
@@ -817,7 +818,8 @@ namespace Policy.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context, delegatingHandler);
 
                 // make a management group
-                var managementGroupName = TestUtilities.GenerateName();
+                //var managementGroupName = TestUtilities.GenerateName();
+                var managementGroupName = "azsmnet9706";
                 var thisTestName = TestUtilities.GetCurrentMethodName();
                 var managementGroup = this.CreateManagementGroup(managementGroupsClient, managementGroupName, thisTestName);
 
@@ -856,7 +858,8 @@ namespace Policy.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context, delegatingHandler);
 
                 // make a management group
-                var managementGroupName = TestUtilities.GenerateName();
+                //var managementGroupName = TestUtilities.GenerateName();
+                var managementGroupName = "azsmnet5070";
                 var thisTestName = TestUtilities.GetCurrentMethodName();
                 var managementGroup = this.CreateManagementGroup(managementGroupsClient, managementGroupName, thisTestName);
 
@@ -1347,8 +1350,9 @@ namespace Policy.Tests
         private ManagementGroup CreateManagementGroup(ManagementGroupsAPIClient client, string name, string displayName)
         {
             // get an existing test management group to be parent
-            var allManagementGroups = client.ManagementGroups.List();
-            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals(ParentManagementGroup));
+            var allManagementGroups = client.ManagementGroups.List().ToArray();
+            //var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals(ParentManagementGroup));
+            var parentManagementGroup = allManagementGroups[1];
 
             // make a management group using the given parameters
             var managementGroupDetails = new CreateManagementGroupDetails(parent: new CreateParentGroupInfo(id: parentManagementGroup.Id), updatedBy: displayName);
@@ -1357,7 +1361,7 @@ namespace Policy.Tests
             var managementGroupResult = client.ManagementGroups.CreateOrUpdate(name, managementGroupRequest);
             Assert.NotNull(managementGroupResult);
 
-            var managementGroup = ((JObject)managementGroupResult).ToObject<ManagementGroup>();
+            var managementGroup = (ManagementGroup) managementGroupResult;
             Assert.NotNull(managementGroup);
             return managementGroup;
         }

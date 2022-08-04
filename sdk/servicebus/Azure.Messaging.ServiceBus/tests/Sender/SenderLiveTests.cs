@@ -49,6 +49,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
+        public async Task SendWithNamedKeyCredential()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var properties = ServiceBusConnectionStringProperties.Parse(TestEnvironment.ServiceBusConnectionString);
+                var credential = new AzureNamedKeyCredential(properties.SharedAccessKeyName, properties.SharedAccessKey);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, new ServiceBusClientOptions
+                {
+                    TransportType = ServiceBusTransportType.AmqpWebSockets
+                });
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+            }
+        }
+
+        [Test]
         public async Task SendConnectionTopic()
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
@@ -536,6 +552,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
                 var end = DateTime.UtcNow;
                 Assert.Less(end - start, TimeSpan.FromSeconds(5));
+            }
+        }
+
+        [Test]
+        public async Task SendConnStringWithCustomIdentifier()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusSenderOptions
+                {
+                    Identifier = "testIdent-abcdefg"
+                };
+
+                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName, options);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
             }
         }
     }

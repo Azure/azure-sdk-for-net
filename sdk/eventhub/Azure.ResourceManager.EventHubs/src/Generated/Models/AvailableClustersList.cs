@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response of the List Available Clusters operation. </summary>
-    public partial class AvailableClustersList
+    internal partial class AvailableClustersList
     {
         /// <summary> Initializes a new instance of AvailableClustersList. </summary>
         internal AvailableClustersList()

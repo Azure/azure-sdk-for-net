@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Tests
     [ClientTestFixture(
     TextAnalyticsClientOptions.ServiceVersion.V3_0,
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
-    TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+    TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
     public class TextAnalyticsClientLiveTestBase : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
         internal const int MaxRetriesCount = 12;
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
-            Sanitizer = new TextAnalyticsRecordedTestSanitizer();
+            SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
         protected TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default, bool useTokenCredential = default)

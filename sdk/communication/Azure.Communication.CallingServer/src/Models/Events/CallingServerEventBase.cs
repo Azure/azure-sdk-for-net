@@ -6,9 +6,12 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// Base type for all calling events.
-    /// </summary>
+     /// The CallingServer Event Base.
+     /// </summary>
     public abstract class CallingServerEventBase
     {
+        /// <summary> Gets the Event type. </summary>
+        [CodeGenMember("Type")]
+        public AcsEventType EventType { get; set; }
     }
 }

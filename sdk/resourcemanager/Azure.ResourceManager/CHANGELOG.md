@@ -1,5 +1,85 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.1 (2022-07-26)
+
+### Other Changes
+
+- Changed `OperationStatusResult` serialization constructor from internal to protected.
+
+## 1.2.0 (2022-07-11)
+
+### Other Changes
+
+- Changed `OperationStatusResult` initialization constructor from internal to public.
+
+- Upgraded dependent `Azure.Core` to 1.25.0
+
+## 1.1.2 (2022-07-01)
+
+### Features Added
+
+- Add `ExtendedLocation` to common type.
+
+## 1.1.1 (2022-06-22)
+
+### Features Added
+
+- Add OperationStatusResult to common type.
+
+### Bugs Fixed
+
+- Fixed serialization of a resource which inherits from ResourceData/TrackedResourceData by making Tags and SystemData as optional properties.
+
+### Other Changes
+
+- Hide EncryptionProperties, EncryptionStatus and KeyVaultProperties in common type.
+
+## 1.1.0 (2022-06-08)
+
+### Features Added
+
+- Add Update methods in resource classes.
+
+## 1.0.0 (2022-04-07)
+This is the first stable release of the Azure Resources management core library.
+
+### Breaking Changes
+
+Minor changes since the public beta release:
+- All `Tag` methods have been removed from `SubscriptionResource` as the service doesn't support these operations.
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Tweaked some properties to right type.
+
+## 1.0.0-beta.9 (2022-03-31)
+
+### Features Added
+
+- New struct `ArmEnvironment`.
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- Moved class `ManagementGroupResource` (previously `ManagementGroup`), `ManagementGroupCollection` and `ManagementGroupData` from `Azure.ResourceManager.Management` namespace to `Azure.ResourceManager.ManagementGroups`.
+- Moved class `ArmResource` and `ArmCollection` from `Azure.ResourceManager.Core` to `Azure.ResourceManager`.
+- Removed namespace `Azure.ResourceManager.Core` and `Azure.ResourceManager.Management`.
+- Removed class `ErrorDetail` and `ErrorAdditionalInfo`.
+- Removed `GetIfExists` methods from all the resource classes.
+- Changed `Scope` in `ArmClientOptions` to `ArmEnvironment`.
+- The constructor of `ArmClient` no longer accepts a `Uri` parameter, please use the `ArmEnvironment` in `ArmClientOptions` instead.
+- All properties of the type `object` were changed to `BinaryData`.
+
 ## 1.0.0-beta.8 (2022-01-29)
 
 ### Features Added

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceEncryptionProtectorOperationSource : IOperationSource<ManagedInstanceEncryptionProtector>
+    internal class ManagedInstanceEncryptionProtectorOperationSource : IOperationSource<ManagedInstanceEncryptionProtectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceEncryptionProtector IOperationSource<ManagedInstanceEncryptionProtector>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceEncryptionProtectorResource IOperationSource<ManagedInstanceEncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
-            return new ManagedInstanceEncryptionProtector(_client, data);
+            return new ManagedInstanceEncryptionProtectorResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceEncryptionProtector> IOperationSource<ManagedInstanceEncryptionProtector>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceEncryptionProtectorResource> IOperationSource<ManagedInstanceEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceEncryptionProtectorData.DeserializeManagedInstanceEncryptionProtectorData(document.RootElement);
-            return new ManagedInstanceEncryptionProtector(_client, data);
+            return new ManagedInstanceEncryptionProtectorResource(_client, data);
         }
     }
 }

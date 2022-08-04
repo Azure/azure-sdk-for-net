@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ElasticPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -41,23 +41,25 @@ namespace Azure.ResourceManager.Sql
         /// </param>
         /// <param name="kind"> Kind of elastic pool. This is metadata used for the Azure portal experience. </param>
         /// <param name="state"> The state of the elastic pool. </param>
-        /// <param name="creationDate"> The creation date of the elastic pool (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the elastic pool (ISO8601 format). </param>
         /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
-        /// <param name="zoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
+        /// <param name="isZoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
-        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, string kind, ElasticPoolState? state, DateTimeOffset? creationDate, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId) : base(id, name, type, systemData, tags, location)
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. </param>
+        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
             State = state;
-            CreationDate = creationDate;
+            CreatedOn = createdOn;
             MaxSizeBytes = maxSizeBytes;
             PerDatabaseSettings = perDatabaseSettings;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             LicenseType = licenseType;
             MaintenanceConfigurationId = maintenanceConfigurationId;
+            HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
         }
 
         /// <summary>
@@ -70,22 +72,24 @@ namespace Azure.ResourceManager.Sql
         /// ````
         /// 
         /// </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Kind of elastic pool. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> The state of the elastic pool. </summary>
         public ElasticPoolState? State { get; }
         /// <summary> The creation date of the elastic pool (ISO8601 format). </summary>
-        public DateTimeOffset? CreationDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
         public long? MaxSizeBytes { get; set; }
         /// <summary> The per database settings for the elastic pool. </summary>
         public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> The license type to apply for this elastic pool. </summary>
         public ElasticPoolLicenseType? LicenseType { get; set; }
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
+        /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. </summary>
+        public int? HighAvailabilityReplicaCount { get; set; }
     }
 }

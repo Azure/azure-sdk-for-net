@@ -6,49 +6,52 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FirewallPolicyRuleCollectionGroup data model. </summary>
-    public partial class FirewallPolicyRuleCollectionGroupData : SubResource
+    public partial class FirewallPolicyRuleCollectionGroupData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()
         {
-            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollection>();
+            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Rule Group type. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
-        /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
+        /// <param name="ruleCollections">
+        /// Group of Firewall Policy rule collections.
+        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(string id, string name, string etag, string type, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, ProvisioningState? provisioningState) : base(id)
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            Type = type;
+            ETag = etag;
             Priority = priority;
             RuleCollections = ruleCollections;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Rule Group type. </summary>
-        public string Type { get; }
+        public ETag? ETag { get; }
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         public int? Priority { get; set; }
-        /// <summary> Group of Firewall Policy rule collections. </summary>
-        public IList<FirewallPolicyRuleCollection> RuleCollections { get; }
+        /// <summary>
+        /// Group of Firewall Policy rule collections.
+        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// </summary>
+        public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
         /// <summary> The provisioning state of the firewall policy rule collection group resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

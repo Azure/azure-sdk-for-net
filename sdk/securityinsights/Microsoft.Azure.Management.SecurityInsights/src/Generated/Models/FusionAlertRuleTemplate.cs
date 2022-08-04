@@ -35,9 +35,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the FusionAlertRuleTemplate class.
         /// </summary>
-        /// <param name="severity">The severity for alerts created by this
-        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
-        /// 'Informational'</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -48,32 +45,40 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// createdBy and modifiedBy information.</param>
         /// <param name="alertRulesCreatedByTemplateCount">the number of alert
         /// rules that were created by this template</param>
-        /// <param name="lastUpdatedDateUTC">The last time that this alert rule
-        /// template has been updated.</param>
         /// <param name="createdDateUTC">The time that this alert rule template
         /// has been added.</param>
+        /// <param name="lastUpdatedDateUTC">The time that this alert rule
+        /// template was last updated.</param>
         /// <param name="description">The description of the alert rule
         /// template.</param>
         /// <param name="displayName">The display name for alert rule
         /// template.</param>
-        /// <param name="requiredDataConnectors">The required data sources for
-        /// this template</param>
+        /// <param name="requiredDataConnectors">The required data connectors
+        /// for this template</param>
         /// <param name="status">The alert rule template status. Possible
         /// values include: 'Installed', 'Available', 'NotAvailable'</param>
+        /// <param name="severity">The severity for alerts created by this
+        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
+        /// 'Informational'</param>
         /// <param name="tactics">The tactics of the alert rule
         /// template</param>
-        public FusionAlertRuleTemplate(string severity, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), System.DateTime? createdDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), IList<string> tactics = default(IList<string>))
+        /// <param name="techniques">The techniques of the alert rule</param>
+        /// <param name="sourceSettings">All supported source signal
+        /// configurations consumed in fusion detection.</param>
+        public FusionAlertRuleTemplate(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? createdDateUTC = default(System.DateTime?), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), string severity = default(string), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>), IList<FusionTemplateSourceSetting> sourceSettings = default(IList<FusionTemplateSourceSetting>))
             : base(id, name, type, systemData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
-            LastUpdatedDateUTC = lastUpdatedDateUTC;
             CreatedDateUTC = createdDateUTC;
+            LastUpdatedDateUTC = lastUpdatedDateUTC;
             Description = description;
             DisplayName = displayName;
             RequiredDataConnectors = requiredDataConnectors;
             Status = status;
             Severity = severity;
             Tactics = tactics;
+            Techniques = techniques;
+            SourceSettings = sourceSettings;
             CustomInit();
         }
 
@@ -90,16 +95,16 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public int? AlertRulesCreatedByTemplateCount { get; set; }
 
         /// <summary>
-        /// Gets the last time that this alert rule template has been updated.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.lastUpdatedDateUTC")]
-        public System.DateTime? LastUpdatedDateUTC { get; private set; }
-
-        /// <summary>
         /// Gets the time that this alert rule template has been added.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdDateUTC")]
         public System.DateTime? CreatedDateUTC { get; private set; }
+
+        /// <summary>
+        /// Gets the time that this alert rule template was last updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastUpdatedDateUTC")]
+        public System.DateTime? LastUpdatedDateUTC { get; private set; }
 
         /// <summary>
         /// Gets or sets the description of the alert rule template.
@@ -114,7 +119,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the required data sources for this template
+        /// Gets or sets the required data connectors for this template
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiredDataConnectors")]
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; set; }
@@ -140,17 +145,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IList<string> Tactics { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the techniques of the alert rule
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Severity == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Severity");
-            }
-        }
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; set; }
+
+        /// <summary>
+        /// Gets or sets all supported source signal configurations consumed in
+        /// fusion detection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceSettings")]
+        public IList<FusionTemplateSourceSetting> SourceSettings { get; set; }
+
     }
 }

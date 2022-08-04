@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraKeyspaceOperationSource : IOperationSource<CassandraKeyspace>
+    internal class CassandraKeyspaceOperationSource : IOperationSource<CassandraKeyspaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CassandraKeyspace IOperationSource<CassandraKeyspace>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraKeyspaceResource IOperationSource<CassandraKeyspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
-            return new CassandraKeyspace(_client, data);
+            return new CassandraKeyspaceResource(_client, data);
         }
 
-        async ValueTask<CassandraKeyspace> IOperationSource<CassandraKeyspace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraKeyspaceResource> IOperationSource<CassandraKeyspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
-            return new CassandraKeyspace(_client, data);
+            return new CassandraKeyspaceResource(_client, data);
         }
     }
 }

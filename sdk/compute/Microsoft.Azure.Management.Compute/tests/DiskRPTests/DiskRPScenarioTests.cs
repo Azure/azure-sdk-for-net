@@ -120,5 +120,11 @@ namespace Compute.Tests.DiskRPTests
         {
             Disk_CRUD_WithPurchasePlan_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithPurchasePlan_EmptyDisk", diskSizeGB: 5);
         }
+
+        [Fact]
+        public void Disk_CRUD_WithArchitecture_EmptyDisk()
+        {
+            Disk_CRUD_WithArchitecture_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithArchitecture_EmptyDisk", diskSizeGB: 5);
+        }
     }
 }

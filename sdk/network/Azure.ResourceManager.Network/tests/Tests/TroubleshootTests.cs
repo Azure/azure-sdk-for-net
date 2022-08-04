@@ -12,7 +12,6 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 //using Sku = Azure.ResourceManager.Storage.Models.Sku;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -41,19 +40,19 @@ namespace Azure.ResourceManager.Network.Tests
             var resourceGroup = CreateResourceGroup(resourceGroupName, location);
 
             // CreateVirtualNetworkGateway API
-            // Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
+            // Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddressResource API
             string publicIpName = Recording.GenerateAssetName("azsmnet");
             string domainNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
+            PublicIPAddressResource nic1publicIp = await CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location);
 
-            //Prerequisite:-Create Virtual Network using Put VirtualNetwork API
+            //Prerequisite:-Create Virtual Network using Put VirtualNetworkResource API
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = "GatewaySubnet";
 
             await CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location);
 
-            Response<Subnet> getSubnetResponse = await GetVirtualNetworkCollection(resourceGroupName).Get(vnetName).Value.GetSubnets().GetAsync(subnetName);
+            Response<SubnetResource> getSubnetResponse = await GetVirtualNetworkCollection(resourceGroupName).Get(vnetName).Value.GetSubnets().GetAsync(subnetName);
 
             // CreateVirtualNetworkGateway API
             string virtualNetworkGatewayName = Recording.GenerateAssetName("azsmnet");
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Network.Tests
                     {
                         Name = ipConfigName,
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                        PublicIPAddress = new SubResource() { Id = nic1publicIp.Id }, Subnet = new SubResource() { Id = getSubnetResponse.Value.Id }
+                        PublicIPAddress = new WritableSubResource() { Id = nic1publicIp.Id }, Subnet = new WritableSubResource() { Id = getSubnetResponse.Value.Id }
                     }
                 },
                 Sku = new VirtualNetworkGatewaySku() { Name = VirtualNetworkGatewaySkuName.Basic, Tier = VirtualNetworkGatewaySkuTier.Basic }
@@ -84,21 +83,21 @@ namespace Azure.ResourceManager.Network.Tests
                 await virtualNetworkGatewayCollection.CreateOrUpdateAsync(true, virtualNetworkGatewayName, virtualNetworkGateway);
             await putVirtualNetworkGatewayResponseOperation.WaitForCompletionAsync();;
             // GetVirtualNetworkGateway API
-            Response<VirtualNetworkGateway> getVirtualNetworkGatewayResponse =
+            Response<VirtualNetworkGatewayResource> getVirtualNetworkGatewayResponse =
                 await virtualNetworkGatewayCollection.GetAsync(virtualNetworkGatewayName);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create network Watcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName, networkWatcherName, properties);
 
             //Create storage
             //string storageName = Recording.GenerateAssetName("azsmnet");
             //var storageParameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardLRS), Kind.Storage, location);
 
-            //Operation<StorageAccount> accountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroupName, storageName, storageParameters);
-            //Response<StorageAccount> account = await accountOperation.WaitForCompletionAsync();;
+            //Operation<StorageAccountResource> accountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroupName, storageName, storageParameters);
+            //Response<StorageAccountResource> account = await accountOperation.WaitForCompletionAsync();;
             //TroubleshootingParameters parameters = new TroubleshootingParameters(getVirtualNetworkGatewayResponse.Value.Id, account.Value.Id, "https://nwtestdbdzq4xsvskrei6.blob.core.windows.net/vhds");
 
             ////Get troubleshooting

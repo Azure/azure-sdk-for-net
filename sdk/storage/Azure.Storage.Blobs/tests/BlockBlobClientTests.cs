@@ -284,11 +284,14 @@ namespace Azure.Storage.Blobs.Test
                 blockBlobClient.StageBlockAsync(
                     base64BlockId: string.Empty,
                     content: new MemoryStream(),
-                    conditions: conditions),
+                    options: new BlockBlobStageBlockOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"StageBlock does not support the {invalidCondition} condition(s)."));
-                    Assert.IsTrue(e.Message.Contains("Conditions"));
+                    Assert.IsTrue(e.Message.Contains("conditions"));
                 });
         }
 
@@ -374,9 +377,12 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlockInfo> response = await blob.StageBlockAsync(
                     base64BlockId: ToBase64(GetNewBlockName()),
                     content: stream,
-                    conditions: new BlobRequestConditions
+                    options: new BlockBlobStageBlockOptions
                     {
-                        LeaseId = leaseId
+                        Conditions = new BlobRequestConditions
+                        {
+                            LeaseId = leaseId
+                        }
                     });
 
                 // Assert
@@ -407,9 +413,12 @@ namespace Azure.Storage.Blobs.Test
                     blob.StageBlockAsync(
                         base64BlockId: ToBase64(GetNewBlockName()),
                         content: stream,
-                        conditions: new BlobRequestConditions
+                        options: new BlockBlobStageBlockOptions
                         {
-                            LeaseId = garbageLeaseId
+                            Conditions = new BlobRequestConditions
+                            {
+                                LeaseId = garbageLeaseId
+                            }
                         }),
                     e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
             }
@@ -446,7 +455,7 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
+                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler, default);
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
@@ -509,7 +518,10 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlockInfo> response = await blob.StageBlockAsync(
                     base64BlockId: ToBase64(GetNewBlockName()),
                     content: stream,
-                    progressHandler: progress);
+                    options: new BlockBlobStageBlockOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert
@@ -3294,6 +3306,69 @@ namespace Azure.Storage.Blobs.Test
                     copySource: sourceBlob.Uri,
                     options: options),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(null)]
+        [TestCase(BlobCopySourceTagsMode.Replace)]
+        [TestCase(BlobCopySourceTagsMode.Copy)]
+        public async Task SyncUploadFromUriAsync_CopySourceTags(BlobCopySourceTagsMode? copySourceTags)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            Dictionary<string, string> sourceTags = new Dictionary<string, string>
+            {
+                { "source", "tag" }
+            };
+
+            BlobUploadOptions uploadOptions = new BlobUploadOptions
+            {
+                Tags = sourceTags
+            };
+
+            await sourceBlob.UploadAsync(stream, uploadOptions);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                CopySourceTagsMode = copySourceTags
+            };
+
+            Dictionary<string, string> destTags = new Dictionary<string, string>
+            {
+                { "dest", "tag" }
+            };
+
+            if (copySourceTags != BlobCopySourceTagsMode.Copy)
+            {
+                options.Tags = destTags;
+            }
+
+            Uri sourceUri = sourceBlob.GenerateSasUri(BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
+
+            // Act
+            Response<BlobContentInfo> uploadResponse = await destBlob.SyncUploadFromUriAsync(
+                copySource: sourceUri,
+                options: options);
+
+            // Assert
+            Response<GetBlobTagResult> getTagsResponse = await destBlob.GetTagsAsync();
+
+            if (copySourceTags == BlobCopySourceTagsMode.Copy)
+            {
+                AssertDictionaryEquality(sourceTags, getTagsResponse.Value.Tags);
+            }
+            else
+            {
+                AssertDictionaryEquality(destTags, getTagsResponse.Value.Tags);
+            }
         }
 
         [RecordedTest]

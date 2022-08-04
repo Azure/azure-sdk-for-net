@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Communication.Tests
 
         public string NotificationHubsResourceGroupName => GetRecordedVariable(NotificationHubsResourceGroupNameEnvironmentVariableName);
         public string NotificationHubsResourceId => GetRecordedVariable(NotificationHubsResourceIdEnvironmentVariableName);
-        public string NotificationHubsConnectionString => GetRecordedVariable(NotificationHubsConnectionStringEnvironmentVariableName);
+        public string NotificationHubsConnectionString => GetRecordedVariable(
+            NotificationHubsConnectionStringEnvironmentVariableName,
+            options => options.HasSecretConnectionStringParameter("SharedAccessKey"));
     }
 }

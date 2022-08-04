@@ -1,65 +1,65 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/languages",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "101",
+        "Accept": "application/json",
+        "Content-Length": "146",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-deae7a07d7f4c74e99ee3cd43a15c226-baf955c3af9d8d43-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "d6d037d3997433f0d1d408295081d2b0",
+        "traceparent": "00-050ca6cc2c1b0364b026b71a6a1ed477-933b56a8592ca28d-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cab3f4ebe34eb766530e2366f34d4622",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "Este documento est\u00E1 en espa\u00F1ol",
-            "countryHint": "COLOMBIA"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Este documento est\u00E1 en espa\u00F1ol",
+              "countryHint": "COLOMBIA"
+            }
+          ]
+        },
+        "kind": "LanguageDetection"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "302049a1-6da9-47f3-8a6d-849f8775e7cd",
+        "apim-request-id": "68b6d5cc-6570-414d-9c06-a44e9d5c4120",
+        "Content-Length": "325",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:14:26 GMT",
+        "Date": "Thu, 21 Jul 2022 23:23:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "2"
       },
       "ResponseBody": {
-        "documents": [],
-        "errors": [
-          {
-            "id": "0",
-            "error": {
-              "code": "InvalidArgument",
-              "message": "Invalid Country Hint.",
-              "innererror": {
-                "code": "InvalidCountryHint",
-                "message": "Country hint is not valid. Please specify an ISO 3166-1 alpha-2 two letter country code."
+        "kind": "LanguageDetectionResults",
+        "results": {
+          "documents": [],
+          "errors": [
+            {
+              "id": "0",
+              "error": {
+                "code": "InvalidArgument",
+                "message": "Invalid Country Hint.",
+                "innererror": {
+                  "code": "InvalidCountryHint",
+                  "message": "Country hint is not valid. Please specify an ISO 3166-1 alpha-2 two letter country code."
+                }
               }
             }
-          }
-        ],
-        "modelVersion": "2021-01-05"
+          ],
+          "modelVersion": "2021-11-20"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "467349083",
+    "RandomSeed": "1664498615",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

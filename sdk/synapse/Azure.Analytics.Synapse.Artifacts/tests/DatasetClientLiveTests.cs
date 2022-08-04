@@ -23,6 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
     {
         public DatasetClientLiveTests(bool isAsync) : base(isAsync)
         {
+            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
+            CompareBodies = false;
         }
 
         private DatasetClient CreateClient()

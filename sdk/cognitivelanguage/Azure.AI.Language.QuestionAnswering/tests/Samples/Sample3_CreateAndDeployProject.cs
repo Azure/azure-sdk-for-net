@@ -24,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
-            newProjectName = "newFAQ";
+            newProjectName = CreateTestProjectName();
 #endif
             RequestContent creationRequestContent = RequestContent.Create(
                 new {
@@ -76,10 +76,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
 #if SNIPPET
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, newProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif
 
@@ -102,10 +102,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             newDeploymentName = "production";
 #endif
 #if SNIPPET
-            Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
+            Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: false, newProjectName, newDeploymentName);
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Started, newProjectName, newDeploymentName);
             await deploymentOperation.WaitForCompletionAsync();
 #endif
 
@@ -120,8 +120,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            DeleteProject(newProjectName);
         }
 
         [RecordedTest]
@@ -134,7 +132,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
-            newProjectName = "newFAQ";
+            newProjectName = CreateTestProjectName();
 #endif
             RequestContent creationRequestContent = RequestContent.Create(
                 new
@@ -188,10 +186,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 });
 
 #if SNIPPET
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, newProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, newProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif
 
@@ -216,10 +214,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             newDeploymentName = "production";
 #endif
 #if SNIPPET
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: true, newProjectName, newDeploymentName);
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(waitForCompletion: false, newProjectName, newDeploymentName);
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Started, newProjectName, newDeploymentName);
             await deploymentOperation.WaitForCompletionAsync();
 #endif
 
@@ -236,8 +234,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            await DeleteProjectAsync(newProjectName);
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class OSDiskImage : IUtf8JsonSerializable
+    internal partial class OSDiskImage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImage DeserializeOSDiskImage(JsonElement element)
         {
-            OperatingSystemTypes operatingSystem = default;
+            SupportedOperatingSystemType operatingSystem = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatingSystem"))
                 {
-                    operatingSystem = property.Value.GetString().ToOperatingSystemTypes();
+                    operatingSystem = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
             }

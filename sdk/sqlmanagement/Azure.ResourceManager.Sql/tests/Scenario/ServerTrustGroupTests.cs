@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class ServerTrustGroupTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public ServerTrustGroupTests(bool isAsync)
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetManagedInstances().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        private async Task<ServerTrustGroup> CreateServerTrustGroup(string locationName, string serverTrustGroupName)
+        private async Task<SqlServerTrustGroupResource> CreateServerTrustGroup(string locationName, string serverTrustGroupName)
         {
             // create two ManagedInstanceName
             string managedInstanceName1 = Recording.GenerateAssetName("managed-instance-");
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 CreateDefaultManagedInstance(managedInstanceName2, networkSecurityGroupName2, routeTableName2, vnetName2, AzureLocation.WestUS2, _resourceGroup),
             };
             Task.WaitAll(tasks);
-            string primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id.ToString();
-            string backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName2)).Value.Data.Id.ToString();
+            ResourceIdentifier primaryManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName1)).Value.Data.Id;
+            ResourceIdentifier backupManagedInstanceId = (await _resourceGroup.GetManagedInstances().GetAsync(managedInstanceName2)).Value.Data.Id;
 
             // create ServerTrustGroup
-            ServerTrustGroupData data = new ServerTrustGroupData()
+            SqlServerTrustGroupData data = new SqlServerTrustGroupData()
             {
                 GroupMembers =
                 {
-                    new ServerInfo(primaryManagedInstanceId),
-                    new ServerInfo(backupManagedInstanceId),
+                    new ServerTrustGroupServerInfo(primaryManagedInstanceId),
+                    new ServerTrustGroupServerInfo(backupManagedInstanceId),
                 },
                 TrustScopes = { ServerTrustGroupPropertiesTrustScopesItem.GlobalTransactions},
             };
-            var serverTrustGroup = await _resourceGroup.GetServerTrustGroups(locationName).CreateOrUpdateAsync(true, serverTrustGroupName, data);
+            var serverTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).CreateOrUpdateAsync(WaitUntil.Completed, serverTrustGroupName, data);
             return serverTrustGroup.Value;
         }
 
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.AreEqual(serverTrustGroupName, serverTrustGroup.Data.Name);
 
             // 2.CheckIfExist
-            Assert.IsTrue(_resourceGroup.GetServerTrustGroups(locationName).Exists(serverTrustGroupName));
+            Assert.IsTrue(_resourceGroup.GetSqlServerTrustGroups(locationName).Exists(serverTrustGroupName));
 
             // 3.Get
-            var getServerTrustGroup = await _resourceGroup.GetServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
+            var getServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
             Assert.IsNotNull(getServerTrustGroup.Value.Data);
             Assert.AreEqual(serverTrustGroupName, getServerTrustGroup.Value.Data.Name);
 
             // 4.GetAll
-            var list = await _resourceGroup.GetServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
 
             // 5.Delete
-            //var deleteServerTrustGroup = await _resourceGroup.GetServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
+            //var deleteServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups().GetAsync(locationName, serverTrustGroupName);
             //await deleteServerTrustGroup.Value.DeleteAsync();
-            //list = await _resourceGroup.GetServerTrustGroups().GetAllAsync(locationName).ToEnumerableAsync();
+            //list = await _resourceGroup.GetSqlServerTrustGroups().GetAllAsync(locationName).ToEnumerableAsync();
         }
 
         [Test]
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var serverTrustGroup = await CreateServerTrustGroup(locationName, serverTrustGroupName);
             Assert.IsNotNull(serverTrustGroup.Data);
 
-            var list = await _resourceGroup.GetServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            var deleteServerTrustGroup = await _resourceGroup.GetServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
-            await deleteServerTrustGroup.Value.DeleteAsync(true);
-            list = await _resourceGroup.GetServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
+            var deleteServerTrustGroup = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName);
+            await deleteServerTrustGroup.Value.DeleteAsync(WaitUntil.Completed);
+            list = await _resourceGroup.GetSqlServerTrustGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
     }

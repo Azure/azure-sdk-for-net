@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> A reference to the origin group. </summary>
-    public partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
+    internal partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
     {
         /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
         public EndpointPropertiesUpdateParametersDefaultOriginGroup()
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal EndpointPropertiesUpdateParametersDefaultOriginGroup(string id)
+        internal EndpointPropertiesUpdateParametersDefaultOriginGroup(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

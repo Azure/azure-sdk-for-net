@@ -10,6 +10,7 @@ using Microsoft.Azure.SignalR.Tests.Common;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Xunit;
 using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
 
@@ -32,7 +33,7 @@ namespace SignalRServiceExtension.Tests
         public async Task EndpointsEqualFact()
         {
             var configuration = CreateTestConfiguration();
-            var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance);
+            var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
             var converter = new NegotiationContextAsyncConverter(serviceManagerStore);
             var attribute = new SignalRNegotiationAttribute { HubName = HubName };
 

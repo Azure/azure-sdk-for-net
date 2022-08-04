@@ -33,13 +33,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         public const string IncidentStatus = "IncidentStatus";
         /// <summary>
+        /// The related Analytic rule ids of the incident
+        /// </summary>
+        public const string IncidentRelatedAnalyticRuleIds = "IncidentRelatedAnalyticRuleIds";
+        /// <summary>
         /// The tactics of the incident
         /// </summary>
         public const string IncidentTactics = "IncidentTactics";
         /// <summary>
-        /// The related Analytic rule ids of the incident
+        /// The labels of the incident
         /// </summary>
-        public const string IncidentRelatedAnalyticRuleIds = "IncidentRelatedAnalyticRuleIds";
+        public const string IncidentLabel = "IncidentLabel";
         /// <summary>
         /// The provider name of the incident
         /// </summary>
@@ -49,7 +53,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         public const string AccountAadTenantId = "AccountAadTenantId";
         /// <summary>
-        /// The account Azure Active Directory user id.
+        /// The account Azure Active Directory user id
         /// </summary>
         public const string AccountAadUserId = "AccountAadUserId";
         /// <summary>
@@ -76,6 +80,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// The account user principal name suffix
         /// </summary>
         public const string AccountUPNSuffix = "AccountUPNSuffix";
+        /// <summary>
+        /// The name of the product of the alert
+        /// </summary>
+        public const string AlertProductNames = "AlertProductNames";
         /// <summary>
         /// The Azure resource id
         /// </summary>
@@ -129,7 +137,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         public const string HostOSVersion = "HostOSVersion";
         /// <summary>
-        /// The IoT device id
+        /// "The IoT device id
         /// </summary>
         public const string IoTDeviceId = "IoTDeviceId";
         /// <summary>

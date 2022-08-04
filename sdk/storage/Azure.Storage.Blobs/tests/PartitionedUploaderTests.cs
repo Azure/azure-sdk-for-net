@@ -302,7 +302,7 @@ namespace Azure.Storage.Blobs.Test
                     InitialTransferSize = blockSize, // known stream length means we need to specify this to force paritioned upload
                     MaximumConcurrency = 1 // concurrency=1 puts us into upload from sequence
                 },
-                hashingOptions: default,
+                validationOptions: default,
                 arrayPool: testPool);
             Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
 
@@ -340,10 +340,12 @@ namespace Azure.Storage.Blobs.Test
                 c => c.StageBlockInternal(
                     IsAny<string>(),
                     IsAny<Stream>(),
-                    IsAny<BlockBlobStageBlockOptions>(),
+                    IsAny<UploadTransferValidationOptions>(),
+                    IsAny<BlobRequestConditions>(),
+                    IsAny<IProgress<long>>(),
                     _async,
                     s_cancellationToken
-                )).Returns<string, Stream, BlockBlobStageBlockOptions, bool, CancellationToken>(sink.StageInternal);
+                )).Returns<string, Stream, UploadTransferValidationOptions, BlobRequestConditions, IProgress<long>, bool, CancellationToken>(sink.StageInternal);
 
             clientMock.Setup(
                 c => c.CommitBlockListInternal(
@@ -399,13 +401,13 @@ namespace Azure.Storage.Blobs.Test
                 return s_response;
             }
 
-            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, BlockBlobStageBlockOptions options, bool async, CancellationToken cancellationToken)
+            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, UploadTransferValidationOptions validationOptions, BlobRequestConditions conditions, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken)
             {
                 if (async)
                 {
                     await Task.Delay(25);
                 }
-                options?.ProgressHandler.Report(stream.Length);
+                progressHandler.Report(stream.Length);
                 byte[] data = default;
                 if (_saveBytes)
                 {

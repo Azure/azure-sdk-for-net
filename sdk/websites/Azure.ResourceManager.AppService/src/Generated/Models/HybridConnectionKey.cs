@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
-    public partial class HybridConnectionKey : ProxyOnlyResource
+    public partial class HybridConnectionKey : ResourceData
     {
         /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
         public HybridConnectionKey()
@@ -21,20 +21,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sendKeyName"> The name of the send key. </param>
         /// <param name="sendKeyValue"> The value of the send key. </param>
-        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string sendKeyName, string sendKeyValue) : base(id, name, type, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sendKeyName, string sendKeyValue, string kind) : base(id, name, resourceType, systemData)
         {
             SendKeyName = sendKeyName;
             SendKeyValue = sendKeyValue;
+            Kind = kind;
         }
 
         /// <summary> The name of the send key. </summary>
         public string SendKeyName { get; }
         /// <summary> The value of the send key. </summary>
         public string SendKeyValue { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

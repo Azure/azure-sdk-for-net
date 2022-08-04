@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobTargetGroupListResult DeserializeJobTargetGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobTargetGroupData>> value = default;
+            Optional<IReadOnlyList<SqlServerJobTargetGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobTargetGroupData> array = new List<JobTargetGroupData>();
+                    List<SqlServerJobTargetGroupData> array = new List<SqlServerJobTargetGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobTargetGroupData.DeserializeJobTargetGroupData(item));
+                        array.Add(SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(item));
                     }
                     value = array;
                     continue;

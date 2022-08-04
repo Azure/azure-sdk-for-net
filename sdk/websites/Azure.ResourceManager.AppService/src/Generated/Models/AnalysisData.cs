@@ -44,6 +44,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Additional Source Data. </summary>
         public IList<IList<NameValuePair>> Data { get; }
         /// <summary> Detector Meta Data. </summary>
-        public ResponseMetaData DetectorMetaData { get; set; }
+        internal ResponseMetaData DetectorMetaData { get; set; }
+        /// <summary> Source of the Data. </summary>
+        public DataSource DataSource
+        {
+            get => DetectorMetaData is null ? default : DetectorMetaData.DataSource;
+            set
+            {
+                if (DetectorMetaData is null)
+                    DetectorMetaData = new ResponseMetaData();
+                DetectorMetaData.DataSource = value;
+            }
+        }
     }
 }

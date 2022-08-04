@@ -18,7 +18,13 @@ param(
     [string]$Subscription,
 
     # Default to true in Azure Pipelines environments
-    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
+    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
+
+    # Optional namespace override, otherwise the shell user or chart annotation will be used
+    [string]$Namespace,
+
+    # Override remote stress-test-addons with local on-disk addons for development
+    [System.IO.FileInfo]$LocalAddonsPath
 )
 
 . $PSScriptRoot/stress-test-deployment-lib.ps1

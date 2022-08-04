@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient fileClient = InstrumentClient(test.Container.GetRootDirectoryClient().GetFileClient(DataLakeClientBuilder.GetNewFileName()));
 
             // Act
-            DataLakeFileSystemClient filesystemClient = fileClient.GetParentDataLakeFileSystemClient();
+            DataLakeFileSystemClient filesystemClient = fileClient.GetParentFileSystemClient();
             // make sure that client is functional
             var containerProperties = await filesystemClient.GetPropertiesAsync();
 
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetFileClient(fileName));
 
             // Act
-            var fileSystemClient = fileClient.GetParentDataLakeFileSystemClient();
+            var fileSystemClient = fileClient.GetParentFileSystemClient();
             // make sure that client is functional
             var fileSystemProperties = await fileSystemClient.GetPropertiesAsync();
 
@@ -75,7 +75,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 .GetFileClient(fileName));
 
             // Act
-            var fileSystemClient = fileClient.GetParentDataLakeFileSystemClient();
+            var fileSystemClient = fileClient.GetParentFileSystemClient();
             // make sure that client is functional
             var pathItems = await fileSystemClient.GetPathsAsync().ToListAsync();
 
@@ -91,10 +91,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             Mock<DataLakeFileClient> fileClientMock = new Mock<DataLakeFileClient>();
             Mock<DataLakeFileSystemClient> fileSystemClientMock = new Mock<DataLakeFileSystemClient>();
-            fileClientMock.Protected().Setup<DataLakeFileSystemClient>("GetParentDataLakeFileSystemClientCore").Returns(fileSystemClientMock.Object);
+            fileClientMock.Protected().Setup<DataLakeFileSystemClient>("GetParentFileSystemClientCore").Returns(fileSystemClientMock.Object);
 
             // Act
-            var fileSystemClient = fileClientMock.Object.GetParentDataLakeFileSystemClientCore();
+            var fileSystemClient = fileClientMock.Object.GetParentFileSystemClientCore();
 
             // Assert
             Assert.IsNotNull(fileSystemClient);
@@ -114,7 +114,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await fileClient.CreateAsync();
 
             // Act
-            DataLakeDirectoryClient parentDirClient = fileClient.GetParentDataLakeDirectoryClient();
+            DataLakeDirectoryClient parentDirClient = fileClient.GetParentDirectoryClient();
             // make sure that client is functional
             var dirProperties = await parentDirClient.GetPropertiesAsync();
 
@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await fileClient.CreateAsync();
 
             // Act
-            DataLakeDirectoryClient parentDirClient = fileClient.GetParentDataLakeDirectoryClient();
+            DataLakeDirectoryClient parentDirClient = fileClient.GetParentDirectoryClient();
             // make sure that client is functional
             var dirProperties = await parentDirClient.GetPropertiesAsync();
 
@@ -167,7 +167,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await fileClient.CreateAsync();
 
             // Act
-            DataLakeDirectoryClient parentDirClient = fileClient.GetParentDataLakeDirectoryClient();
+            DataLakeDirectoryClient parentDirClient = fileClient.GetParentDirectoryClient();
             // make sure that client is functional
             var pathItems = await parentDirClient.GetPathsAsync().ToListAsync();
 
@@ -183,10 +183,10 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             Mock<DataLakeFileClient> fileClientMock = new Mock<DataLakeFileClient>();
             Mock<DataLakeFileSystemClient> fileSystemClientMock = new Mock<DataLakeFileSystemClient>();
-            fileClientMock.Protected().Setup<DataLakeFileSystemClient>("GetParentDataLakeFileSystemClientCore").Returns(fileSystemClientMock.Object);
+            fileClientMock.Protected().Setup<DataLakeFileSystemClient>("GetParentFileSystemClientCore").Returns(fileSystemClientMock.Object);
 
             // Act
-            var fileSystemClient = fileClientMock.Object.GetParentDataLakeFileSystemClientCore();
+            var fileSystemClient = fileClientMock.Object.GetParentFileSystemClientCore();
 
             // Assert
             Assert.IsNotNull(fileSystemClient);
@@ -208,7 +208,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 connectionString,
                 GetNewFileSystemName(),
                 $"{GetNewDirectoryName()}/{GetNewFileName()}"));
-            DataLakeFileSystemClient fileSystem = file.GetParentDataLakeFileSystemClient();
+            DataLakeFileSystemClient fileSystem = file.GetParentFileSystemClient();
             Assert.IsTrue(fileSystem.CanGenerateSasUri);
 
             // Act - BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
@@ -217,14 +217,14 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetNewFileSystemName(),
                 $"{GetNewDirectoryName()}/{GetNewFileName()}",
                 GetOptions()));
-            DataLakeFileSystemClient fileSystem2 = file2.GetParentDataLakeFileSystemClient();
+            DataLakeFileSystemClient fileSystem2 = file2.GetParentFileSystemClient();
             Assert.IsTrue(fileSystem2.CanGenerateSasUri);
 
             // Act - BlobBaseClient(Uri blobContainerUri, BlobClientOptions options = default)
             DataLakeFileClient file3 = InstrumentClient(new DataLakeFileClient(
                 endpoint,
                 GetOptions()));
-            DataLakeFileSystemClient container3 = file3.GetParentDataLakeFileSystemClient();
+            DataLakeFileSystemClient container3 = file3.GetParentFileSystemClient();
             Assert.IsFalse(container3.CanGenerateSasUri);
 
             // Act - BlobBaseClient(Uri blobContainerUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
@@ -232,7 +232,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 endpoint,
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
-            DataLakeFileSystemClient container4 = file4.GetParentDataLakeFileSystemClient();
+            DataLakeFileSystemClient container4 = file4.GetParentFileSystemClient();
             Assert.IsTrue(container4.CanGenerateSasUri);
 
             // Act - BlobBaseClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
@@ -241,7 +241,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 endpoint,
                 tokenCredentials,
                 GetOptions()));
-            DataLakeFileSystemClient container5 = file5.GetParentDataLakeFileSystemClient();
+            DataLakeFileSystemClient container5 = file5.GetParentFileSystemClient();
             Assert.IsFalse(container5.CanGenerateSasUri);
         }
     }

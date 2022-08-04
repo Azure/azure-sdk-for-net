@@ -56,7 +56,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// not</param>
         /// <param name="volumeBackups">A list of volumes assigned to this
         /// policy</param>
-        public BackupPolicy(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupPolicyId = default(string), string provisioningState = default(string), int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? enabled = default(bool?), IList<VolumeBackups> volumeBackups = default(IList<VolumeBackups>))
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public BackupPolicy(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupPolicyId = default(string), string provisioningState = default(string), int? dailyBackupsToKeep = default(int?), int? weeklyBackupsToKeep = default(int?), int? monthlyBackupsToKeep = default(int?), int? volumesAssigned = default(int?), bool? enabled = default(bool?), IList<VolumeBackups> volumeBackups = default(IList<VolumeBackups>), SystemData systemData = default(SystemData))
         {
             Location = location;
             Id = id;
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             VolumesAssigned = volumesAssigned;
             Enabled = enabled;
             VolumeBackups = volumeBackups;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -164,6 +167,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeBackups")]
         public IList<VolumeBackups> VolumeBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
-    public partial class VnetRoute
+    internal partial class VnetRoute
     {
         /// <summary> Initializes a new instance of VnetRoute. </summary>
         public VnetRoute()

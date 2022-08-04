@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
-        internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, string tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
+        internal SubscriptionData(ResourceIdentifier id, string subscriptionId, string displayName, Guid? tenantId, SubscriptionState? state, SubscriptionPolicies subscriptionPolicies, string authorizationSource, IReadOnlyList<ManagedByTenant> managedByTenants, IReadOnlyDictionary<string, string> tags)
         {
             Id = id;
             SubscriptionId = subscriptionId;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The subscription display name. </summary>
         public string DisplayName { get; }
         /// <summary> The subscription tenant ID. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
         public SubscriptionState? State { get; }
         /// <summary> The subscription policies. </summary>

@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceIpAddress))
+            if (Optional.IsDefined(ServiceIPAddress))
             {
                 writer.WritePropertyName("serviceIpAddress");
-                writer.WriteStringValue(ServiceIpAddress);
+                writer.WriteStringValue(ServiceIPAddress);
             }
-            if (Optional.IsDefined(InternalIpAddress))
+            if (Optional.IsDefined(InternalIPAddress))
             {
                 writer.WritePropertyName("internalIpAddress");
-                writer.WriteStringValue(InternalIpAddress);
+                writer.WriteStringValue(InternalIPAddress);
             }
-            if (Optional.IsCollectionDefined(OutboundIpAddresses))
+            if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses");
                 writer.WriteStartArray();
-                foreach (var item in OutboundIpAddresses)
+                foreach (var item in OutboundIPAddresses)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> serviceIpAddress = default;
-            Optional<string> internalIpAddress = default;
-            Optional<IList<string>> outboundIpAddresses = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> serviceIPAddress = default;
+            Optional<string> internalIPAddress = default;
+            Optional<IList<string>> outboundIPAddresses = default;
             Optional<IList<VirtualIPMapping>> vipMappings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,11 +88,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -107,12 +112,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("serviceIpAddress"))
                         {
-                            serviceIpAddress = property0.Value.GetString();
+                            serviceIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("internalIpAddress"))
                         {
-                            internalIpAddress = property0.Value.GetString();
+                            internalIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("outboundIpAddresses"))
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 array.Add(item.GetString());
                             }
-                            outboundIpAddresses = array;
+                            outboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("vipMappings"))
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AddressResponse(id, name, type, systemData, kind.Value, serviceIpAddress.Value, internalIpAddress.Value, Optional.ToList(outboundIpAddresses), Optional.ToList(vipMappings));
+            return new AddressResponse(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value);
         }
     }
 }

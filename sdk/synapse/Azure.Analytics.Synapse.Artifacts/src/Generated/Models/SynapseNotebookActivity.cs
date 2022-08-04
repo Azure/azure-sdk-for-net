@@ -44,16 +44,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="notebook"> Synapse notebook reference. </param>
+        /// <param name="sparkPool"> The name of the big data pool which will be used to execute the notebook. </param>
         /// <param name="parameters"> Notebook parameters. </param>
-        internal SynapseNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, IDictionary<string, NotebookParameter> parameters) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SynapseNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseNotebookReference notebook, BigDataPoolParametrizationReference sparkPool, IDictionary<string, NotebookParameter> parameters) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Notebook = notebook;
+            SparkPool = sparkPool;
             Parameters = parameters;
             Type = type ?? "SynapseNotebook";
         }
 
         /// <summary> Synapse notebook reference. </summary>
         public SynapseNotebookReference Notebook { get; set; }
+        /// <summary> The name of the big data pool which will be used to execute the notebook. </summary>
+        public BigDataPoolParametrizationReference SparkPool { get; set; }
         /// <summary> Notebook parameters. </summary>
         public IDictionary<string, NotebookParameter> Parameters { get; }
     }

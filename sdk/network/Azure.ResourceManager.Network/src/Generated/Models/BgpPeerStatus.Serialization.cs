@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> neighbor = default;
             Optional<long> asn = default;
             Optional<BgpPeerState> state = default;
-            Optional<string> connectedDuration = default;
+            Optional<TimeSpan> connectedDuration = default;
             Optional<long> routesReceived = default;
             Optional<long> messagesSent = default;
             Optional<long> messagesReceived = default;
@@ -56,7 +57,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("connectedDuration"))
                 {
-                    connectedDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    connectedDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("routesReceived"))
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), connectedDuration.Value, Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived));
+            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived));
         }
     }
 }

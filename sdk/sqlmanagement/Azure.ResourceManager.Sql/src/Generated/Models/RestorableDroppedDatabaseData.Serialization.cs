@@ -24,11 +24,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -40,6 +35,8 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -48,20 +45,19 @@ namespace Azure.ResourceManager.Sql
 
         internal static RestorableDroppedDatabaseData DeserializeRestorableDroppedDatabaseData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
-            Optional<string> location = default;
+            Optional<SqlSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> databaseName = default;
             Optional<long> maxSizeBytes = default;
-            Optional<string> elasticPoolId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<RestorableDroppedDatabasePropertiesBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -71,12 +67,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -94,6 +85,11 @@ namespace Azure.ResourceManager.Sql
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("location"))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,11 +102,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -136,11 +137,6 @@ namespace Azure.ResourceManager.Sql
                                 continue;
                             }
                             maxSizeBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("elasticPoolId"))
-                        {
-                            elasticPoolId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -180,14 +176,14 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backupStorageRedundancy = new RestorableDroppedDatabasePropertiesBackupStorageRedundancy(property0.Value.GetString());
+                            backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RestorableDroppedDatabaseData(id, name, type, systemData, sku.Value, location.Value, Optional.ToDictionary(tags), databaseName.Value, Optional.ToNullable(maxSizeBytes), elasticPoolId.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy));
+            return new RestorableDroppedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseName.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy));
         }
     }
 }

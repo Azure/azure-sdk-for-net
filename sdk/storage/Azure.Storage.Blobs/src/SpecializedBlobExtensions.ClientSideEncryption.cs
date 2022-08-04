@@ -26,19 +26,28 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// Client to the blob.
         /// </param>
-        /// <param name="options">
-        /// Optional parameters for the operation.
+        /// <param name="encryptionOptionsOverride">
+        /// Optional override for client-side encryption options to use when updating the key encryption key.
+        /// Defaults to the <see cref="ClientSideEncryptionOptions"/> configured on the client when this is
+        /// not populated. New key encryption key for the blob will be the
+        /// <see cref="ClientSideEncryptionOptions.KeyEncryptionKey"/> on whichever encryption options are
+        /// used for the operation. Options must have a resolver that can resolve the old key on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional request conditions for the operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
         public static void UpdateClientSideKeyEncryptionKey(
             this BlobClient client,
-            UpdateClientSideKeyEncryptionKeyOptions options = default,
+            ClientSideEncryptionOptions encryptionOptionsOverride = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => UpdateClientsideKeyEncryptionKeyInternal(
                 client,
-                options,
+                encryptionOptionsOverride,
+                conditions,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -49,31 +58,41 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// Client to the blob.
         /// </param>
-        /// <param name="options">
-        /// Optional parameters for the operation.
+        /// <param name="encryptionOptionsOverride">
+        /// Optional override for client-side encryption options to use when updating the key encryption key.
+        /// Defaults to the <see cref="ClientSideEncryptionOptions"/> configured on the client when this is
+        /// not populated. New key encryption key for the blob will be the
+        /// <see cref="ClientSideEncryptionOptions.KeyEncryptionKey"/> on whichever encryption options are
+        /// used for the operation. Options must have a resolver that can resolve the old key on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional request conditions for the operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
         public static async Task UpdateClientSideKeyEncryptionKeyAsync(
             this BlobClient client,
-            UpdateClientSideKeyEncryptionKeyOptions options = default,
+            ClientSideEncryptionOptions encryptionOptionsOverride = default,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
             => await UpdateClientsideKeyEncryptionKeyInternal(
                 client,
-                options,
+                encryptionOptionsOverride,
+                conditions,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
         private static async Task UpdateClientsideKeyEncryptionKeyInternal(
             BlobClient client,
-            UpdateClientSideKeyEncryptionKeyOptions options,
+            ClientSideEncryptionOptions encryptionOptionsOverride,
+            BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
             // argument validation
             Argument.AssertNotNull(client, nameof(client));
-            ClientSideEncryptionOptions operationEncryptionOptions = options?.EncryptionOptionsOverride
+            ClientSideEncryptionOptions operationEncryptionOptions = encryptionOptionsOverride
                 ?? client.ClientSideEncryption
                 ?? throw new ArgumentException($"{nameof(ClientSideEncryptionOptions)} are not configured on this client and none were provided for the operation.");
             Argument.AssertNotNull(operationEncryptionOptions.KeyEncryptionKey, nameof(ClientSideEncryptionOptions.KeyEncryptionKey));
@@ -86,14 +105,14 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                         $"{nameof(Uri)}: {client.Uri}\n" +
-                        $"{nameof(options.Conditions)}: {options?.Conditions}");
+                        $"{nameof(conditions)}: {conditions}");
 
                 DiagnosticScope scope = client.ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobClient)}.{nameof(UpdateClientSideKeyEncryptionKey)}");
 
                 try
                 {
                     // hold onto etag, metadata, encryptiondata
-                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(options?.Conditions, async, cancellationToken).ConfigureAwait(false);
+                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false);
                     ETag etag = getPropertiesResponse.ETag;
                     IDictionary<string, string> metadata = getPropertiesResponse.Metadata;
                     EncryptionData encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata)
@@ -121,7 +140,7 @@ namespace Azure.Storage.Blobs.Specialized
                     metadata[Constants.ClientSideEncryption.EncryptionDataKey] = EncryptionDataSerializer.Serialize(encryptionData);
 
                     // update blob ONLY IF ETAG MATCHES (do not take chances encryption info is now out of sync)
-                    BlobRequestConditions modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(options?.Conditions) ?? new BlobRequestConditions();
+                    BlobRequestConditions modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(conditions) ?? new BlobRequestConditions();
                     modifiedRequestConditions.IfMatch = etag;
                     await client.SetMetadataInternal(metadata, modifiedRequestConditions, async, cancellationToken).ConfigureAwait(false);
                 }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// endpoint.</param>
         /// <param name="immutableId">The immutable ID of this data collection
         /// endpoint resource. This property is READ-ONLY.</param>
-        /// <param name="configurationAccess">The endpoint used by agents to
+        /// <param name="configurationAccess">The endpoint used by clients to
         /// access their configuration.</param>
         /// <param name="logsIngestion">The endpoint used by clients to ingest
         /// logs.</param>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string ImmutableId { get; set; }
 
         /// <summary>
-        /// Gets or sets the endpoint used by agents to access their
+        /// Gets or sets the endpoint used by clients to access their
         /// configuration.
         /// </summary>
         [JsonProperty(PropertyName = "configurationAccess")]

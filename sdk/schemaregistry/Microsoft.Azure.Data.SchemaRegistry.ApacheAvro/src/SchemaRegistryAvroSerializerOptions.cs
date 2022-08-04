@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     /// <summary>
-    /// Options for <see cref="SchemaRegistryAvroSerializer"/>.
+    /// The set of options for the <see cref="SchemaRegistryAvroSerializer"/>.
     /// </summary>
     public class SchemaRegistryAvroSerializerOptions
     {
@@ -15,5 +15,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// The default is false.
         /// </summary>
         public bool AutoRegisterSchemas { get; set; }
+
+        internal SchemaRegistryAvroSerializerOptions Clone()
+            => new()
+            {
+                AutoRegisterSchemas = AutoRegisterSchemas
+            };
     }
 }

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpProtocols))
+            if (Optional.IsCollectionDefined(IPProtocols))
             {
                 writer.WritePropertyName("ipProtocols");
                 writer.WriteStartArray();
-                foreach (var item in IpProtocols)
+                foreach (var item in IPProtocols)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("translatedPort");
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpGroups)
+                foreach (var item in SourceIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> destinationPorts = default;
             Optional<string> translatedAddress = default;
             Optional<string> translatedPort = default;
-            Optional<IList<string>> sourceIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
             Optional<string> translatedFqdn = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (property.NameEquals("translatedFqdn"))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NatRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIpGroups), translatedFqdn.Value);
+            return new NatRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIPGroups), translatedFqdn.Value);
         }
     }
 }

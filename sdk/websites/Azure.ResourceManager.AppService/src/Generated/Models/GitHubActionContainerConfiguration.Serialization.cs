@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerUrl))
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl");
-                writer.WriteStringValue(ServerUrl);
+                writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ImageName))
             {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionContainerConfiguration DeserializeGitHubActionContainerConfiguration(JsonElement element)
         {
-            Optional<string> serverUrl = default;
+            Optional<Uri> serverUrl = default;
             Optional<string> imageName = default;
             Optional<string> username = default;
             Optional<string> password = default;
@@ -48,7 +49,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("serverUrl"))
                 {
-                    serverUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        serverUrl = null;
+                        continue;
+                    }
+                    serverUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("imageName"))

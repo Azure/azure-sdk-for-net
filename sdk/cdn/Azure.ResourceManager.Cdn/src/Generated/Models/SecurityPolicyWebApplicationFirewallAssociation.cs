@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -17,21 +16,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         public SecurityPolicyWebApplicationFirewallAssociation()
         {
-            Domains = new ChangeTrackingList<WritableSubResource>();
+            Domains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         /// <param name="domains"> List of domains. </param>
         /// <param name="patternsToMatch"> List of paths. </param>
-        internal SecurityPolicyWebApplicationFirewallAssociation(IList<WritableSubResource> domains, IList<string> patternsToMatch)
+        internal SecurityPolicyWebApplicationFirewallAssociation(IList<FrontDoorActivatedResourceInfo> domains, IList<string> patternsToMatch)
         {
             Domains = domains;
             PatternsToMatch = patternsToMatch;
         }
 
         /// <summary> List of domains. </summary>
-        public IList<WritableSubResource> Domains { get; }
+        public IList<FrontDoorActivatedResourceInfo> Domains { get; }
         /// <summary> List of paths. </summary>
         public IList<string> PatternsToMatch { get; }
     }

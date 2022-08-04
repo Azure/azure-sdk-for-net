@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <summary> Initializes a new instance of MachineExtensionPropertiesInstanceView. </summary>
         /// <param name="name"> The machine extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
-        internal MachineExtensionPropertiesInstanceView(string name, string type, string typeHandlerVersion, MachineExtensionInstanceViewStatus status) : base(name, type, typeHandlerVersion, status)
+        internal MachineExtensionPropertiesInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status) : base(name, machineExtensionInstanceViewType, typeHandlerVersion, status)
         {
         }
     }

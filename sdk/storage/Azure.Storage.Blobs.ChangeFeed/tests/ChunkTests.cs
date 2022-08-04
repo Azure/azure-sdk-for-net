@@ -45,11 +45,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(true);
             avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            long? maxTransferSize = 256 * Constants.MB;
 
             ChunkFactory chunkFactory = new ChunkFactory(
                 containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
-                avroReaderFactory.Object);
+                avroReaderFactory.Object,
+                maxTransferSize);
             Chunk chunk = await chunkFactory.BuildChunk(
                 IsAsync,
                 chunkPath);
@@ -64,7 +66,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
                 blobClient.Object,
                 0,
-                Constants.ChangeFeed.ChunkBlockDownloadSize));
+                maxTransferSize.Value));
             avroReaderFactory.Verify(r => r.BuildAvroReader(lazyLoadingBlobStream.Object));
             avroReader.Verify(r => r.HasNext());
         }
@@ -93,11 +95,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReaderFactory.Setup(r => r.BuildAvroReader(It.IsAny<Stream>())).Returns(avroReader.Object);
             avroReader.Setup(r => r.HasNext()).Returns(false);
             avroReader.Setup(r => r.Initalize(It.IsAny<bool>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            long? maxTransferSize = 256 * Constants.MB;
 
             ChunkFactory chunkFactory = new ChunkFactory(
                 containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
-                avroReaderFactory.Object);
+                avroReaderFactory.Object,
+                maxTransferSize);
             Chunk chunk = await chunkFactory.BuildChunk(
                 IsAsync,
                 chunkPath);
@@ -112,7 +116,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
                 blobClient.Object,
                 0,
-                Constants.ChangeFeed.ChunkBlockDownloadSize));
+                maxTransferSize.Value));
             avroReaderFactory.Verify(r => r.BuildAvroReader(lazyLoadingBlobStream.Object));
             avroReader.Verify(r => r.HasNext());
         }
@@ -207,11 +211,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             avroReader.Setup(r => r.BlockOffset).Returns(blockOffset);
             avroReader.Setup(r => r.ObjectIndex).Returns(eventIndex);
+            long? maxTransferSize = 256 * Constants.MB;
 
             ChunkFactory chunkFactory = new ChunkFactory(
                 containerClient.Object,
                 lazyLoadingBlobStreamFactory.Object,
-                avroReaderFactory.Object);
+                avroReaderFactory.Object,
+                maxTransferSize);
             Chunk chunk = await chunkFactory.BuildChunk(
                 IsAsync,
                 chunkPath,
@@ -248,7 +254,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
                 blobClient.Object,
                 blockOffset,
-                Constants.ChangeFeed.ChunkBlockDownloadSize));
+                maxTransferSize.Value));
             lazyLoadingBlobStreamFactory.Verify(r => r.BuildLazyLoadingBlobStream(
                 blobClient.Object,
                 0,

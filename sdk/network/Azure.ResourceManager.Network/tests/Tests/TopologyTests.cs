@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Network.Tests
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create NetworkWatcher
             //string networkWatcherName = Recording.GenerateAssetName("azsmnet");
-            //NetworkWatcher properties = new NetworkWatcher { Location = location };
+            //NetworkWatcherResource properties = new NetworkWatcherResource { Location = location };
             //await networkWatcherCollection.CreateOrUpdateAsync(true, resourceGroupName2, networkWatcherName, properties);
 
-            TopologyParameters tpProperties = new TopologyParameters() { TargetResourceGroupName = resourceGroupName1 };
+            TopologyContent tpProperties = new TopologyContent() { TargetResourceGroupName = resourceGroupName1 };
 
             //Get the current network topology of the resourceGroupName1
             var networkWatcherCollection = GetNetworkWatcherCollection("NetworkWatcherRG");
-            Response<Topology> getTopology = await networkWatcherCollection.Get("NetworkWatcher_westus2").Value.GetTopologyAsync(tpProperties);
+            Response<NetworkTopology> getTopology = await networkWatcherCollection.Get("NetworkWatcher_westus2").Value.GetTopologyAsync(tpProperties);
 
             //Getting infromation about VM from topology
-            TopologyResource vmResource = getTopology.Value.Resources[0];
+            TopologyResourceInfo vmResource = getTopology.Value.Resources[0];
 
             //Verify that topology contain right number of resources (9 resources from template)
             Assert.AreEqual(9, getTopology.Value.Resources.Count);

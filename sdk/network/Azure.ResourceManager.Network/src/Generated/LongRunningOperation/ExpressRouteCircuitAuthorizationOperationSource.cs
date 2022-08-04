@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitAuthorizationOperationSource : IOperationSource<ExpressRouteCircuitAuthorization>
+    internal class ExpressRouteCircuitAuthorizationOperationSource : IOperationSource<ExpressRouteCircuitAuthorizationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRouteCircuitAuthorization IOperationSource<ExpressRouteCircuitAuthorization>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCircuitAuthorizationResource IOperationSource<ExpressRouteCircuitAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement);
-            return new ExpressRouteCircuitAuthorization(_client, data);
+            return new ExpressRouteCircuitAuthorizationResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteCircuitAuthorization> IOperationSource<ExpressRouteCircuitAuthorization>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCircuitAuthorizationResource> IOperationSource<ExpressRouteCircuitAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(document.RootElement);
-            return new ExpressRouteCircuitAuthorization(_client, data);
+            return new ExpressRouteCircuitAuthorizationResource(_client, data);
         }
     }
 }

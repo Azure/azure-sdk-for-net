@@ -30,5 +30,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string Watchlist = "Watchlist";
         public const string WatchlistTemplate = "WatchlistTemplate";
         public const string Solution = "Solution";
+        public const string AzureFunction = "AzureFunction";
+        public const string LogicAppsCustomConnector = "LogicAppsCustomConnector";
+        public const string AutomationRule = "AutomationRule";
     }
 }

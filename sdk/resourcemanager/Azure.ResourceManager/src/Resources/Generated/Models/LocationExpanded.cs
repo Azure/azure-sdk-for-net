@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location name. </summary>
         public string Name { get; }
         /// <summary> The location type. </summary>
-        public LocationType? Type { get; }
+        public LocationType? LocationType { get; }
         /// <summary> The display name of the location. </summary>
         public string DisplayName { get; }
         /// <summary> The display name of the location and its region. </summary>

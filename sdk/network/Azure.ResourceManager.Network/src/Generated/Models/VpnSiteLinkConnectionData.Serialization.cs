@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,15 +19,15 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -70,11 +71,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors");
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IpsecPolicies))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies");
                 writer.WriteStartArray();
-                foreach (var item in IpsecPolicies)
+                foreach (var item in IPsecPolicies)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -85,10 +86,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableRateLimiting");
                 writer.WriteBooleanValue(EnableRateLimiting.Value);
             }
-            if (Optional.IsDefined(UseLocalAzureIpAddress))
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress");
-                writer.WriteBooleanValue(UseLocalAzureIpAddress.Value);
+                writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
             if (Optional.IsCollectionDefined(IngressNatRules))
             {
@@ -116,10 +117,10 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnSiteLinkConnectionData DeserializeVpnSiteLinkConnectionData(JsonElement element)
         {
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> etag = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceType> type = default;
             Optional<WritableSubResource> vpnSiteLink = default;
             Optional<int> routingWeight = default;
             Optional<VpnLinkConnectionMode> vpnLinkConnectionMode = default;
@@ -131,32 +132,47 @@ namespace Azure.ResourceManager.Network
             Optional<string> sharedKey = default;
             Optional<bool> enableBgp = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IpsecPolicy>> ipsecPolicies = default;
+            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
             Optional<bool> enableRateLimiting = default;
-            Optional<bool> useLocalAzureIpAddress = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<bool> useLocalAzureIPAddress = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IList<WritableSubResource>> ingressNatRules = default;
             Optional<IList<WritableSubResource>> egressNatRules = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -280,10 +296,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpsecPolicy> array = new List<IpsecPolicy>();
+                            List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
                             ipsecPolicies = array;
                             continue;
@@ -305,7 +321,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            useLocalAzureIpAddress = property0.Value.GetBoolean();
+                            useLocalAzureIPAddress = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -315,7 +331,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ingressNatRules"))
@@ -352,7 +368,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, etag.Value, type.Value, vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIpAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
+            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
         }
     }
 }

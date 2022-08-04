@@ -10,14 +10,65 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/ac40996ab146d1360a4783665bb6c0b13f345aec/specification/compute/resource-manager/readme.md
-tag: package-2021-08-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c11930fe7757c6416cb2580eeddb4e57695c707/specification/compute/resource-manager/readme.md
+tag: package-2022-04-04
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
-  
-#TODO: remove after we resolve why RestorePoint has no list
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'locations': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+- IntervalInMins
+- VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VirtualMachineScaleSet
+  VmScaleSet: VirtualMachineScaleSet
+  VmScaleSets: VirtualMachineScaleSets
+  VMScaleSets: VirtualMachineScaleSets
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+  SSD: Ssd
+  SAS: Sas
+  VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
+  RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+  EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+
 list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName} # compute RP did not provide an API for listing this resource
+- /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VirtualMachineScaleSetVmRunCommand
 
 override-operation-name:
   VirtualMachines_Start: PowerOn
@@ -28,274 +79,277 @@ override-operation-name:
   CloudServicesUpdateDomain_ListUpdateDomains: GetUpdateDomains
   CloudServicesUpdateDomain_WalkUpdateDomain: WalkUpdateDomain
   GallerySharingProfile_Update: UpdateSharingProfile
+  VirtualMachineImages_ListPublishers: GetVirtualMachineImagePublishers
   VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
+  VirtualMachineImages_ListOffers: GetVirtualMachineImageOffers
   VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
+  LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
+  LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
+  ResourceSkus_List: GetComputeResourceSkus
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}: CommunityGallery
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
+  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
+
+prepend-rp-prefix:
+- UsageName
+- UsageUnit
+- ApiError
+- ApiErrorBase
+- DeleteOptions
+- ResourceSku
+- ResourceSkuCapacity
+- ResourceSkuLocationInfo
+- ResourceSkuRestrictions
+- ResourceSkuRestrictionInfo
+- ResourceSkuRestrictionsReasonCode
+- ResourceSkuRestrictionsType
+- ResourceSkuZoneDetails
+- ResourceSkuCapacityScaleType
+- EncryptionType
+- PublicIPAddressSku
+- PublicIPAddressSkuName
+- PublicIPAddressSkuTier
+- StatusLevelTypes
+
+rename-mapping:
+  DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
+  SubResource: ComputeWriteableSubResourceData
+  SubResourceReadOnly: ComputeSubResourceData
+  HyperVGenerationType: HyperVGeneration
+  HyperVGenerationTypes: HyperVGeneration
+  VirtualMachineExtension.properties.type: ExtensionType
+  VirtualMachineExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetExtensionUpdate.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtension.properties.type: ExtensionType
+  VirtualMachineScaleSetVMExtensionUpdate.properties.type: ExtensionType
+  RollingUpgradeStatusInfo: VirtualMachineScaleSetRollingUpgrade
+  OperatingSystemTypes: SupportedOperatingSystemType
+  VirtualMachineImageResource: VirtualMachineImageBase
+  RestorePointCollectionSourceProperties: RestorePointCollectionSource
+  RestorePointExpandOptions: RestorePointExpand
+  RestorePointCollectionExpandOptions: RestorePointCollectionExpand
+  ImageReference.sharedGalleryImageId: sharedGalleryImageUniqueId
+  UpdateResource: ComputeResourcePatch
+  SubResourceWithColocationStatus: ComputeSubResourceDataWithColocationStatus
+  SshPublicKey: SshPublicKeyConfiguration
+  SshPublicKeyResource: SshPublicKey
+  LogAnalyticsOperationResult: LogAnalytics
+  PrivateLinkResource: ComputePrivateLinkResourceData
+  Disk: ManagedDisk
+  Encryption: DiskEncryption
+  CreationData: DiskCreationData
+  Architecture: ArchitectureType
+  OSFamily: CloudServiceOSFamily
+  OSFamily.name: ResourceName
+  OSFamily.properties.name: OSFamilyName
+  OSVersion: CloudServiceOSVersion
+  UpdateDomain: UpdateDomainIdentifier
+  Extension: CloudServiceExtension
+  RoleInstance: CloudServiceRoleInstance
+  UpdateResourceDefinition: GalleryUpdateResourceData
+  StorageAccountType: ImageStorageAccountType
+  SharingProfile.permissions: permission
+  UserArtifactManage: UserArtifactManagement
+  GalleryExpandParams: GalleryExpand
+  PirResource: PirResourceData
+  PirSharedGalleryResource: PirSharedGalleryResourceData
+  PirCommunityGalleryResource: PirCommunityGalleryResourceData
+  PirCommunityGalleryResource.type: ResourceType
+  ExpandTypesForGetCapacityReservationGroups: CapacityReservationGroupGetExpand
+  ExpandTypesForGetVMScaleSets: VirtualMachineScaleSetGetExpand
+  DedicatedHostGroup.properties.hosts: DedicatedHosts
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVirtualTpmEnabled
+  NetworkProfile: VirtualMachineNetworkProfile
+  NetworkInterfaceReference: VirtualMachineNetworkInterfaceReference
+  Image: DiskImage
+  VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  VmDiskTypes: VirtualMachineDiskType
+  VMGalleryApplication: VirtualMachineGalleryApplication
+  VMSizeProperties: VirtualMachineSizeProperties
+  ManagedDiskParameters: VirtualMachineManagedDisk
+  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  StorageProfile: VirtualMachineStorageProfile
+  OSProfile: VirtualMachineOSProfile
+  OSDisk: VirtualMachineOSDisk
+  DataDisk: VirtualMachineDataDisk
+  HardwareProfile: VirtualMachineHardwareProfile
+  PublicNetworkAccess: DiskPublicNetworkAccess
+  LoadBalancerConfiguration: CloudServiceLoadBalancerConfiguration
+  ReplicationMode: GalleryReplicationMode
+  ReplicationState: RegionalReplicationState
+  RunCommandResult: VirtualMachineRunCommandResult
+  UpgradeMode: VirtualMachineScaleSetUpgradeMode
+  UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
+  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
+  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
 
 directive:
-  - from: compute.json
-    where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
-    transform: $.description="The list of data disk images information."
-  - from: disk.json
-    where: $.definitions.GrantAccessData.properties.access
-    transform: $.description="The Access Level, accepted values include None, Read, Write."
-  - rename-model:
-      from: SshPublicKey
-      to: SshPublicKeyInfo
-  - rename-model:
-      from: LogAnalyticsOperationResult
-      to: LogAnalytics
-  - rename-model:
-      from: SshPublicKeyResource
-      to: SshPublicKey
-  - rename-model:
-      from: RollingUpgradeStatusInfo
-      to: VirtualMachineScaleSetRollingUpgrade
-  - rename-model:
-      from: RestorePointCollection
-      to: RestorePointGroup
-  - rename-model:
-      from: VirtualMachineScaleSetVM
-      to: VirtualMachineScaleSetVm
-  - rename-model:
-      from: VirtualMachineScaleSetVMExtension
-      to: VirtualMachineScaleSetVmExtension
-  - from: disk.json
-    where: $.definitions.PurchasePlan
-    transform: $["x-ms-client-name"] = "DiskPurchasePlan"
-# problematic word OS
-  - from: swagger-document
-    where: $.definitions.DiskProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.DiskRestorePointProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.GalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.GalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.SharedGalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.SharedGalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.SnapshotProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineProperties.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.CloudServiceProperties.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.CloudServiceOsProfile
-    transform: $["x-ms-client-name"] = "CloudServiceOSProfile"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMProperties.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.CommunityGalleryImageProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.CommunityGalleryImageProperties.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.DiskUpdateProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.EncryptionImages.properties.osDiskImage
-    transform: $["x-ms-client-name"] = "OSDiskImage"
-  - from: swagger-document
-    where: $.definitions.GalleryImageVersionStorageProfile.properties.osDiskImage
-    transform: $["x-ms-client-name"] = "OSDiskImage"
-  - from: swagger-document
-    where: $.definitions.ImageOSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.ImageOSDisk.properties.osState
-    transform: $["x-ms-client-name"] = "OSState"
-  - from: swagger-document
-    where: $.definitions.ImageStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.OSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceMetadata.properties.osProfile
-    transform: $["x-ms-client-name"] = "OSProfile"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMOSDisk
-    transform: $["x-ms-client-name"] = "RestorePointSourceVmOSDisk"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMOSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.RunCommandDocumentBase.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.SnapshotUpdateProperties.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.StorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineImageProperties.properties.osDiskImage
-    transform: $["x-ms-client-name"] = "OSDiskImage"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstanceView.properties.osName
-    transform: $["x-ms-client-name"] = "OSName"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstanceView.properties.osVersion
-    transform: $["x-ms-client-name"] = "OSVersion"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetOSDisk.properties.osType
-    transform: $["x-ms-client-name"] = "OSType"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetUpdateStorageProfile.properties.osDisk
-    transform: $["x-ms-client-name"] = "OSDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineSize.properties.osDiskSizeInMB
-    transform: $["x-ms-client-name"] = "OSDiskSizeInMB"
-# problematic word Vm
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
-    transform: $["name"] = "ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[2]
-    transform: $["name"] = "ConfidentialVmDiskEncryptedWithPlatformKey"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
-    transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMProfile
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmProfile"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetProperties.properties.doNotRunExtensionsOnOverprovisionedVMs
-    transform: $["x-ms-client-name"] = "DoNotRunExtensionsOnOverprovisionedVms"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetUpdateProperties.properties.doNotRunExtensionsOnOverprovisionedVMs
-    transform: $["x-ms-client-name"] = "DoNotRunExtensionsOnOverprovisionedVms"
-  - from: swagger-document
-    where: $.definitions.VMScaleSetConvertToSinglePlacementGroupInput
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetConvertToSinglePlacementGroupOptions"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMInstanceIDs
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmInstanceIds"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMInstanceRequiredIDs
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmInstanceRequiredIds"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}"].get.parameters[4]
-    transform: $["x-ms-enum"].name = "ExpandTypesForGetVirtualMachineScaleSets"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMInstanceView
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmInstanceView"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMReimageParameters
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmReimageOptions"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMNetworkProfileConfiguration
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmNetworkProfileConfiguration"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMProtectionPolicy
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmProtectionPolicy"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionUpdate
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionUpdateOptions"
-  - from: swagger-document
-    where: $.definitions.VMGalleryApplication
-    transform: $["x-ms-client-name"] = "VmGalleryApplication"
-  - from: swagger-document
-    where: $.definitions.DedicatedHostAllocatableVM
-    transform: $["x-ms-client-name"] = "DedicatedHostAllocatableVm"
-  - from: swagger-document
-    where: $.definitions.DiskSecurityProfile.properties.secureVMDiskEncryptionSetId
-    transform: $["x-ms-client-name"] = "SecureVmDiskEncryptionSetId"
-  - from: swagger-document
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups"].get.parameters[3]
+# copy the systemData from common-types here so that it will be automatically replaced
+  - from: common.json
+    where: $.definitions
     transform: >
-        $["x-ms-enum"].values = [
-            { "name": "VirtualMachineScaleSetVmsRef", "value": "virtualMachineScaleSetVMs/$ref" },
-            { "name": "VirtualMachinesRef", "value": "virtualMachines/$ref" }
-        ];
-  - from: swagger-document
-    where: $.definitions.DedicatedHostAvailableCapacity.properties.allocatableVMs
-    transform: $["x-ms-client-name"] = "AllocatableVms"
-  - from: swagger-document
-    where: $.definitions.GrantAccessData.properties.getSecureVMGuestStateSAS
-    transform: $["x-ms-client-name"] = "GetSecureVmGuestStateSAS"
-  - from: swagger-document
-    where: $.definitions.VMSizeProperties
-    transform: $["x-ms-client-name"] = "VmSizeProperties"
-  - from: swagger-document
-    where: $.definitions.LinuxConfiguration.properties.provisionVMAgent
-    transform: $["x-ms-client-name"] = "ProvisionVmAgent"
-  - from: swagger-document
-    where: $.definitions.VMGuestPatchClassificationLinux
-    transform: $["x-ms-client-name"] = "VmGuestPatchClassificationLinux"
-  - from: swagger-document
-    where: $.definitions.LinuxPatchSettings.properties.patchMode["x-ms-enum"].name
-    transform: return "LinuxVmGuestPatchMode"
-  - from: swagger-document
-    where: $.definitions.LinuxParameters.properties.classificationsToInclude.items["x-ms-enum"].name
-    transform: return "VmGuestPatchClassification_Linux"
-  - from: swagger-document
-    where: $.definitions.PatchSettings.properties.patchMode["x-ms-enum"].name
-    transform: return "WindowsVmGuestPatchMode"
-  - from: swagger-document
-    where: $.definitions.WindowsParameters.properties.classificationsToInclude.items["x-ms-enum"].name
-    transform: return "VmGuestPatchClassification_Windows"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMStorageProfile
-    transform: $["x-ms-client-name"] = "RestorePointSourceVmStorageProfile"
-  - from: swagger-document
-    where: $.definitions.RestorePointSourceVMDataDisk
-    transform: $["x-ms-client-name"] = "RestorePointSourceVmDataDisk"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstallPatchesParameters.properties.rebootSetting["x-ms-enum"].name
-    transform: return "VmGuestPatchRebootSetting"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineInstallPatchesResult.properties.rebootStatus["x-ms-enum"].name
-    transform: return "VmGuestPatchRebootStatus"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionsSummary
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionsSummary"
-  - from: swagger-document
-    where: $.definitions.ScaleInPolicy.properties.rules.items["x-ms-enum"]
+      $.SubResource.properties.id["x-ms-format"] = "arm-id";
+      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.SystemData = {
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+            "createdBy": {
+            "type": "string",
+            "description": "The identity that created the resource."
+            },
+            "createdByType": {
+            "type": "string",
+            "description": "The type of identity that created the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource creation (UTC)."
+            },
+            "lastModifiedBy": {
+            "type": "string",
+            "description": "The identity that last modified the resource."
+            },
+            "lastModifiedByType": {
+            "type": "string",
+            "description": "The type of identity that last modified the resource.",
+            "enum": [
+                "User",
+                "Application",
+                "ManagedIdentity",
+                "Key"
+            ],
+            "x-ms-enum": {
+                "name": "createdByType",
+                "modelAsString": true
+            }
+            },
+            "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource last modification (UTC)"
+            }
+          }
+        };
+  - from: virtualMachine.json
+    where: $.definitions
     transform: >
-        $.values = [
-            { "name": "Default", "value": "Default" },
-            { "name": "OldestVm", "value": "OldestVM" },
-            { "name": "NewestVm", "value": "NewestVM" }
-        ]
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetUpdateVMProfile
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetUpdateVmProfile"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionsListResult
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionsListResult"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMExtensionsSummary
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmExtensionsSummary"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineSoftwarePatchProperties.properties.rebootBehavior["x-ms-enum"].name
-    transform: return "VmGuestPatchRebootBehavior"
-  - from: swagger-document
-    where: $.definitions.WindowsConfiguration.properties.provisionVMAgent
-    transform: $["x-ms-client-name"] = "ProvisionVmAgent"
+      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
+  - from: virtualMachineImage.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
+  - from: virtualMachineScaleSet.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
+  - from: restorePoint.json
+    where: $.definitions
+    transform: >
+      $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
+  - from: sshPublicKey.json
+    where: $.definitions
+    transform: >
+      $.SshPublicKeyGenerateKeyPairResult.properties.id["x-ms-format"] = "arm-id";
+  - from: diskRPCommon.json
+    where: $.definitions
+    transform: >
+      $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
+      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
+  - from: disk.json
+    where: $.definitions
+    transform: >
+      $.Disk.properties.managedBy["x-ms-format"] = "arm-id";
+      $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
+      $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+  - from: diskAccess.json
+    where: $.definitions
+    transform: >
+      $.PrivateLinkResourceProperties.properties.groupId["x-ms-format"] = "arm-id";
+  - from: diskRestorePoint.json
+    where: $.definitions
+    transform: >
+      $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
+      $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
+  - from: snapshot.json
+    where: $.definitions
+    transform: >
+      $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+  - from: diskRPCommon.json
+    where: $.definitions
+    transform: >
+      $.Encryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
+      $.CreationData.properties.storageAccountId["x-ms-format"] = "arm-id";
+      $.CreationData.properties.sourceResourceId["x-ms-format"] = "arm-id";
+      $.DiskSecurityProfile.properties.secureVMDiskEncryptionSetId["x-ms-format"] = "arm-id";
+      $.ImageDiskReference.properties.id["x-ms-format"] = "arm-id";
+  - from: cloudService.json
+    where: $.definitions
+    transform: >
+      $.CloudService.properties.properties["x-ms-client-flatten"] = true;
+      $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
+      $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
+      $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
+      $.Extension.properties.properties["x-ms-client-flatten"] = true;
+      $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
+      $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerConfiguration.properties.id["x-ms-format"] = "arm-id";
+      $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
+  - from: gallery.json
+    where: $.definitions
+    transform: >
+      $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
+      $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
+  - from: communityGallery.json
+    where: $.definitions
+    transform: >
+      $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
+  - from: cloudService.json
+    where: $.definitions.LoadBalancerConfigurationProperties
+    transform: >
+      $.properties.frontendIpConfigurations = $.properties.frontendIPConfigurations;
+      $.properties.frontendIpConfigurations["x-ms-client-name"] = "frontendIPConfigurations";
+      $.required = ["frontendIpConfigurations"];
+      $.properties.frontendIPConfigurations = undefined;
+    reason: Service returns response with property name as frontendIpConfigurations.
+  # this enforces the body parameter of CloudServices_CreateOrUpdate to be required
+  - from: cloudService.json
+    where: $.paths
+    transform: >
+      $["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}"].put.parameters[4]["required"] = true;
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: virtualMachineScaleSet.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
 ```

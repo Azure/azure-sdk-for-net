@@ -14,8 +14,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response.
+    /// Error response
     /// </summary>
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
@@ -29,8 +34,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">Error definition.</param>
-        public ErrorResponse(ErrorDefinition error = default(ErrorDefinition))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -42,10 +47,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error definition.
+        /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorDefinition Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
     }
 }

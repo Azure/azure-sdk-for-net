@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Used for getting PHP error logging flag. </summary>
-    public partial class SitePhpErrorLogFlag : ProxyOnlyResource
+    public partial class SitePhpErrorLogFlag : ResourceData
     {
         /// <summary> Initializes a new instance of SitePhpErrorLogFlag. </summary>
         public SitePhpErrorLogFlag()
@@ -21,19 +21,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SitePhpErrorLogFlag. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="localLogErrors"> Local log_errors setting. </param>
         /// <param name="masterLogErrors"> Master log_errors setting. </param>
         /// <param name="localLogErrorsMaxLength"> Local log_errors_max_len setting. </param>
         /// <param name="masterLogErrorsMaxLength"> Master log_errors_max_len setting. </param>
-        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength) : base(id, name, type, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength, string kind) : base(id, name, resourceType, systemData)
         {
             LocalLogErrors = localLogErrors;
             MasterLogErrors = masterLogErrors;
             LocalLogErrorsMaxLength = localLogErrorsMaxLength;
             MasterLogErrorsMaxLength = masterLogErrorsMaxLength;
+            Kind = kind;
         }
 
         /// <summary> Local log_errors setting. </summary>
@@ -44,5 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string LocalLogErrorsMaxLength { get; set; }
         /// <summary> Master log_errors_max_len setting. </summary>
         public string MasterLogErrorsMaxLength { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

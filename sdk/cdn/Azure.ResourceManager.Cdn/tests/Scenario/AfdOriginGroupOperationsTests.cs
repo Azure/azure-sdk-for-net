@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
-            await afdOriginGroupInstance.DeleteAsync(true);
+            FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
+            await afdOriginGroupInstance.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdOriginGroupInstance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -36,23 +36,23 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
-            AfdOriginGroupUpdateOptions updateOptions = new AfdOriginGroupUpdateOptions
+            FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
+            FrontDoorOriginGroupPatch updateOptions = new FrontDoorOriginGroupPatch
             {
-                LoadBalancingSettings = new LoadBalancingSettingsParameters
+                LoadBalancingSettings = new LoadBalancingSettings
                 {
                     SampleSize = 10,
                     SuccessfulSamplesRequired = 5,
                     AdditionalLatencyInMilliseconds = 500
                 }
             };
-            var lro = await afdOriginGroupInstance.UpdateAsync(true, updateOptions);
-            AfdOriginGroup updatedAfdOriginGroupInstance = lro.Value;
+            var lro = await afdOriginGroupInstance.UpdateAsync(WaitUntil.Completed, updateOptions);
+            FrontDoorOriginGroupResource updatedAfdOriginGroupInstance = lro.Value;
             ResourceDataHelper.AssertAfdOriginGroupUpdate(updatedAfdOriginGroupInstance, updateOptions);
         }
 
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task GetResourceUsage()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
+            FrontDoorOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             int count = 0;
-            await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsageAsync())
+            await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsagesAsync())
             {
                 count++;
-                Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);
+                Assert.AreEqual(tempUsage.Unit, FrontDoorUsageUnit.Count);
                 Assert.AreEqual(tempUsage.CurrentValue, 0);
             }
             Assert.AreEqual(count, 1);

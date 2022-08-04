@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class BgpConnectionOperationSource : IOperationSource<BgpConnection>
+    internal class BgpConnectionOperationSource : IOperationSource<BgpConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        BgpConnection IOperationSource<BgpConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        BgpConnectionResource IOperationSource<BgpConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BgpConnectionData.DeserializeBgpConnectionData(document.RootElement);
-            return new BgpConnection(_client, data);
+            return new BgpConnectionResource(_client, data);
         }
 
-        async ValueTask<BgpConnection> IOperationSource<BgpConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BgpConnectionResource> IOperationSource<BgpConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BgpConnectionData.DeserializeBgpConnectionData(document.RootElement);
-            return new BgpConnection(_client, data);
+            return new BgpConnectionResource(_client, data);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public VirtualNetworkProfile(string id)
+        public VirtualNetworkProfile(ResourceIdentifier id)
         {
             if (id == null)
             {
@@ -28,22 +29,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <param name="name"> Name of the Virtual Network (read-only). </param>
-        /// <param name="type"> Resource type of the Virtual Network (read-only). </param>
+        /// <param name="resourceType"> Resource type of the Virtual Network (read-only). </param>
         /// <param name="subnet"> Subnet within the Virtual Network. </param>
-        internal VirtualNetworkProfile(string id, string name, string type, string subnet)
+        internal VirtualNetworkProfile(ResourceIdentifier id, string name, ResourceType? resourceType, string subnet)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             Subnet = subnet;
         }
 
         /// <summary> Resource id of the Virtual Network. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Name of the Virtual Network (read-only). </summary>
         public string Name { get; }
         /// <summary> Resource type of the Virtual Network (read-only). </summary>
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Subnet within the Virtual Network. </summary>
         public string Subnet { get; set; }
     }

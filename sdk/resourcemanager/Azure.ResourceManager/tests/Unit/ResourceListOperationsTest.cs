@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -10,14 +11,14 @@ namespace Azure.ResourceManager.Tests
     [Parallelizable]
     public class ResourceListOperationsTest
     {
-        private static Plan GetPlan()
+        private static ArmPlan GetPlan()
         {
-            return new Plan("name", "publisher", "product", "promo", "version");
+            return new ArmPlan("name", "publisher", "product", "promo", "version");
         }
 
-        private static Resources.Models.Sku GetSku()
+        private static ResourcesSku GetSku()
         {
-            return new Resources.Models.Sku("name", SkuTier.Basic.ToString(), "size", "family", "model", 10);
+            return new ResourcesSku("name", ArmSkuTier.Basic.ToString(), "size", "family", "model", 10);
         }
 
         private static GenericResourceData GetGenericResource()
@@ -33,8 +34,8 @@ namespace Azure.ResourceManager.Tests
 
         private static GenericResourceData GetGenericResource(
             Dictionary<string, string> tags,
-            Resources.Models.Sku sku,
-            Plan plan,
+            ResourcesSku sku,
+            ArmPlan plan,
             string kind,
             string managedBy,
             string location)

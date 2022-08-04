@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the update resource properties. </summary>
-    public partial class NetworkProfileUpdate
+    internal partial class NetworkProfileUpdate
     {
         /// <summary> Initializes a new instance of NetworkProfileUpdate. </summary>
         public NetworkProfileUpdate()

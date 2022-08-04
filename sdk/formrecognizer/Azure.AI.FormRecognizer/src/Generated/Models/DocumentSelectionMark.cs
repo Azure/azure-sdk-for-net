@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -18,29 +17,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="statePrivate"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="span"/> is null. </exception>
         internal DocumentSelectionMark(V3SelectionMarkState statePrivate, DocumentSpan span, float confidence)
         {
-            if (span == null)
-            {
-                throw new ArgumentNullException(nameof(span));
-            }
-
             StatePrivate = statePrivate;
-            BoundingBoxPrivate = new ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Span = span;
             Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
         /// <param name="statePrivate"> State of the selection mark. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box of the selection mark. </param>
+        /// <param name="polygon"> Bounding polygon of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        internal DocumentSelectionMark(V3SelectionMarkState statePrivate, IReadOnlyList<float> boundingBoxPrivate, DocumentSpan span, float confidence)
+        internal DocumentSelectionMark(V3SelectionMarkState statePrivate, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
         {
             StatePrivate = statePrivate;
-            BoundingBoxPrivate = boundingBoxPrivate;
+            Polygon = polygon;
             Span = span;
             Confidence = confidence;
         }

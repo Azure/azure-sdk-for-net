@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
-    public partial class ResourceLogConfiguration
+    internal partial class ResourceLogConfiguration
     {
         /// <summary> Initializes a new instance of ResourceLogConfiguration. </summary>
         public ResourceLogConfiguration()

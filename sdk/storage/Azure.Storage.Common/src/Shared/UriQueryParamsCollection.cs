@@ -17,7 +17,7 @@ namespace Azure.Storage
         /// Takes encoded query params string, output decoded params map
         /// </summary>
         /// <param name="encodedQueryParamString"></param>
-		public UriQueryParamsCollection(string encodedQueryParamString)
+		public UriQueryParamsCollection(string encodedQueryParamString) : base(StringComparer.OrdinalIgnoreCase)
         {
             encodedQueryParamString = encodedQueryParamString ?? throw Errors.ArgumentNull(nameof(encodedQueryParamString));
 

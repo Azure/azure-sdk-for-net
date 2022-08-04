@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedServerSecurityAlertPolicyOperationSource : IOperationSource<ManagedServerSecurityAlertPolicy>
+    internal class ManagedServerSecurityAlertPolicyOperationSource : IOperationSource<ManagedServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedServerSecurityAlertPolicy IOperationSource<ManagedServerSecurityAlertPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedServerSecurityAlertPolicyResource IOperationSource<ManagedServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(document.RootElement);
-            return new ManagedServerSecurityAlertPolicy(_client, data);
+            return new ManagedServerSecurityAlertPolicyResource(_client, data);
         }
 
-        async ValueTask<ManagedServerSecurityAlertPolicy> IOperationSource<ManagedServerSecurityAlertPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedServerSecurityAlertPolicyResource> IOperationSource<ManagedServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedServerSecurityAlertPolicyData.DeserializeManagedServerSecurityAlertPolicyData(document.RootElement);
-            return new ManagedServerSecurityAlertPolicy(_client, data);
+            return new ManagedServerSecurityAlertPolicyResource(_client, data);
         }
     }
 }

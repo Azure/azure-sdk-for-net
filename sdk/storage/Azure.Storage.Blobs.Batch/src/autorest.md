@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f8c3f91da6a9ed64b687711af64e8d70cb500e1d/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
+generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```

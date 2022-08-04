@@ -28,11 +28,12 @@ namespace Azure.Monitor.Query
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
         public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://api.loganalytics.io/v1");
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetRequest(string workspaceId, string query, TimeSpan? timespan)
@@ -55,12 +56,13 @@ namespace Azure.Monitor.Query
             return message;
         }
 
-        /// <summary> Executes an Analytics query for data. </summary>
+        /// <summary> Execute an Analytics query. </summary>
         /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="query"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
+        /// <remarks> Executes an Analytics query for data. </remarks>
         public async Task<Response<LogsQueryResult>> GetAsync(string workspaceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
@@ -88,12 +90,13 @@ namespace Azure.Monitor.Query
             }
         }
 
-        /// <summary> Executes an Analytics query for data. </summary>
+        /// <summary> Execute an Analytics query. </summary>
         /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="query"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
+        /// <remarks> Executes an Analytics query for data. </remarks>
         public Response<LogsQueryResult> Get(string workspaceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
@@ -144,12 +147,13 @@ namespace Azure.Monitor.Query
             return message;
         }
 
-        /// <summary> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </summary>
+        /// <summary> Execute an Analytics query. </summary>
         /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
@@ -177,12 +181,13 @@ namespace Azure.Monitor.Query
             }
         }
 
-        /// <summary> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </summary>
+        /// <summary> Execute an Analytics query. </summary>
         /// <param name="workspaceId"> ID of the workspace. This is Workspace ID from the Properties blade in the Azure portal. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="prefer"> Optional. The prefer header to set server timeout, query statistics and visualization information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Executes an Analytics query for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
         public Response<LogsQueryResult> Execute(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
@@ -227,10 +232,11 @@ namespace Azure.Monitor.Query
             return message;
         }
 
-        /// <summary> Executes a batch of Analytics queries for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </summary>
+        /// <summary> Execute a batch of Analytics queries. </summary>
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Executes a batch of Analytics queries for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
         public async Task<Response<BatchResponse>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -254,10 +260,11 @@ namespace Azure.Monitor.Query
             }
         }
 
-        /// <summary> Executes a batch of Analytics queries for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </summary>
+        /// <summary> Execute a batch of Analytics queries. </summary>
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Executes a batch of Analytics queries for data. [Here](https://dev.loganalytics.io/documentation/Using-the-API) is an example for using POST with an Analytics query. </remarks>
         public Response<BatchResponse> Batch(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)

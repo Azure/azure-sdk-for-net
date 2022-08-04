@@ -30,13 +30,13 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The Schema Registry service endpoint, for example my-namespace.servicebus.windows.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public SchemaGroupsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateListRequest()
@@ -54,8 +54,9 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        /// <summary> Gets the list of schema groups user is authorized to access. </summary>
+        /// <summary> Get list of schema groups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the list of schema groups user is authorized to access. </remarks>
         public async Task<Response<SchemaGroups>> ListAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();
@@ -74,8 +75,9 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
-        /// <summary> Gets the list of schema groups user is authorized to access. </summary>
+        /// <summary> Get list of schema groups. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Gets the list of schema groups user is authorized to access. </remarks>
         public Response<SchemaGroups> List(CancellationToken cancellationToken = default)
         {
             using var message = CreateListRequest();

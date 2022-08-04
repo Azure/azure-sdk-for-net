@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -20,6 +21,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The ID of frontend IP configuration resource. </summary>
         public string Id { get; set; }
         /// <summary> A reference to public IP address resource. </summary>
-        public WritableSubResource PublicIPAddress { get; set; }
+        internal WritableSubResource PublicIPAddress { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPAddressId
+        {
+            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
+            set
+            {
+                if (PublicIPAddress is null)
+                    PublicIPAddress = new WritableSubResource();
+                PublicIPAddress.Id = value;
+            }
+        }
     }
 }

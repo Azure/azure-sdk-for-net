@@ -41,9 +41,9 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? Close { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using transactional
         /// hashing on uploads.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

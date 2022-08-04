@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualNetworkGatewayOperationSource : IOperationSource<VirtualNetworkGateway>
+    internal class VirtualNetworkGatewayOperationSource : IOperationSource<VirtualNetworkGatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualNetworkGateway IOperationSource<VirtualNetworkGateway>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkGatewayResource IOperationSource<VirtualNetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(document.RootElement);
-            return new VirtualNetworkGateway(_client, data);
+            return new VirtualNetworkGatewayResource(_client, data);
         }
 
-        async ValueTask<VirtualNetworkGateway> IOperationSource<VirtualNetworkGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkGatewayResource> IOperationSource<VirtualNetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(document.RootElement);
-            return new VirtualNetworkGateway(_client, data);
+            return new VirtualNetworkGatewayResource(_client, data);
         }
     }
 }

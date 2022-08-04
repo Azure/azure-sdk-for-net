@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class DdosCustomPolicyOperationSource : IOperationSource<DdosCustomPolicy>
+    internal class DdosCustomPolicyOperationSource : IOperationSource<DdosCustomPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        DdosCustomPolicy IOperationSource<DdosCustomPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        DdosCustomPolicyResource IOperationSource<DdosCustomPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
-            return new DdosCustomPolicy(_client, data);
+            return new DdosCustomPolicyResource(_client, data);
         }
 
-        async ValueTask<DdosCustomPolicy> IOperationSource<DdosCustomPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DdosCustomPolicyResource> IOperationSource<DdosCustomPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DdosCustomPolicyData.DeserializeDdosCustomPolicyData(document.RootElement);
-            return new DdosCustomPolicy(_client, data);
+            return new DdosCustomPolicyResource(_client, data);
         }
     }
 }

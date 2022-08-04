@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostAvailableCapacity
+    internal partial class DedicatedHostAvailableCapacity
     {
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVMs = default;
+            Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"))
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         array.Add(DedicatedHostAllocatableVm.DeserializeDedicatedHostAllocatableVm(item));
                     }
-                    allocatableVMs = array;
+                    allocatableVms = array;
                     continue;
                 }
             }
-            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVMs));
+            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVms));
         }
     }
 }

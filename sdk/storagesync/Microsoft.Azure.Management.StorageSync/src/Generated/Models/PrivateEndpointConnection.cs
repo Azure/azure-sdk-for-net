@@ -41,13 +41,15 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="privateEndpoint">The resource of private end
         /// point.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// private endpoint connection resource. Possible values include:
         /// 'Succeeded', 'Creating', 'Deleting', 'Failed'</param>
-        public PrivateEndpointConnection(PrivateLinkServiceConnectionState privateLinkServiceConnectionState, string id = default(string), string name = default(string), string type = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), string provisioningState = default(string))
-            : base(id, name, type)
+        public PrivateEndpointConnection(PrivateLinkServiceConnectionState privateLinkServiceConnectionState, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), string provisioningState = default(string))
+            : base(id, name, type, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;

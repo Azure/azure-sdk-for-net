@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function App Stack. </summary>
-    public partial class FunctionAppStack : ProxyOnlyResource
+    public partial class FunctionAppStack : ResourceData
     {
         /// <summary> Initializes a new instance of FunctionAppStack. </summary>
         public FunctionAppStack()
@@ -23,25 +23,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of FunctionAppStack. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
-        /// <param name="preferredOs"> Function App stack preferred OS. </param>
-        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOs? preferredOs) : base(id, name, type, systemData, kind)
+        /// <param name="preferredOS"> Function App stack preferred OS. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DisplayText = displayText;
             Value = value;
             MajorVersions = majorVersions;
-            PreferredOs = preferredOs;
+            PreferredOS = preferredOS;
+            Kind = kind;
         }
 
         /// <summary> Function App stack location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Function App stack (display only). </summary>
         public string DisplayText { get; }
         /// <summary> Function App stack name. </summary>
@@ -49,6 +50,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> List of major versions available. </summary>
         public IReadOnlyList<FunctionAppMajorVersion> MajorVersions { get; }
         /// <summary> Function App stack preferred OS. </summary>
-        public StackPreferredOs? PreferredOs { get; }
+        public StackPreferredOS? PreferredOS { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

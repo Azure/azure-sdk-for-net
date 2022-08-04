@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkProfile data model. </summary>
-    public partial class NetworkProfileData : Resource
+    public partial class NetworkProfileData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>
         public NetworkProfileData()
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -32,9 +34,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfileData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
             ContainerNetworkInterfaceConfigurations = containerNetworkInterfaceConfigurations;
             ResourceGuid = resourceGuid;
@@ -42,14 +44,14 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> List of child container network interfaces. </summary>
         public IReadOnlyList<ContainerNetworkInterface> ContainerNetworkInterfaces { get; }
         /// <summary> List of chid container network interface configurations. </summary>
         public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; }
         /// <summary> The resource GUID property of the network profile resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network profile resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

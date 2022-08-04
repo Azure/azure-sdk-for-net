@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         {
             Optional<IReadOnlyList<string>> availabilityZones = default;
             Optional<IReadOnlyList<string>> additionalCapabilities = default;
-            Optional<Sku> sku = default;
+            Optional<StoragePoolSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZones"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
                     continue;
                 }
             }

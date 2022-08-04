@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetCachedClient()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             Func<ArmClient, TestObject> factory = (armClient) => { return new TestObject(armClient); };
             TestObject obj1 = subscription.GetCachedClient(factory);
             Assert.IsNotNull(obj1);

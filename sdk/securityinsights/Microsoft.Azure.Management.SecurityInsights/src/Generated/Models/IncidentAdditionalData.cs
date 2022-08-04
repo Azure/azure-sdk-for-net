@@ -39,14 +39,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// incident</param>
         /// <param name="alertProductNames">List of product names of alerts in
         /// the incident</param>
+        /// <param name="providerIncidentUrl">The provider incident url to the
+        /// incident in Microsoft 365 Defender portal</param>
         /// <param name="tactics">The tactics associated with incident</param>
-        public IncidentAdditionalData(int? alertsCount = default(int?), int? bookmarksCount = default(int?), int? commentsCount = default(int?), IList<string> alertProductNames = default(IList<string>), IList<string> tactics = default(IList<string>))
+        /// <param name="techniques">The techniques associated with incident's
+        /// tactics'</param>
+        public IncidentAdditionalData(int? alertsCount = default(int?), int? bookmarksCount = default(int?), int? commentsCount = default(int?), IList<string> alertProductNames = default(IList<string>), string providerIncidentUrl = default(string), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>))
         {
             AlertsCount = alertsCount;
             BookmarksCount = bookmarksCount;
             CommentsCount = commentsCount;
             AlertProductNames = alertProductNames;
+            ProviderIncidentUrl = providerIncidentUrl;
             Tactics = tactics;
+            Techniques = techniques;
             CustomInit();
         }
 
@@ -80,10 +86,23 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IList<string> AlertProductNames { get; private set; }
 
         /// <summary>
+        /// Gets the provider incident url to the incident in Microsoft 365
+        /// Defender portal
+        /// </summary>
+        [JsonProperty(PropertyName = "providerIncidentUrl")]
+        public string ProviderIncidentUrl { get; private set; }
+
+        /// <summary>
         /// Gets the tactics associated with incident
         /// </summary>
         [JsonProperty(PropertyName = "tactics")]
         public IList<string> Tactics { get; private set; }
+
+        /// <summary>
+        /// Gets the techniques associated with incident's tactics'
+        /// </summary>
+        [JsonProperty(PropertyName = "techniques")]
+        public IList<string> Techniques { get; private set; }
 
     }
 }

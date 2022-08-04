@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the InboundNatRule data model. </summary>
-    public partial class InboundNatRuleData : Models.SubResource
+    public partial class InboundNatRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
         public InboundNatRuleData()
@@ -20,9 +22,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within the set of inbound NAT rules used by the load balancer. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
         /// <param name="frontendIPConfiguration"> A reference to frontend IP addresses. </param>
         /// <param name="backendIPConfiguration"> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
@@ -32,11 +34,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableFloatingIP"> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
-        internal InboundNatRuleData(string id, string name, string etag, string type, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, TransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, ProvisioningState? provisioningState) : base(id)
+        internal InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            Type = type;
+            ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendIPConfiguration = backendIPConfiguration;
             Protocol = protocol;
@@ -48,18 +48,26 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within the set of inbound NAT rules used by the load balancer. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public ETag? ETag { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
-        public WritableSubResource FrontendIPConfiguration { get; set; }
+        internal WritableSubResource FrontendIPConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
         public NetworkInterfaceIPConfigurationData BackendIPConfiguration { get; }
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
-        public TransportProtocol? Protocol { get; set; }
+        public LoadBalancingTransportProtocol? Protocol { get; set; }
         /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </summary>
         public int? FrontendPort { get; set; }
         /// <summary> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </summary>
@@ -71,6 +79,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
         public bool? EnableTcpReset { get; set; }
         /// <summary> The provisioning state of the inbound NAT rule resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

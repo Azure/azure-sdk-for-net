@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the SiteLogsConfig data model. </summary>
-    public partial class SiteLogsConfigData : ProxyOnlyResource
+    public partial class SiteLogsConfigData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
         public SiteLogsConfigData()
@@ -22,19 +22,20 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="applicationLogs"> Application logs configuration. </param>
         /// <param name="httpLogs"> HTTP logs configuration. </param>
         /// <param name="failedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="detailedErrorMessages"> Detailed error messages configuration. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages) : base(id, name, type, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
             FailedRequestsTracing = failedRequestsTracing;
             DetailedErrorMessages = detailedErrorMessages;
+            Kind = kind;
         }
 
         /// <summary> Application logs configuration. </summary>
@@ -42,8 +43,34 @@ namespace Azure.ResourceManager.AppService
         /// <summary> HTTP logs configuration. </summary>
         public HttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
-        public EnabledConfig FailedRequestsTracing { get; set; }
+        internal EnabledConfig FailedRequestsTracing { get; set; }
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        public bool? FailedRequestsTracingEnabled
+        {
+            get => FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
+            set
+            {
+                if (FailedRequestsTracing is null)
+                    FailedRequestsTracing = new EnabledConfig();
+                FailedRequestsTracing.Enabled = value;
+            }
+        }
+
         /// <summary> Detailed error messages configuration. </summary>
-        public EnabledConfig DetailedErrorMessages { get; set; }
+        internal EnabledConfig DetailedErrorMessages { get; set; }
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        public bool? DetailedErrorMessagesEnabled
+        {
+            get => DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
+            set
+            {
+                if (DetailedErrorMessages is null)
+                    DetailedErrorMessages = new EnabledConfig();
+                DetailedErrorMessages.Enabled = value;
+            }
+        }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the resource properties. </summary>
-    public partial class NetworkProfile
+    internal partial class NetworkProfile
     {
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()

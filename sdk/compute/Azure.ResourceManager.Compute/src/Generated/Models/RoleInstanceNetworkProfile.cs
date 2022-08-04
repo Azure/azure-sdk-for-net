@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the network profile for the role instance. </summary>
-    public partial class RoleInstanceNetworkProfile
+    internal partial class RoleInstanceNetworkProfile
     {
         /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>
         internal RoleInstanceNetworkProfile()

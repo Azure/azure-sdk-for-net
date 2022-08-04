@@ -16,21 +16,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public SubscriptionTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteSubscription()
         {
             IgnoreTestInLiveMode();
             //create namespace
-            ResourceGroup resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-            ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
 
             //create a topic
             ServiceBusTopicCollection topicCollection = serviceBusNamespace.GetServiceBusTopics();
             string topicName = Recording.GenerateAssetName("topic");
-            ServiceBusTopic topic = (await topicCollection.CreateOrUpdateAsync(true, topicName, new ServiceBusTopicData())).Value;
+            ServiceBusTopicResource topic = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new ServiceBusTopicData())).Value;
             Assert.NotNull(topic);
             Assert.AreEqual(topic.Id.Name, topicName);
 
@@ -44,11 +45,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 DefaultMessageTimeToLive = TimeSpan.Parse("00:05:00"),
                 DeadLetteringOnMessageExpiration = true,
                 MaxDeliveryCount = 14,
-                Status = EntityStatus.Active,
+                Status = ServiceBusMessagingEntityStatus.Active,
                 AutoDeleteOnIdle = TimeSpan.Parse("00:07:00"),
                 DeadLetteringOnFilterEvaluationExceptions = true
             };
-            ServiceBusSubscription serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(true, subscriptionName, parameters)).Value;
+            ServiceBusSubscriptionResource serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, parameters)).Value;
             Assert.NotNull(serviceBusSubscription);
             Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
 
@@ -56,15 +57,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             serviceBusSubscription = await serviceBusSubscriptionCollection.GetAsync(subscriptionName);
             Assert.NotNull(serviceBusSubscription);
             Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
-            Assert.AreEqual(serviceBusSubscription.Data.Status, EntityStatus.Active);
+            Assert.AreEqual(serviceBusSubscription.Data.Status, ServiceBusMessagingEntityStatus.Active);
 
             //get all subscriptions
-            List<ServiceBusSubscription> serviceBusSubscriptions = await serviceBusSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusSubscriptionResource> serviceBusSubscriptions = await serviceBusSubscriptionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(serviceBusSubscriptions.Count, 1);
 
             //create a topic for autoforward
             string topicName1 = Recording.GenerateAssetName("topic");
-            ServiceBusTopic topic1 = (await topicCollection.CreateOrUpdateAsync(true, topicName1, new ServiceBusTopicData() { EnablePartitioning = true})).Value;
+            ServiceBusTopicResource topic1 = (await topicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName1, new ServiceBusTopicData() { EnablePartitioning = true})).Value;
             Assert.NotNull(topic1);
             Assert.AreEqual(topic1.Id.Name, topicName1);
 
@@ -76,15 +77,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 ForwardDeadLetteredMessagesTo = topicName1,
                 ForwardTo = topicName1
             };
-            serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(true, subscriptionName, updateParameters)).Value;
+            serviceBusSubscription = (await serviceBusSubscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionName, updateParameters)).Value;
             Assert.NotNull(serviceBusSubscription);
             Assert.AreEqual(serviceBusSubscription.Id.Name, subscriptionName);
-            Assert.AreEqual(serviceBusSubscription.Data.Status, EntityStatus.Active);
+            Assert.AreEqual(serviceBusSubscription.Data.Status, ServiceBusMessagingEntityStatus.Active);
             Assert.IsTrue(serviceBusSubscription.Data.EnableBatchedOperations);
             Assert.AreEqual(serviceBusSubscription.Data.ForwardTo, topicName1);
 
             //delete subscription
-            await serviceBusSubscription.DeleteAsync(true);
+            await serviceBusSubscription.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await serviceBusSubscriptionCollection.ExistsAsync(subscriptionName));
         }
     }

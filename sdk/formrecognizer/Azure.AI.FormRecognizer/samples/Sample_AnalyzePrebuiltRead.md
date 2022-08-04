@@ -19,22 +19,19 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Use the prebuilt read model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected languages:");
 
 foreach (DocumentLanguage language in result.Languages)
 {
-    Console.WriteLine($"  Found language '{language.LanguageCode}' with confidence {language.Confidence}.");
+    Console.WriteLine($"  Found language with locale '{language.Locale}' and confidence {language.Confidence}.");
 }
 
 foreach (DocumentPage page in result.Pages)
@@ -47,11 +44,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < line.BoundingPolygon.Length; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+        }
     }
 }
 
@@ -76,23 +74,20 @@ foreach (DocumentStyle style in result.Styles)
 
 ## Use the prebuilt read model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a file stream, use the `AnalyzeDocument` method and pass `prebuilt-read` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromFileAsync
 string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected languages:");
 
 foreach (DocumentLanguage language in result.Languages)
 {
-    Console.WriteLine($"  Found language '{language.LanguageCode}' with confidence {language.Confidence}.");
+    Console.WriteLine($"  Found language with locale '{language.Locale}' and confidence {language.Confidence}.");
 }
 
 foreach (DocumentPage page in result.Pages)
@@ -105,11 +100,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < line.BoundingPolygon.Length; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+        }
     }
 }
 

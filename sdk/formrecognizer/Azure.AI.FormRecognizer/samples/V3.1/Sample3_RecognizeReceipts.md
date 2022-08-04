@@ -24,7 +24,7 @@ To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/receiptfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
-Uri receiptUri = <receiptUri>;
+Uri receiptUri = new Uri("<receiptUri>");
 
 RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsFromUriAsync(receiptUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task BuildCustomModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -20,12 +19,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerSampleBuildModel
             // For this sample, you can use the training documents found in the `trainingFiles` folder.
-            // Upload the forms to your storage container and then generate a container SAS URL.
-            // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-            // https://aka.ms/azsdk/formrecognizer/buildtrainingset
+            // Upload the documents to your storage container and then generate a container SAS URL. Note
+            // that a container URI without SAS is accepted only when the container is public or has a
+            // managed identity configured.
+            //
+            // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+            // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
@@ -35,9 +37,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // build modes and their differences, please see:
             // https://aka.ms/azsdk/formrecognizer/buildmode
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
             if (string.IsNullOrEmpty(model.Description))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Extension operation response. </summary>
-    public partial class VirtualMachineExtensionsListResult
+    internal partial class VirtualMachineExtensionsListResult
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionsListResult. </summary>
         internal VirtualMachineExtensionsListResult()

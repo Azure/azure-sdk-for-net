@@ -1,5 +1,13 @@
 # Release History
 
+## 14.2.0 (2022-01-01)
+
+### Features
+
+- Added operation `GetDetector'`.
+- Added operation `ListDetectors`.
+- Model `NetworkConfiguration` has a new parameter `DynamicVNetAssignmentScope`.
+
 ## 14.1.0 (2021-11-01)
 
 ### Bug Fixes

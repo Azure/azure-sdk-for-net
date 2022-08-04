@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class MongoDBCollectionOperationSource : IOperationSource<MongoDBCollection>
+    internal class MongoDBCollectionOperationSource : IOperationSource<MongoDBCollectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        MongoDBCollection IOperationSource<MongoDBCollection>.CreateResult(Response response, CancellationToken cancellationToken)
+        MongoDBCollectionResource IOperationSource<MongoDBCollectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement);
-            return new MongoDBCollection(_client, data);
+            return new MongoDBCollectionResource(_client, data);
         }
 
-        async ValueTask<MongoDBCollection> IOperationSource<MongoDBCollection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MongoDBCollectionResource> IOperationSource<MongoDBCollectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MongoDBCollectionData.DeserializeMongoDBCollectionData(document.RootElement);
-            return new MongoDBCollection(_client, data);
+            return new MongoDBCollectionResource(_client, data);
         }
     }
 }

@@ -12,7 +12,13 @@ namespace Azure.Communication.Sms.Tests
     public class SmsClientLiveTestBase : RecordedTestBase<SmsClientTestEnvironment>
     {
         public SmsClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new SmsClientRecordedTestSanitizer();
+        {
+            JsonPathSanitizers.Add("$..from");
+            JsonPathSanitizers.Add("$..to");
+            JsonPathSanitizers.Add("$..repeatabilityRequestId");
+            JsonPathSanitizers.Add("$..repeatabilityFirstSent");
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         [OneTimeSetUp]
         public void Setup()

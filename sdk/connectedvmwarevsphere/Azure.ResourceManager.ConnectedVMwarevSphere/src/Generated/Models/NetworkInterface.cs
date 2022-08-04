@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         public NetworkInterface()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
             Name = name;
             Label = label;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             MacAddress = macAddress;
             NetworkId = networkId;
             NicType = nicType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             NetworkMoRefId = networkMoRefId;
             NetworkMoName = networkMoName;
             DeviceKey = deviceKey;
-            IpSettings = ipSettings;
+            IPSettings = ipSettings;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets the label of the virtual network in vCenter that the nic is connected to. </summary>
         public string Label { get; }
         /// <summary> Gets or sets the nic ip addresses. </summary>
-        public IReadOnlyList<string> IpAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
         /// <summary> Gets or sets the NIC MAC address. </summary>
         public string MacAddress { get; }
         /// <summary> Gets or sets the ARM Id of the network resource to connect the virtual machine. </summary>
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Gets or sets the device key value. </summary>
         public int? DeviceKey { get; set; }
         /// <summary> Gets or sets the ipsettings. </summary>
-        public NicIPSettings IpSettings { get; set; }
+        public NicIPSettings IPSettings { get; set; }
     }
 }

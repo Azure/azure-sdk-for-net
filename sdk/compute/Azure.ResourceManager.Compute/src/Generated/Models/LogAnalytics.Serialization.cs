@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value);
+                    properties = Models.LogAnalyticsOutput.DeserializeLogAnalyticsOutput(property.Value);
                     continue;
                 }
             }

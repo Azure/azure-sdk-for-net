@@ -21,6 +21,8 @@ namespace Azure.Storage.Files.Shares.Models
         public string FileCreationTime { get; set; }
         /// <summary> Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file. </summary>
         public string FileLastWriteTime { get; set; }
+        /// <summary> Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file. </summary>
+        public string FileChangeTime { get; set; }
         /// <summary> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </summary>
         public PermissionCopyMode? FilePermissionCopyMode { get; set; }
         /// <summary> Specifies the option to overwrite the target file if it already exists and has read-only attribute set. </summary>

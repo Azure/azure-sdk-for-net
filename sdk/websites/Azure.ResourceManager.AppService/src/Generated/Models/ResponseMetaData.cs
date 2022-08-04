@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ResponseMetaData. </summary>
-    public partial class ResponseMetaData
+    internal partial class ResponseMetaData
     {
         /// <summary> Initializes a new instance of ResponseMetaData. </summary>
         public ResponseMetaData()

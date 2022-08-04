@@ -233,6 +233,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public SignalRNegotiationAttribute() { }
     }
+    public partial class SignalROptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
+    {
+        public SignalROptions() { }
+        public Azure.Core.Serialization.ObjectSerializer JsonObjectSerializer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Microsoft.Azure.SignalR.ServiceEndpoint> ServiceEndpoints { get { throw null; } }
+        public Microsoft.Azure.SignalR.Management.ServiceTransportType ServiceTransportType { get { throw null; } set { } }
+        string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
+    }
     public partial class SignalROutputConverter
     {
         public SignalROutputConverter() { }

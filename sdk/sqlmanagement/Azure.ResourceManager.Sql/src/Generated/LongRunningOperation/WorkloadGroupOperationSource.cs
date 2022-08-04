@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class WorkloadGroupOperationSource : IOperationSource<WorkloadGroup>
+    internal class WorkloadGroupOperationSource : IOperationSource<WorkloadGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        WorkloadGroup IOperationSource<WorkloadGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadGroupResource IOperationSource<WorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
-            return new WorkloadGroup(_client, data);
+            return new WorkloadGroupResource(_client, data);
         }
 
-        async ValueTask<WorkloadGroup> IOperationSource<WorkloadGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadGroupResource> IOperationSource<WorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
-            return new WorkloadGroup(_client, data);
+            return new WorkloadGroupResource(_client, data);
         }
     }
 }

@@ -15,8 +15,13 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static PageList DeserializePageList(XElement element)
         {
+            string nextMarker = default;
             IReadOnlyList<PageRange> pageRange = default;
             IReadOnlyList<ClearRange> clearRange = default;
+            if (element.Element("NextMarker") is XElement nextMarkerElement)
+            {
+                nextMarker = (string)nextMarkerElement;
+            }
             var array = new List<PageRange>();
             foreach (var e in element.Elements("PageRange"))
             {
@@ -29,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
                 array0.Add(Models.ClearRange.DeserializeClearRange(e));
             }
             clearRange = array0;
-            return new PageList(pageRange, clearRange);
+            return new PageList(pageRange, clearRange, nextMarker);
         }
     }
 }

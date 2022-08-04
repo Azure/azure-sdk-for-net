@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(SystemAssignedServiceIdentityType.ToString());
             writer.WriteEndObject();
         }
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the role profile for the cloud service. </summary>
-    public partial class CloudServiceRoleProfile
+    internal partial class CloudServiceRoleProfile
     {
         /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>
         public CloudServiceRoleProfile()

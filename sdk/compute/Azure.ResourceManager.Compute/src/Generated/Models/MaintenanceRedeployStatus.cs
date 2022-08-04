@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of MaintenanceRedeployStatus. </summary>
         /// <param name="isCustomerInitiatedMaintenanceAllowed"> True, if customer is allowed to perform Maintenance. </param>
-        /// <param name="preMaintenanceWindowStartTime"> Start Time for the Pre Maintenance Window. </param>
-        /// <param name="preMaintenanceWindowEndTime"> End Time for the Pre Maintenance Window. </param>
-        /// <param name="maintenanceWindowStartTime"> Start Time for the Maintenance Window. </param>
-        /// <param name="maintenanceWindowEndTime"> End Time for the Maintenance Window. </param>
+        /// <param name="preMaintenanceWindowStartOn"> Start Time for the Pre Maintenance Window. </param>
+        /// <param name="preMaintenanceWindowEndOn"> End Time for the Pre Maintenance Window. </param>
+        /// <param name="maintenanceWindowStartOn"> Start Time for the Maintenance Window. </param>
+        /// <param name="maintenanceWindowEndOn"> End Time for the Maintenance Window. </param>
         /// <param name="lastOperationResultCode"> The Last Maintenance Operation Result Code. </param>
         /// <param name="lastOperationMessage"> Message returned for the last Maintenance Operation. </param>
-        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartTime, DateTimeOffset? preMaintenanceWindowEndTime, DateTimeOffset? maintenanceWindowStartTime, DateTimeOffset? maintenanceWindowEndTime, MaintenanceOperationResultCodeTypes? lastOperationResultCode, string lastOperationMessage)
+        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartOn, DateTimeOffset? preMaintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, DateTimeOffset? maintenanceWindowEndOn, MaintenanceOperationResultCodeType? lastOperationResultCode, string lastOperationMessage)
         {
             IsCustomerInitiatedMaintenanceAllowed = isCustomerInitiatedMaintenanceAllowed;
-            PreMaintenanceWindowStartTime = preMaintenanceWindowStartTime;
-            PreMaintenanceWindowEndTime = preMaintenanceWindowEndTime;
-            MaintenanceWindowStartTime = maintenanceWindowStartTime;
-            MaintenanceWindowEndTime = maintenanceWindowEndTime;
+            PreMaintenanceWindowStartOn = preMaintenanceWindowStartOn;
+            PreMaintenanceWindowEndOn = preMaintenanceWindowEndOn;
+            MaintenanceWindowStartOn = maintenanceWindowStartOn;
+            MaintenanceWindowEndOn = maintenanceWindowEndOn;
             LastOperationResultCode = lastOperationResultCode;
             LastOperationMessage = lastOperationMessage;
         }
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> True, if customer is allowed to perform Maintenance. </summary>
         public bool? IsCustomerInitiatedMaintenanceAllowed { get; }
         /// <summary> Start Time for the Pre Maintenance Window. </summary>
-        public DateTimeOffset? PreMaintenanceWindowStartTime { get; }
+        public DateTimeOffset? PreMaintenanceWindowStartOn { get; }
         /// <summary> End Time for the Pre Maintenance Window. </summary>
-        public DateTimeOffset? PreMaintenanceWindowEndTime { get; }
+        public DateTimeOffset? PreMaintenanceWindowEndOn { get; }
         /// <summary> Start Time for the Maintenance Window. </summary>
-        public DateTimeOffset? MaintenanceWindowStartTime { get; }
+        public DateTimeOffset? MaintenanceWindowStartOn { get; }
         /// <summary> End Time for the Maintenance Window. </summary>
-        public DateTimeOffset? MaintenanceWindowEndTime { get; }
+        public DateTimeOffset? MaintenanceWindowEndOn { get; }
         /// <summary> The Last Maintenance Operation Result Code. </summary>
-        public MaintenanceOperationResultCodeTypes? LastOperationResultCode { get; }
+        public MaintenanceOperationResultCodeType? LastOperationResultCode { get; }
         /// <summary> Message returned for the last Maintenance Operation. </summary>
         public string LastOperationMessage { get; }
     }

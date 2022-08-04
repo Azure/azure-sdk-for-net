@@ -25,9 +25,10 @@ pr:
     - sdk/eventhub/service.projects
     - sdk/servicebus/Azure.ResourceManager.ServiceBus
     - sdk/resourcemanager/
+    - sdk/network/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: mgmtclient
     ServiceDirectory: servicebus

@@ -1,4 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
 trigger:
   branches:
     include:
@@ -8,6 +9,12 @@ trigger:
   paths:
     include:
     - sdk/template/
+#if (false)
+    # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
+    # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
+    # eng/common code changes trigger template pipeline for basic checking.
+    - eng/common/
+#endif
 
 pr:
   branches:
@@ -22,13 +29,12 @@ pr:
 #if (false)
     # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
+    # eng/common code changes trigger template pipeline for basic checking.
+    - eng/common/
 #endif
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: template
     ArtifactName: packages

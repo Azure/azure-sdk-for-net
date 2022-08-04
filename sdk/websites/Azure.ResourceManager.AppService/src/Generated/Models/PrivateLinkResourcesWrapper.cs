@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Wrapper for a collection of private link resources. </summary>
-    public partial class PrivateLinkResourcesWrapper
+    internal partial class PrivateLinkResourcesWrapper
     {
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateLinkResourcesWrapper(IEnumerable<PrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResourceData> value)
         {
             if (value == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<PrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<AppServicePrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PrivateLinkResource> Value { get; }
+        public IReadOnlyList<AppServicePrivateLinkResourceData> Value { get; }
     }
 }

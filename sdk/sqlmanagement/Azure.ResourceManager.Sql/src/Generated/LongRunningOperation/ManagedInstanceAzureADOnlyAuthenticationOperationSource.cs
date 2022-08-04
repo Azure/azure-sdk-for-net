@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceAzureADOnlyAuthenticationOperationSource : IOperationSource<ManagedInstanceAzureADOnlyAuthentication>
+    internal class ManagedInstanceAzureADOnlyAuthenticationOperationSource : IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceAzureADOnlyAuthentication IOperationSource<ManagedInstanceAzureADOnlyAuthentication>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceAzureADOnlyAuthenticationResource IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
-            return new ManagedInstanceAzureADOnlyAuthentication(_client, data);
+            return new ManagedInstanceAzureADOnlyAuthenticationResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceAzureADOnlyAuthentication> IOperationSource<ManagedInstanceAzureADOnlyAuthentication>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceAzureADOnlyAuthenticationResource> IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceAzureADOnlyAuthenticationData.DeserializeManagedInstanceAzureADOnlyAuthenticationData(document.RootElement);
-            return new ManagedInstanceAzureADOnlyAuthentication(_client, data);
+            return new ManagedInstanceAzureADOnlyAuthenticationResource(_client, data);
         }
     }
 }

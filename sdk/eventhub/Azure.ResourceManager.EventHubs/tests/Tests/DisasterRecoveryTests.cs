@@ -17,24 +17,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class DisasterRecoveryTests : EventHubTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)
         {
-        }
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubNamespace eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(true);
-                }
-                _resourceGroup = null;
-            }
         }
 
         [Test]
@@ -44,88 +29,88 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             //create namespace1
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eHNamespace1 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //create namespace2 with a different location
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt");
-            EventHubNamespace eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName2, new EventHubNamespaceData(AzureLocation.EastUS))).Value;
+            EventHubsNamespaceResource eHNamespace2 = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName2, new EventHubsNamespaceData(AzureLocation.EastUS))).Value;
 
             //create authorization rule on namespace1
             string ruleName = Recording.GenerateAssetName("authorizationrule");
-            AuthorizationRuleData ruleParameter = new AuthorizationRuleData()
+            EventHubsAuthorizationRuleData ruleParameter = new EventHubsAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { EventHubsAccessRight.Listen, EventHubsAccessRight.Send }
             };
-            NamespaceAuthorizationRule authorizationRule = (await eHNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(true, ruleName, ruleParameter)).Value;
+            EventHubsNamespaceAuthorizationRuleResource authorizationRule = (await eHNamespace1.GetEventHubsNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
             //create a disaster recovery
             string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
-            DisasterRecoveryData parameter = new DisasterRecoveryData()
+            EventHubsDisasterRecoveryData parameter = new EventHubsDisasterRecoveryData()
             {
                 PartnerNamespace = eHNamespace2.Id
             };
-            DisasterRecovery armDisasterRecovery = (await eHNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(true, disasterRecoveryName, parameter)).Value;
+            EventHubsDisasterRecoveryResource armDisasterRecovery = (await eHNamespace1.GetEventHubsDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
             Assert.NotNull(armDisasterRecovery);
             Assert.AreEqual(armDisasterRecovery.Id.Name, disasterRecoveryName);
             Assert.AreEqual(armDisasterRecovery.Data.PartnerNamespace, eHNamespace2.Id.ToString());
 
             //get the disaster recovery - primary
-            armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
-            Assert.AreEqual(armDisasterRecovery.Data.Role, RoleDisasterRecovery.Primary);
+            armDisasterRecovery = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
+            Assert.AreEqual(armDisasterRecovery.Data.Role, EventHubsDisasterRecoveryRole.Primary);
 
             //get the disaster recovery - secondary
-            DisasterRecovery armDisasterRecoverySec = await eHNamespace2.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
-            Assert.AreEqual(armDisasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
+            EventHubsDisasterRecoveryResource armDisasterRecoverySec = await eHNamespace2.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
+            Assert.AreEqual(armDisasterRecoverySec.Data.Role, EventHubsDisasterRecoveryRole.Secondary);
 
             //wait for completion, this may take several minutes in live and record mode
-            armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
+            while (armDisasterRecovery.Data.ProvisioningState != EventHubsDisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+                armDisasterRecovery = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
             System.Console.WriteLine(i);
 
             //check name availability
-            CheckNameAvailabilityResult nameAvailability = await eHNamespace1.CheckNameAvailabilityDisasterRecoveryConfigAsync(new CheckNameAvailabilityOptions(disasterRecoveryName));
+            EventHubsNameAvailabilityResult nameAvailability = await eHNamespace1.CheckEventHubsDisasterRecoveryNameAvailabilityAsync(new EventHubsNameAvailabilityContent(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            List<DisasterRecoveryAuthorizationRule> rules = await armDisasterRecovery.GetDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            List<EventHubsDisasterRecoveryAuthorizationRuleResource> rules = await armDisasterRecovery.GetEventHubsDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            DisasterRecoveryAuthorizationRule rule = rules.First();
-            AccessKeys keys = await rule.GetKeysAsync();
+            EventHubsDisasterRecoveryAuthorizationRuleResource rule = rules.First();
+            EventHubsAccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
             //break pairing and wait for completion
             await armDisasterRecovery.BreakPairingAsync();
-            armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+            armDisasterRecovery = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDR.Succeeded && i < 100)
+            while (armDisasterRecovery.Data.ProvisioningState != EventHubsDisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(5000);
                 }
                 i++;
-                armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+                armDisasterRecovery = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //get all disaster recoveries for a name space
-            List<DisasterRecovery> disasterRcoveries = await eHNamespace1.GetDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
+            List<EventHubsDisasterRecoveryResource> disasterRcoveries = await eHNamespace1.GetEventHubsDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(disasterRcoveries.Count >= 1);
 
             //delete disaster recovery;
-            await armDisasterRecovery.DeleteAsync(true);
+            await armDisasterRecovery.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

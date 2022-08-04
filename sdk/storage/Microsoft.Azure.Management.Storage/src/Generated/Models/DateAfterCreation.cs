@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// Object to define the number of days after creation.
+    /// Object to define snapshot and version action conditions.
     /// </summary>
     public partial class DateAfterCreation
     {
@@ -32,9 +32,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="daysAfterCreationGreaterThan">Value indicating the age
         /// in days after creation</param>
-        public DateAfterCreation(double daysAfterCreationGreaterThan)
+        /// <param name="daysAfterLastTierChangeGreaterThan">Value indicating
+        /// the age in days after last blob tier change time. This property is
+        /// only applicable for tierToArchive actions and requires
+        /// daysAfterCreationGreaterThan to be set for snapshots and blob
+        /// version based actions. The blob will be archived if both the
+        /// conditions are satisfied.</param>
+        public DateAfterCreation(double daysAfterCreationGreaterThan, double? daysAfterLastTierChangeGreaterThan = default(double?))
         {
             DaysAfterCreationGreaterThan = daysAfterCreationGreaterThan;
+            DaysAfterLastTierChangeGreaterThan = daysAfterLastTierChangeGreaterThan;
             CustomInit();
         }
 
@@ -48,6 +55,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "daysAfterCreationGreaterThan")]
         public double DaysAfterCreationGreaterThan { get; set; }
+
+        /// <summary>
+        /// Gets or sets value indicating the age in days after last blob tier
+        /// change time. This property is only applicable for tierToArchive
+        /// actions and requires daysAfterCreationGreaterThan to be set for
+        /// snapshots and blob version based actions. The blob will be archived
+        /// if both the conditions are satisfied.
+        /// </summary>
+        [JsonProperty(PropertyName = "daysAfterLastTierChangeGreaterThan")]
+        public double? DaysAfterLastTierChangeGreaterThan { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -64,6 +81,17 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (DaysAfterCreationGreaterThan % 1 != 0)
             {
                 throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterCreationGreaterThan", 1);
+            }
+            if (DaysAfterLastTierChangeGreaterThan != null)
+            {
+                if (DaysAfterLastTierChangeGreaterThan < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "DaysAfterLastTierChangeGreaterThan", 0);
+                }
+                if (DaysAfterLastTierChangeGreaterThan % 1 != 0)
+                {
+                    throw new ValidationException(ValidationRules.MultipleOf, "DaysAfterLastTierChangeGreaterThan", 1);
+                }
             }
         }
     }

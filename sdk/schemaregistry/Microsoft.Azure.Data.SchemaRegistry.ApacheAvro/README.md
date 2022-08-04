@@ -9,7 +9,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 Install the Azure Schema Registry Apache Avro library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro --version 1.0.0-beta.1
+dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 ```
 
 ### Prerequisites
@@ -89,13 +89,26 @@ Console.WriteLine(eventData.ContentType);
 
 // the serialized Avro data will be stored in the EventBody
 Console.WriteLine(eventData.EventBody);
+
+// construct a publisher and publish the events to our event hub
+var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
+await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+await producer.SendAsync(new EventData[] { eventData });
 ```
 
 To deserialize an `EventData` event that you are consuming:
 ```C# Snippet:SchemaRegistryAvroDecodeEventData
-Employee deserialized = (Employee) await serializer.DeserializeAsync(eventData, typeof(Employee));
-Console.WriteLine(deserialized.Age);
-Console.WriteLine(deserialized.Name);
+// construct a consumer and consume the event from our event hub
+await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
+await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
+{
+    Employee deserialized = (Employee) await serializer.DeserializeAsync(eventData, typeof(Employee));
+    Console.WriteLine(deserialized.Age);
+    Console.WriteLine(deserialized.Name);
+    break;
+}
 ```
 
 You can also use generic methods to serialize and deserialize the data. This may be more convenient if you are not building a library on top of the Avro serializer, as you won't have to worry about the virality of generics:
@@ -119,19 +132,19 @@ Console.WriteLine(deserialized.Age);
 Console.WriteLine(deserialized.Name);
 ```
 
-### Serialize and deserialize data using `BinaryContent` directly
+### Serialize and deserialize data using `MessageContent` directly
 
-It is also possible to serialize and deserialize using `BinaryContent`. Use this option if you are not integrating with any of the messaging libraries that work with `BinaryContent`.
-```C# Snippet:SchemaRegistryAvroEncodeDecodeBinaryContent
+It is also possible to serialize and deserialize using `MessageContent`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageContent`.
+```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageContent
 var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-BinaryContent content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 ```
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be provided as potential issues are discovered.
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from the Apache Avro library. This type of error would typically be caught during testing and should not be handled in code. Any errors related to incompatible schemas will be thrown as an `Exception` with the `InnerException` property set to the underlying exception from the Apache Avro library.
 
 ## Next steps
 
@@ -152,7 +165,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
 [azure_powershell]: https://docs.microsoft.com/powershell/azure/
 [create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
-[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/mgmt_preview_quickstart.md
+[quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
 [schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
 [schema_properties]: src/SchemaProperties.cs
@@ -169,3 +182,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry
+[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

@@ -1,7 +1,7 @@
 {
     "Entries": [
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/configurations/service",
             "RequestMethod": "GET",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -45,7 +45,7 @@
             }
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/service",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/configurations/service",
             "RequestMethod": "PUT",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -103,7 +103,7 @@
             }
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/configurations/policy",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/configurations/policy",
             "RequestMethod": "PUT",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -143,7 +143,7 @@
             }
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/rank",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/multislot/rank",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -245,7 +245,7 @@
             }
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/rank",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/multislot/rank",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -374,7 +374,7 @@
             }
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/rank",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/multislot/rank",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -504,7 +504,7 @@
             }
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/reward",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/multislot/events/123456789/reward",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -543,7 +543,7 @@
             "ResponseBody": []
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/reward",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/multislot/events/123456789/reward",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",
@@ -582,7 +582,7 @@
             "ResponseBody": []
         },
         {
-            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.1/multislot/events/123456789/activate",
+            "RequestUri": "https://sdktestmultislot.ppe.cognitiveservices.azure.com/personalizer/v1.1-preview.3/multislot/events/123456789/activate",
             "RequestMethod": "POST",
             "RequestHeaders": {
                 "Accept": "application/json",

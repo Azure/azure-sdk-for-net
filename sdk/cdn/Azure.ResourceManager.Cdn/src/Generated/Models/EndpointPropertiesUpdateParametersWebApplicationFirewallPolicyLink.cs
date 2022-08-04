@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
-    public partial class EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
+    internal partial class EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
     {
         /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink. </summary>
         public EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink()
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(string id)
+        internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

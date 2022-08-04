@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This library extends its Event Processor with durable storage for checkpoint information using Azure Blob storage.  For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>5.7.0-beta.4</Version>
+    <Version>5.8.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.6.2</ApiCompatVersion>
+    <ApiCompatVersion>5.7.1</ApiCompatVersion>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;Event Processor;EventProcessor;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,14 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--
-        TEMP: Move Core to an implicit dependency until the MessageWithMetadata are shipped in Azure.Core.
-
-    <PackageReference Include="Azure.Core" />
-    -->
-    <!-- END TEMP -->
-
-    <PackageReference Include="Azure.Messaging.EventHubs" VersionOverride="5.7.0-beta.3" /><!-- Remove override when the v5.7.0 line is released for GA -->
+    <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />

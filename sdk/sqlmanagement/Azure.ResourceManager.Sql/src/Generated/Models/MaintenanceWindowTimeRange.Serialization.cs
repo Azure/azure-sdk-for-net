@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration);
+                writer.WriteStringValue(Duration.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             Optional<SqlDayOfWeek> dayOfWeek = default;
             Optional<string> startTime = default;
-            Optional<string> duration = default;
+            Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"))
@@ -57,11 +58,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, duration.Value);
+            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration));
         }
     }
 }

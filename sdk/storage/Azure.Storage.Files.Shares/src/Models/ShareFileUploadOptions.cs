@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -24,6 +23,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Options for transactional hash content verification.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

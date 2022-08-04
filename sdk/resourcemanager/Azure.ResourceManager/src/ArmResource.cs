@@ -13,14 +13,13 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
     /// </summary>
     public abstract partial class ArmResource
     {
-        private TagResource _tagResource;
         private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the diagnostic options for this resource client.
         /// </summary>
-        protected internal DiagnosticsOptions DiagnosticOptions => Client.DiagnosticOptions;
+        protected internal DiagnosticsOptions Diagnostics => Client.Diagnostics;
 
         /// <summary>
         /// Gets the pipeline for this resource client.
@@ -67,20 +66,14 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the base uri for this resource client.
         /// </summary>
-        protected internal Uri BaseUri => Client.BaseUri;
-
-        /// <summary>
-        /// Gets the TagResourceOperations.
-        /// </summary>
-        /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
+        protected internal Uri Endpoint => Client.Endpoint;
 
         /// <summary>
         /// Gets the api version override if it has been set for the current client options.
         /// </summary>
         /// <param name="resourceType"> The resource type to get the version for. </param>
         /// <param name="apiVersion"> The api version to variable to set. </param>
-        protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
+        protected virtual bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
 
         /// <summary>
         /// Lists all available geo-locations.
@@ -88,17 +81,18 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<AzureLocation>> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            ProviderInfo resourcePageableProvider = Client.GetTenantProvider(nameSpace, null, cancellationToken);
+            Response<TenantResourceProvider> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
+            TenantResourceProvider resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
-            return theResource.Locations.Select(l => new AzureLocation(l));
+            return Response.FromValue(theResource.Locations.Select(l => new AzureLocation(l)), resourcePageableProviderResponse.GetRawResponse());
         }
 
         /// <summary>
@@ -107,29 +101,30 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual async Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<AzureLocation>>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            ProviderInfo resourcePageableProvider = await Client.GetTenantProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            Response<TenantResourceProvider> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            TenantResourceProvider resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
-            return theResource.Locations.Select(l => new AzureLocation(l));
+            return Response.FromValue(theResource.Locations.Select(l => new AzureLocation(l)), resourcePageableProviderResponse.GetRawResponse());
         }
 
         /// <summary>
         /// Gets a cached client to use for extension methods.
         /// </summary>
         /// <typeparam name="T"> The type of client to get. </typeparam>
-        /// <param name="func"> The constructor factory for the client. </param>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
             where T : class
         {
-            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(Client); }) as T;
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(Client); }) as T;
         }
     }
 }

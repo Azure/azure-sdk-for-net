@@ -19,18 +19,19 @@ namespace Microsoft.Azure.Management.Kusto
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "ClusterPrincipalAssignments", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "Clusters", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "DataConnections", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "DatabasePrincipalAssignments", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "Databases", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "ManagedPrivateEndpoints", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "Operations", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "OperationsResults", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "PrivateEndpointConnections", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "PrivateLinkResources", "2021-08-27"),
-                new Tuple<string, string, string>("Kusto", "Scripts", "2021-08-27"),
+                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "ClusterPrincipalAssignments", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "Clusters", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "DataConnections", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "DatabasePrincipalAssignments", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "Databases", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "ManagedPrivateEndpoints", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "Operations", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "OperationsResults", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "OperationsResultsLocation", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "PrivateEndpointConnections", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "PrivateLinkResources", "2022-02-01"),
+                new Tuple<string, string, string>("Kusto", "Scripts", "2022-02-01"),
               }.AsEnumerable();
           }
       }

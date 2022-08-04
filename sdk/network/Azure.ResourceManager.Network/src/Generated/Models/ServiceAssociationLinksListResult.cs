@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ServiceAssociationLinks_List operation. </summary>
-    public partial class ServiceAssociationLinksListResult
+    internal partial class ServiceAssociationLinksListResult
     {
         /// <summary> Initializes a new instance of ServiceAssociationLinksListResult. </summary>
         internal ServiceAssociationLinksListResult()

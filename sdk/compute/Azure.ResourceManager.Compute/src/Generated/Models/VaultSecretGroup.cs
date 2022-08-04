@@ -30,7 +30,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </summary>
-        public WritableSubResource SourceVault { get; set; }
+        internal WritableSubResource SourceVault { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SourceVaultId
+        {
+            get => SourceVault is null ? default : SourceVault.Id;
+            set
+            {
+                if (SourceVault is null)
+                    SourceVault = new WritableSubResource();
+                SourceVault.Id = value;
+            }
+        }
+
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<VaultCertificate> VaultCertificates { get; }
     }

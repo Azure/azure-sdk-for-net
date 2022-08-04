@@ -34,8 +34,8 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics instance to use. </param>
-        /// <param name="pipeline"> The pipeline instance to use. </param>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
         /// <param name="apiVersion"> Api Version. </param>
@@ -49,117 +49,203 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetResourceSetRuleAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+        /// 
+        /// Response response = await client.GetResourceSetRuleAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("dynamicReplacement").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("condition").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("bindingUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("isResourceSet").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -181,117 +267,203 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Get a resource set config service model. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetResourceSetRule and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+        /// 
+        /// Response response = client.GetResourceSetRule();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("dynamicReplacement").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("condition").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("bindingUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("isResourceSet").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -313,213 +485,442 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Creates or updates an resource set config. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+        /// 
+        /// var data = new {
+        ///     advancedResourceSet = new {
+        ///         modifiedAt = "2022-05-10T18:57:31.2311892Z",
+        ///         resourceSetProcessing = "Default",
+        ///     },
+        ///     pathPatternConfig = new {
+        ///         acceptedPatterns = new[] {
+        ///             new {
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
+        ///             }
+        ///         },
+        ///         complexReplacers = new[] {
+        ///             new {
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 disabled = true,
+        ///                 disableRecursiveReplacerApplication = true,
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 typeName = "<typeName>",
+        ///             }
+        ///         },
+        ///         createdBy = "<createdBy>",
+        ///         enableDefaultPatterns = true,
+        ///         lastUpdatedTimestamp = 1234L,
+        ///         modifiedBy = "<modifiedBy>",
+        ///         normalizationRules = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 disabled = true,
+        ///                 dynamicReplacement = true,
+        ///                 entityTypes = new[] {
+        ///                     "<String>"
+        ///                 },
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 name = "<name>",
+        ///                 regex = new {
+        ///                     maxDigits = 1234,
+        ///                     maxLetters = 1234,
+        ///                     minDashes = 1234,
+        ///                     minDigits = 1234,
+        ///                     minDigitsOrLetters = 1234,
+        ///                     minDots = 1234,
+        ///                     minHex = 1234,
+        ///                     minLetters = 1234,
+        ///                     minUnderscores = 1234,
+        ///                     options = 1234,
+        ///                     regexStr = "<regexStr>",
+        ///                 },
+        ///                 replaceWith = "<replaceWith>",
+        ///                 version = 123.45d,
+        ///             }
+        ///         },
+        ///         regexReplacers = new[] {
+        ///             new {
+        ///                 condition = "<condition>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 disabled = true,
+        ///                 disableRecursiveReplacerApplication = true,
+        ///                 doNotReplaceRegex = new {
+        ///                     maxDigits = 1234,
+        ///                     maxLetters = 1234,
+        ///                     minDashes = 1234,
+        ///                     minDigits = 1234,
+        ///                     minDigitsOrLetters = 1234,
+        ///                     minDots = 1234,
+        ///                     minHex = 1234,
+        ///                     minLetters = 1234,
+        ///                     minUnderscores = 1234,
+        ///                     options = 1234,
+        ///                     regexStr = "<regexStr>",
+        ///                 },
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 regex = new {
+        ///                     maxDigits = 1234,
+        ///                     maxLetters = 1234,
+        ///                     minDashes = 1234,
+        ///                     minDigits = 1234,
+        ///                     minDigitsOrLetters = 1234,
+        ///                     minDots = 1234,
+        ///                     minHex = 1234,
+        ///                     minLetters = 1234,
+        ///                     minUnderscores = 1234,
+        ///                     options = 1234,
+        ///                     regexStr = "<regexStr>",
+        ///                 },
+        ///                 replaceWith = "<replaceWith>",
+        ///             }
+        ///         },
+        ///         rejectedPatterns = new[] {
+        ///             new {
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
+        ///             }
+        ///         },
+        ///         scopedRules = new[] {
+        ///             new {
+        ///                 bindingUrl = "<bindingUrl>",
+        ///                 rules = new[] {
+        ///                     new {
+        ///                         displayName = "<displayName>",
+        ///                         isResourceSet = true,
+        ///                         lastUpdatedTimestamp = 1234L,
+        ///                         name = "<name>",
+        ///                         qualifiedName = "<qualifiedName>",
+        ///                     }
+        ///                 },
+        ///                 storeType = "<storeType>",
+        ///             }
+        ///         },
+        ///         version = 1234,
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateResourceSetRuleAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("dynamicReplacement").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("condition").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("bindingUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("isResourceSet").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         path: string (required)
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string (required),
-        ///     enableDefaultPatterns: boolean (required),
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean (required),
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string (required),
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string (required)
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string (required)
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -543,213 +944,442 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Creates or updates an resource set config. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateResourceSetRule and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateResourceSetRule with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
+        /// 
+        /// var data = new {
+        ///     advancedResourceSet = new {
+        ///         modifiedAt = "2022-05-10T18:57:31.2311892Z",
+        ///         resourceSetProcessing = "Default",
+        ///     },
+        ///     pathPatternConfig = new {
+        ///         acceptedPatterns = new[] {
+        ///             new {
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
+        ///             }
+        ///         },
+        ///         complexReplacers = new[] {
+        ///             new {
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 disabled = true,
+        ///                 disableRecursiveReplacerApplication = true,
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 typeName = "<typeName>",
+        ///             }
+        ///         },
+        ///         createdBy = "<createdBy>",
+        ///         enableDefaultPatterns = true,
+        ///         lastUpdatedTimestamp = 1234L,
+        ///         modifiedBy = "<modifiedBy>",
+        ///         normalizationRules = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 disabled = true,
+        ///                 dynamicReplacement = true,
+        ///                 entityTypes = new[] {
+        ///                     "<String>"
+        ///                 },
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 name = "<name>",
+        ///                 regex = new {
+        ///                     maxDigits = 1234,
+        ///                     maxLetters = 1234,
+        ///                     minDashes = 1234,
+        ///                     minDigits = 1234,
+        ///                     minDigitsOrLetters = 1234,
+        ///                     minDots = 1234,
+        ///                     minHex = 1234,
+        ///                     minLetters = 1234,
+        ///                     minUnderscores = 1234,
+        ///                     options = 1234,
+        ///                     regexStr = "<regexStr>",
+        ///                 },
+        ///                 replaceWith = "<replaceWith>",
+        ///                 version = 123.45d,
+        ///             }
+        ///         },
+        ///         regexReplacers = new[] {
+        ///             new {
+        ///                 condition = "<condition>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 disabled = true,
+        ///                 disableRecursiveReplacerApplication = true,
+        ///                 doNotReplaceRegex = new {
+        ///                     maxDigits = 1234,
+        ///                     maxLetters = 1234,
+        ///                     minDashes = 1234,
+        ///                     minDigits = 1234,
+        ///                     minDigitsOrLetters = 1234,
+        ///                     minDots = 1234,
+        ///                     minHex = 1234,
+        ///                     minLetters = 1234,
+        ///                     minUnderscores = 1234,
+        ///                     options = 1234,
+        ///                     regexStr = "<regexStr>",
+        ///                 },
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 regex = new {
+        ///                     maxDigits = 1234,
+        ///                     maxLetters = 1234,
+        ///                     minDashes = 1234,
+        ///                     minDigits = 1234,
+        ///                     minDigitsOrLetters = 1234,
+        ///                     minDots = 1234,
+        ///                     minHex = 1234,
+        ///                     minLetters = 1234,
+        ///                     minUnderscores = 1234,
+        ///                     options = 1234,
+        ///                     regexStr = "<regexStr>",
+        ///                 },
+        ///                 replaceWith = "<replaceWith>",
+        ///             }
+        ///         },
+        ///         rejectedPatterns = new[] {
+        ///             new {
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
+        ///             }
+        ///         },
+        ///         scopedRules = new[] {
+        ///             new {
+        ///                 bindingUrl = "<bindingUrl>",
+        ///                 rules = new[] {
+        ///                     new {
+        ///                         displayName = "<displayName>",
+        ///                         isResourceSet = true,
+        ///                         lastUpdatedTimestamp = 1234L,
+        ///                         name = "<name>",
+        ///                         qualifiedName = "<qualifiedName>",
+        ///                     }
+        ///                 },
+        ///                 storeType = "<storeType>",
+        ///             }
+        ///         },
+        ///         version = 1234,
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateResourceSetRule(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("modifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("advancedResourceSet").GetProperty("resourceSetProcessing").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("acceptedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("complexReplacers")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("enableDefaultPatterns").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("dynamicReplacement").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("normalizationRules")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("condition").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disabled").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("disableRecursiveReplacerApplication").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("doNotReplaceRegex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("maxLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDashes").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDigitsOrLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minDots").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minHex").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minLetters").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("minUnderscores").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("options").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("regex").GetProperty("regexStr").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("regexReplacers")[0].GetProperty("replaceWith").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("filterType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("modifiedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("rejectedPatterns")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("bindingUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("isResourceSet").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("lastUpdatedTimestamp").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("rules")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("scopedRules")[0].GetProperty("storeType").ToString());
+        /// Console.WriteLine(result.GetProperty("pathPatternConfig").GetProperty("version").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         path: string (required)
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string (required),
-        ///     enableDefaultPatterns: boolean (required),
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean (required),
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string (required),
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string (required),
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string (required)
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string (required)
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ResourceSetRuleConfig</c>:
         /// <code>{
         ///   advancedResourceSet: {
-        ///     modifiedAt: string (ISO 8601 Format),
-        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///   },
-        ///   name: string,
+        ///     modifiedAt: string (ISO 8601 Format), # Optional. Date at which ResourceSetProcessing property of the account is updated.
+        ///     resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. The advanced resource property of the account.
+        ///   }, # Optional. Gets or sets the advanced resource set property of the account.
+        ///   name: string, # Optional. The name of the rule
         ///   pathPatternConfig: {
         ///     acceptedPatterns: [
         ///       {
-        ///         createdBy: string,
-        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         path: string
+        ///         createdBy: string, # Optional.
+        ///         filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         path: string, # Required.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     complexReplacers: [
         ///       {
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         typeName: string
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Optional.
+        ///         typeName: string, # Optional.
         ///       }
-        ///     ],
-        ///     createdBy: string,
-        ///     enableDefaultPatterns: boolean,
-        ///     lastUpdatedTimestamp: number,
-        ///     modifiedBy: string,
+        ///     ], # Optional.
+        ///     createdBy: string, # Required.
+        ///     enableDefaultPatterns: boolean, # Required.
+        ///     lastUpdatedTimestamp: number, # Optional.
+        ///     modifiedBy: string, # Optional.
         ///     normalizationRules: [
         ///       {
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         dynamicReplacement: boolean,
-        ///         entityTypes: [string],
-        ///         lastUpdatedTimestamp: number,
-        ///         name: string,
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Optional.
+        ///         dynamicReplacement: boolean, # Optional.
+        ///         entityTypes: [string], # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         name: string, # Optional.
         ///         regex: {
-        ///           maxDigits: number,
-        ///           maxLetters: number,
-        ///           minDashes: number,
-        ///           minDigits: number,
-        ///           minDigitsOrLetters: number,
-        ///           minDots: number,
-        ///           minHex: number,
-        ///           minLetters: number,
-        ///           minUnderscores: number,
-        ///           options: number,
-        ///           regexStr: string
-        ///         },
-        ///         replaceWith: string,
-        ///         version: number
+        ///           maxDigits: number, # Optional.
+        ///           maxLetters: number, # Optional.
+        ///           minDashes: number, # Optional.
+        ///           minDigits: number, # Optional.
+        ///           minDigitsOrLetters: number, # Optional.
+        ///           minDots: number, # Optional.
+        ///           minHex: number, # Optional.
+        ///           minLetters: number, # Optional.
+        ///           minUnderscores: number, # Optional.
+        ///           options: number, # Optional.
+        ///           regexStr: string, # Optional.
+        ///         }, # Optional.
+        ///         replaceWith: string, # Optional.
+        ///         version: number, # Optional.
         ///       }
-        ///     ],
+        ///     ], # Optional.
         ///     regexReplacers: [
         ///       {
-        ///         condition: string,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         disabled: boolean,
-        ///         disableRecursiveReplacerApplication: boolean,
-        ///         doNotReplaceRegex: FastRegex,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
-        ///         name: string,
-        ///         regex: FastRegex,
-        ///         replaceWith: string
+        ///         condition: string, # Optional.
+        ///         createdBy: string, # Optional.
+        ///         description: string, # Optional.
+        ///         disabled: boolean, # Required.
+        ///         disableRecursiveReplacerApplication: boolean, # Optional.
+        ///         doNotReplaceRegex: FastRegex, # Optional.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
+        ///         name: string, # Required.
+        ///         regex: FastRegex, # Optional.
+        ///         replaceWith: string, # Optional.
         ///       }
-        ///     ],
-        ///     rejectedPatterns: [Filter],
+        ///     ], # Optional.
+        ///     rejectedPatterns: [Filter], # Optional.
         ///     scopedRules: [
         ///       {
-        ///         bindingUrl: string,
+        ///         bindingUrl: string, # Required.
         ///         rules: [
         ///           {
-        ///             displayName: string,
-        ///             isResourceSet: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
-        ///             qualifiedName: string
+        ///             displayName: string, # Optional.
+        ///             isResourceSet: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
+        ///             qualifiedName: string, # Required.
         ///           }
-        ///         ],
-        ///         storeType: string
+        ///         ], # Optional.
+        ///         storeType: string, # Required.
         ///       }
-        ///     ],
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     ], # Optional.
+        ///     version: number, # Optional.
+        ///   }, # Optional. The configuration rules for path pattern extraction.
         /// }
         /// </code>
         /// 
@@ -773,27 +1403,20 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteResourceSetRuleAsync.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
-        /// </remarks>
+        /// Response response = await client.DeleteResourceSetRuleAsync();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteResourceSetRuleAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
@@ -811,27 +1434,20 @@ namespace Azure.Analytics.Purview.Account
         }
 
         /// <summary> Deletes a ResourceSetRuleConfig resource. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteResourceSetRule.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
-        /// </remarks>
+        /// Response response = client.DeleteResourceSetRule();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response DeleteResourceSetRule(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.DeleteResourceSetRule");
@@ -850,7 +1466,7 @@ namespace Azure.Analytics.Purview.Account
 
         internal HttpMessage CreateGetResourceSetRuleRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -859,13 +1475,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -876,13 +1491,12 @@ namespace Azure.Analytics.Purview.Account
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteResourceSetRuleRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -891,36 +1505,12 @@ namespace Azure.Analytics.Purview.Account
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200204.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200204;
+        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
     }
 }

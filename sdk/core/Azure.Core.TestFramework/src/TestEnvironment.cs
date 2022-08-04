@@ -213,7 +213,7 @@ namespace Azure.Core.TestFramework
                         GetVariable("CLIENT_SECRET"),
                         new ClientSecretCredentialOptions()
                         {
-                             AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST"))
+                             AuthorityHost = new Uri(AuthorityHostUrl)
                         }
                     );
                 }
@@ -629,6 +629,22 @@ namespace Azure.Core.TestFramework
                 bool.TryParse(switchString, out bool disableAutoRecording);
 
                 return disableAutoRecording || GlobalIsRunningInCI;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether to enable the test framework to proxy traffic through fiddler.
+        /// </summary>
+        internal static bool EnableFiddler
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["EnableFiddler"] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_FIDDLER");
+
+                bool.TryParse(switchString, out bool enableFiddler);
+
+                return enableFiddler;
             }
         }
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VirtualHub route table. </summary>
-    public partial class VirtualHubRouteTable
+    internal partial class VirtualHubRouteTable
     {
         /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
         public VirtualHubRouteTable()

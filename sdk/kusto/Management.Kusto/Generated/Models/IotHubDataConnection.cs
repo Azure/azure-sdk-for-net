@@ -60,10 +60,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'APACHEAVRO', 'W3CLOGFILE'</param>
         /// <param name="eventSystemProperties">System properties of the iot
         /// hub</param>
+        /// <param name="databaseRouting">Indication for database routing
+        /// information from the data connection, by default only database
+        /// routing information is allowed. Possible values include: 'Single',
+        /// 'Multi'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
-        public IotHubDataConnection(string iotHubResourceId, string consumerGroup, string sharedAccessPolicyName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string provisioningState = default(string))
+        public IotHubDataConnection(string iotHubResourceId, string consumerGroup, string sharedAccessPolicyName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string databaseRouting = default(string), string provisioningState = default(string))
             : base(id, name, type, location)
         {
             IotHubResourceId = iotHubResourceId;
@@ -73,6 +77,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             DataFormat = dataFormat;
             EventSystemProperties = eventSystemProperties;
             SharedAccessPolicyName = sharedAccessPolicyName;
+            DatabaseRouting = databaseRouting;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -130,6 +135,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedAccessPolicyName")]
         public string SharedAccessPolicyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets indication for database routing information from the
+        /// data connection, by default only database routing information is
+        /// allowed. Possible values include: 'Single', 'Multi'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseRouting")]
+        public string DatabaseRouting { get; set; }
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values

@@ -35,11 +35,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">ProviderName of KeyStoreProvider.</param>
         /// <param name="value">Reference / link to the
         /// KeyEncryptionKey.</param>
-        public KeyWrapMetadata(string name = default(string), string type = default(string), string value = default(string))
+        /// <param name="algorithm">Algorithm used in wrapping and unwrapping
+        /// of the data encryption key.</param>
+        public KeyWrapMetadata(string name = default(string), string type = default(string), string value = default(string), string algorithm = default(string))
         {
             Name = name;
             Type = type;
             Value = value;
+            Algorithm = algorithm;
             CustomInit();
         }
 
@@ -66,6 +69,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets algorithm used in wrapping and unwrapping of the data
+        /// encryption key.
+        /// </summary>
+        [JsonProperty(PropertyName = "algorithm")]
+        public string Algorithm { get; set; }
 
     }
 }

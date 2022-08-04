@@ -34,7 +34,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Instance view statuses. </summary>
-        public InstanceViewStatusesSummary RoleInstance { get; }
+        internal InstanceViewStatusesSummary RoleInstance { get; }
+        /// <summary> The summary. </summary>
+        public IReadOnlyList<StatusCodeCount> RoleInstanceStatusesSummary
+        {
+            get => RoleInstance?.StatusesSummary;
+        }
+
         /// <summary> The version of the SDK that was used to generate the package for the cloud service. </summary>
         public string SdkVersion { get; }
         /// <summary> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as &apos;DeploymentId&apos; for querying details. </summary>

@@ -13,7 +13,10 @@ namespace Azure.Communication.NetworkTraversal.Tests
     public class CommunicationRelayClientLiveTestBase : RecordedTestBase<CommunicationRelayClientTestEnvironment>
     {
         public CommunicationRelayClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new CommunicationRelayClientRecordedTestSanitizer();
+        {
+            JsonPathSanitizers.Add("$..credential");
+            SanitizedHeaders.Add("x-ms-content-sha256");
+        }
 
         /// <summary>
         /// Creates a <see cref="CommunicationRelayClient" /> with the connectionstring via environment

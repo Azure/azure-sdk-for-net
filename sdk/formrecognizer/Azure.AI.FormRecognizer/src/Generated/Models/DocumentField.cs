@@ -39,11 +39,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="valueArray"> Array of field values. </param>
         /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
+        /// <param name="valueAddress"> Address value. </param>
         /// <param name="content"> Field content. </param>
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        internal DocumentField(DocumentFieldType valueType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, int? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
+        internal DocumentField(DocumentFieldType valueType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueNumber, int? valueInteger, V3SelectionMarkState? valueSelectionMarkPrivate, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueArray, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue? valueCurrency, AddressValue valueAddress, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence)
         {
             ValueType = valueType;
             ValueString = valueString;
@@ -58,6 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ValueArray = valueArray;
             ValueObject = valueObject;
             ValueCurrency = valueCurrency;
+            ValueAddress = valueAddress;
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;

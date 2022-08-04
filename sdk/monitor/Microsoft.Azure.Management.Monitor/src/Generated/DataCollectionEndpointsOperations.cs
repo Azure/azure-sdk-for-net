@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Monitor
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2021-09-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Monitor
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2021-09-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionEndpointName");
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2021-09-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 body.Validate();
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2021-09-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -937,7 +937,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionEndpointName");
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2021-09-01-preview";
             ResourceForUpdate body = default(ResourceForUpdate);
             if (tags != null)
             {
@@ -1154,7 +1154,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataCollectionEndpointName");
             }
-            string apiVersion = "2021-04-01";
+            string apiVersion = "2021-09-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

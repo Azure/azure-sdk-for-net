@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Log Definition of a single resource metric. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="displayName"></param>
         /// <param name="blobDuration"></param>
         /// <param name="logFilterPattern"></param>
-        internal LogSpecification(string name, string displayName, string blobDuration, string logFilterPattern)
+        internal LogSpecification(string name, string displayName, TimeSpan? blobDuration, string logFilterPattern)
         {
             Name = name;
             DisplayName = displayName;
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the display name. </summary>
         public string DisplayName { get; }
         /// <summary> Gets the blob duration. </summary>
-        public string BlobDuration { get; }
+        public TimeSpan? BlobDuration { get; }
         /// <summary> Gets the log filter pattern. </summary>
         public string LogFilterPattern { get; }
     }

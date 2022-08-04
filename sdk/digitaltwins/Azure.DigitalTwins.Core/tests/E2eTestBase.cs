@@ -22,10 +22,12 @@ namespace Azure.DigitalTwins.Core.Tests
         // Based on testing, the max length of models can be 27 only and works well for other resources as well. This can be updated when required.
         protected static readonly int MaxIdLength = 27;
 
+        internal const string FAKE_HOST = "fakeHost.api.wus2.digitaltwins.azure.net";
+
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
         {
-            Sanitizer = new TestUrlSanitizer();
+            ReplacementHost = FAKE_HOST;
         }
 
         [SetUp]
@@ -115,7 +117,7 @@ namespace Azure.DigitalTwins.Core.Tests
         /// <param name="delayDuration">Delay duration.</param>
         protected async Task WaitIfLiveAsync(TimeSpan delayDuration)
         {
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode == RecordedTestMode.Live || TestEnvironment.Mode == RecordedTestMode.Record)
             {
                 await Task.Delay(delayDuration);
             }

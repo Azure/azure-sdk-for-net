@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="networkRuleBypassOptions">Whether to allow trusted
         /// Azure services to access a network restricted registry. Possible
         /// values include: 'AzureServices', 'None'</param>
-        public RegistryUpdateParameters(IdentityProperties identity = default(IdentityProperties), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), string publicNetworkAccess = default(string), string networkRuleBypassOptions = default(string))
+        /// <param name="anonymousPullEnabled">Enables registry-wide pull from
+        /// unauthenticated clients.</param>
+        public RegistryUpdateParameters(IdentityProperties identity = default(IdentityProperties), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?), string publicNetworkAccess = default(string), string networkRuleBypassOptions = default(string), bool? anonymousPullEnabled = default(bool?))
         {
             Identity = identity;
             Tags = tags;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             DataEndpointEnabled = dataEndpointEnabled;
             PublicNetworkAccess = publicNetworkAccess;
             NetworkRuleBypassOptions = networkRuleBypassOptions;
+            AnonymousPullEnabled = anonymousPullEnabled;
             CustomInit();
         }
 
@@ -139,6 +142,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkRuleBypassOptions")]
         public string NetworkRuleBypassOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables registry-wide pull from unauthenticated
+        /// clients.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.anonymousPullEnabled")]
+        public bool? AnonymousPullEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

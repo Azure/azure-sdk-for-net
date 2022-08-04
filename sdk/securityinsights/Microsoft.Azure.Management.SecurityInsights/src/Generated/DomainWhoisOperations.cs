@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// DomainWhoisOperations operations.
     /// </summary>
-    internal partial class DomainWhoisOperations : IServiceOperations<SecurityInsightsClient>, IDomainWhoisOperations
+    internal partial class DomainWhoisOperations : IServiceOperations<SecurityInsights>, IDomainWhoisOperations
     {
         /// <summary>
         /// Initializes a new instance of the DomainWhoisOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DomainWhoisOperations(SecurityInsightsClient client)
+        internal DomainWhoisOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Get whois information for a single domain name

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RoleInstanceNetworkProfile
+    internal partial class RoleInstanceNetworkProfile
     {
         internal static RoleInstanceNetworkProfile DeserializeRoleInstanceNetworkProfile(JsonElement element)
         {

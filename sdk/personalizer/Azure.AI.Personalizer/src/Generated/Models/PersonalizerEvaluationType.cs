@@ -15,7 +15,7 @@ namespace Azure.AI.Personalizer
     {
         private readonly string _value;
 
-        /// <summary> Determines if two <see cref="PersonalizerEvaluationType"/> values are the same. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersonalizerEvaluationType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersonalizerEvaluationType(string value)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -13,42 +14,43 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the ContinuousWebJob data model. </summary>
-    public partial class ContinuousWebJobData : ProxyOnlyResource
+    public partial class ContinuousWebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of ContinuousWebJobData. </summary>
         public ContinuousWebJobData()
         {
-            Settings = new ChangeTrackingDictionary<string, object>();
+            Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ContinuousWebJobData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Job status. </param>
         /// <param name="detailedStatus"> Detailed status. </param>
-        /// <param name="logUrl"> Log URL. </param>
+        /// <param name="logUri"> Log URL. </param>
         /// <param name="runCommand"> Run command. </param>
-        /// <param name="url"> Job URL. </param>
-        /// <param name="extraInfoUrl"> Extra Info URL. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="extraInfoUri"> Extra Info URL. </param>
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
-        /// <param name="usingSdk"> Using SDK?. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, ContinuousWebJobStatus? status, string detailedStatus, string logUrl, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, type, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ContinuousWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContinuousWebJobStatus? status, string detailedStatus, Uri logUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             Status = status;
             DetailedStatus = detailedStatus;
-            LogUrl = logUrl;
+            LogUri = logUri;
             RunCommand = runCommand;
-            Url = url;
-            ExtraInfoUrl = extraInfoUrl;
+            Uri = uri;
+            ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
-            UsingSdk = usingSdk;
+            IsUsingSdk = isUsingSdk;
             Settings = settings;
+            Kind = kind;
         }
 
         /// <summary> Job status. </summary>
@@ -56,20 +58,22 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Detailed status. </summary>
         public string DetailedStatus { get; set; }
         /// <summary> Log URL. </summary>
-        public string LogUrl { get; set; }
+        public Uri LogUri { get; set; }
         /// <summary> Run command. </summary>
         public string RunCommand { get; set; }
         /// <summary> Job URL. </summary>
-        public string Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Extra Info URL. </summary>
-        public string ExtraInfoUrl { get; set; }
+        public Uri ExtraInfoUri { get; set; }
         /// <summary> Job type. </summary>
         public WebJobType? WebJobType { get; set; }
         /// <summary> Error information. </summary>
         public string Error { get; set; }
         /// <summary> Using SDK?. </summary>
-        public bool? UsingSdk { get; set; }
+        public bool? IsUsingSdk { get; set; }
         /// <summary> Job settings. </summary>
-        public IDictionary<string, object> Settings { get; }
+        public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

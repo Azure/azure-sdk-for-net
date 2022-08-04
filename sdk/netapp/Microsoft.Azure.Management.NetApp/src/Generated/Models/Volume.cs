@@ -112,6 +112,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="defaultGroupQuotaInKiBs">Default group quota for
         /// volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value
         /// of 4 KiBs applies.</param>
+        /// <param name="maximumNumberOfFiles">Maximum number of files allowed.
+        /// Needs a service request in order to be changed. Only allowed to be
+        /// changed if volume quota is more than 4TiB.</param>
         /// <param name="volumeGroupName">Volume Group Name</param>
         /// <param name="capacityPoolResourceId">Pool Resource Id used in case
         /// of creating a volume through volume group</param>
@@ -122,7 +125,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// specific designation or identifier for the particular volume in a
         /// volume group for e.g. data, log</param>
         /// <param name="placementRules">Volume placement rules</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>))
+        /// <param name="enableSubvolumes">Flag indicating whether subvolume
+        /// operations are enabled on the volume. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), string networkFeatures = default(string), string networkSiblingSetId = default(string), string storageToNetworkProximity = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?), bool? coolAccess = default(bool?), int? coolnessPeriod = default(int?), string unixPermissions = default(string), int? cloneProgress = default(int?), string avsDataStore = default(string), bool? isDefaultQuotaEnabled = default(bool?), long? defaultUserQuotaInKiBs = default(long?), long? defaultGroupQuotaInKiBs = default(long?), long? maximumNumberOfFiles = default(long?), string volumeGroupName = default(string), string capacityPoolResourceId = default(string), string proximityPlacementGroup = default(string), string t2Network = default(string), string volumeSpecName = default(string), IList<PlacementKeyValuePairs> placementRules = default(IList<PlacementKeyValuePairs>), string enableSubvolumes = default(string), SystemData systemData = default(SystemData))
         {
             Location = location;
             Id = id;
@@ -164,12 +172,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
             IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
+            MaximumNumberOfFiles = maximumNumberOfFiles;
             VolumeGroupName = volumeGroupName;
             CapacityPoolResourceId = capacityPoolResourceId;
             ProximityPlacementGroup = proximityPlacementGroup;
             T2Network = t2Network;
             VolumeSpecName = volumeSpecName;
             PlacementRules = placementRules;
+            EnableSubvolumes = enableSubvolumes;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -502,6 +513,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public long? DefaultGroupQuotaInKiBs { get; set; }
 
         /// <summary>
+        /// Gets maximum number of files allowed. Needs a service request in
+        /// order to be changed. Only allowed to be changed if volume quota is
+        /// more than 4TiB.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maximumNumberOfFiles")]
+        public long? MaximumNumberOfFiles { get; private set; }
+
+        /// <summary>
         /// Gets volume Group Name
         /// </summary>
         [JsonProperty(PropertyName = "properties.volumeGroupName")]
@@ -542,6 +561,20 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.placementRules")]
         public IList<PlacementKeyValuePairs> PlacementRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag indicating whether subvolume operations are
+        /// enabled on the volume. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableSubvolumes")]
+        public string EnableSubvolumes { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

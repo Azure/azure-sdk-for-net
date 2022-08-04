@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Represents billing type. </summary>
-    public readonly partial struct BillingType : IEquatable<BillingType>
+    internal readonly partial struct BillingType : IEquatable<BillingType>
     {
         private readonly string _value;
 

@@ -23,7 +23,7 @@ To recognize form fields and other content from your custom forms from a given f
 
 ```C# Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 string modelId = "<modelId>";
-Uri formUri = <formUri>;
+Uri formUri = new Uri("<formUri>");
 var options = new RecognizeCustomFormsOptions() { IncludeFieldElements = true };
 
 RecognizeCustomFormsOperation operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, formUri, options);

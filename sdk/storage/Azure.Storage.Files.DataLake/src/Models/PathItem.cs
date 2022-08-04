@@ -51,6 +51,21 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Permissions { get; internal set; }
 
         /// <summary>
+        /// Created on.
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// Expiry-Time.
+        /// </summary>
+        public DateTimeOffset? ExpiresOn { get; internal set; }
+
+        /// <summary>
+        /// The name of the encryption scope under which the blob is encrypted.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PathItem instances.
         /// You can use DataLakeModelFactory.PathItem instead.
         /// </summary>

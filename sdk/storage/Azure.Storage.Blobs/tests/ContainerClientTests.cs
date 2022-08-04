@@ -1137,6 +1137,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task GetAccessPolicyAsync_EmptyAccessPolicy()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PublicAccessType publicAccessType = PublicAccessType.BlobContainer;
+            BlobSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new BlobSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    // Empty Access Policy
+                }
+            };
+
+            // Act
+            Response<BlobContainerInfo> response = await test.Container.SetAccessPolicyAsync(
+                accessType: publicAccessType,
+                permissions: signedIdentifiers
+            );
+
+            // Assert
+            Response<BlobContainerAccessPolicy> getPolicyResponse = await test.Container.GetAccessPolicyAsync();
+            Assert.AreEqual(1, getPolicyResponse.Value.SignedIdentifiers.Count());
+
+            BlobSignedIdentifier acl = getPolicyResponse.Value.SignedIdentifiers.First();
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.IsNull(acl.AccessPolicy);
+        }
+
+        [RecordedTest]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange

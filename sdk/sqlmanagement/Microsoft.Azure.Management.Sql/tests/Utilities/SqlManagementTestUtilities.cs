@@ -441,6 +441,14 @@ namespace Sql.Tests
             Assert.Equal(expected.EndIpAddress, actual.EndIpAddress);
         }
 
+        public static void ValidateIPv6FirewallRule(IPv6FirewallRule expected, IPv6FirewallRule actual, string name)
+        {
+            Assert.NotNull(actual.Id);
+            Assert.Equal(expected.StartIPv6Address, actual.StartIPv6Address);
+            Assert.Equal(expected.EndIPv6Address, actual.EndIPv6Address);
+        }
+
+
         public static void ValidateServerKey(ServerKey actual, string expectedName, string expectedKeyType, string expectedUri)
         {
             Assert.NotNull(actual);

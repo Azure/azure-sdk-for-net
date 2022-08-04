@@ -1,15 +1,37 @@
 # Release History
 
-## 5.1.0-beta.1 (Unreleased)
+## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Add listener details
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.1.1 (2022-06-20)
+
+### Bugs Fixed
+
+- Fixed a bug in the runtime scale controller that prevented function apps from scaling in.
+
+## 5.1.0 (2022-04-21)
+
+### Features Added
+
+- Adding support for retry policy (SupportsRetryAttribute)
+
+## 5.0.1 (2022-03-09)
+
+### Features Added
+
+- Add listener details
+
+### Bugs Fixed
+
+- Cancel function execution after partition ownership is lost.
+- Stop the processor when disposing the listener to avoid having functions execute after the host has already been disposed.
 
 ## 5.0.0 (2021-10-21)
 

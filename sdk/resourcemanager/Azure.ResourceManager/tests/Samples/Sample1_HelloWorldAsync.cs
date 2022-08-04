@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Tests.Samples
         public async Task GettingDefaultSubscription()
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_DefaultSubscription
         }
@@ -27,8 +27,9 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_Async_SpecificSubscription
             string subscriptionId = "your-subscription-id";
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetSubscriptions().GetAsync(subscriptionId);
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionCollection subscriptions = client.GetSubscriptions();
+            SubscriptionResource subscription = await subscriptions.GetAsync(subscriptionId);
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_SpecificSubscription
         }
@@ -39,8 +40,8 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_Async_SpecifyDefaultSubscription
             string defaultSubscriptionId = "your-subscription-id";
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            ArmClient client = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion
         }
@@ -49,10 +50,10 @@ namespace Azure.ResourceManager.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public void RetrieveResourceGroupCollection()
         {
-            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscription();
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             #region Snippet:Hello_World_Async_ResourceGroupCollection
-            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             #endregion Snippet:Hello_World_Async_ResourceGroupCollection
         }
     }

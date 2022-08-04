@@ -21,14 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName");
-            writer.WriteStringValue(ReferenceName);
+            writer.WriteObjectValue(ReferenceName);
             writer.WriteEndObject();
         }
 
         internal static SynapseNotebookReference DeserializeSynapseNotebookReference(JsonElement element)
         {
             NotebookReferenceType type = default;
-            string referenceName = default;
+            object referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("referenceName"))
                 {
-                    referenceName = property.Value.GetString();
+                    referenceName = property.Value.GetObject();
                     continue;
                 }
             }

@@ -25,11 +25,16 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "West US 2";
+                var location = "southcentralus";
 
-                var resourceGroupCluster = EventHubManagementHelper.ResourceGroupCluster;
+                var resourceGroupCluster = string.Empty;
+                if (string.IsNullOrWhiteSpace(resourceGroupCluster))
+                {
+                    resourceGroupCluster = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroupCluster);
+                }
 
-                var testClusterName = EventHubManagementHelper.TestClusterName;
+                var testClusterName = TestUtilities.GenerateName(EventHubManagementHelper.ClusterPrefix);
 
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
@@ -37,7 +42,24 @@ namespace EventHub.Tests.ScenarioTests
 
                 try
                 {
+                    Cluster createClusterResponse = EventHubManagementClient.Clusters.CreateOrUpdate(resourceGroupCluster, testClusterName, new Cluster() { 
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
+                        },
+                        Location = "southcentralus",
+                        Sku = new ClusterSku()
+                        {
+                            Capacity = 1
+                        }
+                    });
+
                     Cluster getClusterResponse = EventHubManagementClient.Clusters.Get(resourceGroupCluster, testClusterName);
+
+                    Assert.Equal(testClusterName.ToLower(), getClusterResponse.Name.ToLower());
+                    Assert.True(getClusterResponse.Tags.Count() == 2);
+                    Assert.Equal(1, getClusterResponse.Sku.Capacity);
 
                     var checkNameAvailable = EventHubManagementClient.Namespaces.CheckNameAvailability(namespaceName);
 
@@ -69,13 +91,38 @@ namespace EventHub.Tests.ScenarioTests
 
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
+                    getClusterResponse.Tags = new Dictionary<string, string>()
+                    {
+                        { "k1", "v1" },
+                        { "k2", "v2" },
+                        { "k3", "v3" }
+                    };
+
+                    var updatedClusterResponse = this.EventHubManagementClient.Clusters.Update(resourceGroupCluster, testClusterName, getClusterResponse);
+
+                    Assert.Equal(testClusterName.ToLower(), getClusterResponse.Name.ToLower());
+                    Assert.True(getClusterResponse.Tags.Count() == 3);
+                    Assert.Equal(1, getClusterResponse.Sku.Capacity);
+
+                    var listOfNamespaces = this.EventHubManagementClient.Clusters.ListNamespaces(resourceGroupCluster, testClusterName);
+                    Assert.Equal(1, listOfNamespaces.Value.Count);
+
+                    var listClusterByResourceGroup = this.EventHubManagementClient.Clusters.ListByResourceGroup(resourceGroupCluster);
+                    Assert.True(1 == listClusterByResourceGroup.Count());
+
+                    var listClusterBySubscription = this.EventHubManagementClient.Clusters.ListBySubscription();
+                    Assert.True(1 < listClusterBySubscription.Count());
+
                     //Delete the namesapce within the cluster
                     this.EventHubManagementClient.Namespaces.DeleteAsync(resourceGroupCluster, namespaceName, default(CancellationToken)).ConfigureAwait(false);
+
+                    Assert.Throws<ErrorResponseException>(() => this.EventHubManagementClient.Clusters.Delete(resourceGroupCluster, testClusterName));
 
                 }
                 finally
                 {
                     //Delete Resource Group
+                    this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupCluster, null, default(CancellationToken)).ConfigureAwait(false);
                 }
 
             }

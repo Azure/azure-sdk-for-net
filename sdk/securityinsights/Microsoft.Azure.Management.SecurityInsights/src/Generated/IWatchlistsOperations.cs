@@ -32,6 +32,13 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='workspaceName'>
         /// The name of the workspace.
         /// </param>
+        /// <param name='skipToken'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -47,7 +54,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Watchlist>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Watchlist>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a watchlist, without its watchlist items.
         /// </summary>
@@ -100,12 +107,17 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<WatchlistsDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a watchlist and its watchlist items (bulk
+        /// Create or update a Watchlist and its Watchlist Items (bulk
         /// creation, e.g. through text/csv content type). To create a
-        /// Watchlist and its items, we should call this endpoint with
-        /// rawContent and contentType properties.
+        /// Watchlist and its Items, we should call this endpoint with either
+        /// rawContent or a valid SAR URI and contentType properties. The
+        /// rawContent is mainly used for small watchlist (content size below
+        /// 3.8 MB). The SAS URI enables the creation of large watchlist, where
+        /// the content size can go up to 500 MB. The status of processing such
+        /// large file can be polled through the URL returned in
+        /// Azure-AsyncOperation header.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -134,7 +146,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Watchlist>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Watchlist watchlist, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Watchlist,WatchlistsCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Watchlist watchlist, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all watchlists, without watchlist items.
         /// </summary>

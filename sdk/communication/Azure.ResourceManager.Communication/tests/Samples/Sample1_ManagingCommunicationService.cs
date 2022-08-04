@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
 {
     public class Sample1_ManagingCommunicationService
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Readme_GetResourceGroupCollection
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true,rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
             #endregion
 
             this.resourceGroup = resourceGroup;
@@ -43,15 +43,14 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task CreateCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
-            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
             string communicationServiceName = "myCommunicationService";
-            CommunicationServiceData data = new CommunicationServiceData()
+            CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
             {
-                Location = "global",
                 DataLocation = "UnitedStates",
             };
-            ArmOperation<CommunicationService> communicationServiceLro = await collection.CreateOrUpdateAsync(true, communicationServiceName, data);
-            CommunicationService communicationService = communicationServiceLro.Value;
+            ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+            CommunicationServiceResource communicationService = communicationServiceLro.Value;
             #endregion Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
         }
 
@@ -60,10 +59,10 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task ListCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_ListAllCommunicationService
-            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
-            AsyncPageable<CommunicationService> list = collection.GetAllAsync();
-            await foreach (CommunicationService communicationService  in list)
+            AsyncPageable<CommunicationServiceResource> list = collection.GetAllAsync();
+            await foreach (CommunicationServiceResource communicationService  in list)
             {
                 Console.WriteLine(communicationService.Data.Name);
             }
@@ -75,10 +74,10 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task DeleteCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
-            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
-            CommunicationService communicationService = await collection.GetAsync("myCommunicationService");
-            await communicationService.DeleteAsync(true);
+            CommunicationServiceResource communicationService = await collection.GetAsync("myCommunicationService");
+            await communicationService.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
         }
     }

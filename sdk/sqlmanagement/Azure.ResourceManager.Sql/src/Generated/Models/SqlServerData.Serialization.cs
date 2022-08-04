@@ -22,16 +22,20 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
@@ -94,24 +98,24 @@ namespace Azure.ResourceManager.Sql
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> administratorLogin = default;
             Optional<string> administratorLoginPassword = default;
             Optional<string> version = default;
             Optional<string> state = default;
             Optional<string> fullyQualifiedDomainName = default;
-            Optional<IReadOnlyList<ServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
             Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
             Optional<ServerWorkspaceFeature> workspaceFeature = default;
-            Optional<string> primaryUserAssignedIdentityId = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Guid> federatedClientId = default;
-            Optional<string> keyId = default;
+            Optional<Uri> keyId = default;
             Optional<ServerExternalAdministrator> administrators = default;
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
@@ -123,7 +127,8 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -133,6 +138,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -143,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -158,11 +168,16 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -207,10 +222,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServerPrivateEndpointConnection> array = new List<ServerPrivateEndpointConnection>();
+                            List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerPrivateEndpointConnection.DeserializeServerPrivateEndpointConnection(item));
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -242,7 +257,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentityId"))
                         {
-                            primaryUserAssignedIdentityId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("federatedClientId"))
@@ -257,7 +277,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("keyId"))
                         {
-                            keyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                keyId = null;
+                                continue;
+                            }
+                            keyId = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrators"))
@@ -284,7 +309,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerData(id, name, type, systemData, tags, location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess));
+            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess));
         }
     }
 }

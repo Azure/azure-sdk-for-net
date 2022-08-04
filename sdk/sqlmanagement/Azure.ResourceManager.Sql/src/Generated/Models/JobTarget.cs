@@ -11,24 +11,24 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class JobTarget
     {
         /// <summary> Initializes a new instance of JobTarget. </summary>
-        /// <param name="type"> The target type. </param>
-        public JobTarget(JobTargetType type)
+        /// <param name="targetType"> The target type. </param>
+        public JobTarget(JobTargetType targetType)
         {
-            Type = type;
+            TargetType = targetType;
         }
 
         /// <summary> Initializes a new instance of JobTarget. </summary>
         /// <param name="membershipType"> Whether the target is included or excluded from the group. </param>
-        /// <param name="type"> The target type. </param>
+        /// <param name="targetType"> The target type. </param>
         /// <param name="serverName"> The target server name. </param>
         /// <param name="databaseName"> The target database name. </param>
         /// <param name="elasticPoolName"> The target elastic pool name. </param>
         /// <param name="shardMapName"> The target shard map. </param>
         /// <param name="refreshCredential"> The resource ID of the credential that is used during job execution to connect to the target and determine the list of databases inside the target. </param>
-        internal JobTarget(JobTargetGroupMembershipType? membershipType, JobTargetType type, string serverName, string databaseName, string elasticPoolName, string shardMapName, string refreshCredential)
+        internal JobTarget(JobTargetGroupMembershipType? membershipType, JobTargetType targetType, string serverName, string databaseName, string elasticPoolName, string shardMapName, string refreshCredential)
         {
             MembershipType = membershipType;
-            Type = type;
+            TargetType = targetType;
             ServerName = serverName;
             DatabaseName = databaseName;
             ElasticPoolName = elasticPoolName;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether the target is included or excluded from the group. </summary>
         public JobTargetGroupMembershipType? MembershipType { get; set; }
         /// <summary> The target type. </summary>
-        public JobTargetType Type { get; set; }
+        public JobTargetType TargetType { get; set; }
         /// <summary> The target server name. </summary>
         public string ServerName { get; set; }
         /// <summary> The target database name. </summary>

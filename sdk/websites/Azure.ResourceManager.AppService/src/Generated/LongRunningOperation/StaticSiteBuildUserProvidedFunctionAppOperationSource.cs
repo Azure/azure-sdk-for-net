@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class StaticSiteBuildUserProvidedFunctionAppOperationSource : IOperationSource<StaticSiteBuildUserProvidedFunctionApp>
+    internal class StaticSiteBuildUserProvidedFunctionAppOperationSource : IOperationSource<StaticSiteBuildUserProvidedFunctionAppResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        StaticSiteBuildUserProvidedFunctionApp IOperationSource<StaticSiteBuildUserProvidedFunctionApp>.CreateResult(Response response, CancellationToken cancellationToken)
+        StaticSiteBuildUserProvidedFunctionAppResource IOperationSource<StaticSiteBuildUserProvidedFunctionAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
-            return new StaticSiteBuildUserProvidedFunctionApp(_client, data);
+            var data = StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement);
+            return new StaticSiteBuildUserProvidedFunctionAppResource(_client, data);
         }
 
-        async ValueTask<StaticSiteBuildUserProvidedFunctionApp> IOperationSource<StaticSiteBuildUserProvidedFunctionApp>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StaticSiteBuildUserProvidedFunctionAppResource> IOperationSource<StaticSiteBuildUserProvidedFunctionAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
-            return new StaticSiteBuildUserProvidedFunctionApp(_client, data);
+            var data = StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement);
+            return new StaticSiteBuildUserProvidedFunctionAppResource(_client, data);
         }
     }
 }

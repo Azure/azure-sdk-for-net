@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class VirtualClusterOperationSource : IOperationSource<VirtualCluster>
+    internal class VirtualClusterOperationSource : IOperationSource<VirtualClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        VirtualCluster IOperationSource<VirtualCluster>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualClusterResource IOperationSource<VirtualClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
-            return new VirtualCluster(_client, data);
+            return new VirtualClusterResource(_client, data);
         }
 
-        async ValueTask<VirtualCluster> IOperationSource<VirtualCluster>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualClusterResource> IOperationSource<VirtualClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualClusterData.DeserializeVirtualClusterData(document.RootElement);
-            return new VirtualCluster(_client, data);
+            return new VirtualClusterResource(_client, data);
         }
     }
 }

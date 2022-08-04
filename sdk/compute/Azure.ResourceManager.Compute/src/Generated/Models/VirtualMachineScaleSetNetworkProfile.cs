@@ -32,7 +32,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A reference to a load balancer probe used to determine the health of an instance in the virtual machine scale set. The reference will be in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}&apos;. </summary>
-        public WritableSubResource HealthProbe { get; set; }
+        internal WritableSubResource HealthProbe { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier HealthProbeId
+        {
+            get => HealthProbe is null ? default : HealthProbe.Id;
+            set
+            {
+                if (HealthProbe is null)
+                    HealthProbe = new WritableSubResource();
+                HealthProbe.Id = value;
+            }
+        }
+
         /// <summary> The list of network configurations. </summary>
         public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get; }
         /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations for Virtual Machine Scale Set with orchestration mode &apos;Flexible&apos;. </summary>

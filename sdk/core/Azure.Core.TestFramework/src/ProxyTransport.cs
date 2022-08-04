@@ -19,18 +19,33 @@ namespace Azure.Core.TestFramework
         private readonly TestProxy _proxy;
         private readonly bool _isWebRequestTransport;
 
-        private static readonly RemoteCertificateValidationCallback ServerCertificateCustomValidationCallback =
-            (_, certificate, _, _) => certificate.Issuer == TestProxy.DevCertIssuer;
+        private const string DevCertIssuer = "CN=localhost";
+        private const string FiddlerCertIssuer = "CN=DO_NOT_TRUST_FiddlerRoot, O=DO_NOT_TRUST, OU=Created by http://www.fiddler2.com";
+
+        private readonly RemoteCertificateValidationCallback _serverCertificateCustomValidationCallback;
 
         private readonly Func<EntryRecordModel> _filter;
+        private readonly string _proxyHost;
 
         public ProxyTransport(TestProxy proxy, HttpPipelineTransport transport, TestRecording recording, Func<EntryRecordModel> filter)
         {
+            _recording = recording;
+            _proxy = proxy;
+            _filter = filter;
+
+            bool useFiddler = TestEnvironment.EnableFiddler;
+            string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
+            _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxy.IpAddress;
+
             if (transport is HttpClientTransport)
             {
                 var handler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == TestProxy.DevCertIssuer
+                    ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == certIssuer,
+                    // copied from HttpClientTransport - not needed for HttpWebRequestTransport case as cookies are already off by default and can't be turned on
+                    UseCookies = AppContextSwitchHelper.GetConfigValue(
+                        "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
+                        "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES")
                 };
                 _innerTransport = new HttpClientTransport(handler);
             }
@@ -39,10 +54,8 @@ namespace Azure.Core.TestFramework
             {
                 _isWebRequestTransport = true;
                 _innerTransport = transport;
+                _serverCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == certIssuer;
             }
-            _recording = recording;
-            _proxy = proxy;
-            _filter = filter;
         }
 
         public override void Process(HttpMessage message) =>
@@ -53,6 +66,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
+            if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
+            {
+                throw new InvalidOperationException(
+                    "Operations that are enclosed in a 'TestRecording.DisableRecordingScope' created with the 'DisableRecording' method should not be executed in Playback mode." +
+                    "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
+            }
             try
             {
                 RedirectToTestProxy(message);
@@ -80,7 +99,7 @@ namespace Azure.Core.TestFramework
 
                 if (_isWebRequestTransport)
                 {
-                    ServicePointManager.ServerCertificateValidationCallback -= ServerCertificateCustomValidationCallback;
+                    ServicePointManager.ServerCertificateValidationCallback -= _serverCertificateCustomValidationCallback;
                 }
             }
         }
@@ -112,6 +131,7 @@ namespace Azure.Core.TestFramework
             }
 
             var request = _innerTransport.CreateRequest();
+            _recording.HasRequests = true;
             lock (_recording.Random)
             {
                 // Make sure ClientRequestId are the same across request and response
@@ -158,13 +178,12 @@ namespace Azure.Core.TestFramework
             };
             request.Headers.SetValue("x-recording-upstream-base-uri", baseUri.ToString());
 
-            // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
-            request.Uri.Host = TestProxy.IpAddress;
+            request.Uri.Host = _proxyHost;
             request.Uri.Port = request.Uri.Scheme == "https" ? _proxy.ProxyPortHttps.Value : _proxy.ProxyPortHttp.Value;
 
             if (_isWebRequestTransport)
             {
-                ServicePointManager.ServerCertificateValidationCallback += ServerCertificateCustomValidationCallback;
+                ServicePointManager.ServerCertificateValidationCallback += _serverCertificateCustomValidationCallback;
             }
         }
     }

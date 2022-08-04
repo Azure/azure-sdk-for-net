@@ -40,36 +40,29 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>
-        /// <param name="kind"> Table cell kind. </param>
+        /// <param name="kindPrivate"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
-        /// <param name="rowSpan"> Number of rows spanned by this cell. </param>
-        /// <param name="columnSpan"> Number of columns spanned by this cell. </param>
+        /// <param name="rowSpanPrivate"> Number of rows spanned by this cell. </param>
+        /// <param name="columnSpanPrivate"> Number of columns spanned by this cell. </param>
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kind, int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentTableCell(DocumentTableCellKind? kindPrivate, int rowIndex, int columnIndex, int? rowSpanPrivate, int? columnSpanPrivate, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
         {
-            Kind = kind;
+            KindPrivate = kindPrivate;
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
-            RowSpan = rowSpan;
-            ColumnSpan = columnSpan;
+            RowSpanPrivate = rowSpanPrivate;
+            ColumnSpanPrivate = columnSpanPrivate;
             Content = content;
             BoundingRegions = boundingRegions;
             Spans = spans;
         }
-
-        /// <summary> Table cell kind. </summary>
-        public DocumentTableCellKind? Kind { get; }
         /// <summary> Row index of the cell. </summary>
         public int RowIndex { get; }
         /// <summary> Column index of the cell. </summary>
         public int ColumnIndex { get; }
-        /// <summary> Number of rows spanned by this cell. </summary>
-        public int? RowSpan { get; }
-        /// <summary> Number of columns spanned by this cell. </summary>
-        public int? ColumnSpan { get; }
         /// <summary> Concatenated content of the table cell in reading order. </summary>
         public string Content { get; }
         /// <summary> Bounding regions covering the table cell. </summary>

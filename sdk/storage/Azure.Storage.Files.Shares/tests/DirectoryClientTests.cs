@@ -12,6 +12,7 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -252,6 +253,26 @@ namespace Azure.Storage.Files.Shares.Tests
             //Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.Value.FileAttributes);
             Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
             Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task CreateAsync_ChangeTime()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            FileSmbProperties smbProperties = new FileSmbProperties
+            {
+                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+            };
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directoryClient.CreateAsync(smbProperties: smbProperties);
+
+            // Assert
+            AssertValidStorageDirectoryInfo(response);
+            Assert.AreEqual(smbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
@@ -673,6 +694,29 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(smbProperties.FileAttributes, response.Value.SmbProperties.FileAttributes);
             Assert.AreEqual(smbProperties.FileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
             Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task SetPropertiesAsync_ChangeTime()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+            FileSmbProperties smbProperties = new FileSmbProperties
+            {
+                FileChangedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+            };
+
+            await directoryClient.CreateIfNotExistsAsync();
+
+            // Act
+            Response<ShareDirectoryInfo> response = await directoryClient.SetHttpHeadersAsync(smbProperties: smbProperties);
+
+            // Assert
+            AssertValidStorageDirectoryInfo(response);
+            Assert.AreEqual(smbProperties.FileChangedOn, response.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
@@ -1120,6 +1164,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D", "%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool file")]
         [TestCase("directory", "file")]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -1559,6 +1604,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 FileAttributes = ShareExtensions.ToFileAttributes("Directory|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
+                FileChangedOn = new DateTimeOffset(2010, 8, 26, 5, 15, 21, 60, TimeSpan.Zero),
             };
 
             ShareFileRenameOptions options = new ShareFileRenameOptions
@@ -1577,6 +1623,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
             Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
             Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+            Assert.AreEqual(smbProperties.FileChangedOn, propertiesResponse.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
@@ -1610,6 +1657,118 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             await destDir.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_SasCredentialFromShare()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = test.Share.Uri;
+            string sourceDirectoryName = GetNewDirectoryName();
+            string destinationDirectoryName = GetNewDirectoryName();
+            await test.Share.CreateDirectoryAsync(sourceDirectoryName);
+
+            ShareClient sasClient = InstrumentClient(new ShareClient(uri, new AzureSasCredential(sas), GetOptions()));
+            ShareDirectoryClient sourceDirectoryClient = sasClient.GetDirectoryClient(sourceDirectoryName);
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectoryClient.RenameAsync(destinationPath: destinationDirectoryName);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_SasCredentialFromFile()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string sas = GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All, permissions: AccountSasPermissions.All).ToString();
+            Uri uri = test.Share.Uri;
+
+            string sourceFileName = GetNewFileName();
+            string sourceDirectoryName = GetNewDirectoryName();
+            string destinationDirectoryName = GetNewDirectoryName();
+            ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(uri)
+            {
+                DirectoryOrFilePath = sourceDirectoryName + "/" + sourceFileName
+            };
+
+            // Act
+            ShareFileClient sasClient = InstrumentClient(new ShareFileClient(sourceUriBuilder.ToUri(), new AzureSasCredential(sas), GetOptions()));
+            ShareDirectoryClient sourceDirectoryClient = sasClient.GetParentShareDirectoryClient();
+
+            await sourceDirectoryClient.CreateAsync();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sourceDirectoryClient.RenameAsync(destinationPath: destinationDirectoryName);
+
+            // Assert
+            await destDirectory.GetPropertiesAsync();
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task RenameAsync_DifferentSasUri()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            string sourceDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
+            ShareDirectoryClient sourceDirectoryClient = await directoryClient.CreateSubdirectoryAsync(sourceDirectoryName);
+
+            // Make unique source sas
+            SasQueryParameters sourceSas = GetNewFileServiceSasCredentialsShare(shareName);
+            ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(sourceDirectoryClient.Uri)
+            {
+                Sas = sourceSas
+            };
+
+            string destDirName = GetNewDirectoryName();
+
+            ShareClient sasShareClient = InstrumentClient(new ShareClient(sourceUriBuilder.ToUri(), GetOptions()));
+            ShareDirectoryClient sasDirectoryClient = InstrumentClient(sasShareClient.GetDirectoryClient(sourceDirectoryClient.Path));
+
+            // Make unique destination sas
+            string newPath = directoryClient.Path + "/" + destDirName;
+            string destSas = GetNewAccountSasCredentials(
+                resourceTypes: AccountSasResourceTypes.All,
+                permissions: AccountSasPermissions.All).ToString();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sasDirectoryClient.RenameAsync(destinationPath: newPath + "?" + destSas);
+
+            // Assert
+            Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task RenameAsync_SourceSasCredentialDestSasUri()
+        {
+            // Arrange
+            string sas = GetNewAccountSasCredentials().ToString();
+            await using DisposingShare test = await GetTestShareAsync();
+            string sourceDirectoryName = GetNewDirectoryName();
+            ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(sourceDirectoryName);
+
+            string destFileName = GetNewFileName();
+
+            // Act
+            var sasShareClient = InstrumentClient(new ShareClient(test.Share.Uri, new AzureSasCredential(sas), GetOptions()));
+            ShareDirectoryClient sasSourceDirectoryClient = sasShareClient.GetDirectoryClient(directoryClient.Path);
+
+            // Make unique destination sas
+            string destSas = GetNewFileServiceSasCredentialsShare(test.Share.Name).ToString();
+
+            // Act
+            ShareDirectoryClient destDirectory = await sasSourceDirectoryClient.RenameAsync(destinationPath: destFileName + "?" + destSas);
+
+            // Assert
+            Response<ShareDirectoryProperties> response = await destDirectory.GetPropertiesAsync();
         }
 
         #region GenerateSasTests

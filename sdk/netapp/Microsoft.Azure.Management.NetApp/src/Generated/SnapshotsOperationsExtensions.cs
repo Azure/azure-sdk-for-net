@@ -347,6 +347,75 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            public static void RestoreFiles(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+            {
+                operations.RestoreFilesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestoreFilesAsync(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestoreFilesWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create a snapshot
             /// </summary>
             /// <remarks>
@@ -545,6 +614,75 @@ namespace Microsoft.Azure.Management.NetApp
             public static async Task BeginDeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            public static void BeginRestoreFiles(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
+            {
+                operations.BeginRestoreFilesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a new Snapshot Restore Files request
+            /// </summary>
+            /// <remarks>
+            /// Restore the specified files from the specified snapshot to the active
+            /// filesystem
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Restore payload supplied in the body of the operation.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the NetApp account
+            /// </param>
+            /// <param name='poolName'>
+            /// The name of the capacity pool
+            /// </param>
+            /// <param name='volumeName'>
+            /// The name of the volume
+            /// </param>
+            /// <param name='snapshotName'>
+            /// The name of the snapshot
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestoreFilesAsync(this ISnapshotsOperations operations, SnapshotRestoreFiles body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestoreFilesWithHttpMessagesAsync(body, resourceGroupName, accountName, poolName, volumeName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

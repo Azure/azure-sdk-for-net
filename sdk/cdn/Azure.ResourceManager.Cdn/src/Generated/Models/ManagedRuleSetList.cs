@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
-    public partial class ManagedRuleSetList
+    internal partial class ManagedRuleSetList
     {
         /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
         public ManagedRuleSetList()
         {
-            ManagedRuleSets = new ChangeTrackingList<ManagedRuleSet>();
+            ManagedRuleSets = new ChangeTrackingList<WafPolicyManagedRuleSet>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
         /// <param name="managedRuleSets"> List of rule sets. </param>
-        internal ManagedRuleSetList(IList<ManagedRuleSet> managedRuleSets)
+        internal ManagedRuleSetList(IList<WafPolicyManagedRuleSet> managedRuleSets)
         {
             ManagedRuleSets = managedRuleSets;
         }
 
         /// <summary> List of rule sets. </summary>
-        public IList<ManagedRuleSet> ManagedRuleSets { get; }
+        public IList<WafPolicyManagedRuleSet> ManagedRuleSets { get; }
     }
 }

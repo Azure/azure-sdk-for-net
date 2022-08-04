@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("acceleratedNetwork");
                 writer.WriteBooleanValue(AcceleratedNetwork.Value);
             }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture");
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
             Optional<bool> acceleratedNetwork = default;
+            Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acceleratedNetwork"))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Compute.Models
                     acceleratedNetwork = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("architecture"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    architecture = new ArchitectureType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SupportedCapabilities(Optional.ToNullable(acceleratedNetwork));
+            return new SupportedCapabilities(Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
         }
     }
 }

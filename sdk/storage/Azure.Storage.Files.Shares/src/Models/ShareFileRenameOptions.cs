@@ -54,5 +54,11 @@ namespace Azure.Storage.Files.Shares.Models
 #pragma warning disable CA2227 // Collection properties should be read only
         public Metadata Metadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
+
+        /// <summary>
+        /// Optional content type to set on the File.
+        /// Note that this parameter does not apply for Directories.
+        /// </summary>
+        public string ContentType { get; set; }
     }
 }

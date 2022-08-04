@@ -36,8 +36,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         /// <param name="displayName">The display name of the watchlist</param>
         /// <param name="provider">The provider of the watchlist</param>
-        /// <param name="source">The source of the watchlist. Possible values
-        /// include: 'Local file', 'Remote storage'</param>
         /// <param name="itemsSearchKey">The search key is used to optimize
         /// query performance when using watchlists for joins with other data.
         /// For example, enable a column with IP addresses to be the designated
@@ -53,6 +51,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="watchlistId">The id (a Guid) of the watchlist</param>
+        /// <param name="source">The filename of the watchlist, called
+        /// 'source'</param>
+        /// <param name="sourceType">The sourceType of the watchlist. Possible
+        /// values include: 'Local file', 'Remote storage'</param>
         /// <param name="created">The time the watchlist was created</param>
         /// <param name="updated">The last time the watchlist was
         /// updated</param>
@@ -82,15 +84,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// New, InProgress or Complete. Pls note : When a Watchlist upload
         /// status is equal to InProgress, the Watchlist cannot be
         /// deleted</param>
-        /// <param name="watchlistItemsCount">The number of Watchlist Items in
-        /// the Watchlist</param>
-        public Watchlist(string displayName, string provider, string source, string itemsSearchKey, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string watchlistId = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), UserInfo createdBy = default(UserInfo), UserInfo updatedBy = default(UserInfo), string description = default(string), string watchlistType = default(string), string watchlistAlias = default(string), bool? isDeleted = default(bool?), IList<string> labels = default(IList<string>), System.TimeSpan? defaultDuration = default(System.TimeSpan?), string tenantId = default(string), int? numberOfLinesToSkip = default(int?), string rawContent = default(string), string contentType = default(string), string uploadStatus = default(string), int? watchlistItemsCount = default(int?))
+        public Watchlist(string displayName, string provider, string itemsSearchKey, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string watchlistId = default(string), string source = default(string), string sourceType = default(string), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), UserInfo createdBy = default(UserInfo), UserInfo updatedBy = default(UserInfo), string description = default(string), string watchlistType = default(string), string watchlistAlias = default(string), bool? isDeleted = default(bool?), IList<string> labels = default(IList<string>), System.TimeSpan? defaultDuration = default(System.TimeSpan?), string tenantId = default(string), int? numberOfLinesToSkip = default(int?), string rawContent = default(string), string contentType = default(string), string uploadStatus = default(string))
             : base(id, name, type, systemData, etag)
         {
             WatchlistId = watchlistId;
             DisplayName = displayName;
             Provider = provider;
             Source = source;
+            SourceType = sourceType;
             Created = created;
             Updated = updated;
             CreatedBy = createdBy;
@@ -107,7 +108,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             ItemsSearchKey = itemsSearchKey;
             ContentType = contentType;
             UploadStatus = uploadStatus;
-            WatchlistItemsCount = watchlistItemsCount;
             CustomInit();
         }
 
@@ -135,11 +135,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string Provider { get; set; }
 
         /// <summary>
-        /// Gets or sets the source of the watchlist. Possible values include:
-        /// 'Local file', 'Remote storage'
+        /// Gets or sets the filename of the watchlist, called 'source'
         /// </summary>
         [JsonProperty(PropertyName = "properties.source")]
         public string Source { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sourceType of the watchlist. Possible values
+        /// include: 'Local file', 'Remote storage'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceType")]
+        public string SourceType { get; set; }
 
         /// <summary>
         /// Gets or sets the time the watchlist was created
@@ -250,12 +256,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string UploadStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of Watchlist Items in the Watchlist
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.watchlistItemsCount")]
-        public int? WatchlistItemsCount { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -270,10 +270,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             if (Provider == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Provider");
-            }
-            if (Source == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Source");
             }
             if (ItemsSearchKey == null)
             {

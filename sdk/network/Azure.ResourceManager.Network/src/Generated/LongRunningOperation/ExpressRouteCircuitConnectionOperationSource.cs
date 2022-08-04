@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitConnectionOperationSource : IOperationSource<ExpressRouteCircuitConnection>
+    internal class ExpressRouteCircuitConnectionOperationSource : IOperationSource<ExpressRouteCircuitConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRouteCircuitConnection IOperationSource<ExpressRouteCircuitConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCircuitConnectionResource IOperationSource<ExpressRouteCircuitConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(document.RootElement);
-            return new ExpressRouteCircuitConnection(_client, data);
+            return new ExpressRouteCircuitConnectionResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteCircuitConnection> IOperationSource<ExpressRouteCircuitConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCircuitConnectionResource> IOperationSource<ExpressRouteCircuitConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(document.RootElement);
-            return new ExpressRouteCircuitConnection(_client, data);
+            return new ExpressRouteCircuitConnectionResource(_client, data);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Retention policy of a resource metric. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of MetricAvailability. </summary>
         /// <param name="timeGrain"></param>
         /// <param name="blobDuration"></param>
-        internal MetricAvailability(string timeGrain, string blobDuration)
+        internal MetricAvailability(string timeGrain, TimeSpan? blobDuration)
         {
             TimeGrain = timeGrain;
             BlobDuration = blobDuration;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the time grain. </summary>
         public string TimeGrain { get; }
         /// <summary> Gets the blob duration. </summary>
-        public string BlobDuration { get; }
+        public TimeSpan? BlobDuration { get; }
     }
 }

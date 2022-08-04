@@ -1012,6 +1012,60 @@
           "pathFilter": [
             "/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/"
           ]
+        },
+        {
+          "label": "Communication - Calling Server",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.CallingServer/"
+          ]
+        },
+        {
+          "label": "Communication - Chat",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Chat/"
+          ]
+        },
+        {
+          "label": "Communication - Common",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Common/"
+          ]
+        },
+        {
+          "label": "Communication - Identity",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Identity/"
+          ]
+        },
+        {
+          "label": "Communication - Network Traversal",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.NetworkTraversal/"
+          ]
+        },
+        {
+          "label": "Communication - Phone Numbers",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.PhoneNumbers/"
+          ]
+        },
+        {
+          "label": "Communication - Short Codes",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.ShortCodes/"
+          ]
+        },
+        {
+          "label": "Communication - SMS",
+          "pathFilter": [
+            "/sdk/communication/Azure.Communication.Sms/"
+          ]
+        },
+        {
+          "label": "Communication - Resource Manager",
+          "pathFilter": [
+            "/sdk/communication/Azure.ResourceManager.Communication/"
+          ]
         }
       ],
       "taskName": "Auto PR based on folder paths "
@@ -1409,7 +1463,7 @@
           ],
           "mentionees": [
             "ctstone",
-            "anrothMSFT"
+            "vkurpad"
           ]
         },
         {
@@ -1676,7 +1730,7 @@
             "Cosmos"
           ],
           "mentionees": [
-            "Wmengmsft",
+            "pjohari-ms",
             "MehaKaushik"
           ]
         },
@@ -1874,7 +1928,9 @@
             "johngallardo",
             "efriesner",
             "abhinav-gha",
-            "Aashish93-stack"
+            "Aashish93-stack",
+            "sjiherzig",
+            "Satya-Kolluri"
           ]
         },
         {
@@ -1892,7 +1948,8 @@
             "Event Hubs"
           ],
           "mentionees": [
-            "kasun04"
+            "kasun04",
+            "saglodha"
           ]
         },
         {
@@ -1964,9 +2021,10 @@
             "drwill-ms",
             "timtay-microsoft",
             "abhipsaMisra",
-            "azabbasi",
             "brycewang-microsoft",
-            "aandykwong-ms"
+            "andyk-ms",
+            "tmahmood-microsoft",
+            "ngastelum-ms"
           ]
         },
         {
@@ -1978,9 +2036,10 @@
             "drwill-ms",
             "timtay-microsoft",
             "abhipsaMisra",
-            "azabbasi",
             "brycewang-microsoft",
-            "aandykwong-ms"
+            "andyk-ms",
+            "tmahmood-microsoft",
+            "ngastelum-ms"
           ]
         },
         {
@@ -1992,10 +2051,11 @@
             "drwill-ms",
             "timtay-microsoft",
             "abhipsaMisra",
-            "azabbasi",
             "digimaun",
             "brycewang-microsoft",
-            "aandykwong-ms"
+            "andyk-ms",
+            "mahmood-microsoft",
+            "ngastelum-ms"
           ]
         },
         {
@@ -2495,11 +2555,9 @@
             "Search"
           ],
           "mentionees": [
-            "brjohnstmsft",
+            "arv100kri",
             "bleroy",
-            "tjacobhi",
-            "markheff",
-            "miwelsh"
+            "tjacobhi"
           ]
         },
         {
@@ -2518,7 +2576,9 @@
           ],
           "mentionees": [
             "shankarsama",
-            "DorothySun216"
+            "DorothySun216",
+            "EldertGrootenboer",
+            "saglodha"
           ]
         },
         {
@@ -2549,7 +2609,8 @@
           ],
           "mentionees": [
             "sffamily",
-            "chenkennt"
+            "chenkennt",
+            "Y-Sindo"
           ]
         },
         {

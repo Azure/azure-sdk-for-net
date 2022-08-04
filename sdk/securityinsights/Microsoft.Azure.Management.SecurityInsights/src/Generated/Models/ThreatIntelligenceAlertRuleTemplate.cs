@@ -62,9 +62,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// this template</param>
         /// <param name="status">The alert rule template status. Possible
         /// values include: 'Installed', 'Available', 'NotAvailable'</param>
-        /// <param name="tactics">The tactics of the alert rule
-        /// template</param>
-        public ThreatIntelligenceAlertRuleTemplate(string severity, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), System.DateTime? createdDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), IList<string> tactics = default(IList<string>))
+        /// <param name="tactics">The tactics of the alert rule</param>
+        /// <param name="techniques">The techniques of the alert rule</param>
+        public ThreatIntelligenceAlertRuleTemplate(string severity, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), int? alertRulesCreatedByTemplateCount = default(int?), System.DateTime? lastUpdatedDateUTC = default(System.DateTime?), System.DateTime? createdDateUTC = default(System.DateTime?), string description = default(string), string displayName = default(string), IList<AlertRuleTemplateDataSource> requiredDataConnectors = default(IList<AlertRuleTemplateDataSource>), string status = default(string), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>))
             : base(id, name, type, systemData)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
@@ -74,8 +74,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             DisplayName = displayName;
             RequiredDataConnectors = requiredDataConnectors;
             Status = status;
-            Severity = severity;
             Tactics = tactics;
+            Techniques = techniques;
+            Severity = severity;
             CustomInit();
         }
 
@@ -129,17 +130,23 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string Status { get; set; }
 
         /// <summary>
+        /// Gets or sets the tactics of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tactics")]
+        public IList<string> Tactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the techniques of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; set; }
+
+        /// <summary>
         /// Gets or sets the severity for alerts created by this alert rule.
         /// Possible values include: 'High', 'Medium', 'Low', 'Informational'
         /// </summary>
         [JsonProperty(PropertyName = "properties.severity")]
         public string Severity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tactics of the alert rule template
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tactics")]
-        public IList<string> Tactics { get; set; }
 
         /// <summary>
         /// Validate the object.

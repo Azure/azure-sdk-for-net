@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet");
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the AppServiceDomain data model. </summary>
-    public partial class AppServiceDomainData : AppServiceResource
+    public partial class AppServiceDomainData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
         /// <param name="location"> The location. </param>
@@ -22,17 +22,16 @@ namespace Azure.ResourceManager.AppService
         {
             NameServers = new ChangeTrackingList<string>();
             ManagedHostNames = new ChangeTrackingList<HostName>();
-            DomainNotRenewableReasons = new ChangeTrackingList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem>();
+            DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="contactAdmin"> Administrative contact. </param>
         /// <param name="contactBilling"> Billing contact. </param>
         /// <param name="contactRegistrant"> Registrant contact. </param>
@@ -40,11 +39,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="registrationStatus"> Domain registration status. </param>
         /// <param name="provisioningState"> Domain provisioning state. </param>
         /// <param name="nameServers"> Name servers. </param>
-        /// <param name="privacy"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="createdTime"> Domain creation timestamp. </param>
-        /// <param name="expirationTime"> Domain expiration timestamp. </param>
-        /// <param name="lastRenewedTime"> Timestamp when the domain was renewed last time. </param>
-        /// <param name="autoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appServiceHasPrivacy"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="createdOn"> Domain creation timestamp. </param>
+        /// <param name="expireOn"> Domain expiration timestamp. </param>
+        /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
+        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="readyForDnsRecordManagement">
         /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
         ///  it is hosted on name servers Azure has programmatic access to.
@@ -56,7 +55,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
-        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? privacy, DateTimeOffset? createdTime, DateTimeOffset? expirationTime, DateTimeOffset? lastRenewedTime, bool? autoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode) : base(id, name, type, systemData, tags, location, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? appServiceHasPrivacy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? readyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.AppService
             RegistrationStatus = registrationStatus;
             ProvisioningState = provisioningState;
             NameServers = nameServers;
-            Privacy = privacy;
-            CreatedTime = createdTime;
-            ExpirationTime = expirationTime;
-            LastRenewedTime = lastRenewedTime;
-            AutoRenew = autoRenew;
+            AppServiceHasPrivacy = appServiceHasPrivacy;
+            CreatedOn = createdOn;
+            ExpireOn = expireOn;
+            LastRenewedOn = lastRenewedOn;
+            IsAutoRenew = isAutoRenew;
             ReadyForDnsRecordManagement = readyForDnsRecordManagement;
             ManagedHostNames = managedHostNames;
             Consent = consent;
@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.AppService
             DnsZoneId = dnsZoneId;
             TargetDnsType = targetDnsType;
             AuthCode = authCode;
+            Kind = kind;
         }
 
         /// <summary> Administrative contact. </summary>
@@ -95,15 +96,15 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Name servers. </summary>
         public IReadOnlyList<string> NameServers { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Privacy { get; set; }
+        public bool? AppServiceHasPrivacy { get; set; }
         /// <summary> Domain creation timestamp. </summary>
-        public DateTimeOffset? CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Domain expiration timestamp. </summary>
-        public DateTimeOffset? ExpirationTime { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> Timestamp when the domain was renewed last time. </summary>
-        public DateTimeOffset? LastRenewedTime { get; }
+        public DateTimeOffset? LastRenewedOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? AutoRenew { get; set; }
+        public bool? IsAutoRenew { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and 
         ///  it is hosted on name servers Azure has programmatic access to.
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Legal agreement consent. </summary>
         public DomainPurchaseConsent Consent { get; set; }
         /// <summary> Reasons why domain is not renewable. </summary>
-        public IReadOnlyList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem> DomainNotRenewableReasons { get; }
+        public IReadOnlyList<DomainNotRenewableReason> DomainNotRenewableReasons { get; }
         /// <summary> Current DNS type. </summary>
         public DnsType? DnsType { get; set; }
         /// <summary> Azure DNS Zone to use. </summary>
@@ -123,5 +124,7 @@ namespace Azure.ResourceManager.AppService
         public DnsType? TargetDnsType { get; set; }
         /// <summary> Gets or sets the auth code. </summary>
         public string AuthCode { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

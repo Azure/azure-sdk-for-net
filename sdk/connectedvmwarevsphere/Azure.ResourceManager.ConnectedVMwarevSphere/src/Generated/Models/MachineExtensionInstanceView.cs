@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
         /// <param name="name"> The machine extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
-        internal MachineExtensionInstanceView(string name, string type, string typeHandlerVersion, MachineExtensionInstanceViewStatus status)
+        internal MachineExtensionInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status)
         {
             Name = name;
-            Type = type;
+            MachineExtensionInstanceViewType = machineExtensionInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> The machine extension name. </summary>
         public string Name { get; }
         /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
-        public string Type { get; }
+        public string MachineExtensionInstanceViewType { get; }
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; }
         /// <summary> Instance view status. </summary>

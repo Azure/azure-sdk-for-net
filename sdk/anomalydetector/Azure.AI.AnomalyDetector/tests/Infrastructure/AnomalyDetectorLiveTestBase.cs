@@ -11,7 +11,11 @@ namespace Azure.AI.AnomalyDetector.Tests
     {
         public AnomalyDetectorLiveTestBase(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new AnomalyDetectorRecordedTestSanitizer();
+            {
+                JsonPathSanitizers.Add("$..accessToken");
+                JsonPathSanitizers.Add("$..source");
+                SanitizedHeaders.Add(Constants.AuthorizationHeader);
+            };
         }
 
         /// <summary>

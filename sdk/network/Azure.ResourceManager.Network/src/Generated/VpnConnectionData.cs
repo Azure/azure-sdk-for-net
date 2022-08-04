@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -13,19 +14,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnConnection data model. </summary>
-    public partial class VpnConnectionData : Models.SubResource
+    public partial class VpnConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>
         public VpnConnectionData()
         {
-            IpsecPolicies = new ChangeTrackingList<IpsecPolicy>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
             VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="remoteVpnSite"> Id of the connected vpn site. </param>
         /// <param name="routingWeight"> Routing weight for vpn connection. </param>
@@ -42,14 +44,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="trafficSelectorPolicies"> The Traffic Selector Policies to be considered by this connection. </param>
         /// <param name="enableRateLimiting"> EnableBgp flag. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="useLocalAzureIpAddress"> Use local azure ip to initiate connection. </param>
+        /// <param name="useLocalAzureIPAddress"> Use local azure ip to initiate connection. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN connection resource. </param>
         /// <param name="vpnLinkConnections"> List of all vpn site link connections to the gateway. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal VpnConnectionData(string id, string name, string etag, WritableSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IpsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIpAddress, ProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration) : base(id)
+        internal VpnConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource remoteVpnSite, int? routingWeight, int? dpdTimeoutSeconds, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, bool? enableRateLimiting, bool? enableInternetSecurity, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<VpnSiteLinkConnectionData> vpnLinkConnections, RoutingConfiguration routingConfiguration) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
+            ETag = etag;
             RemoteVpnSite = remoteVpnSite;
             RoutingWeight = routingWeight;
             DpdTimeoutSeconds = dpdTimeoutSeconds;
@@ -61,22 +62,32 @@ namespace Azure.ResourceManager.Network
             SharedKey = sharedKey;
             EnableBgp = enableBgp;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
-            IpsecPolicies = ipsecPolicies;
+            IPsecPolicies = ipsecPolicies;
             TrafficSelectorPolicies = trafficSelectorPolicies;
             EnableRateLimiting = enableRateLimiting;
             EnableInternetSecurity = enableInternetSecurity;
-            UseLocalAzureIpAddress = useLocalAzureIpAddress;
+            UseLocalAzureIPAddress = useLocalAzureIPAddress;
             ProvisioningState = provisioningState;
             VpnLinkConnections = vpnLinkConnections;
             RoutingConfiguration = routingConfiguration;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Id of the connected vpn site. </summary>
-        public WritableSubResource RemoteVpnSite { get; set; }
+        internal WritableSubResource RemoteVpnSite { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier RemoteVpnSiteId
+        {
+            get => RemoteVpnSite is null ? default : RemoteVpnSite.Id;
+            set
+            {
+                if (RemoteVpnSite is null)
+                    RemoteVpnSite = new WritableSubResource();
+                RemoteVpnSite.Id = value;
+            }
+        }
+
         /// <summary> Routing weight for vpn connection. </summary>
         public int? RoutingWeight { get; set; }
         /// <summary> DPD timeout in seconds for vpn connection. </summary>
@@ -98,7 +109,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Enable policy-based traffic selectors. </summary>
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
-        public IList<IpsecPolicy> IpsecPolicies { get; }
+        public IList<IPsecPolicy> IPsecPolicies { get; }
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; }
         /// <summary> EnableBgp flag. </summary>
@@ -106,9 +117,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Enable internet security. </summary>
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> Use local azure ip to initiate connection. </summary>
-        public bool? UseLocalAzureIpAddress { get; set; }
+        public bool? UseLocalAzureIPAddress { get; set; }
         /// <summary> The provisioning state of the VPN connection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> List of all vpn site link connections to the gateway. </summary>
         public IList<VpnSiteLinkConnectionData> VpnLinkConnections { get; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>

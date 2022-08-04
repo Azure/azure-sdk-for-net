@@ -10,13 +10,12 @@ using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.EdgeOrder.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class EdgeOrderManagementClientBase : ManagementRecordedTestBase<EdgeOrderManagementTestEnvironment>
     {
         public string SubscriptionId { get; set; }
         public ArmClient ArmClient { get; private set; }
         public ResourceGroupCollection ResourceGroupsOperations { get; set; }
-        public Subscription Subscription { get; set; }
+        public SubscriptionResource Subscription { get; set; }
 
         protected EdgeOrderManagementClientBase(bool isAsync) : base(isAsync)
         {
@@ -34,26 +33,26 @@ namespace Azure.ResourceManager.EdgeOrder.Tests
             ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
 
-        public async Task<ResourceGroup> GetResourceGroupAsync(string name)
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
         protected async Task<AddressResourceCollection> GetAddressResourceCollectionAsync(string resourceGroupName)
         {
-            ResourceGroup rg = await GetResourceGroupAsync(resourceGroupName);
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             return rg.GetAddressResources();
         }
 
         protected async Task<OrderItemResourceCollection> GetOrderItemResourceCollectionAsync(string resourceGroupName)
         {
-            ResourceGroup rg = await GetResourceGroupAsync(resourceGroupName);
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             return rg.GetOrderItemResources();
         }
 
         protected async Task<OrderResourceCollection> GetOrderResourceCollectionAsync(string resourceGroupName)
         {
-            ResourceGroup rg = await GetResourceGroupAsync(resourceGroupName);
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             return rg.GetOrderResources();
         }
 
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests
             {
                 Preferences = new OrderItemPreferences
                 {
-                    TransportPreferences = new TransportPreferences(TransportShipmentTypes.MicrosoftManaged)
+                    TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged)
                 }
             };
         }

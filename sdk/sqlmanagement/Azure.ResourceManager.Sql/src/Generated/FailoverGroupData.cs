@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Sql
         public FailoverGroupData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PartnerServers = new ChangeTrackingList<PartnerInfo>();
+            PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
             Databases = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FailoverGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
         /// <param name="databases"> List of databases in the failover group. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerInfo> partnerServers, IList<string> databases) : base(id, name, type, systemData)
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<string> databases) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -49,19 +49,31 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
-        public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
+        internal FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
+        /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
+        public ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy
+        {
+            get => ReadOnlyEndpoint is null ? default : ReadOnlyEndpoint.FailoverPolicy;
+            set
+            {
+                if (ReadOnlyEndpoint is null)
+                    ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint();
+                ReadOnlyEndpoint.FailoverPolicy = value;
+            }
+        }
+
         /// <summary> Local replication role of the failover group instance. </summary>
         public FailoverGroupReplicationRole? ReplicationRole { get; }
         /// <summary> Replication state of the failover group instance. </summary>
         public string ReplicationState { get; }
         /// <summary> List of partner server information for the failover group. </summary>
-        public IList<PartnerInfo> PartnerServers { get; }
+        public IList<PartnerServerInfo> PartnerServers { get; }
         /// <summary> List of databases in the failover group. </summary>
         public IList<string> Databases { get; }
     }

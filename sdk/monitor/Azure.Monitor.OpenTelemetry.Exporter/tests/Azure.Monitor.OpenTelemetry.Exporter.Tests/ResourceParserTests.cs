@@ -32,20 +32,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void RoleNameAndInstanceIsAssignedOnce()
-        {
-            var resource1 = CreateTestResource(serviceName: "my-service1", serviceInstance: "my-instance1");
-            var resource2 = CreateTestResource(serviceName: "my-service2", serviceInstance: "my-instance2");
-
-            var resourceParser = new ResourceParser();
-            resourceParser.UpdateRoleNameAndInstance(resource1);
-            resourceParser.UpdateRoleNameAndInstance(resource2);
-
-            Assert.Equal("my-service1", resourceParser.RoleName);
-            Assert.Equal("my-instance1", resourceParser.RoleInstance);
-        }
-
-        [Fact]
         public void ServiceNameFromResource()
         {
             var resource = CreateTestResource(serviceName: "my-service");
@@ -74,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
 
-            Assert.StartsWith("my-namespace.unknown_service", resourceParser.RoleName);
+            Assert.StartsWith("[my-namespace]/unknown_service", resourceParser.RoleName);
             Assert.Equal(Dns.GetHostName(), resourceParser.RoleInstance);
         }
 
@@ -96,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var resourceParser = new ResourceParser();
             resourceParser.UpdateRoleNameAndInstance(resource);
 
-            Assert.Equal("my-namespace.my-service", resourceParser.RoleName);
+            Assert.Equal("[my-namespace]/my-service", resourceParser.RoleName);
             Assert.Equal("my-instance", resourceParser.RoleInstance);
         }
 

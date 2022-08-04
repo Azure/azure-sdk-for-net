@@ -81,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             });
         }
 
-        internal EventProcessorHost GetEventProcessorHost(string eventHubName, string connection, string consumerGroup)
+        internal EventProcessorHost GetEventProcessorHost(string eventHubName, string connection, string consumerGroup, bool singleDispatch)
         {
             consumerGroup ??= EventHubConsumerClient.DefaultConsumerGroupName;
 
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             if (!string.IsNullOrEmpty(connection))
             {
                 var info = ResolveConnectionInformation(connection);
-
+                var maxEventBatchSize = singleDispatch ? 1 : _options.MaxEventBatchSize;
                 if (info.FullyQualifiedEndpoint != null &&
                     info.TokenCredential != null)
                 {
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         eventHubName: eventHubName,
                         credential: info.TokenCredential,
                         options: _options.EventProcessorOptions,
-                        eventBatchMaximumCount: _options.MaxEventBatchSize,
+                        eventBatchMaximumCount: maxEventBatchSize,
                         exceptionHandler: _options.ExceptionHandler);
                 }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     connectionString: NormalizeConnectionString(info.ConnectionString, eventHubName),
                     eventHubName: eventHubName,
                     options: _options.EventProcessorOptions,
-                    eventBatchMaximumCount: _options.MaxEventBatchSize,
+                    eventBatchMaximumCount: maxEventBatchSize,
                     exceptionHandler: _options.ExceptionHandler);
             }
 

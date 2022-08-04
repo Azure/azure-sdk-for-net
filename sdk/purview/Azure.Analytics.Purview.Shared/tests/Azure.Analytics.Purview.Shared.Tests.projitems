@@ -9,6 +9,6 @@
     <Import_RootNamespace>Azure.Analytics.Purview.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)PurviewRecordedTestSanitizer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PurviewRecordedTestUtilities.cs" />
   </ItemGroup>
 </Project>

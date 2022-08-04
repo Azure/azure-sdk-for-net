@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machines scale sets network configuration&apos;s DNS settings. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfigurationDnsSettings
+    internal partial class VirtualMachineScaleSetNetworkConfigurationDnsSettings
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfigurationDnsSettings. </summary>
         public VirtualMachineScaleSetNetworkConfigurationDnsSettings()

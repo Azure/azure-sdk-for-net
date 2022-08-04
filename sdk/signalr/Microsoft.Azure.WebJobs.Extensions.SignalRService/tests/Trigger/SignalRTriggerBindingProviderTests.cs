@@ -11,6 +11,7 @@ using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using SignalRServiceExtension.Tests.Utils;
 using Xunit;
 
@@ -143,7 +144,8 @@ namespace SignalRServiceExtension.Tests
             configuration["Serverless_ExpressionBindings_HubCategory"] = "connections";
             configuration["Serverless_ExpressionBindings_HubEvent"] = "connected";
             var dispatcher = new TestTriggerDispatcher();
-            return new SignalRTriggerBindingProvider(dispatcher, new DefaultNameResolver(configuration), new ServiceManagerStore(configuration, NullLoggerFactory.Instance, null), exception);
+            return new SignalRTriggerBindingProvider(dispatcher, new DefaultNameResolver(configuration),
+                new ServiceManagerStore(configuration, NullLoggerFactory.Instance, null, Options.Create(new SignalROptions())), exception);
         }
 
         public class TestServerlessHub : ServerlessHub

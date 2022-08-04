@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class FailoverGroupOperationSource : IOperationSource<FailoverGroup>
+    internal class FailoverGroupOperationSource : IOperationSource<FailoverGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        FailoverGroup IOperationSource<FailoverGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        FailoverGroupResource IOperationSource<FailoverGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FailoverGroupData.DeserializeFailoverGroupData(document.RootElement);
-            return new FailoverGroup(_client, data);
+            return new FailoverGroupResource(_client, data);
         }
 
-        async ValueTask<FailoverGroup> IOperationSource<FailoverGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FailoverGroupResource> IOperationSource<FailoverGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FailoverGroupData.DeserializeFailoverGroupData(document.RootElement);
-            return new FailoverGroup(_client, data);
+            return new FailoverGroupResource(_client, data);
         }
     }
 }

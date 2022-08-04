@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// </summary>
     public static class TriggerStatus
     {
-        public const string Disabled = "Disabled";
         public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

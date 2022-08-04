@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class DedicatedHostOperationSource : IOperationSource<DedicatedHost>
+    internal class DedicatedHostOperationSource : IOperationSource<DedicatedHostResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        DedicatedHost IOperationSource<DedicatedHost>.CreateResult(Response response, CancellationToken cancellationToken)
+        DedicatedHostResource IOperationSource<DedicatedHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement);
-            return new DedicatedHost(_client, data);
+            return new DedicatedHostResource(_client, data);
         }
 
-        async ValueTask<DedicatedHost> IOperationSource<DedicatedHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DedicatedHostResource> IOperationSource<DedicatedHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement);
-            return new DedicatedHost(_client, data);
+            return new DedicatedHostResource(_client, data);
         }
     }
 }

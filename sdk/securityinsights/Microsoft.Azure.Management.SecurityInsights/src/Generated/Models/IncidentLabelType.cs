@@ -23,6 +23,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Label automatically created by the system
         /// </summary>
-        public const string System = "System";
+        public const string AutoAssigned = "AutoAssigned";
     }
 }

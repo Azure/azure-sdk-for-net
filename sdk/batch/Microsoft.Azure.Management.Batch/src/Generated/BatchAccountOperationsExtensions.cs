@@ -431,6 +431,92 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
+            /// Gets information about the detectors available for a given Batch account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            public static IPage<DetectorResponse> ListDetectors(this IBatchAccountOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.ListDetectorsAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about the detectors available for a given Batch account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DetectorResponse>> ListDetectorsAsync(this IBatchAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDetectorsWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about the given detector for a given Batch account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            /// <param name='detectorId'>
+            /// The name of the detector.
+            /// </param>
+            public static DetectorResponse GetDetector(this IBatchAccountOperations operations, string resourceGroupName, string accountName, string detectorId)
+            {
+                return operations.GetDetectorAsync(resourceGroupName, accountName, detectorId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about the given detector for a given Batch account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the Batch account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Batch account.
+            /// </param>
+            /// <param name='detectorId'>
+            /// The name of the detector.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DetectorResponse> GetDetectorAsync(this IBatchAccountOperations operations, string resourceGroupName, string accountName, string detectorId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDetectorWithHttpMessagesAsync(resourceGroupName, accountName, detectorId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the endpoints that a Batch Compute Node under this Batch Account may
             /// call as part of Batch service administration. If you are deploying a Pool
             /// inside of a virtual network that you specify, you must make sure your
@@ -647,6 +733,40 @@ namespace Microsoft.Azure.Management.Batch
             public static async Task<IPage<BatchAccount>> ListByResourceGroupNextAsync(this IBatchAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets information about the detectors available for a given Batch account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DetectorResponse> ListDetectorsNext(this IBatchAccountOperations operations, string nextPageLink)
+            {
+                return operations.ListDetectorsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets information about the detectors available for a given Batch account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DetectorResponse>> ListDetectorsNextAsync(this IBatchAccountOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListDetectorsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

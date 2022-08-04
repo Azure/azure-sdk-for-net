@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> The type of child resource. </summary>
     public readonly partial struct ManagementGroupChildType : IEquatable<ManagementGroupChildType>

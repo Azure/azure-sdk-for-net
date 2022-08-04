@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
-        public DatabasePrincipalAssignment(string principalId, string role, string principalType, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string tenantName = default(string), string principalName = default(string), string provisioningState = default(string))
+        /// <param name="aadObjectId">The service principal object id in AAD
+        /// (Azure active directory)</param>
+        public DatabasePrincipalAssignment(string principalId, string role, string principalType, string id = default(string), string name = default(string), string type = default(string), string tenantId = default(string), string tenantName = default(string), string principalName = default(string), string provisioningState = default(string), string aadObjectId = default(string))
             : base(id, name, type)
         {
             PrincipalId = principalId;
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             TenantName = tenantName;
             PrincipalName = principalName;
             ProvisioningState = provisioningState;
+            AadObjectId = aadObjectId;
             CustomInit();
         }
 
@@ -119,6 +122,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the service principal object id in AAD (Azure active
+        /// directory)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.aadObjectId")]
+        public string AadObjectId { get; private set; }
 
         /// <summary>
         /// Validate the object.

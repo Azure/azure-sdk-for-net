@@ -19,6 +19,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal bool ShouldReleaseSession { get; set; }
 
+        /// <inheritdoc cref="ServiceBusSessionReceiver.SessionLockedUntil"/>
+        public virtual DateTimeOffset SessionLockedUntil => _eventArgs?.SessionLockedUntil ?? _receiver.SessionLockedUntil;
+
         internal ServiceBusSessionMessageActions(ProcessSessionMessageEventArgs eventArgs) : base(eventArgs)
         {
             _eventArgs = eventArgs;
@@ -73,6 +76,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public virtual void ReleaseSession()
         {
             ShouldReleaseSession = true;
+        }
+
+        ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
+        public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
+        {
+            if (_receiver != null)
+            {
+                await _receiver.RenewSessionLockAsync(
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                await _eventArgs.RenewSessionLockAsync(
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
         }
     }
 }

@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'WorkbookTemplate', 'Playbook', 'PlaybookTemplate',
         /// 'AnalyticsRuleTemplate', 'AnalyticsRule', 'HuntingQuery',
         /// 'InvestigationQuery', 'Parser', 'Watchlist', 'WatchlistTemplate',
-        /// 'Solution'</param>
+        /// 'Solution', 'AzureFunction', 'LogicAppsCustomConnector',
+        /// 'AutomationRule'</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -78,7 +79,24 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// item</param>
         /// <param name="lastPublishDate">last publish date for the solution
         /// content item</param>
-        public MetadataModel(string parentId, string kind, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string contentId = default(string), string version = default(string), MetadataSource source = default(MetadataSource), MetadataAuthor author = default(MetadataAuthor), MetadataSupport support = default(MetadataSupport), MetadataDependencies dependencies = default(MetadataDependencies), MetadataCategories categories = default(MetadataCategories), IList<string> providers = default(IList<string>), System.DateTime? firstPublishDate = default(System.DateTime?), System.DateTime? lastPublishDate = default(System.DateTime?))
+        /// <param name="customVersion">The custom version of the content. A
+        /// optional free text</param>
+        /// <param name="contentSchemaVersion">Schema version of the content.
+        /// Can be used to distinguish between different flow based on the
+        /// schema version</param>
+        /// <param name="icon">the icon identifier. this id can later be
+        /// fetched from the solution template</param>
+        /// <param name="threatAnalysisTactics">the tactics the resource
+        /// covers</param>
+        /// <param name="threatAnalysisTechniques">the techniques the resource
+        /// covers, these have to be aligned with the tactics being
+        /// used</param>
+        /// <param name="previewImages">preview image file names. These will be
+        /// taken from the solution artifacts</param>
+        /// <param name="previewImagesDark">preview image file names. These
+        /// will be taken from the solution artifacts. used for dark theme
+        /// support</param>
+        public MetadataModel(string parentId, string kind, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string contentId = default(string), string version = default(string), MetadataSource source = default(MetadataSource), MetadataAuthor author = default(MetadataAuthor), MetadataSupport support = default(MetadataSupport), MetadataDependencies dependencies = default(MetadataDependencies), MetadataCategories categories = default(MetadataCategories), IList<string> providers = default(IList<string>), System.DateTime? firstPublishDate = default(System.DateTime?), System.DateTime? lastPublishDate = default(System.DateTime?), string customVersion = default(string), string contentSchemaVersion = default(string), string icon = default(string), IList<string> threatAnalysisTactics = default(IList<string>), IList<string> threatAnalysisTechniques = default(IList<string>), IList<string> previewImages = default(IList<string>), IList<string> previewImagesDark = default(IList<string>))
             : base(id, name, type, systemData, etag)
         {
             ContentId = contentId;
@@ -93,6 +111,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             Providers = providers;
             FirstPublishDate = firstPublishDate;
             LastPublishDate = lastPublishDate;
+            CustomVersion = customVersion;
+            ContentSchemaVersion = contentSchemaVersion;
+            Icon = icon;
+            ThreatAnalysisTactics = threatAnalysisTactics;
+            ThreatAnalysisTechniques = threatAnalysisTechniques;
+            PreviewImages = previewImages;
+            PreviewImagesDark = previewImagesDark;
             CustomInit();
         }
 
@@ -133,7 +158,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'WorkbookTemplate', 'Playbook', 'PlaybookTemplate',
         /// 'AnalyticsRuleTemplate', 'AnalyticsRule', 'HuntingQuery',
         /// 'InvestigationQuery', 'Parser', 'Watchlist', 'WatchlistTemplate',
-        /// 'Solution'
+        /// 'Solution', 'AzureFunction', 'LogicAppsCustomConnector',
+        /// 'AutomationRule'
         /// </summary>
         [JsonProperty(PropertyName = "properties.kind")]
         public string Kind { get; set; }
@@ -193,6 +219,54 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         [JsonConverter(typeof(DateJsonConverter))]
         [JsonProperty(PropertyName = "properties.lastPublishDate")]
         public System.DateTime? LastPublishDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom version of the content. A optional free
+        /// text
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customVersion")]
+        public string CustomVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets schema version of the content. Can be used to
+        /// distinguish between different flow based on the schema version
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.contentSchemaVersion")]
+        public string ContentSchemaVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the icon identifier. this id can later be fetched from
+        /// the solution template
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.icon")]
+        public string Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tactics the resource covers
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.threatAnalysisTactics")]
+        public IList<string> ThreatAnalysisTactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the techniques the resource covers, these have to be
+        /// aligned with the tactics being used
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.threatAnalysisTechniques")]
+        public IList<string> ThreatAnalysisTechniques { get; set; }
+
+        /// <summary>
+        /// Gets or sets preview image file names. These will be taken from the
+        /// solution artifacts
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.previewImages")]
+        public IList<string> PreviewImages { get; set; }
+
+        /// <summary>
+        /// Gets or sets preview image file names. These will be taken from the
+        /// solution artifacts. used for dark theme support
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.previewImagesDark")]
+        public IList<string> PreviewImagesDark { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -5,15 +5,16 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Nuget properties -->
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.3.0-beta.1</Version>
+    <Version>1.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.2</ApiCompatVersion>
+    <ApiCompatVersion>1.4.0</ApiCompatVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,44 +24,10 @@
 
   <!-- Common source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>

@@ -36,6 +36,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// rule.</param>
         /// <param name="immutableId">The immutable ID of this data collection
         /// rule. This property is READ-ONLY.</param>
+        /// <param name="dataCollectionEndpointId">The resource ID of the data
+        /// collection endpoint that this rule can be used with.</param>
+        /// <param name="metadata">Metadata about the resource</param>
+        /// <param name="streamDeclarations">Declaration of custom streams used
+        /// in this rule.</param>
         /// <param name="dataSources">The specification of data sources.
         /// This property is optional and can be omitted if the rule is meant
         /// to be used via direct calls to the provisioned endpoint.</param>
@@ -45,10 +50,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="provisioningState">The resource provisioning state.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed'</param>
-        public DataCollectionRule(string description = default(string), string immutableId = default(string), DataCollectionRuleDataSources dataSources = default(DataCollectionRuleDataSources), DataCollectionRuleDestinations destinations = default(DataCollectionRuleDestinations), IList<DataFlow> dataFlows = default(IList<DataFlow>), string provisioningState = default(string))
+        public DataCollectionRule(string description = default(string), string immutableId = default(string), string dataCollectionEndpointId = default(string), DataCollectionRuleMetadata metadata = default(DataCollectionRuleMetadata), IDictionary<string, StreamDeclaration> streamDeclarations = default(IDictionary<string, StreamDeclaration>), DataCollectionRuleDataSources dataSources = default(DataCollectionRuleDataSources), DataCollectionRuleDestinations destinations = default(DataCollectionRuleDestinations), IList<DataFlow> dataFlows = default(IList<DataFlow>), string provisioningState = default(string))
         {
             Description = description;
             ImmutableId = immutableId;
+            DataCollectionEndpointId = dataCollectionEndpointId;
+            Metadata = metadata;
+            StreamDeclarations = streamDeclarations;
             DataSources = dataSources;
             Destinations = destinations;
             DataFlows = dataFlows;
@@ -73,6 +81,25 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "immutableId")]
         public string ImmutableId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the data collection endpoint that
+        /// this rule can be used with.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataCollectionEndpointId")]
+        public string DataCollectionEndpointId { get; set; }
+
+        /// <summary>
+        /// Gets metadata about the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "metadata")]
+        public DataCollectionRuleMetadata Metadata { get; private set; }
+
+        /// <summary>
+        /// Gets or sets declaration of custom streams used in this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "streamDeclarations")]
+        public IDictionary<string, StreamDeclaration> StreamDeclarations { get; set; }
 
         /// <summary>
         /// Gets or sets the specification of data sources.

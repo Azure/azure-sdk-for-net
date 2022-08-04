@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task RecognizeIdentityDocumentsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -23,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeIdentityDocumentsUri
 #if SNIPPET
-            Uri sourceUri = <sourceUri>;
+            Uri sourceUri = new Uri("<sourceUri>");
 #else
             Uri sourceUri = FormRecognizerTestEnvironment.CreateUri("license.jpg");
 #endif

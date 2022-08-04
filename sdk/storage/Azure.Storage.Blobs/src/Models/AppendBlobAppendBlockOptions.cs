@@ -27,9 +27,13 @@ namespace Azure.Storage.Blobs.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        /// hashing on uploads.
+        /// Optional <see cref="UploadTransferValidationOptions"/> for using additional
+        /// transactional validation on block appending. Transactional checksums are
+        /// discarded after use.
+        ///
+        /// AppendBlock accepts precalcualted checksums, but the method will calculate
+        /// one if not provided.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

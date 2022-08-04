@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineScaleSetExtensionOperationSource : IOperationSource<VirtualMachineScaleSetExtension>
+    internal class VirtualMachineScaleSetExtensionOperationSource : IOperationSource<VirtualMachineScaleSetExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        VirtualMachineScaleSetExtension IOperationSource<VirtualMachineScaleSetExtension>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineScaleSetExtensionResource IOperationSource<VirtualMachineScaleSetExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(document.RootElement);
-            return new VirtualMachineScaleSetExtension(_client, data);
+            return new VirtualMachineScaleSetExtensionResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineScaleSetExtension> IOperationSource<VirtualMachineScaleSetExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineScaleSetExtensionResource> IOperationSource<VirtualMachineScaleSetExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(document.RootElement);
-            return new VirtualMachineScaleSetExtension(_client, data);
+            return new VirtualMachineScaleSetExtensionResource(_client, data);
         }
     }
 }

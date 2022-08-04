@@ -71,8 +71,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public StorageTransferOptions TransferOptions { get; set; }
 
         /// <summary>
-        /// Options for hashing upload contents for greater data transit integrity protections.
+        /// Options for hashing upload contents for data transit integrity protections.
         /// </summary>
-        public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

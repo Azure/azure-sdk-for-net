@@ -103,11 +103,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
-
-        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         public virtual IServerCommunicationLinksOperations ServerCommunicationLinks { get; private set; }
@@ -131,26 +126,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerUsagesOperations.
         /// </summary>
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
-
-        /// <summary>
-        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
 
         /// <summary>
         /// Gets the IDatabaseAdvisorsOperations.
@@ -348,16 +323,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IManagedDatabaseSecurityEventsOperations ManagedDatabaseSecurityEvents { get; private set; }
 
         /// <summary>
-        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
-        /// </summary>
-        public virtual IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; private set; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseRecommendedSensitivityLabelsOperations.
-        /// </summary>
-        public virtual IManagedDatabaseRecommendedSensitivityLabelsOperations ManagedDatabaseRecommendedSensitivityLabels { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedDatabaseTablesOperations.
         /// </summary>
         public virtual IManagedDatabaseTablesOperations ManagedDatabaseTables { get; private set; }
@@ -448,11 +413,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IOperationsHealthOperations.
-        /// </summary>
-        public virtual IOperationsHealthOperations OperationsHealth { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -471,16 +431,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IRestorePointsOperations.
         /// </summary>
         public virtual IRestorePointsOperations RestorePoints { get; private set; }
-
-        /// <summary>
-        /// Gets the ISensitivityLabelsOperations.
-        /// </summary>
-        public virtual ISensitivityLabelsOperations SensitivityLabels { get; private set; }
-
-        /// <summary>
-        /// Gets the IRecommendedSensitivityLabelsOperations.
-        /// </summary>
-        public virtual IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; private set; }
 
         /// <summary>
         /// Gets the IServerAdvisorsOperations.
@@ -666,6 +616,101 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
         public virtual IServerConnectionPoliciesOperations ServerConnectionPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDistributedAvailabilityGroupsOperations.
+        /// </summary>
+        public virtual IDistributedAvailabilityGroupsOperations DistributedAvailabilityGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerTrustCertificatesOperations.
+        /// </summary>
+        public virtual IServerTrustCertificatesOperations ServerTrustCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the IIPv6FirewallRulesOperations.
+        /// </summary>
+        public virtual IIPv6FirewallRulesOperations IPv6FirewallRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IEndpointCertificatesOperations.
+        /// </summary>
+        public virtual IEndpointCertificatesOperations EndpointCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseRecommendedSensitivityLabelsOperations ManagedDatabaseRecommendedSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the ISensitivityLabelsOperations.
+        /// </summary>
+        public virtual ISensitivityLabelsOperations SensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the IRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        public virtual IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IDatabaseAdvancedThreatProtectionSettingsOperations DatabaseAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IServerAdvancedThreatProtectionSettingsOperations ServerAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedServerDnsAliasesOperations.
+        /// </summary>
+        public virtual IManagedServerDnsAliasesOperations ManagedServerDnsAliases { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceDtcsOperations.
+        /// </summary>
+        public virtual IManagedInstanceDtcsOperations ManagedInstanceDtcs { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IManagedDatabaseAdvancedThreatProtectionSettingsOperations ManagedDatabaseAdvancedThreatProtectionSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        public virtual IManagedInstanceAdvancedThreatProtectionSettingsOperations ManagedInstanceAdvancedThreatProtectionSettings { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -914,16 +959,11 @@ namespace Microsoft.Azure.Management.Sql
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
             Databases = new DatabasesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
-            ReplicationLinks = new ReplicationLinksOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
-            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
-            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
-            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
-            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
             DatabaseAdvisors = new DatabaseAdvisorsOperations(this);
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             DatabaseColumns = new DatabaseColumnsOperations(this);
@@ -963,8 +1003,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseSchemas = new ManagedDatabaseSchemasOperations(this);
             ManagedDatabaseSecurityAlertPolicies = new ManagedDatabaseSecurityAlertPoliciesOperations(this);
             ManagedDatabaseSecurityEvents = new ManagedDatabaseSecurityEventsOperations(this);
-            ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
-            ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
             ManagedDatabaseTables = new ManagedDatabaseTablesOperations(this);
             ManagedDatabaseTransparentDataEncryption = new ManagedDatabaseTransparentDataEncryptionOperations(this);
             ManagedDatabaseVulnerabilityAssessmentRuleBaselines = new ManagedDatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
@@ -983,13 +1021,10 @@ namespace Microsoft.Azure.Management.Sql
             ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies = new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(this);
             ManagedServerSecurityAlertPolicies = new ManagedServerSecurityAlertPoliciesOperations(this);
             Operations = new Operations(this);
-            OperationsHealth = new OperationsHealthOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             RecoverableManagedDatabases = new RecoverableManagedDatabasesOperations(this);
             RestorePoints = new RestorePointsOperations(this);
-            SensitivityLabels = new SensitivityLabelsOperations(this);
-            RecommendedSensitivityLabels = new RecommendedSensitivityLabelsOperations(this);
             ServerAdvisors = new ServerAdvisorsOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
@@ -1027,6 +1062,25 @@ namespace Microsoft.Azure.Management.Sql
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             RestorableDroppedManagedDatabases = new RestorableDroppedManagedDatabasesOperations(this);
             ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
+            DistributedAvailabilityGroups = new DistributedAvailabilityGroupsOperations(this);
+            ServerTrustCertificates = new ServerTrustCertificatesOperations(this);
+            IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
+            EndpointCertificates = new EndpointCertificatesOperations(this);
+            ReplicationLinks = new ReplicationLinksOperations(this);
+            ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
+            ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
+            SensitivityLabels = new SensitivityLabelsOperations(this);
+            RecommendedSensitivityLabels = new RecommendedSensitivityLabelsOperations(this);
+            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
+            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
+            DatabaseAdvancedThreatProtectionSettings = new DatabaseAdvancedThreatProtectionSettingsOperations(this);
+            ServerAdvancedThreatProtectionSettings = new ServerAdvancedThreatProtectionSettingsOperations(this);
+            ManagedServerDnsAliases = new ManagedServerDnsAliasesOperations(this);
+            ManagedInstanceDtcs = new ManagedInstanceDtcsOperations(this);
+            ManagedDatabaseAdvancedThreatProtectionSettings = new ManagedDatabaseAdvancedThreatProtectionSettingsOperations(this);
+            ManagedInstanceAdvancedThreatProtectionSettings = new ManagedInstanceAdvancedThreatProtectionSettingsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

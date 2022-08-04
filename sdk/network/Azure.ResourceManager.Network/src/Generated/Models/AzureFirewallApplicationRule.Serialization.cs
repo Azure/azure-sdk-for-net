@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups");
                 writer.WriteStartArray();
-                foreach (var item in SourceIpGroups)
+                foreach (var item in SourceIPGroups)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<AzureFirewallApplicationRuleProtocol>> protocols = default;
             Optional<IList<string>> targetFqdns = default;
             Optional<IList<string>> fqdnTags = default;
-            Optional<IList<string>> sourceIpGroups = default;
+            Optional<IList<string>> sourceIPGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
             }
-            return new AzureFirewallApplicationRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(fqdnTags), Optional.ToList(sourceIpGroups));
+            return new AzureFirewallApplicationRule(name.Value, description.Value, Optional.ToList(sourceAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups));
         }
     }
 }

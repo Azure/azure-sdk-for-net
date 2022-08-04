@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<RecommendedSensitivityLabelUpdateKind> op = default;
             Optional<string> schema = default;
             Optional<string> table = default;
@@ -66,11 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -112,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedSensitivityLabelUpdate(id, name, type, systemData, Optional.ToNullable(op), schema.Value, table.Value, column.Value);
+            return new RecommendedSensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value);
         }
     }
 }

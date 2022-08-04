@@ -27,12 +27,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> Registry login URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="url"/> is null. </exception>
         public ContainerRegistryBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url)
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetBlobRequest(string name, string digest)
@@ -352,7 +352,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateGetUploadStatusRequest(string location)
+        internal HttpMessage CreateGetUploadStatusRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -360,24 +360,24 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(location, false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Retrieve status of upload identified by uuid. The primary purpose of this endpoint is to resolve the current status of a resumable upload. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryBlobGetUploadStatusHeaders>> GetUploadStatusAsync(string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobGetUploadStatusHeaders>> GetUploadStatusAsync(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetUploadStatusRequest(location);
+            using var message = CreateGetUploadStatusRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobGetUploadStatusHeaders(message.Response);
             switch (message.Response.Status)
@@ -390,17 +390,17 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Retrieve status of upload identified by uuid. The primary purpose of this endpoint is to resolve the current status of a resumable upload. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryBlobGetUploadStatusHeaders> GetUploadStatus(string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public ResponseWithHeaders<ContainerRegistryBlobGetUploadStatusHeaders> GetUploadStatus(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetUploadStatusRequest(location);
+            using var message = CreateGetUploadStatusRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobGetUploadStatusHeaders(message.Response);
             switch (message.Response.Status)
@@ -412,7 +412,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUploadChunkRequest(string location, Stream value)
+        internal HttpMessage CreateUploadChunkRequest(string nextLink, Stream value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -420,7 +420,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(location, false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/octet-stream");
@@ -429,22 +429,22 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Upload a stream of data without completing the upload. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="value"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string location, Stream value, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders>> UploadChunkAsync(string nextLink, Stream value, CancellationToken cancellationToken = default)
         {
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadChunkRequest(location, value);
+            using var message = CreateUploadChunkRequest(nextLink, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
@@ -457,22 +457,22 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Upload a stream of data without completing the upload. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="value"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string location, Stream value, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="value"/> is null. </exception>
+        public ResponseWithHeaders<ContainerRegistryBlobUploadChunkHeaders> UploadChunk(string nextLink, Stream value, CancellationToken cancellationToken = default)
         {
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
 
-            using var message = CreateUploadChunkRequest(location, value);
+            using var message = CreateUploadChunkRequest(nextLink, value);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobUploadChunkHeaders(message.Response);
             switch (message.Response.Status)
@@ -484,7 +484,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCompleteUploadRequest(string digest, string location, Stream value)
+        internal HttpMessage CreateCompleteUploadRequest(string digest, string nextLink, Stream value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -492,7 +492,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(location, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("digest", digest, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -506,22 +506,22 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Optional raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="location"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders>> CompleteUploadAsync(string digest, string location, Stream value = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="nextLink"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders>> CompleteUploadAsync(string digest, string nextLink, Stream value = null, CancellationToken cancellationToken = default)
         {
             if (digest == null)
             {
                 throw new ArgumentNullException(nameof(digest));
             }
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateCompleteUploadRequest(digest, location, value);
+            using var message = CreateCompleteUploadRequest(digest, nextLink, value);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobCompleteUploadHeaders(message.Response);
             switch (message.Response.Status)
@@ -535,22 +535,22 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Complete the upload, providing all the data in the body, if necessary. A request without a body will just complete the upload with previously uploaded content. </summary>
         /// <param name="digest"> Digest of a BLOB. </param>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="value"> Optional raw data of blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="location"/> is null. </exception>
-        public ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> CompleteUpload(string digest, string location, Stream value = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> or <paramref name="nextLink"/> is null. </exception>
+        public ResponseWithHeaders<ContainerRegistryBlobCompleteUploadHeaders> CompleteUpload(string digest, string nextLink, Stream value = null, CancellationToken cancellationToken = default)
         {
             if (digest == null)
             {
                 throw new ArgumentNullException(nameof(digest));
             }
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateCompleteUploadRequest(digest, location, value);
+            using var message = CreateCompleteUploadRequest(digest, nextLink, value);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobCompleteUploadHeaders(message.Response);
             switch (message.Response.Status)
@@ -562,7 +562,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateCancelUploadRequest(string location)
+        internal HttpMessage CreateCancelUploadRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -570,24 +570,24 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendPath(location, false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished uploads will eventually timeout. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async Task<Response> CancelUploadAsync(string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<Response> CancelUploadAsync(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateCancelUploadRequest(location);
+            using var message = CreateCancelUploadRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -599,17 +599,17 @@ namespace Azure.Containers.ContainerRegistry
         }
 
         /// <summary> Cancel outstanding upload processes, releasing associated resources. If this is not called, the unfinished uploads will eventually timeout. </summary>
-        /// <param name="location"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
+        /// <param name="nextLink"> Link acquired from upload start or previous chunk. Note, do not include initial / (must do substring(1) ). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public Response CancelUpload(string location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public Response CancelUpload(string nextLink, CancellationToken cancellationToken = default)
         {
-            if (location == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException(nameof(location));
+                throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateCancelUploadRequest(location);
+            using var message = CreateCancelUploadRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

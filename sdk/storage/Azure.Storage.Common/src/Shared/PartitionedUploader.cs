@@ -34,7 +34,7 @@ namespace Azure.Storage
             Stream contentStream,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             string operationName,
             bool async,
             CancellationToken cancellationToken);
@@ -42,7 +42,7 @@ namespace Azure.Storage
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
@@ -94,7 +94,7 @@ namespace Azure.Storage
         /// <summary>
         /// Hashing options to use for paritioned upload calls.
         /// </summary>
-        private readonly UploadTransactionalHashingOptions _hashingOptions;
+        private readonly UploadTransferValidationOptions _validationOptions;
 
         /// <summary>
         /// The name of the calling operaiton.
@@ -104,7 +104,7 @@ namespace Azure.Storage
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
@@ -152,9 +152,9 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            _hashingOptions = hashingOptions;
-            // partitioned uploads don't support pre-calculated hashes
-            if (_hashingOptions?.PrecalculatedHash != default)
+            _validationOptions = validationOptions;
+            //partitioned uploads don't support pre-calculated hashes
+            if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
             {
                 throw Errors.PrecalculatedHashNotSupportedOnSplit();
             }
@@ -213,7 +213,7 @@ namespace Azure.Storage
                     content,
                     args,
                     progressHandler,
-                    _hashingOptions,
+                    _validationOptions,
                     _operationName,
                     async,
                     cancellationToken)
@@ -478,7 +478,7 @@ namespace Azure.Storage
                     offset,
                     args,
                     progressHandler,
-                    _hashingOptions,
+                    _validationOptions,
                     async,
                     cancellationToken)
                     .ConfigureAwait(false);

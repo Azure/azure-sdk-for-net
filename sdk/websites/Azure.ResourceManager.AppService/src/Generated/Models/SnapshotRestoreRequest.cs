@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Details about app recovery operation. </summary>
-    public partial class SnapshotRestoreRequest : ProxyOnlyResource
+    public partial class SnapshotRestoreRequest : ResourceData
     {
         /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
         public SnapshotRestoreRequest()
@@ -21,9 +21,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="snapshotTime"> Point in time in which the app restore should be done, formatted as a DateTime string. </param>
         /// <param name="recoverySource">
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
@@ -36,7 +35,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// This setting is only necessary when RecoverConfiguration is enabled.
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
-        internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string snapshotTime, SnapshotRecoverySource recoverySource, bool? overwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary) : base(id, name, type, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SnapshotRestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotTime, SnapshotRecoverySource recoverySource, bool? overwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary, string kind) : base(id, name, resourceType, systemData)
         {
             SnapshotTime = snapshotTime;
             RecoverySource = recoverySource;
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             RecoverConfiguration = recoverConfiguration;
             IgnoreConflictingHostNames = ignoreConflictingHostNames;
             UseDRSecondary = useDRSecondary;
+            Kind = kind;
         }
 
         /// <summary> Point in time in which the app restore should be done, formatted as a DateTime string. </summary>
@@ -64,5 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IgnoreConflictingHostNames { get; set; }
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
         public bool? UseDRSecondary { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

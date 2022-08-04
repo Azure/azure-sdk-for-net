@@ -35,9 +35,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="enabled">Policy is enabled if set to true.</param>
         /// <param name="rules">The storage account blob inventory policy
         /// rules. The rule is applied when it is enabled.</param>
-        public BlobInventoryPolicySchema(bool enabled, IList<BlobInventoryPolicyRule> rules)
+        /// <param name="destination">Deprecated Property from API version
+        /// 2021-04-01 onwards, the required destination container name must be
+        /// specified at the rule level 'policy.rule.destination'</param>
+        public BlobInventoryPolicySchema(bool enabled, IList<BlobInventoryPolicyRule> rules, string destination = default(string))
         {
             Enabled = enabled;
+            Destination = destination;
             Rules = rules;
             CustomInit();
         }
@@ -59,6 +63,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool Enabled { get; set; }
+
+        /// <summary>
+        /// Gets deprecated Property from API version 2021-04-01 onwards, the
+        /// required destination container name must be specified at the rule
+        /// level 'policy.rule.destination'
+        /// </summary>
+        [JsonProperty(PropertyName = "destination")]
+        public string Destination { get; private set; }
 
         /// <summary>
         /// Gets or sets the storage account blob inventory policy rules. The

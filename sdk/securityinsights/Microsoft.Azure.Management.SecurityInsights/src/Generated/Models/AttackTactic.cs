@@ -16,6 +16,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// </summary>
     public static class AttackTactic
     {
+        public const string Reconnaissance = "Reconnaissance";
+        public const string ResourceDevelopment = "ResourceDevelopment";
         public const string InitialAccess = "InitialAccess";
         public const string Execution = "Execution";
         public const string Persistence = "Persistence";
@@ -29,5 +31,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public const string CommandAndControl = "CommandAndControl";
         public const string Impact = "Impact";
         public const string PreAttack = "PreAttack";
+        public const string ImpairProcessControl = "ImpairProcessControl";
+        public const string InhibitResponseFunction = "InhibitResponseFunction";
     }
 }

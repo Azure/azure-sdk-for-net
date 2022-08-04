@@ -24,7 +24,7 @@ To recognize business cards from a URI, use the `StartRecognizeBusinessCardsFrom
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/businesscardfields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
-Uri businessCardUri = <businessCardUri>;
+Uri businessCardUri = new Uri("<businessCardUri>");
 
 RecognizeBusinessCardsOperation operation = await client.StartRecognizeBusinessCardsFromUriAsync(businessCardUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpStatusCodeValue = "httpStatusCode";
         private const string ProtocolValue = "protocol";
         private const string CacheStatusValue = "cacheStatus";
-        private const string CountryValue = "country";
+        private const string CountryOrRegionValue = "countryOrRegion";
         private const string CustomDomainValue = "customDomain";
 
         /// <summary> httpStatusCode. </summary>
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public static LogMetricsGroupBy Protocol { get; } = new LogMetricsGroupBy(ProtocolValue);
         /// <summary> cacheStatus. </summary>
         public static LogMetricsGroupBy CacheStatus { get; } = new LogMetricsGroupBy(CacheStatusValue);
-        /// <summary> country. </summary>
-        public static LogMetricsGroupBy Country { get; } = new LogMetricsGroupBy(CountryValue);
+        /// <summary> countryOrRegion. </summary>
+        public static LogMetricsGroupBy CountryOrRegion { get; } = new LogMetricsGroupBy(CountryOrRegionValue);
         /// <summary> customDomain. </summary>
         public static LogMetricsGroupBy CustomDomain { get; } = new LogMetricsGroupBy(CustomDomainValue);
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are the same. </summary>

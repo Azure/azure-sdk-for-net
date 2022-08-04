@@ -39,12 +39,18 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// configurations.</param>
         /// <param name="extensions">The list of Azure VM extension data source
         /// configurations.</param>
-        public DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters = default(IList<PerfCounterDataSource>), IList<WindowsEventLogDataSource> windowsEventLogs = default(IList<WindowsEventLogDataSource>), IList<SyslogDataSource> syslog = default(IList<SyslogDataSource>), IList<ExtensionDataSource> extensions = default(IList<ExtensionDataSource>))
+        /// <param name="logFiles">The list of Log files source
+        /// configurations.</param>
+        /// <param name="iisLogs">The list of IIS logs source
+        /// configurations.</param>
+        public DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters = default(IList<PerfCounterDataSource>), IList<WindowsEventLogDataSource> windowsEventLogs = default(IList<WindowsEventLogDataSource>), IList<SyslogDataSource> syslog = default(IList<SyslogDataSource>), IList<ExtensionDataSource> extensions = default(IList<ExtensionDataSource>), IList<LogFilesDataSource> logFiles = default(IList<LogFilesDataSource>), IList<IisLogsDataSource> iisLogs = default(IList<IisLogsDataSource>))
         {
             PerformanceCounters = performanceCounters;
             WindowsEventLogs = windowsEventLogs;
             Syslog = syslog;
             Extensions = extensions;
+            LogFiles = logFiles;
+            IisLogs = iisLogs;
             CustomInit();
         }
 
@@ -79,6 +85,18 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "extensions")]
         public IList<ExtensionDataSource> Extensions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of Log files source configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "logFiles")]
+        public IList<LogFilesDataSource> LogFiles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of IIS logs source configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "iisLogs")]
+        public IList<IisLogsDataSource> IisLogs { get; set; }
 
     }
 }

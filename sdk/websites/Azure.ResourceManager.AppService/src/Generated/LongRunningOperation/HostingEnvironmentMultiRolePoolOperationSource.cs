@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class HostingEnvironmentMultiRolePoolOperationSource : IOperationSource<HostingEnvironmentMultiRolePool>
+    internal class HostingEnvironmentMultiRolePoolOperationSource : IOperationSource<HostingEnvironmentMultiRolePoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        HostingEnvironmentMultiRolePool IOperationSource<HostingEnvironmentMultiRolePool>.CreateResult(Response response, CancellationToken cancellationToken)
+        HostingEnvironmentMultiRolePoolResource IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement);
-            return new HostingEnvironmentMultiRolePool(_client, data);
+            var data = WorkerPoolData.DeserializeWorkerPoolData(document.RootElement);
+            return new HostingEnvironmentMultiRolePoolResource(_client, data);
         }
 
-        async ValueTask<HostingEnvironmentMultiRolePool> IOperationSource<HostingEnvironmentMultiRolePool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HostingEnvironmentMultiRolePoolResource> IOperationSource<HostingEnvironmentMultiRolePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement);
-            return new HostingEnvironmentMultiRolePool(_client, data);
+            var data = WorkerPoolData.DeserializeWorkerPoolData(document.RootElement);
+            return new HostingEnvironmentMultiRolePoolResource(_client, data);
         }
     }
 }

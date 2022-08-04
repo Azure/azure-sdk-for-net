@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
-        /// <param name="dateTime"></param>
+        /// <param name="dateOn"></param>
         /// <param name="value"></param>
-        internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateTime, float? value)
+        internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value)
         {
-            DateTime = dateTime;
+            DateOn = dateOn;
             Value = value;
         }
 
-        /// <summary> Gets the date time. </summary>
-        public DateTimeOffset? DateTime { get; }
+        /// <summary> Gets the date on. </summary>
+        public DateTimeOffset? DateOn { get; }
         /// <summary> Gets the value. </summary>
         public float? Value { get; }
     }

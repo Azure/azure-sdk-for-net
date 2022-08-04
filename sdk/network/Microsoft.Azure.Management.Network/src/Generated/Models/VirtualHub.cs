@@ -76,11 +76,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="preferredRoutingGateway">The preferred gateway to
         /// route on-prem traffic. Possible values include: 'ExpressRoute',
         /// 'VpnGateway', 'None'</param>
+        /// <param name="hubRoutingPreference">The hubRoutingPreference of this
+        /// VirtualHub. Possible values include: 'ExpressRoute', 'VpnGateway',
+        /// 'ASPath'</param>
+        /// <param name="virtualRouterAutoScaleConfiguration">The VirtualHub
+        /// Router autoscale configuration.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="kind">Kind of service virtual hub. This is metadata
         /// used for the Azure portal experience for Route Server.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string preferredRoutingGateway = default(string), string etag = default(string), string kind = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string preferredRoutingGateway = default(string), string hubRoutingPreference = default(string), VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration = default(VirtualRouterAutoScaleConfiguration), string etag = default(string), string kind = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -102,6 +107,8 @@ namespace Microsoft.Azure.Management.Network.Models
             VirtualRouterIps = virtualRouterIps;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
             PreferredRoutingGateway = preferredRoutingGateway;
+            HubRoutingPreference = hubRoutingPreference;
+            VirtualRouterAutoScaleConfiguration = virtualRouterAutoScaleConfiguration;
             Etag = etag;
             Kind = kind;
             CustomInit();
@@ -233,6 +240,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PreferredRoutingGateway { get; set; }
 
         /// <summary>
+        /// Gets or sets the hubRoutingPreference of this VirtualHub. Possible
+        /// values include: 'ExpressRoute', 'VpnGateway', 'ASPath'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hubRoutingPreference")]
+        public string HubRoutingPreference { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VirtualHub Router autoscale configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualRouterAutoScaleConfiguration")]
+        public VirtualRouterAutoScaleConfiguration VirtualRouterAutoScaleConfiguration { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
@@ -261,6 +281,10 @@ namespace Microsoft.Azure.Management.Network.Models
             if (VirtualRouterAsn < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 0);
+            }
+            if (VirtualRouterAutoScaleConfiguration != null)
+            {
+                VirtualRouterAutoScaleConfiguration.Validate();
             }
         }
     }

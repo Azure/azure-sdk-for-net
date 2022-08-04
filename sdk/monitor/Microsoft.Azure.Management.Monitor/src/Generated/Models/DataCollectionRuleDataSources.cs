@@ -42,8 +42,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// configurations.</param>
         /// <param name="extensions">The list of Azure VM extension data source
         /// configurations.</param>
-        public DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters = default(IList<PerfCounterDataSource>), IList<WindowsEventLogDataSource> windowsEventLogs = default(IList<WindowsEventLogDataSource>), IList<SyslogDataSource> syslog = default(IList<SyslogDataSource>), IList<ExtensionDataSource> extensions = default(IList<ExtensionDataSource>))
-            : base(performanceCounters, windowsEventLogs, syslog, extensions)
+        /// <param name="logFiles">The list of Log files source
+        /// configurations.</param>
+        /// <param name="iisLogs">The list of IIS logs source
+        /// configurations.</param>
+        public DataCollectionRuleDataSources(IList<PerfCounterDataSource> performanceCounters = default(IList<PerfCounterDataSource>), IList<WindowsEventLogDataSource> windowsEventLogs = default(IList<WindowsEventLogDataSource>), IList<SyslogDataSource> syslog = default(IList<SyslogDataSource>), IList<ExtensionDataSource> extensions = default(IList<ExtensionDataSource>), IList<LogFilesDataSource> logFiles = default(IList<LogFilesDataSource>), IList<IisLogsDataSource> iisLogs = default(IList<IisLogsDataSource>))
+            : base(performanceCounters, windowsEventLogs, syslog, extensions, logFiles, iisLogs)
         {
             CustomInit();
         }

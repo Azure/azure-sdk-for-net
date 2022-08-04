@@ -12,52 +12,53 @@ namespace Azure.ResourceManager
 {
     public partial class ArmClient
     {
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignment along with the instance operations that can be performed on it but with no data. </summary>
+        #region PolicyAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="PolicyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
-        public virtual PolicyAssignment GetPolicyAssignment(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyAssignmentResource" /> object. </returns>
+        public virtual PolicyAssignmentResource GetPolicyAssignmentResource(ResourceIdentifier id)
         {
-            PolicyAssignment.ValidateResourceId(id);
-            return new PolicyAssignment(this, id);
+            PolicyAssignmentResource.ValidateResourceId(id);
+            return new PolicyAssignmentResource(this, id);
         }
         #endregion
 
-        #region Provider
-        /// <summary> Gets an object representing a Provider along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceProviderResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceProviderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceProviderResource.CreateResourceIdentifier" /> to create a <see cref="ResourceProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Provider" /> object. </returns>
-        public virtual Provider GetProvider(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceProviderResource" /> object. </returns>
+        public virtual ResourceProviderResource GetResourceProviderResource(ResourceIdentifier id)
         {
-            Provider.ValidateResourceId(id);
-            return new Provider(this, id);
+            ResourceProviderResource.ValidateResourceId(id);
+            return new ResourceProviderResource(this, id);
         }
         #endregion
 
-        #region GenericResource
-        /// <summary> Gets an object representing a GenericResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
-        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupResource" /> object. </returns>
+        public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
         {
-            GenericResource.ValidateResourceId(id);
-            return new GenericResource(this, id);
-        }
-        #endregion
-
-        #region ResourceGroup
-        /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
-        public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
-        {
-            ResourceGroup.ValidateResourceId(id);
-            return new ResourceGroup(this, id);
+            ResourceGroupResource.ValidateResourceId(id);
+            return new ResourceGroupResource(this, id);
         }
         #endregion
 
         #region TagResource
-        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TagResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TagResource.CreateResourceIdentifier" /> to create a <see cref="TagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TagResource" /> object. </returns>
         public virtual TagResource GetTagResource(ResourceIdentifier id)
@@ -67,135 +68,143 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region SubscriptionPolicyDefinition
-        /// <summary> Gets an object representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionPolicyDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPolicyDefinition" /> object. </returns>
-        public virtual SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionPolicyDefinitionResource" /> object. </returns>
+        public virtual SubscriptionPolicyDefinitionResource GetSubscriptionPolicyDefinitionResource(ResourceIdentifier id)
         {
-            SubscriptionPolicyDefinition.ValidateResourceId(id);
-            return new SubscriptionPolicyDefinition(this, id);
+            SubscriptionPolicyDefinitionResource.ValidateResourceId(id);
+            return new SubscriptionPolicyDefinitionResource(this, id);
         }
         #endregion
 
-        #region TenantPolicyDefinition
-        /// <summary> Gets an object representing a TenantPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicyDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantPolicyDefinition" /> object. </returns>
-        public virtual TenantPolicyDefinition GetTenantPolicyDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicyDefinitionResource" /> object. </returns>
+        public virtual TenantPolicyDefinitionResource GetTenantPolicyDefinitionResource(ResourceIdentifier id)
         {
-            TenantPolicyDefinition.ValidateResourceId(id);
-            return new TenantPolicyDefinition(this, id);
+            TenantPolicyDefinitionResource.ValidateResourceId(id);
+            return new TenantPolicyDefinitionResource(this, id);
         }
         #endregion
 
-        #region ManagementGroupPolicyDefinition
-        /// <summary> Gets an object representing a ManagementGroupPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementGroupPolicyDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupPolicyDefinition" /> object. </returns>
-        public virtual ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupPolicyDefinitionResource" /> object. </returns>
+        public virtual ManagementGroupPolicyDefinitionResource GetManagementGroupPolicyDefinitionResource(ResourceIdentifier id)
         {
-            ManagementGroupPolicyDefinition.ValidateResourceId(id);
-            return new ManagementGroupPolicyDefinition(this, id);
+            ManagementGroupPolicyDefinitionResource.ValidateResourceId(id);
+            return new ManagementGroupPolicyDefinitionResource(this, id);
         }
         #endregion
 
-        #region SubscriptionPolicySetDefinition
-        /// <summary> Gets an object representing a SubscriptionPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionPolicySetDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicySetDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicySetDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicySetDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinition" /> object. </returns>
-        public virtual SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinitionResource" /> object. </returns>
+        public virtual SubscriptionPolicySetDefinitionResource GetSubscriptionPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            SubscriptionPolicySetDefinition.ValidateResourceId(id);
-            return new SubscriptionPolicySetDefinition(this, id);
+            SubscriptionPolicySetDefinitionResource.ValidateResourceId(id);
+            return new SubscriptionPolicySetDefinitionResource(this, id);
         }
         #endregion
 
-        #region TenantPolicySetDefinition
-        /// <summary> Gets an object representing a TenantPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicySetDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantPolicySetDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicySetDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicySetDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantPolicySetDefinition" /> object. </returns>
-        public virtual TenantPolicySetDefinition GetTenantPolicySetDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicySetDefinitionResource" /> object. </returns>
+        public virtual TenantPolicySetDefinitionResource GetTenantPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            TenantPolicySetDefinition.ValidateResourceId(id);
-            return new TenantPolicySetDefinition(this, id);
+            TenantPolicySetDefinitionResource.ValidateResourceId(id);
+            return new TenantPolicySetDefinitionResource(this, id);
         }
         #endregion
 
-        #region ManagementGroupPolicySetDefinition
-        /// <summary> Gets an object representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementGroupPolicySetDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupPolicySetDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupPolicySetDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupPolicySetDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinition" /> object. </returns>
-        public virtual ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinitionResource" /> object. </returns>
+        public virtual ManagementGroupPolicySetDefinitionResource GetManagementGroupPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            ManagementGroupPolicySetDefinition.ValidateResourceId(id);
-            return new ManagementGroupPolicySetDefinition(this, id);
+            ManagementGroupPolicySetDefinitionResource.ValidateResourceId(id);
+            return new ManagementGroupPolicySetDefinitionResource(this, id);
         }
         #endregion
 
-        #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemption along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataPolicyManifestResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataPolicyManifestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataPolicyManifestResource.CreateResourceIdentifier" /> to create a <see cref="DataPolicyManifestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyExemption" /> object. </returns>
-        public virtual PolicyExemption GetPolicyExemption(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataPolicyManifestResource" /> object. </returns>
+        public virtual DataPolicyManifestResource GetDataPolicyManifestResource(ResourceIdentifier id)
         {
-            PolicyExemption.ValidateResourceId(id);
-            return new PolicyExemption(this, id);
+            DataPolicyManifestResource.ValidateResourceId(id);
+            return new DataPolicyManifestResource(this, id);
         }
         #endregion
 
-        #region DataPolicyManifest
-        /// <summary> Gets an object representing a DataPolicyManifest along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementLockResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementLockResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementLockResource.CreateResourceIdentifier" /> to create a <see cref="ManagementLockResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataPolicyManifest" /> object. </returns>
-        public virtual DataPolicyManifest GetDataPolicyManifest(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementLockResource" /> object. </returns>
+        public virtual ManagementLockResource GetManagementLockResource(ResourceIdentifier id)
         {
-            DataPolicyManifest.ValidateResourceId(id);
-            return new DataPolicyManifest(this, id);
+            ManagementLockResource.ValidateResourceId(id);
+            return new ManagementLockResource(this, id);
         }
         #endregion
 
-        #region ManagementLock
-        /// <summary> Gets an object representing a ManagementLock along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementLock" /> object. </returns>
-        public virtual ManagementLock GetManagementLock(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionResource" /> object. </returns>
+        public virtual SubscriptionResource GetSubscriptionResource(ResourceIdentifier id)
         {
-            ManagementLock.ValidateResourceId(id);
-            return new ManagementLock(this, id);
+            SubscriptionResource.ValidateResourceId(id);
+            return new SubscriptionResource(this, id);
         }
         #endregion
 
-        #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region FeatureResource
+        /// <summary>
+        /// Gets an object representing a <see cref="FeatureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FeatureResource.CreateResourceIdentifier" /> to create a <see cref="FeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
-        public virtual ResourceLink GetResourceLink(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FeatureResource" /> object. </returns>
+        public virtual FeatureResource GetFeatureResource(ResourceIdentifier id)
         {
-            ResourceLink.ValidateResourceId(id);
-            return new ResourceLink(this, id);
-        }
-        #endregion
-
-        #region Subscription
-        /// <summary> Gets an object representing a Subscription along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Subscription" /> object. </returns>
-        public virtual Subscription GetSubscription(ResourceIdentifier id)
-        {
-            Subscription.ValidateResourceId(id);
-            return new Subscription(this, id);
-        }
-        #endregion
-
-        #region Feature
-        /// <summary> Gets an object representing a Feature along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Feature" /> object. </returns>
-        public virtual Feature GetFeature(ResourceIdentifier id)
-        {
-            Feature.ValidateResourceId(id);
-            return new Feature(this, id);
+            FeatureResource.ValidateResourceId(id);
+            return new FeatureResource(this, id);
         }
         #endregion
     }

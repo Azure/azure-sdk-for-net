@@ -66,7 +66,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="managedIdentityResourceId">The resource ID of a
         /// managed identity (system or user assigned) to be used to
         /// authenticate with event hub.</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string), string managedIdentityResourceId = default(string))
+        /// <param name="managedIdentityObjectId">The object ID of the
+        /// managedIdentityResourceId</param>
+        /// <param name="databaseRouting">Indication for database routing
+        /// information from the data connection, by default only database
+        /// routing information is allowed. Possible values include: 'Single',
+        /// 'Multi'</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string), string managedIdentityResourceId = default(string), string managedIdentityObjectId = default(string), string databaseRouting = default(string))
             : base(id, name, type, location)
         {
             EventHubResourceId = eventHubResourceId;
@@ -78,6 +84,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
             Compression = compression;
             ProvisioningState = provisioningState;
             ManagedIdentityResourceId = managedIdentityResourceId;
+            ManagedIdentityObjectId = managedIdentityObjectId;
+            DatabaseRouting = databaseRouting;
             CustomInit();
         }
 
@@ -150,6 +158,20 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedIdentityResourceId")]
         public string ManagedIdentityResourceId { get; set; }
+
+        /// <summary>
+        /// Gets the object ID of the managedIdentityResourceId
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedIdentityObjectId")]
+        public string ManagedIdentityObjectId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indication for database routing information from the
+        /// data connection, by default only database routing information is
+        /// allowed. Possible values include: 'Single', 'Multi'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseRouting")]
+        public string DatabaseRouting { get; set; }
 
         /// <summary>
         /// Validate the object.

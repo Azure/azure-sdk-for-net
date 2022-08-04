@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportingScriptUris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -110,25 +110,25 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzureCliScript DeserializeAzureCliScript(JsonElement element)
         {
-            Optional<DeploymentScriptManagedIdentity> identity = default;
-            string location = default;
+            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ContainerConfiguration> containerSettings = default;
-            Optional<StorageAccountConfiguration> storageAccountSettings = default;
-            Optional<CleanupOptions> cleanupPreference = default;
+            Optional<ScriptStorageConfiguration> storageAccountSettings = default;
+            Optional<ScriptCleanupOptions> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
-            Optional<IReadOnlyDictionary<string, object>> outputs = default;
+            Optional<BinaryData> outputs = default;
             Optional<Uri> primaryScriptUri = default;
-            Optional<IList<string>> supportingScriptUris = default;
+            Optional<IList<Uri>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
-            Optional<IList<EnvironmentVariable>> environmentVariables = default;
+            Optional<IList<ScriptEnvironmentVariable>> environmentVariables = default;
             Optional<string> forceUpdateTag = default;
             TimeSpan retentionInterval = default;
             Optional<TimeSpan> timeout = default;
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = DeploymentScriptManagedIdentity.DeserializeDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -182,11 +182,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -216,7 +221,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccountSettings = StorageAccountConfiguration.DeserializeStorageAccountConfiguration(property0.Value);
+                            storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cleanupPreference"))
@@ -226,7 +231,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cleanupPreference = new CleanupOptions(property0.Value.GetString());
+                            cleanupPreference = new ScriptCleanupOptions(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -256,19 +261,14 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
-                            }
-                            outputs = dictionary;
+                            outputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("primaryScriptUri"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                primaryScriptUri = null;
                                 continue;
                             }
                             primaryScriptUri = new Uri(property0.Value.GetString());
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new Uri(item.GetString()));
                             }
                             supportingScriptUris = array;
                             continue;
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                            List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item));
+                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
                             }
                             environmentVariables = array;
                             continue;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzureCliScript(id, name, type, systemData, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
+            return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
         }
     }
 }

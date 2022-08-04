@@ -56,8 +56,7 @@ namespace NetApp.Tests.ResourceTests
 
                 // create a volume, get all and check
                 var resource = ResourceUtils.CreateVolume(netAppMgmtClient);
-                Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), resource.ExportPolicy.ToString());
-                Assert.Null(resource.Tags);
+                Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), resource.ExportPolicy.ToString());                
                 // check DP properties exist but unassigned because
                 // dataprotection volume was not created
                 Assert.Null(resource.VolumeType);
@@ -392,8 +391,7 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal("Premium", volume.ServiceLevel);
                 Assert.Equal(100 * ResourceUtils.gibibyte, volume.UsageThreshold);
                 Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), volume.ExportPolicy.ToString());
-                Assert.Null(volume.Tags);
-
+                
                 // create a volume with tags and export policy
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag2", "Value2");

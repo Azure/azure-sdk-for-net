@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests.Samples
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
             [Table("MyTable")] TableClient client)
         {
-            await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<PartitionKey>")
+            await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<RowKey>")
             {
                 ["Text"] = request.GetEncodedPathAndQuery()
             });

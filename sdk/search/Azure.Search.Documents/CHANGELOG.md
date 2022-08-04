@@ -1,14 +1,22 @@
 # Release History
 
-## 11.4.0-beta.7 (Unreleased)
+## 11.4.0-beta.9 (2022-08-08)
 
 ### Features Added
+- Added support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in `SimpleField` and `SearchableField`.
 
-### Breaking Changes
+## 11.4.0-beta.8 (2022-07-07)
 
 ### Bugs Fixed
+- Fixed issue where `SearchOptions.SessionId` property was not passed to the service ([#27549](https://github.com/Azure/azure-sdk-for-net/issues/27549))
 
 ### Other Changes
+- Added [Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/TROUBLESHOOTING.md).
+
+## 11.4.0-beta.7 (2022-03-08)
+
+### Features Added
+- Added support to create, update and delete aliases via the `SearchIndexClient`.
 
 ## 11.4.0-beta.6 (2022-02-08)
 

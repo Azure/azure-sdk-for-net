@@ -17,6 +17,13 @@ namespace Azure.Messaging.ServiceBus
     /// same AMQP connection. Disposing the <see cref="ServiceBusClient"/> will cause the AMQP
     /// connection to close.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusClient" /> is safe to cache and use for the lifetime of an
+    /// application, which is the best practice when the application is making use of Service Bus
+    /// regularly or semi-regularly.  The client is responsible for ensuring efficient network, CPU,
+    /// and memory use.  Calling <see cref="DisposeAsync" /> as the application is shutting down
+    /// will ensure that network resources and other unmanaged objects are properly cleaned up.
+    ///</remarks>
     public class ServiceBusClient : IAsyncDisposable
     {
         private readonly ServiceBusClientOptions _options;
@@ -50,9 +57,9 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
-        ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
+        ///   The name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
-        internal string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
@@ -87,16 +94,25 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Can be used for mocking.
+        /// Gets the metrics associated with this <see cref="ServiceBusClient"/> instance. The metrics returned represent a snapshot and will not be updated.
+        /// To get updated metrics, this method should be called again.
+        /// In order to use this property, <see cref="ServiceBusClientOptions.EnableTransportMetrics"/> must be set to <value>true</value>.
         /// </summary>
-        protected ServiceBusClient()
-        {
-        }
+        internal virtual ServiceBusTransportMetrics GetTransportMetrics()
+            => Connection.InnerClient.TransportMetrics?.Clone() ??
+               throw new InvalidOperationException("Transport metrics are not enabled. To enable transport metrics, set the EnableTransportMetrics property on the ServiceBusClientOptions.");
 
         /// <summary>
         /// The connection that is used for the client.
         /// </summary>
         internal ServiceBusConnection Connection { get; }
+
+        /// <summary>
+        /// Can be used for mocking.
+        /// </summary>
+        protected ServiceBusClient()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
@@ -142,7 +158,7 @@ namespace Azure.Messaging.ServiceBus
             _options = options?.Clone() ?? new ServiceBusClientOptions();
             Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
-            Identifier = DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Identifier = string.IsNullOrEmpty(_options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace) : _options.Identifier;
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
@@ -222,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             _options = options?.Clone() ?? new ServiceBusClientOptions();
-            Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
+            Identifier = string.IsNullOrEmpty(_options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace) : _options.Identifier;
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,
@@ -244,13 +260,31 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
         /// </exception>
-        public virtual ServiceBusSender CreateSender(string queueOrTopicName)
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName) => CreateSender(queueOrTopicName, new ServiceBusSenderOptions());
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
+        /// queue or topic.
+        /// </summary>
+        ///
+        /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/>
+        /// for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use when configuring
+        /// the <see cref="ServiceBusSender"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
+        /// <exception cref="ArgumentException">
+        ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
+        ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
+        /// </exception>
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
             ValidateEntityName(queueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                connection: Connection);
+                connection: Connection,
+                options: options);
         }
 
         /// <summary>
@@ -266,16 +300,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueName"/> value specified here.
         /// </exception>
-        public virtual ServiceBusReceiver CreateReceiver(string queueName)
-        {
-            ValidateEntityName(queueName);
-
-            return new ServiceBusReceiver(
-                connection: Connection,
-                entityPath: queueName,
-                isSessionEntity: false,
-                options: new ServiceBusReceiverOptions());
-        }
+        public virtual ServiceBusReceiver CreateReceiver(string queueName) => CreateReceiver(queueName, new ServiceBusReceiverOptions());
 
         /// <summary>
         /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
@@ -324,16 +349,7 @@ namespace Azure.Messaging.ServiceBus
         /// </exception>
         public virtual ServiceBusReceiver CreateReceiver(
             string topicName,
-            string subscriptionName)
-        {
-            ValidateEntityName(topicName);
-
-            return new ServiceBusReceiver(
-                connection: Connection,
-                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
-                isSessionEntity: false,
-                options: new ServiceBusReceiverOptions());
-        }
+            string subscriptionName) => CreateReceiver(topicName, subscriptionName, new ServiceBusReceiverOptions());
 
         /// <summary>
         /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for
@@ -674,6 +690,24 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 options: options ?? new ServiceBusSessionProcessorOptions());
+        }
+
+        /// <summary>
+        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
+        /// </summary>
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusRuleManager"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to create
+        /// a <see cref="ServiceBusRuleManager"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusRuleManager"/> scoped to the specified subscription and topic.</returns>
+        public virtual ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusRuleManager(
+                connection: Connection,
+                subscriptionPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
         }
 
         /// <summary>

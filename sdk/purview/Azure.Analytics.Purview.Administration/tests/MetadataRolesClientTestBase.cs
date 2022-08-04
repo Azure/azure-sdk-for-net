@@ -17,14 +17,9 @@ namespace Azure.Analytics.Purview.Administration.Tests
 {
     public class MetadataRolesClientTestBase : RecordedTestBase<PurviewCollectionTestEnvironment>
     {
-        public MetadataRolesClientTestBase(bool isAsync) : base(isAsync)
+        public MetadataRolesClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-
-        public MetadataRolesClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
         public PurviewMetadataRolesClient GetMetadataPolicyClient()
         {

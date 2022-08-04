@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/TestSchema.Employee_Unregistered:get-id?api-version=2021-10",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "180",
+        "Content-Type": "application/json; serialization=Avro",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "50ba36b11e20b7588347b10f3d8f4f4d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "type": "record",
+        "name": "Employee_Unregistered",
+        "namespace": "TestSchema",
+        "aliases": [
+          "TestSchema.EmployeeV2"
+        ],
+        "fields": [
+          {
+            "name": "Name",
+            "type": "string"
+          },
+          {
+            "name": "Age",
+            "type": "int"
+          }
+        ]
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Tue, 22 Mar 2022 06:02:52 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Transfer-Encoding": "chunked",
+        "x-ms-error-code": "ItemNotFound"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ItemNotFound",
+          "message": "Schema azsdk_net_test_group/TestSchema.Employee_Unregistered does not exist. TrackingId:6d05393d-9f3e-4cdb-ba6f-a627ac300d0a_G5, SystemTracker:jolovschemaregistry.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/TestSchema.Employee_Unregistered:get-id, Timestamp:2022-03-22T06:02:52"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "713242673",
+    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
+  }
+}

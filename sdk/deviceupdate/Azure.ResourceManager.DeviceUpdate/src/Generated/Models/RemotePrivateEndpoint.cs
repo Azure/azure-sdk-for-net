@@ -24,14 +24,20 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
         /// <param name="id"> Remote endpoint resource ID. </param>
+        /// <param name="location"> ARM location of the remote private endpoint. </param>
+        /// <param name="immutableSubscriptionId"> Original subscription ID needed by Microsoft.Network. </param>
+        /// <param name="immutableResourceId"> Original resource ID needed by Microsoft.Network. </param>
         /// <param name="vnetTrafficTag"> Virtual network traffic tag. </param>
         /// <param name="manualPrivateLinkServiceConnections"> List of private link service connections that need manual approval. </param>
         /// <param name="privateLinkServiceConnections"> List of automatically approved private link service connections. </param>
         /// <param name="privateLinkServiceProxies"> List of private link service proxies. </param>
         /// <param name="connectionDetails"> List of connection details. </param>
-        internal RemotePrivateEndpoint(string id, string vnetTrafficTag, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails)
+        internal RemotePrivateEndpoint(string id, AzureLocation? location, string immutableSubscriptionId, string immutableResourceId, string vnetTrafficTag, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails)
         {
             Id = id;
+            Location = location;
+            ImmutableSubscriptionId = immutableSubscriptionId;
+            ImmutableResourceId = immutableResourceId;
             VnetTrafficTag = vnetTrafficTag;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             PrivateLinkServiceConnections = privateLinkServiceConnections;
@@ -41,8 +47,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         /// <summary> Remote endpoint resource ID. </summary>
         public string Id { get; set; }
+        /// <summary> ARM location of the remote private endpoint. </summary>
+        public AzureLocation? Location { get; set; }
+        /// <summary> Original subscription ID needed by Microsoft.Network. </summary>
+        public string ImmutableSubscriptionId { get; set; }
+        /// <summary> Original resource ID needed by Microsoft.Network. </summary>
+        public string ImmutableResourceId { get; set; }
         /// <summary> Virtual network traffic tag. </summary>
-        public string VnetTrafficTag { get; }
+        public string VnetTrafficTag { get; set; }
         /// <summary> List of private link service connections that need manual approval. </summary>
         public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> List of automatically approved private link service connections. </summary>

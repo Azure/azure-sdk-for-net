@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of GremlinGraphData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinGraphPropertiesResource resource, GremlinGraphPropertiesOptions options) : base(id, name, type, systemData, tags, location)
+        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public GremlinGraphPropertiesResource Resource { get; set; }
+        public ExtendedGremlinGraphResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public GremlinGraphPropertiesOptions Options { get; set; }
+        public GremlinGraphPropertiesConfig Options { get; set; }
     }
 }

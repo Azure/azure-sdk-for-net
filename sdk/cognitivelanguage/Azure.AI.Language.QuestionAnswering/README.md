@@ -11,7 +11,7 @@ The Question Answering service is a cloud-based API service that lets you create
 Install the Azure Cognitive Language Services Question Answering client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+dotnet add package Azure.AI.Language.QuestionAnswering
 ```
 
 ### Prerequisites
@@ -177,7 +177,7 @@ Your projects can be deployed using the `DeployProjectAsync` or the synchronous 
 ```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
-Operation<BinaryData> deploymentOperation = client.DeployProject(waitForCompletion: true, newProjectName, newDeploymentName);
+Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
 Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -211,7 +211,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: true, newProjectName, updateSourcesRequestContent);
+Operation<BinaryData> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = client.GetSources(newProjectName);

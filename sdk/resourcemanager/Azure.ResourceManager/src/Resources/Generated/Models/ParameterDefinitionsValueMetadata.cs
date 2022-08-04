@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
         public ParameterDefinitionsValueMetadata()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ParameterDefinitionsValueMetadata. </summary>
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
         /// <param name="assignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ParameterDefinitionsValueMetadata(string displayName, string description, string strongType, bool? assignPermissions, IDictionary<string, object> additionalProperties)
+        internal ParameterDefinitionsValueMetadata(string displayName, string description, string strongType, bool? assignPermissions, IDictionary<string, BinaryData> additionalProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -43,6 +44,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </summary>
         public bool? AssignPermissions { get; set; }
         /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

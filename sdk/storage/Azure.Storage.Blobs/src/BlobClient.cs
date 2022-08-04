@@ -1622,29 +1622,27 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            UploadTransferValidationOptions validationOptions = options?.TransferValidationOptions ?? ClientConfiguration.TransferValidation.Upload;
+
             long? expectedContentLength = null;
             if (UsingClientSideEncryption)
             {
                 options ??= new BlobUploadOptions();
 
-                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                {
-                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                }
-
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
                 if (expectedContentLength.HasValue)
                 {
-                    expectedContentLength = ClientSideEncryptor.ExpectedCiphertextLength(expectedContentLength.Value);
+                    expectedContentLength = encryptor.ExpectedOutputContentLength(expectedContentLength.Value);
                 }
-                (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                (content, options.Metadata) = await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransactionalHashingOptions,
+                validationOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1689,28 +1687,6 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            // TODO Upload from file will get it's own implementation in the future that opens more
-            //      than one stream at once. This is incompatible with .NET's CryptoStream. We will
-            //      need to uncomment the below code and revert to upload from stream if client-side
-            //      encryption is enabled.
-            //if (ClientSideEncryption != default)
-            //{
-            //    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            //    {
-            //        return await StagedUploadAsync(
-            //            stream,
-            //            blobHttpHeaders,
-            //            metadata,
-            //            conditions,
-            //            progressHandler,
-            //            accessTier,
-            //            transferOptions: transferOptions,
-            //            async: async,
-            //            cancellationToken: cancellationToken)
-            //            .ConfigureAwait(false);
-            //    }
-            //}
-
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadInternal(
@@ -1745,6 +1721,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
+        [ForwardsClientCalls]
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
@@ -1778,6 +1755,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
+        [ForwardsClientCalls]
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
@@ -1797,23 +1775,19 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
-                if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                {
-                    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                }
-
-                return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
+                return await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
                         overwrite,
-                        options.ToBlockBlobOpenWriteOptions(),
+                        options?.ToBlockBlobOpenWriteOptions(),
                         async,
                         cancellationToken).ConfigureAwait(false);
             }
 
             return await BlockBlobClient.OpenWriteInternal(
                 overwrite,
-                options.ToBlockBlobOpenWriteOptions(),
+                options?.ToBlockBlobOpenWriteOptions(),
                 async,
                 cancellationToken).ConfigureAwait(false);
         }
@@ -1835,9 +1809,9 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, hashingOptions, arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, validationOptions, arrayPool, operationName);
     }
 }

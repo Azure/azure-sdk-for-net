@@ -19,5 +19,7 @@ namespace Azure.Communication.NetworkTraversal
         public string Id { get; set; }
         /// <summary> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </summary>
         public RouteType? RouteType { get; set; }
+        /// <summary> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </summary>
+        public int? Ttl { get; set; }
     }
 }

@@ -22,6 +22,20 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected, text);
         }
 
+        public static void AssertConverterSerialization(string expected, object model, JsonSerializerOptions options = default)
+        {
+            using var memoryStream = new MemoryStream();
+
+            using (var writer = new Utf8JsonWriter(memoryStream))
+            {
+                JsonSerializer.Serialize(writer, model, options);
+            }
+
+            var text = Encoding.UTF8.GetString(memoryStream.ToArray());
+
+            Assert.AreEqual(expected, text);
+        }
+
         public static JsonElement AssertSerializes(IUtf8JsonSerializable serializable)
         {
             using var memoryStream = new MemoryStream();

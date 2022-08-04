@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<string>> namespaces = default;
             Optional<string> policyMode = default;
             Optional<bool> isBuiltInOnly = default;
             Optional<IReadOnlyList<ResourceTypeAliases>> resourceTypeAliases = default;
-            Optional<IReadOnlyList<DataEffect>> effects = default;
+            Optional<IReadOnlyList<DataPolicyManifestEffect>> effects = default;
             Optional<IReadOnlyList<string>> fieldValues = default;
             Optional<IReadOnlyList<string>> standard = default;
             Optional<IReadOnlyList<DataManifestCustomResourceFunctionDefinition>> custom = default;
@@ -43,11 +43,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -112,10 +117,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataEffect> array = new List<DataEffect>();
+                            List<DataPolicyManifestEffect> array = new List<DataPolicyManifestEffect>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataEffect.DeserializeDataEffect(item));
+                                array.Add(DataPolicyManifestEffect.DeserializeDataPolicyManifestEffect(item));
                             }
                             effects = array;
                             continue;
@@ -181,7 +186,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new DataPolicyManifestData(id, name, type, systemData, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom));
+            return new DataPolicyManifestData(id, name, type, systemData.Value, Optional.ToList(namespaces), policyMode.Value, Optional.ToNullable(isBuiltInOnly), Optional.ToList(resourceTypeAliases), Optional.ToList(effects), Optional.ToList(fieldValues), Optional.ToList(standard), Optional.ToList(custom));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class ProfileOperationSource : IOperationSource<Profile>
+    internal class ProfileOperationSource : IOperationSource<ProfileResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        Profile IOperationSource<Profile>.CreateResult(Response response, CancellationToken cancellationToken)
+        ProfileResource IOperationSource<ProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProfileData.DeserializeProfileData(document.RootElement);
-            return new Profile(_client, data);
+            return new ProfileResource(_client, data);
         }
 
-        async ValueTask<Profile> IOperationSource<Profile>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ProfileResource> IOperationSource<ProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProfileData.DeserializeProfileData(document.RootElement);
-            return new Profile(_client, data);
+            return new ProfileResource(_client, data);
         }
     }
 }

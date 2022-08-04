@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of CassandraTableData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraTablePropertiesResource resource, CassandraTablePropertiesOptions options) : base(id, name, type, systemData, tags, location)
+        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public CassandraTablePropertiesResource Resource { get; set; }
+        public ExtendedCassandraTableResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public CassandraTablePropertiesOptions Options { get; set; }
+        public CassandraTablePropertiesConfig Options { get; set; }
     }
 }

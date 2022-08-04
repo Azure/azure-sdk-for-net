@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "3adb5347-d1a4-c00c-3907-d31c8ada0db6",
         "x-ms-date": "Fri, 15 Oct 2021 20:57:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "3adb5347-d1a4-c00c-3907-d31c8ada0db6",
         "x-ms-request-id": "29565495-101e-000b-2007-c2d0b4000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -44,7 +44,7 @@
         "x-ms-encryption-key": "Sanitized",
         "x-ms-encryption-key-sha256": "cDZzvuiNDzOxwGtG/Sob1pj7VqCf5QL1g\u002BCB8v3Nsbc=",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -58,7 +58,7 @@
         "x-ms-encryption-key-sha256": "cDZzvuiNDzOxwGtG/Sob1pj7VqCf5QL1g\u002BCB8v3Nsbc=",
         "x-ms-request-id": "295654fb-101e-000b-0107-c2d0b4000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-10-15T20:57:05.6591984Z"
       },
       "ResponseBody": []
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "7cb8d43d-4d0c-ebc3-f4a2-173533a70d5c",
         "x-ms-date": "Fri, 15 Oct 2021 20:57:05 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -84,7 +84,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "7cb8d43d-4d0c-ebc3-f4a2-173533a70d5c",
         "x-ms-request-id": "29565544-101e-000b-4907-c2d0b4000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the FirewallPolicyFilterRuleCollectionAction. </summary>
-    public partial class FirewallPolicyFilterRuleCollectionAction
+    internal partial class FirewallPolicyFilterRuleCollectionAction
     {
         /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionAction. </summary>
         public FirewallPolicyFilterRuleCollectionAction()
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionAction. </summary>
-        /// <param name="type"> The type of action. </param>
-        internal FirewallPolicyFilterRuleCollectionAction(FirewallPolicyFilterRuleCollectionActionType? type)
+        /// <param name="actionType"> The type of action. </param>
+        internal FirewallPolicyFilterRuleCollectionAction(FirewallPolicyFilterRuleCollectionActionType? actionType)
         {
-            Type = type;
+            ActionType = actionType;
         }
 
         /// <summary> The type of action. </summary>
-        public FirewallPolicyFilterRuleCollectionActionType? Type { get; set; }
+        public FirewallPolicyFilterRuleCollectionActionType? ActionType { get; set; }
     }
 }

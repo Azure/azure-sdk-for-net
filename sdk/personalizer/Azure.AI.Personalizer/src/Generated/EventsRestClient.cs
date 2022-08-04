@@ -39,7 +39,7 @@ namespace Azure.AI.Personalizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/personalizer/v1.1-preview.1", false);
+            uri.AppendRaw("/personalizer/v1.1-preview.3", false);
             uri.AppendPath("/events/", false);
             uri.AppendPath(eventId, true);
             uri.AppendPath("/reward", false);
@@ -113,7 +113,7 @@ namespace Azure.AI.Personalizer
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/personalizer/v1.1-preview.1", false);
+            uri.AppendRaw("/personalizer/v1.1-preview.3", false);
             uri.AppendPath("/events/", false);
             uri.AppendPath(eventId, true);
             uri.AppendPath("/activate", false);

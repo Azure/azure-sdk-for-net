@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs to file system configuration. </summary>
-    public partial class FileSystemApplicationLogsConfig
+    internal partial class FileSystemApplicationLogsConfig
     {
         /// <summary> Initializes a new instance of FileSystemApplicationLogsConfig. </summary>
         public FileSystemApplicationLogsConfig()

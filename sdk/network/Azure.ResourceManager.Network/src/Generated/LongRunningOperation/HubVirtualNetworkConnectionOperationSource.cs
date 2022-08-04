@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class HubVirtualNetworkConnectionOperationSource : IOperationSource<HubVirtualNetworkConnection>
+    internal class HubVirtualNetworkConnectionOperationSource : IOperationSource<HubVirtualNetworkConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        HubVirtualNetworkConnection IOperationSource<HubVirtualNetworkConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        HubVirtualNetworkConnectionResource IOperationSource<HubVirtualNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement);
-            return new HubVirtualNetworkConnection(_client, data);
+            return new HubVirtualNetworkConnectionResource(_client, data);
         }
 
-        async ValueTask<HubVirtualNetworkConnection> IOperationSource<HubVirtualNetworkConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HubVirtualNetworkConnectionResource> IOperationSource<HubVirtualNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HubVirtualNetworkConnectionData.DeserializeHubVirtualNetworkConnectionData(document.RootElement);
-            return new HubVirtualNetworkConnection(_client, data);
+            return new HubVirtualNetworkConnectionResource(_client, data);
         }
     }
 }

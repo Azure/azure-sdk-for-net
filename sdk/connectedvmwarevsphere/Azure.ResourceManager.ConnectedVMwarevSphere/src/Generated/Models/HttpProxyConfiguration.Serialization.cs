@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class HttpProxyConfiguration : IUtf8JsonSerializable
+    internal partial class HttpProxyConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -10,14 +10,9 @@ namespace Azure.Analytics.Purview.Administration.Tests
 {
     public class MetadataPolicyClientTestBase : RecordedTestBase<PurviewCollectionTestEnvironment>
     {
-        public MetadataPolicyClientTestBase(bool isAsync) : base(isAsync)
+        public MetadataPolicyClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-
-        public MetadataPolicyClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
         public PurviewMetadataPolicyClient GetMetadataPolicyClient(string collectionName)
         {

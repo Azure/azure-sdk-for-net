@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager.Core;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
@@ -14,31 +14,5 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemAssignedServiceIdentity
     {
-        /// <summary> Initializes a new instance of SystemAssignedServiceIdentity. </summary>
-        /// <param name="type"> Type of managed service identity (either system assigned, or none). </param>
-        [InitializationConstructor]
-        public SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType type)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of SystemAssignedServiceIdentity. </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> Type of managed service identity (either system assigned, or none). </param>
-        [SerializationConstructor]
-        internal SystemAssignedServiceIdentity(Guid? principalId, Guid? tenantId, SystemAssignedServiceIdentityType type)
-        {
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            Type = type;
-        }
-
-        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
-        public Guid? PrincipalId { get; }
-        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
-        public Guid? TenantId { get; }
-        /// <summary> Type of managed service identity (either system assigned, or none). </summary>
-        public SystemAssignedServiceIdentityType Type { get; set; }
     }
 }

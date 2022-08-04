@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             PolicyDefinitionId = policyDefinitionId;
-            Parameters = new ChangeTrackingDictionary<string, ParameterValuesValue>();
+            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameterValue>();
             GroupNames = new ChangeTrackingList<string>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
         /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
         /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
-        internal PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ParameterValuesValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames)
+        internal PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ArmPolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames)
         {
             PolicyDefinitionId = policyDefinitionId;
             Parameters = parameters;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the policy definition or policy set definition. </summary>
         public string PolicyDefinitionId { get; set; }
         /// <summary> The parameter values for the referenced policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters { get; }
+        public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }
         /// <summary> A unique id (within the policy set definition) for this policy definition reference. </summary>
         public string PolicyDefinitionReferenceId { get; set; }
         /// <summary> The name of the groups that this policy definition reference belongs to. </summary>

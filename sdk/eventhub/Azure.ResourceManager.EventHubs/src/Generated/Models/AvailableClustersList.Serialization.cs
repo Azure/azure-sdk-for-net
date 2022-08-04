@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class AvailableClustersList
+    internal partial class AvailableClustersList
     {
         internal static AvailableClustersList DeserializeAvailableClustersList(JsonElement element)
         {

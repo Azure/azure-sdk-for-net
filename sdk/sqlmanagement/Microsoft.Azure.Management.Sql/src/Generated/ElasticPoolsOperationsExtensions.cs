@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='skip'>
             /// The number of elements in the collection to skip.
             /// </param>
-            public static IPage<ElasticPool> ListByServer(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, int? skip = default(int?))
+            public static IPage<ElasticPool> ListByServer(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, long? skip = default(long?))
             {
                 return operations.ListByServerAsync(resourceGroupName, serverName, skip).GetAwaiter().GetResult();
             }
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ElasticPool>> ListByServerAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ElasticPool>> ListByServerAsync(this IElasticPoolsOperations operations, string resourceGroupName, string serverName, long? skip = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, skip, null, cancellationToken).ConfigureAwait(false))
                 {

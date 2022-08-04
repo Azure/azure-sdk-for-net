@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleSetList : IUtf8JsonSerializable
+    internal partial class ManagedRuleSetList : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetList DeserializeManagedRuleSetList(JsonElement element)
         {
-            Optional<IList<ManagedRuleSet>> managedRuleSets = default;
+            Optional<IList<WafPolicyManagedRuleSet>> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedRuleSets"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedRuleSet> array = new List<ManagedRuleSet>();
+                    List<WafPolicyManagedRuleSet> array = new List<WafPolicyManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSet.DeserializeManagedRuleSet(item));
+                        array.Add(WafPolicyManagedRuleSet.DeserializeWafPolicyManagedRuleSet(item));
                     }
                     managedRuleSets = array;
                     continue;

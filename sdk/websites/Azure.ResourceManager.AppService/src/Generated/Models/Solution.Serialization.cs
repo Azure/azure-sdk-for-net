@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SolutionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(SolutionType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Data))
             {

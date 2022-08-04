@@ -5,18 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Output of virtual machine capture operation. </summary>
-    public partial class VirtualMachineCaptureResult : SubResource
+    public partial class VirtualMachineCaptureResult : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
         public VirtualMachineCaptureResult()
         {
-            Resources = new ChangeTrackingList<object>();
+            Resources = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="contentVersion"> the version of the content. </param>
         /// <param name="parameters"> parameters of the captured virtual machine. </param>
         /// <param name="resources"> a list of resource items of the captured virtual machine. </param>
-        internal VirtualMachineCaptureResult(string id, string schema, string contentVersion, object parameters, IReadOnlyList<object> resources) : base(id)
+        internal VirtualMachineCaptureResult(ResourceIdentifier id, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id)
         {
             Schema = schema;
             ContentVersion = contentVersion;
@@ -38,8 +39,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> the version of the content. </summary>
         public string ContentVersion { get; }
         /// <summary> parameters of the captured virtual machine. </summary>
-        public object Parameters { get; }
+        public BinaryData Parameters { get; }
         /// <summary> a list of resource items of the captured virtual machine. </summary>
-        public IReadOnlyList<object> Resources { get; }
+        public IReadOnlyList<BinaryData> Resources { get; }
     }
 }

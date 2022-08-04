@@ -13,12 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a TagResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a TagResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TagResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetTagResource method.
+    /// </summary>
     public partial class TagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TagResource"/> instance. </summary>
@@ -51,9 +55,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
-            _tagResourceTagsRestClient = new TagsRestOperations(_tagResourceTagsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
+            _tagResourceTagsRestClient = new TagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tagResourceTagsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,20 +93,20 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Tags_GetAtScope
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TagResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _tagResourceTagsRestClient.GetAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _tagResourceTagsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -115,18 +119,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TagResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Get");
+            scope0.Start();
             try
             {
                 var response = _tagResourceTagsRestClient.GetAtScope(Id.Parent, cancellationToken);
                 if (response.Value == null)
-                    throw _tagResourceTagsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -136,23 +140,23 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_DeleteAtScope
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
+            scope0.Start();
             try
             {
                 var response = await _tagResourceTagsRestClient.DeleteAtScopeAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -162,23 +166,23 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_DeleteAtScope
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Delete");
+            scope0.Start();
             try
             {
                 var response = _tagResourceTagsRestClient.DeleteAtScope(Id.Parent, cancellationToken);
                 var operation = new ResourcesArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -188,23 +192,23 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
+        /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<TagResource>> UpdateAsync(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<TagResource>> UpdateAsync(TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
+            scope0.Start();
             try
             {
-                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, options, cancellationToken).ConfigureAwait(false);
+                var response = await _tagResourceTagsRestClient.UpdateAtScopeAsync(Id.Parent, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -214,23 +218,23 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_UpdateAtScope
         /// </summary>
-        /// <param name="options"> The TagResourceUpdateOptions to use. </param>
+        /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<TagResource> Update(TagResourceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<TagResource> Update(TagResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.Update");
+            scope0.Start();
             try
             {
-                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, options, cancellationToken);
+                var response = _tagResourceTagsRestClient.UpdateAtScope(Id.Parent, patch, cancellationToken);
                 return Response.FromValue(new TagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -240,27 +244,27 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_CreateOrUpdateAtScope
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The TagResource to use. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<TagResource>> CreateOrUpdateAsync(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<TagResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TagResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
+            scope0.Start();
             try
             {
-                var response = await _tagResourceTagsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, parameters, cancellationToken).ConfigureAwait(false);
+                var response = await _tagResourceTagsRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation<TagResource>(Response.FromValue(new TagResource(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -270,27 +274,27 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Resources/tags/default
         /// Operation Id: Tags_CreateOrUpdateAtScope
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> The TagResource to use. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The TagResource to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<TagResource> CreateOrUpdate(bool waitForCompletion, TagResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<TagResource> CreateOrUpdate(WaitUntil waitUntil, TagResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
-            scope.Start();
+            using var scope0 = _tagResourceTagsClientDiagnostics.CreateScope("TagResource.CreateOrUpdate");
+            scope0.Start();
             try
             {
-                var response = _tagResourceTagsRestClient.CreateOrUpdateAtScope(Id.Parent, parameters, cancellationToken);
+                var response = _tagResourceTagsRestClient.CreateOrUpdateAtScope(Id.Parent, data, cancellationToken);
                 var operation = new ResourcesArmOperation<TagResource>(Response.FromValue(new TagResource(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

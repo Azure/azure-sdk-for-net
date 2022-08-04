@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
@@ -31,12 +32,13 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         [SetUp]
         public void Setup()
         {
-            snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
-            snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ManagedDiskFixture.Instance.Snapshot2SASUri?.AbsoluteUri, v => Sanitizer.SanitizeUri(v)));
+            snapshot1SASUri = new Uri(Recording.GetVariable(nameof(snapshot1SASUri), ManagedDiskFixture.Instance.Snapshot1SASUri?.AbsoluteUri, v => SanitizeUri(v)));
+            snapshot2SASUri = new Uri(Recording.GetVariable(nameof(snapshot2SASUri), ManagedDiskFixture.Instance.Snapshot2SASUri?.AbsoluteUri, v => SanitizeUri(v)));
             snapshot1Size = long.Parse(Recording.GetVariable(nameof(snapshot1Size), ManagedDiskFixture.Instance.Snapshot1?.Data.DiskSizeBytes.ToString()));
         }
 
         [Test]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/30035")]
         public async Task CanDiffPagesBetweenSnapshots()
         {
             // Arrange
@@ -155,7 +157,10 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
         {
             var memoryStream = new MemoryStream();
-            using BlobDownloadStreamingResult result1 = await client.DownloadStreamingAsync(range: range);
+            using BlobDownloadStreamingResult result1 = await client.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                Range = range
+            });
             await result1.Content.CopyToAsync(memoryStream);
             return memoryStream.ToArray();
         }

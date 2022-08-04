@@ -20,7 +20,7 @@ To develop .NET application code that can connect to an Azure Container Registry
 Install the Azure Container Registry client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Containers.ContainerRegistry --prerelease
+dotnet add package Azure.Containers.ContainerRegistry
 ```
 
 ### Prerequisites
@@ -173,9 +173,6 @@ image.UpdateTagProperties("latest", new ArtifactTagProperties()
 ### Delete images
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -285,10 +282,6 @@ await image.UpdateTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-using System.Linq;
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 

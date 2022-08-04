@@ -13,13 +13,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public static class DocumentAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of AccountProperties. </summary>
-        /// <param name="count"> Number of custom models in the current resource. </param>
-        /// <param name="limit"> Maximum number of custom models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.AccountProperties"/> instance for mocking. </returns>
-        public static AccountProperties AccountProperties(int count = default, int limit = default)
+        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <param name="documentModelCount"> Number of custom models in the current resource. </param>
+        /// <param name="documentModelLimit"> Maximum number of custom models supported in the current resource. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
+        public static ResourceDetails ResourceDetails(int documentModelCount = default, int documentModelLimit = default)
         {
-            return new AccountProperties(count, limit);
+            return new ResourceDetails(documentModelCount, documentModelLimit);
+        }
+
+        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <param name="houseNumber"> House or building number. </param>
+        /// <param name="poBox"> Post office box number. </param>
+        /// <param name="road"> Street name. </param>
+        /// <param name="city"> Name of city, town, village, etc. </param>
+        /// <param name="state"> First-level administrative division. </param>
+        /// <param name="postalCode"> Postal code used for mail sorting. </param>
+        /// <param name="countryRegion"> Country/region. </param>
+        /// <param name="streetAddress"> Street-level address, excluding city, state, countryRegion, and postalCode. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.AddressValue"/> instance for mocking. </returns>
+        public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null)
+        {
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress);
         }
 
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
@@ -44,52 +59,39 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="pages"> Analyzed pages. </param>
         /// <param name="tables"> Extracted tables. </param>
         /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
-        /// <param name="entities"> Extracted entities. </param>
         /// <param name="styles"> Extracted font styles. </param>
         /// <param name="languages"> Detected languages. </param>
         /// <param name="documents"> Extracted documents. </param>
         /// <returns> A new <see cref="DocumentAnalysis.AnalyzeResult"/> instance for mocking. </returns>
-        public static AnalyzeResult AnalyzeResult(string modelId = null, string content = null, IEnumerable<DocumentPage> pages = null, IEnumerable<DocumentTable> tables = null, IEnumerable<DocumentKeyValuePair> keyValuePairs = null, IEnumerable<DocumentEntity> entities = null, IEnumerable<DocumentStyle> styles = null, IEnumerable<DocumentLanguage> languages = null, IEnumerable<AnalyzedDocument> documents = null)
+        public static AnalyzeResult AnalyzeResult(string modelId = null, string content = null, IEnumerable<DocumentPage> pages = null, IEnumerable<DocumentTable> tables = null, IEnumerable<DocumentKeyValuePair> keyValuePairs = null, IEnumerable<DocumentStyle> styles = null, IEnumerable<DocumentLanguage> languages = null, IEnumerable<AnalyzedDocument> documents = null)
         {
             pages ??= new List<DocumentPage>();
             tables ??= new List<DocumentTable>();
             keyValuePairs ??= new List<DocumentKeyValuePair>();
-            entities ??= new List<DocumentEntity>();
             styles ??= new List<DocumentStyle>();
             languages ??= new List<DocumentLanguage>();
             documents ??= new List<AnalyzedDocument>();
 
-            return new AnalyzeResult(apiVersion: default, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), tables?.ToList(), keyValuePairs?.ToList(), entities?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
+            return new AnalyzeResult(apiVersion: default, modelId, StringIndexType.Utf16CodeUnit, content, pages?.ToList(), paragraphs: default, tables?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
-        /// <param name="points"> The sequence of points defining this Bounding Box. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.BoundingBox"/> instance for mocking. </returns>
-        public static BoundingBox BoundingBox(IEnumerable<PointF> points = null)
+        /// <summary> Initializes a new instance of BoundingPolygon. </summary>
+        /// <param name="points"> The sequence of points defining this <see cref="DocumentAnalysis.BoundingPolygon"/>. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.BoundingPolygon"/> instance for mocking. </returns>
+        public static BoundingPolygon BoundingPolygon(IEnumerable<PointF> points = null)
         {
             points ??= new List<PointF>();
 
-            return new BoundingBox(points?.ToList());
+            return new BoundingPolygon(points?.ToList());
         }
 
         /// <summary> Initializes a new instance of BoundingRegion. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
-        /// <param name="boundingBox"> Bounding box on the page, or the entire page if not specified. </param>
+        /// <param name="boundingPolygon"> Bounding polygon on the page, or the entire page if not specified. </param>
         /// <returns> A new <see cref="DocumentAnalysis.BoundingRegion"/> instance for mocking. </returns>
-        public static BoundingRegion BoundingRegion(int pageNumber = default, BoundingBox boundingBox = default)
+        public static BoundingRegion BoundingRegion(int pageNumber = default, BoundingPolygon boundingPolygon = default)
         {
-            return new BoundingRegion(pageNumber, boundingBox);
-        }
-
-        /// <summary> Initializes a new instance of CopyAuthorization. </summary>
-        /// <param name="targetResourceRegion"> Location of the target Azure resource where the model should be copied to. </param>
-        /// <param name="targetModelId"> Identifier of the target model. </param>
-        /// <param name="targetModelLocation"> URL of the copied model in the target account. </param>
-        /// <param name="expirationDateTime"> Date/time when the access token expires. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.CopyAuthorization"/> instance for mocking. </returns>
-        public static CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, DateTimeOffset expirationDateTime = default)
-        {
-            return new CopyAuthorization(targetResourceRegion, targetModelId, targetModelLocation, expirationDateTime);
+            return new BoundingRegion(pageNumber, boundingPolygon);
         }
 
         /// <summary> Initializes a new instance of CurrencyValue. </summary>
@@ -113,22 +115,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             fieldConfidence ??= new Dictionary<string, float>();
 
             return new DocTypeInfo(description, buildMode, fieldSchema, fieldConfidence);
-        }
-
-        /// <summary> Initializes a new instance of DocumentEntity. </summary>
-        /// <param name="category"> Entity type. </param>
-        /// <param name="subCategory"> Entity sub type. </param>
-        /// <param name="content"> Entity content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the entity. </param>
-        /// <param name="spans"> Location of the entity in the reading order concatenated content. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the entity. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentEntity"/> instance for mocking. </returns>
-        public static DocumentEntity DocumentEntity(string category = null, string subCategory = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentEntity(category, subCategory, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
@@ -160,7 +146,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.CountryRegion, null, null, null, null, null, null, null, null, valueCountryRegion: value, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.CountryRegion, null, null, null, null, null, null, null, null, valueCountryRegion: value, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -178,7 +164,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Currency, null, null, null, null, null, null, null, null, null, valueArray, valueObject, valueCurrency: value, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Currency, null, null, null, null, null, null, null, null, null, valueArray, valueObject, valueCurrency: value, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -196,7 +182,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Date, null, valueDate: value, null, null, null, null, null, null, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Date, null, valueDate: value, null, null, null, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -214,7 +200,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             var valueArray = new List<DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Dictionary, null, null, null, null, null, null, null, null, null, valueArray, valueObject: value, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Dictionary, null, null, null, null, null, null, null, null, null, valueArray, valueObject: value, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -232,7 +218,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Double, null, null, null, null, valueNumber: value, null, null, null, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Double, null, null, null, null, valueNumber: value, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -250,7 +236,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Int64, null, null, null, null, null, valueInteger: value, null, null, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Int64, null, null, null, null, null, valueInteger: value, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -268,7 +254,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.List, null, null, null, null, null, null, null, null, null, valueArray: value?.ToList(), valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.List, null, null, null, null, null, null, null, null, null, valueArray: value?.ToList(), valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -286,7 +272,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.PhoneNumber, null, null, null, valuePhoneNumber: value, null, null, null, null, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.PhoneNumber, null, null, null, valuePhoneNumber: value, null, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -319,7 +305,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Signature, null, null, null, null, null, null, null, valueSignature: value, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Signature, null, null, null, null, null, null, null, valueSignature: value, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -337,7 +323,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.String, valueString: value, null, null, null, null, null, null, null, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.String, valueString: value, null, null, null, null, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -355,7 +341,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             var valueArray = new List<DocumentField>();
             var valueObject = new Dictionary<string, DocumentField>();
 
-            return new DocumentField(DocumentFieldType.Time, null, null, valueTime: value, null, null, null, null, null, null, valueArray, valueObject, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(DocumentFieldType.Time, null, null, valueTime: value, null, null, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
@@ -382,87 +368,102 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
-        /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
+        /// <param name="locale"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentLanguage"/> instance for mocking. </returns>
-        public static DocumentLanguage DocumentLanguage(string languageCode = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
+        public static DocumentLanguage DocumentLanguage(string locale = null, IEnumerable<DocumentSpan> spans = null, float confidence = default)
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentLanguage(languageCode, spans?.ToList(), confidence);
+            return new DocumentLanguage(locale, spans?.ToList(), confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentLine. </summary>
         /// <param name="content"> Concatenated content of the contained elements in reading order. </param>
-        /// <param name="boundingBox"> Bounding box of the line. </param>
+        /// <param name="boundingPolygon"> Bounding polygon of the line. </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentLine"/> instance for mocking. </returns>
-        public static DocumentLine DocumentLine(string content = null, BoundingBox boundingBox = default, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentLine DocumentLine(string content = null, BoundingPolygon boundingPolygon = default, IEnumerable<DocumentSpan> spans = null)
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentLine(content, boundingBox, spans?.ToList());
+            return new DocumentLine(content, boundingPolygon, spans?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DocumentModel. </summary>
+        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="docTypes"> Supported document types. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModel"/> instance for mocking. </returns>
-        public static DocumentModel DocumentModel(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
         {
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocTypeInfo>();
 
-            return new DocumentModel(modelId, description, createdOn, apiVersion: null, tags, docTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, docTypes);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelInfo"/> instance for mocking. </returns>
-        public static DocumentModelInfo DocumentModelInfo(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelSummary"/> instance for mocking. </returns>
+        public static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdOn = default, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelInfo(modelId, description, createdOn, apiVersion: null, tags);
+            return new DocumentModelSummary(modelId, description, createdOn, apiVersion: null, tags);
         }
 
         /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <param name="kind"> Kind of document page. </param>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
         /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="unit"> The unit used by the width, height, and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        /// <param name="unit"> The unit used by the width, height, and boundingPolygon properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
         /// <param name="spans"> Location of the page in the reading order concatenated content. </param>
         /// <param name="words"> Extracted words from the page. </param>
         /// <param name="selectionMarks"> Extracted selection marks from the page. </param>
         /// <param name="lines"> Extracted lines from the page, potentially containing both textual and visual elements. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float angle = default, float width = default, float height = default, LengthUnit unit = default, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
+        public static DocumentPage DocumentPage(DocumentPageKind kind = default, int pageNumber = default, float? angle = null, float? width = null, float? height = null, LengthUnit? unit = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<DocumentWord> words = null, IEnumerable<DocumentSelectionMark> selectionMarks = null, IEnumerable<DocumentLine> lines = null)
         {
             spans ??= new List<DocumentSpan>();
             words ??= new List<DocumentWord>();
             selectionMarks ??= new List<DocumentSelectionMark>();
             lines ??= new List<DocumentLine>();
 
-            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
+            return new DocumentPage(kind, pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DocumentParagraph. </summary>
+        /// <param name="role"> Semantic role of the paragraph. </param>
+        /// <param name="content"> Concatenated content of the paragraph in reading order. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the paragraph. </param>
+        /// <param name="spans"> Location of the paragraph in the reading order concatenated content. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentParagraph"/> instance for mocking. </returns>
+        public static DocumentParagraph DocumentParagraph(ParagraphRole? role = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        {
+            boundingRegions ??= new List<BoundingRegion>();
+            spans ??= new List<DocumentSpan>();
+
+            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
         /// <param name="state"> State of the selection mark. </param>
-        /// <param name="boundingBox"> Bounding box of the selection mark. </param>
+        /// <param name="boundingPolygon"> Bounding polygon of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, BoundingBox boundingBox = default, DocumentSpan span = null, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(SelectionMarkState state = default, BoundingPolygon boundingPolygon = default, DocumentSpan span = default, float confidence = default)
         {
-            return new DocumentSelectionMark(state, boundingBox, span, confidence);
+            return new DocumentSelectionMark(state, boundingPolygon, span, confidence);
         }
 
         /// <summary> Initializes a new instance of DocumentSpan. </summary>
@@ -499,7 +500,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption: null, footnotes: new List<DocumentFootnote>(), boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>
@@ -512,7 +513,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind kind = default, int rowIndex = default, int columnIndex = default, int rowSpan = default, int columnSpan = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
@@ -522,49 +523,49 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Initializes a new instance of DocumentWord. </summary>
         /// <param name="content"> Text content of the word. </param>
-        /// <param name="boundingBox"> Bounding box of the word. </param>
+        /// <param name="boundingPolygon"> Bounding polygon of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(string content = null, BoundingBox boundingBox = default, DocumentSpan span = null, float confidence = default)
+        public static DocumentWord DocumentWord(string content = null, BoundingPolygon boundingPolygon = default, DocumentSpan span = default, float confidence = default)
         {
-            return new DocumentWord(content, boundingBox, span, confidence);
+            return new DocumentWord(content, boundingPolygon, span, confidence);
         }
 
-        /// <summary> Initializes a new instance of ModelOperation. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationDetails. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="resourceLocation"> URI of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ModelOperation"/> instance for mocking. </returns>
-        public static ModelOperation ModelOperation(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModel result = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelOperationDetails DocumentModelOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ModelOperation(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags, error, result);
+            return new DocumentModelOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, tags, error, result);
         }
 
-        /// <summary> Initializes a new instance of ModelOperationInfo. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="resourceLocation"> URI of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.ModelOperationInfo"/> instance for mocking. </returns>
-        public static ModelOperationInfo ModelOperationInfo(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationSummary"/> instance for mocking. </returns>
+        public static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ModelOperationInfo(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
+            return new DocumentModelOperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags);
         }
     }
 }

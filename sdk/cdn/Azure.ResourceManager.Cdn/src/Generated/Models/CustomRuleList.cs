@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of custom rules. </summary>
-    public partial class CustomRuleList
+    internal partial class CustomRuleList
     {
         /// <summary> Initializes a new instance of CustomRuleList. </summary>
         public CustomRuleList()

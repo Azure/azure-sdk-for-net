@@ -56,12 +56,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="authentication">Authentication method used for calling
         /// the endpoint.</param>
+        /// <param name="disableCertValidation">When set to true, Certificate
+        /// validation will be disabled.</param>
         /// <param name="datasets">List of datasets passed to web
         /// endpoint.</param>
         /// <param name="linkedServices">List of linked services passed to web
         /// endpoint.</param>
         /// <param name="connectVia">The integration runtime reference.</param>
-        public WebActivity(string name, string method, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), IList<DatasetReference> datasets = default(IList<DatasetReference>), IList<LinkedServiceReference> linkedServices = default(IList<LinkedServiceReference>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference))
+        public WebActivity(string name, string method, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), bool? disableCertValidation = default(bool?), IList<DatasetReference> datasets = default(IList<DatasetReference>), IList<LinkedServiceReference> linkedServices = default(IList<LinkedServiceReference>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Method = method;
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Headers = headers;
             Body = body;
             Authentication = authentication;
+            DisableCertValidation = disableCertValidation;
             Datasets = datasets;
             LinkedServices = linkedServices;
             ConnectVia = connectVia;
@@ -117,6 +120,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authentication")]
         public WebActivityAuthentication Authentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets when set to true, Certificate validation will be
+        /// disabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.disableCertValidation")]
+        public bool? DisableCertValidation { get; set; }
 
         /// <summary>
         /// Gets or sets list of datasets passed to web endpoint.

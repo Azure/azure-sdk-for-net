@@ -29,8 +29,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the AutomationRuleAction class.
         /// </summary>
-        /// <param name="order">The order of execution of the automation rule
-        /// action</param>
         public AutomationRuleAction(int order)
         {
             Order = order;
@@ -43,7 +41,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the order of execution of the automation rule action
         /// </summary>
         [JsonProperty(PropertyName = "order")]
         public int Order { get; set; }

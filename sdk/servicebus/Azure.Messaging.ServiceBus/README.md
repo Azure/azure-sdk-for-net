@@ -32,7 +32,7 @@ Use the client library for Azure Service Bus to:
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
 
 ### Install the package
 
@@ -55,6 +55,8 @@ ServiceBusClient client = new ServiceBusClient(connectionString);
 ```
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
+
+To see how to initiate the connection with a custom endpoint, view this [example](#initiating-the-connection-with-a-custom-endpoint).
 
 ### ASP.NET Core
 
@@ -142,13 +144,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 ## Examples
 
 * [Send and receive a message](#send-and-receive-a-message)
-* [Send and receive a batch of messages](#send-and-receive-a-batch-of-messages)
+* [Sending a batch of messages](#sending-a-batch-of-messages)
+* [Receiving a batch of messages](#receiving-a-batch-of-messages)
 * [Complete a message](#complete-a-message)
 * [Abandon a message](#abandon-a-message)
 * [Defer a message](#defer-a-message)
 * [Dead letter a message](#dead-letter-a-message)
 * [Using the processor](#using-the-processor)
 * [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
+* [Initiating the connection with a custom endpoint](#initiating-the-connection-with-a-custom-endpoint)
 * [Working with sessions](#working-with-sessions)
 * [More samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/README.md)
 
@@ -182,7 +186,7 @@ string body = receivedMessage.Body.ToString();
 Console.WriteLine(body);
 ```
 
-### Send and receive a batch of messages
+### Sending a batch of messages
 
 There are two ways of sending several messages at once. The first way of doing this uses safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
@@ -237,6 +241,23 @@ messages.Add(new ServiceBusMessage("First"));
 messages.Add(new ServiceBusMessage("Second"));
 // send the messages
 await sender.SendMessagesAsync(messages);
+```
+
+### Receiving a batch of messages
+```C# Snippet:ServiceBusReceiveBatch
+// create a receiver that we can use to receive the messages
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+// a batch of messages (maximum of 2 in this case) are received
+IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveMessagesAsync(maxMessages: 2);
+
+// go through each of the messages received
+foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
+{
+    // get the message body as a string
+    string body = receivedMessage.Body.ToString();
+}
 ```
 
 ### Complete a message
@@ -302,8 +323,9 @@ Dead lettering a message is similar to deferring with one main difference being 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-// dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-await receiver.DeadLetterMessageAsync(receivedMessage);
+// Dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+// We can optionally pass a dead letter reason and dead letter description to further describe the reason for dead-lettering the message.
+await receiver.DeadLetterMessageAsync(receivedMessage, "sample reason", "sample description");
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
 ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -311,6 +333,10 @@ ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBus
     SubQueue = SubQueue.DeadLetter
 });
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+
+// The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
+string reason = dlqMessage.DeadLetterReason;
+string description = dlqMessage.DeadLetterErrorDescription;
 ```
 
 ### Using the Processor
@@ -391,6 +417,23 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+```
+
+### Initiating the connection with a custom endpoint
+
+If an alternative host name is needed to establish the connection to the service, a custom endpoint address can be provided through the `ServiceBusClientOptions`. The client will use this endpoint to open the initial connection, and then will use the default endpoint provided by the Service Bus service for all following operations and validation.
+
+```C# Snippet:ServiceBusCustomEndpoint
+// Connect to the service using a custom endpoint
+string connectionString = "<connection_string>";
+string customEndpoint = "<custom_endpoint>";
+
+var options = new ServiceBusClientOptions
+{
+    CustomEndpointAddress = new Uri(customEndpoint)
+};
+
+ServiceBusClient client = new ServiceBusClient(connectionString, options);
 ```
 
 ### Working with Sessions

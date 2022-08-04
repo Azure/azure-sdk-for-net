@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextHopIpAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress");
-                writer.WriteStringValue(NextHopIpAddress);
+                writer.WriteStringValue(NextHopIPAddress);
             }
             writer.WriteEndObject();
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<IList<string>> addressPrefixes = default;
-            Optional<string> nextHopIpAddress = default;
+            Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("nextHopIpAddress"))
                 {
-                    nextHopIpAddress = property.Value.GetString();
+                    nextHopIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIpAddress.Value);
+            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
         }
     }
 }

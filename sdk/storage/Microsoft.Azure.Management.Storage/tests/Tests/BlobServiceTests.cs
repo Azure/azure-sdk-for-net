@@ -790,7 +790,7 @@ namespace Storage.Tests
                 {
                     Sku = new Sku { Name = SkuName.StandardLRS },
                     Kind = Kind.StorageV2,
-                    Location = "centraluseuap"
+                    Location = "eastus2euap"
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
 
@@ -807,6 +807,7 @@ namespace Storage.Tests
                     properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();
                     properties2.DeleteRetentionPolicy.Enabled = true;
                     properties2.DeleteRetentionPolicy.Days = 300;
+                    properties2.DeleteRetentionPolicy.AllowPermanentDelete = true;
                     properties2.DefaultServiceVersion = "2017-04-17";
                     properties2.LastAccessTimeTrackingPolicy = new LastAccessTimeTrackingPolicy();
                     properties2.LastAccessTimeTrackingPolicy.Enable = true;
@@ -816,6 +817,7 @@ namespace Storage.Tests
                     BlobServiceProperties properties3 = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
                     Assert.True(properties3.DeleteRetentionPolicy.Enabled);
                     Assert.Equal(300, properties3.DeleteRetentionPolicy.Days);
+                    Assert.True(properties3.DeleteRetentionPolicy.AllowPermanentDelete);
                     Assert.Equal("2017-04-17", properties3.DefaultServiceVersion);
                     Assert.True(properties3.LastAccessTimeTrackingPolicy.Enable);
                     Assert.True(properties3.IsVersioningEnabled);

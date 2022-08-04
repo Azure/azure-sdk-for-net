@@ -26,6 +26,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Optional transactional hashing options.
         /// </summary>
-        public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

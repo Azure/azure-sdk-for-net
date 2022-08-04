@@ -422,6 +422,24 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Creates a new <see cref="ServiceBusTransportMetrics"/> instance for mocking.
+        /// </summary>
+        /// <param name="lastHeartbeat">The last time that a heartbeat was received from the service.</param>
+        /// <param name="lastConnectionOpen">The last time that a connection was opened.</param>
+        /// <param name="lastConnectionClose">The last time that a connection was closed.</param>
+        /// <returns></returns>
+        internal static ServiceBusTransportMetrics ServiceBusTransportMetrics(
+            DateTimeOffset? lastHeartbeat = default,
+            DateTimeOffset? lastConnectionOpen = default,
+            DateTimeOffset? lastConnectionClose = default)
+            => new()
+            {
+                LastHeartBeat = lastHeartbeat,
+                LastConnectionOpen = lastConnectionOpen,
+                LastConnectionClose = lastConnectionClose
+            };
+
+        /// <summary>
         ///   Allows for the transport event batch created by the factory to be injected for testing purposes.
         /// </summary>
         ///

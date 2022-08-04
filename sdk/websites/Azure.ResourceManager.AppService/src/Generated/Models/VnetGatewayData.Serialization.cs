@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> vnetName = default;
             Optional<Uri> vpnPackageUri = default;
             foreach (var property in element.EnumerateObject())
@@ -66,11 +66,16 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                vpnPackageUri = null;
                                 continue;
                             }
                             vpnPackageUri = new Uri(property0.Value.GetString());
@@ -102,7 +107,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new VnetGatewayData(id, name, type, systemData, kind.Value, vnetName.Value, vpnPackageUri.Value);
+            return new VnetGatewayData(id, name, type, systemData.Value, vnetName.Value, vpnPackageUri.Value, kind.Value);
         }
     }
 }

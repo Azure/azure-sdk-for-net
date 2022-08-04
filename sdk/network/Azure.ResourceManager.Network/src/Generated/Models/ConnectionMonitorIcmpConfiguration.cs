@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the ICMP configuration. </summary>
-    public partial class ConnectionMonitorIcmpConfiguration
+    internal partial class ConnectionMonitorIcmpConfiguration
     {
         /// <summary> Initializes a new instance of ConnectionMonitorIcmpConfiguration. </summary>
         public ConnectionMonitorIcmpConfiguration()

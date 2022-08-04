@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public static string ToSerialString(this DomainStatus value) => value switch
         {
+            DomainStatus.Unknown => "Unknown",
             DomainStatus.Active => "Active",
             DomainStatus.Awaiting => "Awaiting",
             DomainStatus.Cancelled => "Cancelled",
@@ -29,7 +30,6 @@ namespace Azure.ResourceManager.AppService.Models
             DomainStatus.Reverted => "Reverted",
             DomainStatus.Suspended => "Suspended",
             DomainStatus.Transferred => "Transferred",
-            DomainStatus.Unknown => "Unknown",
             DomainStatus.Unlocked => "Unlocked",
             DomainStatus.Unparked => "Unparked",
             DomainStatus.Updated => "Updated",
@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DomainStatus ToDomainStatus(this string value)
         {
+            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Unknown;
             if (string.Equals(value, "Active", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Active;
             if (string.Equals(value, "Awaiting", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Awaiting;
             if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Cancelled;
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.AppService.Models
             if (string.Equals(value, "Reverted", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Reverted;
             if (string.Equals(value, "Suspended", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Suspended;
             if (string.Equals(value, "Transferred", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Transferred;
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Unknown;
             if (string.Equals(value, "Unlocked", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Unlocked;
             if (string.Equals(value, "Unparked", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Unparked;
             if (string.Equals(value, "Updated", StringComparison.InvariantCultureIgnoreCase)) return DomainStatus.Updated;

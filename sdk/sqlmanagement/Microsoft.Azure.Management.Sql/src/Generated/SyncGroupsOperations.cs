@@ -600,7 +600,7 @@ namespace Microsoft.Azure.Management.Sql
             }
             if (type != null)
             {
-                _queryParameters.Add(string.Format("type={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(type, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("type={0}", System.Uri.EscapeDataString(type)));
             }
             if (continuationToken != null)
             {

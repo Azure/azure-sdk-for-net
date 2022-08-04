@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 
-namespace Azure.ResourceManager.Management.Models
+namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class ManagementGroupListResult
     {

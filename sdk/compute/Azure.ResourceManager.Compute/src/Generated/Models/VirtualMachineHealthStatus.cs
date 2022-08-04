@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The health status of the VM. </summary>
-    public partial class VirtualMachineHealthStatus
+    internal partial class VirtualMachineHealthStatus
     {
         /// <summary> Initializes a new instance of VirtualMachineHealthStatus. </summary>
         internal VirtualMachineHealthStatus()

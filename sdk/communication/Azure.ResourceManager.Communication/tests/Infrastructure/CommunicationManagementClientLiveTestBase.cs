@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.TestFramework;
+using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
-    [RunFrequency(RunTestFrequency.Manually)]
     public abstract class CommunicationManagementClientLiveTestBase : ManagementRecordedTestBase<CommunicationManagementTestEnvironment>
     {
         public string ResourceGroupPrefix { get; private set; }
@@ -22,6 +24,7 @@ namespace Azure.ResourceManager.Communication.Tests
         protected CommunicationManagementClientLiveTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreTestInLiveMode();
             Init();
         }
 
@@ -36,18 +39,47 @@ namespace Azure.ResourceManager.Communication.Tests
         protected CommunicationManagementClientLiveTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
         {
+            IgnoreTestInLiveMode();
             Init();
         }
 
-        internal async Task<CommunicationService> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroup _resourceGroup)
+        internal async Task<CommunicationServiceResource> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroupResource _resourceGroup)
         {
-            CommunicationServiceData data = new CommunicationServiceData()
+            CommunicationServiceResourceData data = new CommunicationServiceResourceData(ResourceLocation)
             {
-                Location = ResourceLocation,
                 DataLocation = ResourceDataLocation,
             };
-            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(true, communicationServiceName, data);
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             return communicationServiceLro.Value;
+        }
+
+        internal async Task<EmailServiceResource> CreateDefaultEmailServices(string emailServiceName, ResourceGroupResource _resourceGroup)
+        {
+            EmailServiceResourceData data = new EmailServiceResourceData(ResourceLocation)
+            {
+                DataLocation = ResourceDataLocation,
+            };
+            var emailServiceLro = await _resourceGroup.GetEmailServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, emailServiceName, data);
+            return emailServiceLro.Value;
+        }
+
+        internal async Task<CommunicationDomainResource> CreateDefaultDomain(string domainName, EmailServiceResource emailService)
+        {
+            CommunicationDomainResourceData data = new CommunicationDomainResourceData(ResourceLocation)
+            {
+                DomainManagement = DomainManagement.CustomerManaged,
+                ValidSenderUsernames = { {"username", "displayName" } }
+            };
+            var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
+            return domainLro.Value;
+        }
+
+        private void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
         }
     }
 }

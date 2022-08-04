@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var blobStorageUrl = TestEnvironment.StorageUri;
             var blobContainerName = BlobContainerName;
             var sasToken = "?" + SasToken;
-            var client = GetClient(false);
+            var managedHsmUrl = TestEnvironment.ManagedHsmUrl;
 
             // Create a Uri with the storage container
             UriBuilder builder = new UriBuilder(blobStorageUrl)
@@ -36,12 +37,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 #if SNIPPET
             // Construct a new KeyVaultBackupClient or use an existing one.
             KeyVaultBackupClient client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
+#else
+            var client = Client;
 #endif
 
             // Construct a BackupOperation using a KeyVaultBackupClient and the Id from a previously started operation.
             KeyVaultBackupOperation backupOperation = new KeyVaultBackupOperation(client, backupOperationId);
 #if !SNIPPET
-            backupOperation._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
+            backupOperation = InstrumentOperation(backupOperation);
 #endif
 
             // Wait for completion of the BackupOperation.
@@ -61,15 +64,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var restoreOperationId = originalRestoreOperation.Id;
 
             #region Snippet:ResumeRestoreAsync
-#if SNIPPET
-            // Construct a new KeyVaultBackupClient or use an existing one.
-            KeyVaultBackupClient Client = new KeyVaultBackupClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
-#endif
-
             // Construct a RestoreOperation using a KeyVaultBackupClient and the Id from a previously started operation.
             KeyVaultRestoreOperation restoreOperation = new KeyVaultRestoreOperation(client, restoreOperationId);
 #if !SNIPPET
-            restoreOperation._operationInternal._retryAfterSeconds = (int)PollingInterval.TotalSeconds;
+            restoreOperation = InstrumentOperation(restoreOperation);
 #endif
 
             // Wait for completion of the RestoreOperation.

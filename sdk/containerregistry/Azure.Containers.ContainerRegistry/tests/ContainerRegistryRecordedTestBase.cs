@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Azure.Management.ContainerRegistry;
@@ -12,19 +13,30 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
+using Azure.Core;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryRecordedTestBase : RecordedTestBase<ContainerRegistryTestEnvironment>
     {
-        protected ContainerRegistryRecordedTestBase(bool isAsync) : base(isAsync)
+        public ContainerRegistryRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
-        }
-
-        public ContainerRegistryRecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
+            DateTimeOffset expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromDays(365 * 30); // Never expire in software years
+            string encodedBody = Base64Url.EncodeString($"{{\"exp\":{expiresOn.ToUnixTimeSeconds()}}}");
+            var jwtSanitizedValue = $"{SanitizeValue}.{encodedBody}.{SanitizeValue}";
+            BodyKeySanitizers.Add(new BodyKeySanitizer(jwtSanitizedValue)
+            {
+                JsonPath = "$..refresh_token"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+            {
+                GroupForReplace = "group"
+            });
         }
 
         public ContainerRegistryClient CreateClient(bool anonymousAccess = false)
@@ -56,6 +68,22 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             return InstrumentClient(new ContainerRegistryClient(
                     new Uri(endpoint),
+                    InstrumentClientOptions(new ContainerRegistryClientOptions()
+                    {
+                        Audience = audience
+                    })
+                ));
+        }
+        public ContainerRegistryBlobClient CreateBlobClient(string repository)
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            Uri authorityHost = GetAuthorityHost(endpoint);
+            ContainerRegistryAudience audience = GetAudience(authorityHost);
+
+            return InstrumentClient(new ContainerRegistryBlobClient(
+                    new Uri(endpoint),
+                    TestEnvironment.Credential,
+                    repository,
                     InstrumentClientOptions(new ContainerRegistryClientOptions()
                     {
                         Audience = audience

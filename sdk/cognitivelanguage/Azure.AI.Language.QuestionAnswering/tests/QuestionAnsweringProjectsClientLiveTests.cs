@@ -22,6 +22,40 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29958")]
+        public async Task SupportsAadAuthentication()
+        {
+            QuestionAnsweringProjectsClient client = CreateClient<QuestionAnsweringProjectsClient>(
+               TestEnvironment.Endpoint,
+               TestEnvironment.Credential,
+               InstrumentClientOptions(
+                    new QuestionAnsweringClientOptions()));
+
+            string testProjectName = CreateTestProjectName();
+
+            RequestContent creationRequestContent = RequestContent.Create(
+                new
+                {
+                    description = "This is the description for a test project",
+                    language = "en",
+                    multilingualResource = false,
+                    settings = new
+                    {
+                        defaultAnswer = "No answer found for your question."
+                    }
+                }
+                );
+
+            Response createProjectResponse = await client.CreateProjectAsync(testProjectName, creationRequestContent);
+            Response projectDetailsResponse = await client.GetProjectDetailsAsync(testProjectName);
+
+            Assert.AreEqual(201, createProjectResponse.Status);
+            Assert.AreEqual(200, projectDetailsResponse.Status);
+
+            await client.DeleteProjectAsync(WaitUntil.Completed, testProjectName);
+        }
+
+        [RecordedTest]
         public async Task CreateProject()
         {
             string testProjectName = CreateTestProjectName();
@@ -33,8 +67,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(200, projectDetailsResponse.Status);
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(testProjectName)));
             Assert.That(projectDetailsResponse.Content.ToString().Contains(testProjectName));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -59,19 +91,17 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                             }
                         }
                 });
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(false, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 
             string testDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(false, testProjectName, testDeploymentName);
+            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Started, testProjectName, testDeploymentName);
 
             await deploymentOperation.WaitForCompletionAsync();
             AsyncPageable<BinaryData> deployments = Client.GetDeploymentsAsync(testProjectName);
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(testDeploymentName)));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -97,7 +127,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(true, testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
             AsyncPageable<BinaryData> sources = Client.GetQnasAsync(testProjectName);
 
@@ -105,8 +135,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -132,7 +160,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(false, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
 
             await updateSourcesOperation.WaitForCompletionAsync();
 
@@ -141,8 +169,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -180,8 +206,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -191,7 +215,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             await CreateProjectAsync(testProjectName);
 
             string exportFormat = "json";
-            Operation<BinaryData> exportOperation = await Client.ExportAsync(true, testProjectName, exportFormat);
+            Operation<BinaryData> exportOperation = await Client.ExportAsync(WaitUntil.Completed, testProjectName, exportFormat);
 
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
@@ -199,8 +223,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.True(exportOperation.HasCompleted);
             Assert.AreEqual(200, exportOperation.GetRawResponse().Status);
             Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -226,7 +248,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 }
             });
 
-            Operation<BinaryData> importOperation = await Client.ImportAsync(true, testProjectName, importRequestContent, importFormat);
+            Operation<BinaryData> importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
 
             Response projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 
@@ -234,8 +256,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
             Assert.AreEqual(200, projectDetails.Status);
             Assert.That(projectDetails.Content.ToString().Contains(testProjectName));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -261,7 +281,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
-            await DeleteProjectAsync(testProjectName);
         }
     }
 }

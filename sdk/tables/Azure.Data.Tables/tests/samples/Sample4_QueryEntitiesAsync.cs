@@ -44,7 +44,6 @@ namespace Azure.Data.Tables.Samples
             };
             await tableClient.AddEntityAsync(entity2);
 
-            #region Snippet:TablesSample4QueryEntitiesAsync
             // Use the <see cref="TableClient"> to query the table. Passing in OData filter strings is optional.
             AsyncPageable<TableEntity> queryResults = tableClient.QueryAsync<TableEntity>(filter: $"PartitionKey eq '{partitionKey}'");
             int count = 0;
@@ -57,19 +56,13 @@ namespace Azure.Data.Tables.Samples
             }
 
             Console.WriteLine($"The query returned {count} entities.");
-            #endregion
 
-            #region Snippet:TablesSample4QueryEntitiesExpressionAsync
             // Use the <see cref="TableClient"> to query the table using a filter expression.
             double priceCutOff = 6.00;
             AsyncPageable<OfficeSupplyEntity> queryResultsLINQ = tableClient.QueryAsync<OfficeSupplyEntity>(ent => ent.Price >= priceCutOff);
-            #endregion
 
-            #region Snippet:TablesSample4QueryEntitiesSelectAsync
             AsyncPageable<TableEntity> queryResultsSelect = tableClient.QueryAsync<TableEntity>(select: new List<string>() { "Product", "Price" });
-            #endregion
 
-            #region Snippet:TablesSample4QueryEntitiesMaxPerPageAsync
             AsyncPageable<TableEntity> queryResultsMaxPerPage = tableClient.QueryAsync<TableEntity>(maxPerPage: 10);
 
             // Iterate the <see cref="Pageable"> by page.
@@ -81,7 +74,6 @@ namespace Azure.Data.Tables.Samples
                     Console.WriteLine($"# of {qEntity.GetString("Product")} inventoried: {qEntity.GetInt32("Quantity")}");
                 }
             }
-            #endregion
 
             await serviceClient.DeleteTableAsync(tableName);
         }

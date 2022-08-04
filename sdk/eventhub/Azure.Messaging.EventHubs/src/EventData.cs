@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventHubs
     ///   An Event Hubs event, encapsulating a set of data and its associated metadata.
     /// </summary>
     ///
-    public class EventData : BinaryContent
+    public class EventData : MessageContent
     {
         /// <summary>The AMQP representation of the event, allowing access to additional protocol data elements not used directly by the Event Hubs client library.</summary>
         private readonly AmqpAnnotatedMessage _amqpMessage;
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///    This member is intended to allow the string-based <see cref="ContentType" /> in this class to be
-        ///    translated to/from the <see cref="Azure.Core.ContentType" /> type used by the <see cref="BinaryContent" />
+        ///    translated to/from the <see cref="Azure.Core.ContentType" /> type used by the <see cref="MessageContent" />
         ///    base class.
         /// </summary>
         ///
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Hidden property that shadows the <see cref="EventBody"/> property. This is added
-        ///   in order to inherit from <see cref="BinaryContent"/>.
+        ///   in order to inherit from <see cref="MessageContent"/>.
         /// </summary>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Hidden property that indicates that the <see cref="EventData"/> is not read-only. This is part of
-        ///   the <see cref="BinaryContent"/> abstraction.
+        ///   the <see cref="MessageContent"/> abstraction.
         /// </summary>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -220,7 +220,35 @@ namespace Azure.Messaging.EventHubs
         ///   A common use case for <see cref="EventData.Properties" /> is to associate serialization hints
         ///   for the <see cref="EventData.EventBody" /> as an aid to consumers who wish to deserialize the binary data
         ///   when the <see cref="ContentType" /> alone does not offer sufficient context.
+        ///
+        ///   <list type="bullet">
+        ///     <listheader><description>The following types are supported:</description></listheader>
+        ///     <item><description>string</description></item>
+        ///     <item><description>bool</description></item>
+        ///     <item><description>byte</description></item>
+        ///     <item><description>sbyte</description></item>
+        ///     <item><description>short</description></item>
+        ///     <item><description>ushort</description></item>
+        ///     <item><description>int</description></item>
+        ///     <item><description>uint</description></item>
+        ///     <item><description>long</description></item>
+        ///     <item><description>ulong</description></item>
+        ///     <item><description>float</description></item>
+        ///     <item><description>decimal</description></item>
+        ///     <item><description>double</description></item>
+        ///     <item><description>char</description></item>
+        ///     <item><description>Guid</description></item>
+        ///     <item><description>DateTime</description></item>
+        ///     <item><description>DateTimeOffset</description></item>
+        ///     <item><description>Stream</description></item>
+        ///     <item><description>Uri</description></item>
+        ///     <item><description>TimeSpan</description></item>
+        ///   </list>
         /// </remarks>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <see cref="EventData" /> is serialized for transport when an unsupported type is used as a property.
+        /// </exception>
         ///
         /// <example>
         ///   <code>

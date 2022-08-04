@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// SentinelOnboardingStatesOperations operations.
     /// </summary>
-    internal partial class SentinelOnboardingStatesOperations : IServiceOperations<SecurityInsightsClient>, ISentinelOnboardingStatesOperations
+    internal partial class SentinelOnboardingStatesOperations : IServiceOperations<SecurityInsights>, ISentinelOnboardingStatesOperations
     {
         /// <summary>
         /// Initializes a new instance of the SentinelOnboardingStatesOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SentinelOnboardingStatesOperations(SecurityInsightsClient client)
+        internal SentinelOnboardingStatesOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Get Sentinel onboarding state

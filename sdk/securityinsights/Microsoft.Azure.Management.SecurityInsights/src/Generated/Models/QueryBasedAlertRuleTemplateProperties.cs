@@ -38,7 +38,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="severity">The severity for alerts created by this
         /// alert rule. Possible values include: 'High', 'Medium', 'Low',
         /// 'Informational'</param>
-        /// <param name="tactics">The tactics of the alert rule</param>
         /// <param name="version">The version of this template - in format
         /// &lt;a.b.c&gt;, where all are numbers. For example
         /// &lt;1.0.2&gt;.</param>
@@ -48,11 +47,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// alert rule</param>
         /// <param name="alertDetailsOverride">The alert details override
         /// settings</param>
-        public QueryBasedAlertRuleTemplateProperties(string query = default(string), string severity = default(string), IList<string> tactics = default(IList<string>), string version = default(string), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
+        public QueryBasedAlertRuleTemplateProperties(string query = default(string), string severity = default(string), string version = default(string), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
         {
             Query = query;
             Severity = severity;
-            Tactics = tactics;
             Version = version;
             CustomDetails = customDetails;
             EntityMappings = entityMappings;
@@ -77,12 +75,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public string Severity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tactics of the alert rule
-        /// </summary>
-        [JsonProperty(PropertyName = "tactics")]
-        public IList<string> Tactics { get; set; }
 
         /// <summary>
         /// Gets or sets the version of this template - in format

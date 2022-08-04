@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteConnectionList
+    internal partial class ExpressRouteConnectionList
     {
         internal static ExpressRouteConnectionList DeserializeExpressRouteConnectionList(JsonElement element)
         {

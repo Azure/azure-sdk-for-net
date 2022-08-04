@@ -1,20 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
+using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientLiveTestBase : RecordedTestBase<CommunicationIdentityClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
+
         public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
-            => Sanitizer = new CommunicationIdentityClientRecordedTestSanitizer();
+        {
+            JsonPathSanitizers.Add("$..token");
+            JsonPathSanitizers.Add("$..appId");
+            JsonPathSanitizers.Add("$..userId");
+            JsonPathSanitizers.Add("$..id");
+            SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
+        }
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
@@ -48,14 +59,10 @@ namespace Azure.Communication.Identity.Tests
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
-        protected async Task<string> generateTeamsToken()
+        protected async Task<GetTokenForTeamsUserOptions> CreateTeamsUserParams()
         {
-            string token;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                token = "Sanitized";
-            }
-            else
+            GetTokenForTeamsUserOptions options = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
+            if (!TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest && Mode != RecordedTestMode.Playback)
             {
                 IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
@@ -71,9 +78,9 @@ namespace Azure.Communication.Identity.Tests
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-                token = result.AccessToken;
+                options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
-            return token;
+            return options;
         }
     }
 }

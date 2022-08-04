@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.SignalR.Tests.Common;
@@ -29,7 +30,7 @@ namespace SignalRServiceExtension.Tests
             var connectionStringKey = "key";
             configuration[connectionStringKey] = connectionString;
 
-            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, null);
+            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, null, Options.Create(new SignalROptions()));
             var hubContextStore = managerStore.GetOrAddByConnectionStringKey(connectionStringKey);
             var manager = hubContextStore.ServiceManager;
         }
@@ -44,7 +45,7 @@ namespace SignalRServiceExtension.Tests
             configuration[Constants.FunctionsWorkerRuntime] = Constants.DotnetWorker;
 
             var productInfo = new ServiceCollection()
-                .AddSignalRServiceManager(new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, connectionStringKey))
+                .AddSignalRServiceManager(new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, connectionStringKey))
                 .BuildServiceProvider()
                 .GetRequiredService<IOptions<ServiceManagerOptions>>()
                 .Value.ProductInfo;
@@ -70,6 +71,28 @@ namespace SignalRServiceExtension.Tests
                 .ConfigureWebJobs(b => b.AddSignalR().Services.AddAzureClientsCore()).Build();
             var hubContext = await host.Services.GetRequiredService<IServiceManagerStore>().GetOrAddByConnectionStringKey("key").GetAsync("hubName") as ServiceHubContext;
             await Assert.ThrowsAsync<AzureSignalRNotConnectedException>(() => hubContext.NegotiateAsync().AsTask());
+        }
+
+        [Fact]
+        public async Task TestConfigureSignalROptions()
+        {
+            var builder = new HostBuilder();
+            var host = builder
+                .ConfigureWebJobs(b => b.AddSignalR())
+                .ConfigureServices(services => services.Configure<SignalROptions>(o =>
+                {
+                    foreach (var endpoint in FakeEndpointUtils.GetFakeEndpoint(3))
+                    {
+                        o.ServiceEndpoints.Add(endpoint);
+                    }
+                    o.ServiceTransportType = ServiceTransportType.Persistent;
+                    o.JsonObjectSerializer = new NewtonsoftJsonObjectSerializer();
+                })).Build();
+            var hubContext = await host.Services.GetRequiredService<IServiceManagerStore>().GetOrAddByConnectionStringKey("key").GetAsync("hubName") as ServiceHubContext;
+            var resultOptions = (hubContext as ServiceHubContextImpl).ServiceProvider.GetRequiredService<IOptions<ServiceManagerOptions>>().Value;
+            Assert.Equal(3, resultOptions.ServiceEndpoints.Length);
+            Assert.Equal(ServiceTransportType.Persistent, resultOptions.ServiceTransportType);
+            Assert.IsType<NewtonsoftJsonObjectSerializer>(resultOptions.ObjectSerializer);
         }
     }
 }

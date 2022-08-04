@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteDomainOwnershipIdentifier and their operations over its parent. </summary>
-    public partial class SiteDomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<SiteDomainOwnershipIdentifier>, IAsyncEnumerable<SiteDomainOwnershipIdentifier>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteDomainOwnershipIdentifierResource" /> and their operations.
+    /// Each <see cref="SiteDomainOwnershipIdentifierResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteDomainOwnershipIdentifierCollection" /> instance call the GetSiteDomainOwnershipIdentifiers method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
+    public partial class SiteDomainOwnershipIdentifierCollection : ArmCollection, IEnumerable<SiteDomainOwnershipIdentifierResource>, IAsyncEnumerable<SiteDomainOwnershipIdentifierResource>
     {
         private readonly ClientDiagnostics _siteDomainOwnershipIdentifierWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteDomainOwnershipIdentifierWebAppsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteDomainOwnershipIdentifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDomainOwnershipIdentifier.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteDomainOwnershipIdentifier.ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
-            _siteDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(_siteDomainOwnershipIdentifierWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDomainOwnershipIdentifierWebAppsApiVersion);
+            _siteDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteDomainOwnershipIdentifierResource.ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
+            _siteDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteDomainOwnershipIdentifierWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -55,24 +58,24 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_CreateOrUpdateDomainOwnershipIdentifier
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteDomainOwnershipIdentifier>> CreateOrUpdateAsync(bool waitForCompletion, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteDomainOwnershipIdentifierResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, domainOwnershipIdentifier, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifier>(Response.FromValue(new SiteDomainOwnershipIdentifier(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,24 +91,24 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_CreateOrUpdateDomainOwnershipIdentifier
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="domainOwnershipIdentifier"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="domainOwnershipIdentifier"/> is null. </exception>
-        public virtual ArmOperation<SiteDomainOwnershipIdentifier> CreateOrUpdate(bool waitForCompletion, string domainOwnershipIdentifierName, IdentifierData domainOwnershipIdentifier, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SiteDomainOwnershipIdentifierResource> CreateOrUpdate(WaitUntil waitUntil, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-            Argument.AssertNotNull(domainOwnershipIdentifier, nameof(domainOwnershipIdentifier));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, domainOwnershipIdentifier, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifier>(Response.FromValue(new SiteDomainOwnershipIdentifier(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var response = _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public async virtual Task<Response<SiteDomainOwnershipIdentifier>> GetAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> GetAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
 
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDomainOwnershipIdentifier(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public virtual Response<SiteDomainOwnershipIdentifier> Get(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDomainOwnershipIdentifierResource> Get(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
 
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifier(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +183,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListDomainOwnershipIdentifiers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteDomainOwnershipIdentifier> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteDomainOwnershipIdentifierResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteDomainOwnershipIdentifier>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteDomainOwnershipIdentifierResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.ListDomainOwnershipIdentifiersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifier(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +201,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteDomainOwnershipIdentifier>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteDomainOwnershipIdentifierResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.ListDomainOwnershipIdentifiersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifier(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +225,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListDomainOwnershipIdentifiers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifier" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteDomainOwnershipIdentifier> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteDomainOwnershipIdentifierResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteDomainOwnershipIdentifierResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteDomainOwnershipIdentifier> FirstPageFunc(int? pageSizeHint)
+            Page<SiteDomainOwnershipIdentifierResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteDomainOwnershipIdentifierWebAppsRestClient.ListDomainOwnershipIdentifiers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifier(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +243,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteDomainOwnershipIdentifier> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteDomainOwnershipIdentifierResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteDomainOwnershipIdentifierWebAppsRestClient.ListDomainOwnershipIdentifiersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifier(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDomainOwnershipIdentifierResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -267,7 +270,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
 
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(domainOwnershipIdentifierName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,7 +305,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(domainOwnershipIdentifierName, cancellationToken: cancellationToken);
+                var response = _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,65 +315,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// Operation Id: WebApps_GetDomainOwnershipIdentifier
-        /// </summary>
-        /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public async virtual Task<Response<SiteDomainOwnershipIdentifier>> GetIfExistsAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteDomainOwnershipIdentifier>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifier(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
-        /// Operation Id: WebApps_GetDomainOwnershipIdentifier
-        /// </summary>
-        /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
-        public virtual Response<SiteDomainOwnershipIdentifier> GetIfExists(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(domainOwnershipIdentifierName, nameof(domainOwnershipIdentifierName));
-
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteDomainOwnershipIdentifier>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifier(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SiteDomainOwnershipIdentifier> IEnumerable<SiteDomainOwnershipIdentifier>.GetEnumerator()
+        IEnumerator<SiteDomainOwnershipIdentifierResource> IEnumerable<SiteDomainOwnershipIdentifierResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +325,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteDomainOwnershipIdentifier> IAsyncEnumerable<SiteDomainOwnershipIdentifier>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteDomainOwnershipIdentifierResource> IAsyncEnumerable<SiteDomainOwnershipIdentifierResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -5,27 +5,32 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource extended location. </summary>
+    [PropertyReferenceType]
     public partial class ExtendedLocation
     {
         /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        [InitializationConstructor]
         public ExtendedLocation()
         {
         }
 
         /// <summary> Initializes a new instance of ExtendedLocation. </summary>
-        /// <param name="type"> The extended location type. </param>
+        /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal ExtendedLocation(ExtendedLocationType? type, string name)
+        [SerializationConstructor]
+        internal ExtendedLocation(ExtendedLocationType? extendedLocationType, string name)
         {
-            Type = type;
+            ExtendedLocationType = extendedLocationType;
             Name = name;
         }
 
         /// <summary> The extended location type. </summary>
-        public ExtendedLocationType? Type { get; set; }
+        public ExtendedLocationType? ExtendedLocationType { get; set; }
         /// <summary> The extended location name. </summary>
         public string Name { get; set; }
     }

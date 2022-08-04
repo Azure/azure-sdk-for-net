@@ -125,6 +125,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task PeekMessagesWithACustomIdentifier()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCt = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<ServiceBusMessage>();
+
+                await sender.SendMessagesAsync(batch);
+
+                var options = new ServiceBusReceiverOptions
+                {
+                    Identifier = "MyServiceBusReceiver"
+                };
+                await using var receiver = client.CreateReceiver(scope.QueueName, options);
+                var messageEnum = sentMessages.GetEnumerator();
+
+                var ct = 0;
+                while (ct < messageCt)
+                {
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekMessagesAsync(
+                    maxMessages: messageCt))
+                    {
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
+                        ct++;
+                    }
+                }
+                Assert.AreEqual(messageCt, ct);
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesWhenQueueEmpty()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -157,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
                 var stop = DateTime.UtcNow;
 
-                Assert.That(stop - start, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
+                Assert.That(stop - start, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(5)));
             }
         }
 
@@ -230,7 +266,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(1, msg.DeliveryCount);
                 var end = DateTime.UtcNow;
                 Assert.NotNull(msg);
-                Assert.Less(end - start, TimeSpan.FromSeconds(5));
+                Assert.Less(end - start, TimeSpan.FromSeconds(10));
             }
         }
 

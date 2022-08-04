@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines contents of rate limit rules. </summary>
-    public partial class RateLimitRuleList
+    internal partial class RateLimitRuleList
     {
         /// <summary> Initializes a new instance of RateLimitRuleList. </summary>
         public RateLimitRuleList()

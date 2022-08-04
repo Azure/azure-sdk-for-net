@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<CdnSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -63,11 +63,16 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ManagedRuleSetDefinition(id, name, type, systemData, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
         }
     }
 }

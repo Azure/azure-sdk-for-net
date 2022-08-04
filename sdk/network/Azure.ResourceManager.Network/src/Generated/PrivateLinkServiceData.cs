@@ -6,33 +6,35 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PrivateLinkService data model. </summary>
-    public partial class PrivateLinkServiceData : Resource
+    public partial class PrivateLinkServiceData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
         public PrivateLinkServiceData()
         {
-            LoadBalancerFrontendIpConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
-            IpConfigurations = new ChangeTrackingList<PrivateLinkServiceIpConfiguration>();
+            LoadBalancerFrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
+            IPConfigurations = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="loadBalancerFrontendIpConfigurations"> An array of references to the load balancer IP configurations. </param>
+        /// <param name="loadBalancerFrontendIPConfigurations"> An array of references to the load balancer IP configurations. </param>
         /// <param name="ipConfigurations"> An array of private link service IP configurations. </param>
         /// <param name="networkInterfaces"> An array of references to the network interfaces created for this private link service. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service resource. </param>
@@ -42,12 +44,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdns"> The list of Fqdn. </param>
         /// <param name="alias"> The alias of the private link service. </param>
         /// <param name="enableProxyProtocol"> Whether the private link service is enabled for proxy protocol or not. </param>
-        internal PrivateLinkServiceData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIpConfigurations, IList<PrivateLinkServiceIpConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, type, location, tags)
+        internal PrivateLinkServiceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations, IList<PrivateLinkServiceIPConfiguration> ipConfigurations, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections, PrivateLinkServicePropertiesVisibility visibility, PrivateLinkServicePropertiesAutoApproval autoApproval, IList<string> fqdns, string @alias, bool? enableProxyProtocol) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
-            Etag = etag;
-            LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
-            IpConfigurations = ipConfigurations;
+            ETag = etag;
+            LoadBalancerFrontendIPConfigurations = loadBalancerFrontendIPConfigurations;
+            IPConfigurations = ipConfigurations;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -61,21 +63,43 @@ namespace Azure.ResourceManager.Network
         /// <summary> The extended location of the load balancer. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> An array of references to the load balancer IP configurations. </summary>
-        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIpConfigurations { get; }
+        public IList<FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get; }
         /// <summary> An array of private link service IP configurations. </summary>
-        public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; }
+        public IList<PrivateLinkServiceIPConfiguration> IPConfigurations { get; }
         /// <summary> An array of references to the network interfaces created for this private link service. </summary>
         public IReadOnlyList<NetworkInterfaceData> NetworkInterfaces { get; }
         /// <summary> The provisioning state of the private link service resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> An array of list about connections to the private endpoint. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<NetworkPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The visibility list of the private link service. </summary>
-        public PrivateLinkServicePropertiesVisibility Visibility { get; set; }
+        internal PrivateLinkServicePropertiesVisibility Visibility { get; set; }
+        /// <summary> The list of subscriptions. </summary>
+        public IList<string> VisibilitySubscriptions
+        {
+            get
+            {
+                if (Visibility is null)
+                    Visibility = new PrivateLinkServicePropertiesVisibility();
+                return Visibility.Subscriptions;
+            }
+        }
+
         /// <summary> The auto-approval list of the private link service. </summary>
-        public PrivateLinkServicePropertiesAutoApproval AutoApproval { get; set; }
+        internal PrivateLinkServicePropertiesAutoApproval AutoApproval { get; set; }
+        /// <summary> The list of subscriptions. </summary>
+        public IList<string> AutoApprovalSubscriptions
+        {
+            get
+            {
+                if (AutoApproval is null)
+                    AutoApproval = new PrivateLinkServicePropertiesAutoApproval();
+                return AutoApproval.Subscriptions;
+            }
+        }
+
         /// <summary> The list of Fqdn. </summary>
         public IList<string> Fqdns { get; }
         /// <summary> The alias of the private link service. </summary>

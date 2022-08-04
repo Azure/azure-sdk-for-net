@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -18,6 +19,7 @@ using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -792,7 +794,10 @@ namespace Azure.Storage.Blobs.Test
             {
                 Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                     content: stream,
-                    transactionalContentHash: MD5.Create().ComputeHash(data));
+                    transactionalContentHash: MD5.Create().ComputeHash(data),
+                    conditions: null,
+                    progressHandler: null,
+                    cancellationToken: CancellationToken.None);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -815,7 +820,10 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.AppendBlockAsync(
                         content: stream,
-                        transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
+                        transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage")),
+                        conditions: null,
+                        progressHandler: null,
+                        cancellationToken: CancellationToken.None),
                     e => Assert.AreEqual("Md5Mismatch", e.ErrorCode));
             }
         }
@@ -873,7 +881,10 @@ namespace Azure.Storage.Blobs.Test
                 {
                     Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                         content: stream,
-                        conditions: accessConditions);
+                        options: new AppendBlobAppendBlockOptions
+                        {
+                            Conditions = accessConditions
+                        });
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -916,7 +927,10 @@ namespace Azure.Storage.Blobs.Test
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(
                             content: stream,
-                            conditions: accessConditions),
+                            options: new AppendBlobAppendBlockOptions
+                            {
+                                Conditions = accessConditions
+                            }),
                         e => { });
                 }
             }
@@ -948,7 +962,10 @@ namespace Azure.Storage.Blobs.Test
             // Act
             Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                 content: stream,
-                conditions: conditions);
+                options: new AppendBlobAppendBlockOptions
+                {
+                    Conditions = conditions
+                });
         }
 
         [RecordedTest]
@@ -973,7 +990,10 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.AppendBlockAsync(
                     content: stream,
-                    conditions: conditions),
+                    options: new AppendBlobAppendBlockOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1011,7 +1031,12 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
+                await blobFaulty.AppendBlockAsync(
+                    content: stream,
+                    options: new AppendBlobAppendBlockOptions
+                    {
+                        ProgressHandler = progressHandler
+                    });
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
@@ -1047,7 +1072,12 @@ namespace Azure.Storage.Blobs.Test
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await blob.AppendBlockAsync(stream, progressHandler: progress);
+                await blob.AppendBlockAsync(
+                    content: stream,
+                    options: new AppendBlobAppendBlockOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert
@@ -1596,6 +1626,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_10_02)]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task AppendBlockFromUriAsync_SourceBearerToken()
         {
             // Arrange
@@ -1664,6 +1695,33 @@ namespace Azure.Storage.Blobs.Test
                     sourceUri: sourceBlob.Uri,
                     options: options),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task AppendBlockFromUriAsync_NullOptions()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateIfNotExistsAsync();
+                await sourceBlob.AppendBlockAsync(stream);
+
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await destBlob.CreateIfNotExistsAsync();
+
+                // Act
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(sourceBlob.Uri);
+
+                // Ensure that we grab the whole ETag value from the service without removing the quotes
+                Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            }
         }
 
         [RecordedTest]

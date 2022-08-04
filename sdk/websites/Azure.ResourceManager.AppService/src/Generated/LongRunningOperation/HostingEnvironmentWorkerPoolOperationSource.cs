@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class HostingEnvironmentWorkerPoolOperationSource : IOperationSource<HostingEnvironmentWorkerPool>
+    internal class HostingEnvironmentWorkerPoolOperationSource : IOperationSource<HostingEnvironmentWorkerPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        HostingEnvironmentWorkerPool IOperationSource<HostingEnvironmentWorkerPool>.CreateResult(Response response, CancellationToken cancellationToken)
+        HostingEnvironmentWorkerPoolResource IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement);
-            return new HostingEnvironmentWorkerPool(_client, data);
+            var data = WorkerPoolData.DeserializeWorkerPoolData(document.RootElement);
+            return new HostingEnvironmentWorkerPoolResource(_client, data);
         }
 
-        async ValueTask<HostingEnvironmentWorkerPool> IOperationSource<HostingEnvironmentWorkerPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HostingEnvironmentWorkerPoolResource> IOperationSource<HostingEnvironmentWorkerPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement);
-            return new HostingEnvironmentWorkerPool(_client, data);
+            var data = WorkerPoolData.DeserializeWorkerPoolData(document.RootElement);
+            return new HostingEnvironmentWorkerPoolResource(_client, data);
         }
     }
 }

@@ -29,13 +29,13 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public EventRoutesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public EventRoutesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-05-31")
         {
-            _endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://digitaltwins-hostname");
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateListRequest(GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)
@@ -201,13 +201,10 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (eventRoute != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(eventRoute);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(eventRoute);
+            request.Content = content;
             return message;
         }
 
@@ -225,12 +222,16 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoute"> The event route data. </param>
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute = null, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="eventRoute"/> is null. </exception>
+        public async Task<Response> AddAsync(string id, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
+            }
+            if (eventRoute == null)
+            {
+                throw new ArgumentNullException(nameof(eventRoute));
             }
 
             using var message = CreateAddRequest(id, eventRoute, eventRoutesAddOptions);
@@ -258,12 +259,16 @@ namespace Azure.DigitalTwins.Core
         /// <param name="eventRoute"> The event route data. </param>
         /// <param name="eventRoutesAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response Add(string id, DigitalTwinsEventRoute eventRoute = null, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="eventRoute"/> is null. </exception>
+        public Response Add(string id, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions eventRoutesAddOptions = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
+            }
+            if (eventRoute == null)
+            {
+                throw new ArgumentNullException(nameof(eventRoute));
             }
 
             using var message = CreateAddRequest(id, eventRoute, eventRoutesAddOptions);

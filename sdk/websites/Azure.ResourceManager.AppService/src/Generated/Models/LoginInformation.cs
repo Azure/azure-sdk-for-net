@@ -41,7 +41,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
-        public LoginRoutes Routes { get; set; }
+        internal LoginRoutes Routes { get; set; }
+        /// <summary> The endpoint at which a logout request should be made. </summary>
+        public string RoutesLogoutEndpoint
+        {
+            get => Routes is null ? default : Routes.LogoutEndpoint;
+            set
+            {
+                if (Routes is null)
+                    Routes = new LoginRoutes();
+                Routes.LogoutEndpoint = value;
+            }
+        }
+
         /// <summary> The configuration settings of the token store. </summary>
         public TokenStore TokenStore { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

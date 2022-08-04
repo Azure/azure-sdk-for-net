@@ -12,9 +12,12 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 {
     public static class ResourceDataHelper
     {
-        public static ProfileData CreateProfileData(SkuName skuName) => new ProfileData(AzureLocation.WestUS, new Models.Sku { Name = skuName });
+        public static ProfileData CreateProfileData(CdnSkuName skuName) => new ProfileData(AzureLocation.WestUS, new CdnSku { Name = skuName });
 
-        public static ProfileData CreateAfdProfileData(SkuName skuName) => new ProfileData("Global", new Models.Sku { Name = skuName });
+        public static ProfileData CreateAfdProfileData(CdnSkuName skuName) => new ProfileData("Global", new CdnSku { Name = skuName })
+        {
+            OriginResponseTimeoutSeconds = 60
+        };
 
         public static CdnEndpointData CreateEndpointData() => new CdnEndpointData(AzureLocation.WestUS)
         {
@@ -23,10 +26,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             OptimizationType = OptimizationType.GeneralWebDelivery
         };
 
-        public static AfdEndpointData CreateAfdEndpointData() => new AfdEndpointData(AzureLocation.WestUS)
-        {
-            OriginResponseTimeoutSeconds = 60
-        };
+        public static FrontDoorEndpointData CreateAfdEndpointData() => new FrontDoorEndpointData(AzureLocation.WestUS);
 
         public static DeepCreatedOrigin CreateDeepCreatedOrigin() => new DeepCreatedOrigin("testOrigin")
         {
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static DeepCreatedOriginGroup CreateDeepCreatedOriginGroup() => new DeepCreatedOriginGroup("testOriginGroup")
         {
-            HealthProbeSettings = new HealthProbeParameters
+            HealthProbeSettings = new HealthProbeSettings
             {
                 ProbePath = "/healthz",
                 ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
+                ProbeProtocol = HealthProbeProtocol.Https,
                 ProbeIntervalInSeconds = 60
             }
         };
@@ -53,23 +53,23 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Weight = 150
         };
 
-        public static AfdOriginData CreateAfdOriginData() => new AfdOriginData
+        public static FrontDoorOriginData CreateAfdOriginData() => new FrontDoorOriginData
         {
             HostName = "testsa4dotnetsdk.blob.core.windows.net"
         };
 
         public static CdnOriginGroupData CreateOriginGroupData() => new CdnOriginGroupData();
 
-        public static AfdOriginGroupData CreateAfdOriginGroupData() => new AfdOriginGroupData
+        public static FrontDoorOriginGroupData CreateAfdOriginGroupData() => new FrontDoorOriginGroupData
         {
-            HealthProbeSettings = new HealthProbeParameters
+            HealthProbeSettings = new HealthProbeSettings
             {
                 ProbePath = "/healthz",
                 ProbeRequestType = HealthProbeRequestType.Head,
-                ProbeProtocol = ProbeProtocol.Https,
+                ProbeProtocol = HealthProbeProtocol.Https,
                 ProbeIntervalInSeconds = 60
             },
-            LoadBalancingSettings = new LoadBalancingSettingsParameters
+            LoadBalancingSettings = new LoadBalancingSettings
             {
                 SampleSize = 5,
                 SuccessfulSamplesRequired = 4,
@@ -77,42 +77,43 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static CustomDomainOptions CreateCdnCustomDomainData(string hostName) => new CustomDomainOptions
+        public static CdnCustomDomainCreateOrUpdateContent CreateCdnCustomDomainData(string hostName) => new CdnCustomDomainCreateOrUpdateContent
         {
             HostName = hostName
         };
 
-        public static AfdCustomDomainData CreateAfdCustomDomainData(string hostName) => new AfdCustomDomainData
+        public static FrontDoorCustomDomainData CreateAfdCustomDomainData(string hostName) => new FrontDoorCustomDomainData
         {
             HostName = hostName,
-            TlsSettings = new AfdCustomDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
+            TlsSettings = new FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType.ManagedCertificate)
             {
-                MinimumTlsVersion = AfdMinimumTlsVersion.TLS12
+                MinimumTlsVersion = FrontDoorMinimumTlsVersion.Tls1_2
             },
-            AzureDnsZone = new WritableSubResource
+            DnsZone = new WritableSubResource
             {
                 Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/cdntest/providers/Microsoft.Network/dnszones/azuretest.net")
             }
         };
 
-        public static AfdRuleData CreateAfdRuleData() => new AfdRuleData
+        public static FrontDoorRuleData CreateAfdRuleData() => new FrontDoorRuleData
         {
             Order = 1
         };
 
-        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any));
+        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchCondition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any));
 
-        public static DeliveryRuleActionAutoGenerated CreateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
+        public static DeliveryRuleAction CreateDeliveryRuleOperation() => new DeliveryRuleRouteConfigurationOverrideAction(new RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType.RouteConfigurationOverrideAction)
         {
-            CacheDuration = "00:00:20"
+            CacheConfiguration = new CacheConfiguration()
+            {
+                QueryStringCachingBehavior = RuleQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings,
+                QueryParameters = "a=test,b=test",
+                IsCompressionEnabled = RuleIsCompressionEnabled.Enabled,
+                CacheBehavior = RuleCacheBehavior.HonorOrigin
+            }
         });
 
-        public static DeliveryRuleActionAutoGenerated UpdateDeliveryRuleOperation() => new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersOdataType.MicrosoftAzureCdnModelsDeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
-        {
-            CacheDuration = "00:00:30"
-        });
-
-        public static AfdRouteData CreateAfdRouteData(AfdOriginGroup originGroup) => new AfdRouteData
+        public static FrontDoorRouteData CreateAfdRouteData(FrontDoorOriginGroupResource originGroup) => new FrontDoorRouteData
         {
             OriginGroup = new WritableSubResource
             {
@@ -122,9 +123,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             EnabledState = EnabledState.Enabled
         };
 
-        public static AfdSecurityPolicyData CreateAfdSecurityPolicyData(AfdEndpoint endpoint) => new AfdSecurityPolicyData
+        public static FrontDoorSecurityPolicyData CreateAfdSecurityPolicyData(FrontDoorEndpointResource endpoint) => new FrontDoorSecurityPolicyData
         {
-            Parameters = new SecurityPolicyWebApplicationFirewallParameters
+            Properties = new SecurityPolicyWebApplicationFirewall
             {
                 WafPolicy = new WritableSubResource
                 {
@@ -133,45 +134,57 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         };
 
-        public static AfdSecretData CreateAfdSecretData() => new AfdSecretData
+        public static FrontDoorSecretData CreateAfdSecretData() => new FrontDoorSecretData
         {
-            Parameters = new CustomerCertificateParameters(new WritableSubResource
+            Properties = new CustomerCertificateProperties(new WritableSubResource
             {
-                Id = new ResourceIdentifier("/subscriptions/87082bb7-c39f-42d2-83b6-4980444c7397/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFD/certificates/testCert")
+                Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFDTest/certificates/testCertificate")
             })
             {
                 UseLatestVersion = true
             }
         };
 
-        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new Models.Sku
+        public static CdnWebApplicationFirewallPolicyData CreateCdnWebApplicationFirewallPolicyData() => new CdnWebApplicationFirewallPolicyData("Global", new CdnSku
         {
-            Name = SkuName.StandardMicrosoft
+            Name = CdnSkuName.StandardMicrosoft
         });
 
-        public static void AssertValidProfile(Profile model, Profile getResult)
+        public static void AssertValidProfile(ProfileResource model, ProfileResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
+            Assert.AreEqual(model.Data.Kind, getResult.Data.Kind);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
-            Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
+            Assert.AreEqual(model.Data.FrontDoorId, getResult.Data.FrontDoorId);
+            Assert.AreEqual(model.Data.OriginResponseTimeoutSeconds, getResult.Data.OriginResponseTimeoutSeconds);
         }
 
-        public static void AssertProfileUpdate(Profile updatedProfile, string key, string value)
+        public static void AssertProfileUpdate(ProfileResource updatedProfile, ProfilePatch updateOptions)
+        {
+            Assert.AreEqual(updatedProfile.Data.Tags.Count, updateOptions.Tags.Count);
+            foreach (var kv in updatedProfile.Data.Tags)
+            {
+                Assert.True(updateOptions.Tags.ContainsKey(kv.Key));
+                Assert.AreEqual(kv.Value, updateOptions.Tags[kv.Key]);
+            }
+        }
+
+        public static void AssertProfileUpdate(ProfileResource updatedProfile, string key, string value)
         {
             Assert.GreaterOrEqual(updatedProfile.Data.Tags.Count, 1);
             Assert.IsTrue(updatedProfile.Data.Tags.ContainsKey(key));
             Assert.AreEqual(updatedProfile.Data.Tags[key], value);
         }
 
-        public static void AssertValidEndpoint(CdnEndpoint model, CdnEndpoint getResult)
+        public static void AssertValidEndpoint(CdnEndpointResource model, CdnEndpointResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
             Assert.AreEqual(model.Data.OriginHostHeader, getResult.Data.OriginHostHeader);
             Assert.AreEqual(model.Data.IsCompressionEnabled, getResult.Data.IsCompressionEnabled);
@@ -186,28 +199,26 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ContentTypesToCompress, GeoFilters, DefaultOriginGroup, UrlSigningKeys, DeliveryPolicy, WebApplicationFirewallPolicyLink, Origins, OriginGroups
         }
 
-        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, CdnEndpointUpdateOptions updateOptions)
+        public static void AssertEndpointUpdate(CdnEndpointResource updatedEndpoint, CdnEndpointPatch updateOptions)
         {
             Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateOptions.IsHttpAllowed);
             Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateOptions.OriginPath);
             Assert.AreEqual(updatedEndpoint.Data.OriginHostHeader, updateOptions.OriginHostHeader);
         }
 
-        public static void AssertValidAfdEndpoint(AfdEndpoint model, AfdEndpoint getResult)
+        public static void AssertValidAfdEndpoint(FrontDoorEndpointResource model, FrontDoorEndpointResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
-            Assert.AreEqual(model.Data.OriginResponseTimeoutSeconds, getResult.Data.OriginResponseTimeoutSeconds);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.EnabledState, getResult.Data.EnabledState);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
         }
 
-        public static void AssertAfdEndpointUpdate(AfdEndpoint updatedAfdEndpoint, AfdEndpointUpdateOptions updateOptions)
+        public static void AssertAfdEndpointUpdate(FrontDoorEndpointResource updatedAfdEndpoint, FrontDoorEndpointPatch updateOptions)
         {
-            Assert.AreEqual(updatedAfdEndpoint.Data.OriginResponseTimeoutSeconds, updateOptions.OriginResponseTimeoutSeconds);
             Assert.AreEqual(updatedAfdEndpoint.Data.Tags.Count, updateOptions.Tags.Count);
             foreach (var kv in updatedAfdEndpoint.Data.Tags)
             {
@@ -216,11 +227,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             }
         }
 
-        public static void AssertValidOrigin(CdnOrigin model, CdnOrigin getResult)
+        public static void AssertValidOrigin(CdnOriginResource model, CdnOriginResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
             Assert.AreEqual(model.Data.HttpsPort, getResult.Data.HttpsPort);
@@ -237,7 +248,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.PrivateEndpointStatus, getResult.Data.PrivateEndpointStatus);
         }
 
-        public static void AssertOriginUpdate(CdnOrigin updatedOrigin, CdnOriginUpdateOptions updateOptions)
+        public static void AssertOriginUpdate(CdnOriginResource updatedOrigin, CdnOriginPatch updateOptions)
         {
             Assert.AreEqual(updatedOrigin.Data.HttpPort, updateOptions.HttpPort);
             Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateOptions.HttpsPort);
@@ -245,16 +256,16 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(updatedOrigin.Data.Weight, updateOptions.Weight);
         }
 
-        public static void AssertValidAfdOrigin(AfdOrigin model, AfdOrigin getResult)
+        public static void AssertValidAfdOrigin(FrontDoorOriginResource model, FrontDoorOriginResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
-            if (model.Data.AzureOrigin != null || getResult.Data.AzureOrigin != null)
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            if (model.Data.Origin != null || getResult.Data.Origin != null)
             {
-                Assert.NotNull(model.Data.AzureOrigin);
-                Assert.NotNull(getResult.Data.AzureOrigin);
-                Assert.AreEqual(model.Data.AzureOrigin.Id, getResult.Data.AzureOrigin.Id);
+                Assert.NotNull(model.Data.Origin);
+                Assert.NotNull(getResult.Data.Origin);
+                Assert.AreEqual(model.Data.Origin.Id, getResult.Data.Origin.Id);
             }
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
@@ -268,17 +279,17 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo:SharedPrivateLinkResource
         }
 
-        public static void AssertAfdOriginUpdate(AfdOrigin updatedAfdOrigin, AfdOriginUpdateOptions updateOptions)
+        public static void AssertAfdOriginUpdate(FrontDoorOriginResource updatedAfdOrigin, FrontDoorOriginPatch updateOptions)
         {
             Assert.AreEqual(updatedAfdOrigin.Data.Priority, updateOptions.Priority);
             Assert.AreEqual(updatedAfdOrigin.Data.Weight, updateOptions.Weight);
         }
 
-        public static void AssertValidOriginGroup(CdnOriginGroup model, CdnOriginGroup getResult)
+        public static void AssertValidOriginGroup(CdnOriginGroupResource model, CdnOriginGroupResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if (model.Data.HealthProbeSettings != null || getResult.Data.HealthProbeSettings != null)
             {
                 Assert.NotNull(model.Data.HealthProbeSettings);
@@ -299,7 +310,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ResponseBasedOriginErrorDetectionSettings
         }
 
-        public static void AssertOriginGroupUpdate(CdnOriginGroup updatedOriginGroup, CdnOriginGroupUpdateOptions updateOptions)
+        public static void AssertOriginGroupUpdate(CdnOriginGroupResource updatedOriginGroup, CdnOriginGroupPatch updateOptions)
         {
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbePath, updateOptions.HealthProbeSettings.ProbePath);
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeRequestType, updateOptions.HealthProbeSettings.ProbeRequestType);
@@ -307,11 +318,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeIntervalInSeconds, updateOptions.HealthProbeSettings.ProbeIntervalInSeconds);
         }
 
-        public static void AssertValidAfdOriginGroup(AfdOriginGroup model, AfdOriginGroup getResult)
+        public static void AssertValidAfdOriginGroup(FrontDoorOriginGroupResource model, FrontDoorOriginGroupResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if (model.Data.LoadBalancingSettings != null || getResult.Data.LoadBalancingSettings != null)
             {
                 Assert.NotNull(model.Data.LoadBalancingSettings);
@@ -329,38 +340,38 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.AreEqual(model.Data.HealthProbeSettings.ProbeProtocol, getResult.Data.HealthProbeSettings.ProbeProtocol);
                 Assert.AreEqual(model.Data.HealthProbeSettings.ProbeRequestType, getResult.Data.HealthProbeSettings.ProbeRequestType);
             }
-            Assert.AreEqual(model.Data.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes, getResult.Data.TrafficRestorationTimeToHealedOrNewEndpointsInMinutes);
+            Assert.AreEqual(model.Data.TrafficRestorationTimeInMinutes, getResult.Data.TrafficRestorationTimeInMinutes);
             Assert.AreEqual(model.Data.SessionAffinityState, getResult.Data.SessionAffinityState);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
             //Todo: ResponseBasedAfdOriginErrorDetectionSettings
         }
 
-        public static void AssertAfdOriginGroupUpdate(AfdOriginGroup updatedAfdOriginGroup, AfdOriginGroupUpdateOptions updateOptions)
+        public static void AssertAfdOriginGroupUpdate(FrontDoorOriginGroupResource updatedAfdOriginGroup, FrontDoorOriginGroupPatch updateOptions)
         {
             Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.SampleSize, updateOptions.LoadBalancingSettings.SampleSize);
             Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.SuccessfulSamplesRequired, updateOptions.LoadBalancingSettings.SuccessfulSamplesRequired);
             Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds, updateOptions.LoadBalancingSettings.AdditionalLatencyInMilliseconds);
         }
 
-        public static void AssertValidCustomDomain(CdnCustomDomain model, CdnCustomDomain getResult)
+        public static void AssertValidCustomDomain(CdnCustomDomainResource model, CdnCustomDomainResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             Assert.AreEqual(model.Data.CustomHttpsProvisioningState, getResult.Data.CustomHttpsProvisioningState);
-            Assert.AreEqual(model.Data.CustomHttpsProvisioningSubstate, getResult.Data.CustomHttpsProvisioningSubstate);
+            Assert.AreEqual(model.Data.CustomHttpsAvailabilityState, getResult.Data.CustomHttpsAvailabilityState);
             Assert.AreEqual(model.Data.ValidationData, getResult.Data.ValidationData);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
         }
 
-        public static void AssertValidAfdCustomDomain(AfdCustomDomain model, AfdCustomDomain getResult)
+        public static void AssertValidAfdCustomDomain(FrontDoorCustomDomainResource model, FrontDoorCustomDomainResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.TlsSettings.CertificateType, getResult.Data.TlsSettings.CertificateType);
             Assert.AreEqual(model.Data.TlsSettings.MinimumTlsVersion, getResult.Data.TlsSettings.MinimumTlsVersion);
             if (model.Data.TlsSettings.Secret != null || getResult.Data.TlsSettings.Secret != null)
@@ -369,11 +380,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.NotNull(getResult.Data.TlsSettings.Secret);
                 Assert.AreEqual(model.Data.TlsSettings.Secret.Id, getResult.Data.TlsSettings.Secret.Id);
             }
-            if (model.Data.AzureDnsZone != null || getResult.Data.AzureDnsZone != null)
+            if (model.Data.DnsZone != null || getResult.Data.DnsZone != null)
             {
-                Assert.NotNull(model.Data.AzureDnsZone);
-                Assert.NotNull(getResult.Data.AzureDnsZone);
-                Assert.AreEqual(model.Data.AzureDnsZone.Id, getResult.Data.AzureDnsZone.Id);
+                Assert.NotNull(model.Data.DnsZone);
+                Assert.NotNull(getResult.Data.DnsZone);
+                Assert.AreEqual(model.Data.DnsZone.Id, getResult.Data.DnsZone.Id);
             }
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
@@ -384,30 +395,30 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.NotNull(model.Data.ValidationProperties);
                 Assert.NotNull(getResult.Data.ValidationProperties);
                 Assert.AreEqual(model.Data.ValidationProperties.ValidationToken, getResult.Data.ValidationProperties.ValidationToken);
-                Assert.AreEqual(model.Data.ValidationProperties.ExpirationDate, getResult.Data.ValidationProperties.ExpirationDate);
+                Assert.AreEqual(model.Data.ValidationProperties.ExpiresOn, getResult.Data.ValidationProperties.ExpiresOn);
             }
         }
 
-        public static void AssertAfdDomainUpdate(AfdCustomDomain updatedAfdDomain, AfdCustomDomainUpdateOptions updateOptions)
+        public static void AssertAfdDomainUpdate(FrontDoorCustomDomainResource updatedAfdDomain, FrontDoorCustomDomainPatch updateOptions)
         {
             Assert.AreEqual(updatedAfdDomain.Data.TlsSettings.CertificateType, updateOptions.TlsSettings.CertificateType);
             Assert.AreEqual(updatedAfdDomain.Data.TlsSettings.MinimumTlsVersion, updateOptions.TlsSettings.MinimumTlsVersion);
         }
 
-        public static void AssertValidAfdRuleSet(AfdRuleSet model, AfdRuleSet getResult)
+        public static void AssertValidAfdRuleSet(FrontDoorRuleSetResource model, FrontDoorRuleSetResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
         }
 
-        public static void AssertValidAfdRule(AfdRule model, AfdRule getResult)
+        public static void AssertValidAfdRule(FrontDoorRuleResource model, FrontDoorRuleResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Order, getResult.Data.Order);
             Assert.AreEqual(model.Data.Conditions.Count, getResult.Data.Conditions.Count);
             for (int i = 0; i < model.Data.Conditions.Count; ++i)
@@ -424,16 +435,16 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
         }
 
-        public static void AssertAfdRuleUpdate(AfdRule updatedRule, AfdRuleUpdateOptions updateOptions)
+        public static void AssertAfdRuleUpdate(FrontDoorRuleResource updatedRule, FrontDoorRulePatch updateOptions)
         {
             Assert.AreEqual(updatedRule.Data.Order, updateOptions.Order);
         }
 
-        public static void AssertValidAfdRoute(AfdRoute model, AfdRoute getResult)
+        public static void AssertValidAfdRoute(FrontDoorRouteResource model, FrontDoorRouteResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.CustomDomains.Count, getResult.Data.CustomDomains.Count);
             for (int i = 0; i < model.Data.CustomDomains.Count; ++i)
             {
@@ -456,7 +467,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 Assert.AreEqual(model.Data.PatternsToMatch[i], getResult.Data.PatternsToMatch[i]);
             }
-            Assert.AreEqual(model.Data.QueryStringCachingBehavior, getResult.Data.QueryStringCachingBehavior);
+            Assert.AreEqual(model.Data.EndpointName, getResult.Data.EndpointName);
             Assert.AreEqual(model.Data.ForwardingProtocol, getResult.Data.ForwardingProtocol);
             Assert.AreEqual(model.Data.LinkToDefaultDomain, getResult.Data.LinkToDefaultDomain);
             Assert.AreEqual(model.Data.HttpsRedirect, getResult.Data.HttpsRedirect);
@@ -465,59 +476,59 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
         }
 
-        public static void AssertAfdRouteUpdate(AfdRoute updatedRoute, AfdRouteUpdateOptions updateOptions)
+        public static void AssertAfdRouteUpdate(FrontDoorRouteResource updatedRoute, FrontDoorRoutePatch updateOptions)
         {
             Assert.AreEqual(updatedRoute.Data.EnabledState, updateOptions.EnabledState);
         }
 
-        public static void AssertValidAfdSecurityPolicy(AfdSecurityPolicy model, AfdSecurityPolicy getResult)
+        public static void AssertValidAfdSecurityPolicy(FrontDoorSecurityPolicyResource model, FrontDoorSecurityPolicyResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
+            Assert.AreEqual(model.Data.Properties.PolicyType, getResult.Data.Properties.PolicyType);
         }
 
-        public static void AssertAfdSecurityPolicyUpdate(AfdSecurityPolicy updatedSecurityPolicy, AfdSecurityPolicyUpdateOptions updateOptions)
+        public static void AssertAfdSecurityPolicyUpdate(FrontDoorSecurityPolicyResource updatedSecurityPolicy, FrontDoorSecurityPolicyPatch updateOptions)
         {
-            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations.Count, 1);
-            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].Domains.Count, 2);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations.Count, 1);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations[0].Domains.Count, 2);
         }
 
-        public static void AssertValidPolicy(CdnWebApplicationFirewallPolicy model, CdnWebApplicationFirewallPolicy getResult)
+        public static void AssertValidPolicy(CdnWebApplicationFirewallPolicyResource model, CdnWebApplicationFirewallPolicyResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
-            Assert.AreEqual(model.Data.Etag, getResult.Data.Etag);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
+            Assert.AreEqual(model.Data.ETag, getResult.Data.ETag);
             Assert.AreEqual(model.Data.Sku.Name, getResult.Data.Sku.Name);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.ResourceState, getResult.Data.ResourceState);
             //Todo: PolicySettings, RateLimitRules, CustomRules, ManagedRules, EndpointLinks
         }
 
-        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicy updatedPolicy, string key, string value)
+        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicyResource updatedPolicy, string key, string value)
         {
             Assert.GreaterOrEqual(updatedPolicy.Data.Tags.Count, 1);
             Assert.IsTrue(updatedPolicy.Data.Tags.ContainsKey(key));
             Assert.AreEqual(updatedPolicy.Data.Tags[key], value);
         }
 
-        public static void AssertValidAfdSecret(AfdSecret model, AfdSecret getResult)
+        public static void AssertValidAfdSecret(FrontDoorSecretResource model, FrontDoorSecretResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Parameters.Type, getResult.Data.Parameters.Type);
-            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).SecretVersion);
-            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).CertificateAuthority, ((CustomerCertificateParameters)getResult.Data.Parameters).CertificateAuthority);
-            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).UseLatestVersion, ((CustomerCertificateParameters)getResult.Data.Parameters).UseLatestVersion);
-            Assert.AreEqual(((CustomerCertificateParameters)model.Data.Parameters).SecretSource.Id.ToString().ToLower(), ((CustomerCertificateParameters)getResult.Data.Parameters).SecretSource.Id.ToString().ToLower());
-            Assert.True(((CustomerCertificateParameters)model.Data.Parameters).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateParameters)getResult.Data.Parameters).SubjectAlternativeNames));
+            Assert.AreEqual(model.Data.Properties.SecretType, getResult.Data.Properties.SecretType);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).SecretVersion, ((CustomerCertificateProperties)getResult.Data.Properties).SecretVersion);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).CertificateAuthority, ((CustomerCertificateProperties)getResult.Data.Properties).CertificateAuthority);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).UseLatestVersion, ((CustomerCertificateProperties)getResult.Data.Properties).UseLatestVersion);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).SecretSource.Id.Name.ToString().ToLower(), ((CustomerCertificateProperties)getResult.Data.Properties).SecretSource.Id.Name.ToString().ToLower());
+            Assert.True(((CustomerCertificateProperties)model.Data.Properties).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateProperties)getResult.Data.Properties).SubjectAlternativeNames));
         }
     }
 }

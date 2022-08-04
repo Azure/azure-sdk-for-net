@@ -208,9 +208,9 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 }
 ```
 
-By default tests are run in playback mode. To change the mode use the `AZURE_TEST_MODE` environment variable and set it to one of the followind values: `Live`, `Playback`, `Record`.
+By default tests are run in playback mode. To change the mode use the `AZURE_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
-In development scenarios where it's required to change mode quickly without restarting the Visual Studio use the two-parameter constructor of `RecordedTestBase` to change the mode:
+In development scenarios where it's required to change mode quickly without restarting Visual Studio, use the two-parameter constructor of `RecordedTestBase` to change the mode, or use the `.runsettings` file as described [here](#test-settings).
 
 Recorded tests can be attributed with the `RecordedTestAttribute` in lieu of the standard `TestAttribute` to enable functionality to automatically re-record tests that fail due to recording session file mismatches.
 Tests that are auto-rerecorded will fail with the following error and succeed if re-run.
@@ -233,6 +233,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
     }
 }
 ```
+In addition to the auto-rerecording functionality, using the RecordedTestAttribute also will automatically retry tests that fail due due to exceeding the global test time limit.
 
 ### Recording
 
@@ -241,74 +242,59 @@ When tests are run in recording mode, session records are saved to the project d
 ### Sanitizing
 
 Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record.
-**Do not check in session records containing secrets.** Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, the `RecordedTestSanitizer` should be used as an extension point.
+**Do not check in session records containing secrets.** Common headers like `Authentication` are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, the `Sanitizer` property should be used as an extension point.
 
 For example:
 
-``` C#
-    public class ConfigurationRecordedTestSanitizer : RecordedTestSanitizer
+```C#
+    public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
     {
-        public ConfigurationRecordedTestSanitizer()
+        public ConfigurationLiveTests()
         {
-            // Add headers that might contain secrets
-            SanitizedHeaders.Add("My-Custom-Auth-Header");
-        }
-
-        public override string SanitizeUri(string uri)
-        {
-            // sanitize url
+            SanitizedHeaders.Add("example-header");
+            SanitizeQueryParameters.Add("example-query-parameter");
         }
     }
 ```
 
-Another sanitizer feature that is available for sanitizing Json payloads is the `AddJsonPathSanitizer`.
-This method allows adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) format strings that will be validated against the body. If a match exists, the value will be sanitized.
+Another sanitization feature that is available involves sanitizing Json payloads.
+By adding a [Json Path](https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm) formatted string to the `JsonPathSanitizers` property, you can sanitize the value for a specific JSON property in request/response bodies.
 
-By default, the following values are added to the `AddJsonPathSanitizer` to be sanitized: `primaryKey`, `secondaryKey`, `primaryConnectionString`, `secondaryConnectionString`, and `connectionString`.
+By default, the following values are added to the `JsonPathSanitizers` to be sanitized: `primaryKey`, `secondaryKey`, `primaryConnectionString`, `secondaryConnectionString`, and `connectionString`.
 
 ```c#
-    public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
+    public class FormRecognizerLiveTests: RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        public FormRecognizerRecordedTestSanitizer()
-            : base()
+        public FormRecognizerLiveTests()
         {
-            AddJsonPathSanitizer("$..accessToken");
-            AddJsonPathSanitizer("$..source");
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..source");
         }
     }
 ```
-
-Sometimes it's useful to be able to have a custom replacement values for JsonPath-based sanitization (connection strings, JWT tokens).
-To enable this the `AddJsonPathSanitizer` provides an additional callback that would be called for every match.
-
-```C#
-AddJsonPathSanitizer("$..jwt_token", token => SanitizeJwt(token));
-```
-
 
 ### Matching
 
-When tests are run in replay mode, HTTP method, Uri and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during the matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use `RecordMatcher` extensions point.
+When tests are run in `Playback` mode, the HTTP method, Uri, and headers are used to match the request to the recordings. Some headers change on every request and are not controlled by the client code and should be ignored during matching. Common headers like `Date`, `x-ms-date`, `x-ms-client-request-id`, `User-Agent`, `Request-Id` are ignored by default but if more headers need to be ignored, use the various matching properties to customize as needed.
 
 
 ``` C#
-    public class ConfigurationRecordMatcher : RecordMatcher
+    public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnvironment>
     {
-        public ConfigurationRecordMatcher(RecordedTestSanitizer sanitizer) : base(sanitizer)
+        public ConfigurationLiveTests()
         {
             IgnoredHeaders.Add("Sync-Token");
-        }
-    }
-
-    public class ConfigurationLiveTests: RecordedTestBase
-    {
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new ConfigurationRecordedTestSanitizer();
-            Matcher = new ConfigurationRecordMatcher(Sanitizer);
+            IgnoredQueryParameters.Add("service-version");
         }
     }
 ```
+
+### Ignoring intermittent service errors
+
+If your live tests are impacted by temporary or intermittent services errors, be sure the service team is aware and has a plan to address the issues.
+If these issues cannot be resolved, you can attribute test classes or test methods with `[IgnoreServiceError]` which takes a required HTTP status code, Azure service error, and optional error message substring.
+This attribute, when used with `RecordedTestBase`-derived test fixtures and methods attributed with `[RecordedTest]`, which mark tests that failed with that specific error as "inconclusive", along with an optional
+reason you specify and the original error information.
 
 ### Misc
 
@@ -323,6 +309,8 @@ It's possible to add additional recording variables for advanced scenarios (like
 You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
+
+In order to enable testing with Fiddler, you can either set the  `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 ## Support multi service version testing
 
@@ -346,11 +334,26 @@ public abstract class BlobTestBase : StorageTestBase
 }
 ```
 
+The `ServiceVersion` must be either an Enum that is convertible to an Int32 or a string in the format of a date with an optional preview qualifier `yyyy-MM-dd[-preview]`.
+The list passed into `ClientTestFixture` must be homogenous.
+
+By default these versions will only apply to live tests.  There is an overloaded constructor which adds a flag `recordAllVersions` to apply these versions to record and playback as well.
+If this flag is set to true you will now get a version qualifier string added to the file name.
+
 Add a `ServiceVersion` parameter to the test class constructor and use the provided service version to create the `ClientOptions` instance.
 
 ```C#
 public BlobClientOptions GetOptions() =>
     new BlobClientOptions(_serviceVersion) { /* ... */ };
+```
+
+For Management plane setting this in the client options is handled by default in the `ManagementRecordedTestBase` class by calling the new constructor which takes in the ResourceType and apiVersion to use.
+
+```C#
+        public ResourceGroupOperationsTests(bool isAsync, string apiVersion)
+            : base(isAsync, ResourceGroupResource.ResourceType, apiVersion)
+        {
+        }
 ```
 
 To control what service versions a test will run against, use the `ServiceVersion` attribute by setting it's `Min` or `Max` properties (inclusive).

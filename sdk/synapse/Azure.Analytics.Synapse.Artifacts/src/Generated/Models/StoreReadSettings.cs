@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public StoreReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "StoreReadSettings";
         }
 
         /// <summary> Initializes a new instance of StoreReadSettings. </summary>
@@ -26,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal StoreReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "StoreReadSettings";
+            Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
             AdditionalProperties = additionalProperties;
         }

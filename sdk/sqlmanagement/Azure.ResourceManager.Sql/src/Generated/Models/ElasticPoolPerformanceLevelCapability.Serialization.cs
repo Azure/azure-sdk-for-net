@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static ElasticPoolPerformanceLevelCapability DeserializeElasticPoolPerformanceLevelCapability(JsonElement element)
         {
             Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
             Optional<int> maxDatabaseCount = default;
             Optional<MaxSizeCapability> includedMaxSize = default;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>> supportedPerDatabaseMaxPerformanceLevels = default;
             Optional<bool> zoneRedundant = default;
             Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
-            Optional<CapabilityStatus> status = default;
+            Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedLicenseTypes"))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToCapabilityStatus();
+                    status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
                 if (property.NameEquals("reason"))

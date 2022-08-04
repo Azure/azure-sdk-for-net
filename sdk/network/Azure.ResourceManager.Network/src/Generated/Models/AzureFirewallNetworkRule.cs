@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
             DestinationAddresses = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
             DestinationFqdns = new ChangeTrackingList<string>();
-            SourceIpGroups = new ChangeTrackingList<string>();
-            DestinationIpGroups = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
+            DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationAddresses"> List of destination IP addresses. </param>
         /// <param name="destinationPorts"> List of destination ports. </param>
         /// <param name="destinationFqdns"> List of destination FQDNs. </param>
-        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIpGroups"> List of destination IpGroups for this rule. </param>
-        internal AzureFirewallNetworkRule(string name, string description, IList<AzureFirewallNetworkRuleProtocol> protocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> destinationFqdns, IList<string> sourceIpGroups, IList<string> destinationIpGroups)
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
+        internal AzureFirewallNetworkRule(string name, string description, IList<AzureFirewallNetworkRuleProtocol> protocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> destinationFqdns, IList<string> sourceIPGroups, IList<string> destinationIPGroups)
         {
             Name = name;
             Description = description;
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Network.Models
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
             DestinationFqdns = destinationFqdns;
-            SourceIpGroups = sourceIpGroups;
-            DestinationIpGroups = destinationIpGroups;
+            SourceIPGroups = sourceIPGroups;
+            DestinationIPGroups = destinationIPGroups;
         }
 
         /// <summary> Name of the network rule. </summary>
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of destination FQDNs. </summary>
         public IList<string> DestinationFqdns { get; }
         /// <summary> List of source IpGroups for this rule. </summary>
-        public IList<string> SourceIpGroups { get; }
+        public IList<string> SourceIPGroups { get; }
         /// <summary> List of destination IpGroups for this rule. </summary>
-        public IList<string> DestinationIpGroups { get; }
+        public IList<string> DestinationIPGroups { get; }
     }
 }

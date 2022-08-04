@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -22,21 +23,25 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -91,20 +96,20 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("allowSharedKeyAccess");
                 writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
             }
-            if (Optional.IsDefined(EnableNfsV3))
+            if (Optional.IsDefined(IsNfsV3Enabled))
             {
                 writer.WritePropertyName("isNfsV3Enabled");
-                writer.WriteBooleanValue(EnableNfsV3.Value);
+                writer.WriteBooleanValue(IsNfsV3Enabled.Value);
             }
             if (Optional.IsDefined(AllowCrossTenantReplication))
             {
                 writer.WritePropertyName("allowCrossTenantReplication");
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(DefaultToOAuthAuthentication))
+            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication");
-                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
+                writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -121,58 +126,70 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("allowedCopyScope");
                 writer.WriteStringValue(AllowedCopyScope.Value.ToString());
             }
+            if (Optional.IsDefined(StorageAccountSkuConversionStatus))
+            {
+                writer.WritePropertyName("storageAccountSkuConversionStatus");
+                writer.WriteObjectValue(StorageAccountSkuConversionStatus);
+            }
+            if (Optional.IsDefined(DnsEndpointType))
+            {
+                writer.WritePropertyName("dnsEndpointType");
+                writer.WriteStringValue(DnsEndpointType.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static StorageAccountData DeserializeStorageAccountData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
-            Optional<Kind> kind = default;
+            Optional<StorageSku> sku = default;
+            Optional<StorageKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<Endpoints> primaryEndpoints = default;
-            Optional<string> primaryLocation = default;
-            Optional<AccountStatus> statusOfPrimary = default;
+            Optional<SystemData> systemData = default;
+            Optional<StorageProvisioningState> provisioningState = default;
+            Optional<StorageAccountEndpoints> primaryEndpoints = default;
+            Optional<AzureLocation> primaryLocation = default;
+            Optional<StorageAccountStatus> statusOfPrimary = default;
             Optional<DateTimeOffset> lastGeoFailoverTime = default;
-            Optional<string> secondaryLocation = default;
-            Optional<AccountStatus> statusOfSecondary = default;
+            Optional<AzureLocation> secondaryLocation = default;
+            Optional<StorageAccountStatus> statusOfSecondary = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<CustomDomain> customDomain = default;
-            Optional<SasPolicy> sasPolicy = default;
-            Optional<KeyPolicy> keyPolicy = default;
-            Optional<KeyCreationTime> keyCreationTime = default;
-            Optional<Endpoints> secondaryEndpoints = default;
-            Optional<Encryption> encryption = default;
-            Optional<AccessTier> accessTier = default;
-            Optional<AzureFilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
+            Optional<StorageCustomDomain> customDomain = default;
+            Optional<StorageAccountSasPolicy> sasPolicy = default;
+            Optional<StorageAccountKeyPolicy> keyPolicy = default;
+            Optional<StorageAccountKeyCreationTime> keyCreationTime = default;
+            Optional<StorageAccountEndpoints> secondaryEndpoints = default;
+            Optional<StorageAccountEncryption> encryption = default;
+            Optional<StorageAccountAccessTier> accessTier = default;
+            Optional<FilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
             Optional<bool> supportsHttpsTrafficOnly = default;
-            Optional<NetworkRuleSet> networkAcls = default;
+            Optional<StorageAccountNetworkRuleSet> networkAcls = default;
             Optional<bool> isSftpEnabled = default;
             Optional<bool> isLocalUserEnabled = default;
             Optional<bool> isHnsEnabled = default;
-            Optional<GeoReplicationStats> geoReplicationStats = default;
+            Optional<GeoReplicationStatistics> geoReplicationStats = default;
             Optional<bool> failoverInProgress = default;
             Optional<LargeFileSharesState> largeFileSharesState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<RoutingPreference> routingPreference = default;
+            Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<StorageRoutingPreference> routingPreference = default;
             Optional<BlobRestoreStatus> blobRestoreStatus = default;
             Optional<bool> allowBlobPublicAccess = default;
-            Optional<MinimumTlsVersion> minimumTlsVersion = default;
+            Optional<StorageMinimumTlsVersion> minimumTlsVersion = default;
             Optional<bool> allowSharedKeyAccess = default;
             Optional<bool> isNfsV3Enabled = default;
             Optional<bool> allowCrossTenantReplication = default;
             Optional<bool> defaultToOAuthAuthentication = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<StoragePublicNetworkAccess> publicNetworkAccess = default;
             Optional<ImmutableStorageAccount> immutableStorageWithVersioning = default;
             Optional<AllowedCopyScope> allowedCopyScope = default;
+            Optional<StorageAccountSkuConversionStatus> storageAccountSkuConversionStatus = default;
+            Optional<StorageDnsEndpointType> dnsEndpointType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -182,7 +199,7 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -192,7 +209,7 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new Kind(property.Value.GetString());
+                    kind = new StorageKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -202,7 +219,8 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))
@@ -212,11 +230,16 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -227,7 +250,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -242,11 +265,16 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -266,7 +294,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToStorageProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("primaryEndpoints"))
@@ -276,12 +304,17 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            primaryEndpoints = Endpoints.DeserializeEndpoints(property0.Value);
+                            primaryEndpoints = StorageAccountEndpoints.DeserializeStorageAccountEndpoints(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("primaryLocation"))
                         {
-                            primaryLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            primaryLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("statusOfPrimary"))
@@ -291,7 +324,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            statusOfPrimary = property0.Value.GetString().ToAccountStatus();
+                            statusOfPrimary = property0.Value.GetString().ToStorageAccountStatus();
                             continue;
                         }
                         if (property0.NameEquals("lastGeoFailoverTime"))
@@ -306,7 +339,12 @@ namespace Azure.ResourceManager.Storage
                         }
                         if (property0.NameEquals("secondaryLocation"))
                         {
-                            secondaryLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            secondaryLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("statusOfSecondary"))
@@ -316,7 +354,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            statusOfSecondary = property0.Value.GetString().ToAccountStatus();
+                            statusOfSecondary = property0.Value.GetString().ToStorageAccountStatus();
                             continue;
                         }
                         if (property0.NameEquals("creationTime"))
@@ -336,7 +374,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customDomain = CustomDomain.DeserializeCustomDomain(property0.Value);
+                            customDomain = StorageCustomDomain.DeserializeStorageCustomDomain(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sasPolicy"))
@@ -346,7 +384,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sasPolicy = SasPolicy.DeserializeSasPolicy(property0.Value);
+                            sasPolicy = StorageAccountSasPolicy.DeserializeStorageAccountSasPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyPolicy"))
@@ -356,7 +394,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyPolicy = KeyPolicy.DeserializeKeyPolicy(property0.Value);
+                            keyPolicy = StorageAccountKeyPolicy.DeserializeStorageAccountKeyPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("keyCreationTime"))
@@ -366,7 +404,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyCreationTime = KeyCreationTime.DeserializeKeyCreationTime(property0.Value);
+                            keyCreationTime = StorageAccountKeyCreationTime.DeserializeStorageAccountKeyCreationTime(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secondaryEndpoints"))
@@ -376,7 +414,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            secondaryEndpoints = Endpoints.DeserializeEndpoints(property0.Value);
+                            secondaryEndpoints = StorageAccountEndpoints.DeserializeStorageAccountEndpoints(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
@@ -386,7 +424,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = StorageAccountEncryption.DeserializeStorageAccountEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTier"))
@@ -396,7 +434,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessTier = property0.Value.GetString().ToAccessTier();
+                            accessTier = property0.Value.GetString().ToStorageAccountAccessTier();
                             continue;
                         }
                         if (property0.NameEquals("azureFilesIdentityBasedAuthentication"))
@@ -406,7 +444,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureFilesIdentityBasedAuthentication = AzureFilesIdentityBasedAuthentication.DeserializeAzureFilesIdentityBasedAuthentication(property0.Value);
+                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHttpsTrafficOnly"))
@@ -426,7 +464,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
+                            networkAcls = StorageAccountNetworkRuleSet.DeserializeStorageAccountNetworkRuleSet(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isSftpEnabled"))
@@ -466,7 +504,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            geoReplicationStats = GeoReplicationStats.DeserializeGeoReplicationStats(property0.Value);
+                            geoReplicationStats = GeoReplicationStatistics.DeserializeGeoReplicationStatistics(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failoverInProgress"))
@@ -496,10 +534,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<StoragePrivateEndpointConnectionData> array = new List<StoragePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -511,7 +549,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            routingPreference = RoutingPreference.DeserializeRoutingPreference(property0.Value);
+                            routingPreference = StorageRoutingPreference.DeserializeStorageRoutingPreference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("blobRestoreStatus"))
@@ -541,7 +579,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimumTlsVersion = new MinimumTlsVersion(property0.Value.GetString());
+                            minimumTlsVersion = new StorageMinimumTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowSharedKeyAccess"))
@@ -591,7 +629,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new StoragePublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("immutableStorageWithVersioning"))
@@ -614,11 +652,31 @@ namespace Azure.ResourceManager.Storage
                             allowedCopyScope = new AllowedCopyScope(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("storageAccountSkuConversionStatus"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountSkuConversionStatus = StorageAccountSkuConversionStatus.DeserializeStorageAccountSkuConversionStatus(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsEndpointType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dnsEndpointType = new StorageDnsEndpointType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new StorageAccountData(id, name, type, systemData, tags, location, sku.Value, Optional.ToNullable(kind), identity, extendedLocation.Value, Optional.ToNullable(provisioningState), primaryEndpoints.Value, primaryLocation.Value, Optional.ToNullable(statusOfPrimary), Optional.ToNullable(lastGeoFailoverTime), secondaryLocation.Value, Optional.ToNullable(statusOfSecondary), Optional.ToNullable(creationTime), customDomain.Value, sasPolicy.Value, keyPolicy.Value, keyCreationTime.Value, secondaryEndpoints.Value, encryption.Value, Optional.ToNullable(accessTier), azureFilesIdentityBasedAuthentication.Value, Optional.ToNullable(supportsHttpsTrafficOnly), networkAcls.Value, Optional.ToNullable(isSftpEnabled), Optional.ToNullable(isLocalUserEnabled), Optional.ToNullable(isHnsEnabled), geoReplicationStats.Value, Optional.ToNullable(failoverInProgress), Optional.ToNullable(largeFileSharesState), Optional.ToList(privateEndpointConnections), routingPreference.Value, blobRestoreStatus.Value, Optional.ToNullable(allowBlobPublicAccess), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(allowSharedKeyAccess), Optional.ToNullable(isNfsV3Enabled), Optional.ToNullable(allowCrossTenantReplication), Optional.ToNullable(defaultToOAuthAuthentication), Optional.ToNullable(publicNetworkAccess), immutableStorageWithVersioning.Value, Optional.ToNullable(allowedCopyScope));
+            return new StorageAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, extendedLocation, Optional.ToNullable(provisioningState), primaryEndpoints.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(statusOfPrimary), Optional.ToNullable(lastGeoFailoverTime), Optional.ToNullable(secondaryLocation), Optional.ToNullable(statusOfSecondary), Optional.ToNullable(creationTime), customDomain.Value, sasPolicy.Value, keyPolicy.Value, keyCreationTime.Value, secondaryEndpoints.Value, encryption.Value, Optional.ToNullable(accessTier), azureFilesIdentityBasedAuthentication.Value, Optional.ToNullable(supportsHttpsTrafficOnly), networkAcls.Value, Optional.ToNullable(isSftpEnabled), Optional.ToNullable(isLocalUserEnabled), Optional.ToNullable(isHnsEnabled), geoReplicationStats.Value, Optional.ToNullable(failoverInProgress), Optional.ToNullable(largeFileSharesState), Optional.ToList(privateEndpointConnections), routingPreference.Value, blobRestoreStatus.Value, Optional.ToNullable(allowBlobPublicAccess), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(allowSharedKeyAccess), Optional.ToNullable(isNfsV3Enabled), Optional.ToNullable(allowCrossTenantReplication), Optional.ToNullable(defaultToOAuthAuthentication), Optional.ToNullable(publicNetworkAccess), immutableStorageWithVersioning.Value, Optional.ToNullable(allowedCopyScope), storageAccountSkuConversionStatus.Value, Optional.ToNullable(dnsEndpointType));
         }
     }
 }

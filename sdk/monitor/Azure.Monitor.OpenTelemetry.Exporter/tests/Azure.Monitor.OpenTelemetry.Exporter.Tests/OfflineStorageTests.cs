@@ -6,10 +6,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using Microsoft.AspNetCore.Http;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
+
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -37,182 +42,133 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             HttpPipelineHelper.MinimumRetryInterval = 6000;
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
+        [Fact]
         public void Success200()
         {
-            var activity = CreateActivity("TestActivity");
+            using var activity = CreateActivity("TestActivity");
             var telemetryItem = CreateTelemetryItem(activity);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalEndpoint(testEndpoint);
-            testServer.ServerLogic = async (httpContext) =>
-            {
-                httpContext.Response.StatusCode = 200;
-                await httpContext.Response.WriteAsync("Ok");
-            };
-
             // Transmit
-            var transmitter = GetTransmitter();
+            var mockResponse = new MockResponse(200).SetContent("Ok");
+            var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-            // Wait for maintenance job to run atleast once
-            Thread.Sleep(15000);
-
             //Assert
-            Assert.Empty(transmitter._storage.GetBlobs());
+            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
         [Fact]
         public void FailureResponseCode500()
         {
-            var activity = CreateActivity("TestActivity");
+            using var activity = CreateActivity("TestActivity");
             var telemetryItem = CreateTelemetryItem(activity);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalEndpoint(testEndpoint);
-            testServer.ServerLogic = async (httpContext) =>
-            {
-                httpContext.Response.StatusCode = 500;
-                await httpContext.Response.WriteAsync("Internal Server Error");
-            };
-
             // Transmit
-            var transmitter = GetTransmitter();
+            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
+            var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-            // Wait for maintenance job to run atleast once
-            Thread.Sleep(15000);
-
             //Assert
-            Assert.Single(transmitter._storage.GetBlobs());
-
-            // Delete the blob
-            transmitter._storage.GetBlob().Lease(1000).Delete();
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
+        [Fact]
         public void FailureResponseCode429()
         {
-            var activity = CreateActivity("TestActivity");
+            using var activity = CreateActivity("TestActivity");
             var telemetryItem = CreateTelemetryItem(activity);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalEndpoint(testEndpoint);
-            testServer.ServerLogic = async (httpContext) =>
-            {
-                httpContext.Response.StatusCode = 429;
-                httpContext.Response.Headers.Add("Retry-After", "6");
-                await httpContext.Response.WriteAsync("Too Many Requests");
-            };
-
             // Transmit
-            var transmitter = GetTransmitter();
+            var mockResponse = new MockResponse(429)
+                                    .AddHeader("Retry-After", "6")
+                                    .SetContent("Too Many Requests");
+            var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-            // Wait for maintenance job to run atleast once
-            Thread.Sleep(15000);
-
             //Assert
-            Assert.Single(transmitter._storage.GetBlobs());
-
-            // Delete the blob
-            transmitter._storage.GetBlob().Lease(1000).Delete();
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/26783")]
+        [Fact]
         public void FailureResponseCode206()
         {
-            var activity1 = CreateActivity("TestActivity1");
-            var activity2 = CreateActivity("TestActivity1");
-            var activity3 = CreateActivity("TestActivity1");
+            using var activity1 = CreateActivity("TestActivity1");
+            using var activity2 = CreateActivity("TestActivity2");
+            using var activity3 = CreateActivity("TestActivity3");
             var telemetryItem1 = CreateTelemetryItem(activity1);
-            var telemetryItem2 = CreateTelemetryItem(activity1);
-            var telemetryItem3 = CreateTelemetryItem(activity1);
+            var telemetryItem2 = CreateTelemetryItem(activity2);
+            var telemetryItem3 = CreateTelemetryItem(activity3);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem1);
             telemetryItems.Add(telemetryItem2);
             telemetryItems.Add(telemetryItem3);
 
-            using var testServer = new LocalEndpoint(testEndpoint);
-            testServer.ServerLogic = async (httpContext) =>
-            {
-                httpContext.Response.StatusCode = 206;
-                httpContext.Response.Headers.Add("Retry-After", "6");
-                await httpContext.Response.WriteAsync("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
-            };
-
             // Transmit
-            var transmitter = GetTransmitter();
+            var mockResponse = new MockResponse(206)
+                                    .AddHeader("Retry-After", "6")
+                                    .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
+            var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-            // Wait for maintenance job to run atleast once
-            Thread.Sleep(15000);
-
             //Assert
-            Assert.Single(transmitter._storage.GetBlobs());
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+            transmitter._fileBlobProvider.TryGetBlob(out var blob);
+            blob.TryRead(out var content);
 
-            var failedData = System.Text.Encoding.UTF8.GetString(transmitter._storage.GetBlob().Read());
+            Assert.NotNull(content);
+
+            var failedData = System.Text.Encoding.UTF8.GetString(content);
 
             string[] items = failedData.Split('\n');
 
             //Assert
             Assert.Equal(2, items.Count());
-
-            // Delete the blob
-            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
-        [Fact(Skip = "Unstable")]
+        [Fact]
         public void TransmitFromStorage()
         {
-            var activity = CreateActivity("TestActivity");
+            using var activity = CreateActivity("TestActivity");
             var telemetryItem = CreateTelemetryItem(activity);
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
-            using var testServer = new LocalEndpoint(testEndpoint);
-            testServer.ServerLogic = async (httpContext) =>
-            {
-                httpContext.Response.StatusCode = 500;
-                await httpContext.Response.WriteAsync("Internal Server Error");
-            };
-
             // Transmit
-            var transmitter = GetTransmitter();
+            var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
+            var transmitter = GetTransmitter(mockResponse);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
-            // Wait for maintenance job to run atleast once
-            Thread.Sleep(15000);
-
             //Assert
-            Assert.Single(transmitter._storage.GetBlobs());
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
 
             // reset server logic to return 200
-            testServer.ServerLogic = async (httpContext) =>
-            {
-                httpContext.Response.StatusCode = 200;
-                await httpContext.Response.WriteAsync("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
-            };
+            mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
+            transmitter = GetTransmitter(mockResponse);
 
             transmitter.TransmitFromStorage(1, false, CancellationToken.None).EnsureCompleted();
 
             // Assert
             // Blob will be deleted on successful transmission
-            Assert.Empty(transmitter._storage.GetBlobs());
+            Assert.Empty(transmitter._fileBlobProvider.GetBlobs());
         }
 
-        private static AzureMonitorTransmitter GetTransmitter()
+        private static AzureMonitorTransmitter GetTransmitter(MockResponse mockResponse)
         {
+            MockTransport mockTransport = new MockTransport(mockResponse);
             AzureMonitorExporterOptions options = new AzureMonitorExporterOptions();
             options.ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}";
-            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+            options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory() + "\\test";
+            options.Transport = mockTransport;
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
-            // Overwrite storage to reduce maintenance period
-            transmitter._storage = new FileStorage(options.StorageDirectory, 5000, 5000);
+            // Overwrite storage with mock
+            transmitter._fileBlobProvider = new MockFileProvider();
 
             return transmitter;
         }
@@ -233,7 +189,69 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            return new TelemetryItem(activity, ref monitorTags);
+            return new TelemetryItem(activity, ref monitorTags, null, null, null);
+        }
+
+        private class MockFileProvider : PersistentBlobProvider
+        {
+            private readonly List<PersistentBlob> _mockStorage = new();
+
+            public IEnumerable<PersistentBlob> TryGetBlobs() => this._mockStorage.AsEnumerable();
+
+            protected override IEnumerable<PersistentBlob> OnGetBlobs()
+            {
+                return this._mockStorage.AsEnumerable();
+            }
+
+            protected override bool OnTryCreateBlob(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
+            {
+                blob = new MockFileBlob();
+                this._mockStorage.Add(blob);
+                return blob.TryWrite(buffer);
+            }
+
+            protected override bool OnTryCreateBlob(byte[] buffer, out PersistentBlob blob)
+            {
+                blob = new MockFileBlob();
+                this._mockStorage.Add(blob);
+                return blob.TryWrite(buffer);
+            }
+
+            protected override bool OnTryGetBlob(out PersistentBlob blob)
+            {
+                blob = this.GetBlobs().FirstOrDefault();
+
+                return true;
+            }
+        }
+
+        private class MockFileBlob : PersistentBlob
+        {
+            private byte[] _buffer;
+
+            protected override bool OnTryRead(out byte[] buffer)
+            {
+                buffer = this._buffer;
+
+                return true;
+            }
+
+            protected override bool OnTryWrite(byte[] buffer, int leasePeriodMilliseconds = 0)
+            {
+                this._buffer = buffer;
+
+                return true;
+            }
+
+            protected override bool OnTryLease(int leasePeriodMilliseconds)
+            {
+                return true;
+            }
+
+            protected override bool OnTryDelete()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The change time of the file.
         /// </summary>
-        public DateTimeOffset? FileChangedOn { get; internal set; }
+        public DateTimeOffset? FileChangedOn { get; set; }
 
         /// <summary>
         /// The fileId of the file.

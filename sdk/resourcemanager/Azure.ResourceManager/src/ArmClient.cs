@@ -10,8 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Management;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
@@ -22,11 +21,11 @@ namespace Azure.ResourceManager
     /// </summary>
     public partial class ArmClient
     {
-        private Tenant _tenant;
-        private Subscription _defaultSubscription;
+        private TenantResource _tenant;
+        private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
 
-        private Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+        internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
         internal ConcurrentDictionary<string, string> NamespaceVersionCache { get; } = new ConcurrentDictionary<string, string>();
@@ -71,28 +70,22 @@ namespace Azure.ResourceManager
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new ArmClientOptions();
+            ArmEnvironment environment = options.Environment.HasValue ? options.Environment.Value : ArmEnvironment.AzurePublicCloud;
 
-            Argument.AssertNotNull(options.Environment.BaseUri, nameof(options.Environment.BaseUri));
+            Argument.AssertNotNull(environment.Endpoint, nameof(environment.Endpoint));
 
-            BaseUri = options.Environment.BaseUri;
+            Endpoint = environment.Endpoint;
 
-            if (options.Diagnostics.IsTelemetryEnabled)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope), new MgmtTelemetryPolicy(this, options));
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
-            }
+            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, environment.DefaultScope));
 
-            DiagnosticOptions = options.Diagnostics;
-            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions);
+            Diagnostics = options.Diagnostics;
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", SubscriptionResource.ResourceType.Namespace, Diagnostics);
 
             CopyApiVersionOverrides(options);
 
-            _tenant = new Tenant(this);
+            _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
-                new Subscription(this, Subscription.CreateResourceIdentifier(defaultSubscriptionId));
+                new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)
@@ -114,7 +107,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="resourceType"> The resource type to get the version for. </param>
         /// <param name="apiVersion"> The api version to variable to set. </param>
-        internal bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
+        internal virtual bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
         {
             return ApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
         }
@@ -122,12 +115,12 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
-        internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+        internal virtual DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        internal virtual Uri BaseUri { get; private set; }
+        internal virtual Uri Endpoint { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
@@ -154,7 +147,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <returns> Resource operations of the Subscription. </returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Subscription GetDefaultSubscription(CancellationToken cancellationToken = default)
+        public virtual SubscriptionResource GetDefaultSubscription(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
             using var scope = _subscriptionClientDiagnostics.CreateScope("ArmClient.GetDefaultSubscription");
@@ -191,7 +184,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <returns> Resource operations of the Subscription. </returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Subscription> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<SubscriptionResource> GetDefaultSubscriptionAsync(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
             using var scope = _subscriptionClientDiagnostics.CreateScope("ArmClient.GetDefaultSubscription");
@@ -232,14 +225,14 @@ namespace Azure.ResourceManager
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Pageable<ProviderInfo> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProviders(top, expand, cancellationToken);
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(top, expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<ProviderInfo> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProvidersAsync(top, expand, cancellationToken);
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(top, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -247,7 +240,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProvider(resourceProviderNamespace, expand, cancellationToken);
+        public virtual Response<TenantResourceProvider> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvider(resourceProviderNamespace, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -255,7 +248,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<TenantResourceProvider>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantResourceProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the management group collection for this tenant.
@@ -267,12 +260,12 @@ namespace Azure.ResourceManager
         /// Gets a client using this instance of ArmClient to copy the client settings from.
         /// </summary>
         /// <typeparam name="T"> The type of <see cref="ArmResource"/> that will be constructed. </typeparam>
-        /// <param name="ctor"> Delegate method that will construct the client. </param>
+        /// <param name="resourceFactory"> Delegate method that will construct the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetClient<T>(Func<T> ctor)
+        public virtual T GetResourceClient<T>(Func<T> resourceFactory)
             where T : ArmResource
         {
-            return ctor();
+            return resourceFactory();
         }
     }
 }

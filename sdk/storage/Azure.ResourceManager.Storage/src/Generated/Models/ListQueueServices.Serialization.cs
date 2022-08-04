@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ListQueueServices
+    internal partial class ListQueueServices
     {
         internal static ListQueueServices DeserializeListQueueServices(JsonElement element)
         {

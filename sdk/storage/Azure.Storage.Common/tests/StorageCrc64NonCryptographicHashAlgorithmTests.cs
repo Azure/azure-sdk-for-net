@@ -27,7 +27,7 @@ namespace Azure.Storage.Tests
             // should produce same result every time regardless of randomness
             byte[] ComputeHash()
             {
-                var calculator = StorageCrc64NonCryptographicHashAlgorithm.Create();
+                var calculator = StorageCrc64HashAlgorithm.Create();
                 var position = 0;
 
                 do

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ServiceEndpointPolicyDefinitionOperationSource : IOperationSource<ServiceEndpointPolicyDefinition>
+    internal class ServiceEndpointPolicyDefinitionOperationSource : IOperationSource<ServiceEndpointPolicyDefinitionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ServiceEndpointPolicyDefinition IOperationSource<ServiceEndpointPolicyDefinition>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceEndpointPolicyDefinitionResource IOperationSource<ServiceEndpointPolicyDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
-            return new ServiceEndpointPolicyDefinition(_client, data);
+            return new ServiceEndpointPolicyDefinitionResource(_client, data);
         }
 
-        async ValueTask<ServiceEndpointPolicyDefinition> IOperationSource<ServiceEndpointPolicyDefinition>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceEndpointPolicyDefinitionResource> IOperationSource<ServiceEndpointPolicyDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceEndpointPolicyDefinitionData.DeserializeServiceEndpointPolicyDefinitionData(document.RootElement);
-            return new ServiceEndpointPolicyDefinition(_client, data);
+            return new ServiceEndpointPolicyDefinitionResource(_client, data);
         }
     }
 }

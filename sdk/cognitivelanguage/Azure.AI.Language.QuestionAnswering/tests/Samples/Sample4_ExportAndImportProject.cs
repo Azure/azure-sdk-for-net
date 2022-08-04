@@ -7,8 +7,6 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Projects;
 using Azure.Core;
-using System.Linq;
-using System.Threading;
 using System.Text.Json;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
@@ -24,7 +22,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             CreateProject(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProject
-            Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, exportedProjectName, format: "json");
+            Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -32,25 +30,22 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
 
             Assert.True(exportOperation.HasCompleted);
-            Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
+            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
 
             #region Snippet:QuestionAnsweringProjectsClient_ImportProject
             // Set import project name and request content
             string importedProjectName = "{ProjectNameToBeImported}";
 #if !SNIPPET
-            importedProjectName = "importedProject";
+            importedProjectName = CreateTestProjectName();
 #endif
             RequestContent importRequestContent = RequestContent.Create(new
                 {
                 Metadata = new
                 {
-                    ProjectName = "NewProjectForExport",
                     Description = "This is the description for a test project",
                     Language = "en",
                     DefaultAnswer = "No answer found for your question.",
                     MultilingualResource = false,
-                    CreatedDateTime = "2021-11-25T09=35=33Z",
-                    LastModifiedDateTime = "2021-11-25T09=35=33Z",
                     Settings = new
                     {
                         DefaultAnswer = "No answer found for your question."
@@ -58,8 +53,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = client.Import(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
-
+            Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+#if !SNIPPET
+            EnqueueProjectDeletion(importedProjectName);
+#endif
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 
@@ -73,8 +70,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
 
             Assert.AreEqual(200, projectDetails.Status);
-
-            DeleteProject(importedProjectName);
         }
 
         [RecordedTest]
@@ -86,7 +81,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             await CreateProjectAsync(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
-            Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion: true, exportedProjectName, format : "json");
+            Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -94,25 +89,22 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
 
             Assert.True(exportOperation.HasCompleted);
-            Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
+            Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
 
             #region Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
             // Set import project name and request content
             string importedProjectName = "{ProjectNameToBeImported}";
 #if !SNIPPET
-            importedProjectName = "importedProject";
+            importedProjectName = CreateTestProjectName();
 #endif
             RequestContent importRequestContent = RequestContent.Create(new
             {
                 Metadata = new
                 {
-                    ProjectName = "NewProjectForExport",
                     Description = "This is the description for a test project",
                     Language = "en",
                     DefaultAnswer = "No answer found for your question.",
                     MultilingualResource = false,
-                    CreatedDateTime = "2021-11-25T09=35=33Z",
-                    LastModifiedDateTime = "2021-11-25T09=35=33Z",
                     Settings = new
                     {
                         DefaultAnswer = "No answer found for your question."
@@ -120,7 +112,10 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
+            Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
+#if !SNIPPET
+            EnqueueProjectDeletion(importedProjectName);
+#endif
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 
@@ -134,8 +129,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
 
             Assert.AreEqual(200, projectDetails.Status);
-
-            await DeleteProjectAsync(importedProjectName);
         }
     }
 }

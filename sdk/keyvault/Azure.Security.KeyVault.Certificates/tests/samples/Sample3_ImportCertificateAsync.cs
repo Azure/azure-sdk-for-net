@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;

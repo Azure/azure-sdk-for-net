@@ -67,14 +67,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IConnectedRegistriesOperations.
+        /// </summary>
+        public virtual IConnectedRegistriesOperations ConnectedRegistries { get; private set; }
+
+        /// <summary>
+        /// Gets the IExportPipelinesOperations.
+        /// </summary>
+        public virtual IExportPipelinesOperations ExportPipelines { get; private set; }
+
+        /// <summary>
         /// Gets the IRegistriesOperations.
         /// </summary>
         public virtual IRegistriesOperations Registries { get; private set; }
 
         /// <summary>
+        /// Gets the IImportPipelinesOperations.
+        /// </summary>
+        public virtual IImportPipelinesOperations ImportPipelines { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPipelineRunsOperations.
+        /// </summary>
+        public virtual IPipelineRunsOperations PipelineRuns { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -85,6 +105,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// Gets the IReplicationsOperations.
         /// </summary>
         public virtual IReplicationsOperations Replications { get; private set; }
+
+        /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        public virtual IScopeMapsOperations ScopeMaps { get; private set; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        public virtual ITokensOperations Tokens { get; private set; }
 
         /// <summary>
         /// Gets the IWebhooksOperations.
@@ -352,10 +382,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </summary>
         private void Initialize()
         {
+            ConnectedRegistries = new ConnectedRegistriesOperations(this);
+            ExportPipelines = new ExportPipelinesOperations(this);
             Registries = new RegistriesOperations(this);
+            ImportPipelines = new ImportPipelinesOperations(this);
             Operations = new Operations(this);
+            PipelineRuns = new PipelineRunsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Replications = new ReplicationsOperations(this);
+            ScopeMaps = new ScopeMapsOperations(this);
+            Tokens = new TokensOperations(this);
             Webhooks = new WebhooksOperations(this);
             AgentPools = new AgentPoolsOperations(this);
             Runs = new RunsOperations(this);

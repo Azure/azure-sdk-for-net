@@ -6,21 +6,18 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.CosmosDB</PackageId>
     <Description>Provides developers with libraries for the CosmosDB under Azure Resource manager to manage CosmosDB Account, Databases and child resources and their available management capabilities. Create, Delete, Update CosmosDB Account, Databases and child resources. Note: This client library is for CosmosDB under Azure Resource Manager.</Description>
-    <Version>3.4.0-preview</Version>
+    <Version>3.8.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.CosmosDB</AssemblyName>
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Introduced restorable apis support for Gremlin and Table, which includes:
-          - Added the apis for RestorableGremlinDatabases, RestorableGremlinGraphs, RestorableGremlinResources, RestorableTables, RestorableResources.
-          - Added RetrieveContinuousBackupInfo apis for Gremlin and Table which help in determining the restore point of time and the resources to restore.
-          - Added GremlinDatabasesToRestore and TablesToRestore field to provision and restore database account api.
-          - Added StartTime and EndTime support for listing restorable containers event feed.
+        Add support for throughput redistribution across physical partitions      
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->

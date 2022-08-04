@@ -182,6 +182,36 @@ namespace Azure.Communication.NetworkTraversal.Samples
 
         [Test]
         [SyncOnly]
+        public void GetRelayConfigurationWithTtl()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+
+            var communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            Response<CommunicationUserIdentifier> response = communicationIdentityClient.CreateUser();
+            var user = response.Value;
+
+            // Get a connection string to our Azure Communication resource.
+            //@@var connectionString = "<connection_string>";
+            var client = new CommunicationRelayClient(connectionString);
+            client = CreateClientWithConnectionString();
+            Response<CommunicationRelayConfiguration> relayConfiguration = client.GetRelayConfiguration(ttl: 5000);
+            DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
+            IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+            Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
+            foreach (CommunicationIceServer iceServer in iceServers)
+            {
+                foreach (string url in iceServer.Urls)
+                {
+                    Console.WriteLine($"ICE Server Url: {url}");
+                }
+                Console.WriteLine($"ICE Server Username: {iceServer.Username}");
+                Console.WriteLine($"ICE Server Credential: {iceServer.Credential}");
+                Console.WriteLine($"ICE Server RouteType: {iceServer.RouteType}");
+            }
+        }
+
+        [Test]
+        [SyncOnly]
         public void GetRelayConfigurationWithoutIdentity()
         {
             var connectionString = TestEnvironment.LiveTestDynamicConnectionString;

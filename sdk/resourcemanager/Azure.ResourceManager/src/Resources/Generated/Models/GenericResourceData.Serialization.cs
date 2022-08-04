@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Kind))
             {
@@ -52,16 +56,19 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WriteEndObject();
@@ -69,22 +76,22 @@ namespace Azure.ResourceManager.Resources
 
         internal static GenericResourceData DeserializeGenericResourceData(JsonElement element)
         {
-            Optional<Plan> plan = default;
-            Optional<object> properties = default;
+            Optional<ArmPlan> plan = default;
+            Optional<BinaryData> properties = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
-            Optional<Models.Sku> sku = default;
+            Optional<ResourcesSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<string> provisioningState = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<Plan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -104,7 +111,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = property.Value.GetObject();
+                    properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ResourcesSku.DeserializeResourcesSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -169,11 +176,16 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -184,7 +196,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -199,16 +211,21 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
             }
-            return new GenericResourceData(id, name, type, systemData, tags, location, extendedLocation.Value, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
     }
 }

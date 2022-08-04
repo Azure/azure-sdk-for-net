@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of subscription resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SBSubscription : Resource
+    public partial class SBSubscription : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SBSubscription class.
@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SBSubscription class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="messageCount">Number of messages.</param>
         /// <param name="createdAt">Exact time the message was created.</param>
         /// <param name="accessedAt">Last time there was a receive request to
@@ -81,8 +86,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// affine subscriptions.</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string), bool? isClientAffine = default(bool?), SBClientAffineProperties clientAffineProperties = default(SBClientAffineProperties), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), string location = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string), bool? isClientAffine = default(bool?), SBClientAffineProperties clientAffineProperties = default(SBClientAffineProperties), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             MessageCount = messageCount;
             CreatedAt = createdAt;

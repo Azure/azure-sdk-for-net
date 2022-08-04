@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -22,15 +23,25 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of QueueServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="cors"> Specifies CORS rules for the Queue service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Queue service. </param>
-        internal QueueServiceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, CorsRules cors) : base(id, name, type, systemData)
+        internal QueueServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageCorsRules cors) : base(id, name, resourceType, systemData)
         {
             Cors = cors;
         }
 
         /// <summary> Specifies CORS rules for the Queue service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Queue service. </summary>
-        public CorsRules Cors { get; set; }
+        internal StorageCorsRules Cors { get; set; }
+        /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        public IList<StorageCorsRule> CorsRules
+        {
+            get
+            {
+                if (Cors is null)
+                    Cors = new StorageCorsRules();
+                return Cors.CorsRules;
+            }
+        }
     }
 }

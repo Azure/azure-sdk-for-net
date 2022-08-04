@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("protocol");
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(InterfaceType.Value.ToString());
             }
             writer.WriteEndObject();
         }

@@ -3,12 +3,10 @@
 
 using System;
 
-using Azure.Monitor.OpenTelemetry.Exporter;
-
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
-namespace Microsoft.Extensions.Logging
+namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// Extension methods to simplify registering of Azure Monitor Log Exporter.
@@ -30,6 +28,12 @@ namespace Microsoft.Extensions.Logging
 
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
+
+            // TODO: Fallback to default location if location provided via options does not work.
+            if (!options.DisableOfflineStorage && options.StorageDirectory == null)
+            {
+                options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+            }
 
             return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
         }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SKU of nat gateway. </summary>
-    public partial class NatGatewaySku
+    internal partial class NatGatewaySku
     {
         /// <summary> Initializes a new instance of NatGatewaySku. </summary>
         public NatGatewaySku()

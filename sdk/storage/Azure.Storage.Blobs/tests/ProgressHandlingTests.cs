@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Tests
             // Act
             var result = await client.DownloadContentAsync(new BlobDownloadOptions
             {
-                ProgressHandler = progress,
+                ProgressHandler = progress
             });
 
             // Assert
@@ -92,7 +92,7 @@ namespace Azure.Storage.Blobs.Tests
             // Act
             var result = await client.DownloadStreamingAsync(new BlobDownloadOptions
             {
-                ProgressHandler = progress,
+                ProgressHandler = progress
             });
             var downloadedData = new byte[result.Value.Details.ContentLength];
             using (Stream ms = new MemoryStream(downloadedData))

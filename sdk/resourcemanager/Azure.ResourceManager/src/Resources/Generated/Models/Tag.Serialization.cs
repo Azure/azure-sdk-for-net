@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TagsValue))
+            if (Optional.IsCollectionDefined(TagValues))
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
-                foreach (var item in TagsValue)
+                foreach (var item in TagValues)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);

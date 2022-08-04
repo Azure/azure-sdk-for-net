@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ServiceEndpointPolicy data model. </summary>
-    public partial class ServiceEndpointPolicyData : Resource
+    public partial class ServiceEndpointPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
         public ServiceEndpointPolicyData()
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -33,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service endpoint policy resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
-        internal ServiceEndpointPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Kind = kind;
             ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
             Subnets = subnets;
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>
@@ -52,8 +54,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> A collection of references to subnets. </summary>
         public IReadOnlyList<SubnetData> Subnets { get; }
         /// <summary> The resource GUID property of the service endpoint policy resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the service endpoint policy resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }
