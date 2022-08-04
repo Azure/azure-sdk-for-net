@@ -162,6 +162,10 @@ much more.
 * [Retrieving a specific document from your index](#retrieving-a-specific-document-from-your-index)
 * [Async APIs](#async-apis)
 
+### Advanced authentication
+ 
+- [Create a client that can authenticate in a national cloud](#authenticate-in-a-national-cloud)
+
 ### Querying
 
 Let's start by importing our namespaces.
@@ -363,6 +367,29 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.Id}: {doc.Name}");
 }
+```
+
+### Authenticate in a National Cloud
+
+To authenticate in a [National Cloud](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud), you will need to make the following additions to your client configuration:
+
+- Set the `AuthorityHost` in the credential options or via the `AZURE_AUTHORITY_HOST` environment variable
+- Set the `Audience` in `SearchClientOptions`
+
+```C#
+// Create a SearchClient that will authenticate through AAD in the China national cloud
+string indexName = "nycjobs";
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+SearchClient client = new SearchClient(endpoint, indexName,
+    new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions()
+        {
+            AuthorityHost = AzureAuthorityHosts.AzureChina
+        }),
+    new SearchClientOptions()
+    {
+        Audience = SearchAudience.AzureChina
+    });
 ```
 
 ## Troubleshooting
