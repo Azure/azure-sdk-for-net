@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the properties for manual resolution. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Migrate.Models
 
         /// <summary> Initializes a new instance of ManualResolutionProperties. </summary>
         /// <param name="targetId"> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </param>
-        internal ManualResolutionProperties(string targetId)
+        internal ManualResolutionProperties(ResourceIdentifier targetId)
         {
             TargetId = targetId;
         }
 
         /// <summary> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </summary>
-        public string TargetId { get; }
+        public ResourceIdentifier TargetId { get; }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization
         internal ProviderOperationsMetadataData()
         {
             ResourceTypes = new ChangeTrackingList<ProviderOperationsResourceType>();
-            Operations = new ChangeTrackingList<ProviderOperation>();
+            Operations = new ChangeTrackingList<ProviderOperationInfo>();
         }
 
         /// <summary> Initializes a new instance of ProviderOperationsMetadataData. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="displayName"> The provider display name. </param>
         /// <param name="resourceTypes"> The provider resource types. </param>
         /// <param name="operations"> The provider operations. </param>
-        internal ProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<ProviderOperationsResourceType> resourceTypes, IReadOnlyList<ProviderOperation> operations) : base(id, name, resourceType, systemData)
+        internal ProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<ProviderOperationsResourceType> resourceTypes, IReadOnlyList<ProviderOperationInfo> operations) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The provider resource types. </summary>
         public IReadOnlyList<ProviderOperationsResourceType> ResourceTypes { get; }
         /// <summary> The provider operations. </summary>
-        public IReadOnlyList<ProviderOperation> Operations { get; }
+        public IReadOnlyList<ProviderOperationInfo> Operations { get; }
     }
 }

@@ -6,7 +6,7 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A classification of an input document extracted by the Single Category Classification
+    /// A classification of an input document extracted by the Single Label Classification
     /// operation. The service attributes a confidence score to the predicted category
     /// for measuring how confident the model is in the returned prediction.
     /// </summary>

@@ -40,7 +40,9 @@ namespace Azure.Storage.Files.DataLake
                     ETag = containerProperties.ETag,
                     Metadata = containerProperties.Metadata,
                     DeletedOn = containerProperties.DeletedOn,
-                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays,
+                    DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -114,7 +116,8 @@ namespace Azure.Storage.Files.DataLake
                 AccessTier = blobProperties.AccessTier,
                 ArchiveStatus = blobProperties.ArchiveStatus,
                 AccessTierChangedOn = blobProperties.AccessTierChangedOn,
-                ExpiresOn = blobProperties.ExpiresOn
+                ExpiresOn = blobProperties.ExpiresOn,
+                EncryptionScope = blobProperties.EncryptionScope
             };
 
         internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
@@ -572,7 +575,8 @@ namespace Azure.Storage.Files.DataLake
                 Group = path.Group,
                 Permissions = path.Permissions,
                 CreatedOn = ParseFileTimeString(path.CreationTime),
-                ExpiresOn = ParseFileTimeString(path.ExpiryTime)
+                ExpiresOn = ParseFileTimeString(path.ExpiryTime),
+                EncryptionScope = path.EncryptionScope
             };
         }
 
@@ -889,6 +893,19 @@ namespace Azure.Storage.Files.DataLake
                 IndexDocument = dataLakeStaticWebsite.IndexDocument,
                 ErrorDocument404Path = dataLakeStaticWebsite.ErrorDocument404Path,
                 DefaultIndexDocumentPath = dataLakeStaticWebsite.DefaultIndexDocumentPath
+            };
+        }
+        internal static BlobContainerEncryptionScopeOptions ToBlobContainerEncryptionScopeOptions(this DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions)
+        {
+            if (encryptionScopeOptions == null)
+            {
+                return null;
+            }
+
+            return new BlobContainerEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = encryptionScopeOptions.PreventEncryptionScopeOverride
             };
         }
 

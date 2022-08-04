@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NEWValue = "NEW";
+        private const string NewValue = "NEW";
         private const string ExtendValue = "EXTEND";
-        private const string ADDValue = "ADD";
+        private const string AddValue = "ADD";
 
         /// <summary> NEW. </summary>
-        public static DiskConfigurationType NEW { get; } = new DiskConfigurationType(NEWValue);
+        public static DiskConfigurationType New { get; } = new DiskConfigurationType(NewValue);
         /// <summary> EXTEND. </summary>
         public static DiskConfigurationType Extend { get; } = new DiskConfigurationType(ExtendValue);
         /// <summary> ADD. </summary>
-        public static DiskConfigurationType ADD { get; } = new DiskConfigurationType(ADDValue);
+        public static DiskConfigurationType Add { get; } = new DiskConfigurationType(AddValue);
         /// <summary> Determines if two <see cref="DiskConfigurationType"/> values are the same. </summary>
         public static bool operator ==(DiskConfigurationType left, DiskConfigurationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskConfigurationType"/> values are not the same. </summary>

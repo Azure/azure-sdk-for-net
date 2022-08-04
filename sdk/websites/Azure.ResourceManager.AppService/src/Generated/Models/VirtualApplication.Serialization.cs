@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("physicalPath");
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (Optional.IsDefined(PreloadEnabled))
+            if (Optional.IsDefined(IsPreloadEnabled))
             {
                 writer.WritePropertyName("preloadEnabled");
-                writer.WriteBooleanValue(PreloadEnabled.Value);
+                writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
             if (Optional.IsCollectionDefined(VirtualDirectories))
             {

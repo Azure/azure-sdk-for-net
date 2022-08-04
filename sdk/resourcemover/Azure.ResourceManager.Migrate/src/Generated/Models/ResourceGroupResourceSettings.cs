@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the resource group resource settings. </summary>
-    public partial class ResourceGroupResourceSettings : ResourceSettings
+    public partial class ResourceGroupResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of ResourceGroupResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

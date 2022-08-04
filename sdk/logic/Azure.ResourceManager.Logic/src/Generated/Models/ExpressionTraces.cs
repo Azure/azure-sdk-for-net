@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of ExpressionTraces. </summary>
         internal ExpressionTraces()
         {
-            Inputs = new ChangeTrackingList<ExpressionRoot>();
+            Inputs = new ChangeTrackingList<LogicExpressionRoot>();
         }
 
         /// <summary> Initializes a new instance of ExpressionTraces. </summary>
         /// <param name="inputs"></param>
-        internal ExpressionTraces(IReadOnlyList<ExpressionRoot> inputs)
+        internal ExpressionTraces(IReadOnlyList<LogicExpressionRoot> inputs)
         {
             Inputs = inputs;
         }
 
         /// <summary> Gets the inputs. </summary>
-        public IReadOnlyList<ExpressionRoot> Inputs { get; }
+        public IReadOnlyList<LogicExpressionRoot> Inputs { get; }
     }
 }

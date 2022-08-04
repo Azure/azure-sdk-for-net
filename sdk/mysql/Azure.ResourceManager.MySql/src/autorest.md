@@ -28,6 +28,13 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'sessionId': 'uuid'
+  'PrincipalId': 'uuid'
+  '*ServerId': 'arm-id'
+  '*SubnetId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  'ResourceType': 'resource-type'
+  '*IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -52,8 +59,95 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations/{configurationName}
+prepend-rp-prefix:
+  - Advisor
+  - Configuration
+  - Database
+  - FirewallRule
+  - QueryStatistic
+  - QueryText
+  - RecommendationAction
+  - Server
+  - ServerKey
+  - ServerSecurityAlertPolicy
+  - ServerVersion
+  - VirtualNetworkRule
+  - WaitStatistic
+  - AdministratorType
+  - AdvisorResultList
+  - ConfigurationListContent
+  - CreateMode
+  - DatabaseListResult
+  - FirewallRuleListResult
+  - LogFile
+  - LogFileListResult
+  - MinimalTlsVersionEnum
+  - GeoRedundantBackup
+  - InfrastructureEncryption
+  - NameAvailabilityRequest
+  - PerformanceTierListResult
+  - PerformanceTierServiceLevelObjectives
+  - PrivateEndpointProvisioningState
+  - PrivateLinkServiceConnectionStateStatus
+  - PublicNetworkAccessEnum
+  - QueryPerformanceInsightResetDataResult
+  - QueryPerformanceInsightResetDataResultState
+  - RecommendedActionSessionsOperationStatus
+  - StorageProfile
+  - ServerPropertiesForCreate
+  - ServerPropertiesForDefaultCreate
+  - ServerPropertiesForRestore
+  - ServerPropertiesForGeoRestore
+  - ServerPropertiesForReplica
+  - SecurityAlertPolicyName
+  - ServerKeyListResult
+  - ServerKeyType
+  - ServerListResult
+  - ServerPrivateEndpointConnection
+  - ServerPrivateEndpointConnectionProperties
+  - ServerPrivateLinkServiceConnectionStateProperty
+  - ServerSecurityAlertPolicyListResult
+  - ServerSecurityAlertPolicyState
+  - ServerState
+  - ServerUpgradeParameters
+  - SslEnforcementEnum
+  - StorageAutogrow
+  - TopQueryStatisticsInput
+  - VirtualNetworkRuleListResult
+  - VirtualNetworkRuleState
+  - WaitStatisticsInput
+rename-mapping:
+  ServerAdministratorResource: MySqlServerAdministrator
+  ServerAdministratorResourceListResult: MySqlServerAdministratorListResult
+  AdvisorsResultList: MySqlAdvisorListResult
+  QueryTextsResultList: MySqlQueryTextListResult
+  TopQueryStatisticsResultList: MySqlTopQueryStatisticsListResult
+  RecommendationActionsResultList: MySqlRecommendationActionListResult
+  WaitStatisticsResultList: MySqlWaitStatisticsListResult
+  PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
+  RecoverableServerResource: MySqlRecoverableServerResourceData
+  ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
+  NameAvailability.nameAvailable: IsNameAvailable
+  StorageProfile.storageMB: StorageInMB
+  WaitStatistic.properties.totalTimeInMs: TotalTimeInMinutes
+  PerformanceTierProperties.minStorageMB: MinStorageInMB
+  PerformanceTierProperties.maxStorageMB: MaxStorageInMB
+  PerformanceTierProperties.minLargeStorageMB: MinLargeStorageInMB
+  PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
+  PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
+  PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  NameAvailability: MySqlNameAvailabilityResult
+  PerformanceTierProperties: MySqlPerformanceTier
+  ConfigurationListResult: MySqlConfigurationList
+
+override-operation-name:
+  ServerParameters_ListUpdateConfigurations: UpdateConfigurations
+  LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
+  LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
+  MySqlServers_Start: Start
+  MySqlServers_Stop: Stop
+  MySqlServers_Upgrade: Upgrade
+  CheckNameAvailability_Execute: CheckMySqlNameAvailability
 
 directive:
   - rename-operation:
@@ -65,6 +159,11 @@ directive:
   - rename-operation:
       from: Servers_Upgrade
       to: MySqlServers_Upgrade
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
+      $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
@@ -80,6 +179,12 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'PrincipalId': 'uuid'
+  '*SubnetId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  '*UserAssignedIdentityId': 'arm-id'
+  'ResourceType': 'resource-type'
+  '*IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -104,4 +209,60 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  Configuration: MySqlFlexibleServerConfiguration
+  Database: MySqlFlexibleServerDatabase
+  FirewallRule: MySqlFlexibleServerFirewallRule
+  ServerBackup: MySqlFlexibleServerBackup
+  Server: MySqlFlexibleServer
+  ServerVersion: MySqlFlexibleServerVersion
+  EnableStatusEnum: MySqlFlexibleServerEnableStatusEnum
+  ReplicationRole: MySqlFlexibleServerReplicationRole
+  DataEncryption: MySqlFlexibleServerDataEncryption
+  MaintenanceWindow: MySqlFlexibleServerMaintenanceWindow
+  Backup: MySqlFlexibleServerBackupProperties
+  Storage: MySqlFlexibleServerStorage
+  Sku: MySqlFlexibleServerSku
+  Network: MySqlFlexibleServerNetwork
+  HighAvailability: MySqlFlexibleServerHighAvailability
+  HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode
+  HighAvailabilityState: MySqlFlexibleServerHighAvailabilityState
+  ServerProperties: MySqlFlexibleServerProperties
+  ServerPropertiesForUpdate: MySqlFlexibleServerPropertiesForUpdate
+  ServerForUpdate: MySqlFlexibleServerForUpdate
+  ServerListResult: MySqlFlexibleServerListResult
+  ServerRestartParameter: MySqlFlexibleServerRestartParameter
+  ServerState: MySqlFlexibleServerState
+  ServerBackupListResult: MySqlFlexibleServerBackupListResult
+  FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
+  FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
+#   DatabaseProperties: MySqlFlexibleServer
+  DatabaseListResult: MySqlFlexibleServerDatabaseListResult
+  ConfigurationSource: MySqlFlexibleServerConfigurationSource
+  ConfigurationListResult: MySqlFlexibleServerConfigurationListResult
+  ConfigurationForBatchUpdate: MySqlFlexibleServerConfigurationForBatchUpdate
+  ConfigurationListForBatchUpdate: MySqlFlexibleServerConfigurationListForBatchUpdate
+  VirtualNetworkSubnetUsageParameter: MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
+  DelegatedSubnetUsage: MySqlFlexibleServerDelegatedSubnetUsage
+  VirtualNetworkSubnetUsageResult: MySqlFlexibleServerVirtualNetworkSubnetUsageResult
+  SkuCapability: MySqlFlexibleServerSkuCapability
+  ServerVersionCapability: MySqlFlexibleServerServerVersionCapability
+  StorageEditionCapability: MySqlFlexibleServerStorageEditionCapability
+  ServerEditionCapability: MySqlFlexibleServerEditionCapability
+  CapabilityProperties: MySqlFlexibleServerCapabilityProperties
+  CapabilitiesListResult: MySqlFlexibleServerCapabilitiesListResult
+  GetPrivateDnsZoneSuffixResponse: MySqlFlexibleServerPrivateDnsZoneSuffixResponse
+  NameAvailabilityRequest: MySqlFlexibleServerNameAvailabilityRequest
+  NameAvailability: MySqlFlexibleServerNameAvailabilityResult
+  CreateMode: MySqlFlexibleServerCreateMode
+  DataEncryptionType: MySqlFlexibleServerDataEncryptionType
+  SkuTier: MySqlFlexibleServerSkuTier
+  IsReadOnly: MySqlFlexibleServerConfigReadOnlyState
+  IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
+  IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
+  NameAvailability.nameAvailable: IsNameAvailable
+  Storage.storageSizeGB: StorageSizeInGB
+  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+override-operation-name:
+  CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
 ```

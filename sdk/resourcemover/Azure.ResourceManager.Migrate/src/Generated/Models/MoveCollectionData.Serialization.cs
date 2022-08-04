@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Migrate
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Migrate
         internal static MoveCollectionData DeserializeMoveCollectionData(JsonElement element)
         {
             Optional<ETag> etag = default;
-            Optional<Identity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<MoveCollectionProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Migrate
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Migrate
                     continue;
                 }
             }
-            return new MoveCollectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity.Value, properties.Value);
+            return new MoveCollectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, properties.Value);
         }
     }
 }

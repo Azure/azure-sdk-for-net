@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagDescriptionCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TagDescriptionListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagDescriptionCollection value = default;
+                        TagDescriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagDescriptionCollection.DeserializeTagDescriptionCollection(document.RootElement);
+                        value = TagDescriptionListResult.DeserializeTagDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagDescriptionCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<TagDescriptionListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagDescriptionCollection value = default;
+                        TagDescriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagDescriptionCollection.DeserializeTagDescriptionCollection(document.RootElement);
+                        value = TagDescriptionListResult.DeserializeTagDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="tagDescriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagDescriptionContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiTagDescriptionData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagDescriptionContractData value = default;
+                        ApiTagDescriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagDescriptionContractData.DeserializeTagDescriptionContractData(document.RootElement);
+                        value = ApiTagDescriptionData.DeserializeApiTagDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TagDescriptionContractData)null, message.Response);
+                    return Response.FromValue((ApiTagDescriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="tagDescriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagDescriptionContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, CancellationToken cancellationToken = default)
+        public Response<ApiTagDescriptionData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagDescriptionContractData value = default;
+                        ApiTagDescriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagDescriptionContractData.DeserializeTagDescriptionContractData(document.RootElement);
+                        value = ApiTagDescriptionData.DeserializeApiTagDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TagDescriptionContractData)null, message.Response);
+                    return Response.FromValue((ApiTagDescriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionContractCreateOrUpdateContent content, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagDescriptionContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionContractCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiTagDescriptionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        TagDescriptionContractData value = default;
+                        ApiTagDescriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagDescriptionContractData.DeserializeTagDescriptionContractData(document.RootElement);
+                        value = ApiTagDescriptionData.DeserializeApiTagDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="tagDescriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="tagDescriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagDescriptionContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, TagDescriptionContractCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiTagDescriptionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagDescriptionId, ApiTagDescriptionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        TagDescriptionContractData value = default;
+                        ApiTagDescriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagDescriptionContractData.DeserializeTagDescriptionContractData(document.RootElement);
+                        value = ApiTagDescriptionData.DeserializeApiTagDescriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagDescriptionCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TagDescriptionListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagDescriptionCollection value = default;
+                        TagDescriptionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TagDescriptionCollection.DeserializeTagDescriptionCollection(document.RootElement);
+                        value = TagDescriptionListResult.DeserializeTagDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagDescriptionCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<TagDescriptionListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -599,9 +599,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TagDescriptionCollection value = default;
+                        TagDescriptionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TagDescriptionCollection.DeserializeTagDescriptionCollection(document.RootElement);
+                        value = TagDescriptionListResult.DeserializeTagDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -36,11 +36,11 @@ namespace Azure.Communication.CallingServer
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
         /// <param name="subject">The subject.</param>
-        /// <param name="callbackUri">The callback URI.</param>
+        /// <param name="callbackEndpoint">The callback URI.</param>
         /// <returns> A new <see cref="CallingServer.CallConnectionProperties"/> instance for mocking. </returns>
-        public static CallConnectionProperties CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackUri)
+        public static CallConnectionProperties CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackEndpoint)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, callSource, targets, callConnectionState, subject, callbackUri);
+            return new CallConnectionProperties(callConnectionId, serverCallId, callSource, targets, callConnectionState, subject, callbackEndpoint);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>

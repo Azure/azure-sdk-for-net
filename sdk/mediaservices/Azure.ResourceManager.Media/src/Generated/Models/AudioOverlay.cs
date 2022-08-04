@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the properties of an audio overlay. </summary>
-    public partial class AudioOverlay : Overlay
+    public partial class AudioOverlay : OverlayBasicProperties
     {
         /// <summary> Initializes a new instance of AudioOverlay. </summary>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>

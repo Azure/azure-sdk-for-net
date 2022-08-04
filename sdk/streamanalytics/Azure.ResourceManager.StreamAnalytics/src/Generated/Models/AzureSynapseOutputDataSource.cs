@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure Synapse output data source. </summary>
-    public partial class AzureSynapseOutputDataSource : OutputDataSource
+    public partial class AzureSynapseOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of AzureSynapseOutputDataSource. </summary>
         public AzureSynapseOutputDataSource()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="user"> The user name that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="password"> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal AzureSynapseOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal AzureSynapseOutputDataSource(string outputDataSourceType, string server, string database, string table, string user, string password, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The password that will be used to connect to the Azure SQL database. Required on PUT (CreateOrReplace) requests. </summary>
         public string Password { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

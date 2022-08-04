@@ -14,9 +14,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Tracks the status of a long-running operation for copying a custom model into a target Form Recognizer resource.
     /// </summary>
-    public class CopyModelOperation : Operation<DocumentModel>, IOperation<DocumentModel>
+    public class CopyModelOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
     {
-        private readonly OperationInternal<DocumentModel> _operationInternal;
+        private readonly OperationInternal<DocumentModelDetails> _operationInternal;
 
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly DocumentAnalysisRestClient _serviceClient;
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
-        public override DocumentModel Value => _operationInternal.Value;
+        public override DocumentModelDetails Value => _operationInternal.Value;
 
         /// <summary>
         /// Returns true if the long-running operation completed.
@@ -130,7 +130,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override async ValueTask<Response<DocumentModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<DocumentModelDetails>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
         /// </remarks>
-        public override async ValueTask<Response<DocumentModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override async ValueTask<Response<DocumentModelDetails>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -171,11 +171,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
-        async ValueTask<OperationState<DocumentModel>> IOperation<DocumentModel>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        async ValueTask<OperationState<DocumentModelDetails>> IOperation<DocumentModelDetails>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response<ModelOperation> response = async
-                    ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
-                    : _serviceClient.GetOperation(Id, cancellationToken);
+            Response<GetOperationResponse> response = async
+                ? await _serviceClient.GetOperationAsync(Id, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetOperation(Id, cancellationToken);
 
             DocumentOperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();
@@ -183,7 +183,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             if (status == DocumentOperationStatus.Succeeded)
             {
-                return OperationState<DocumentModel>.Success(rawResponse, response.Value.Result);
+                return OperationState<DocumentModelDetails>.Success(rawResponse, response.Value.Result);
             }
             else if (status == DocumentOperationStatus.Failed)
             {
@@ -191,14 +191,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Error)
                     .ConfigureAwait(false);
 
-                return OperationState<DocumentModel>.Failure(rawResponse, requestFailedException);
+                return OperationState<DocumentModelDetails>.Failure(rawResponse, requestFailedException);
             }
             else if (status == DocumentOperationStatus.Canceled)
             {
-                return OperationState<DocumentModel>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<DocumentModelDetails>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            return OperationState<DocumentModel>.Pending(rawResponse);
+            return OperationState<DocumentModelDetails>.Pending(rawResponse);
         }
     }
 }

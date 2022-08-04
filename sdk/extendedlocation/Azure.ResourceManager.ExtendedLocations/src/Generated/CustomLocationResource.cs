@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// Operation Id: CustomLocations_ListEnabledResourceTypes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnabledResourceType> GetEnabledResourceTypesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CustomLocationEnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomLocationEnabledResourceType> GetEnabledResourceTypesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EnabledResourceType>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CustomLocationEnabledResourceType>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
                 scope.Start();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     throw;
                 }
             }
-            async Task<Page<EnabledResourceType>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CustomLocationEnabledResourceType>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
                 scope.Start();
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// Operation Id: CustomLocations_ListEnabledResourceTypes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnabledResourceType> GetEnabledResourceTypes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomLocationEnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomLocationEnabledResourceType> GetEnabledResourceTypes(CancellationToken cancellationToken = default)
         {
-            Page<EnabledResourceType> FirstPageFunc(int? pageSizeHint)
+            Page<CustomLocationEnabledResourceType> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
                 scope.Start();
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                     throw;
                 }
             }
-            Page<EnabledResourceType> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CustomLocationEnabledResourceType> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
                 scope.Start();

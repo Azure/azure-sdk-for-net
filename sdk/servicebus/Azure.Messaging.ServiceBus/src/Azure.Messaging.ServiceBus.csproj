@@ -29,7 +29,7 @@
 
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="SharedSource\Azure.Core" />

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="fullSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch data from the sql database. </param>
         /// <param name="deltaSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal AzureSqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, RefreshType? refreshType, string refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, AuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
+        internal AzureSqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, string refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> This element is associated with the datasource element. This is the password that will be used to connect to the SQL Database instance. </summary>
         public string Password { get; set; }
         /// <summary> Indicates the type of data refresh option. </summary>
-        public RefreshType? RefreshType { get; set; }
+        public DataRefreshType? RefreshType { get; set; }
         /// <summary> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </summary>
         public string RefreshRate { get; set; }
         /// <summary> This element is associated with the datasource element. This query is used to fetch data from the sql database. </summary>
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </summary>
         public string DeltaSnapshotQuery { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

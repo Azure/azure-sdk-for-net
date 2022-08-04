@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure SQL database output data source. </summary>
-    public partial class AzureSqlDatabaseOutputDataSource : OutputDataSource
+    public partial class AzureSqlDatabaseOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of AzureSqlDatabaseOutputDataSource. </summary>
         public AzureSqlDatabaseOutputDataSource()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="maxBatchCount"> Max Batch count for write to Sql database, the default value is 10,000. Optional on PUT requests. </param>
         /// <param name="maxWriterCount"> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal AzureSqlDatabaseOutputDataSource(string outputDataSourceType, string server, string database, string user, string password, string table, float? maxBatchCount, float? maxWriterCount, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal AzureSqlDatabaseOutputDataSource(string outputDataSourceType, string server, string database, string user, string password, string table, float? maxBatchCount, float? maxWriterCount, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Max Writer count, currently only 1(single writer) and 0(based on query partition) are available. Optional on PUT requests. </summary>
         public float? MaxWriterCount { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

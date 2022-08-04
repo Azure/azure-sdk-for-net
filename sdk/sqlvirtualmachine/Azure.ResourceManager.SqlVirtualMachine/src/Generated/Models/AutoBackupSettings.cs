@@ -21,30 +21,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Initializes a new instance of AutoBackupSettings. </summary>
-        /// <param name="enable"> Enable or disable autobackup on SQL virtual machine. </param>
-        /// <param name="enableEncryption"> Enable or disable encryption for backup on SQL virtual machine. </param>
+        /// <param name="isEnabled"> Enable or disable autobackup on SQL virtual machine. </param>
+        /// <param name="isEncryptionEnabled"> Enable or disable encryption for backup on SQL virtual machine. </param>
         /// <param name="retentionPeriod"> Retention period of backup: 1-90 days. </param>
         /// <param name="storageAccountUri"> Storage account url where backup will be taken to. </param>
         /// <param name="storageContainerName"> Storage container name where backup will be taken to. </param>
         /// <param name="storageAccessKey"> Storage account key where backup will be taken to. </param>
         /// <param name="password"> Password for encryption on backup. </param>
-        /// <param name="backupSystemDbs"> Include or exclude system databases from auto backup. </param>
+        /// <param name="isSystemDbsIncludedInBackup"> Include or exclude system databases from auto backup. </param>
         /// <param name="backupScheduleType"> Backup schedule type. </param>
         /// <param name="fullBackupFrequency"> Frequency of full backups. In both cases, full backups begin during the next scheduled time window. </param>
         /// <param name="daysOfWeek"> Days of the week for the backups when FullBackupFrequency is set to Weekly. </param>
         /// <param name="fullBackupStartTime"> Start time of a given day during which full backups can take place. 0-23 hours. </param>
         /// <param name="fullBackupWindowHours"> Duration of the time window of a given day during which full backups can take place. 1-23 hours. </param>
         /// <param name="logBackupFrequency"> Frequency of log backups. 5-60 minutes. </param>
-        internal AutoBackupSettings(bool? enable, bool? enableEncryption, int? retentionPeriod, Uri storageAccountUri, string storageContainerName, string storageAccessKey, string password, bool? backupSystemDbs, BackupScheduleType? backupScheduleType, FullBackupFrequencyType? fullBackupFrequency, IList<AutoBackupDaysOfWeek> daysOfWeek, int? fullBackupStartTime, int? fullBackupWindowHours, int? logBackupFrequency)
+        internal AutoBackupSettings(bool? isEnabled, bool? isEncryptionEnabled, int? retentionPeriod, Uri storageAccountUri, string storageContainerName, string storageAccessKey, string password, bool? isSystemDbsIncludedInBackup, BackupScheduleType? backupScheduleType, FullBackupFrequency? fullBackupFrequency, IList<AutoBackupDaysOfWeek> daysOfWeek, int? fullBackupStartTime, int? fullBackupWindowHours, int? logBackupFrequency)
         {
-            Enable = enable;
-            EnableEncryption = enableEncryption;
+            IsEnabled = isEnabled;
+            IsEncryptionEnabled = isEncryptionEnabled;
             RetentionPeriod = retentionPeriod;
             StorageAccountUri = storageAccountUri;
             StorageContainerName = storageContainerName;
             StorageAccessKey = storageAccessKey;
             Password = password;
-            BackupSystemDbs = backupSystemDbs;
+            IsSystemDbsIncludedInBackup = isSystemDbsIncludedInBackup;
             BackupScheduleType = backupScheduleType;
             FullBackupFrequency = fullBackupFrequency;
             DaysOfWeek = daysOfWeek;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Enable or disable autobackup on SQL virtual machine. </summary>
-        public bool? Enable { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Enable or disable encryption for backup on SQL virtual machine. </summary>
-        public bool? EnableEncryption { get; set; }
+        public bool? IsEncryptionEnabled { get; set; }
         /// <summary> Retention period of backup: 1-90 days. </summary>
         public int? RetentionPeriod { get; set; }
         /// <summary> Storage account url where backup will be taken to. </summary>
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Password for encryption on backup. </summary>
         public string Password { get; set; }
         /// <summary> Include or exclude system databases from auto backup. </summary>
-        public bool? BackupSystemDbs { get; set; }
+        public bool? IsSystemDbsIncludedInBackup { get; set; }
         /// <summary> Backup schedule type. </summary>
         public BackupScheduleType? BackupScheduleType { get; set; }
         /// <summary> Frequency of full backups. In both cases, full backups begin during the next scheduled time window. </summary>
-        public FullBackupFrequencyType? FullBackupFrequency { get; set; }
+        public FullBackupFrequency? FullBackupFrequency { get; set; }
         /// <summary> Days of the week for the backups when FullBackupFrequency is set to Weekly. </summary>
         public IList<AutoBackupDaysOfWeek> DaysOfWeek { get; }
         /// <summary> Start time of a given day during which full backups can take place. 0-23 hours. </summary>

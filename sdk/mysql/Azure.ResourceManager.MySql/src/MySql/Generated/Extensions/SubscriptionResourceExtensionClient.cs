@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serverClientDiagnostics;
-        private ServersRestOperations _serverRestClient;
+        private ClientDiagnostics _mySqlServerServersClientDiagnostics;
+        private ServersRestOperations _mySqlServerServersRestClient;
         private ClientDiagnostics _locationBasedPerformanceTierClientDiagnostics;
         private LocationBasedPerformanceTierRestOperations _locationBasedPerformanceTierRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.MySql
         {
         }
 
-        private ClientDiagnostics ServerClientDiagnostics => _serverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql", ServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations ServerRestClient => _serverRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServerResource.ResourceType));
+        private ClientDiagnostics MySqlServerServersClientDiagnostics => _mySqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql", MySqlServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations MySqlServerServersRestClient => _mySqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MySqlServerResource.ResourceType));
         private ClientDiagnostics LocationBasedPerformanceTierClientDiagnostics => _locationBasedPerformanceTierClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationBasedPerformanceTierRestOperations LocationBasedPerformanceTierRestClient => _locationBasedPerformanceTierRestClient ??= new LocationBasedPerformanceTierRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.MySql
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerResource> GetServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlServerResource> GetMySqlServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MySqlServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = MySqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMySqlServers");
                 scope.Start();
                 try
                 {
-                    var response = await ServerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = await MySqlServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MySqlServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.MySql
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerResource> GetServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlServerResource> GetMySqlServers(CancellationToken cancellationToken = default)
         {
-            Page<ServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<MySqlServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = MySqlServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMySqlServers");
                 scope.Start();
                 try
                 {
-                    var response = ServerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), null, response.GetRawResponse());
+                    var response = MySqlServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MySqlServerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PerformanceTierProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MySqlPerformanceTier>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedPerformanceTierClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers");
                 scope.Start();
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PerformanceTierProperties> GetLocationBasedPerformanceTiers(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(string locationName, CancellationToken cancellationToken = default)
         {
-            Page<PerformanceTierProperties> FirstPageFunc(int? pageSizeHint)
+            Page<MySqlPerformanceTier> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedPerformanceTierClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers");
                 scope.Start();
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlNameAvailability");
             scope.Start();
             try
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> ExecuteCheckNameAvailability(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlNameAvailability");
             scope.Start();
             try
             {
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecommendedActionSessionsOperationStatus>> GetLocationBasedRecommendedActionSessionsOperationStatuAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlRecommendedActionSessionsOperationStatus>> GetRecommendedActionSessionsOperationStatusAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedRecommendedActionSessionsOperationStatu");
+            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationStatus");
             scope.Start();
             try
             {
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecommendedActionSessionsOperationStatus> GetLocationBasedRecommendedActionSessionsOperationStatu(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlRecommendedActionSessionsOperationStatus> GetRecommendedActionSessionsOperationStatus(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedRecommendedActionSessionsOperationStatu");
+            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationStatus");
             scope.Start();
             try
             {
@@ -272,17 +272,17 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecommendationActionResource> GetRecommendationActionsByLocationRecommendedActionSessionsOperationResultAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResultsAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecommendationActionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MySqlRecommendationActionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
                     var response = await LocationBasedRecommendedActionSessionsResultRestClient.ListAsync(Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MySqlRecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -290,14 +290,14 @@ namespace Azure.ResourceManager.MySql
                     throw;
                 }
             }
-            async Task<Page<RecommendationActionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MySqlRecommendationActionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
                     var response = await LocationBasedRecommendedActionSessionsResultRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MySqlRecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,17 +316,17 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecommendationActionResource> GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult(string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResults(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Page<RecommendationActionResource> FirstPageFunc(int? pageSizeHint)
+            Page<MySqlRecommendationActionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
                     var response = LocationBasedRecommendedActionSessionsResultRestClient.List(Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MySqlRecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,14 +334,14 @@ namespace Azure.ResourceManager.MySql
                     throw;
                 }
             }
-            Page<RecommendationActionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MySqlRecommendationActionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
                     var response = LocationBasedRecommendedActionSessionsResultRestClient.ListNextPage(nextLink, Id.SubscriptionId, locationName, operationId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MySqlRecommendationActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class ConnectivityEndpoint
     {
         /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
-        internal ConnectivityEndpoint()
+        public ConnectivityEndpoint()
         {
         }
 
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The name of the endpoint. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The protocol of the endpoint. </summary>
-        public string Protocol { get; }
+        public string Protocol { get; set; }
         /// <summary> The location of the endpoint. </summary>
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The port to connect to. </summary>
-        public int? Port { get; }
+        public int? Port { get; set; }
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress { get; set; }
     }
 }

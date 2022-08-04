@@ -111,7 +111,8 @@
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
-        "Wadl"
+        "Wadl",
+        "Invokable"
       ]
     },
     {
@@ -428,7 +429,8 @@
         "Nvarchar",
         "Stdev",
         "Unrestorable",
-        "Vcores"
+        "Vcores",
+        "Dtcs"
       ]
     },
     {

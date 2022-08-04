@@ -14,13 +14,18 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         internal static IotCentralAppTemplateLocation DeserializeIotCentralAppTemplateLocation(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<AzureLocation> id = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"))
@@ -29,7 +34,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralAppTemplateLocation(id.Value, displayName.Value);
+            return new IotCentralAppTemplateLocation(Optional.ToNullable(id), displayName.Value);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -16,16 +17,12 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="linkedRedisCacheId"> Fully qualified resourceId of the linked redis cache. </param>
         /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
         /// <param name="serverRole"> Role of the linked server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> or <paramref name="linkedRedisCacheLocation"/> is null. </exception>
-        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole)
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> is null. </exception>
+        public RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId, AzureLocation linkedRedisCacheLocation, RedisLinkedServerRole serverRole)
         {
             if (linkedRedisCacheId == null)
             {
                 throw new ArgumentNullException(nameof(linkedRedisCacheId));
-            }
-            if (linkedRedisCacheLocation == null)
-            {
-                throw new ArgumentNullException(nameof(linkedRedisCacheLocation));
             }
 
             LinkedRedisCacheId = linkedRedisCacheId;
@@ -34,10 +31,10 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
-        public string LinkedRedisCacheId { get; }
+        public ResourceIdentifier LinkedRedisCacheId { get; }
         /// <summary> Location of the linked redis cache. </summary>
-        public string LinkedRedisCacheLocation { get; }
+        public AzureLocation LinkedRedisCacheLocation { get; }
         /// <summary> Role of the linked server. </summary>
-        public ReplicationRole ServerRole { get; }
+        public RedisLinkedServerRole ServerRole { get; }
     }
 }

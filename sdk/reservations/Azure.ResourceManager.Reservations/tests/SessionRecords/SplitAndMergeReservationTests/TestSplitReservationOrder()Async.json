@@ -133,7 +133,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/55940ea5-f1ab-4dc6-804e-44ffe25c6769/reservations/%2F94d889a8-f0dd-42c2-adb3-bad2870240c0?api-version=2022-03-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/55940ea5-f1ab-4dc6-804e-44ffe25c6769/reservations/94d889a8-f0dd-42c2-adb3-bad2870240c0?api-version=2022-03-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

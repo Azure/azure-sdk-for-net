@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             Optional<string> path = default;
             int port = default;
-            Optional<Scheme> scheme = default;
+            Optional<ContainerHttpGetScheme> scheme = default;
             Optional<IList<HttpHeader>> httpHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheme = new Scheme(property.Value.GetString());
+                    scheme = new ContainerHttpGetScheme(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpHeaders"))

@@ -48,12 +48,10 @@ namespace Azure.Communication.CallingServer
         /// Start recording of the call.
         /// </summary>
         /// <param name="callLocator"> The callLocator. </param>
-        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
+        /// <param name="recordingStateCallbackEndpoint">The uri to send state change callbacks.</param>
+        /// <param name="options">Optional parameters</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="content">content for recording.</param>
-        /// <param name="channel">channel for recording.</param>
-        /// <param name="format">format for recording.</param>
-        public virtual Response<RecordingStatusResult> StartRecording(CallLocator callLocator, Uri recordingStateCallbackUri, RecordingContent? content = null, RecordingChannel? channel = null, RecordingFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<RecordingStatusResult> StartRecording(CallLocator callLocator, Uri recordingStateCallbackEndpoint, StartRecordingOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
@@ -61,10 +59,14 @@ namespace Azure.Communication.CallingServer
             {
                 StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal(CallLocatorSerializer.Serialize(callLocator))
                 {
-                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri,
-                    RecordingChannelType = channel,
-                    RecordingContentType = content,
-                    RecordingFormatType = format,
+                    RecordingStateCallbackUri = recordingStateCallbackEndpoint.AbsoluteUri,
+                };
+
+                if (options != null)
+                {
+                    request.RecordingChannelType = options.RecordingChannel;
+                    request.RecordingContentType = options.RecordingContent;
+                    request.RecordingFormatType = options.RecordingFormat;
                 };
 
                 return contentRestClient.Recording(request, cancellationToken);
@@ -80,12 +82,10 @@ namespace Azure.Communication.CallingServer
         /// Start recording of the call.
         /// </summary>
         /// <param name="callLocator"> The callLocator. </param>
-        /// <param name="recordingStateCallbackUri">The uri to send state change callbacks.</param>
+        /// <param name="recordingStateCallbackEndpoint">The uri to send state change callbacks.</param>
+        /// <param name="options">Optional parameters</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="content">content for recording.</param>
-        /// <param name="channel">channel for recording.</param>
-        /// <param name="format">format for recording.</param>
-        public virtual async Task<Response<RecordingStatusResult>> StartRecordingAsync(CallLocator callLocator, Uri recordingStateCallbackUri, RecordingContent? content = null, RecordingChannel? channel = null, RecordingFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecordingStatusResult>> StartRecordingAsync(CallLocator callLocator, Uri recordingStateCallbackEndpoint, StartRecordingOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
@@ -93,10 +93,14 @@ namespace Azure.Communication.CallingServer
             {
                 StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal(CallLocatorSerializer.Serialize(callLocator))
                 {
-                    RecordingStateCallbackUri = recordingStateCallbackUri.AbsoluteUri,
-                    RecordingChannelType = channel,
-                    RecordingContentType = content,
-                    RecordingFormatType = format,
+                    RecordingStateCallbackUri = recordingStateCallbackEndpoint.AbsoluteUri,
+                };
+
+                if (options != null)
+                {
+                    request.RecordingChannelType = options.RecordingChannel;
+                    request.RecordingContentType = options.RecordingContent;
+                    request.RecordingFormatType = options.RecordingFormat;
                 };
                 return await contentRestClient.RecordingAsync(request, cancellationToken).ConfigureAwait(false);
             }

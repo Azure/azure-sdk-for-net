@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the SQL Server resource settings. </summary>
-    public partial class SqlServerResourceSettings : ResourceSettings
+    public partial class SqlServerResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of SqlServerResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

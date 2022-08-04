@@ -11,27 +11,42 @@ using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The response of the List Namespace operation. </summary>
+    /// <summary>
+    /// The response of the List Namespace operation.
+    /// Serialized Name: SharedAccessAuthorizationRuleListResult
+    /// </summary>
     internal partial class SharedAccessAuthorizationRuleListResult
     {
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
         internal SharedAccessAuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<SharedAccessAuthorizationRuleResourceData>();
+            Value = new ChangeTrackingList<NotificationHubAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
-        /// <param name="value"> Result of the List AuthorizationRules operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules. </param>
-        internal SharedAccessAuthorizationRuleListResult(IReadOnlyList<SharedAccessAuthorizationRuleResourceData> value, string nextLink)
+        /// <param name="value">
+        /// Result of the List AuthorizationRules operation.
+        /// Serialized Name: SharedAccessAuthorizationRuleListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules
+        /// Serialized Name: SharedAccessAuthorizationRuleListResult.nextLink
+        /// </param>
+        internal SharedAccessAuthorizationRuleListResult(IReadOnlyList<NotificationHubAuthorizationRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Result of the List AuthorizationRules operation. </summary>
-        public IReadOnlyList<SharedAccessAuthorizationRuleResourceData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules. </summary>
+        /// <summary>
+        /// Result of the List AuthorizationRules operation.
+        /// Serialized Name: SharedAccessAuthorizationRuleListResult.value
+        /// </summary>
+        public IReadOnlyList<NotificationHubAuthorizationRuleData> Value { get; }
+        /// <summary>
+        /// Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules
+        /// Serialized Name: SharedAccessAuthorizationRuleListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

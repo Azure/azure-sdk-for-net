@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="licenses"> The PlayReady licenses. </param>
         /// <param name="responseCustomData"> The custom response data. </param>
-        internal ContentKeyPolicyPlayReadyConfiguration(string odataType, IList<ContentKeyPolicyPlayReadyLicense> licenses, string responseCustomData) : base(odataType)
+        internal ContentKeyPolicyPlayReadyConfiguration(string odataType, IList<ContentKeyPolicyPlayReadyLicense> licenses, BinaryData responseCustomData) : base(odataType)
         {
             Licenses = licenses;
             ResponseCustomData = responseCustomData;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The PlayReady licenses. </summary>
         public IList<ContentKeyPolicyPlayReadyLicense> Licenses { get; }
         /// <summary> The custom response data. </summary>
-        public string ResponseCustomData { get; set; }
+        public BinaryData ResponseCustomData { get; set; }
     }
 }

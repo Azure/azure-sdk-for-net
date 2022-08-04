@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity source for Microsoft Access. </summary>
-    public partial class MicrosoftAccessSource : CopySource
+    public partial class MicrosoftAccessSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of MicrosoftAccessSource. </summary>
         public MicrosoftAccessSource()

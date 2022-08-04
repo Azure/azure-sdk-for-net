@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
         public B2BPartnerContent()
         {
-            BusinessIdentities = new ChangeTrackingList<BusinessIdentity>();
+            BusinessIdentities = new ChangeTrackingList<IntegrationAccountBusinessIdentity>();
         }
 
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
         /// <param name="businessIdentities"> The list of partner business identities. </param>
-        internal B2BPartnerContent(IList<BusinessIdentity> businessIdentities)
+        internal B2BPartnerContent(IList<IntegrationAccountBusinessIdentity> businessIdentities)
         {
             BusinessIdentities = businessIdentities;
         }
 
         /// <summary> The list of partner business identities. </summary>
-        public IList<BusinessIdentity> BusinessIdentities { get; }
+        public IList<IntegrationAccountBusinessIdentity> BusinessIdentities { get; }
     }
 }
