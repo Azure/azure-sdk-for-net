@@ -54,13 +54,19 @@ namespace Azure.ResourceManager.TrafficManager
             return PageableHelpers.CreateEnumerable(_ => Page.FromValues(this._profileData.Endpoints, null, null), null, null);
         }
 
-        /// <inheritdoc />
-        public IEnumerator<EndpointData> GetEnumerator() => GetAll().GetEnumerator();
+        IEnumerator<EndpointData> IEnumerable<EndpointData>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
 
-        /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
 
-        /// <inheritdoc />
-        public IAsyncEnumerator<EndpointData> GetAsyncEnumerator(CancellationToken cancellationToken = default) => GetAllAsync().GetAsyncEnumerator(cancellationToken);
+        IAsyncEnumerator<EndpointData> IAsyncEnumerable<EndpointData>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync().GetAsyncEnumerator(cancellationToken);
+        }
     }
 }
