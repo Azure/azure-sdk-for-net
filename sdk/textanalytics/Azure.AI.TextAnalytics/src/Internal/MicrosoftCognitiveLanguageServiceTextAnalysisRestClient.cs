@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal partial class MicrosoftCognitiveLanguageServiceRestClient
+    internal partial class MicrosoftCognitiveLanguageServiceTextAnalysisRestClient
     {
         internal HttpMessage CreateAnalyzeBatchNextPageRequest(string nextLink)
         {
