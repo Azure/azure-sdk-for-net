@@ -102,6 +102,7 @@ Console.WriteLine($"Worker 2 has not been issued an offer for job: {queriedWorke
 // We will observe the following:-
 // Worker1 will get the offer for job1
 // Worker2 will get the offer for job2
+
 // Create distribution policy
 string distributionPolicyId = "distribution-policy-id-6";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -179,6 +180,7 @@ Console.WriteLine($"Worker 2 has successfully received offer for job2: {queriedW
 // Worker1 will not get the offer for the job (complete label overlap + partial worker selector matched)
 // Worker2 will get the first offer for the job (complete label overlap + complete worker selector matched)
 // Worker3 will not get the offer for the job (partial label overlap + partial worker selector match)
+
 // Create distribution policy
 string distributionPolicyId = "distribution-policy-id-7";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(

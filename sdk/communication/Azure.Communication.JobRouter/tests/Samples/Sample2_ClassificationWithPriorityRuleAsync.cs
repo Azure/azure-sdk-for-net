@@ -18,10 +18,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task Scenario1()
         {
-#if !SNIPPET
             RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
             RouterAdministrationClient routerAdministration = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyStaticRule
 
@@ -98,10 +96,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task Scenario2()
         {
-#if !SNIPPET
             RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
             RouterAdministrationClient routerAdministration = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRule
 
@@ -204,10 +200,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task Scenario3()
         {
-#if !SNIPPET
             RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
             RouterAdministrationClient routerAdministration = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRule
 

@@ -18,6 +18,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task WaitTimeTriggerException_SampleScenario()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Exception_WaitTimeTrigger
             // In this scenario, we are going to address how to escalate jobs when it had waited in queue for a threshold period of time
             //
@@ -30,10 +33,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 2. Enqueue job to Q1
             // 3. Job waits for 30 seconds before exception policy hits
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-9";
 

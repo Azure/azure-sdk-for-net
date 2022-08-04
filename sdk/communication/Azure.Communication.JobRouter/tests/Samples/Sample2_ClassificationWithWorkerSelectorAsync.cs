@@ -18,6 +18,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task WorkerSelection_StaticSelectors()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_StaticWorkerSelectors
             // In this scenario we are going to use a classification policy while submitting a job.
             // We are going to utilize the 'WorkerSelectors' attribute on the classification policy to attach
@@ -38,10 +41,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             //
             // NOTE: All jobs with referencing the classification policy will have the WorkerSelectors attached to them
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             // Set up queue
             string distributionPolicyId = "distribution-policy-id-2";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -171,6 +170,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task WorkerSelection_ByCondition()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_CondtitionalWorkerSelectors
             // In this scenario we are going to use a classification policy while submitting a job.
             // We are going to utilize the 'WorkerSelectors' attribute on the classification policy to attach
@@ -196,11 +198,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Output:
             // 1. Incoming job will have the aforementioned worker selectors attached to it.
             // 2. Offer will be sent only to the worker who satisfies all three criteria
-
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
 
             // Set up queue
             string distributionPolicyId = "distribution-policy-id-3";
@@ -349,6 +346,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task WorkerSelection_ByPassThroughValues()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PassThroughWorkerSelectors
             // cSpell:ignore XBOX, Xbox
             // In this scenario we are going to use a classification policy while submitting a job.
@@ -368,10 +368,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 1. Incoming jobs will have the aforementioned worker selectors attached to it.
             // 2. Offer will be sent only to the worker who satisfies all criteria
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             // Set up queue
             string distributionPolicyId = "distribution-policy-id-4";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(

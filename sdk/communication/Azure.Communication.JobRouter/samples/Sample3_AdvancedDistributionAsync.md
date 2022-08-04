@@ -21,6 +21,7 @@ RouterAdministrationClient routerAdministrationClient = new RouterAdministration
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRule
 // In this scenario, we are going to create a simple PowerFx expression rule to check whether a worker can handler escalation or not
 // If the worker can handler escalation then they are given a score of 100, otherwise a score of 1
+
 // Create distribution policy
 string distributionPolicyId = "best-worker-dp-2";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(

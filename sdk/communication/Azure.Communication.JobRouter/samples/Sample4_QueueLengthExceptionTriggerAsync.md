@@ -32,7 +32,6 @@ RouterAdministrationClient routerAdministrationClient = new RouterAdministration
 // 3. Enqueue 10 jobs - in order to fill in queue's capacity
 // 4. Attempt to enqueue Job11 to Q1
 
-
 // create a distribution policy (this will be referenced by both primary queue and backup queue)
 string distributionPolicyId = "distribution-policy-id";
 

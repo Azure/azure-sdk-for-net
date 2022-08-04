@@ -167,7 +167,6 @@ Console.WriteLine($"Worker 2 has not received offer for job: {queriedWorker2.Val
 // 1. Incoming job will have the aforementioned worker selectors attached to it.
 // 2. Offer will be sent only to the worker who satisfies all three criteria
 
-
 // Set up queue
 string distributionPolicyId = "distribution-policy-id-3";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(

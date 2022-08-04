@@ -18,6 +18,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task QueueSelection_ById()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionById
             // In this scenario we are going to use a classification policy while submitting a job.
             // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
@@ -32,10 +35,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 1. Job1 is enqueued in Queue1
             // 2. Job2 is enqueued in Queue2
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(distributionPolicyId: "distribution-policy-id-2", offerTtl: TimeSpan.FromSeconds(30), mode: new LongestIdleMode())
                 {
@@ -122,6 +121,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task QueueSelection_ByCondition()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByConditionalLabelAttachments
             // In this scenario we are going to use a classification policy while submitting a job.
             // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
@@ -142,10 +144,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 1. Job1 is enqueued in Queue1
             // 2. Job2 is enqueued in Queue2
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: "distribution-policy-id-3",
@@ -259,6 +257,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task QueueSelection_ByPassThroughValues()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByPassThroughLabelAttachments
             // cSpell:ignore EMEA, Emea
             // In this scenario we are going to use a classification policy while submitting a job.
@@ -282,10 +283,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 2. Job2 is enqueued in Queue2
             // 3. Job3 is enqueued in Queue3
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(
                     distributionPolicyId: "distribution-policy-id-4",

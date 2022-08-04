@@ -18,6 +18,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_LongestIdle()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_LongestIdle
             // In this scenario, we are going to demonstrate how to use the longest idle distribution mode
             // when distributing offers for job to workers
@@ -31,10 +34,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // We will observe the following:-
             // Worker1 (who had registered earlier) will get the offer for the job
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-5";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -107,6 +106,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_RoundRobin()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_RoundRobin
             // In this scenario, we are going to demonstrate how to use the round robin distribution mode
             // when distributing offers for job to workers
@@ -120,10 +122,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // We will observe the following:-
             // Worker1 will get the offer for job1
             // Worker2 will get the offer for job2
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
+
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-6";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -195,6 +194,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_DefaultBestWorker()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_DefaultBestWorker
             // In this scenario, we are going to demonstrate how to use the default best worker distribution mode
             // when distributing offers for job to workers
@@ -217,10 +219,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Worker1 will not get the offer for the job (complete label overlap + partial worker selector matched)
             // Worker2 will get the first offer for the job (complete label overlap + complete worker selector matched)
             // Worker3 will not get the offer for the job (partial label overlap + partial worker selector match)
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
+
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-7";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -339,6 +338,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task SimpleDistribution_ConcurrentOffers_ModeAgnostic()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_ConcurrentOffers_ModeAgnostic
             // In this scenario, we are going to demonstrate how to set up concurrent offers so that multiple workers
             // can received offers for the same job in parallel.
@@ -352,10 +354,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // We will observe the following:-
             // Both Worker1 and Worker2 will get offer for the job
 
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
             // Create distribution policy
             string distributionPolicyId = "distribution-policy-id-8";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(

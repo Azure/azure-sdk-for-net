@@ -18,6 +18,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task QueueLengthTriggerException_SampleScenario()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Exception_QueueLengthExceptionTrigger
             // In this scenario, we are going to address how to escalate / move jobs when a queue has "too many" jobs already en-queued.
             // A real-world example of this would be to implement a maximum capacity on a queue
@@ -31,11 +34,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 2. Create a secondary back up queue (this will be treated as a backup queue when Q1 'overflows')
             // 3. Enqueue 10 jobs - in order to fill in queue's capacity
             // 4. Attempt to enqueue Job11 to Q1
-
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
 
             // create a distribution policy (this will be referenced by both primary queue and backup queue)
             string distributionPolicyId = "distribution-policy-id";

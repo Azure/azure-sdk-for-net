@@ -18,13 +18,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task BestWorkerDistribution_Advanced_ExpressionRule()
         {
+            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
+            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_ExpressionRule
             // In this scenario, we are going to create a simple PowerFx expression rule to check whether a worker can handler escalation or not
             // If the worker can handler escalation then they are given a score of 100, otherwise a score of 1
-#if !SNIPPET
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
+
             // Create distribution policy
             string distributionPolicyId = "best-worker-dp-2";
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
@@ -114,11 +114,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task BestWorkerDistribution_Advanced_AzureFunctionRule()
         {
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRule
-#if !SNIPPET
             RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
             RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
-#endif
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRule
 
             // Create distribution policy
             string distributionPolicyId = "best-worker-dp-1";
