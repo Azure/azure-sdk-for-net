@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
@@ -30,37 +31,34 @@ namespace Azure.ResourceManager.Monitor.Tests
         public async Task CreateOrUpdate_NewSignature()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            var collection = Client.GetDiagnosticSettings(resourceGroup.Id);
+            var scope = new ResourceIdentifier(resourceGroup.Id + "/providers/Microsoft.Compute/locations/westus/communityGalleries/vnet");
+            var collection = Client.GetDiagnosticSettings(scope);
 
             var name = Recording.GenerateAssetName("testDiagnosticSettings-");
             var input = new DiagnosticSettingData()
             {
-                //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892/AuthorizationRules/testfordiagnostic",
-                //EventHubAuthorizationRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Default-EventHub-1375/providers/Microsoft.EventHub/namespaces/sdk-eventhub-Namespace-8280/eventhubs/testfordiagnosticsetting/authorizationRules/testfordiagonst",
-                //EventHubName = "myeventhub",
-                //WorkspaceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/default-eventhub-1375/providers/microsoft.operationalinsights/workspaces/myworkspace",
                 LogAnalyticsDestinationType = "Dedicated",
                 Metrics =
                 {
                     new MetricSettings(true)
-                {
-                    Category = "WorkflowMetrics",
-                    RetentionPolicy = new RetentionPolicy(false, 0),
-                }
+                    {
+                        Category = "WorkflowMetrics",
+                        RetentionPolicy = new RetentionPolicy(false, 0),
+                    }
                 },
                 Logs =
                 {
                     new LogSettings(true)
-                {
-                    Category = "Alert",
-                    RetentionPolicy= new RetentionPolicy(false, 0)
-                }
+                    {
+                        Category = "Alert",
+                        RetentionPolicy= new RetentionPolicy(false, 0)
+                    }
                 }
             };
             try
             {
                 var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-                var setting = lro.Value;
+            var setting = lro.Value;
             }
             catch { }
         }
