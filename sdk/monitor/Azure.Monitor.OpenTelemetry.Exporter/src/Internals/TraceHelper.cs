@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "Dependency";
+                var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
                 telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
 
                 switch (activity.GetTelemetryType())
