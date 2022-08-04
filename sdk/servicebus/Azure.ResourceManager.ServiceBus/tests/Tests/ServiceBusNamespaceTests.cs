@@ -12,7 +12,12 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.ResourceManager.ServiceBus.Tests.Helpers;
+using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.ManagedServiceIdentities;
+using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
@@ -417,6 +422,80 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        public async Task NamespaceSystemAssignedEncryptionTests()
+        {
+            //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
+            //Please create a new key vault in the subscription that the SDK repo is supposed to use
+            //And update the KeyVault and KeyName in the ServiceBusTestBase
+            ServiceBusNamespaceResource resource = null;
+
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            ServiceBusNamespaceData namespaceData = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
+                {
+                    Tier = ServiceBusSkuTier.Premium,
+                    Capacity = 1
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            };
+
+            ArmOperation<ServiceBusNamespaceResource> serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false));
+
+            Assert.AreEqual(namespaceName, serviceBusNamespace.Value.Data.Name);
+            Assert.AreEqual(ServiceBusSkuName.Premium, serviceBusNamespace.Value.Data.Sku.Name);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, serviceBusNamespace.Value.Data.Identity.ManagedServiceIdentityType);
+
+            namespaceData = serviceBusNamespace.Value.Data;
+
+            IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
+
+            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)namespaceData.Identity.TenantId, namespaceData.Identity.PrincipalId.ToString(), identityAccessPermissions);
+            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+            KeyVaultData kvData = kvResponse.Value.Data;
+            kvData.Properties.AccessPolicies.Add(property);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+            ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+
+            namespaceData.Encryption = new ServiceBusEncryption()
+            {
+                KeySource = ServiceBusEncryptionKeySource.MicrosoftKeyVault
+            };
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key1,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key2,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key3,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false)).Value;
+            AssertNamespaceMSIOnUpdates(namespaceData, resource.Data);
+            resource = await GetSucceededNamespace(resource);
+            await resource.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task StandardToPremiumMigration()
         {
             IgnoreTestInLiveMode();
@@ -501,6 +580,41 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 count++;
             }
             await GetSucceededNamespace(serviceBusNamespace1);
+        }
+
+        public void AssertNamespaceMSIOnUpdates(ServiceBusNamespaceData expectedNamespace, ServiceBusNamespaceData actualNamespace)
+        {
+            if (expectedNamespace.Identity != null)
+            {
+                Assert.IsNotNull(actualNamespace.Identity);
+                Assert.AreEqual(expectedNamespace.Identity.ManagedServiceIdentityType, actualNamespace.Identity.ManagedServiceIdentityType);
+                Assert.AreEqual(expectedNamespace.Identity.PrincipalId, actualNamespace.Identity.PrincipalId);
+                Assert.AreEqual(expectedNamespace.Identity.TenantId, actualNamespace.Identity.TenantId);
+
+                if (expectedNamespace.Identity.UserAssignedIdentities != null)
+                {
+                    Assert.NotNull(actualNamespace.Identity.UserAssignedIdentities);
+                    Assert.AreEqual(expectedNamespace.Identity.UserAssignedIdentities.Count, actualNamespace.Identity.UserAssignedIdentities.Count);
+                }
+                else
+                {
+                    Assert.Null(actualNamespace.Identity.UserAssignedIdentities);
+                }
+
+                if (expectedNamespace.Encryption != null)
+                {
+                    Assert.NotNull(actualNamespace.Encryption);
+                    Assert.AreEqual(expectedNamespace.Encryption.KeyVaultProperties.Count, actualNamespace.Encryption.KeyVaultProperties.Count);
+                }
+                else
+                {
+                    Assert.Null(actualNamespace.Encryption);
+                }
+            }
+            else
+            {
+                Assert.Null(actualNamespace.Identity);
+            }
         }
 
         public async Task<ServiceBusNamespaceResource> GetSucceededNamespace(ServiceBusNamespaceResource serviceBusNamespace)
