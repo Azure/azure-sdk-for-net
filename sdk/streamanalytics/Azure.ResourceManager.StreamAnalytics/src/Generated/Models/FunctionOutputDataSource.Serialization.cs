@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> functionAppName = default;
             Optional<string> functionName = default;
             Optional<string> apiKey = default;
-            Optional<float> maxBatchSize = default;
+            Optional<int> maxBatchSize = default;
             Optional<int> maxBatchCount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            maxBatchSize = property0.Value.GetSingle();
+                            maxBatchSize = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("maxBatchCount"))

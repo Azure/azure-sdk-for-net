@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="apiKey"> If you want to use an Azure Function from another subscription, you can do so by providing the key to access your function. </param>
         /// <param name="maxBatchSize"> A property that lets you set the maximum size for each output batch that&apos;s sent to your Azure function. The input unit is in bytes. By default, this value is 262,144 bytes (256 KB). </param>
         /// <param name="maxBatchCount"> A property that lets you specify the maximum number of events in each batch that&apos;s sent to Azure Functions. The default value is 100. </param>
-        internal FunctionOutputDataSource(string outputDataSourceType, string functionAppName, string functionName, string apiKey, float? maxBatchSize, int? maxBatchCount) : base(outputDataSourceType)
+        internal FunctionOutputDataSource(string outputDataSourceType, string functionAppName, string functionName, string apiKey, int? maxBatchSize, int? maxBatchCount) : base(outputDataSourceType)
         {
             FunctionAppName = functionAppName;
             FunctionName = functionName;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> If you want to use an Azure Function from another subscription, you can do so by providing the key to access your function. </summary>
         public string ApiKey { get; set; }
         /// <summary> A property that lets you set the maximum size for each output batch that&apos;s sent to your Azure function. The input unit is in bytes. By default, this value is 262,144 bytes (256 KB). </summary>
-        public float? MaxBatchSize { get; set; }
+        public int? MaxBatchSize { get; set; }
         /// <summary> A property that lets you specify the maximum number of events in each batch that&apos;s sent to Azure Functions. The default value is 100. </summary>
         public int? MaxBatchCount { get; set; }
     }

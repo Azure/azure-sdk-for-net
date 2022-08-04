@@ -182,6 +182,7 @@ directive:
   transform: >
     $.PostgreSQLDataSourceProperties.properties.maxWriterCount['type'] = 'integer';
     $.AzureSqlDatabaseDataSourceProperties.properties.maxWriterCount['type'] = 'integer';
+    $.AzureFunctionOutputDataSourceProperties.properties.maxBatchSize['type'] = 'integer';
     $.AzureFunctionOutputDataSourceProperties.properties.maxBatchCount['type'] = 'integer';
     $.AzureSqlDatabaseDataSourceProperties.properties.maxBatchCount['type'] = 'integer';
     $.ServiceBusQueueOutputDataSourceProperties.properties.systemPropertyColumns['additionalProperties'] = { 'type': 'string' };

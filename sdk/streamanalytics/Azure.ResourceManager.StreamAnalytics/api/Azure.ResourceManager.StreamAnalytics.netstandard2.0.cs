@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string FunctionAppName { get { throw null; } set { } }
         public string FunctionName { get { throw null; } set { } }
         public int? MaxBatchCount { get { throw null; } set { } }
-        public float? MaxBatchSize { get { throw null; } set { } }
+        public int? MaxBatchSize { get { throw null; } set { } }
     }
     public partial class FunctionRetrieveDefaultDefinitionContent
     {
