@@ -174,19 +174,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
         {
-            foreach (var evnt in activity.Events)
+            if (activity.Events.Any())
             {
-                if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
+                foreach (var evnt in activity.Events)
                 {
-                    try
+                    if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
-                        SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
-                        telemetryItems.Add(exceptionTelemetryItem);
-                    }
-                    catch (Exception ex)
-                    {
-                        AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractExceptionFromActivityEvent", ex);
+                        try
+                        {
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                            SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
+                            telemetryItems.Add(exceptionTelemetryItem);
+                        }
+                        catch (Exception ex)
+                        {
+                            AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractExceptionFromActivityEvent", ex);
+                        }
                     }
                 }
             }
