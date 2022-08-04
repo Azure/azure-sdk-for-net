@@ -427,7 +427,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartComposeModelWithTags()
+        public async Task ComposeModelWithTags()
         {
             var client = CreateDocumentModelAdministrationClient();
 
@@ -451,7 +451,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task StartComposeModelFailsWithInvalidId()
+        public async Task ComposeModelFailsWithInvalidId()
         {
             var client = CreateDocumentModelAdministrationClient();
 
