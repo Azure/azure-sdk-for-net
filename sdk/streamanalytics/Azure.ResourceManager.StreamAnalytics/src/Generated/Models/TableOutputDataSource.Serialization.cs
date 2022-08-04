@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureTableOutputDataSource : IUtf8JsonSerializable
+    public partial class TableOutputDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureTableOutputDataSource DeserializeAzureTableOutputDataSource(JsonElement element)
+        internal static TableOutputDataSource DeserializeTableOutputDataSource(JsonElement element)
         {
             string type = default;
             Optional<string> accountName = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureTableOutputDataSource(type, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, Optional.ToList(columnsToRemove), Optional.ToNullable(batchSize));
+            return new TableOutputDataSource(type, accountName.Value, accountKey.Value, table.Value, partitionKey.Value, rowKey.Value, Optional.ToList(columnsToRemove), Optional.ToNullable(batchSize));
         }
     }
 }

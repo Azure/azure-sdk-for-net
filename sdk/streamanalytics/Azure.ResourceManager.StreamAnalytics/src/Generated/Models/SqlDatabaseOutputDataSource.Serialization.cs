@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureSqlDatabaseOutputDataSource : IUtf8JsonSerializable
+    public partial class SqlDatabaseOutputDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlDatabaseOutputDataSource DeserializeAzureSqlDatabaseOutputDataSource(JsonElement element)
+        internal static SqlDatabaseOutputDataSource DeserializeSqlDatabaseOutputDataSource(JsonElement element)
         {
             string type = default;
             Optional<string> server = default;
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> user = default;
             Optional<string> password = default;
             Optional<string> table = default;
-            Optional<float> maxBatchCount = default;
-            Optional<float> maxWriterCount = default;
+            Optional<int> maxBatchCount = default;
+            Optional<int> maxWriterCount = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            maxBatchCount = property0.Value.GetSingle();
+                            maxBatchCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("maxWriterCount"))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            maxWriterCount = property0.Value.GetSingle();
+                            maxWriterCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("authenticationMode"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureSqlDatabaseOutputDataSource(type, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new SqlDatabaseOutputDataSource(type, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
         }
     }
 }

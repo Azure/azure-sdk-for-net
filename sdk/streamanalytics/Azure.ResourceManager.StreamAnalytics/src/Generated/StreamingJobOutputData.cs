@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="datasource">
         /// Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests.
         /// Please note <see cref="StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="AzureFunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="AzureDataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="AzureSynapseOutputDataSource"/>, <see cref="AzureSqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="AzureTableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
+        /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="FunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="DataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="SynapseOutputDataSource"/>, <see cref="SqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="TableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
         /// </param>
         /// <param name="timeWindow"> The time frame for filtering Stream Analytics job outputs. </param>
         /// <param name="sizeWindow"> The size window to constrain a Stream Analytics output to. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="etag"> The current entity tag for the output. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="lastOutputEventTimestamps"> A list of the last output event times for each output partition. The index of the array corresponds to the partition number. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to send watermarks to downstream. </param>
-        internal StreamingJobOutputData(ResourceIdentifier id, string name, ResourceType? resourceType, StreamingJobOutputDataSource datasource, string timeWindow, float? sizeWindow, DataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps, StreamingJobOutputWatermarkProperties watermarkSettings) : base(id, name, resourceType)
+        internal StreamingJobOutputData(ResourceIdentifier id, string name, ResourceType? resourceType, StreamingJobOutputDataSource datasource, DateTimeOffset? timeWindow, float? sizeWindow, DataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps, StreamingJobOutputWatermarkProperties watermarkSettings) : base(id, name, resourceType)
         {
             Datasource = datasource;
             TimeWindow = timeWindow;
@@ -56,11 +57,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary>
         /// Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests.
         /// Please note <see cref="StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="AzureFunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="AzureDataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="AzureSynapseOutputDataSource"/>, <see cref="AzureSqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="AzureTableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
+        /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="FunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="DataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="SynapseOutputDataSource"/>, <see cref="SqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="TableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
         /// </summary>
         public StreamingJobOutputDataSource Datasource { get; set; }
         /// <summary> The time frame for filtering Stream Analytics job outputs. </summary>
-        public string TimeWindow { get; set; }
+        public DateTimeOffset? TimeWindow { get; set; }
         /// <summary> The size window to constrain a Stream Analytics output to. </summary>
         public float? SizeWindow { get; set; }
         /// <summary>

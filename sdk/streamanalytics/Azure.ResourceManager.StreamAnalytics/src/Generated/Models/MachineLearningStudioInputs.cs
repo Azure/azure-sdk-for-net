@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The inputs for the Azure Machine Learning Studio endpoint. </summary>
-    public partial class AzureMachineLearningStudioInputs
+    public partial class MachineLearningStudioInputs
     {
-        /// <summary> Initializes a new instance of AzureMachineLearningStudioInputs. </summary>
-        public AzureMachineLearningStudioInputs()
+        /// <summary> Initializes a new instance of MachineLearningStudioInputs. </summary>
+        public MachineLearningStudioInputs()
         {
-            ColumnNames = new ChangeTrackingList<AzureMachineLearningStudioInputColumn>();
+            ColumnNames = new ChangeTrackingList<MachineLearningStudioInputColumn>();
         }
 
-        /// <summary> Initializes a new instance of AzureMachineLearningStudioInputs. </summary>
+        /// <summary> Initializes a new instance of MachineLearningStudioInputs. </summary>
         /// <param name="name"> The name of the input. This is the name provided while authoring the endpoint. </param>
         /// <param name="columnNames"> A list of input columns for the Azure Machine Learning Studio endpoint. </param>
-        internal AzureMachineLearningStudioInputs(string name, IList<AzureMachineLearningStudioInputColumn> columnNames)
+        internal MachineLearningStudioInputs(string name, IList<MachineLearningStudioInputColumn> columnNames)
         {
             Name = name;
             ColumnNames = columnNames;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The name of the input. This is the name provided while authoring the endpoint. </summary>
         public string Name { get; set; }
         /// <summary> A list of input columns for the Azure Machine Learning Studio endpoint. </summary>
-        public IList<AzureMachineLearningStudioInputColumn> ColumnNames { get; }
+        public IList<MachineLearningStudioInputColumn> ColumnNames { get; }
     }
 }

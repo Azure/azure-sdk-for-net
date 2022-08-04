@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(TimeWindow))
             {
                 writer.WritePropertyName("timeWindow");
-                writer.WriteStringValue(TimeWindow);
+                writer.WriteStringValue(TimeWindow.Value);
             }
             if (Optional.IsDefined(SizeWindow))
             {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<StreamingJobOutputDataSource> datasource = default;
-            Optional<string> timeWindow = default;
+            Optional<DateTimeOffset> timeWindow = default;
             Optional<float> sizeWindow = default;
             Optional<DataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
@@ -115,7 +116,12 @@ namespace Azure.ResourceManager.StreamAnalytics
                         }
                         if (property0.NameEquals("timeWindow"))
                         {
-                            timeWindow = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeWindow = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("sizeWindow"))
@@ -187,7 +193,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), datasource.Value, timeWindow.Value, Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
         }
     }
 }

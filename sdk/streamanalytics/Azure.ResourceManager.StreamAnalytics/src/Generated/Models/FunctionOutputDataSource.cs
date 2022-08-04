@@ -8,22 +8,22 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Defines the metadata of AzureFunctionOutputDataSource. </summary>
-    public partial class AzureFunctionOutputDataSource : StreamingJobOutputDataSource
+    public partial class FunctionOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of AzureFunctionOutputDataSource. </summary>
-        public AzureFunctionOutputDataSource()
+        /// <summary> Initializes a new instance of FunctionOutputDataSource. </summary>
+        public FunctionOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.AzureFunction";
         }
 
-        /// <summary> Initializes a new instance of AzureFunctionOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of FunctionOutputDataSource. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="functionAppName"> The name of your Azure Functions app. </param>
         /// <param name="functionName"> The name of the function in your Azure Functions app. </param>
         /// <param name="apiKey"> If you want to use an Azure Function from another subscription, you can do so by providing the key to access your function. </param>
         /// <param name="maxBatchSize"> A property that lets you set the maximum size for each output batch that&apos;s sent to your Azure function. The input unit is in bytes. By default, this value is 262,144 bytes (256 KB). </param>
         /// <param name="maxBatchCount"> A property that lets you specify the maximum number of events in each batch that&apos;s sent to Azure Functions. The default value is 100. </param>
-        internal AzureFunctionOutputDataSource(string outputDataSourceType, string functionAppName, string functionName, string apiKey, float? maxBatchSize, float? maxBatchCount) : base(outputDataSourceType)
+        internal FunctionOutputDataSource(string outputDataSourceType, string functionAppName, string functionName, string apiKey, float? maxBatchSize, int? maxBatchCount) : base(outputDataSourceType)
         {
             FunctionAppName = functionAppName;
             FunctionName = functionName;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> A property that lets you set the maximum size for each output batch that&apos;s sent to your Azure function. The input unit is in bytes. By default, this value is 262,144 bytes (256 KB). </summary>
         public float? MaxBatchSize { get; set; }
         /// <summary> A property that lets you specify the maximum number of events in each batch that&apos;s sent to Azure Functions. The default value is 100. </summary>
-        public float? MaxBatchCount { get; set; }
+        public int? MaxBatchCount { get; set; }
     }
 }

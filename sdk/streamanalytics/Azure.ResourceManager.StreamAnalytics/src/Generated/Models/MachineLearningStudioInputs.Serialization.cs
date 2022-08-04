@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureMachineLearningStudioInputs : IUtf8JsonSerializable
+    public partial class MachineLearningStudioInputs : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMachineLearningStudioInputs DeserializeAzureMachineLearningStudioInputs(JsonElement element)
+        internal static MachineLearningStudioInputs DeserializeMachineLearningStudioInputs(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<IList<AzureMachineLearningStudioInputColumn>> columnNames = default;
+            Optional<IList<MachineLearningStudioInputColumn>> columnNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureMachineLearningStudioInputColumn> array = new List<AzureMachineLearningStudioInputColumn>();
+                    List<MachineLearningStudioInputColumn> array = new List<MachineLearningStudioInputColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureMachineLearningStudioInputColumn.DeserializeAzureMachineLearningStudioInputColumn(item));
+                        array.Add(MachineLearningStudioInputColumn.DeserializeMachineLearningStudioInputColumn(item));
                     }
                     columnNames = array;
                     continue;
                 }
             }
-            return new AzureMachineLearningStudioInputs(name.Value, Optional.ToList(columnNames));
+            return new MachineLearningStudioInputs(name.Value, Optional.ToList(columnNames));
         }
     }
 }

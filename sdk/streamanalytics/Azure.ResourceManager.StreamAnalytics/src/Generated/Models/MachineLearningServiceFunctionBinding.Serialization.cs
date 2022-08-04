@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureMachineLearningStudioFunctionBinding : IUtf8JsonSerializable
+    public partial class MachineLearningServiceFunctionBinding : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,10 +30,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("apiKey");
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(Inputs))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs");
-                writer.WriteObjectValue(Inputs);
+                writer.WriteStartArray();
+                foreach (var item in Inputs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -50,18 +55,36 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("batchSize");
                 writer.WriteNumberValue(BatchSize.Value);
             }
+            if (Optional.IsDefined(NumberOfParallelRequests))
+            {
+                writer.WritePropertyName("numberOfParallelRequests");
+                writer.WriteNumberValue(NumberOfParallelRequests.Value);
+            }
+            if (Optional.IsDefined(InputRequestName))
+            {
+                writer.WritePropertyName("inputRequestName");
+                writer.WriteStringValue(InputRequestName);
+            }
+            if (Optional.IsDefined(OutputResponseName))
+            {
+                writer.WritePropertyName("outputResponseName");
+                writer.WriteStringValue(OutputResponseName);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static AzureMachineLearningStudioFunctionBinding DeserializeAzureMachineLearningStudioFunctionBinding(JsonElement element)
+        internal static MachineLearningServiceFunctionBinding DeserializeMachineLearningServiceFunctionBinding(JsonElement element)
         {
             string type = default;
             Optional<string> endpoint = default;
             Optional<string> apiKey = default;
-            Optional<AzureMachineLearningStudioInputs> inputs = default;
-            Optional<IList<AzureMachineLearningStudioOutputColumn>> outputs = default;
+            Optional<IList<MachineLearningServiceInputColumn>> inputs = default;
+            Optional<IList<MachineLearningServiceOutputColumn>> outputs = default;
             Optional<int> batchSize = default;
+            Optional<int> numberOfParallelRequests = default;
+            Optional<string> inputRequestName = default;
+            Optional<string> outputResponseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -95,7 +118,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            inputs = AzureMachineLearningStudioInputs.DeserializeAzureMachineLearningStudioInputs(property0.Value);
+                            List<MachineLearningServiceInputColumn> array = new List<MachineLearningServiceInputColumn>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MachineLearningServiceInputColumn.DeserializeMachineLearningServiceInputColumn(item));
+                            }
+                            inputs = array;
                             continue;
                         }
                         if (property0.NameEquals("outputs"))
@@ -105,10 +133,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureMachineLearningStudioOutputColumn> array = new List<AzureMachineLearningStudioOutputColumn>();
+                            List<MachineLearningServiceOutputColumn> array = new List<MachineLearningServiceOutputColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureMachineLearningStudioOutputColumn.DeserializeAzureMachineLearningStudioOutputColumn(item));
+                                array.Add(MachineLearningServiceOutputColumn.DeserializeMachineLearningServiceOutputColumn(item));
                             }
                             outputs = array;
                             continue;
@@ -123,11 +151,31 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             batchSize = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("numberOfParallelRequests"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfParallelRequests = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("inputRequestName"))
+                        {
+                            inputRequestName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("outputResponseName"))
+                        {
+                            outputResponseName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new AzureMachineLearningStudioFunctionBinding(type, endpoint.Value, apiKey.Value, inputs.Value, Optional.ToList(outputs), Optional.ToNullable(batchSize));
+            return new MachineLearningServiceFunctionBinding(type, endpoint.Value, apiKey.Value, Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToNullable(batchSize), Optional.ToNullable(numberOfParallelRequests), inputRequestName.Value, outputResponseName.Value);
         }
     }
 }

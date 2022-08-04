@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureDataLakeStoreOutputDataSource : IUtf8JsonSerializable
+    public partial class DataLakeStoreOutputDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeStoreOutputDataSource DeserializeAzureDataLakeStoreOutputDataSource(JsonElement element)
+        internal static DataLakeStoreOutputDataSource DeserializeDataLakeStoreOutputDataSource(JsonElement element)
         {
             string type = default;
             Optional<string> refreshToken = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureDataLakeStoreOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
+            return new DataLakeStoreOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
         }
     }
 }

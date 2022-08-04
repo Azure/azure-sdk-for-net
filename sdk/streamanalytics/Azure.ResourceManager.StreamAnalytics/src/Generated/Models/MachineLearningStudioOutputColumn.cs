@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an output column for the Azure Machine Learning Studio endpoint. </summary>
-    public partial class AzureMachineLearningStudioOutputColumn
+    public partial class MachineLearningStudioOutputColumn
     {
-        /// <summary> Initializes a new instance of AzureMachineLearningStudioOutputColumn. </summary>
-        public AzureMachineLearningStudioOutputColumn()
+        /// <summary> Initializes a new instance of MachineLearningStudioOutputColumn. </summary>
+        public MachineLearningStudioOutputColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMachineLearningStudioOutputColumn. </summary>
+        /// <summary> Initializes a new instance of MachineLearningStudioOutputColumn. </summary>
         /// <param name="name"> The name of the output column. </param>
         /// <param name="dataType"> The (Azure Machine Learning supported) data type of the output column. A list of valid  Azure Machine Learning data types are described at https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx . </param>
-        internal AzureMachineLearningStudioOutputColumn(string name, string dataType)
+        internal MachineLearningStudioOutputColumn(string name, string dataType)
         {
             Name = name;
             DataType = dataType;

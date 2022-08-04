@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureMachineLearningStudioOutputColumn : IUtf8JsonSerializable
+    public partial class MachineLearningStudioOutputColumn : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureMachineLearningStudioOutputColumn DeserializeAzureMachineLearningStudioOutputColumn(JsonElement element)
+        internal static MachineLearningStudioOutputColumn DeserializeMachineLearningStudioOutputColumn(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> dataType = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureMachineLearningStudioOutputColumn(name.Value, dataType.Value);
+            return new MachineLearningStudioOutputColumn(name.Value, dataType.Value);
         }
     }
 }

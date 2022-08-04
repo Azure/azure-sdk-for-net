@@ -5,18 +5,20 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure SQL database reference input data source. </summary>
-    public partial class AzureSqlReferenceInputDataSource : ReferenceInputDataSource
+    public partial class SqlReferenceInputDataSource : ReferenceInputDataSource
     {
-        /// <summary> Initializes a new instance of AzureSqlReferenceInputDataSource. </summary>
-        public AzureSqlReferenceInputDataSource()
+        /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>
+        public SqlReferenceInputDataSource()
         {
             ReferenceInputDataSourceType = "Microsoft.Sql/Server/Database";
         }
 
-        /// <summary> Initializes a new instance of AzureSqlReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="server"> This element is associated with the datasource element. This is the name of the server that contains the database that will be written to. </param>
         /// <param name="database"> This element is associated with the datasource element. This is the name of the database that output will be written to. </param>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="fullSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch data from the sql database. </param>
         /// <param name="deltaSnapshotQuery"> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal AzureSqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, string refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
+        internal SqlReferenceInputDataSource(string referenceInputDataSourceType, string server, string database, string user, string password, DataRefreshType? refreshType, DateTimeOffset? refreshRate, string fullSnapshotQuery, string deltaSnapshotQuery, StreamAnalyticsAuthenticationMode? authenticationMode) : base(referenceInputDataSourceType)
         {
             Server = server;
             Database = database;
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Indicates the type of data refresh option. </summary>
         public DataRefreshType? RefreshType { get; set; }
         /// <summary> This element is associated with the datasource element. This indicates how frequently the data will be fetched from the database. It is of DateTime format. </summary>
-        public string RefreshRate { get; set; }
+        public DateTimeOffset? RefreshRate { get; set; }
         /// <summary> This element is associated with the datasource element. This query is used to fetch data from the sql database. </summary>
         public string FullSnapshotQuery { get; set; }
         /// <summary> This element is associated with the datasource element. This query is used to fetch incremental changes from the SQL database. To use this option, we recommend using temporal tables in Azure SQL Database. </summary>

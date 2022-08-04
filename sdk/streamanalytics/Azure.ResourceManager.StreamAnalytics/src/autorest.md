@@ -27,14 +27,33 @@ rename-mapping:
   ClusterProperties.clusterId: -|uuid
   LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|datetime
   LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|datetime
+  Output.properties.timeWindow: -|datetime
   PowerBIOutputDataSource.properties.groupId: -|uuid
   PrivateEndpointProperties.createdDate: createdOn|datetime
+  PrivateLinkServiceConnection.properties.privateLinkServiceId: -|arm-id
   SampleInputResult.lastArrivalTime: lastArrivedOn|datetime
   SubResource.id: -|arm-id
   SubResource.type: -|resource-type
+  AzureSqlReferenceInputDataSource.properties.refreshRate: -|date
+  DiagnosticCondition.since: -|datetime
+  RawReferenceInputDataSource.properties.payload: -|any
+  RawStreamInputDataSource.properties.payload: -|any
   AvroSerialization: AvroFormatSerialization
-  AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters: AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionContent
-  AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters: AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionContent
+  AzureDataLakeStoreOutputDataSource: DataLakeStoreOutputDataSource
+  AzureFunctionOutputDataSource: FunctionOutputDataSource
+  AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters: MachineLearningServiceFunctionRetrieveDefaultDefinitionContent
+  AzureMachineLearningServiceInputColumn: MachineLearningServiceInputColumn
+  AzureMachineLearningServiceOutputColumn: MachineLearningServiceOutputColumn
+  AzureMachineLearningServiceFunctionBinding: MachineLearningServiceFunctionBinding
+  AzureMachineLearningStudioFunctionBinding: eMachineLearningStudioFunctionBinding
+  AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters: MachineLearningStudioFunctionRetrieveDefaultDefinitionContent
+  AzureMachineLearningStudioInputColumn: MachineLearningStudioInputColumn
+  AzureMachineLearningStudioInputs: MachineLearningStudioInputs
+  AzureMachineLearningStudioOutputColumn: MachineLearningStudioOutputColumn
+  AzureSqlDatabaseOutputDataSource: SqlDatabaseOutputDataSource
+  AzureSqlReferenceInputDataSource: SqlReferenceInputDataSource
+  AzureSynapseOutputDataSource: SynapseOutputDataSource
+  AzureTableOutputDataSource: TableOutputDataSource
   BlobWriteMode: BlobOutputWriteMode
   CompatibilityLevel: StreamingJobCompatibilityLevel
   Compression: StreamingCompression
@@ -44,7 +63,7 @@ rename-mapping:
   CsvSerialization: CsvFormatSerialization
   DiagnosticCondition: StreamingJobDiagnosticCondition
   Diagnostics: StreamingJobDiagnostics
-  Encoding: StreamingEncoding
+  Encoding: DataSerializationEncoding
   External: StreamingJobExternal
   Function: StreamingJobFunction
   FunctionBinding: StreamingJobFunctionBinding
@@ -158,6 +177,14 @@ directive:
   where: $.definitions
   transform: >
     $.ResourceTestStatus.properties.error['x-ms-client-flatten'] = true;
+- from: outputs.json
+  where: $.definitions
+  transform: >
+    $.PostgreSQLDataSourceProperties.properties.maxWriterCount['type'] = 'integer';
+    $.AzureSqlDatabaseDataSourceProperties.properties.maxWriterCount['type'] = 'integer';
+    $.AzureFunctionOutputDataSourceProperties.properties.maxBatchCount['type'] = 'integer';
+    $.AzureSqlDatabaseDataSourceProperties.properties.maxBatchCount['type'] = 'integer';
+    $.ServiceBusQueueOutputDataSourceProperties.properties.systemPropertyColumns['additionalProperties'] = { 'type': 'string' };
 - from: subscriptions.json
   where: $.definitions
   transform: >

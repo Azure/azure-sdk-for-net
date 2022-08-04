@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureSynapseOutputDataSource : IUtf8JsonSerializable
+    public partial class SynapseOutputDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSynapseOutputDataSource DeserializeAzureSynapseOutputDataSource(JsonElement element)
+        internal static SynapseOutputDataSource DeserializeSynapseOutputDataSource(JsonElement element)
         {
             string type = default;
             Optional<string> server = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureSynapseOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(authenticationMode));
+            return new SynapseOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(authenticationMode));
         }
     }
 }

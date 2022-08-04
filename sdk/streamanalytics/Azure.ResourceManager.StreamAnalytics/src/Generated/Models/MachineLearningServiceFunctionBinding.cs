@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The binding to an Azure Machine Learning web service. </summary>
-    public partial class AzureMachineLearningServiceFunctionBinding : StreamingJobFunctionBinding
+    public partial class MachineLearningServiceFunctionBinding : StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of AzureMachineLearningServiceFunctionBinding. </summary>
-        public AzureMachineLearningServiceFunctionBinding()
+        /// <summary> Initializes a new instance of MachineLearningServiceFunctionBinding. </summary>
+        public MachineLearningServiceFunctionBinding()
         {
-            Inputs = new ChangeTrackingList<AzureMachineLearningServiceInputColumn>();
-            Outputs = new ChangeTrackingList<AzureMachineLearningServiceOutputColumn>();
+            Inputs = new ChangeTrackingList<MachineLearningServiceInputColumn>();
+            Outputs = new ChangeTrackingList<MachineLearningServiceOutputColumn>();
             FunctionBindingType = "Microsoft.MachineLearningServices";
         }
 
-        /// <summary> Initializes a new instance of AzureMachineLearningServiceFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of MachineLearningServiceFunctionBinding. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
         /// <param name="endpoint"> The Request-Response execute endpoint of the Azure Machine Learning web service. </param>
         /// <param name="apiKey"> The API key used to authenticate with Request-Response endpoint. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="numberOfParallelRequests"> The number of parallel requests that will be sent per partition of your job to the machine learning service. Default is 1. </param>
         /// <param name="inputRequestName"> Label for the input request object. </param>
         /// <param name="outputResponseName"> Label for the output request object. </param>
-        internal AzureMachineLearningServiceFunctionBinding(string functionBindingType, string endpoint, string apiKey, IList<AzureMachineLearningServiceInputColumn> inputs, IList<AzureMachineLearningServiceOutputColumn> outputs, int? batchSize, int? numberOfParallelRequests, string inputRequestName, string outputResponseName) : base(functionBindingType)
+        internal MachineLearningServiceFunctionBinding(string functionBindingType, string endpoint, string apiKey, IList<MachineLearningServiceInputColumn> inputs, IList<MachineLearningServiceOutputColumn> outputs, int? batchSize, int? numberOfParallelRequests, string inputRequestName, string outputResponseName) : base(functionBindingType)
         {
             Endpoint = endpoint;
             ApiKey = apiKey;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The API key used to authenticate with Request-Response endpoint. </summary>
         public string ApiKey { get; set; }
         /// <summary> The inputs for the Azure Machine Learning web service endpoint. </summary>
-        public IList<AzureMachineLearningServiceInputColumn> Inputs { get; }
+        public IList<MachineLearningServiceInputColumn> Inputs { get; }
         /// <summary> A list of outputs from the Azure Machine Learning web service endpoint execution. </summary>
-        public IList<AzureMachineLearningServiceOutputColumn> Outputs { get; }
+        public IList<MachineLearningServiceOutputColumn> Outputs { get; }
         /// <summary> Number between 1 and 10000 describing maximum number of rows for every Azure ML RRS execute request. Default is 1000. </summary>
         public int? BatchSize { get; set; }
         /// <summary> The number of parallel requests that will be sent per partition of your job to the machine learning service. Default is 1. </summary>

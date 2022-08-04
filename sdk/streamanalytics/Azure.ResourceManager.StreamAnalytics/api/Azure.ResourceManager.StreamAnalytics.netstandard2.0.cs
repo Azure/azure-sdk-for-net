@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.LastOutputEventTimestamp> LastOutputEventTimestamps { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.DataSerialization Serialization { get { throw null; } set { } }
         public float? SizeWindow { get { throw null; } set { } }
-        public string TimeWindow { get { throw null; } set { } }
+        public System.DateTimeOffset? TimeWindow { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkProperties WatermarkSettings { get { throw null; } set { } }
     }
     public partial class StreamingJobOutputResource : Azure.ResourceManager.ArmResource
@@ -355,140 +355,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public AvroFormatSerialization() { }
         public System.BinaryData Properties { get { throw null; } set { } }
     }
-    public partial class AzureDataLakeStoreOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
-    {
-        public AzureDataLakeStoreOutputDataSource() { }
-        public string AccountName { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
-        public string DateFormat { get { throw null; } set { } }
-        public string FilePathPrefix { get { throw null; } set { } }
-        public string RefreshToken { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-        public string TimeFormat { get { throw null; } set { } }
-        public string TokenUserDisplayName { get { throw null; } set { } }
-        public string TokenUserPrincipalName { get { throw null; } set { } }
-    }
-    public partial class AzureFunctionOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
-    {
-        public AzureFunctionOutputDataSource() { }
-        public string ApiKey { get { throw null; } set { } }
-        public string FunctionAppName { get { throw null; } set { } }
-        public string FunctionName { get { throw null; } set { } }
-        public float? MaxBatchCount { get { throw null; } set { } }
-        public float? MaxBatchSize { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningServiceFunctionBinding : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionBinding
-    {
-        public AzureMachineLearningServiceFunctionBinding() { }
-        public string ApiKey { get { throw null; } set { } }
-        public int? BatchSize { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } set { } }
-        public string InputRequestName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningServiceInputColumn> Inputs { get { throw null; } }
-        public int? NumberOfParallelRequests { get { throw null; } set { } }
-        public string OutputResponseName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningServiceOutputColumn> Outputs { get { throw null; } }
-    }
-    public partial class AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionContent : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
-    {
-        public AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionContent() { }
-        public string ExecuteEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType? UdfType { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningServiceInputColumn
-    {
-        public AzureMachineLearningServiceInputColumn() { }
-        public string DataType { get { throw null; } set { } }
-        public int? MapTo { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningServiceOutputColumn
-    {
-        public AzureMachineLearningServiceOutputColumn() { }
-        public string DataType { get { throw null; } set { } }
-        public int? MapTo { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningStudioFunctionBinding : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionBinding
-    {
-        public AzureMachineLearningStudioFunctionBinding() { }
-        public string ApiKey { get { throw null; } set { } }
-        public int? BatchSize { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningStudioInputs Inputs { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningStudioOutputColumn> Outputs { get { throw null; } }
-    }
-    public partial class AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionContent : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
-    {
-        public AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionContent() { }
-        public string ExecuteEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType? UdfType { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningStudioInputColumn
-    {
-        public AzureMachineLearningStudioInputColumn() { }
-        public string DataType { get { throw null; } set { } }
-        public int? MapTo { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningStudioInputs
-    {
-        public AzureMachineLearningStudioInputs() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningStudioInputColumn> ColumnNames { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class AzureMachineLearningStudioOutputColumn
-    {
-        public AzureMachineLearningStudioOutputColumn() { }
-        public string DataType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class AzureSqlDatabaseOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
-    {
-        public AzureSqlDatabaseOutputDataSource() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
-        public string Database { get { throw null; } set { } }
-        public float? MaxBatchCount { get { throw null; } set { } }
-        public float? MaxWriterCount { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public string Server { get { throw null; } set { } }
-        public string Table { get { throw null; } set { } }
-        public string User { get { throw null; } set { } }
-    }
-    public partial class AzureSqlReferenceInputDataSource : Azure.ResourceManager.StreamAnalytics.Models.ReferenceInputDataSource
-    {
-        public AzureSqlReferenceInputDataSource() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
-        public string Database { get { throw null; } set { } }
-        public string DeltaSnapshotQuery { get { throw null; } set { } }
-        public string FullSnapshotQuery { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public string RefreshRate { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType? RefreshType { get { throw null; } set { } }
-        public string Server { get { throw null; } set { } }
-        public string User { get { throw null; } set { } }
-    }
-    public partial class AzureSynapseOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
-    {
-        public AzureSynapseOutputDataSource() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
-        public string Database { get { throw null; } set { } }
-        public string Password { get { throw null; } set { } }
-        public string Server { get { throw null; } set { } }
-        public string Table { get { throw null; } set { } }
-        public string User { get { throw null; } set { } }
-    }
-    public partial class AzureTableOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
-    {
-        public AzureTableOutputDataSource() { }
-        public string AccountKey { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public int? BatchSize { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ColumnsToRemove { get { throw null; } }
-        public string PartitionKey { get { throw null; } set { } }
-        public string RowKey { get { throw null; } set { } }
-        public string Table { get { throw null; } set { } }
-    }
     public partial class BlobOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
     {
         public BlobOutputDataSource() { }
@@ -562,7 +428,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     public partial class CsvFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
     {
         public CsvFormatSerialization() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding? Encoding { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding? Encoding { get { throw null; } set { } }
         public string FieldDelimiter { get { throw null; } set { } }
     }
     public partial class CustomClrFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
@@ -570,6 +436,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public CustomClrFormatSerialization() { }
         public string SerializationClassName { get { throw null; } set { } }
         public string SerializationDllPath { get { throw null; } set { } }
+    }
+    public partial class DataLakeStoreOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
+    {
+        public DataLakeStoreOutputDataSource() { }
+        public string AccountName { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
+        public string DateFormat { get { throw null; } set { } }
+        public string FilePathPrefix { get { throw null; } set { } }
+        public string RefreshToken { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        public string TimeFormat { get { throw null; } set { } }
+        public string TokenUserDisplayName { get { throw null; } set { } }
+        public string TokenUserPrincipalName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataRefreshType : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType>
@@ -596,6 +475,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public DataSerialization() { }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataSerializationEncoding : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataSerializationEncoding(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding Utf8 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DocumentDbOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
     {
         public DocumentDbOutputDataSource() { }
@@ -606,6 +502,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Database { get { throw null; } set { } }
         public string DocumentId { get { throw null; } set { } }
         public string PartitionKey { get { throw null; } set { } }
+    }
+    public partial class EMachineLearningStudioFunctionBinding : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionBinding
+    {
+        public EMachineLearningStudioFunctionBinding() { }
+        public string ApiKey { get { throw null; } set { } }
+        public int? BatchSize { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.MachineLearningStudioInputs Inputs { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.MachineLearningStudioOutputColumn> Outputs { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventGridEventSchemaType : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.EventGridEventSchemaType>
@@ -699,6 +604,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy left, Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class FunctionOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
+    {
+        public FunctionOutputDataSource() { }
+        public string ApiKey { get { throw null; } set { } }
+        public string FunctionAppName { get { throw null; } set { } }
+        public string FunctionName { get { throw null; } set { } }
+        public int? MaxBatchCount { get { throw null; } set { } }
+        public float? MaxBatchSize { get { throw null; } set { } }
+    }
     public partial class FunctionRetrieveDefaultDefinitionContent
     {
         public FunctionRetrieveDefaultDefinitionContent() { }
@@ -736,7 +650,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     public partial class JsonFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
     {
         public JsonFormatSerialization() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding? Encoding { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding? Encoding { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat? Format { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -763,6 +677,63 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public System.DateTimeOffset? LastOutputEventOn { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
     }
+    public partial class MachineLearningServiceFunctionBinding : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionBinding
+    {
+        public MachineLearningServiceFunctionBinding() { }
+        public string ApiKey { get { throw null; } set { } }
+        public int? BatchSize { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
+        public string InputRequestName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.MachineLearningServiceInputColumn> Inputs { get { throw null; } }
+        public int? NumberOfParallelRequests { get { throw null; } set { } }
+        public string OutputResponseName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.MachineLearningServiceOutputColumn> Outputs { get { throw null; } }
+    }
+    public partial class MachineLearningServiceFunctionRetrieveDefaultDefinitionContent : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
+    {
+        public MachineLearningServiceFunctionRetrieveDefaultDefinitionContent() { }
+        public string ExecuteEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType? UdfType { get { throw null; } set { } }
+    }
+    public partial class MachineLearningServiceInputColumn
+    {
+        public MachineLearningServiceInputColumn() { }
+        public string DataType { get { throw null; } set { } }
+        public int? MapTo { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class MachineLearningServiceOutputColumn
+    {
+        public MachineLearningServiceOutputColumn() { }
+        public string DataType { get { throw null; } set { } }
+        public int? MapTo { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class MachineLearningStudioFunctionRetrieveDefaultDefinitionContent : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
+    {
+        public MachineLearningStudioFunctionRetrieveDefaultDefinitionContent() { }
+        public string ExecuteEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType? UdfType { get { throw null; } set { } }
+    }
+    public partial class MachineLearningStudioInputColumn
+    {
+        public MachineLearningStudioInputColumn() { }
+        public string DataType { get { throw null; } set { } }
+        public int? MapTo { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class MachineLearningStudioInputs
+    {
+        public MachineLearningStudioInputs() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.MachineLearningStudioInputColumn> ColumnNames { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class MachineLearningStudioOutputColumn
+    {
+        public MachineLearningStudioOutputColumn() { }
+        public string DataType { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class ParquetFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
     {
         public ParquetFormatSerialization() { }
@@ -773,7 +744,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public PostgreSQLOutputDataSource() { }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
         public string Database { get { throw null; } set { } }
-        public float? MaxWriterCount { get { throw null; } set { } }
+        public int? MaxWriterCount { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }
         public string Table { get { throw null; } set { } }
@@ -799,13 +770,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     public partial class RawReferenceInputDataSource : Azure.ResourceManager.StreamAnalytics.Models.ReferenceInputDataSource
     {
         public RawReferenceInputDataSource() { }
-        public string Payload { get { throw null; } set { } }
+        public System.BinaryData Payload { get { throw null; } set { } }
         public System.Uri PayloadUri { get { throw null; } set { } }
     }
     public partial class RawStreamInputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamInputDataSource
     {
         public RawStreamInputDataSource() { }
-        public string Payload { get { throw null; } set { } }
+        public System.BinaryData Payload { get { throw null; } set { } }
         public System.Uri PayloadUri { get { throw null; } set { } }
     }
     public partial class ReferenceInputDataSource
@@ -835,7 +806,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string ServiceBusNamespace { get { throw null; } set { } }
         public string SharedAccessPolicyKey { get { throw null; } set { } }
         public string SharedAccessPolicyName { get { throw null; } set { } }
-        public System.BinaryData SystemPropertyColumns { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> SystemPropertyColumns { get { throw null; } }
     }
     public partial class ServiceBusTopicOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
     {
@@ -847,6 +818,31 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string SharedAccessPolicyName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SystemPropertyColumns { get { throw null; } }
         public string TopicName { get { throw null; } set { } }
+    }
+    public partial class SqlDatabaseOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
+    {
+        public SqlDatabaseOutputDataSource() { }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
+        public string Database { get { throw null; } set { } }
+        public int? MaxBatchCount { get { throw null; } set { } }
+        public int? MaxWriterCount { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public string Server { get { throw null; } set { } }
+        public string Table { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
+    }
+    public partial class SqlReferenceInputDataSource : Azure.ResourceManager.StreamAnalytics.Models.ReferenceInputDataSource
+    {
+        public SqlReferenceInputDataSource() { }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
+        public string Database { get { throw null; } set { } }
+        public string DeltaSnapshotQuery { get { throw null; } set { } }
+        public string FullSnapshotQuery { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public System.DateTimeOffset? RefreshRate { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType? RefreshType { get { throw null; } set { } }
+        public string Server { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
     }
     public partial class StartStreamingJobContent
     {
@@ -974,7 +970,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public StreamAnalyticsPrivateLinkServiceConnection() { }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsPrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public string PrivateLinkServiceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateLinkServiceId { get { throw null; } set { } }
         public string RequestMessage { get { throw null; } }
     }
     public partial class StreamAnalyticsQueryCompilationError
@@ -1178,23 +1174,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StreamingEncoding : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StreamingEncoding(string value) { throw null; }
-        public static Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding Utf8 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding left, Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding left, Azure.ResourceManager.StreamAnalytics.Models.StreamingEncoding right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamingJobCompatibilityLevel : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel>
     {
         private readonly object _dummy;
@@ -1235,7 +1214,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal StreamingJobDiagnosticCondition() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
-        public string Since { get { throw null; } }
+        public System.DateTimeOffset? Since { get { throw null; } }
     }
     public partial class StreamingJobExternal
     {
@@ -1462,5 +1441,26 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public StreamInputProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamInputDataSource Datasource { get { throw null; } set { } }
+    }
+    public partial class SynapseOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
+    {
+        public SynapseOutputDataSource() { }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsAuthenticationMode? AuthenticationMode { get { throw null; } set { } }
+        public string Database { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public string Server { get { throw null; } set { } }
+        public string Table { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
+    }
+    public partial class TableOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
+    {
+        public TableOutputDataSource() { }
+        public string AccountKey { get { throw null; } set { } }
+        public string AccountName { get { throw null; } set { } }
+        public int? BatchSize { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ColumnsToRemove { get { throw null; } }
+        public string PartitionKey { get { throw null; } set { } }
+        public string RowKey { get { throw null; } set { } }
+        public string Table { get { throw null; } set { } }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureFunctionOutputDataSource : IUtf8JsonSerializable
+    public partial class FunctionOutputDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureFunctionOutputDataSource DeserializeAzureFunctionOutputDataSource(JsonElement element)
+        internal static FunctionOutputDataSource DeserializeFunctionOutputDataSource(JsonElement element)
         {
             string type = default;
             Optional<string> functionAppName = default;
             Optional<string> functionName = default;
             Optional<string> apiKey = default;
             Optional<float> maxBatchSize = default;
-            Optional<float> maxBatchCount = default;
+            Optional<int> maxBatchCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            maxBatchCount = property0.Value.GetSingle();
+                            maxBatchCount = property0.Value.GetInt32();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AzureFunctionOutputDataSource(type, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
+            return new FunctionOutputDataSource(type, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
         }
     }
 }

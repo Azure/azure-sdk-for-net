@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class AzureSqlReferenceInputDataSource : IUtf8JsonSerializable
+    public partial class SqlReferenceInputDataSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(RefreshRate))
             {
                 writer.WritePropertyName("refreshRate");
-                writer.WriteStringValue(RefreshRate);
+                writer.WriteStringValue(RefreshRate.Value);
             }
             if (Optional.IsDefined(FullSnapshotQuery))
             {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlReferenceInputDataSource DeserializeAzureSqlReferenceInputDataSource(JsonElement element)
+        internal static SqlReferenceInputDataSource DeserializeSqlReferenceInputDataSource(JsonElement element)
         {
             string type = default;
             Optional<string> server = default;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> user = default;
             Optional<string> password = default;
             Optional<DataRefreshType> refreshType = default;
-            Optional<string> refreshRate = default;
+            Optional<DateTimeOffset> refreshRate = default;
             Optional<string> fullSnapshotQuery = default;
             Optional<string> deltaSnapshotQuery = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
@@ -128,7 +129,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         }
                         if (property0.NameEquals("refreshRate"))
                         {
-                            refreshRate = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            refreshRate = property0.Value.GetDateTimeOffset();
                             continue;
                         }
                         if (property0.NameEquals("fullSnapshotQuery"))
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new AzureSqlReferenceInputDataSource(type, server.Value, database.Value, user.Value, password.Value, Optional.ToNullable(refreshType), refreshRate.Value, fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Optional.ToNullable(authenticationMode));
+            return new SqlReferenceInputDataSource(type, server.Value, database.Value, user.Value, password.Value, Optional.ToNullable(refreshType), Optional.ToNullable(refreshRate), fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Optional.ToNullable(authenticationMode));
         }
     }
 }
