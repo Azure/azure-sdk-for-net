@@ -1,16 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -19,26 +14,19 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiOperationTests : ApiManagementManagementTestBase
     {
         public ApiOperationTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private VirtualNetworkCollection VNetCollection { get; set; }
-
         private ApiManagementServiceCollection ApiServiceCollection { get; set; }
 
         private ApiManagementServiceResource ApiServiceResource { get; set; }
 
-        private ApiCollection Collection { get; set; }
-
-        private ApiResource Resources { get; set; }
-
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            VNetCollection = ResourceGroup.GetVirtualNetworks();
             ApiServiceCollection = ResourceGroup.GetApiManagementServices();
         }
 
@@ -94,12 +82,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             string newOperationRequestParamDefaultValue = Recording.GenerateAssetName("newOperationRequestParamDefaultValue");
             string newOperationRequestParamType = "string";
 
-            string newOperationRequestRepresentationContentType = Recording.GenerateAssetName("newOperationRequestRepresentationContentType");
             string newOperationRequestRepresentationTypeName = "not null";
 
             string newOperationResponseDescription = Recording.GenerateAssetName("newOperationResponseDescription");
             int newOperationResponseStatusCode = 1980785443;
-            string newOperationResponseRepresentationContentType = Recording.GenerateAssetName("newOperationResponseRepresentationContentType");
 
             var newOperation = new ApiOperationData
             {
