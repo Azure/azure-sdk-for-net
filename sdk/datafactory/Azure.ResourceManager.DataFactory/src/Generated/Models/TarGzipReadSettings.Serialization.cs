@@ -12,11 +12,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CompressionReadSettings : IUtf8JsonSerializable
+    public partial class TarGzipReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
+            {
+                writer.WritePropertyName("preserveCompressionFileNameAsFolder");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PreserveCompressionFileNameAsFolder);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveCompressionFileNameAsFolder.ToString()).RootElement);
+#endif
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(CompressionReadSettingsType);
             foreach (var item in AdditionalProperties)
@@ -31,22 +40,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static CompressionReadSettings DeserializeCompressionReadSettings(JsonElement element)
+        internal static TarGzipReadSettings DeserializeTarGzipReadSettings(JsonElement element)
         {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "TarGZipReadSettings": return TarGzipReadSettings.DeserializeTarGzipReadSettings(element);
-                    case "TarReadSettings": return TarReadSettings.DeserializeTarReadSettings(element);
-                    case "ZipDeflateReadSettings": return ZipDeflateReadSettings.DeserializeZipDeflateReadSettings(element);
-                }
-            }
+            Optional<BinaryData> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("preserveCompressionFileNameAsFolder"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    preserveCompressionFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -55,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CompressionReadSettings(type, additionalProperties);
+            return new TarGzipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
         }
     }
 }

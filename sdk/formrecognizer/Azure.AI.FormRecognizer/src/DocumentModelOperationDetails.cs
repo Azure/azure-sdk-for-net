@@ -3,39 +3,81 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("GetOperationResponse")]
-    public partial class DocumentModelOperationDetails
+    /// <summary>
+    /// Details about a document model long-running operation.
+    /// </summary>
+    public class DocumentModelOperationDetails
     {
-        // This property is set by the DocumentAnalysisModelFactory when mocking this class.
-        private readonly ResponseError _mockError;
-
-        /// <summary>
-        /// Initializes a new instance of ModelOperation. Used by the <see cref="DocumentAnalysisModelFactory"/>.
-        /// </summary>
-        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
+        internal DocumentModelOperationDetails(GetOperationResponse response)
+            : this(response.OperationId, response.Status, response.PercentCompleted, response.CreatedOn, response.LastUpdatedOn, response.Kind, response.ResourceLocation, response.Tags, response.Error, response.Result)
         {
-            _mockError = error;
+        }
+
+        internal DocumentModelOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelDetails result)
+        {
+            OperationId = operationId;
+            Status = status;
+            PercentCompleted = percentCompleted;
+            Kind = kind;
+            ResourceLocation = resourceLocation;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            Tags = tags;
+            Error = error;
             Result = result;
         }
 
-        /// <summary> Operation result upon success. </summary>
-        //TODO service is looking into fixing this so it has different return types that we can adapt.
-        [CodeGenMember("Result")]
-        public DocumentModelDetails Result { get; }
+        /// <summary>
+        /// Operation ID.
+        /// </summary>
+        public string OperationId { get; }
 
-        /// <summary> Encountered error. </summary>
-        [CodeGenMember("Error")]
-        private readonly JsonElement _error;
+        /// <summary>
+        /// Operation status.
+        /// </summary>
+        public DocumentOperationStatus Status { get; }
+
+        /// <summary>
+        /// Operation progress (0-100).
+        /// </summary>
+        public int? PercentCompleted { get; }
+
+        /// <summary>
+        /// Date and time (UTC) when the operation was created.
+        /// </summary>
+        public DateTimeOffset CreatedOn { get; }
+
+        /// <summary>
+        /// Date and time (UTC) when the operation was last updated.
+        /// </summary>
+        public DateTimeOffset LastUpdatedOn { get; }
+
+        /// <summary>
+        /// Type of operation.
+        /// </summary>
+        public DocumentOperationKind Kind { get; }
+
+        /// <summary>
+        /// URI of the resource targeted by this operation.
+        /// </summary>
+        public Uri ResourceLocation { get; }
+
+        /// <summary>
+        /// A list of user-defined key-value tag attributes associated with the model.
+        /// </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary>
         /// Gets the error that occurred during the operation. The value is <c>null</c> if the operation succeeds.
         /// </summary>
-        public ResponseError Error => _mockError
-            ?? (_error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText()));
+        public ResponseError Error { get; }
+
+        /// <summary>
+        /// Operation result upon success.
+        /// </summary>
+        public DocumentModelDetails Result { get; }
     }
 }

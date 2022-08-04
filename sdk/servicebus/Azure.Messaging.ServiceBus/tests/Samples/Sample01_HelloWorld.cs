@@ -342,5 +342,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
             #endregion
         }
+
+        /// <summary>
+        /// Set the TimeToLive on a message.
+        /// </summary>
+        public void SetMessageTimeToLive()
+        {
+            #region Snippet:ServiceBusMessageTimeToLive
+            var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };
+            #endregion
+        }
     }
 }
