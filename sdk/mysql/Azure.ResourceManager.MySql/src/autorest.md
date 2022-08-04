@@ -26,6 +26,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'sessionId': 'uuid'
@@ -58,6 +59,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Five6: FivePointSix
+  Five7: FivePointSeven
+  Eight0: EightPointZero
 
 prepend-rp-prefix:
   - Advisor
@@ -118,6 +122,8 @@ prepend-rp-prefix:
   - WaitStatisticsInput
 rename-mapping:
   ServerAdministratorResource: MySqlServerAdministrator
+  ServerAdministratorResource.properties.login: LoginAccountName
+  ServerAdministratorResource.properties.sid: SecureId
   ServerAdministratorResourceListResult: MySqlServerAdministratorListResult
   AdvisorsResultList: MySqlAdvisorListResult
   QueryTextsResultList: MySqlQueryTextListResult
@@ -139,17 +145,21 @@ rename-mapping:
   NameAvailability: MySqlNameAvailabilityResult
   PerformanceTierProperties: MySqlPerformanceTier
   ConfigurationListResult: MySqlConfigurationList
+  LogFile.properties.type: LogFileType
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
-  LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
-  LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
+#   LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
+#   LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
   MySqlServers_Start: Start
   MySqlServers_Stop: Stop
   MySqlServers_Upgrade: Upgrade
   CheckNameAvailability_Execute: CheckMySqlNameAvailability
 
 directive:
+  # These 2 operations read like some LRO related operations. Remove them first.
+  - remove-operation: LocationBasedRecommendedActionSessionsResult_List
+  - remove-operation: LocationBasedRecommendedActionSessionsOperationStatus_Get
   - rename-operation:
       from: Servers_Start
       to: MySqlServers_Start
@@ -177,6 +187,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'PrincipalId': 'uuid'
@@ -236,7 +247,6 @@ rename-mapping:
   ServerBackupListResult: MySqlFlexibleServerBackupListResult
   FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
   FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
-#   DatabaseProperties: MySqlFlexibleServer
   DatabaseListResult: MySqlFlexibleServerDatabaseListResult
   ConfigurationSource: MySqlFlexibleServerConfigurationSource
   ConfigurationListResult: MySqlFlexibleServerConfigurationListResult
@@ -265,4 +275,12 @@ rename-mapping:
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
+
+directive:
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.Identity['x-ms-client-flatten'] = false;
+      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
+      delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
 ```
