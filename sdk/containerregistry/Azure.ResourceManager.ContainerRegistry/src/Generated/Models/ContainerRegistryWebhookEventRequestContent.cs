@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The request that generated the event. </summary>
-    public partial class ContainerRegistryWebhookEventRequest
+    public partial class ContainerRegistryWebhookEventRequestContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequest. </summary>
-        internal ContainerRegistryWebhookEventRequest()
+        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestContent. </summary>
+        internal ContainerRegistryWebhookEventRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequest. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestContent. </summary>
         /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
         /// <param name="method"> The request method that generated the event. </param>
         /// <param name="userAgent"> The user agent header of the request. </param>
-        internal ContainerRegistryWebhookEventRequest(Guid? id, string addr, string host, string method, string userAgent)
+        internal ContainerRegistryWebhookEventRequestContent(Guid? id, string addr, string host, string method, string userAgent)
         {
             Id = id;
             Addr = addr;

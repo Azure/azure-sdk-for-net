@@ -167,7 +167,7 @@ rename-mapping:
   EventResponseMessage: ContainerRegistryWebhookEventResponseMessage
   Target: ContainerRegistryWebhookEventTarget
   Source: ContainerRegistryWebhookEventSource
-  Request: ContainerRegistryWebhookEventRequest
+  Request: ContainerRegistryWebhookEventRequestContent
   ConnectionStatus: ContainerRegistryPrivateLinkServiceConnectionStatus
   Credentials: ContainerRegistryRunCredentials
   DefaultAction: ContainerRegistryNetworkRuleDefaultAction

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> action = default;
             Optional<ContainerRegistryWebhookEventTarget> target = default;
-            Optional<ContainerRegistryWebhookEventRequest> request = default;
+            Optional<ContainerRegistryWebhookEventRequestContent> request = default;
             Optional<ContainerRegistryWebhookEventActor> actor = default;
             Optional<ContainerRegistryWebhookEventSource> source = default;
             foreach (var property in element.EnumerateObject())
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    request = ContainerRegistryWebhookEventRequest.DeserializeContainerRegistryWebhookEventRequest(property.Value);
+                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("actor"))

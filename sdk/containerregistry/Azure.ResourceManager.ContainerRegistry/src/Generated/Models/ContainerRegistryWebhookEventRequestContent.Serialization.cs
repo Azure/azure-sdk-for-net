@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryWebhookEventRequest
+    public partial class ContainerRegistryWebhookEventRequestContent
     {
-        internal static ContainerRegistryWebhookEventRequest DeserializeContainerRegistryWebhookEventRequest(JsonElement element)
+        internal static ContainerRegistryWebhookEventRequestContent DeserializeContainerRegistryWebhookEventRequestContent(JsonElement element)
         {
             Optional<Guid> id = default;
             Optional<string> addr = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventRequest(Optional.ToNullable(id), addr.Value, host.Value, method.Value, userAgent.Value);
+            return new ContainerRegistryWebhookEventRequestContent(Optional.ToNullable(id), addr.Value, host.Value, method.Value, userAgent.Value);
         }
     }
 }
