@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> sourceEndpoint = default;
             Optional<string> primaryAvailabilityGroupName = default;
             Optional<string> secondaryAvailabilityGroupName = default;
-            Optional<ReplicationMode> replicationMode = default;
+            Optional<DistributedAvailabilityGroupReplicationMode> replicationMode = default;
             Optional<Guid> distributedAvailabilityGroupId = default;
             Optional<Guid> sourceReplicaId = default;
             Optional<Guid> targetReplicaId = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            replicationMode = new ReplicationMode(property0.Value.GetString());
+                            replicationMode = new DistributedAvailabilityGroupReplicationMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("distributedAvailabilityGroupId"))

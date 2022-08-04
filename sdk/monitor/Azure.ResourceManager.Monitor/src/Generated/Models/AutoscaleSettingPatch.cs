@@ -27,8 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<AutoscaleProfile> Profiles { get; }
         /// <summary> the collection of notifications. </summary>
         public IList<AutoscaleNotification> Notifications { get; set; }
-        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </summary>
+        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </summary>
         public bool? IsEnabled { get; set; }
+        /// <summary> the predictive autoscale policy mode. </summary>
+        public PredictiveAutoscalePolicy PredictiveAutoscalePolicy { get; set; }
         /// <summary> the name of the autoscale setting. </summary>
         public string AutoscaleSettingName { get; set; }
         /// <summary> the resource identifier of the resource that the autoscale setting should be added to. </summary>

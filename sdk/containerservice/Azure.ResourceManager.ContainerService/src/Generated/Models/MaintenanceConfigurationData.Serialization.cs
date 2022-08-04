@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeInWeek))
+            if (Optional.IsCollectionDefined(TimesInWeek))
             {
                 writer.WritePropertyName("timeInWeek");
                 writer.WriteStartArray();
-                foreach (var item in TimeInWeek)
+                foreach (var item in TimesInWeek)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotAllowedTime))
+            if (Optional.IsCollectionDefined(NotAllowedTimes))
             {
                 writer.WritePropertyName("notAllowedTime");
                 writer.WriteStartArray();
-                foreach (var item in NotAllowedTime)
+                foreach (var item in NotAllowedTimes)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<TimeInWeek>> timeInWeek = default;
-            Optional<IList<TimeSpan>> notAllowedTime = default;
+            Optional<IList<ContainerServiceTimeInWeek>> timeInWeek = default;
+            Optional<IList<ContainerServiceTimeSpan>> notAllowedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TimeInWeek> array = new List<TimeInWeek>();
+                            List<ContainerServiceTimeInWeek> array = new List<ContainerServiceTimeInWeek>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.TimeInWeek.DeserializeTimeInWeek(item));
+                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item));
                             }
                             timeInWeek = array;
                             continue;
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TimeSpan> array = new List<TimeSpan>();
+                            List<ContainerServiceTimeSpan> array = new List<ContainerServiceTimeSpan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeSpan.DeserializeTimeSpan(item));
+                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item));
                             }
                             notAllowedTime = array;
                             continue;

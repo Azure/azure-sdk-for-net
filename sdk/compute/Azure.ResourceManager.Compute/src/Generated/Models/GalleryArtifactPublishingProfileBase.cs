@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
-        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, ReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations)
+        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations)
         {
             TargetRegions = targetRegions;
             ReplicaCount = replicaCount;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
         public ImageStorageAccountType? StorageAccountType { get; set; }
         /// <summary> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </summary>
-        public ReplicationMode? ReplicationMode { get; set; }
+        public GalleryReplicationMode? ReplicationMode { get; set; }
         /// <summary> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </summary>
         public IList<GalleryTargetExtendedLocation> TargetExtendedLocations { get; }
     }

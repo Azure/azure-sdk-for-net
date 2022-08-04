@@ -233,8 +233,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>Returns a list of rules description</returns>
         public override async Task<List<RuleProperties>> GetRulesAsync(int skip, int top, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
-                async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false),
-                this,
+                static async (value, timeout, token) =>
+                {
+                    var (manager, skip, top) = value;
+                    return await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false);
+                },
+                (this, skip, top),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -259,10 +263,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _managementLink,
                 amqpRequestMessage,
                 timeout).ConfigureAwait(false);
-            var ruleDescriptions = new List<RuleProperties>();
+            List<RuleProperties> ruleDescriptions = null;
             if (response.StatusCode == AmqpResponseStatusCode.OK)
             {
                 var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
+                ruleDescriptions = new List<RuleProperties>(ruleList.Count);
                 foreach (var entry in ruleList)
                 {
                     var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
@@ -279,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw response.ToMessagingContractException();
             }
 
-            return ruleDescriptions;
+            return ruleDescriptions ?? new List<RuleProperties>(0);
         }
 
         /// <summary>

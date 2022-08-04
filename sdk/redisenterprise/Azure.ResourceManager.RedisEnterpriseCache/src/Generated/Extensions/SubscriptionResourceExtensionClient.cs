@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
     {
         private ClientDiagnostics _operationsStatusClientDiagnostics;
         private OperationsStatusRestOperations _operationsStatusRestClient;
-        private ClientDiagnostics _clusterRedisEnterpriseClientDiagnostics;
-        private RedisEnterpriseRestOperations _clusterRedisEnterpriseRestClient;
+        private ClientDiagnostics _redisEnterpriseClusterRedisEnterpriseClientDiagnostics;
+        private RedisEnterpriseRestOperations _redisEnterpriseClusterRedisEnterpriseRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
 
         private ClientDiagnostics OperationsStatusClientDiagnostics => _operationsStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterpriseCache", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationsStatusRestOperations OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ClusterRedisEnterpriseClientDiagnostics => _clusterRedisEnterpriseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterpriseCache", ClusterResource.ResourceType.Namespace, Diagnostics);
-        private RedisEnterpriseRestOperations ClusterRedisEnterpriseRestClient => _clusterRedisEnterpriseRestClient ??= new RedisEnterpriseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
+        private ClientDiagnostics RedisEnterpriseClusterRedisEnterpriseClientDiagnostics => _redisEnterpriseClusterRedisEnterpriseClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterpriseCache", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
+        private RedisEnterpriseRestOperations RedisEnterpriseClusterRedisEnterpriseRestClient => _redisEnterpriseClusterRedisEnterpriseRestClient ??= new RedisEnterpriseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisEnterpriseClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="location"> The region the operation is in. </param>
         /// <param name="operationId"> The operation&apos;s unique identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetRedisEnterpriseOperationsStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisEnterpriseOperationStatus>> GetRedisEnterpriseOperationsStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = OperationsStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseOperationsStatus");
             scope.Start();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="location"> The region the operation is in. </param>
         /// <param name="operationId"> The operation&apos;s unique identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetRedisEnterpriseOperationsStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<RedisEnterpriseOperationStatus> GetRedisEnterpriseOperationsStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = OperationsStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseOperationsStatus");
             scope.Start();
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// Operation Id: RedisEnterprise_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RedisEnterpriseClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRedisEnterpriseRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await RedisEnterpriseClusterRedisEnterpriseRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
                     throw;
                 }
             }
-            async Task<Page<ClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RedisEnterpriseClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRedisEnterpriseRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await RedisEnterpriseClusterRedisEnterpriseRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// Operation Id: RedisEnterprise_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(CancellationToken cancellationToken = default)
         {
-            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<RedisEnterpriseClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRedisEnterpriseRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = RedisEnterpriseClusterRedisEnterpriseRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
                     throw;
                 }
             }
-            Page<ClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RedisEnterpriseClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = RedisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedisEnterpriseClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRedisEnterpriseRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = RedisEnterpriseClusterRedisEnterpriseRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

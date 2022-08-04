@@ -13,8 +13,8 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class CustomSingleLabelClassificationTaskParameters : CustomTaskParameters
     {
         /// <summary> Initializes a new instance of CustomSingleLabelClassificationTaskParameters. </summary>
-        /// <param name="projectName"></param>
-        /// <param name="deploymentName"></param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public CustomSingleLabelClassificationTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
         {
@@ -30,8 +30,8 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of CustomSingleLabelClassificationTaskParameters. </summary>
         /// <param name="loggingOptOut"></param>
-        /// <param name="projectName"></param>
-        /// <param name="deploymentName"></param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         internal CustomSingleLabelClassificationTaskParameters(bool? loggingOptOut, string projectName, string deploymentName) : base(loggingOptOut, projectName, deploymentName)
         {
         }

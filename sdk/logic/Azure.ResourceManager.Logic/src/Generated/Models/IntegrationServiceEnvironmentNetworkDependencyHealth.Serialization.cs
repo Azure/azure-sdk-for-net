@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentNetworkDependencyHealth DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(JsonElement element)
         {
-            Optional<ExtendedErrorInfo> error = default;
+            Optional<IntegrationServiceErrorInfo> error = default;
             Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ExtendedErrorInfo.DeserializeExtendedErrorInfo(property.Value);
+                    error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("state"))

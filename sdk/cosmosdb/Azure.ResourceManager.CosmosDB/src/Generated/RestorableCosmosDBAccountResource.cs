@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class RestorableCosmosDBAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorableCosmosDBAccountResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string instanceId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, Guid instanceId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}";
             return new ResourceIdentifier(resourceId);
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly RestorableSqlContainersRestOperations _restorableSqlContainersRestClient;
         private readonly ClientDiagnostics _restorableSqlResourcesClientDiagnostics;
         private readonly RestorableSqlResourcesRestOperations _restorableSqlResourcesRestClient;
-        private readonly ClientDiagnostics _restorableMongodbDatabasesClientDiagnostics;
-        private readonly RestorableMongodbDatabasesRestOperations _restorableMongodbDatabasesRestClient;
-        private readonly ClientDiagnostics _restorableMongodbCollectionsClientDiagnostics;
-        private readonly RestorableMongodbCollectionsRestOperations _restorableMongodbCollectionsRestClient;
-        private readonly ClientDiagnostics _restorableMongodbResourcesClientDiagnostics;
-        private readonly RestorableMongodbResourcesRestOperations _restorableMongodbResourcesRestClient;
+        private readonly ClientDiagnostics _restorableMongoDBDatabasesClientDiagnostics;
+        private readonly RestorableMongodbDatabasesRestOperations _restorableMongoDBDatabasesRestClient;
+        private readonly ClientDiagnostics _restorableMongoDBCollectionsClientDiagnostics;
+        private readonly RestorableMongodbCollectionsRestOperations _restorableMongoDBCollectionsRestClient;
+        private readonly ClientDiagnostics _restorableMongoDBResourcesClientDiagnostics;
+        private readonly RestorableMongodbResourcesRestOperations _restorableMongoDBResourcesRestClient;
         private readonly RestorableCosmosDBAccountData _data;
 
         /// <summary> Initializes a new instance of the <see cref="RestorableCosmosDBAccountResource"/> class for mocking. </summary>
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.CosmosDB
             _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _restorableSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _restorableMongodbDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _restorableMongodbCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _restorableMongodbResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableMongoDBDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableMongoDBDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableMongoDBCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableMongoDBCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableMongoDBResourcesRestClient = new RestorableMongodbResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.GetByLocationAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableCosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient.GetByLocation(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableCosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlDatabasesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlDatabasesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlDatabasesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken: cancellationToken);
+                    var response = _restorableSqlDatabasesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlContainersRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken);
+                    var response = _restorableSqlContainersRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableSqlResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableSqlResources(string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableSqlResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
+                    var response = _restorableSqlResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -342,11 +342,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             async Task<Page<RestorableMongoDBDatabase>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _restorableMongodbDatabasesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases");
+                using var scope = _restorableMongoDBDatabasesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases");
                 scope.Start();
                 try
                 {
-                    var response = await _restorableMongodbDatabasesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableMongoDBDatabasesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Page<RestorableMongoDBDatabase> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _restorableMongodbDatabasesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases");
+                using var scope = _restorableMongoDBDatabasesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBDatabases");
                 scope.Start();
                 try
                 {
-                    var response = _restorableMongodbDatabasesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken: cancellationToken);
+                    var response = _restorableMongoDBDatabasesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -397,11 +397,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             async Task<Page<RestorableMongoDBCollection>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _restorableMongodbCollectionsClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections");
+                using var scope = _restorableMongoDBCollectionsClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections");
                 scope.Start();
                 try
                 {
-                    var response = await _restorableMongodbCollectionsRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restorableMongoDBDatabaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableMongoDBCollectionsRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -425,11 +425,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Page<RestorableMongoDBCollection> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _restorableMongodbCollectionsClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections");
+                using var scope = _restorableMongoDBCollectionsClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections");
                 scope.Start();
                 try
                 {
-                    var response = _restorableMongodbCollectionsRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restorableMongoDBDatabaseRid, cancellationToken: cancellationToken);
+                    var response = _restorableMongoDBCollectionsRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -450,15 +450,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResourcesAsync(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<DatabaseRestoreResourceInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _restorableMongodbResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
+                using var scope = _restorableMongoDBResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
                 scope.Start();
                 try
                 {
-                    var response = await _restorableMongodbResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableMongoDBResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -479,15 +479,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="restoreTimestampInUtc"> The timestamp when the restorable resources existed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseRestoreResourceInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(string restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableMongoDBResources(AzureLocation? restoreLocation = null, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
         {
             Page<DatabaseRestoreResourceInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _restorableMongodbResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
+                using var scope = _restorableMongoDBResourcesClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableMongoDBResources");
                 scope.Start();
                 try
                 {
-                    var response = _restorableMongodbResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
+                    var response = _restorableMongoDBResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

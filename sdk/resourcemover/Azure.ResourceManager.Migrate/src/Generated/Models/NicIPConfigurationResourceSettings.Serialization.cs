@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> privateIpAddress = default;
-            Optional<string> privateIpAllocationMethod = default;
+            Optional<string> privateIPAddress = default;
+            Optional<string> privateIPAllocationMethod = default;
             Optional<SubnetReference> subnet = default;
             Optional<bool> primary = default;
             Optional<IList<LoadBalancerBackendAddressPoolReference>> loadBalancerBackendAddressPools = default;
             Optional<IList<LoadBalancerNatRuleReference>> loadBalancerNatRules = default;
-            Optional<PublicIPReference> publicIp = default;
+            Optional<PublicIPReference> publicIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIpAddress = property.Value.GetString();
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"))
                 {
-                    privateIpAllocationMethod = property.Value.GetString();
+                    privateIPAllocationMethod = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicIp = PublicIPReference.DeserializePublicIPReference(property.Value);
+                    publicIP = PublicIPReference.DeserializePublicIPReference(property.Value);
                     continue;
                 }
             }
-            return new NicIPConfigurationResourceSettings(name.Value, privateIpAddress.Value, privateIpAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIp.Value);
+            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerNatRules), publicIP.Value);
         }
     }
 }

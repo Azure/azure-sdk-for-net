@@ -121,21 +121,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> virtualMachineResourceId = default;
+            Optional<ResourceIdentifier> virtualMachineResourceId = default;
             Optional<string> provisioningState = default;
             Optional<string> sqlImageOffer = default;
             Optional<SqlServerLicenseType> sqlServerLicenseType = default;
             Optional<SqlManagementMode> sqlManagement = default;
             Optional<SqlImageSku> sqlImageSku = default;
-            Optional<string> sqlVirtualMachineGroupResourceId = default;
+            Optional<ResourceIdentifier> sqlVirtualMachineGroupResourceId = default;
             Optional<WsfcDomainCredentials> wsfcDomainCredentials = default;
-            Optional<string> wsfcStaticIp = default;
+            Optional<string> wsfcStaticIP = default;
             Optional<AutoPatchingSettings> autoPatchingSettings = default;
             Optional<AutoBackupSettings> autoBackupSettings = default;
             Optional<KeyVaultCredentialSettings> keyVaultCredentialSettings = default;
             Optional<ServerConfigurationsManagementSettings> serverConfigurationsManagementSettings = default;
             Optional<StorageConfigurationSettings> storageConfigurationSettings = default;
-            Optional<AssessmentSettings> assessmentSettings = default;
+            Optional<SqlVirtualMachineAssessmentSettings> assessmentSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -204,7 +204,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     {
                         if (property0.NameEquals("virtualMachineResourceId"))
                         {
-                            virtualMachineResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualMachineResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -249,7 +254,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         }
                         if (property0.NameEquals("sqlVirtualMachineGroupResourceId"))
                         {
-                            sqlVirtualMachineGroupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sqlVirtualMachineGroupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("wsfcDomainCredentials"))
@@ -264,7 +274,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         }
                         if (property0.NameEquals("wsfcStaticIp"))
                         {
-                            wsfcStaticIp = property0.Value.GetString();
+                            wsfcStaticIP = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("autoPatchingSettings"))
@@ -324,14 +334,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            assessmentSettings = AssessmentSettings.DeserializeAssessmentSettings(property0.Value);
+                            assessmentSettings = SqlVirtualMachineAssessmentSettings.DeserializeSqlVirtualMachineAssessmentSettings(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SqlVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVirtualMachineGroupResourceId.Value, wsfcDomainCredentials.Value, wsfcStaticIp.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value);
+            return new SqlVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVirtualMachineGroupResourceId.Value, wsfcDomainCredentials.Value, wsfcStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value);
         }
     }
 }

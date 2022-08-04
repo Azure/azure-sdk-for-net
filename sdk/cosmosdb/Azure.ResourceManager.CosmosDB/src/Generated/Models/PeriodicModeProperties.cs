@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupIntervalInMinutes"> An integer representing the interval in minutes between two backups. </param>
         /// <param name="backupRetentionIntervalInHours"> An integer representing the time (in hours) that each backup is retained. </param>
         /// <param name="backupStorageRedundancy"> Enum to indicate type of backup residency. </param>
-        internal PeriodicModeProperties(int? backupIntervalInMinutes, int? backupRetentionIntervalInHours, BackupStorageRedundancy? backupStorageRedundancy)
+        internal PeriodicModeProperties(int? backupIntervalInMinutes, int? backupRetentionIntervalInHours, CosmosDBBackupStorageRedundancy? backupStorageRedundancy)
         {
             BackupIntervalInMinutes = backupIntervalInMinutes;
             BackupRetentionIntervalInHours = backupRetentionIntervalInHours;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> An integer representing the time (in hours) that each backup is retained. </summary>
         public int? BackupRetentionIntervalInHours { get; set; }
         /// <summary> Enum to indicate type of backup residency. </summary>
-        public BackupStorageRedundancy? BackupStorageRedundancy { get; set; }
+        public CosmosDBBackupStorageRedundancy? BackupStorageRedundancy { get; set; }
     }
 }

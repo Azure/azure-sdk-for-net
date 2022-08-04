@@ -18,25 +18,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
-  naming:
-    override:
-      Site: WebSite
-      AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
-      AppServiceCertificatePatchResource: AppServiceCertificatePatch
-      AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchOptions
-      AppserviceGithubToken: AppServiceGithubToken
-      AppServicePlanPatchResource: AppServicePlanPatchOptions
-      Contact: ContactInformation 
-      Login: LoginInformation
-      MSDeploy: MsDeploy
-      MSDeployLog: MsDeployLog
-      MSDeployLogEntry: MsDeployLogEntry
-      Operation: OperationInformation
-      Recommendation: AppServiceRecommendation
-      Resource: AppServiceResource
-      Status: OperationStatus
-      DetectorResponse: AppServiceDetector
-      DetectorDefinitionResource: DetectorDefinition
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -82,8 +63,13 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: SiteTriggeredwebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: SiteTriggeredWebJobHistory
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: SiteWebJob
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}: SiteSlotBackUp
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: SiteSlotSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: SiteExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
 
 override-operation-name:
   Diagnostics_ExecuteSiteAnalysis: Execute
@@ -101,6 +87,8 @@ override-operation-name:
   StaticSites_ResetStaticSiteApiKey: ResetApiKey
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
+  AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
+  AppServicePlans_GetHybridConnection: GetHybridConnectionRelays
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -120,7 +108,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -131,43 +119,303 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-      
+  Etag: ETag|etag
+  Ipssl: IPSsl|ipSsl
+  WWW: Www
+  Ms: MS
+
+rename-mapping:
+  Site: WebSite
+  AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
+  AppServiceCertificatePatchResource: AppServiceCertificatePatch
+  AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
+  AppserviceGithubToken: AppServiceGithubToken
+  AppServicePlanPatchResource: AppServicePlanPatchContent
+  Contact: ContactInformation
+  Login: LoginInformation
+  MSDeploy: MsDeploy
+  MSDeployLog: MsDeployLog
+  MSDeployLogEntry: MsDeployLogEntry
+  Operation: OperationInformation
+  Recommendation: AppServiceRecommendation
+  Resource: AppServiceResource
+  DetectorResponse: AppServiceDetector
+  ApiKVReference: ApiKeyVaultReference
+  Domain: AppServiceDomain
+# rename property
+  ValidateResourceTypes.Site: WebSite
+  CheckNameResourceTypes.Site: WebSite
+  ApiKVReference.properties.identityType: Identity
+  AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
+  AppServiceCertificateOrder.properties.expirationTime: ExpireOn
+  AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
+  AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
+  Domain.properties.privacy: AppServiceHasPrivacy
+  Domain.properties.expirationTime: ExpireOn
+  Domain.properties.autoRenew: IsAutoRenew
+  AppServiceEnvironment.properties.suspended: IsSuspended
+  AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
+  AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpiredOn
+  AppServicePlan.properties.hyperV: IsHyperV
+  AppServicePlan.properties.perSiteScaling: IsPerSiteScaling
+  AppServicePlan.properties.reserved: IsReserved
+  AppServicePlan.properties.spotExpirationTime: SpotExpireOn
+  AppServicePlan.properties.zoneRedundant: IsZoneRedundant
+  BackupItem.properties.created: CreatedOn
+  BackupItem.properties.finishedTimeStamp: FinishedOn
+  BackupItem.properties.lastRestoreTimeStamp: LastRestoreOn
+  BackupItem.properties.scheduled: IsScheduled
+  Certificate.properties.expirationDate: ExpireOn
+  Certificate.properties.valid: IsValid
+  ContinuousWebJob.properties.using_sdk: IsUsingSdk
+  Deployment.properties.active: IsActive
+  KubeEnvironment.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
+  MigrateMySqlStatus.properties.localMySqlEnabled: IsLocalMySqlEnabled
+  MSDeployStatus.properties.complete: IsComplete
+  PrivateAccess.properties.enabled: IsEnabled
+  ResourceHealthMetadata.properties.signalAvailability: IsSignalAvailable
+  SiteConfig.properties.acrUseManagedIdentityCreds: HasAcrUseManagedIdentityCreds
+  SiteConfig.properties.alwaysOn: IsAlwaysOn
+  SiteConfig.properties.autoHealEnabled: IsAutoHealEnabled
+  SiteConfig.properties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
+  SiteConfig.properties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitoringEnabled
+  SiteConfig.properties.http20Enabled: IsHttp20Enabled
+  SiteConfig.properties.localMySqlEnabled: IsLocalMySqlEnabled
+  SiteConfig.properties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
+  SiteConfig.properties.requestTracingEnabled: IsRequestTracingEnabled
+  SiteConfig.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
+  SiteConfig.properties.webSocketsEnabled: IsWebSocketsEnabled
+  SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
+  StaticSiteBuildARMResource.properties.createdTimeUtc: CreatedOn
+  SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
+  TopLevelDomain.properties.privacy: HasPrivacy
+  TriggeredWebJob.properties.using_sdk: IsUsingSdk
+  VnetInfoResource.properties.resyncRequired: IsResyncRequired
+  WebJob.properties.using_sdk: IsUsingSdk
+  Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
+  Site.properties.clientCertEnabled: IsClientCertEnabled
+  Site.properties.enabled: IsEnabled
+  Site.properties.hostNamesDisabled: IsHostNameDisabled
+  Site.properties.httpsOnly: IsHttpsOnly
+  Site.properties.hyperV: IsHyperV
+  Site.properties.storageAccountRequired: IsStorageAccountRequired
+  CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints: IsIncludeDisasterRecoveryEndpoints
+  AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
+  DomainPatchResource.properties.autoRenew: IsAutoRenew
+  DomainPatchResource.properties.privacy: HasPrivacy
+  DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
+  AppServiceEnvironmentAutoGenerated.suspended: IsSuspended
+  AppServiceEnvironmentAutoGenerated.zoneRedundant: IsZoneRedundant
+  AppServicePlanPatchResource.properties.elasticScaleEnabled: IsElasticScaleEnabled
+  AppServicePlanPatchResource.properties.hyperV: IsHyperV
+  AppServicePlanPatchResource.properties.perSiteScaling: IsPerSiteScaling
+  AppServicePlanPatchResource.properties.reserved: IsReserved
+  AppServicePlanPatchResource.properties.zoneRedundant: IsZoneRedundant
+  AuthPlatform.enabled: IsEnabled
+  AzureActiveDirectory.enabled: IsEnabled
+  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsDisableWWWAuthenticate
+  AzureBlobStorageHttpLogsConfig.enabled: IsEnabled
+  AzureStaticWebApps.enabled: IsEnabled
+  BackupRequest.properties.storageAccountUrl: IsEnabled
+  CertificatePatchResource.properties.valid: IsValid
+  CorsSettings.supportCredentials: IsCredentialsSupported
+  CustomOpenIdConnectProvider.enabled: IsEnabled
+  Dimension.toBeExportedForShoebox: IsToBeExportedForShoebox
+  DomainAvailabilityCheckResult.available: IsAvailable
+  Facebook.enabled: IsEnabled
+  FileSystemHttpLogsConfig.enabled: IsEnabled
+  FunctionAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+  GitHub.enabled: IsEnabled
+  GlobalValidation.requireAuthentication: IsAuthenticationRequired
+  Google.enabled: IsEnabled
+  HostNameSslState.toUpdate: IsToUpdate
+  HttpSettings.requireHttps: IsHttpsRequired
+  KubeEnvironmentPatchResource.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
+  LegacyMicrosoftAccount.enabled: IsEnabled
+  MetricSpecification.enableRegionalMdmAccount: IsRegionalMdmAccountEnabled
+  MetricSpecification.supportsInstanceLevelAggregation: IsInstanceLevelAggregationSupported
+  MSDeploy.properties.appOffline: IsAppOffline
+  PremierAddOnOffer.properties.promoCodeRequired: IsPromoCodeRequired
+  ResourceNameAvailability.nameAvailable: IsNameAvailable
+  SiteAuthSettings.properties.enabled: IsEnabled
+  SiteAuthSettings.properties.tokenStoreEnabled: IsTokenStoreEnabled
+  SiteConfigProperties.alwaysOn: IsAlwaysOn
+  SiteConfigProperties.autoHealEnabled: IsAutoHealEnabled
+  SiteConfigProperties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitoringEnabled
+  SiteConfigProperties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
+  SiteConfigProperties.httpLoggingEnabled: IsHttpLoggingEnabled
+  SiteConfigProperties.http20Enabled: IsHttp20Enabled
+  SiteConfigProperties.localMySqlEnabled: IsLocalMySqlEnabled
+  SiteConfigProperties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
+  SiteConfigProperties.requestTracingEnabled: IsRequestTracingEnabled
+  SiteConfigProperties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
+  SiteConfigProperties.webSocketsEnabled: IsWebSocketsEnabled
+  SiteConfigurationSnapshotInfo.properties.time: SnapshotTakenTime
+  SitePatchResource.properties.clientAffinityEnabled: IsClientAffinityEnabled
+  SitePatchResource.properties.clientCertEnabled: IsClientCertEnabled
+  SitePatchResource.properties.enabled: IsEnabled
+  SitePatchResource.properties.hostNamesDisabled: IsHostNameDisabled
+  SitePatchResource.properties.httpsOnly: IsHttpsOnly
+  SitePatchResource.properties.hyperV: IsHyperV
+  SitePatchResource.properties.lastModifiedTimeUtc: LastModifiedOn
+  SitePatchResource.properties.scmSiteAlsoStopped: IsScmSiteAlsoStopped
+  SitePatchResource.properties.storageAccountRequired: IsStorageAccountRequired
+  SitePatchResource.properties.suspendedTill: SuspendOn
+  SiteSealRequest.lightTheme: IsLightTheme
+  StackMajorVersion.applicationInsights: IsApplicationInsights
+  TokenStore.enabled: IsEnabled
+  TopLevelDomainAgreementOption.forTransfer: IsForTransfer
+  Twitter.enabled: IsEnabled
+  VirtualApplication.preloadEnabled: IsPreloadEnabled
+  VirtualIPMapping.inUse: IsInUse
+  VnetInfo.resyncRequired: IsResyncRequired
+  VnetValidationFailureDetails.properties.failed: IsFailed
+  WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+#rename resource
+  AppServiceCertificate: AppServiceCertificateInfo # this is weird
+  AppServiceCertificateResource: AppServiceCertificate
+  StaticSiteARMResource: StaticSite
+  StaticSiteBuildARMResource: StaticSiteBuild
+  StaticSiteCustomDomainOverviewARMResource: StaticSiteCustomDomainOverview
+  StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionApp
+  StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
+  StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
+# same name in model
+#   VnetInfoResource: VnetInfo
+  WorkerPoolResource: WorkerPool
+  CsmPublishingProfileOptions: CsmPublishingProfile
+  StaticSiteTemplateOptions: StaticSiteTemplate
+  PrivateLinkResource: AppServicePrivateLinkResourceData
+  PrivateLinkResourceProperties: AppServicePrivateLinkResourceProperties
+  AzureStoragePropertyDictionaryResource: AzureStoragePropertyDictionary
+  ContainerThrottlingData: ContainerThrottlingInfo
+  DeletedAppRestoreRequest: DeletedAppRestoreContent
+  DiagnosticData: DiagnosticInfo
+  DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
+  PerfMonResponse: PerfMonResponseInfo
+  PrivateLinkConnectionApprovalRequestResource: PrivateLinkConnectionApprovalRequestInfo
+  RestoreRequest: RestoreRequestInfo
+  SitePatchResource: SitePatchInfo
+  StaticSiteResetPropertiesARMResource: StaticSiteResetContent
+  StaticSiteUserARMResource: StaticSiteUser
+  StaticSiteUserInvitationRequestResource: StaticSiteUserInvitationContent
+  StaticSiteUserInvitationResponseResource: StaticSiteUserInvitationResult
+  StaticSiteZipDeploymentARMResource: StaticSiteZipDeployment
+  StorageMigrationResponse: StorageMigrationResult
+  Status: AppServiceStatusInfo
+
 directive:
-# rename model
-  - rename-model:
-      from: ApiKVReference
-      to: ApiKeyVaultReference
-# 2 AppServiceCertificate exists in 2 different files 
-#   - rename-model:
-#       from: AppServiceCertificateResource
-#       to: AppServiceCertificate
   - rename-model:
       from: AppServiceEnvironmentResource
       to: AppServiceEnvironment
-#   - rename-model:
-#       from: Certificate
-#       to: AppServiceCertificate
-#   - rename-model:
-#       from: DetectorDefinitionResource
-#       to: DetectorDefinition
-#   - rename-model:
-#       from: DetectorResponse
-#       to: AppServiceDetector
-  - rename-model:
-      from: Domain
-      to: AppServiceDomain
-#   - rename-model:
-#       from: SiteConfig
-#       to: SiteConfigProperties
-#   - rename-model:
-#       from: SiteConfigResource
-#       to: SiteConfig
 
+# ResourceId
+  - from: Certificates.json
+    where: $.definitions.Certificate.properties.properties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Certificates.json
+    where: $.definitions.Certificate.properties.properties.properties.keyVaultId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Certificates.json
+    where: $.definitions.CertificatePatchResource.properties.properties.properties.keyVaultId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Certificates.json
+    where: $.definitions.CertificatePatchResource.properties.properties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
+# not sure
+  - from: KubeEnvironments.json
+    where: $.definitions.KubeEnvironment.properties.properties.properties.aksResourceID
+    transform: $["x-ms-format"] = "arm-id"
+  - from: KubeEnvironments.json
+    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: WebApps.json
+    where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.subnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: WebApps.json
+    where: $.definitions.SwiftVirtualNetwork.properties.properties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VnetInfo.properties.vnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: Recommendations.json
+    where: $.definitions.Recommendation.properties.properties.properties.resourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.BillingMeter.properties.properties.properties.meterId
+    transform: $["x-ms-format"] = "uuid"
+  - from: CommonDefinitions.json
+    where: $.definitions.CloningInfo.properties.sourceWebAppId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.CloningInfo.properties.trafficManagerProfileId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.SupportTopic.properties.pesId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VnetInfo.properties.vnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VirtualNetworkProfile.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.VirtualNetworkProfile.properties.type
+    transform: $["x-ms-format"] = "resource-type"
+  - from: CommonDefinitions.json
+    where: $.definitions.HostingEnvironmentProfile.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.HostingEnvironmentProfile.properties.type
+    transform: $["x-ms-format"] = "resource-type"
+  - from: CommonDefinitions.json
+    where: $.definitions.KubeEnvironmentProfile.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: CommonDefinitions.json
+    where: $.definitions.KubeEnvironmentProfile.properties.type
+    transform: $["x-ms-format"] = "resource-type"
+  - from: WebApps.json
+    where: $.definitions.DeletedAppRestoreRequest.properties.properties.properties.deletedSiteId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: ResourceProvider.json
+    where: $.definitions.SkuInfos.properties.resourceType
+    transform: $["x-ms-format"] = "resource-type"
+  - from: ResourceProvider.json
+    where: $.definitions.ValidateProperties.properties.serverFarmId
+    transform: $["x-ms-format"] = "arm-id"
+  - from: AppServiceEnvironments.json
+    where: $.definitions.SkuInfo.properties.resourceType
+    transform: $["x-ms-format"] = "resource-type"
+  - from: WebApps.json
+    where: $.definitions.SnapshotRecoverySource.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+#   - from: StaticSites.json
+#     where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
+#     transform: $["x-ms-format"] = "arm-id"
+  - from: StaticSites.json
+    where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
+    transform: $["x-ms-format"] = "arm-id"
+# StaticSiteUserProvidedFunctionAppARMResource and StaticSiteUserProvidedFunctionApp are two models with exactly same properties but different names. Here we manually replace the references so that these two models are combined
+  - from: StaticSites.json
+    where: $.definitions.StaticSite.properties.userProvidedFunctionApps.items
+    transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
+  - from: StaticSites.json
+    where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
+    transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
+#   - from: StaticSites.json
+#     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource
+#     transform: $["x-ms-client-name"] = "StaticSiteUserProvidedFunctionApp"
+  - from: ResourceProvider.json
+    where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
+    transform: $["x-ms-format"] = "arm-id"
 # Enum rename
   - from: swagger-document
     where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
@@ -240,11 +488,6 @@ directive:
     where: $.definitions.ApiManagementConfig.properties.*
     transform: >
         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties
-#     transform: >
-#         delete $["minTlsVersion"];
-#         delete $["scmMinTlsVersion"];
   - from: swagger-document
     where: $.definitions.Site.properties.properties.properties.trafficManagerHostNames
     transform: >
@@ -290,108 +533,4 @@ directive:
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.defaultDocuments
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.requestTracingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.remoteDebuggingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.logsDirectorySizeLimit
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.httpLoggingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.detailedErrorLoggingEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.appSettings
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.connectionStrings
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.machineKey
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.handlerMappings
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.scmType
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.use32BitWorkerProcess
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.webSocketsEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.managedPipelineMode
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.virtualApplications
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.loadBalancing
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.experiments
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.limits
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.autoHealEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.autoHealRules
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.vnetRouteAllEnabled
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.vnetPrivatePortsCount
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.cors
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.push
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.apiDefinition
-#     transform: >
-#         $["x-nullable"] = true;
-#   - from: swagger-document
-#     where: $.definitions.SiteConfig.properties.apiManagementConfig
-#     transform: >
-#         $["x-nullable"] = true;
 ```

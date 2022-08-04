@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<bool> requiresDuplicateDetection = default;
             Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
             Optional<bool> enableBatchedOperations = default;
-            Optional<EntityStatus> status = default;
+            Optional<ServiceBusMessagingEntityStatus> status = default;
             Optional<bool> supportOrdering = default;
             Optional<TimeSpan> autoDeleteOnIdle = default;
             Optional<bool> enablePartitioning = default;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToEntityStatus();
+                            status = property0.Value.GetString().ToServiceBusMessagingEntityStatus();
                             continue;
                         }
                         if (property0.NameEquals("supportOrdering"))

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
         internal RedisLinkedServerWithPropertiesList()
         {
-            Value = new ChangeTrackingList<RedisLinkedServerWithPropertiesData>();
+            Value = new ChangeTrackingList<RedisLinkedServerWithPropertyData>();
         }
 
         /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
         /// <param name="value"> List of linked servers (with properties) of a Redis cache. </param>
         /// <param name="nextLink"> Link for next set. </param>
-        internal RedisLinkedServerWithPropertiesList(IReadOnlyList<RedisLinkedServerWithPropertiesData> value, string nextLink)
+        internal RedisLinkedServerWithPropertiesList(IReadOnlyList<RedisLinkedServerWithPropertyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of linked servers (with properties) of a Redis cache. </summary>
-        public IReadOnlyList<RedisLinkedServerWithPropertiesData> Value { get; }
+        public IReadOnlyList<RedisLinkedServerWithPropertyData> Value { get; }
         /// <summary> Link for next set. </summary>
         public string NextLink { get; }
     }

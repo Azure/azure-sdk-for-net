@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public PtrRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            PtrRecords = new ChangeTrackingList<PtrRecord>();
+            PtrRecords = new ChangeTrackingList<DnsPtrRecord>();
         }
 
         /// <summary> Initializes a new instance of PtrRecordSetData. </summary>
@@ -30,16 +31,16 @@ namespace Azure.ResourceManager.Dns
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        internal PtrRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<PtrRecord> ptrRecords) : base(id, name, resourceType, systemData)
+        internal PtrRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsPtrRecord> ptrRecords) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = etag;
             Metadata = metadata;
-            TTL = ttl;
+            Ttl = ttl;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
@@ -47,11 +48,11 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The etag of the record set. </summary>
-        public string Etag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-        public long? TTL { get; set; }
+        /// <summary> The Ttl (time-to-live) of the records in the record set. </summary>
+        public long? Ttl { get; set; }
         /// <summary> Fully qualified domain name of the record set. </summary>
         public string Fqdn { get; }
         /// <summary> provisioning State of the record set. </summary>
@@ -71,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PtrRecord> PtrRecords { get; }
+        public IList<DnsPtrRecord> PtrRecords { get; }
     }
 }

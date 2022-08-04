@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
             Optional<string> code = default;
-            Optional<StatusLevelType> level = default;
+            Optional<MachineExtensionStatusLevelType> level = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = new StatusLevelType(property.Value.GetString());
+                    level = new MachineExtensionStatusLevelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayStatus"))

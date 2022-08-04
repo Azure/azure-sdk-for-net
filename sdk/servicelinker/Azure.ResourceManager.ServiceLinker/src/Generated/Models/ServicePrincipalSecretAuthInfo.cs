@@ -16,16 +16,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="principalId"/> or <paramref name="secret"/> is null. </exception>
-        public ServicePrincipalSecretAuthInfo(string clientId, string principalId, string secret)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>
+        public ServicePrincipalSecretAuthInfo(string clientId, Guid principalId, string secret)
         {
             if (clientId == null)
             {
                 throw new ArgumentNullException(nameof(clientId));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
             }
             if (secret == null)
             {
@@ -43,7 +39,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="clientId"> ServicePrincipal application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="secret"> Secret for servicePrincipal auth. </param>
-        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, string clientId, string principalId, string secret) : base(authType)
+        internal ServicePrincipalSecretAuthInfo(LinkerAuthType authType, string clientId, Guid principalId, string secret) : base(authType)
         {
             ClientId = clientId;
             PrincipalId = principalId;
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> ServicePrincipal application clientId for servicePrincipal auth. </summary>
         public string ClientId { get; set; }
         /// <summary> Principal Id for servicePrincipal auth. </summary>
-        public string PrincipalId { get; set; }
+        public Guid PrincipalId { get; set; }
         /// <summary> Secret for servicePrincipal auth. </summary>
         public string Secret { get; set; }
     }

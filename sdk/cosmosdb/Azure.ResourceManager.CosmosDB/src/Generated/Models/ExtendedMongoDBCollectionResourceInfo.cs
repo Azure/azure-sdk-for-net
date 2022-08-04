@@ -15,29 +15,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class ExtendedMongoDBCollectionResourceInfo : MongoDBCollectionResourceInfo
     {
         /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ExtendedMongoDBCollectionResourceInfo(string id) : base(id)
+        /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        public ExtendedMongoDBCollectionResourceInfo(string collectionName) : base(collectionName)
         {
-            if (id == null)
+            if (collectionName == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(collectionName));
             }
         }
 
         /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>
-        /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
+        /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="eTag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedMongoDBCollectionResourceInfo(string id, IDictionary<string, string> shardKey, IList<MongoIndex> indexes, int? analyticalStorageTtl, string rid, float? timestamp, ETag? eTag) : base(id, shardKey, indexes, analyticalStorageTtl)
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        internal ExtendedMongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl, string rid, float? timestamp, ETag? etag) : base(collectionName, shardKey, indexes, analyticalStorageTtl)
         {
             Rid = rid;
             Timestamp = timestamp;
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

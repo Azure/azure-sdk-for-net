@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<ProvisioningState> provisioningState = default;
             Optional<long> baseSizeTiB = default;
             Optional<long> extendedCapacitySizeTiB = default;
-            Optional<long> totalVolumeSizeGiB = default;
-            Optional<long> volumeGroupCount = default;
+            Optional<long> totalElasticSanVolumeSizeGiB = default;
+            Optional<long> elasticSanVolumeGroupCount = default;
             Optional<long> totalIops = default;
-            Optional<long> totalMBps = default;
-            Optional<long> provisionedMBps = default;
+            Optional<long> totalMbps = default;
+            Optional<long> totalSizeTiB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            totalVolumeSizeGiB = property0.Value.GetInt64();
+                            totalElasticSanVolumeSizeGiB = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("volumeGroupCount"))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            volumeGroupCount = property0.Value.GetInt64();
+                            elasticSanVolumeGroupCount = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("totalIops"))
@@ -228,24 +228,24 @@ namespace Azure.ResourceManager.ElasticSan
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            totalMBps = property0.Value.GetInt64();
+                            totalMbps = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("provisionedMBps"))
+                        if (property0.NameEquals("totalSizeTiB"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisionedMBps = property0.Value.GetInt64();
+                            totalSizeTiB = property0.Value.GetInt64();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMBps), Optional.ToNullable(provisionedMBps));
+            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(totalElasticSanVolumeSizeGiB), Optional.ToNullable(elasticSanVolumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB));
         }
     }
 }

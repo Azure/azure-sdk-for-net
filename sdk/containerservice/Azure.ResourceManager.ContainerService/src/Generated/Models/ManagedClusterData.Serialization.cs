@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ManagedClusterData DeserializeManagedClusterData(JsonElement element)
         {
-            Optional<ManagedClusterSKU> sku = default;
+            Optional<ManagedClusterSku> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ManagedClusterIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -231,13 +231,13 @@ namespace Azure.ResourceManager.ContainerService
             Optional<bool> enableRBAC = default;
             Optional<bool> enablePodSecurityPolicy = default;
             Optional<ContainerServiceNetworkProfile> networkProfile = default;
-            Optional<ManagedClusterAADProfile> aadProfile = default;
+            Optional<ManagedClusterAadProfile> aadProfile = default;
             Optional<ManagedClusterAutoUpgradeProfile> autoUpgradeProfile = default;
-            Optional<ManagedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
-            Optional<ManagedClusterAPIServerAccessProfile> apiServerAccessProfile = default;
-            Optional<string> diskEncryptionSetID = default;
+            Optional<ManagedClusterAutoScalerProfile> autoScalerProfile = default;
+            Optional<ManagedClusterApiServerAccessProfile> apiServerAccessProfile = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<IDictionary<string, Models.UserAssignedIdentity>> identityProfile = default;
-            Optional<IList<ContainerServicePrivateLinkResource>> privateLinkResources = default;
+            Optional<IList<ContainerServicePrivateLinkResourceData>> privateLinkResources = default;
             Optional<bool> disableLocalAccounts = default;
             Optional<ManagedClusterHttpProxyConfig> httpProxyConfig = default;
             Optional<ManagedClusterSecurityProfile> securityProfile = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ManagedClusterSKU.DeserializeManagedClusterSKU(property.Value);
+                    sku = ManagedClusterSku.DeserializeManagedClusterSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            aadProfile = ManagedClusterAADProfile.DeserializeManagedClusterAADProfile(property0.Value);
+                            aadProfile = ManagedClusterAadProfile.DeserializeManagedClusterAadProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoUpgradeProfile"))
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoScalerProfile = ManagedClusterPropertiesAutoScalerProfile.DeserializeManagedClusterPropertiesAutoScalerProfile(property0.Value);
+                            autoScalerProfile = ManagedClusterAutoScalerProfile.DeserializeManagedClusterAutoScalerProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiServerAccessProfile"))
@@ -531,12 +531,17 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            apiServerAccessProfile = ManagedClusterAPIServerAccessProfile.DeserializeManagedClusterAPIServerAccessProfile(property0.Value);
+                            apiServerAccessProfile = ManagedClusterApiServerAccessProfile.DeserializeManagedClusterApiServerAccessProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskEncryptionSetID"))
                         {
-                            diskEncryptionSetID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diskEncryptionSetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("identityProfile"))
@@ -561,10 +566,10 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContainerServicePrivateLinkResource> array = new List<ContainerServicePrivateLinkResource>();
+                            List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServicePrivateLinkResource.DeserializeContainerServicePrivateLinkResource(item));
+                                array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
                             }
                             privateLinkResources = array;
                             continue;
@@ -623,7 +628,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new ManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity.Value, provisioningState.Value, powerState.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, Optional.ToList(agentPoolProfiles), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, nodeResourceGroup.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(enablePodSecurityPolicy), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetID.Value, Optional.ToDictionary(identityProfile), Optional.ToList(privateLinkResources), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, Optional.ToNullable(publicNetworkAccess));
+            return new ManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity.Value, provisioningState.Value, powerState.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, Optional.ToList(agentPoolProfiles), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, nodeResourceGroup.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(enablePodSecurityPolicy), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetId.Value, Optional.ToDictionary(identityProfile), Optional.ToList(privateLinkResources), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, Optional.ToNullable(publicNetworkAccess));
         }
     }
 }
