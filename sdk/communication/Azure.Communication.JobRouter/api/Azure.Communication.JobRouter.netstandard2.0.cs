@@ -228,12 +228,13 @@ namespace Azure.Communication.JobRouter
         public LabelValue(uint value) { throw null; }
         public LabelValue(ulong value) { throw null; }
         public object Value { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Equals(Azure.Communication.JobRouter.LabelValue other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.JobRouter.LabelValue left, Azure.Communication.JobRouter.LabelValue right) { throw null; }
+        public static bool operator !=(Azure.Communication.JobRouter.LabelValue left, Azure.Communication.JobRouter.LabelValue right) { throw null; }
     }
     public partial class LongestIdleMode : Azure.Communication.JobRouter.DistributionMode
     {
@@ -271,7 +272,6 @@ namespace Azure.Communication.JobRouter
     }
     public partial class QueueSelector
     {
-        public QueueSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
         public QueueSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value) { }
         public string Key { get { throw null; } set { } }
         public Azure.Communication.JobRouter.LabelOperator LabelOperator { get { throw null; } set { } }
@@ -467,7 +467,7 @@ namespace Azure.Communication.JobRouter
         public UpdateExceptionPolicyOptions(string exceptionPolicyId) { }
         public string ExceptionPolicyId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Communication.JobRouter.ExceptionRule?> ExceptionRules { get { throw null; } set { } }
-        public string? Name { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class UpdateJobOptions
     {
@@ -521,7 +521,6 @@ namespace Azure.Communication.JobRouter
     }
     public partial class WorkerSelector
     {
-        public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator) { }
         public WorkerSelector(string key, Azure.Communication.JobRouter.LabelOperator labelOperator, Azure.Communication.JobRouter.LabelValue value, System.TimeSpan? ttl = default(System.TimeSpan?), bool? expedite = default(bool?)) { }
         public bool? Expedite { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireTime { get { throw null; } }
