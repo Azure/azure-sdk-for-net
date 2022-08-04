@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class ConfigurationStorePatch : IUtf8JsonSerializable
+    public partial class AppConfigurationStorePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

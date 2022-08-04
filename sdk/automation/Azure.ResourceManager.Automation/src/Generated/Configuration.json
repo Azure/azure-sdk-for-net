@@ -1,0 +1,42 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.Automation",
+  "LibraryName": "Automation",
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Generator.Shared",
+    "..\\..\\..\\..\\..\\..\\autorest.csharp\\artifacts\\bin\\AutoRest.CSharp\\Debug\\netcoreapp3.1\\Azure.Core.Shared"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "RawRenameRules": {
+    "CPU": "Cpu",
+    "CPUs": "Cpus",
+    "Os": "OS",
+    "Ip": "IP",
+    "Ips": "IPs|ips",
+    "ID": "Id",
+    "IDs": "Ids",
+    "VM": "Vm",
+    "VMs": "Vms",
+    "Vmos": "VmOS",
+    "VMScaleSet": "VmScaleSet",
+    "DNS": "Dns",
+    "VPN": "Vpn",
+    "NAT": "Nat",
+    "WAN": "Wan",
+    "Ipv4": "IPv4|ipv4",
+    "Ipv6": "IPv6|ipv6",
+    "Ipsec": "IPsec|ipsec",
+    "SSO": "Sso",
+    "URI": "Uri",
+    "Etag": "ETag|etag"
+  },
+  "FormatByNameRules": {
+    "tenantId": "uuid",
+    "ETag": "etag",
+    "location": "azure-location",
+    "*Uri": "Uri",
+    "*Uris": "Uri"
+  }
+}

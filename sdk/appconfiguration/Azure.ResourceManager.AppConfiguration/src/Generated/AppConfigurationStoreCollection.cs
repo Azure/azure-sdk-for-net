@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfigurationStoreResource" /> and their operations.
-    /// Each <see cref="ConfigurationStoreResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ConfigurationStoreCollection" /> instance call the GetConfigurationStores method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AppConfigurationStoreResource" /> and their operations.
+    /// Each <see cref="AppConfigurationStoreResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AppConfigurationStoreCollection" /> instance call the GetAppConfigurationStores method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class ConfigurationStoreCollection : ArmCollection, IEnumerable<ConfigurationStoreResource>, IAsyncEnumerable<ConfigurationStoreResource>
+    public partial class AppConfigurationStoreCollection : ArmCollection, IEnumerable<AppConfigurationStoreResource>, IAsyncEnumerable<AppConfigurationStoreResource>
     {
-        private readonly ClientDiagnostics _configurationStoreClientDiagnostics;
-        private readonly ConfigurationStoresRestOperations _configurationStoreRestClient;
+        private readonly ClientDiagnostics _appConfigurationStoreConfigurationStoresClientDiagnostics;
+        private readonly ConfigurationStoresRestOperations _appConfigurationStoreConfigurationStoresRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreCollection"/> class for mocking. </summary>
-        protected ConfigurationStoreCollection()
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreCollection"/> class for mocking. </summary>
+        protected AppConfigurationStoreCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConfigurationStoreCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ConfigurationStoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppConfigurationStoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConfigurationStoreResource.ResourceType, out string configurationStoreApiVersion);
-            _configurationStoreRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationStoreApiVersion);
+            _appConfigurationStoreConfigurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppConfigurationStoreResource.ResourceType, out string appConfigurationStoreConfigurationStoresApiVersion);
+            _appConfigurationStoreConfigurationStoresRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationStoreConfigurationStoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfigurationStoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configStoreName, ConfigurationStoreData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppConfigurationStoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configStoreName, AppConfigurationStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<ConfigurationStoreResource>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ConfigurationStoreResource> CreateOrUpdate(WaitUntil waitUntil, string configStoreName, ConfigurationStoreData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppConfigurationStoreResource> CreateOrUpdate(WaitUntil waitUntil, string configStoreName, AppConfigurationStoreData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.CreateOrUpdate");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<ConfigurationStoreResource>(new ConfigurationStoreOperationSource(Client), _configurationStoreClientDiagnostics, Pipeline, _configurationStoreRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _appConfigurationStoreConfigurationStoresRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data, cancellationToken);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public virtual async Task<Response<ConfigurationStoreResource>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationStoreResource>> GetAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.Get");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public virtual Response<ConfigurationStoreResource> Get(string configStoreName, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationStoreResource> Get(string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Get");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.Get");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken);
+                var response = _appConfigurationStoreConfigurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,17 +185,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationStoreResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppConfigurationStoreResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _configurationStoreRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appConfigurationStoreConfigurationStoresRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            async Task<Page<ConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _configurationStoreRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appConfigurationStoreConfigurationStoresRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,17 +228,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationStoreResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppConfigurationStoreResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _configurationStoreRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appConfigurationStoreConfigurationStoresRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            Page<ConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.GetAll");
+                using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _configurationStoreRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appConfigurationStoreConfigurationStoresRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _configurationStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -304,11 +304,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
 
-            using var scope = _configurationStoreClientDiagnostics.CreateScope("ConfigurationStoreCollection.Exists");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreCollection.Exists");
             scope.Start();
             try
             {
-                var response = _configurationStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
+                var response = _appConfigurationStoreConfigurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configStoreName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        IEnumerator<ConfigurationStoreResource> IEnumerable<ConfigurationStoreResource>.GetEnumerator()
+        IEnumerator<AppConfigurationStoreResource> IEnumerable<AppConfigurationStoreResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ConfigurationStoreResource> IAsyncEnumerable<ConfigurationStoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppConfigurationStoreResource> IAsyncEnumerable<AppConfigurationStoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

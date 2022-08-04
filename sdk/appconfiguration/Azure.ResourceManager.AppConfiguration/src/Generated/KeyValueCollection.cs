@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="KeyValueResource" /> and their operations.
-    /// Each <see cref="KeyValueResource" /> in the collection will belong to the same instance of <see cref="ConfigurationStoreResource" />.
-    /// To get a <see cref="KeyValueCollection" /> instance call the GetKeyValues method from an instance of <see cref="ConfigurationStoreResource" />.
+    /// Each <see cref="KeyValueResource" /> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource" />.
+    /// To get a <see cref="KeyValueCollection" /> instance call the GetKeyValues method from an instance of <see cref="AppConfigurationStoreResource" />.
     /// </summary>
     public partial class KeyValueCollection : ArmCollection, IEnumerable<KeyValueResource>, IAsyncEnumerable<KeyValueResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfigurationStoreResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationStoreResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
         }
 
         /// <summary>

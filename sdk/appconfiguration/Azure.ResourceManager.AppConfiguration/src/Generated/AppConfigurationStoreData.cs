@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary> A class representing the ConfigurationStore data model. </summary>
-    public partial class ConfigurationStoreData : TrackedResourceData
+    /// <summary> A class representing the AppConfigurationStore data model. </summary>
+    public partial class AppConfigurationStoreData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku">
         /// The sku of the configuration store.
         /// Serialized Name: ConfigurationStore.sku
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ConfigurationStoreData(AzureLocation location, AppConfigurationSku sku) : base(location)
+        public AppConfigurationStoreData(AzureLocation location, AppConfigurationSku sku) : base(location)
         {
             if (sku == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppConfiguration
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionReference>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Indicates whether the configuration store need to be recovered.
         /// Serialized Name: ConfigurationStore.properties.createMode
         /// </param>
-        internal ConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
+        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;

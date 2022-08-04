@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class ConfigurationStoreData : IUtf8JsonSerializable
+    public partial class AppConfigurationStoreData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppConfiguration
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationStoreData DeserializeConfigurationStoreData(JsonElement element)
+        internal static AppConfigurationStoreData DeserializeAppConfigurationStoreData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             AppConfigurationSku sku = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode));
+            return new AppConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode));
         }
     }
 }

@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationStoreResource> GetConfigurationStoresAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationStoresAsync(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationStoreResource> GetConfigurationStores(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationStores(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.AppConfiguration
             );
         }
 
-        /// <summary> Gets a collection of ConfigurationStoreResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AppConfigurationStoreResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConfigurationStoreResources and their operations over a ConfigurationStoreResource. </returns>
-        public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
+        public static AppConfigurationStoreCollection GetAppConfigurationStores(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationStores();
+            return GetExtensionClient(resourceGroupResource).GetAppConfigurationStores();
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationStoreResource>> GetConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppConfigurationStoreResource>> GetAppConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -174,25 +174,25 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationStoreResource> GetConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
+        public static Response<AppConfigurationStoreResource> GetAppConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConfigurationStores().Get(configStoreName, cancellationToken);
+            return resourceGroupResource.GetAppConfigurationStores().Get(configStoreName, cancellationToken);
         }
 
-        #region ConfigurationStoreResource
+        #region AppConfigurationStoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationStoreResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationStoreResource" /> object. </returns>
-        public static ConfigurationStoreResource GetConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationStoreResource" /> object. </returns>
+        public static AppConfigurationStoreResource GetAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationStoreResource.ValidateResourceId(id);
-                return new ConfigurationStoreResource(client, id);
+                AppConfigurationStoreResource.ValidateResourceId(id);
+                return new AppConfigurationStoreResource(client, id);
             }
             );
         }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
         internal ConfigurationStoreListResult()
         {
-            Value = new ChangeTrackingList<ConfigurationStoreData>();
+            Value = new ChangeTrackingList<AppConfigurationStoreData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// The URI that can be used to request the next set of paged results.
         /// Serialized Name: ConfigurationStoreListResult.nextLink
         /// </param>
-        internal ConfigurationStoreListResult(IReadOnlyList<ConfigurationStoreData> value, string nextLink)
+        internal ConfigurationStoreListResult(IReadOnlyList<AppConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// The collection value.
         /// Serialized Name: ConfigurationStoreListResult.value
         /// </summary>
-        public IReadOnlyList<ConfigurationStoreData> Value { get; }
+        public IReadOnlyList<AppConfigurationStoreData> Value { get; }
         /// <summary>
         /// The URI that can be used to request the next set of paged results.
         /// Serialized Name: ConfigurationStoreListResult.nextLink

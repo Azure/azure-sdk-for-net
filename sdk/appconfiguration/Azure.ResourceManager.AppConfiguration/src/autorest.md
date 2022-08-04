@@ -20,6 +20,14 @@ mgmt-debug:
 
 no-property-type-replacement: RegenerateKeyContent
 
+
+rename-mapping:
+  ConfigurationStore: AppConfigurationStore
+  DeletedConfigurationStore: DeletedAppConfigurationStore
+
+prepend-rp-prefix:
+  - KeyValue
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'

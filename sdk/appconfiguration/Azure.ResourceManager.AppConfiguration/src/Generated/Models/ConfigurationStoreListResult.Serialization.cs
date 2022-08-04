@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static ConfigurationStoreListResult DeserializeConfigurationStoreListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConfigurationStoreData>> value = default;
+            Optional<IReadOnlyList<AppConfigurationStoreData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConfigurationStoreData> array = new List<ConfigurationStoreData>();
+                    List<AppConfigurationStoreData> array = new List<AppConfigurationStoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationStoreData.DeserializeConfigurationStoreData(item));
+                        array.Add(AppConfigurationStoreData.DeserializeAppConfigurationStoreData(item));
                     }
                     value = array;
                     continue;
