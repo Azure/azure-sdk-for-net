@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolUsage DeserializeInstancePoolUsage(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<UsageName> name = default;
-            Optional<string> type = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<InstancePoolUsageName> name = default;
+            Optional<ResourceType> type = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
@@ -25,7 +25,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -35,12 +40,17 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = InstancePoolUsageName.DeserializeInstancePoolUsageName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new InstancePoolUsage(id.Value, name.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit));
+            return new InstancePoolUsage(id.Value, name.Value, Optional.ToNullable(type), unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit));
         }
     }
 }

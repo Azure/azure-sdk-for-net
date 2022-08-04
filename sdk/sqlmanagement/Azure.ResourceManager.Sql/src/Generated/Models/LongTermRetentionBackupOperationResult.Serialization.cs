@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SystemData> systemData = default;
             Optional<Guid> requestId = default;
             Optional<string> operationType = default;
-            Optional<string> fromBackupResourceId = default;
-            Optional<string> toBackupResourceId = default;
-            Optional<BackupStorageRedundancy> targetBackupStorageRedundancy = default;
+            Optional<ResourceIdentifier> fromBackupResourceId = default;
+            Optional<ResourceIdentifier> toBackupResourceId = default;
+            Optional<SqlBackupStorageRedundancy> targetBackupStorageRedundancy = default;
             Optional<string> status = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
@@ -89,12 +89,22 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("fromBackupResourceId"))
                         {
-                            fromBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            fromBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("toBackupResourceId"))
                         {
-                            toBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            toBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetBackupStorageRedundancy"))
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            targetBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            targetBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))

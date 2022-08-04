@@ -19,20 +19,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>
-        /// The path of the Service Bus subscription to which the rule manager is bound.
-        /// </summary>
-        ///
-        private readonly string _subscriptionPath;
-
-        /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         private readonly ServiceBusRetryPolicy _retryPolicy;
-
-        /// <summary>
-        /// The identifier for the rule manager.
-        /// </summary>
-        private readonly string _identifier;
 
         /// <summary>
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
@@ -94,22 +83,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _subscriptionPath = subscriptionPath;
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
-            _identifier = identifier;
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
-                    _subscriptionPath,
-                    _identifier,
+                    subscriptionPath,
+                    identifier,
                     timeout,
                     CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
         }
 
         /// <summary>
@@ -233,8 +216,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>Returns a list of rules description</returns>
         public override async Task<List<RuleProperties>> GetRulesAsync(int skip, int top, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
-                async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false),
-                this,
+                static async (value, timeout, token) =>
+                {
+                    var (manager, skip, top) = value;
+                    return await manager.GetRulesInternalAsync(timeout, skip, top).ConfigureAwait(false);
+                },
+                (this, skip, top),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -259,10 +246,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _managementLink,
                 amqpRequestMessage,
                 timeout).ConfigureAwait(false);
-            var ruleDescriptions = new List<RuleProperties>();
+            List<RuleProperties> ruleDescriptions = null;
             if (response.StatusCode == AmqpResponseStatusCode.OK)
             {
                 var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
+                ruleDescriptions = new List<RuleProperties>(ruleList.Count);
                 foreach (var entry in ruleList)
                 {
                     var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
@@ -279,7 +267,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw response.ToMessagingContractException();
             }
 
-            return ruleDescriptions;
+            return ruleDescriptions ?? new List<RuleProperties>(0);
         }
 
         /// <summary>

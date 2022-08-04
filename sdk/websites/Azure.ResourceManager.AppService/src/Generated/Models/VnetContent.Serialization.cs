@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> vnetResourceGroup = default;
             Optional<string> vnetName = default;
             Optional<string> vnetSubnetName = default;
-            Optional<string> subnetResourceId = default;
+            Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -116,7 +116,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("subnetResourceId"))
                         {
-                            subnetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

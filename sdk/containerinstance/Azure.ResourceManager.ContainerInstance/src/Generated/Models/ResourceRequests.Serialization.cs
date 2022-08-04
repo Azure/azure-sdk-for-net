@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             double memoryInGB = default;
             double cpu = default;
-            Optional<GpuResource> gpu = default;
+            Optional<GpuResourceInfo> gpu = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryInGB"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gpu = GpuResource.DeserializeGpuResource(property.Value);
+                    gpu = GpuResourceInfo.DeserializeGpuResourceInfo(property.Value);
                     continue;
                 }
             }

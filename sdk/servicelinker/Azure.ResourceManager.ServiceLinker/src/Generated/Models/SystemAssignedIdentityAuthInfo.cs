@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is systemAssignedIdentity. </summary>
-    public partial class SystemAssignedIdentityAuthInfo : AuthInfoBase
+    public partial class SystemAssignedIdentityAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of SystemAssignedIdentityAuthInfo. </summary>
         public SystemAssignedIdentityAuthInfo()
         {
-            AuthType = AuthType.SystemAssignedIdentity;
+            AuthType = LinkerAuthType.SystemAssignedIdentity;
         }
 
         /// <summary> Initializes a new instance of SystemAssignedIdentityAuthInfo. </summary>
         /// <param name="authType"> The authentication type. </param>
-        internal SystemAssignedIdentityAuthInfo(AuthType authType) : base(authType)
+        internal SystemAssignedIdentityAuthInfo(LinkerAuthType authType) : base(authType)
         {
             AuthType = authType;
         }

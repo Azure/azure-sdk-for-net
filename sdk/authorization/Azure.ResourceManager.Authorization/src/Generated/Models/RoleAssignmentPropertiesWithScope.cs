@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Role assignment properties with scope. </summary>
@@ -19,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scope"> The role assignment scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
-        internal RoleAssignmentPropertiesWithScope(string scope, string roleDefinitionId, string principalId)
+        internal RoleAssignmentPropertiesWithScope(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -29,8 +32,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> The role assignment scope. </summary>
         public string Scope { get; }
         /// <summary> The role definition ID. </summary>
-        public string RoleDefinitionId { get; }
+        public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> The principal ID. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
     }
 }

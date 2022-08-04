@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricCriteria DeserializeMetricCriteria(JsonElement element)
         {
-            Operator @operator = default;
+            MonitorOperator @operator = default;
             double threshold = default;
             CriterionType criterionType = default;
             string name = default;
             string metricName = default;
             Optional<string> metricNamespace = default;
-            AggregationTypeEnum timeAggregation = default;
+            MonitorAggregationType timeAggregation = default;
             Optional<IList<MetricDimension>> dimensions = default;
             Optional<bool> skipMetricValidation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (property.NameEquals("operator"))
                 {
-                    @operator = new Operator(property.Value.GetString());
+                    @operator = new MonitorOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("threshold"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("timeAggregation"))
                 {
-                    timeAggregation = new AggregationTypeEnum(property.Value.GetString());
+                    timeAggregation = new MonitorAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dimensions"))

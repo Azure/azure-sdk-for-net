@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,8 +16,8 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleAssignmentPropertiesWithScope DeserializeRoleAssignmentPropertiesWithScope(JsonElement element)
         {
             Optional<string> scope = default;
-            Optional<string> roleDefinitionId = default;
-            Optional<string> principalId = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
@@ -26,16 +27,26 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("roleDefinitionId"))
                 {
-                    roleDefinitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    roleDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new RoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, principalId.Value);
+            return new RoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId));
         }
     }
 }

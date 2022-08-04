@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<IReadOnlyList<WebAppMajorVersion>> majorVersions = default;
-            Optional<StackPreferredOS> preferredOs = default;
+            Optional<StackPreferredOS> preferredOS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            preferredOs = property0.Value.GetString().ToStackPreferredOS();
+                            preferredOS = property0.Value.GetString().ToStackPreferredOS();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new WebAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOs), kind.Value);
+            return new WebAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOS), kind.Value);
         }
     }
 }

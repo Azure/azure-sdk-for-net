@@ -8,7 +8,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -575,6 +578,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_CustomSessionHandlers()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestCustomSessionHandlers>(SetCustomSessionHandlers);
+            using (host)
+            {
+                bool result1 = _waitHandle1.WaitOne(SBTimeoutMills);
+                bool result2 = _waitHandle2.WaitOne(SBTimeoutMills);
+
+                Assert.True(result1);
+                Assert.True(result2);
+                await host.StopAsync();
+            }
+        }
+
+        private static Action<IHostBuilder> SetCustomSessionHandlers =>
+            builder => builder.ConfigureWebJobs(b =>
+                b.AddServiceBus(sbOptions =>
+                {
+                    sbOptions.SessionInitializingAsync = TestCustomSessionHandlers.SessionInitializingHandler;
+                    sbOptions.SessionClosingAsync = TestCustomSessionHandlers.SessionClosingHandler;
+                }));
+
+        [Test]
         public async Task TestBatch_ReceiveFromFunction()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
@@ -593,6 +620,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
             }
+        }
+
+        [Test]
+        public async Task TestBatch_ProcessMessagesSpan()
+        {
+            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
+            var scope = listener.AssertAndRemoveScope(Constants.ProcessSessionMessagesActivityName);
+            var tags = scope.Activity.Tags.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.AreEqual(2, scope.LinkedActivities.Count);
+            Assert.IsTrue(scope.IsCompleted);
+        }
+
+        [Test]
+        public async Task TestBatch_ProcessMessagesSpan_FailedScope()
+        {
+            ExpectedRemainingMessages = 2;
+            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
+            var scope = listener.AssertAndRemoveScope(Constants.ProcessSessionMessagesActivityName);
+            var tags = scope.Activity.Tags.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.AreEqual(2, scope.LinkedActivities.Count);
+            Assert.IsTrue(scope.IsFailed);
         }
 
         private async Task TestMultiple<T>(bool isXml = false)
@@ -877,6 +933,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws
+        {
+            public static void Run(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] TestPoco[] array,
+                ServiceBusMessageActions messageActions)
+            {
+                string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+                throw new Exception("Test exception");
+            }
+        }
+
         public class ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity
         {
             public static void SBQueueFunction(
@@ -1103,6 +1171,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.IsNotNull(received);
 
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestCustomSessionHandlers
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                await sessionActions.CompleteMessageAsync(message);
+                sessionActions.ReleaseSession();
+            }
+
+            public static Task SessionInitializingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle1.Set();
+                return Task.CompletedTask;
+            }
+
+            public static Task SessionClosingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle2.Set();
+                return Task.CompletedTask;
             }
         }
 

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, NetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules)
+        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </summary>
         public ManagedHsmNetworkRuleBypassOption? Bypass { get; set; }
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
-        public NetworkRuleAction? DefaultAction { get; set; }
+        public ManagedHsmNetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
         public IList<ManagedHsmIPRule> IPRules { get; }
         /// <summary> The list of virtual network rules. </summary>

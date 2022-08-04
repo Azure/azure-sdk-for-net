@@ -20,6 +20,10 @@ pr:
   paths:
     include:
     - sdk/servicelinker/
+    - sdk/keyvault/
+    - sdk/webpubsub/
+    - sdk/websites/
+    - sdk/network/
     - sdk/resourcemanager/
 
 extends:

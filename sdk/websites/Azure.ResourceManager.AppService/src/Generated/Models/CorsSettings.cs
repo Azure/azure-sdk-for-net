@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all.
         /// </param>
-        /// <param name="supportCredentials">
+        /// <param name="isCredentialsSupported">
         /// Gets or sets whether CORS requests with credentials are allowed. See 
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </param>
-        internal CorsSettings(IList<string> allowedOrigins, bool? supportCredentials)
+        internal CorsSettings(IList<string> allowedOrigins, bool? isCredentialsSupported)
         {
             AllowedOrigins = allowedOrigins;
-            SupportCredentials = supportCredentials;
+            IsCredentialsSupported = isCredentialsSupported;
         }
 
         /// <summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </summary>
-        public bool? SupportCredentials { get; set; }
+        public bool? IsCredentialsSupported { get; set; }
     }
 }

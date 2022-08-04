@@ -342,10 +342,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: MetricDefinitions_ListElasticPool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MetricDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlMetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _metricDefinitionsClientDiagnostics.CreateScope("ElasticPoolResource.GetMetricDefinitions");
                 scope.Start();
@@ -369,10 +369,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: MetricDefinitions_ListElasticPool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<MetricDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<SqlMetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _metricDefinitionsClientDiagnostics.CreateScope("ElasticPoolResource.GetMetricDefinitions");
                 scope.Start();
@@ -550,10 +550,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ElasticPoolOperations_ListByElasticPool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticPoolOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolOperation> GetElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ElasticPoolOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticPoolOperationData> GetElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ElasticPoolOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ElasticPoolOperationData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.GetElasticPoolOperations");
                 scope.Start();
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ElasticPoolOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ElasticPoolOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.GetElasticPoolOperations");
                 scope.Start();
@@ -592,10 +592,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ElasticPoolOperations_ListByElasticPool
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticPoolOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolOperation> GetElasticPoolOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ElasticPoolOperationData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticPoolOperationData> GetElasticPoolOperations(CancellationToken cancellationToken = default)
         {
-            Page<ElasticPoolOperation> FirstPageFunc(int? pageSizeHint)
+            Page<ElasticPoolOperationData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.GetElasticPoolOperations");
                 scope.Start();
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ElasticPoolOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ElasticPoolOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.GetElasticPoolOperations");
                 scope.Start();
@@ -626,6 +626,58 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Failovers an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/failover
+        /// Operation Id: ElasticPools_Failover
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.Failover");
+            scope.Start();
+            try
+            {
+                var response = await _elasticPoolRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Failovers an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/failover
+        /// Operation Id: ElasticPools_Failover
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Failover(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.Failover");
+            scope.Start();
+            try
+            {
+                var response = _elasticPoolRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlArmOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -710,58 +762,6 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Failovers an elastic pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/failover
-        /// Operation Id: ElasticPools_Failover
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.Failover");
-            scope.Start();
-            try
-            {
-                var response = await _elasticPoolRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Failovers an elastic pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/failover
-        /// Operation Id: ElasticPools_Failover
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Failover(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolResource.Failover");
-            scope.Start();
-            try
-            {
-                var response = _elasticPoolRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_elasticPoolClientDiagnostics, Pipeline, _elasticPoolRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

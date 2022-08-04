@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2022-07-19)
+
+### Features Added
+
+- Added support for Azure Active Directory (AAD) authentication.
 
 ## 1.1.0-beta.1 (2022-02-08)
 

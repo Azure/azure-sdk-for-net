@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -9,9 +10,9 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage;
+using Azure.ResourceManager.Resources.Models;
 using KeyType = Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType;
+using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -31,22 +32,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             _eventHubCollection = eventHubNamespace.GetEventHubs();
-        }
-
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-                List<EventHubsNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubsNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
         }
 
         [Test]
@@ -74,21 +59,25 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("exceed 8s")]
         public async Task CreateEventhubWithParameter()
         {
             //prepare a storage account
             string accountName = Recording.GenerateAssetName("storage");
-            StorageSku sku = new StorageSku("Standard_LRS");
-            var storageAccountCreateParameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.StorageV2, "eastus2")
+
+            GenericResourceData input = new GenericResourceData(AzureLocation.EastUS2)
             {
-                AccessTier = AccessTier.Hot
+                Sku = new ResourcesSku
+                {
+                    Name = "Standard_LRS"
+                },
+                Kind = "StorageV2",
+                Properties = BinaryData.FromObjectAsJson(new JsonObject()
+                {
+                    {"accessTier", "Hot"}
+                })
             };
-            StorageAccountResource account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, storageAccountCreateParameters)).Value;
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(5000);
-            }
+            ResourceIdentifier storageAccountId = _resourceGroup.Id.AppendProviderResource("Microsoft.Storage", "storageAccounts", accountName);
+            GenericResource account = (await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountId, input)).Value;
 
             //create eventhub
             string eventHubName = Recording.GenerateAssetName("eventhub");

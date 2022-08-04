@@ -13,52 +13,18 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class VmInsightsOnboardingStatusData : IUtf8JsonSerializable
+    public partial class VmInsightsOnboardingStatusData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
-            }
-            if (Optional.IsDefined(OnboardingStatus))
-            {
-                writer.WritePropertyName("onboardingStatus");
-                writer.WriteStringValue(OnboardingStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(DataStatus))
-            {
-                writer.WritePropertyName("dataStatus");
-                writer.WriteStringValue(DataStatus.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Data))
-            {
-                writer.WritePropertyName("data");
-                writer.WriteStartArray();
-                foreach (var item in Data)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static VmInsightsOnboardingStatusData DeserializeVmInsightsOnboardingStatusData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<OnboardingStatus> onboardingStatus = default;
             Optional<DataStatus> dataStatus = default;
-            Optional<IList<DataContainer>> data = default;
+            Optional<IReadOnlyList<DataContainer>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -97,7 +63,12 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("onboardingStatus"))

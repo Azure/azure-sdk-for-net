@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// </remarks>
     [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     [ClientTestFixture(
-     DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_preview)]
+     DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_Preview)]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -49,16 +49,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-businessCard", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-businessCard", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.BusinessCardJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-businessCard", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-businessCard", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -163,16 +161,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.BusinessMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-businessCard", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-businessCard", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.BusinessMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-businessCard", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-businessCard", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(2, result.Documents.Count);
 
@@ -228,16 +226,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartAnalyzeDocumentFromUriAsync(customModel.ModelId, uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -279,10 +275,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -323,16 +317,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync(customModel.ModelId, uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
@@ -381,16 +373,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipageBlank);
-                operation = await client.StartAnalyzeDocumentFromUriAsync(customModel.ModelId, uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, customModel.ModelId, uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
             AnalyzedDocument document = result.Documents.Single();
@@ -436,10 +426,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
             var fields = result.Documents.Single().Fields;
@@ -463,10 +451,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
 
@@ -489,10 +475,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(customModel.ModelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
-
-            await operation.WaitForCompletionAsync();
 
             AnalyzeResult result = operation.Value;
 
@@ -516,10 +500,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -557,7 +541,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -571,7 +555,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentFromUriAsync(modelId, invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -592,16 +576,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Form1);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", uri);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -695,16 +678,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-idDocument", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-idDocument", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.DriverLicenseJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-idDocument", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-idDocument", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -772,16 +753,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -935,16 +914,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-invoice", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -997,16 +976,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", uri);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -1078,16 +1056,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoiceMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(2, result.Pages.Count);
 
@@ -1117,10 +1095,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(3, result.Pages.Count);
 
@@ -1157,10 +1135,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", stream);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -1187,16 +1164,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri);
             }
 
-            await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
 
             AnalyzeResult result = operation.Value;
@@ -1240,16 +1216,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", uri);
             }
-
-            await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
@@ -1347,16 +1321,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceipMultipage);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceipMultipage);
-                operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", uri);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             Assert.AreEqual(2, result.Documents.Count);
 
@@ -1396,10 +1370,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceipMultipageWithBlankPage);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -1444,7 +1418,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Form1);
             using (Recording.DisableRequestBodyRecording())
             {
-                Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync("prebuilt-layout", stream));
+                Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, "prebuilt-layout", stream));
             }
         }
 
@@ -1457,12 +1431,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", stream);
             }
 
             // Sanity check to make sure we got an actual response back from the service.
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -1489,10 +1463,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
             }
 
-            AnalyzeResult result = await operation.WaitForCompletionAsync();
+            AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
@@ -1535,7 +1509,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -1551,7 +1525,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentFromUriAsync(modelId, invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -1572,7 +1546,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using (Recording.DisableRequestBodyRecording())
             {
-                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartAnalyzeDocumentAsync(modelId, stream, options));
+                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream, options));
             }
 
             Assert.AreEqual("InvalidArgument", ex.ErrorCode);

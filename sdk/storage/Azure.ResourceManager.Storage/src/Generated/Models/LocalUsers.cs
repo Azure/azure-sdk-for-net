@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of LocalUsers. </summary>
         internal LocalUsers()
         {
-            Value = new ChangeTrackingList<LocalUserData>();
+            Value = new ChangeTrackingList<StorageAccountLocalUserData>();
         }
 
         /// <summary> Initializes a new instance of LocalUsers. </summary>
         /// <param name="value"> The local users associated with the storage account. </param>
-        internal LocalUsers(IReadOnlyList<LocalUserData> value)
+        internal LocalUsers(IReadOnlyList<StorageAccountLocalUserData> value)
         {
             Value = value;
         }
 
         /// <summary> The local users associated with the storage account. </summary>
-        public IReadOnlyList<LocalUserData> Value { get; }
+        public IReadOnlyList<StorageAccountLocalUserData> Value { get; }
     }
 }

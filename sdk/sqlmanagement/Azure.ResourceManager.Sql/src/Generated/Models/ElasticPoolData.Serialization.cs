@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("perDatabaseSettings");
                 writer.WriteObjectValue(PerDatabaseSettings);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
             Optional<bool> zoneRedundant = default;
             Optional<ElasticPoolLicenseType> licenseType = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<int> highAvailabilityReplicaCount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -224,7 +224,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("maintenanceConfigurationId"))
                         {
-                            maintenanceConfigurationId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("highAvailabilityReplicaCount"))

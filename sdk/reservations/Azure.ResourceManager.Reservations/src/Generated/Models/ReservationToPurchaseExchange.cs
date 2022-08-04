@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Reservation purchase details. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="properties"></param>
         /// <param name="billingCurrencyTotal"></param>
         /// <param name="status"> Status of the individual operation. </param>
-        internal ReservationToPurchaseExchange(string reservationOrderId, string reservationId, PurchaseRequestContent properties, PurchasePrice billingCurrencyTotal, OperationStatus? status)
+        internal ReservationToPurchaseExchange(ResourceIdentifier reservationOrderId, ResourceIdentifier reservationId, ReservationPurchaseContent properties, PurchasePrice billingCurrencyTotal, ReservationOperationStatus? status)
         {
             ReservationOrderId = reservationOrderId;
             ReservationId = reservationId;
@@ -31,14 +33,14 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Fully qualified id of the ReservationOrder being purchased. </summary>
-        public string ReservationOrderId { get; }
+        public ResourceIdentifier ReservationOrderId { get; }
         /// <summary> Fully qualified id of the Reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </summary>
-        public string ReservationId { get; }
+        public ResourceIdentifier ReservationId { get; }
         /// <summary> Gets the properties. </summary>
-        public PurchaseRequestContent Properties { get; }
+        public ReservationPurchaseContent Properties { get; }
         /// <summary> Gets the billing currency total. </summary>
         public PurchasePrice BillingCurrencyTotal { get; }
         /// <summary> Status of the individual operation. </summary>
-        public OperationStatus? Status { get; }
+        public ReservationOperationStatus? Status { get; }
     }
 }
