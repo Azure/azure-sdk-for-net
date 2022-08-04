@@ -16,11 +16,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="value"> The static value this rule always returns. </param>
         internal StaticRule(string kind, object value) : base(kind)
         {
-            Value = value;
+            _value = value;
             Kind = kind ?? "static-rule";
         }
-
-        /// <summary> The static value this rule always returns. </summary>
-        public object Value { get; set; }
     }
 }

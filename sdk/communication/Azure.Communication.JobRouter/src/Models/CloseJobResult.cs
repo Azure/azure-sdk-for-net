@@ -12,8 +12,10 @@ namespace Azure.Communication.JobRouter.Models
     /// </summary>
     public class CloseJobResult
     {
-        /// <inheritdoc />
-        public CloseJobResult()
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
+        internal CloseJobResult()
         {
         }
     }

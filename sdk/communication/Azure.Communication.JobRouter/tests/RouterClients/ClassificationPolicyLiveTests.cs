@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             {
                 new StaticWorkerSelectorAttachment(new WorkerSelector("key", LabelOperator.Equal, new LabelValue("value")))
             };
-            var prioritizationRule = new StaticRule(1);
+            var prioritizationRule = new StaticRule(new LabelValue(1));
 
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
@@ -147,7 +147,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var classificationPolicyId = $"{IdPrefix}-CPPri";
             var classificationPolicyName = $"Priority-ClassificationPolicy";
-            var priorityRule = new StaticRule(10);
+            var priorityRule = new StaticRule(new LabelValue(10));
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
@@ -173,7 +173,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-ClassificationPolicY_w_QSelector");
             var classificationPolicyName = $"QueueSelection-ClassificationPolicy";
             var createQueueResponse = await CreateQueueAsync(nameof(CreateQueueSelectionClassificationPolicyTest));
-            var queueIdStaticRule = new StaticRule(createQueueResponse.Value.Id);
+            var queueIdStaticRule = new StaticRule(new LabelValue(createQueueResponse.Value.Id));
             var queueSelectionRule = new List<QueueSelectorAttachment>()
             {
                 new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))

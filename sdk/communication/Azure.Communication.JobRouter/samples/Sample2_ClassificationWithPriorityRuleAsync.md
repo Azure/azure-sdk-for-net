@@ -27,7 +27,7 @@ var classificationPolicyId = "static-priority";
 var classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new StaticRule(10)
+        PrioritizationRule = new StaticRule(new LabelValue(10))
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");

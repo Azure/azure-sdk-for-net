@@ -24,7 +24,7 @@ var classificationPolicy = await routerAdministrationClient.CreateClassification
     options: new CreateClassificationPolicyOptions(classificationPolicyId)
     {
         Name = "Sample classification policy",
-        PrioritizationRule = new StaticRule(10),
+        PrioritizationRule = new StaticRule(new LabelValue(10)),
         QueueSelectors = new List<QueueSelectorAttachment>()
         {
             new StaticQueueSelectorAttachment(new QueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),

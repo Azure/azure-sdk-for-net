@@ -436,8 +436,8 @@ namespace Azure.Communication.JobRouter
     }
     public partial class StaticRule : Azure.Communication.JobRouter.RouterRule
     {
-        public StaticRule(object value) { }
-        public object Value { get { throw null; } set { } }
+        public StaticRule(Azure.Communication.JobRouter.LabelValue value) { }
+        public Azure.Communication.JobRouter.LabelValue Value { get { throw null; } set { } }
     }
     public partial class StaticWorkerSelectorAttachment : Azure.Communication.JobRouter.WorkerSelectorAttachment
     {
@@ -580,7 +580,7 @@ namespace Azure.Communication.JobRouter.Models
     }
     public partial class CloseJobResult
     {
-        public CloseJobResult() { }
+        internal CloseJobResult() { }
     }
     public partial class CompleteJobResult
     {
