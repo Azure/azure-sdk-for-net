@@ -10,7 +10,8 @@ using System.Text.Json;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -217,7 +218,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedMslinks, actualMSlinks);
         }
 
-        private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
+        [Fact]
+        public void ActivityWithExceptionEventCreatesExceptionTelemetry()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Client);
+
+            activity.RecordException(new Exception("Exception Message"));
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+
+            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal("RemoteDependency", (IEnumerable<char>)telemetryItems[0].Name);
+            Assert.Equal("Exception", (IEnumerable<char>)telemetryItems[1].Name);
+            Assert.Equal("Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
+            Assert.Equal("System.Exception", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
+            Assert.Equal("System.Exception: Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
+        }
+
+            private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())
             {
