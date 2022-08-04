@@ -27,6 +27,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         public ResponseError Error { get; private set; }
 
-        public DocumentModelDetails Result { get; }
+        public DocumentModel Result { get; }
     }
 }

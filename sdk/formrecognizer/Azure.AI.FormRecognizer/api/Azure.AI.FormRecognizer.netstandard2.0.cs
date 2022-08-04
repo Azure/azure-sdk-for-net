@@ -581,10 +581,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public virtual Azure.Response<Azure.AI.FormRecognizer.DocumentAnalysis.ResourceDetails> GetResourceDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.FormRecognizer.DocumentAnalysis.ResourceDetails>> GetResourceDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DocumentModelDetails : Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelSummary
+    public partial class DocumentModelDetails
     {
         internal DocumentModelDetails() { }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocTypeInfo> DocTypes { get { throw null; } }
+        public string ModelId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DocumentModelOperationDetails
     {
