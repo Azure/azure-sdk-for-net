@@ -14,8 +14,6 @@ extends:
         GenerateVMJobs: true
     EnvVars:
       AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
-      STORAGE_AZUREWEBJOBSSTORAGE: "no"
-      AZUREWEBJOBSSTORAGE: "no"
     DeployTestResources: false
     TestSetupSteps:
       - template: /sdk/storage/tests-install-azurite.yml
