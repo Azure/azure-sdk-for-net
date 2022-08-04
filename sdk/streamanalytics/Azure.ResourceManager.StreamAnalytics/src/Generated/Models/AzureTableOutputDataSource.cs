@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure Table output data source. </summary>
-    public partial class AzureTableOutputDataSource : OutputDataSource
+    public partial class AzureTableOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of AzureTableOutputDataSource. </summary>
         public AzureTableOutputDataSource()

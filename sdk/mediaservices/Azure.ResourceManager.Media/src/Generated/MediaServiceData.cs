@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
         /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
-        internal MediaServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServiceId, IList<MediaServiceStorageAccount> storageAccounts, StorageAuthentication? storageAuthentication, AccountEncryption encryption, KeyDelivery keyDelivery, IsMediaServicePublicNetworkAccessEnabled? publicNetworkAccess, MediaProvisioningState? provisioningState, IReadOnlyList<MediaPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal MediaServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServiceId, IList<MediaServiceStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, KeyDelivery keyDelivery, MediaPublicNetworkAccessStatus? publicNetworkAccess, MediaProvisioningState? provisioningState, IReadOnlyList<MediaPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MediaServiceId = mediaServiceId;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> The storage accounts for this resource. </summary>
         public IList<MediaServiceStorageAccount> StorageAccounts { get; }
         /// <summary> Gets or sets the storage authentication. </summary>
-        public StorageAuthentication? StorageAuthentication { get; set; }
+        public MediaStorageAuthentication? StorageAuthentication { get; set; }
         /// <summary> The account encryption properties. </summary>
         public AccountEncryption Encryption { get; set; }
         /// <summary> The Key Delivery properties for Media Services account. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary> Whether or not public network access is allowed for resources under the Media Services account. </summary>
-        public IsMediaServicePublicNetworkAccessEnabled? PublicNetworkAccess { get; set; }
+        public MediaPublicNetworkAccessStatus? PublicNetworkAccess { get; set; }
         /// <summary> Provisioning state of the Media Services account. </summary>
         public MediaProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>

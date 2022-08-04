@@ -67,8 +67,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(200, projectDetailsResponse.Status);
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(testProjectName)));
             Assert.That(projectDetailsResponse.Content.ToString().Contains(testProjectName));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -104,8 +102,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(testDeploymentName)));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -139,8 +135,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(200, updateQnasOperation.GetRawResponse().Status);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(question)));
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(answer)));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -175,8 +169,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.AreEqual(200, updateSourcesOperation.GetRawResponse().Status);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -214,8 +206,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(204, updateSynonymsResponse.Status);
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qnamaker")));
             Assert.That((await synonyms.ToEnumerableAsync()).Any(synonym => synonym.ToString().Contains("qna")));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -233,8 +223,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.True(exportOperation.HasCompleted);
             Assert.AreEqual(200, exportOperation.GetRawResponse().Status);
             Assert.True(!String.IsNullOrEmpty(exportedFileUrl));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -268,8 +256,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
             Assert.AreEqual(200, projectDetails.Status);
             Assert.That(projectDetails.Content.ToString().Contains(testProjectName));
-
-            await DeleteProjectAsync(testProjectName);
         }
 
         [RecordedTest]
@@ -295,7 +281,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             Response addFeedbackResponse = await Client.AddFeedbackAsync(testProjectName, addFeedbackRequestContent);
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
-            await DeleteProjectAsync(testProjectName);
         }
     }
 }

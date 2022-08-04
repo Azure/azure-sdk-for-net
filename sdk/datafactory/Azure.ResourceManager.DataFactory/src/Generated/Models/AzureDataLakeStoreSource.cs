@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Azure Data Lake source. </summary>
-    public partial class AzureDataLakeStoreSource : CopySource
+    public partial class AzureDataLakeStoreSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreSource. </summary>
         public AzureDataLakeStoreSource()

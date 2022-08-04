@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The activation Mode of the service package
-    /// Serialized Name: ArmServicePackageActivationMode
-    /// </summary>
+    /// <summary> The activation Mode of the service package. </summary>
     public readonly partial struct ArmServicePackageActivationMode : IEquatable<ArmServicePackageActivationMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string SharedProcessValue = "SharedProcess";
         private const string ExclusiveProcessValue = "ExclusiveProcess";
 
-        /// <summary>
-        /// Indicates the application package activation mode will use shared process.
-        /// Serialized Name: ArmServicePackageActivationMode.SharedProcess
-        /// </summary>
+        /// <summary> Indicates the application package activation mode will use shared process. </summary>
         public static ArmServicePackageActivationMode SharedProcess { get; } = new ArmServicePackageActivationMode(SharedProcessValue);
-        /// <summary>
-        /// Indicates the application package activation mode will use exclusive process.
-        /// Serialized Name: ArmServicePackageActivationMode.ExclusiveProcess
-        /// </summary>
+        /// <summary> Indicates the application package activation mode will use exclusive process. </summary>
         public static ArmServicePackageActivationMode ExclusiveProcess { get; } = new ArmServicePackageActivationMode(ExclusiveProcessValue);
         /// <summary> Determines if two <see cref="ArmServicePackageActivationMode"/> values are the same. </summary>
         public static bool operator ==(ArmServicePackageActivationMode left, ArmServicePackageActivationMode right) => left.Equals(right);

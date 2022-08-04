@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Media
 
         /// <summary> Gets a collection of MediaPrivateLinkResources in the MediaService. </summary>
         /// <returns> An object representing collection of MediaPrivateLinkResources and their operations over a MediaPrivateLinkResource. </returns>
-        public virtual MediaPrivateLinkCollection GetMediaPrivateLinks()
+        public virtual MediaPrivateLinkResourceCollection GetMediaPrivateLinkResources()
         {
-            return GetCachedClient(Client => new MediaPrivateLinkCollection(Client, Id));
+            return GetCachedClient(Client => new MediaPrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MediaPrivateLinkResource>> GetMediaPrivateLinkAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaPrivateLinkResource>> GetMediaPrivateLinkResourceAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetMediaPrivateLinks().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMediaPrivateLinkResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MediaPrivateLinkResource> GetMediaPrivateLink(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MediaPrivateLinkResource> GetMediaPrivateLinkResource(string name, CancellationToken cancellationToken = default)
         {
-            return GetMediaPrivateLinks().Get(name, cancellationToken);
+            return GetMediaPrivateLinkResources().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of MediaPrivateEndpointConnectionResources in the MediaService. </summary>

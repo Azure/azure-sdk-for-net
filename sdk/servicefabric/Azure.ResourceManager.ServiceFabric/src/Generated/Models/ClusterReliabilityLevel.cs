@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     ///   - Gold - Run the System services with a target replica set count of 7.
     ///   - Platinum - Run the System services with a target replica set count of 9.
     /// 
-    /// Serialized Name: ReliabilityLevel
     /// </summary>
     public readonly partial struct ClusterReliabilityLevel : IEquatable<ClusterReliabilityLevel>
     {
@@ -38,30 +37,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string GoldValue = "Gold";
         private const string PlatinumValue = "Platinum";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: ReliabilityLevel.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static ClusterReliabilityLevel None { get; } = new ClusterReliabilityLevel(NoneValue);
-        /// <summary>
-        /// Bronze
-        /// Serialized Name: ReliabilityLevel.Bronze
-        /// </summary>
+        /// <summary> Bronze. </summary>
         public static ClusterReliabilityLevel Bronze { get; } = new ClusterReliabilityLevel(BronzeValue);
-        /// <summary>
-        /// Silver
-        /// Serialized Name: ReliabilityLevel.Silver
-        /// </summary>
+        /// <summary> Silver. </summary>
         public static ClusterReliabilityLevel Silver { get; } = new ClusterReliabilityLevel(SilverValue);
-        /// <summary>
-        /// Gold
-        /// Serialized Name: ReliabilityLevel.Gold
-        /// </summary>
+        /// <summary> Gold. </summary>
         public static ClusterReliabilityLevel Gold { get; } = new ClusterReliabilityLevel(GoldValue);
-        /// <summary>
-        /// Platinum
-        /// Serialized Name: ReliabilityLevel.Platinum
-        /// </summary>
+        /// <summary> Platinum. </summary>
         public static ClusterReliabilityLevel Platinum { get; } = new ClusterReliabilityLevel(PlatinumValue);
         /// <summary> Determines if two <see cref="ClusterReliabilityLevel"/> values are the same. </summary>
         public static bool operator ==(ClusterReliabilityLevel left, ClusterReliabilityLevel right) => left.Equals(right);

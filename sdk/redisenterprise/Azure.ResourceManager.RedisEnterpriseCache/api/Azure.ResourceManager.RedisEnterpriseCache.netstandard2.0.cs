@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseEvictionPolicy? EvictionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseDatabaseGeoReplication GeoReplication { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseModule> Modules { get { throw null; } }
-        public Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettings Persistence { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisPersistenceSettings Persistence { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseProvisioningStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseClusterResourceState? ResourceState { get { throw null; } }
@@ -210,14 +210,6 @@ namespace Azure.ResourceManager.RedisEnterpriseCache.Models
         public static implicit operator Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingRdbFrequency (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingRdbFrequency left, Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingRdbFrequency right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PersistenceSettings
-    {
-        public PersistenceSettings() { }
-        public Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingAofFrequency? AofFrequency { get { throw null; } set { } }
-        public bool? IsAofEnabled { get { throw null; } set { } }
-        public bool? IsRdbEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingRdbFrequency? RdbFrequency { get { throw null; } set { } }
     }
     public enum RedisEnterpriseAccessKeyType
     {
@@ -341,7 +333,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache.Models
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseEvictionPolicy? EvictionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseDatabaseGeoReplication GeoReplication { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseModule> Modules { get { throw null; } }
-        public Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettings Persistence { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisPersistenceSettings Persistence { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseProvisioningStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseClusterResourceState? ResourceState { get { throw null; } }
@@ -520,5 +512,13 @@ namespace Azure.ResourceManager.RedisEnterpriseCache.Models
         public static implicit operator Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseTlsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseTlsVersion left, Azure.ResourceManager.RedisEnterpriseCache.Models.RedisEnterpriseTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RedisPersistenceSettings
+    {
+        public RedisPersistenceSettings() { }
+        public Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingAofFrequency? AofFrequency { get { throw null; } set { } }
+        public bool? IsAofEnabled { get { throw null; } set { } }
+        public bool? IsRdbEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterpriseCache.Models.PersistenceSettingRdbFrequency? RdbFrequency { get { throw null; } set { } }
     }
 }

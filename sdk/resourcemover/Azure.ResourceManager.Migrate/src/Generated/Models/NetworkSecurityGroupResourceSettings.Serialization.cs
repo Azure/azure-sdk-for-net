@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static NetworkSecurityGroupResourceSettings DeserializeNetworkSecurityGroupResourceSettings(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<NsgSecurityRule>> securityRules = default;
+            Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NsgSecurityRule> array = new List<NsgSecurityRule>();
+                    List<NetworkSecurityGroupSecurityRule> array = new List<NetworkSecurityGroupSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NsgSecurityRule.DeserializeNsgSecurityRule(item));
+                        array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item));
                     }
                     securityRules = array;
                     continue;

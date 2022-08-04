@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity excel source. </summary>
-    public partial class ExcelSource : CopySource
+    public partial class ExcelSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of ExcelSource. </summary>
         public ExcelSource()

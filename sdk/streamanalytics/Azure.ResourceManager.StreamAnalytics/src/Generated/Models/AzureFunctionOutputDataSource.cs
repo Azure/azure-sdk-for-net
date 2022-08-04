@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Defines the metadata of AzureFunctionOutputDataSource. </summary>
-    public partial class AzureFunctionOutputDataSource : OutputDataSource
+    public partial class AzureFunctionOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of AzureFunctionOutputDataSource. </summary>
         public AzureFunctionOutputDataSource()

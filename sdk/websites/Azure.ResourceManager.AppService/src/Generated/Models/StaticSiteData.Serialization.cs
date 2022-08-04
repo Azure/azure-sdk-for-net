@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static StaticSiteData DeserializeStaticSiteData(JsonElement element)
         {
-            Optional<SkuDescription> sku = default;
+            Optional<AppServiceSkuDescription> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

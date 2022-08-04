@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DataFactory
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<string> version = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
+            Optional<FactoryPurviewConfiguration> purviewConfiguration = default;
             Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, GlobalParameterSpecification>> globalParameters = default;
-            Optional<EncryptionConfiguration> encryption = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IDictionary<string, FactoryGlobalParameterSpecification>> globalParameters = default;
+            Optional<FactoryEncryptionConfiguration> encryption = default;
+            Optional<FactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = FactoryPurviewConfiguration.DeserializeFactoryPurviewConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("repoConfiguration"))
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, GlobalParameterSpecification> dictionary = new Dictionary<string, GlobalParameterSpecification>();
+                            Dictionary<string, FactoryGlobalParameterSpecification> dictionary = new Dictionary<string, FactoryGlobalParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, GlobalParameterSpecification.DeserializeGlobalParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, FactoryGlobalParameterSpecification.DeserializeFactoryGlobalParameterSpecification(property1.Value));
                             }
                             globalParameters = dictionary;
                             continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionConfiguration.DeserializeEncryptionConfiguration(property0.Value);
+                            encryption = FactoryEncryptionConfiguration.DeserializeFactoryEncryptionConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new FactoryPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

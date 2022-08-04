@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -170,9 +172,84 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
         }
 
+        [Test]
+        public async Task CancelAnalyzeOperation()
+        {
+            RequestUriBuilder actionUri = new();
+            actionUri.Reset(new Uri(s_endpoint));
+            actionUri.Path = "/language/analyze-text/jobs";
+
+            RequestUriBuilder statusUri = new();
+            statusUri.Reset(new Uri(s_endpoint));
+            statusUri.Path = "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234";
+
+            RequestUriBuilder cancelUri = new();
+            cancelUri.Reset(new Uri(s_endpoint));
+            cancelUri.Path = "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234:cancel";
+
+            ConcurrentQueue<(MockRequest Request, MockResponse Response)> messages = new(new[]
+            {
+                (
+                    new MockRequest { Method = RequestMethod.Post, Uri = actionUri },
+                    new MockResponse(202).WithHeader("operation-location", "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },
+                    new MockResponse(202).WithHeader("operation-location", "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""cancelled"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":0}}")
+                ),
+            });
+
+            MockTransport transport = new(request =>
+            {
+                if (!messages.TryDequeue(out (MockRequest Request, MockResponse Response) message))
+                {
+                    throw new AssertionException($"No more response for request to {request.Method} {request.Uri}");
+                }
+
+                if (RequestComparer.Shared.Equals(message.Request, request))
+                {
+                    return message.Response;
+                }
+
+                throw new AssertionException($"Request to {request.Method} {request.Uri} does not match queued request to {message.Request.Method} {message.Request.Uri}");
+            })
+            {
+                ExpectSyncPipeline = !IsAsync,
+            };
+
+            TextAnalyticsClient client = InstrumentClient(CreateTestClient(transport));
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(new[] { "100mg ibuprofen" }, new TextAnalyticsActions { AnalyzeHealthcareEntitiesActions = new[] { new AnalyzeHealthcareEntitiesAction() } }, "en");
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+                await operation.CancelAsync();
+
+                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+                Assert.That(ex.Message, Contains.Substring("canceled"));
+            }
+            else
+            {
+                operation.UpdateStatus();
+                operation.Cancel();
+
+                RequestFailedException ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
+                Assert.That(ex.Message, Contains.Substring("canceled"));
+            }
+        }
+
         #endregion Analyze
 
         #region Healthcare
+
         [Test]
         public async Task CreateHealthcareOperationConvenienceSetsOperationId()
         {
@@ -297,6 +374,80 @@ namespace Azure.AI.TextAnalytics.Tests
 
             var ex = Assert.Throws<ArgumentException>(() => new AnalyzeHealthcareEntitiesOperation(operationId, client));
             Assert.IsInstanceOf<ArgumentNullException>(ex.InnerException);
+        }
+
+        [Test]
+        public async Task CancelHealthcareOperation()
+        {
+            RequestUriBuilder actionUri = new();
+            actionUri.Reset(new Uri(s_endpoint));
+            actionUri.Path = "/language/analyze-text/jobs";
+
+            RequestUriBuilder statusUri = new();
+            statusUri.Reset(new Uri(s_endpoint));
+            statusUri.Path = "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234";
+
+            RequestUriBuilder cancelUri = new();
+            cancelUri.Reset(new Uri(s_endpoint));
+            cancelUri.Path = "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234:cancel";
+
+            ConcurrentQueue<(MockRequest Request, MockResponse Response)> messages = new(new[]
+            {
+                (
+                    new MockRequest { Method = RequestMethod.Post, Uri = actionUri },
+                    new MockResponse(202).WithHeader("operation-location", "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""inProgress"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Post, Uri = cancelUri },
+                    new MockResponse(202).WithHeader("operation-location", "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234")
+                ),
+                (
+                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
+                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""cancelled"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":0}}")
+                ),
+            });
+
+            MockTransport transport = new(request =>
+            {
+                if (!messages.TryDequeue(out (MockRequest Request, MockResponse Response) message))
+                {
+                    throw new AssertionException($"No more response for request to {request.Method} {request.Uri}");
+                }
+
+                if (RequestComparer.Shared.Equals(message.Request, request))
+                {
+                    return message.Response;
+                }
+
+                throw new AssertionException($"Request to {request.Method} {request.Uri} does not match queued request to {message.Request.Method} {message.Request.Uri}");
+            })
+            {
+                ExpectSyncPipeline = !IsAsync,
+            };
+
+            TextAnalyticsClient client = InstrumentClient(CreateTestClient(transport));
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(new[] { "100mg ibuprofen" }, "en");
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+                await operation.CancelAsync();
+
+                RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionAsync());
+                Assert.That(ex.Message, Contains.Substring("canceled"));
+            }
+            else
+            {
+                operation.UpdateStatus();
+                operation.Cancel();
+
+                RequestFailedException ex = Assert.Throws<RequestFailedException>(() => operation.WaitForCompletion());
+                Assert.That(ex.Message, Contains.Substring("canceled"));
+            }
         }
 
         #endregion Healthcare

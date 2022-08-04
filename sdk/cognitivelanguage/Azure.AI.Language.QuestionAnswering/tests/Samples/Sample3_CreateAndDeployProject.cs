@@ -120,8 +120,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            DeleteProject(newProjectName);
         }
 
         [RecordedTest]
@@ -236,8 +234,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            await DeleteProjectAsync(newProjectName);
         }
     }
 }

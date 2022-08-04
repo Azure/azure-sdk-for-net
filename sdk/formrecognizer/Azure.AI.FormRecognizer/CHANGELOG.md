@@ -13,13 +13,15 @@
   - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
 - Renamed `DocumentModel` to `DocumentModelDetails`.
 - Renamed `DocumentModelInfo` to `DocumentModelSummary`.
-- Renamed `ModelOperation` to `DocumentModelOperationDetails`.
-- Renamed `ModelOperationInfo` to `DocumentModelOperationSummary`.
+- Updated `ModelOperationInfo` and `ModelOperation`:
+  - Renamed them to `DocumentModelOperationSummary` and `DocumentModelOperationDetails`, respectively.
+  - Removed the inheritance between them.
+  - Updated `ResourceLocation` to be a `Uri` in both.
 - Renamed `AccountProperties` to `ResourceDetails`.
 - Renamed method `GetAccountProperties` to `GetResourceDetails`.
 - Renamed method `StartCreateComposedModel` to `ComposeModel`.
 - Renamed `BuildModelOptions.ModelDescription` to `Description`.
-- Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
+- Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `ComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
 - Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
