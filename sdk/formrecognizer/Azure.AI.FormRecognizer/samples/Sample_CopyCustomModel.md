@@ -48,7 +48,7 @@ Now that we have authorization from the target Form Recognizer resource, we exec
 
 ```C# Snippet:FormRecognizerSampleCreateCopyModel
 string modelId = "<source_modelId>";
-CopyModelOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
+CopyModelToOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
 DocumentModelDetails newModel = newModelOperation.Value;
 
 Console.WriteLine($"Original model ID => {modelId}");
