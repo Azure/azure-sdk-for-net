@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The request that generated the event. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
         /// <param name="method"> The request method that generated the event. </param>
         /// <param name="userAgent"> The user agent header of the request. </param>
-        internal ContainerRegistryWebhookEventRequest(string id, string addr, string host, string method, string userAgent)
+        internal ContainerRegistryWebhookEventRequest(Guid? id, string addr, string host, string method, string userAgent)
         {
             Id = id;
             Addr = addr;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The ID of the request that initiated the event. </summary>
-        public string Id { get; }
+        public Guid? Id { get; }
         /// <summary> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </summary>
         public string Addr { get; }
         /// <summary> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </summary>

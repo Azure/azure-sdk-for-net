@@ -193,6 +193,12 @@ rename-mapping:
   RegistryListResult: ContainerRegistryListResult
   RegistryUsageListResult: ContainerRegistryUsageListResult
   StepType: ContainerRegistryTaskStepType
+  ImageUpdateTrigger.id: -|uuid
+  SourceTriggerDescriptor.id: -|uuid
+  EventContent.id: -|uuid
+  Event.id: -|uuid
+  EventInfo.id: -|uuid
+  Request.id: -|uuid
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

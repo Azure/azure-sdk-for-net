@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryImageUpdateTrigger
     {
         public ContainerRegistryImageUpdateTrigger() { }
-        public string Id { get { throw null; } set { } }
+        public System.Guid? Id { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageDescriptor> Images { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } set { } }
     }
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string BranchName { get { throw null; } set { } }
         public string CommitId { get { throw null; } set { } }
         public string EventType { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
+        public System.Guid? Id { get { throw null; } set { } }
         public string ProviderType { get { throw null; } set { } }
         public string PullRequestId { get { throw null; } set { } }
         public System.Uri RepositoryUri { get { throw null; } set { } }
@@ -1504,7 +1504,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal ContainerRegistryWebhookEventContent() { }
         public string Action { get { throw null; } }
         public string ActorName { get { throw null; } }
-        public string Id { get { throw null; } }
+        public System.Guid? Id { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventRequest Request { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventSource Source { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventTarget Target { get { throw null; } }
@@ -1513,14 +1513,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryWebhookEventInfo
     {
         internal ContainerRegistryWebhookEventInfo() { }
-        public string Id { get { throw null; } }
+        public System.Guid? Id { get { throw null; } }
     }
     public partial class ContainerRegistryWebhookEventRequest
     {
         internal ContainerRegistryWebhookEventRequest() { }
         public string Addr { get { throw null; } }
         public string Host { get { throw null; } }
-        public string Id { get { throw null; } }
+        public System.Guid? Id { get { throw null; } }
         public string Method { get { throw null; } }
         public string UserAgent { get { throw null; } }
     }
