@@ -10,53 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerInstanceUsage
+    public partial class ContainerSupportedCapabilities
     {
-        internal static ContainerInstanceUsage DeserializeContainerInstanceUsage(JsonElement element)
+        internal static ContainerSupportedCapabilities DeserializeContainerSupportedCapabilities(JsonElement element)
         {
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<ContainerInstanceUsageName> name = default;
+            Optional<float> maxMemoryInGB = default;
+            Optional<float> maxCpu = default;
+            Optional<float> maxGpuCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
-                {
-                    unit = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("maxMemoryInGB"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    currentValue = property.Value.GetInt32();
+                    maxMemoryInGB = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("maxCpu"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    limit = property.Value.GetInt32();
+                    maxCpu = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("maxGpuCount"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = ContainerInstanceUsageName.DeserializeContainerInstanceUsageName(property.Value);
+                    maxGpuCount = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new ContainerInstanceUsage(unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new ContainerSupportedCapabilities(Optional.ToNullable(maxMemoryInGB), Optional.ToNullable(maxCpu), Optional.ToNullable(maxGpuCount));
         }
     }
 }
