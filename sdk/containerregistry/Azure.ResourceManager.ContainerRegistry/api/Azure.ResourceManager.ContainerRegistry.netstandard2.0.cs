@@ -1505,7 +1505,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Action { get { throw null; } }
         public string ActorName { get { throw null; } }
         public System.Guid? Id { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventRequest Request { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventRequestContent Request { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventSource Source { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventTarget Target { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
@@ -1515,9 +1515,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal ContainerRegistryWebhookEventInfo() { }
         public System.Guid? Id { get { throw null; } }
     }
-    public partial class ContainerRegistryWebhookEventRequest
+    public partial class ContainerRegistryWebhookEventRequestContent
     {
-        internal ContainerRegistryWebhookEventRequest() { }
+        internal ContainerRegistryWebhookEventRequestContent() { }
         public string Addr { get { throw null; } }
         public string Host { get { throw null; } }
         public System.Guid? Id { get { throw null; } }

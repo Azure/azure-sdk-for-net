@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PerNodeState
+    public partial class PerNodeArcState
     {
-        internal static PerNodeState DeserializePerNodeState(JsonElement element)
+        internal static PerNodeArcState DeserializePerNodeArcState(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> arcInstance = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PerNodeState(name.Value, arcInstance.Value, Optional.ToNullable(state));
+            return new PerNodeArcState(name.Value, arcInstance.Value, Optional.ToNullable(state));
         }
     }
 }
