@@ -18,7 +18,7 @@
     ],
     "TestFilterConfig": {
         "ExcludeNonVirtualized": {
-            "AdditionalTestFilters": "FullyQualifiedName\\!~Microsoft.Azure.WebJobs.Extensions.Storage"
+            "AdditionalTestFilters": "FullyQualifiedName\\!~WebJobs"
         }
       }
   }
