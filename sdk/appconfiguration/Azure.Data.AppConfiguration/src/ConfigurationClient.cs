@@ -40,7 +40,6 @@ namespace Azure.Data.AppConfiguration
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
         public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
-           : this(new Uri(ConnectionString.Parse(connectionString).GetRequired("Endpoint")), (string)null, options)
         {
             if (connectionString == null)
                 throw new ArgumentNullException(nameof(connectionString));
