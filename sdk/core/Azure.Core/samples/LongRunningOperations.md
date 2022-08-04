@@ -47,18 +47,13 @@ By using `UpdateStatusAsync` and `HasCompleted` together, you can customize the 
 // Start the operation
 DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
-while (true)
+while (operation.HasCompleted)
 {
     // there could be more complex logic to control polling interval
     Thread.Sleep(TimeSpan.FromSeconds(60));
 
-    Response state = await operation.UpdateStatusAsync();
-    Console.WriteLine($"Operation status is {state}");
-
-    if (operation.HasCompleted)
-    {
-        break;
-    }
+    Response statusResponse = await operation.UpdateStatusAsync();
+    // optionally do something with the statusResponse
 }
 ```
 
