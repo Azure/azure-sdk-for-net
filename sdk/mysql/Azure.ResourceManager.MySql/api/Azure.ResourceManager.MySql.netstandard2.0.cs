@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.MySql.Models
         public int? MaxStorageInMB { get { throw null; } }
         public int? MinBackupRetentionDays { get { throw null; } }
         public int? MinStorageInMB { get { throw null; } }
-        public int? VCore { get { throw null; } }
+        public int? VCores { get { throw null; } }
     }
     public partial class MySqlPrivateEndpointConnectionPatch
     {
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.MySql.Models
         public string HardwareGeneration { get { throw null; } }
         public System.DateTimeOffset? LastAvailableBackupOn { get { throw null; } }
         public string ServiceLevelObjective { get { throw null; } }
-        public int? VCore { get { throw null; } }
+        public int? VCores { get { throw null; } }
         public string Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

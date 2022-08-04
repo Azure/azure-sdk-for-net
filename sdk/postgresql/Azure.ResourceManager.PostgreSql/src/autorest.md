@@ -27,6 +27,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'PrincipalId': 'uuid'
@@ -57,6 +58,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Nine5: NinePointFive
+  Nine6: NinePointSix
+  Ten0: TenPointZero
+  Ten2: TenPointTwo
+
 
 prepend-rp-prefix:
   - Configuration
@@ -106,9 +112,12 @@ prepend-rp-prefix:
   - VirtualNetworkRuleState
 rename-mapping:
   ServerAdministratorResource: PostgreSqlServerAdministrator
+  ServerAdministratorResource.properties.login: LoginAccountName
+  ServerAdministratorResource.properties.sid: SecureId
   ServerAdministratorResourceListResult: PostgreSqlServerAdministratorListResult
   PrivateLinkServiceConnectionStateActionsRequire: PostgreSqlPrivateLinkServiceConnectionStateRequiredActions
   RecoverableServerResource: PostgreSqlRecoverableServerResourceData
+  RecoverableServerResource.properties.vCore: VCores
   ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
   NameAvailability.nameAvailable: IsNameAvailable
   StorageProfile.storageMB: StorageInMB
@@ -118,8 +127,10 @@ rename-mapping:
   PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
   PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  PerformanceTierServiceLevelObjectives.vCore: VCores
   NameAvailability: PostgreSqlNameAvailabilityResult
   ConfigurationListResult: PostgreSqlConfigurationList
+  LogFile.properties.type: LogFileType
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
   CheckNameAvailability_Execute: CheckPostgreSqlNameAvailability
@@ -141,6 +152,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   '*ResourceId': 'arm-id'
@@ -170,6 +182,8 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Vcore: VCore
+  Vcores: VCores
+  UTC: Utc
 
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration
@@ -204,6 +218,9 @@ rename-mapping:
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
   ServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   CapabilityProperties: PostgreSqlFlexibleServerCapabilityProperties
+  CapabilityProperties.geoBackupSupported: IsGeoBackupSupported
+  CapabilityProperties.zoneRedundantHaSupported: IsZoneRedundantHASupported
+  CapabilityProperties.zoneRedundantHaAndGeoBackupSupported: IsZoneRedundantHAAndGeoBackupSupported
   CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
   NameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityRequest
   NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
@@ -220,6 +237,7 @@ rename-mapping:
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   CapabilityProperties.supportedHAMode: SupportedHAModes
   StorageEditionCapability.supportedStorageMB: SupportedStorageCapabilities
+  Server.properties.pointInTimeUTC: PointInTimeUtc
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
 ```

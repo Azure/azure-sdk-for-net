@@ -132,6 +132,7 @@ rename-mapping:
   WaitStatisticsResultList: MySqlWaitStatisticsListResult
   PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
   RecoverableServerResource: MySqlRecoverableServerResourceData
+  RecoverableServerResource.properties.vCore: VCores
   ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
   NameAvailability.nameAvailable: IsNameAvailable
   StorageProfile.storageMB: StorageInMB
@@ -142,6 +143,7 @@ rename-mapping:
   PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
   PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  PerformanceTierServiceLevelObjectives.vCore: VCores
   NameAvailability: MySqlNameAvailabilityResult
   PerformanceTierProperties: MySqlPerformanceTier
   ConfigurationListResult: MySqlConfigurationList
