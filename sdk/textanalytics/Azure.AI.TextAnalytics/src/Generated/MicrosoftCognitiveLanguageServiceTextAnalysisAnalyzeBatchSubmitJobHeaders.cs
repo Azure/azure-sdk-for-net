@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal partial class MicrosoftCognitiveLanguageServiceAnalyzeBatchSubmitJobHeaders
+    internal partial class MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchSubmitJobHeaders
     {
         private readonly Response _response;
-        public MicrosoftCognitiveLanguageServiceAnalyzeBatchSubmitJobHeaders(Response response)
+        public MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchSubmitJobHeaders(Response response)
         {
             _response = response;
         }
