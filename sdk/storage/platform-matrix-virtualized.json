@@ -15,6 +15,11 @@
     ],
     "BuildConfiguration": [
         "Debug"
-    ]
+    ],
+    "TestFilterConfig": {
+        "ExcludeNonVirtualized": {
+            "AdditionalTestFilters": "TestCategory!=NonVirtualized & FullyQualifiedName\!~Microsoft.Azure.WebJobs.Extensions.Storage"
+        }
+      }
   }
 }
