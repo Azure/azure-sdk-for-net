@@ -16,10 +16,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal string RoleInstance { get; private set; }
 
-        internal static string Statsbeat_RoleName { get; private set; }
-
-        internal static string Statsbeat_RoleInstance { get; private set; }
-
         internal void UpdateRoleNameAndInstance(Resource resource)
         {
             if (resource == null)
@@ -66,17 +62,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingRoleInstanceToHostName", ex);
                 }
-            }
-
-            // Race condition is not taken in to account here
-            // If the exporters have different resources
-            // only one of them will be used.
-            // Also, statsbeats will have these properties missing before the first export
-            // as the resource is initialized at that time.
-            if (Statsbeat_RoleName == null && Statsbeat_RoleInstance == null)
-            {
-                Statsbeat_RoleInstance = RoleInstance;
-                Statsbeat_RoleName = RoleName;
             }
         }
     }
