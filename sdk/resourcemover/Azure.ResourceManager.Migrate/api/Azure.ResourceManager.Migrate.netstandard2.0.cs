@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Migrate.Models
     public partial class MoveResourceDependency
     {
         internal MoveResourceDependency() { }
-        public string AutomaticResolutionMoveResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AutomaticResolutionMoveResourceId { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoverDependencyType? DependencyType { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public bool? IsOptional { get { throw null; } }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Condition applicable to the resource, or to the job overall, that warrant customer attention. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="since"> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </param>
         /// <param name="code"> The opaque diagnostic code. </param>
         /// <param name="message"> The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request. </param>
-        internal StreamingJobDiagnosticCondition(string since, string code, string message)
+        internal StreamingJobDiagnosticCondition(DateTimeOffset? since, string code, string message)
         {
             Since = since;
             Code = code;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The UTC timestamp of when the condition started. Customers should be able to find a corresponding event in the ops log around this time. </summary>
-        public string Since { get; }
+        public DateTimeOffset? Since { get; }
         /// <summary> The opaque diagnostic code. </summary>
         public string Code { get; }
         /// <summary> The human-readable message describing the condition in detail. Localized in the Accept-Language of the client request. </summary>

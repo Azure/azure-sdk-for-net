@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Description of a CheckAvailability resource.
-    /// Serialized Name: CheckAvailabilityResult
-    /// </summary>
+    /// <summary> Description of a CheckAvailability resource. </summary>
     public partial class NotificationHubAvailabilityResult : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NotificationHubAvailabilityResult. </summary>
@@ -30,29 +27,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="isAvailiable">
-        /// True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false.
-        /// Serialized Name: CheckAvailabilityResult.isAvailiable
-        /// </param>
-        /// <param name="sku">
-        /// The sku of the created namespace
-        /// Serialized Name: Resource.sku
-        /// </param>
+        /// <param name="isAvailiable"> True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false. </param>
+        /// <param name="sku"> The sku of the created namespace. </param>
         internal NotificationHubAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, bool? isAvailiable, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             IsAvailiable = isAvailiable;
             Sku = sku;
         }
 
-        /// <summary>
-        /// True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false.
-        /// Serialized Name: CheckAvailabilityResult.isAvailiable
-        /// </summary>
+        /// <summary> True if the name is available and can be used to create new Namespace/NotificationHub. Otherwise false. </summary>
         public bool? IsAvailiable { get; set; }
-        /// <summary>
-        /// The sku of the created namespace
-        /// Serialized Name: Resource.sku
-        /// </summary>
+        /// <summary> The sku of the created namespace. </summary>
         public NotificationHubSku Sku { get; set; }
     }
 }

@@ -144,6 +144,7 @@ rename-mapping:
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
   RuntimeScriptActionDetail.startTime: -|datetime
   RuntimeScriptActionDetail.endTime: -|datetime
+  DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
 

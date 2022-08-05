@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// SharedAccessAuthorizationRule properties.
-    /// Serialized Name: SharedAccessAuthorizationRuleProperties
-    /// </summary>
+    /// <summary> SharedAccessAuthorizationRule properties. </summary>
     public partial class SharedAccessAuthorizationRuleProperties
     {
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
@@ -24,42 +21,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
-        /// <param name="rights">
-        /// The rights associated with the rule.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.rights
-        /// </param>
-        /// <param name="primaryKey">
-        /// A base64-encoded 256-bit primary key for signing and validating the SAS token.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// A base64-encoded 256-bit primary key for signing and validating the SAS token.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.secondaryKey
-        /// </param>
-        /// <param name="keyName">
-        /// A string that describes the authorization rule.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.keyName
-        /// </param>
-        /// <param name="claimType">
-        /// A string that describes the claim type
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.claimType
-        /// </param>
-        /// <param name="claimValue">
-        /// A string that describes the claim value
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.claimValue
-        /// </param>
-        /// <param name="modifiedOn">
-        /// The last modified time for this rule
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.modifiedTime
-        /// </param>
-        /// <param name="createdOn">
-        /// The created time for this rule
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.createdTime
-        /// </param>
-        /// <param name="revision">
-        /// The revision number for the rule
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.revision
-        /// </param>
+        /// <param name="rights"> The rights associated with the rule. </param>
+        /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
+        /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
+        /// <param name="keyName"> A string that describes the authorization rule. </param>
+        /// <param name="claimType"> A string that describes the claim type. </param>
+        /// <param name="claimValue"> A string that describes the claim value. </param>
+        /// <param name="modifiedOn"> The last modified time for this rule. </param>
+        /// <param name="createdOn"> The created time for this rule. </param>
+        /// <param name="revision"> The revision number for the rule. </param>
         internal SharedAccessAuthorizationRuleProperties(IList<AuthorizationRuleAccessRight> rights, string primaryKey, string secondaryKey, string keyName, string claimType, string claimValue, DateTimeOffset? modifiedOn, DateTimeOffset? createdOn, int? revision)
         {
             Rights = rights;
@@ -73,50 +43,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Revision = revision;
         }
 
-        /// <summary>
-        /// The rights associated with the rule.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.rights
-        /// </summary>
+        /// <summary> The rights associated with the rule. </summary>
         public IList<AuthorizationRuleAccessRight> Rights { get; }
-        /// <summary>
-        /// A base64-encoded 256-bit primary key for signing and validating the SAS token.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.primaryKey
-        /// </summary>
+        /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
         public string PrimaryKey { get; }
-        /// <summary>
-        /// A base64-encoded 256-bit primary key for signing and validating the SAS token.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.secondaryKey
-        /// </summary>
+        /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
         public string SecondaryKey { get; }
-        /// <summary>
-        /// A string that describes the authorization rule.
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.keyName
-        /// </summary>
+        /// <summary> A string that describes the authorization rule. </summary>
         public string KeyName { get; }
-        /// <summary>
-        /// A string that describes the claim type
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.claimType
-        /// </summary>
+        /// <summary> A string that describes the claim type. </summary>
         public string ClaimType { get; }
-        /// <summary>
-        /// A string that describes the claim value
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.claimValue
-        /// </summary>
+        /// <summary> A string that describes the claim value. </summary>
         public string ClaimValue { get; }
-        /// <summary>
-        /// The last modified time for this rule
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.modifiedTime
-        /// </summary>
+        /// <summary> The last modified time for this rule. </summary>
         public DateTimeOffset? ModifiedOn { get; }
-        /// <summary>
-        /// The created time for this rule
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.createdTime
-        /// </summary>
+        /// <summary> The created time for this rule. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The revision number for the rule
-        /// Serialized Name: SharedAccessAuthorizationRuleProperties.revision
-        /// </summary>
+        /// <summary> The revision number for the rule. </summary>
         public int? Revision { get; }
     }
 }
