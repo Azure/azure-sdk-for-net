@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="primaryKey"> Primary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
         /// <param name="secondaryKey"> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        /// <param name="isEnabled"> Determines whether direct access is enabled. </param>
-        internal TenantAccessInfoSecretsDetails(string accessInfoType, string principalId, string primaryKey, string secondaryKey, bool? isEnabled)
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        internal TenantAccessInfoSecretsDetails(string accessInfoType, string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled)
         {
             AccessInfoType = accessInfoType;
             PrincipalId = principalId;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
-            IsEnabled = isEnabled;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
         }
 
         /// <summary> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
         public string SecondaryKey { get; }
         /// <summary> Determines whether direct access is enabled. </summary>
-        public bool? IsEnabled { get; }
+        public bool? IsDirectAccessEnabled { get; }
     }
 }

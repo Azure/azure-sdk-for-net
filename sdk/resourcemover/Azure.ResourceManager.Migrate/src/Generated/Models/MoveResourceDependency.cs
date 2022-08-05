@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </summary>
-        public string AutomaticResolutionMoveResourceId
+        public ResourceIdentifier AutomaticResolutionMoveResourceId
         {
             get => AutomaticResolution?.MoveResourceId;
         }

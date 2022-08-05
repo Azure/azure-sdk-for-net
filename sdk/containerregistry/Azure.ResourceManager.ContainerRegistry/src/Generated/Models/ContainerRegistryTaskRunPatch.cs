@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Identity for the resource. </summary>
-        public ContainerRegistryManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The ARM resource tags. </summary>

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchPublicIPAddressConfiguration. </summary>
         public BatchPublicIPAddressConfiguration()
         {
-            IPAddressIds = new ChangeTrackingList<string>();
+            IPAddressIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of BatchPublicIPAddressConfiguration. </summary>
         /// <param name="provision"> The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
-        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<string> ipAddressIds)
+        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds)
         {
             Provision = provision;
             IPAddressIds = ipAddressIds;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The default value is BatchManaged. </summary>
         public BatchIPAddressProvisioningType? Provision { get; set; }
         /// <summary> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </summary>
-        public IList<string> IPAddressIds { get; }
+        public IList<ResourceIdentifier> IPAddressIds { get; }
     }
 }

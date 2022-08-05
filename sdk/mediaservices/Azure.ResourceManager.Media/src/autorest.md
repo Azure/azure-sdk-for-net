@@ -26,6 +26,7 @@ override-operation-name:
   StreamingEndpoints_Skus: GetSupportedSkus
   StreamingLocators_ListPaths: GetSupportedPaths
   Locations_CheckNameAvailability: CheckMediaNameAvailability
+  Assets_ListContainerSas: GetStorageContainerUris
   
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -72,6 +73,10 @@ list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
 
 rename-mapping:
+  AacAudioProfile.HeAacV1: HEAacV1
+  AacAudioProfile.HeAacV2: HEAacV2
+  AccessControl: MediaAccessControl
+  KeyDelivery: MediaKeyDelivery
   Asset: MediaAsset
   Asset.properties.created: CreatedOn
   Asset.properties.lastModified: LastModifiedOn
@@ -227,6 +232,7 @@ directive:
     where: $.definitions
     transform: >
       $.EdgeUsageDataCollectionPolicy.properties.maxAllowedUnreportedUsageDuration['format'] = 'duration';
+      $.AccessControl.properties.ipAllowList.items['x-ms-format'] = 'ip-address';
   - from: streamingservice.json
     where: $.definitions
     transform: >

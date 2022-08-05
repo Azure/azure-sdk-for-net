@@ -259,13 +259,13 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.AssetFilterResource>> GetAssetFilterAsync(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.AssetFilterCollection GetAssetFilters() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.Uri> GetContainerSas(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.Uri> GetContainerSasAsync(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo> GetEncryptionKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo>> GetEncryptionKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource> GetMediaAssetTrack(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource>> GetMediaAssetTrackAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaAssetTrackCollection GetMediaAssetTracks() { throw null; }
+        public virtual Azure.Pageable<System.Uri> GetStorageContainerUris(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.Uri> GetStorageContainerUrisAsync(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.AssetStreamingLocator> GetStreamingLocators(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.AssetStreamingLocator> GetStreamingLocatorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetResource> Update(Azure.ResourceManager.Media.MediaAssetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Media
         public MediaServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Media.Models.AccountEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.AccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
         public System.Guid? MediaServiceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaProvisioningState? ProvisioningState { get { throw null; } }
@@ -785,8 +785,8 @@ namespace Azure.ResourceManager.Media.Models
         private readonly int _dummyPrimitive;
         public AacAudioProfile(string value) { throw null; }
         public static Azure.ResourceManager.Media.Models.AacAudioProfile AacLc { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.AacAudioProfile HeAacV1 { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.AacAudioProfile HeAacV2 { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.AacAudioProfile HEAacV1 { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.AacAudioProfile HEAacV2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.AacAudioProfile other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -801,12 +801,6 @@ namespace Azure.ResourceManager.Media.Models
     {
         public AbsoluteClipTime(System.TimeSpan time) { }
         public System.TimeSpan Time { get { throw null; } set { } }
-    }
-    public partial class AccessControl
-    {
-        public AccessControl() { }
-        public Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> IPAllowList { get { throw null; } }
     }
     public partial class AccountEncryption
     {
@@ -2046,6 +2040,12 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.LiveOutputResourceState left, Azure.ResourceManager.Media.Models.LiveOutputResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MediaAccessControl
+    {
+        public MediaAccessControl() { }
+        public Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction? DefaultAction { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> IPAllowList { get { throw null; } }
+    }
     public partial class MediaEnabledProtocols
     {
         public MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHttpLiveStreamingEnabled, bool isSmoothStreamingEnabled) { }
@@ -2169,7 +2169,7 @@ namespace Azure.ResourceManager.Media.Models
         public MediaServicePatch() { }
         public Azure.ResourceManager.Media.Models.AccountEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.AccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
         public System.Guid? MediaServiceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Media.Models.MediaProvisioningState? ProvisioningState { get { throw null; } }

@@ -67,6 +67,12 @@ namespace Azure.Search.Documents
         public ObjectSerializer Serializer { get; set; }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="SearchAudience.AzurePublicCloud" /> will be assumed.</value>
+        public SearchAudience? Audience { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
         /// class.
         /// </summary>
@@ -120,9 +126,11 @@ namespace Azure.Search.Documents
         internal HttpPipeline Build(TokenCredential credential)
         {
             Debug.Assert(credential != null);
+            var authorizationScope = $"{(string.IsNullOrEmpty(Audience?.ToString()) ? SearchAudience.AzurePublicCloud : Audience)}/.default";
+
             return HttpPipelineBuilder.Build(
                 options: this,
-                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, Constants.CredentialScopeName) },
+                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
         }

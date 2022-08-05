@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Description of a NotificationHub ApnsCredential.
-    /// Serialized Name: ApnsCredential
-    /// </summary>
+    /// <summary> Description of a NotificationHub ApnsCredential. </summary>
     public partial class NotificationHubApnsCredential
     {
         /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
@@ -21,38 +18,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubApnsCredential. </summary>
-        /// <param name="apnsCertificate">
-        /// The APNS certificate. Specify if using Certificate Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.apnsCertificate
-        /// </param>
-        /// <param name="certificateKey">
-        /// The APNS certificate password if it exists.
-        /// Serialized Name: ApnsCredential.properties.certificateKey
-        /// </param>
-        /// <param name="endpoint">
-        /// The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;.
-        /// Serialized Name: ApnsCredential.properties.endpoint
-        /// </param>
-        /// <param name="thumbprint">
-        /// The APNS certificate thumbprint. Specify if using Certificate Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.thumbprint
-        /// </param>
-        /// <param name="keyId">
-        /// A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.keyId
-        /// </param>
-        /// <param name="appName">
-        /// The name of the application or BundleId. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.appName
-        /// </param>
-        /// <param name="appId">
-        /// The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.appId
-        /// </param>
-        /// <param name="token">
-        /// Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.token
-        /// </param>
+        /// <param name="apnsCertificate"> The APNS certificate. Specify if using Certificate Authentication Mode. </param>
+        /// <param name="certificateKey"> The APNS certificate password if it exists. </param>
+        /// <param name="endpoint"> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;. </param>
+        /// <param name="thumbprint"> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </param>
+        /// <param name="keyId"> A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode. </param>
+        /// <param name="appName"> The name of the application or BundleId. Specify if using Token Authentication Mode. </param>
+        /// <param name="appId"> The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode. </param>
+        /// <param name="token"> Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode. </param>
         internal NotificationHubApnsCredential(string apnsCertificate, string certificateKey, Uri endpoint, BinaryData thumbprint, string keyId, string appName, string appId, string token)
         {
             ApnsCertificate = apnsCertificate;
@@ -65,45 +38,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Token = token;
         }
 
-        /// <summary>
-        /// The APNS certificate. Specify if using Certificate Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.apnsCertificate
-        /// </summary>
+        /// <summary> The APNS certificate. Specify if using Certificate Authentication Mode. </summary>
         public string ApnsCertificate { get; set; }
-        /// <summary>
-        /// The APNS certificate password if it exists.
-        /// Serialized Name: ApnsCredential.properties.certificateKey
-        /// </summary>
+        /// <summary> The APNS certificate password if it exists. </summary>
         public string CertificateKey { get; set; }
-        /// <summary>
-        /// The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;.
-        /// Serialized Name: ApnsCredential.properties.endpoint
-        /// </summary>
+        /// <summary> The APNS endpoint of this credential. If using Certificate Authentication Mode and Sandbox specify &apos;gateway.sandbox.push.apple.com&apos;. If using Certificate Authentication Mode and Production specify &apos;gateway.push.apple.com&apos;. If using Token Authentication Mode and Sandbox specify &apos;https://api.development.push.apple.com:443/3/device&apos;. If using Token Authentication Mode and Production specify &apos;https://api.push.apple.com:443/3/device&apos;. </summary>
         public Uri Endpoint { get; set; }
-        /// <summary>
-        /// The APNS certificate thumbprint. Specify if using Certificate Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.thumbprint
-        /// </summary>
+        /// <summary> The APNS certificate thumbprint. Specify if using Certificate Authentication Mode. </summary>
         public BinaryData Thumbprint { get; set; }
-        /// <summary>
-        /// A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.keyId
-        /// </summary>
+        /// <summary> A 10-character key identifier (kid) key, obtained from your developer account. Specify if using Token Authentication Mode. </summary>
         public string KeyId { get; set; }
-        /// <summary>
-        /// The name of the application or BundleId. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.appName
-        /// </summary>
+        /// <summary> The name of the application or BundleId. Specify if using Token Authentication Mode. </summary>
         public string AppName { get; set; }
-        /// <summary>
-        /// The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.appId
-        /// </summary>
+        /// <summary> The issuer (iss) registered claim key. The value is a 10-character TeamId, obtained from your developer account. Specify if using Token Authentication Mode. </summary>
         public string AppId { get; set; }
-        /// <summary>
-        /// Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode.
-        /// Serialized Name: ApnsCredential.properties.token
-        /// </summary>
+        /// <summary> Provider Authentication Token, obtained through your developer account. Specify if using Token Authentication Mode. </summary>
         public string Token { get; set; }
     }
 }

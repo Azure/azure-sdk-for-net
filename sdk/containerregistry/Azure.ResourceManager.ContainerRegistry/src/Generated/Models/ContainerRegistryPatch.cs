@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The identity of the container registry. </summary>
-        public ContainerRegistryManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The tags for the container registry. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The SKU of the container registry. </summary>

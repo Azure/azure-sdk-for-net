@@ -18,6 +18,7 @@ modelerfour:
 
 rename-mapping:
   AffectedMoveResource.id: -|arm-id
+  AutomaticResolutionProperties.moveResourceId: -|arm-id
   AzureResourceReference.sourceArmResourceId: -|arm-id
   LBFrontendIPConfigurationResourceSettings.privateIpAddress: -|ip-address
   ManualResolutionProperties.targetId: -|arm-id
