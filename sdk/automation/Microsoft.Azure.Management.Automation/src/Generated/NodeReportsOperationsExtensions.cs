@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Management.Automation
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Azure.OData;
     using Models;
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -149,7 +150,7 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='reportId'>
             /// The report id.
             /// </param>
-            public static object GetContent(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
+            public static String GetContent(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
             {
                 return operations.GetContentAsync(resourceGroupName, automationAccountName, nodeId, reportId).GetAwaiter().GetResult();
             }
@@ -176,7 +177,7 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetContentAsync(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<String> GetContentAsync(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeId, reportId, null, cancellationToken).ConfigureAwait(false))
                 {
