@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
-            var apiCollection = ApiServiceResource.GetApis();
             var versionCollection = ApiServiceResource.GetApiVersionSets();
 
             // there is no api-version-set initially
