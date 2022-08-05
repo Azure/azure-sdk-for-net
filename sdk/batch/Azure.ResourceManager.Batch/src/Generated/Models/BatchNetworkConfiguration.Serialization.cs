@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element)
         {
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             Optional<DynamicVNetAssignmentScope> dynamicVNetAssignmentScope = default;
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;
             Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
@@ -48,7 +48,12 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dynamicVNetAssignmentScope"))

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The direction for the resource provider connection.
-    /// Serialized Name: ResourceProviderConnection
-    /// </summary>
+    /// <summary> The direction for the resource provider connection. </summary>
     public readonly partial struct HDInsightResourceProviderConnection : IEquatable<HDInsightResourceProviderConnection>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string InboundValue = "Inbound";
         private const string OutboundValue = "Outbound";
 
-        /// <summary>
-        /// Inbound
-        /// Serialized Name: ResourceProviderConnection.Inbound
-        /// </summary>
+        /// <summary> Inbound. </summary>
         public static HDInsightResourceProviderConnection Inbound { get; } = new HDInsightResourceProviderConnection(InboundValue);
-        /// <summary>
-        /// Outbound
-        /// Serialized Name: ResourceProviderConnection.Outbound
-        /// </summary>
+        /// <summary> Outbound. </summary>
         public static HDInsightResourceProviderConnection Outbound { get; } = new HDInsightResourceProviderConnection(OutboundValue);
         /// <summary> Determines if two <see cref="HDInsightResourceProviderConnection"/> values are the same. </summary>
         public static bool operator ==(HDInsightResourceProviderConnection left, HDInsightResourceProviderConnection right) => left.Equals(right);

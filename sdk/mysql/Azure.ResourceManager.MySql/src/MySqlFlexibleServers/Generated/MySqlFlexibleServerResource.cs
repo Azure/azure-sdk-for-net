@@ -627,11 +627,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="mySqlFlexibleServerConfigurationListForBatchUpdate"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerConfigurationListForBatchUpdate"/> is null. </exception>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurationListResult>> BatchUpdateConfigurationAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerConfigurationListResult>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerConfigurationListForBatchUpdate, nameof(mySqlFlexibleServerConfigurationListForBatchUpdate));
 
-            using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerResource.BatchUpdateConfiguration");
+            using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerResource.UpdateConfigurations");
             scope.Start();
             try
             {
@@ -657,11 +657,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="mySqlFlexibleServerConfigurationListForBatchUpdate"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mySqlFlexibleServerConfigurationListForBatchUpdate"/> is null. </exception>
-        public virtual ArmOperation<MySqlFlexibleServerConfigurationListResult> BatchUpdateConfiguration(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerConfigurationListResult> UpdateConfigurations(WaitUntil waitUntil, MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(mySqlFlexibleServerConfigurationListForBatchUpdate, nameof(mySqlFlexibleServerConfigurationListForBatchUpdate));
 
-            using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerResource.BatchUpdateConfiguration");
+            using var scope = _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlFlexibleServerResource.UpdateConfigurations");
             scope.Start();
             try
             {

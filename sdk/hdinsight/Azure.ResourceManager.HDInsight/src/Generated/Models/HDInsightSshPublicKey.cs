@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The SSH public key for the cluster nodes.
-    /// Serialized Name: SshPublicKey
-    /// </summary>
+    /// <summary> The SSH public key for the cluster nodes. </summary>
     public partial class HDInsightSshPublicKey
     {
         /// <summary> Initializes a new instance of HDInsightSshPublicKey. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightSshPublicKey. </summary>
-        /// <param name="certificateData">
-        /// The certificate for SSH.
-        /// Serialized Name: SshPublicKey.certificateData
-        /// </param>
+        /// <param name="certificateData"> The certificate for SSH. </param>
         internal HDInsightSshPublicKey(string certificateData)
         {
             CertificateData = certificateData;
         }
 
-        /// <summary>
-        /// The certificate for SSH.
-        /// Serialized Name: SshPublicKey.certificateData
-        /// </summary>
+        /// <summary> The certificate for SSH. </summary>
         public string CertificateData { get; set; }
     }
 }

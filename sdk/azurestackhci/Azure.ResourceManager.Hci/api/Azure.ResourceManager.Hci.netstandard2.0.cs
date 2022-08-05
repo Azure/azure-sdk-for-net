@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci
         public string ArcInstanceResourceGroup { get { throw null; } set { } }
         public System.Guid? ArcServicePrincipalObjectId { get { throw null; } set { } }
         public System.BinaryData ConnectivityProperties { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeState> PerNodeDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeArcState> PerNodeDetails { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.HciProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ArcSettingResource : Azure.ResourceManager.ArmResource
@@ -440,19 +440,19 @@ namespace Azure.ResourceManager.Hci.Models
         public static bool operator !=(Azure.ResourceManager.Hci.Models.NodeExtensionState left, Azure.ResourceManager.Hci.Models.NodeExtensionState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PerNodeArcState
+    {
+        internal PerNodeArcState() { }
+        public string ArcInstance { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Hci.Models.NodeArcState? State { get { throw null; } }
+    }
     public partial class PerNodeExtensionState
     {
         internal PerNodeExtensionState() { }
         public string Extension { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.NodeExtensionState? State { get { throw null; } }
-    }
-    public partial class PerNodeState
-    {
-        internal PerNodeState() { }
-        public string ArcInstance { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Hci.Models.NodeArcState? State { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WindowsServerSubscription : System.IEquatable<Azure.ResourceManager.Hci.Models.WindowsServerSubscription>

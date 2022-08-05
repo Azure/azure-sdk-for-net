@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<bool> initialSyncComplete = default;
             Optional<bool> ldapsEnabled = default;
             Optional<string> ldapsPublicCertificateInBase64 = default;
-            Optional<string> resourceId = default;
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,12 +56,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tenantId"))

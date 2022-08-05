@@ -16,9 +16,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -85,6 +82,8 @@ rename-mapping:
   ValidationErrorInfo: HDInsightClusterValidationErrorInfo
   AaddsResourceDetails.initialSyncComplete: IsInitialSyncComplete
   AaddsResourceDetails.ldapsEnabled: IsLdapsEnabled
+  AaddsResourceDetails.resourceId: -|arm-id
+  AaddsResourceDetails.subnetId: -|arm-id
   AsyncOperationResult: HDInsightAsyncOperationResult
   AsyncOperationState: HDInsightAsyncOperationState
   ApplicationProperties: HDInsightApplicationProperties
@@ -146,6 +145,8 @@ rename-mapping:
   RuntimeScriptActionDetail.startTime: -|datetime
   RuntimeScriptActionDetail.endTime: -|datetime
   DaysOfWeek: HDInsightDayOfWeek
+  DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
+  DirectoryType: AuthenticationDirectoryType
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2

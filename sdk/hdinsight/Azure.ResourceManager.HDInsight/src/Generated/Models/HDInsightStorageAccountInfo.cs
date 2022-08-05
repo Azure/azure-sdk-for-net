@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The storage Account.
-    /// Serialized Name: StorageAccount
-    /// </summary>
+    /// <summary> The storage Account. </summary>
     public partial class HDInsightStorageAccountInfo
     {
         /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
@@ -21,42 +18,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
-        /// <param name="name">
-        /// The name of the storage account.
-        /// Serialized Name: StorageAccount.name
-        /// </param>
-        /// <param name="isDefault">
-        /// Whether or not the storage account is the default storage account.
-        /// Serialized Name: StorageAccount.isDefault
-        /// </param>
-        /// <param name="container">
-        /// The container in the storage account, only to be specified for WASB storage accounts.
-        /// Serialized Name: StorageAccount.container
-        /// </param>
-        /// <param name="fileSystem">
-        /// The filesystem, only to be specified for Azure Data Lake Storage Gen 2.
-        /// Serialized Name: StorageAccount.fileSystem
-        /// </param>
-        /// <param name="key">
-        /// The storage account access key.
-        /// Serialized Name: StorageAccount.key
-        /// </param>
-        /// <param name="resourceId">
-        /// The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2.
-        /// Serialized Name: StorageAccount.resourceId
-        /// </param>
-        /// <param name="msiResourceId">
-        /// The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2.
-        /// Serialized Name: StorageAccount.msiResourceId
-        /// </param>
-        /// <param name="sasKey">
-        /// The shared access signature key.
-        /// Serialized Name: StorageAccount.saskey
-        /// </param>
-        /// <param name="fileshare">
-        /// The file share name.
-        /// Serialized Name: StorageAccount.fileshare
-        /// </param>
+        /// <param name="name"> The name of the storage account. </param>
+        /// <param name="isDefault"> Whether or not the storage account is the default storage account. </param>
+        /// <param name="container"> The container in the storage account, only to be specified for WASB storage accounts. </param>
+        /// <param name="fileSystem"> The filesystem, only to be specified for Azure Data Lake Storage Gen 2. </param>
+        /// <param name="key"> The storage account access key. </param>
+        /// <param name="resourceId"> The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2. </param>
+        /// <param name="msiResourceId"> The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2. </param>
+        /// <param name="sasKey"> The shared access signature key. </param>
+        /// <param name="fileshare"> The file share name. </param>
         internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, string sasKey, string fileshare)
         {
             Name = name;
@@ -70,50 +40,23 @@ namespace Azure.ResourceManager.HDInsight.Models
             Fileshare = fileshare;
         }
 
-        /// <summary>
-        /// The name of the storage account.
-        /// Serialized Name: StorageAccount.name
-        /// </summary>
+        /// <summary> The name of the storage account. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Whether or not the storage account is the default storage account.
-        /// Serialized Name: StorageAccount.isDefault
-        /// </summary>
+        /// <summary> Whether or not the storage account is the default storage account. </summary>
         public bool? IsDefault { get; set; }
-        /// <summary>
-        /// The container in the storage account, only to be specified for WASB storage accounts.
-        /// Serialized Name: StorageAccount.container
-        /// </summary>
+        /// <summary> The container in the storage account, only to be specified for WASB storage accounts. </summary>
         public string Container { get; set; }
-        /// <summary>
-        /// The filesystem, only to be specified for Azure Data Lake Storage Gen 2.
-        /// Serialized Name: StorageAccount.fileSystem
-        /// </summary>
+        /// <summary> The filesystem, only to be specified for Azure Data Lake Storage Gen 2. </summary>
         public string FileSystem { get; set; }
-        /// <summary>
-        /// The storage account access key.
-        /// Serialized Name: StorageAccount.key
-        /// </summary>
+        /// <summary> The storage account access key. </summary>
         public string Key { get; set; }
-        /// <summary>
-        /// The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2.
-        /// Serialized Name: StorageAccount.resourceId
-        /// </summary>
+        /// <summary> The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2. </summary>
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2.
-        /// Serialized Name: StorageAccount.msiResourceId
-        /// </summary>
+        /// <summary> The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2. </summary>
         public ResourceIdentifier MsiResourceId { get; set; }
-        /// <summary>
-        /// The shared access signature key.
-        /// Serialized Name: StorageAccount.saskey
-        /// </summary>
+        /// <summary> The shared access signature key. </summary>
         public string SasKey { get; set; }
-        /// <summary>
-        /// The file share name.
-        /// Serialized Name: StorageAccount.fileshare
-        /// </summary>
+        /// <summary> The file share name. </summary>
         public string Fileshare { get; set; }
     }
 }
