@@ -7,14 +7,13 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Automanage.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
@@ -22,21 +21,21 @@ namespace Azure.ResourceManager.Automanage
     /// A Class representing a ConfigurationProfileAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfigurationProfileAssignmentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetConfigurationProfileAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConfigurationProfileAssignment method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetConfigurationProfileAssignment method.
     /// </summary>
     public partial class ConfigurationProfileAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfigurationProfileAssignmentResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string configurationProfileAssignmentName)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string configurationProfileAssignmentName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}";
+            var resourceId = $"{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}";
             return new ResourceIdentifier(resourceId);
         }
 
         private readonly ClientDiagnostics _configurationProfileAssignmentClientDiagnostics;
         private readonly ConfigurationProfileAssignmentsRestOperations _configurationProfileAssignmentRestClient;
-        private readonly ClientDiagnostics _reportreportsClientDiagnostics;
-        private readonly ReportsRestOperations _reportreportsRestClient;
+        private readonly ClientDiagnostics _reportsClientDiagnostics;
+        private readonly ReportsRestOperations _reportsRestClient;
         private readonly ConfigurationProfileAssignmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ConfigurationProfileAssignmentResource"/> class for mocking. </summary>
@@ -61,9 +60,8 @@ namespace Azure.ResourceManager.Automanage
             _configurationProfileAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string configurationProfileAssignmentApiVersion);
             _configurationProfileAssignmentRestClient = new ConfigurationProfileAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationProfileAssignmentApiVersion);
-            _reportreportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ReportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReportResource.ResourceType, out string reportreportsApiVersion);
-            _reportreportsRestClient = new ReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reportreportsApiVersion);
+            _reportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automanage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _reportsRestClient = new ReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -93,105 +91,68 @@ namespace Azure.ResourceManager.Automanage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ReportResources in the ConfigurationProfileAssignment. </summary>
-        /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
-        public virtual ReportCollection GetReports()
-        {
-            return GetCachedClient(Client => new ReportCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get information about a report associated with a configuration profile assignment run
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
-        /// Operation Id: HCIReports_Get
-        /// </summary>
-        /// <param name="reportName"> The report name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReportResource>> GetReportAsync(string reportName, CancellationToken cancellationToken = default)
-        {
-            return await GetReports().GetAsync(reportName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information about a report associated with a configuration profile assignment run
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
-        /// Operation Id: HCIReports_Get
-        /// </summary>
-        /// <param name="reportName"> The report name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ReportResource> GetReport(string reportName, CancellationToken cancellationToken = default)
-        {
-            return GetReports().Get(reportName, cancellationToken);
-        }
-
         /// <summary>
         /// Get information about a configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigurationProfileAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
-            scope.Start();
+            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
+            scope0.Start();
             try
             {
-                var response = await _configurationProfileAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationProfileAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Get information about a configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigurationProfileAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
-            scope.Start();
+            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Get");
+            scope0.Start();
             try
             {
-                var response = _configurationProfileAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _configurationProfileAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ConfigurationProfileAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Delete a configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
-            scope.Start();
+            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
+            scope0.Start();
             try
             {
-                var response = await _configurationProfileAssignmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationProfileAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AutomanageArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -199,25 +160,25 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Delete a configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
-            scope.Start();
+            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Delete");
+            scope0.Start();
             try
             {
-                var response = _configurationProfileAssignmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _configurationProfileAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
                 var operation = new AutomanageArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -225,14 +186,14 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Creates an association between a VM and Automanage configuration profile
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -243,11 +204,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
-            scope.Start();
+            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
+            scope0.Start();
             try
             {
-                var response = await _configurationProfileAssignmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _configurationProfileAssignmentRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 var operation = new AutomanageArmOperation<ConfigurationProfileAssignmentResource>(Response.FromValue(new ConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -255,14 +216,14 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Creates an association between a VM and Automanage configuration profile
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -273,11 +234,11 @@ namespace Azure.ResourceManager.Automanage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
-            scope.Start();
+            using var scope0 = _configurationProfileAssignmentClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.Update");
+            scope0.Start();
             try
             {
-                var response = _configurationProfileAssignmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _configurationProfileAssignmentRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
                 var operation = new AutomanageArmOperation<ConfigurationProfileAssignmentResource>(Response.FromValue(new ConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -285,117 +246,63 @@ namespace Azure.ResourceManager.Automanage
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Get information about a report associated with a configuration profile assignment run
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
         /// Operation Id: reports_Get
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        public virtual async Task<Response<ReportResource>> GetReportAsync(string reportName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Report>> GetReportAsync(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _reportreportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
-            scope.Start();
+            using var scope0 = _reportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
+            scope0.Start();
             try
             {
-                var response = await _reportreportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ReportResource(Client, response.Value), response.GetRawResponse());
+                var response = await _reportsRestClient.GetAsync(Id.Parent, Id.Name, reportName, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
 
         /// <summary>
         /// Get information about a report associated with a configuration profile assignment run
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
         /// Operation Id: reports_Get
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
-        public virtual Response<ReportResource> GetReport(string reportName, CancellationToken cancellationToken = default)
+        public virtual Response<Report> GetReport(string reportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
-            using var scope = _reportreportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
-            scope.Start();
+            using var scope0 = _reportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReport");
+            scope0.Start();
             try
             {
-                var response = _reportreportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken);
-                return Response.FromValue(new ReportResource(Client, response.Value), response.GetRawResponse());
+                var response = _reportsRestClient.Get(Id.Parent, Id.Name, reportName, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: reports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportResource> GetReportsByConfigurationProfileAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ReportResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportreportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await _reportreportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: reports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportResource> GetReportsByConfigurationProfileAssignments(CancellationToken cancellationToken = default)
-        {
-            Page<ReportResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _reportreportsClientDiagnostics.CreateScope("ConfigurationProfileAssignmentResource.GetReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = _reportreportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automanage
@@ -110,32 +111,6 @@ namespace Azure.ResourceManager.Automanage
             return GetExtensionClient(subscriptionResource).GetConfigurationProfiles(cancellationToken);
         }
 
-        /// <summary>
-        /// Get list of configuration profile assignments under a given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfileAssignmentsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get list of configuration profile assignments under a given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfileAssignments(cancellationToken);
-        }
-
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient((client) =>
@@ -185,23 +160,30 @@ namespace Azure.ResourceManager.Automanage
             return resourceGroupResource.GetConfigurationProfiles().Get(configurationProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileAssignmentResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
+        /// Operation Id: reports_ListByConfigurationProfileAssignments
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        /// <returns> An object representing collection of ConfigurationProfileAssignmentResources and their operations over a ConfigurationProfileAssignmentResource. </returns>
-        public static ConfigurationProfileAssignmentCollection GetConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string vmName)
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Report> GetReportsByConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
 
-            return GetExtensionClient(resourceGroupResource).GetConfigurationProfileAssignments(vmName);
+            return GetExtensionClient(resourceGroupResource).GetReportsByConfigurationProfileAssignmentsAsync(vmName, configurationProfileAssignmentName, cancellationToken);
         }
 
         /// <summary>
-        /// Get information about a configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
-        /// Operation Id: ConfigurationProfileAssignments_Get
+        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
+        /// Operation Id: reports_ListByConfigurationProfileAssignments
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
@@ -209,53 +191,142 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationProfileAssignmentResource>> GetConfigurationProfileAssignmentAsync(this ResourceGroupResource resourceGroupResource, string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Report> GetReportsByConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConfigurationProfileAssignments(vmName).GetAsync(configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            return GetExtensionClient(resourceGroupResource).GetReportsByConfigurationProfileAssignments(vmName, configurationProfileAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
+        /// Operation Id: HCRPReports_ListByConfigurationProfileAssignments
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="machineName"> The name of the Arc machine. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Report> GetHCRPReportsByConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            return GetExtensionClient(resourceGroupResource).GetHCRPReportsByConfigurationProfileAssignmentsAsync(machineName, configurationProfileAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
+        /// Operation Id: HCRPReports_ListByConfigurationProfileAssignments
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="machineName"> The name of the Arc machine. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Report> GetHCRPReportsByConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            return GetExtensionClient(resourceGroupResource).GetHCRPReportsByConfigurationProfileAssignments(machineName, configurationProfileAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
+        /// Operation Id: HCIReports_ListByConfigurationProfileAssignments
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="clusterName"> The name of the Arc machine. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<Report> GetHCIReportsByConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            return GetExtensionClient(resourceGroupResource).GetHCIReportsByConfigurationProfileAssignmentsAsync(clusterName, configurationProfileAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of reports within a given configuration profile assignment
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
+        /// Operation Id: HCIReports_ListByConfigurationProfileAssignments
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="clusterName"> The name of the Arc machine. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<Report> GetHCIReportsByConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+
+            return GetExtensionClient(resourceGroupResource).GetHCIReportsByConfigurationProfileAssignments(clusterName, configurationProfileAssignmentName, cancellationToken);
+        }
+
+        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        {
+            return armResource.GetCachedClient((client) =>
+            {
+                return new ArmResourceExtensionClient(client, armResource.Id);
+            }
+            );
+        }
+
+        /// <summary> Gets a collection of ConfigurationProfileAssignmentResources in the ArmResource. </summary>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ConfigurationProfileAssignmentResources and their operations over a ConfigurationProfileAssignmentResource. </returns>
+        public static ConfigurationProfileAssignmentCollection GetConfigurationProfileAssignments(this ArmResource armResource)
+        {
+            return GetExtensionClient(armResource).GetConfigurationProfileAssignments();
         }
 
         /// <summary>
         /// Get information about a configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
         /// Operation Id: ConfigurationProfileAssignments_Get
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignment(this ResourceGroupResource resourceGroupResource, string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfigurationProfileAssignmentResource>> GetConfigurationProfileAssignmentAsync(this ArmResource armResource, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConfigurationProfileAssignments(vmName).Get(configurationProfileAssignmentName, cancellationToken);
+            return await armResource.GetConfigurationProfileAssignments().GetAsync(configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get list of configuration profile assignments
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_List
+        /// Get information about a configuration profile assignment
+        /// Request Path: /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}
+        /// Operation Id: ConfigurationProfileAssignments_Get
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
+        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignmentsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileAssignmentName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignment(this ArmResource armResource, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationProfileAssignmentsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get list of configuration profile assignments
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_List
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignments(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationProfileAssignments(cancellationToken);
+            return armResource.GetConfigurationProfileAssignments().Get(configurationProfileAssignmentName, cancellationToken);
         }
 
         #region BestPracticeResource
@@ -367,25 +438,6 @@ namespace Azure.ResourceManager.Automanage
             {
                 ServicePrincipalResource.ValidateResourceId(id);
                 return new ServicePrincipalResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ReportResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ReportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReportResource.CreateResourceIdentifier" /> to create a <see cref="ReportResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReportResource" /> object. </returns>
-        public static ReportResource GetReportResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ReportResource.ValidateResourceId(id);
-                return new ReportResource(client, id);
             }
             );
         }

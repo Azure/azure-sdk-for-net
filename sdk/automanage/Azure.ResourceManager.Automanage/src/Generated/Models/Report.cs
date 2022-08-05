@@ -9,21 +9,20 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Models
 {
-    /// <summary> A class representing the Report data model. </summary>
-    public partial class ReportData : ResourceData
+    /// <summary> Definition of the report. </summary>
+    public partial class Report : ResourceData
     {
-        /// <summary> Initializes a new instance of ReportData. </summary>
-        public ReportData()
+        /// <summary> Initializes a new instance of Report. </summary>
+        public Report()
         {
-            Resources = new ChangeTrackingList<Models.ReportResource>();
+            Resources = new ChangeTrackingList<ReportResource>();
         }
 
-        /// <summary> Initializes a new instance of ReportData. </summary>
+        /// <summary> Initializes a new instance of Report. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="resources"> List of resources processed by the configuration profile assignment. </param>
         /// <param name="error"> Error message, if any, returned by the configuration profile assignment processing. </param>
         /// <param name="reportFormatVersion"> Version of the report format. </param>
-        internal ReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startTime, string endTime, string lastModifiedTime, TimeSpan? duration, string typePropertiesType, string status, string configurationProfile, IReadOnlyList<Models.ReportResource> resources, ResponseError error, string reportFormatVersion) : base(id, name, resourceType, systemData)
+        internal Report(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startTime, string endTime, string lastModifiedTime, TimeSpan? duration, string typePropertiesType, string status, string configurationProfile, IReadOnlyList<ReportResource> resources, ResponseError error, string reportFormatVersion) : base(id, name, resourceType, systemData)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Automanage
         /// <summary> The configurationProfile linked to the assignment. </summary>
         public string ConfigurationProfile { get; }
         /// <summary> List of resources processed by the configuration profile assignment. </summary>
-        public IReadOnlyList<Models.ReportResource> Resources { get; }
+        public IReadOnlyList<ReportResource> Resources { get; }
         /// <summary> Error message, if any, returned by the configuration profile assignment processing. </summary>
         public ResponseError Error { get; }
         /// <summary> Version of the report format. </summary>

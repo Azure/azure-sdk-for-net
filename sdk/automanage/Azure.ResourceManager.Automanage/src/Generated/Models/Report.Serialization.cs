@@ -10,12 +10,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Automanage
+namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class ReportData : IUtf8JsonSerializable
+    public partial class Report : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.Automanage
             writer.WriteEndObject();
         }
 
-        internal static ReportData DeserializeReportData(JsonElement element)
+        internal static Report DeserializeReport(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Automanage
             Optional<string> type0 = default;
             Optional<string> status = default;
             Optional<string> configurationProfile = default;
-            Optional<IReadOnlyList<Models.ReportResource>> resources = default;
+            Optional<IReadOnlyList<ReportResource>> resources = default;
             Optional<ResponseError> error = default;
             Optional<string> reportFormatVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -135,10 +134,10 @@ namespace Azure.ResourceManager.Automanage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.ReportResource> array = new List<Models.ReportResource>();
+                            List<ReportResource> array = new List<ReportResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ReportResource.DeserializeReportResource(item));
+                                array.Add(ReportResource.DeserializeReportResource(item));
                             }
                             resources = array;
                             continue;
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Automanage
                     continue;
                 }
             }
-            return new ReportData(id, name, type, systemData.Value, startTime.Value, endTime.Value, lastModifiedTime.Value, Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
+            return new Report(id, name, type, systemData.Value, startTime.Value, endTime.Value, lastModifiedTime.Value, Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
         }
     }
 }

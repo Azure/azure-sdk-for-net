@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Automanage
     {
         private ClientDiagnostics _configurationProfileClientDiagnostics;
         private ConfigurationProfilesRestOperations _configurationProfileRestClient;
-        private ClientDiagnostics _configurationProfileAssignmentClientDiagnostics;
-        private ConfigurationProfileAssignmentsRestOperations _configurationProfileAssignmentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,8 +36,6 @@ namespace Azure.ResourceManager.Automanage
 
         private ClientDiagnostics ConfigurationProfileClientDiagnostics => _configurationProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ConfigurationProfileResource.ResourceType.Namespace, Diagnostics);
         private ConfigurationProfilesRestOperations ConfigurationProfileRestClient => _configurationProfileRestClient ??= new ConfigurationProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationProfileResource.ResourceType));
-        private ClientDiagnostics ConfigurationProfileAssignmentClientDiagnostics => _configurationProfileAssignmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ConfigurationProfileAssignmentResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationProfileAssignmentsRestOperations ConfigurationProfileAssignmentRestClient => _configurationProfileAssignmentRestClient ??= new ConfigurationProfileAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationProfileAssignmentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -98,60 +94,6 @@ namespace Azure.ResourceManager.Automanage
                 {
                     var response = ConfigurationProfileRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get list of configuration profile assignments under a given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ConfigurationProfileAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationProfileAssignmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationProfileAssignmentRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get list of configuration profile assignments under a given subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfileAssignments
-        /// Operation Id: ConfigurationProfileAssignments_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationProfileAssignmentResource> GetConfigurationProfileAssignments(CancellationToken cancellationToken = default)
-        {
-            Page<ConfigurationProfileAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationProfileAssignmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationProfileAssignmentRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileAssignmentResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
