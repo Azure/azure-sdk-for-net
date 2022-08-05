@@ -77,8 +77,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(getTopicResponse.Name, topicName);                
 
                 // Create a topic AuthorizationRule
-                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
-                string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
+                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);                
                 var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
                     Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
@@ -148,81 +147,43 @@ namespace ServiceBus.Tests.ScenarioTests
                 
                 var regeneratePrimaryKeysTopicsResposnse = ServiceBusManagementClient.Topics.RegenerateKeys(resourceGroup, namespaceName, topicName, authorizationRuleName, regenerateKeysTopicsParameters);
 
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                {
-                    Assert.Equal("Sanitized", regeneratePrimaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.Equal("Sanitized", regeneratePrimaryKeysTopicsResposnse.SecondaryKey);
-                }
-
-                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                {
-                    Assert.NotEqual(listKeysTopicsResponse.PrimaryKey, regeneratePrimaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.Equal(listKeysTopicsResponse.SecondaryKey, regeneratePrimaryKeysTopicsResposnse.SecondaryKey);
-                }
+                Assert.NotEqual(listKeysTopicsResponse.PrimaryKey, regeneratePrimaryKeysTopicsResposnse.PrimaryKey);
+                Assert.Equal(listKeysTopicsResponse.SecondaryKey, regeneratePrimaryKeysTopicsResposnse.SecondaryKey);
 
                 listKeysTopicsResponse = regeneratePrimaryKeysTopicsResposnse;
                 
                 var regenerateSecondaryKeysTopicsResposnse = ServiceBusManagementClient.Topics.RegenerateKeys(resourceGroup, namespaceName, topicName, authorizationRuleName, new RegenerateAccessKeyParameters() { KeyType = KeyType.SecondaryKey });
                 
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                {
-                    Assert.Equal("Sanitized", regenerateSecondaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.Equal("Sanitized", regenerateSecondaryKeysTopicsResposnse.SecondaryKey);
-                }
-
-                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                {
-                    Assert.Equal(listKeysTopicsResponse.PrimaryKey, regenerateSecondaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.NotEqual(listKeysTopicsResponse.SecondaryKey, regenerateSecondaryKeysTopicsResposnse.SecondaryKey);
-                }
+                Assert.Equal(listKeysTopicsResponse.PrimaryKey, regenerateSecondaryKeysTopicsResposnse.PrimaryKey);
+                Assert.NotEqual(listKeysTopicsResponse.SecondaryKey, regenerateSecondaryKeysTopicsResposnse.SecondaryKey);
 
                 listKeysTopicsResponse = regenerateSecondaryKeysTopicsResposnse;
-
-                string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
+                              
 
                 RegenerateAccessKeyParameters keyObject = new RegenerateAccessKeyParameters()
                 {
-                    Key = updatePrimaryKey,
+                    Key = ServiceBusManagementHelper.GenerateRandomKey(),
                     KeyType = KeyType.PrimaryKey
                 };
 
                 regeneratePrimaryKeysTopicsResposnse = ServiceBusManagementClient.Topics.RegenerateKeys(resourceGroup, namespaceName, topicName, authorizationRuleName, keyObject);
 
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                {
-                    Assert.Equal("Sanitized", regeneratePrimaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.Equal("Sanitized", regeneratePrimaryKeysTopicsResposnse.SecondaryKey);
-                }
-
-                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                {
-                    Assert.Equal(updatePrimaryKey, regeneratePrimaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.Equal(listKeysTopicsResponse.SecondaryKey, regeneratePrimaryKeysTopicsResposnse.SecondaryKey);
-                }
+                Assert.Equal(keyObject.Key, regeneratePrimaryKeysTopicsResposnse.PrimaryKey);
+                Assert.Equal(listKeysTopicsResponse.SecondaryKey, regeneratePrimaryKeysTopicsResposnse.SecondaryKey);
+                
 
                 listKeysTopicsResponse = regeneratePrimaryKeysTopicsResposnse;
-
-                string updateSecondaryKey = HttpMockServer.GetVariable("UpdateSecondaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-
+                                
                 keyObject = new RegenerateAccessKeyParameters()
                 {
-                    Key = updateSecondaryKey,
+                    Key = ServiceBusManagementHelper.GenerateRandomKey(),
                     KeyType = KeyType.SecondaryKey
                 };
 
                 regenerateSecondaryKeysTopicsResposnse = ServiceBusManagementClient.Topics.RegenerateKeys(resourceGroup, namespaceName, topicName, authorizationRuleName, keyObject);
-
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                {
-                    Assert.Equal("Sanitized", regenerateSecondaryKeysTopicsResposnse.PrimaryKey);
-                    Assert.Equal("Sanitized", regenerateSecondaryKeysTopicsResposnse.SecondaryKey);
-                }
-
-                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                {
-                    Assert.Equal(updateSecondaryKey, regenerateSecondaryKeysTopicsResposnse.SecondaryKey);
-                    Assert.Equal(listKeysTopicsResponse.PrimaryKey, regenerateSecondaryKeysTopicsResposnse.PrimaryKey);
-                }
+                Assert.Equal(keyObject.Key, regenerateSecondaryKeysTopicsResposnse.SecondaryKey);
+                Assert.Equal(listKeysTopicsResponse.PrimaryKey, regenerateSecondaryKeysTopicsResposnse.PrimaryKey);
+                
 
                 // Delete Topic authorizationRule
                 ServiceBusManagementClient.Topics.DeleteAuthorizationRule(resourceGroup, namespaceName, topicName, authorizationRuleName);
