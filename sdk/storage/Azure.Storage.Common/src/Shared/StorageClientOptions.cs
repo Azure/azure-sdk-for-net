@@ -103,14 +103,19 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="geoRedundantReadMode">How to treat a secondary URI on reads.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            HttpPipelinePolicy authentication = null,
+            Uri geoRedundantSecondaryStorageUri = null,
+            GeoRedundantReadMode geoRedundantReadMode = default)
         {
             List<HttpPipelinePolicy> perRetryClientPolicies = new();
             StorageResponseClassifier classifier = new();
             if (geoRedundantSecondaryStorageUri != null)
             {
-                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
+                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri, geoRedundantReadMode));
                 classifier.SecondaryStorageUri = geoRedundantSecondaryStorageUri;
             }
 
@@ -130,8 +135,17 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="geoRedundantReadMode">How to treat a secondary URI on reads.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            object credentials,
+            Uri geoRedundantSecondaryStorageUri = null,
+            GeoRedundantReadMode geoRedundantReadMode = default) =>
+            Build(
+                options,
+                GetAuthenticationPolicy(credentials),
+                geoRedundantSecondaryStorageUri,
+                geoRedundantReadMode);
     }
 }

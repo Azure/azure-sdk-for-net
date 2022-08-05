@@ -25,7 +25,7 @@ namespace Azure.Storage.Tests
                     SecondaryStorageUri = MockSecondaryUri
                 });
 
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
+            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, GeoRedundantReadMode.PrimaryThenSecondary);
 
             policy.OnSendingRequest(message);
 
@@ -45,7 +45,7 @@ namespace Azure.Storage.Tests
                 });
 
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
+            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, GeoRedundantReadMode.PrimaryThenSecondary);
 
             policy.OnSendingRequest(message);
 
@@ -65,7 +65,7 @@ namespace Azure.Storage.Tests
                 });
 
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockPrimaryUri.Host);
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
+            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, GeoRedundantReadMode.PrimaryThenSecondary);
 
             policy.OnSendingRequest(message);
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Tests
                     Response = new MockResponse(Constants.HttpStatusCode.NotFound)
                 };
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
+            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, GeoRedundantReadMode.PrimaryThenSecondary);
 
             policy.OnSendingRequest(message);
 
@@ -108,7 +108,7 @@ namespace Azure.Storage.Tests
 
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             message.SetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, true);
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
+            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, GeoRedundantReadMode.PrimaryThenSecondary);
 
             policy.OnSendingRequest(message);
 
@@ -127,7 +127,7 @@ namespace Azure.Storage.Tests
                     SecondaryStorageUri = MockSecondaryUri
                 });
 
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
+            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, GeoRedundantReadMode.PrimaryThenSecondary);
 
             policy.OnSendingRequest(message);
 
