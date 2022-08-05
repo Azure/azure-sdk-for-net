@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="payload"> The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </param>
         /// <param name="payloadUri"> The SAS URL to a blob containing the JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </param>
-        internal RawStreamInputDataSource(string streamInputDataSourceType, string payload, Uri payloadUri) : base(streamInputDataSourceType)
+        internal RawStreamInputDataSource(string streamInputDataSourceType, BinaryData payload, Uri payloadUri) : base(streamInputDataSourceType)
         {
             Payload = payload;
             PayloadUri = payloadUri;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </summary>
-        public string Payload { get; set; }
+        public BinaryData Payload { get; set; }
         /// <summary> The SAS URL to a blob containing the JSON serialized content of the input data. Either payload or payloadUri must be set, but not both. </summary>
         public Uri PayloadUri { get; set; }
     }

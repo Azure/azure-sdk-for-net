@@ -26,6 +26,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'sessionId': 'uuid'
@@ -58,6 +59,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Five6: FivePointSix
+  Five7: FivePointSeven
+  Eight0: EightPointZero
 
 prepend-rp-prefix:
   - Advisor
@@ -76,7 +80,6 @@ prepend-rp-prefix:
   - AdministratorType
   - AdvisorResultList
   - ConfigurationListContent
-  - ConfigurationListResult
   - CreateMode
   - DatabaseListResult
   - FirewallRuleListResult
@@ -119,6 +122,8 @@ prepend-rp-prefix:
   - WaitStatisticsInput
 rename-mapping:
   ServerAdministratorResource: MySqlServerAdministrator
+  ServerAdministratorResource.properties.login: LoginAccountName
+  ServerAdministratorResource.properties.sid: SecureId
   ServerAdministratorResourceListResult: MySqlServerAdministratorListResult
   AdvisorsResultList: MySqlAdvisorListResult
   QueryTextsResultList: MySqlQueryTextListResult
@@ -127,8 +132,7 @@ rename-mapping:
   WaitStatisticsResultList: MySqlWaitStatisticsListResult
   PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
   RecoverableServerResource: MySqlRecoverableServerResourceData
-  RecommendationAction.properties.expirationTime: ExpireOn
-  ServerKey.properties.creationDate: CreatedOn
+  RecoverableServerResource.properties.vCore: VCores
   ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
   NameAvailability.nameAvailable: IsNameAvailable
   StorageProfile.storageMB: StorageInMB
@@ -139,19 +143,25 @@ rename-mapping:
   PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
   PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  PerformanceTierServiceLevelObjectives.vCore: VCores
   NameAvailability: MySqlNameAvailabilityResult
   PerformanceTierProperties: MySqlPerformanceTier
+  ConfigurationListResult: MySqlConfigurationList
+  LogFile.properties.type: LogFileType
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
-  LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
-  LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
+#   LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
+#   LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
   MySqlServers_Start: Start
   MySqlServers_Stop: Stop
   MySqlServers_Upgrade: Upgrade
   CheckNameAvailability_Execute: CheckMySqlNameAvailability
 
 directive:
+  # These 2 operations read like some LRO related operations. Remove them first.
+  - remove-operation: LocationBasedRecommendedActionSessionsResult_List
+  - remove-operation: LocationBasedRecommendedActionSessionsOperationStatus_Get
   - rename-operation:
       from: Servers_Start
       to: MySqlServers_Start
@@ -161,27 +171,6 @@ directive:
   - rename-operation:
       from: Servers_Upgrade
       to: MySqlServers_Upgrade
-  - from: mysql.json
-    where: $.definitions
-    transform: >
-      $.ConfigurationListContent = {
-          "properties": {
-            "value": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Configuration"
-              },
-              "description": "The list of server configurations."
-            }
-          },
-          "description": "A list of server configurations."
-        };
-      $.ConfigurationListResult.properties.value.readOnly = true;
-    reason: The generator will not treat the model as the schema for a list method without value being a IReadOnlyList. Need to have separate models for input and output.
-  - from: mysql.json
-    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/updateConfigurations'].post.parameters[?(@.name === 'value')]
-    transform: >
-      $.schema['$ref'] = $.schema['$ref'].replace('ConfigurationListResult', 'ConfigurationListContent');
   - from: mysql.json
     where: $.definitions
     transform: >
@@ -200,6 +189,7 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'PrincipalId': 'uuid'
@@ -259,7 +249,6 @@ rename-mapping:
   ServerBackupListResult: MySqlFlexibleServerBackupListResult
   FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
   FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
-#   DatabaseProperties: MySqlFlexibleServer
   DatabaseListResult: MySqlFlexibleServerDatabaseListResult
   ConfigurationSource: MySqlFlexibleServerConfigurationSource
   ConfigurationListResult: MySqlFlexibleServerConfigurationListResult
@@ -288,4 +277,13 @@ rename-mapping:
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
+  Configurations_BatchUpdate: UpdateConfigurations
+
+directive:
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.Identity['x-ms-client-flatten'] = false;
+      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
+      delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
 ```

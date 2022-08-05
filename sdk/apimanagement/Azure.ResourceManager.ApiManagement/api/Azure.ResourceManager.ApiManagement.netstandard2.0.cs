@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiIssueCommentData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserId { get { throw null; } set { } }
     }
     public partial class ApiIssueCommentResource : Azure.ResourceManager.ArmResource
     {
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.ApiManagement
         public string DefaultScope { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public bool? DoesSupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.GrantType> GrantTypes { get { throw null; } }
         public string ResourceOwnerPassword { get { throw null; } set { } }
         public string ResourceOwnerUsername { get { throw null; } set { } }
-        public bool? SupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> TokenBodyParameters { get { throw null; } }
         public string TokenEndpoint { get { throw null; } set { } }
     }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendProxyContract Proxy { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties Tls { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ApiManagement
         public System.DateTimeOffset? DeletedOn { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } set { } }
-        public string ServiceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServiceId { get { throw null; } set { } }
     }
     public partial class ApiManagementDeletedServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -687,10 +687,10 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiManagementGatewayHostnameConfigurationData() { }
         public string CertificateId { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
+        public bool? IsClientCertificateRequired { get { throw null; } set { } }
         public bool? IsHttp2_0Enabled { get { throw null; } set { } }
         public bool? IsTls1_0Enabled { get { throw null; } set { } }
         public bool? IsTls1_1Enabled { get { throw null; } set { } }
-        public bool? NegotiateClientCertificate { get { throw null; } set { } }
     }
     public partial class ApiManagementGatewayHostnameConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiManagementGlobalSchemaData() { }
         public string Description { get { throw null; } set { } }
         public System.BinaryData Document { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiManagement.Models.SchemaType? SchemaType { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.ApiSchemaType? SchemaType { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
     }
     public partial class ApiManagementGlobalSchemaResource : Azure.ResourceManager.ArmResource
@@ -1111,8 +1111,8 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalDelegationSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalDelegationSettingData() { }
-        public bool? IsSubscriptionsEnabled { get { throw null; } set { } }
-        public bool? IsUserRegistrationEnabled { get { throw null; } set { } }
+        public bool? EnableSubscriptionDelegation { get { throw null; } set { } }
+        public bool? EnableUserRegistrationDelegation { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
     }
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignInSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalSignInSettingData() { }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? EnableRedirect { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalSignInSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignUpSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalSignUpSettingData() { }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? EnableSignUpDeveloperPortal { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalSignUpSettingResource : Azure.ResourceManager.ArmResource
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.ApiManagement
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PrivateIPAddresses { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PublicIPAddresses { get { throw null; } }
-        public string PublicIPAddressId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string PublisherEmail { get { throw null; } set { } }
         public string PublisherName { get { throw null; } set { } }
@@ -1568,8 +1568,8 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract> GetNetworkStatusByLocation(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract>> GetNetworkStatusByLocationAsync(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract> GetNetworkStatusByLocation(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContract>> GetNetworkStatusByLocationAsync(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContractWithLocation> GetNetworkStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.NetworkStatusContractWithLocation> GetNetworkStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2175,9 +2175,9 @@ namespace Azure.ResourceManager.ApiManagement
         public DiagnosticContractData() { }
         public Azure.ResourceManager.ApiManagement.Models.AlwaysLog? AlwaysLog { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
+        public bool? EnableLogClientIP { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? HttpCorrelationProtocol { get { throw null; } set { } }
-        public bool? LogClientIP { get { throw null; } set { } }
         public string LoggerId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? OperationNameFormat { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SamplingSettings Sampling { get { throw null; } set { } }
@@ -2240,7 +2240,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         public TenantAccessInfoData() { }
         public string AccessInfoType { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
     }
     public partial class TenantAccessInfoResource : Azure.ResourceManager.ArmResource
@@ -2309,7 +2309,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public Azure.ResourceManager.ApiManagement.Models.PlatformVersion? PlatformVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PrivateIPAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PublicIPAddresses { get { throw null; } }
-        public string PublicIPAddressId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuProperties Sku { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.VirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -2421,10 +2421,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string DefaultScope { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
+        public bool? DoesSupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.GrantType> GrantTypes { get { throw null; } }
         public string ResourceOwnerPassword { get { throw null; } set { } }
         public string ResourceOwnerUsername { get { throw null; } set { } }
-        public bool? SupportState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApiManagement.Models.TokenBodyParameterContract> TokenBodyParameters { get { throw null; } }
         public string TokenEndpoint { get { throw null; } set { } }
     }
@@ -2436,7 +2436,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendProtocol? Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendProxyContract Proxy { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.BackendTlsProperties Tls { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
@@ -2553,7 +2553,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementPrivateEndpointConnectionCreateOrUpdateContent
     {
         public ApiManagementPrivateEndpointConnectionCreateOrUpdateContent() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2712,7 +2712,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PrivateIPAddresses { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> PublicIPAddresses { get { throw null; } }
-        public string PublicIPAddressId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string PublisherEmail { get { throw null; } set { } }
         public string PublisherName { get { throw null; } set { } }
@@ -2763,7 +2763,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Family { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuLocationInfo> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictions> Restrictions { get { throw null; } }
@@ -2807,7 +2807,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementSkuRestrictionInfo
     {
         internal ApiManagementSkuRestrictionInfo() { }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     public partial class ApiManagementSkuRestrictions
@@ -2974,6 +2974,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public System.Uri PrivateUri { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApiSchemaType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ApiSchemaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApiSchemaType(string value) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiSchemaType Json { get { throw null; } }
+        public static Azure.ResourceManager.ApiManagement.Models.ApiSchemaType Xml { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType left, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiManagement.Models.ApiSchemaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.ApiSchemaType left, Azure.ResourceManager.ApiManagement.Models.ApiSchemaType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
         public ApiTagDescriptionCreateOrUpdateContent() { }
@@ -3128,7 +3146,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal AvailableApiManagementServiceSkuResult() { }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementResourceSkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceSkuType? SkuName { get { throw null; } }
     }
     public partial class BackendAuthorizationHeaderCredentials
@@ -3189,8 +3207,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class BackendTlsProperties
     {
         public BackendTlsProperties() { }
-        public bool? ValidateCertificateChain { get { throw null; } set { } }
-        public bool? ValidateCertificateName { get { throw null; } set { } }
+        public bool? ShouldValidateCertificateChain { get { throw null; } set { } }
+        public bool? ShouldValidateCertificateName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BearerTokenSendingMethod : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod>
@@ -3309,7 +3327,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ConfigurationDeployContent() { }
         public string Branch { get { throw null; } set { } }
-        public bool? Force { get { throw null; } set { } }
+        public bool? ForceDelete { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfigurationName : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ConfigurationName>
@@ -3332,7 +3350,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public ConfigurationSaveContent() { }
         public string Branch { get { throw null; } set { } }
-        public bool? Force { get { throw null; } set { } }
+        public bool? ForceUpdate { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfirmationEmailType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.ConfirmationEmailType>
@@ -3647,13 +3665,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string CertificatePassword { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateSource? CertificateSource { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateStatus? CertificateStatus { get { throw null; } set { } }
-        public bool? DefaultSslBinding { get { throw null; } set { } }
+        public bool? EnableClientCertificateNegotiation { get { throw null; } set { } }
+        public bool? EnableDefaultSslBinding { get { throw null; } set { } }
         public string EncodedCertificate { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HostnameType HostnameType { get { throw null; } set { } }
         public string IdentityClientId { get { throw null; } set { } }
-        public string KeyVaultId { get { throw null; } set { } }
-        public bool? NegotiateClientCertificate { get { throw null; } set { } }
+        public System.Uri KeyVaultSecretUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HostnameType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.HostnameType>
@@ -3957,9 +3975,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string DefaultValue { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ApiManagement.Models.ParameterExampleContract> Examples { get { throw null; } }
+        public bool? IsRequired { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ParameterContractType { get { throw null; } set { } }
-        public bool? Required { get { throw null; } set { } }
         public string SchemaId { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
@@ -4090,11 +4108,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class PortalSettingsContractData : Azure.ResourceManager.Models.ResourceData
     {
         public PortalSettingsContractData() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public bool? SubscriptionsEnabled { get { throw null; } set { } }
+        public bool? EnableRedirect { get { throw null; } set { } }
+        public bool? EnableSubscriptionDelegation { get { throw null; } set { } }
+        public bool? EnableUserRegistrationDelegation { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
-        public bool? UserRegistrationEnabled { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
     }
     public partial class PortalSettingValidationKeyContract
@@ -4227,7 +4245,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public double? ServiceTimeAvg { get { throw null; } }
         public double? ServiceTimeMax { get { throw null; } }
         public double? ServiceTimeMin { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubscriptionResourceId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string UserId { get { throw null; } }
         public string Zip { get { throw null; } }
@@ -4266,7 +4284,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public int? ResponseCode { get { throw null; } }
         public int? ResponseSize { get { throw null; } }
         public double? ServiceTime { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubscriptionResourceId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public string UserId { get { throw null; } }
@@ -4308,24 +4326,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SamplingType left, Azure.ResourceManager.ApiManagement.Models.SamplingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiManagement.Models.SamplingType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.SamplingType left, Azure.ResourceManager.ApiManagement.Models.SamplingType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SchemaType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.SchemaType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SchemaType(string value) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.SchemaType Json { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.SchemaType Xml { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiManagement.Models.SchemaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.SchemaType left, Azure.ResourceManager.ApiManagement.Models.SchemaType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiManagement.Models.SchemaType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.SchemaType left, Azure.ResourceManager.ApiManagement.Models.SchemaType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4446,7 +4446,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoCreateOrUpdateContent
     {
         public TenantAccessInfoCreateOrUpdateContent() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         public string PrimaryKey { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
         public string SecondaryKey { get { throw null; } set { } }
@@ -4454,13 +4454,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoPatch
     {
         public TenantAccessInfoPatch() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
     }
     public partial class TenantAccessInfoSecretsDetails
     {
         internal TenantAccessInfoSecretsDetails() { }
         public string AccessInfoType { get { throw null; } }
-        public bool? Enabled { get { throw null; } }
+        public bool? IsDirectAccessEnabled { get { throw null; } }
         public string PrimaryKey { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
@@ -4471,7 +4471,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Branch { get { throw null; } set { } }
         public string CommitId { get { throw null; } set { } }
         public System.DateTimeOffset? ConfigurationChangeOn { get { throw null; } set { } }
-        public bool? IsExport { get { throw null; } set { } }
+        public bool? IsExported { get { throw null; } set { } }
         public bool? IsGitEnabled { get { throw null; } set { } }
         public bool? IsSynced { get { throw null; } set { } }
         public string LastOperationId { get { throw null; } set { } }
@@ -4480,8 +4480,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TermsOfServiceProperties
     {
         public TermsOfServiceProperties() { }
-        public bool? ConsentRequired { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsConsentRequired { get { throw null; } set { } }
+        public bool? IsDisplayEnabled { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
     }
     public partial class TokenBodyParameterContract

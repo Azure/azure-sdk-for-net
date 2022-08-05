@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static TaskSchedulingPolicy DeserializeTaskSchedulingPolicy(JsonElement element)
         {
-            ComputeNodeFillType nodeFillType = default;
+            BatchNodeFillType nodeFillType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeFillType"))
                 {
-                    nodeFillType = property.Value.GetString().ToComputeNodeFillType();
+                    nodeFillType = property.Value.GetString().ToBatchNodeFillType();
                     continue;
                 }
             }

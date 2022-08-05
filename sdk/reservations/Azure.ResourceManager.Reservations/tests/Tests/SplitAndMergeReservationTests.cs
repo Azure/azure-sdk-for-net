@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestSplitReservationOrder()
         {
-            var response = await Collection.GetAsync(ReservationOrderId);
+            var response = await Collection.GetAsync(Guid.Parse(ReservationOrderId));
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
@@ -47,8 +48,8 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(1, response.Value.Data.Reservations.Count);
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
-            var reservationId = fullyQualifiedId.Substring(fullyQualifiedId.LastIndexOf("/"));
-            var reservationResponse = await response.Value.GetReservationDetails().GetAsync(reservationId);
+            var reservationId = fullyQualifiedId.Substring(fullyQualifiedId.LastIndexOf("/") + 1);
+            var reservationResponse = await response.Value.GetReservationDetails().GetAsync(Guid.Parse(reservationId));
             var reservation = reservationResponse.Value;
 
             Assert.IsNotNull(reservation.Data);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestMergeReservationOrder()
         {
-            var response = await Collection.GetAsync(ReservationOrderId);
+            var response = await Collection.GetAsync(Guid.Parse(ReservationOrderId));
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);

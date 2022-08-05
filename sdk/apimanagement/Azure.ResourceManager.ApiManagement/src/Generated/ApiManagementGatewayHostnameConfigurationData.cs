@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="hostname"> Hostname value. Supports valid domain name, partial or full wildcard. </param>
         /// <param name="certificateId"> Identifier of Certificate entity that will be used for TLS connection establishment. </param>
-        /// <param name="negotiateClientCertificate"> Determines whether gateway requests client certificate. </param>
+        /// <param name="isClientCertificateRequired"> Determines whether gateway requests client certificate. </param>
         /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
         /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
         /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
-        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? negotiateClientCertificate, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled) : base(id, name, resourceType, systemData)
+        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled) : base(id, name, resourceType, systemData)
         {
             Hostname = hostname;
             CertificateId = certificateId;
-            NegotiateClientCertificate = negotiateClientCertificate;
+            IsClientCertificateRequired = isClientCertificateRequired;
             IsTls1_0Enabled = isTls10Enabled;
             IsTls1_1Enabled = isTls11Enabled;
             IsHttp2_0Enabled = isHttp20Enabled;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Identifier of Certificate entity that will be used for TLS connection establishment. </summary>
         public string CertificateId { get; set; }
         /// <summary> Determines whether gateway requests client certificate. </summary>
-        public bool? NegotiateClientCertificate { get; set; }
+        public bool? IsClientCertificateRequired { get; set; }
     }
 }

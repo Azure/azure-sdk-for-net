@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("validationKey");
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Subscriptions))
+            if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions");
-                writer.WriteObjectValue(Subscriptions);
+                writer.WriteObjectValue(IsSubscriptions);
             }
-            if (Optional.IsDefined(UserRegistration))
+            if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration");
-                writer.WriteObjectValue(UserRegistration);
+                writer.WriteObjectValue(IsUserRegistration);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(EnableRedirect))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(EnableRedirect.Value);
             }
             if (Optional.IsDefined(TermsOfService))
             {
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<SystemData> systemData = default;
             Optional<Uri> uri = default;
             Optional<string> validationKey = default;
-            Optional<SubscriptionsDelegationSettingsProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingsProperties> userRegistration = default;
+            Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
+            Optional<RegistrationDelegationSettingProperties> userRegistration = default;
             Optional<bool> enabled = default;
             Optional<TermsOfServiceProperties> termsOfService = default;
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subscriptions = SubscriptionsDelegationSettingsProperties.DeserializeSubscriptionsDelegationSettingsProperties(property0.Value);
+                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingsProperties.DeserializeRegistrationDelegationSettingsProperties(property0.Value);
+                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enabled"))

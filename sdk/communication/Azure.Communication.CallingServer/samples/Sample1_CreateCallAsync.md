@@ -25,7 +25,7 @@ var createCallOption = new CreateCallOptions(
 var callConnection = await callingServerClient.CreateCallAsync(
     source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    callbackUri: new Uri(TestEnvironment.AppCallbackUrl),
+    callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl),
     options: createCallOption // The options for creating a call.
     );
 Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");

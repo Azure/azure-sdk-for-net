@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ImageFormat": return ImageFormat.DeserializeImageFormat(element);
+                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element);
                     case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element);
                     case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element);
                     case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element);

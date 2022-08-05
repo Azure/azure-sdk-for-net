@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the load balancer resource settings. </summary>
-    public partial class LoadBalancerResourceSettings : ResourceSettings
+    public partial class LoadBalancerResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of LoadBalancerResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             Tags = new ChangeTrackingDictionary<string, string>();
-            FrontendIPConfigurations = new ChangeTrackingList<LBFrontendIPConfigurationResourceSettings>();
-            BackendAddressPools = new ChangeTrackingList<LBBackendAddressPoolResourceSettings>();
+            FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>();
+            BackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>();
             ResourceType = "Microsoft.Network/loadBalancers";
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Gets or sets the csv list of zones common for all frontend IP configurations. Note this is given
         ///  precedence only if frontend IP configurations settings are not present.
         /// </param>
-        internal LoadBalancerResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, string sku, IList<LBFrontendIPConfigurationResourceSettings> frontendIPConfigurations, IList<LBBackendAddressPoolResourceSettings> backendAddressPools, string zones) : base(resourceType, targetResourceName)
+        internal LoadBalancerResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, string sku, IList<LoadBalancerFrontendIPConfigurationResourceSettings> frontendIPConfigurations, IList<LoadBalancerBackendAddressPoolResourceSettings> backendAddressPools, string zones) : base(resourceType, targetResourceName)
         {
             Tags = tags;
             Sku = sku;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Gets or sets load balancer sku (Basic/Standard). </summary>
         public string Sku { get; set; }
         /// <summary> Gets or sets the frontend IP configurations of the load balancer. </summary>
-        public IList<LBFrontendIPConfigurationResourceSettings> FrontendIPConfigurations { get; }
+        public IList<LoadBalancerFrontendIPConfigurationResourceSettings> FrontendIPConfigurations { get; }
         /// <summary> Gets or sets the backend address pools of the load balancer. </summary>
-        public IList<LBBackendAddressPoolResourceSettings> BackendAddressPools { get; }
+        public IList<LoadBalancerBackendAddressPoolResourceSettings> BackendAddressPools { get; }
         /// <summary>
         /// Gets or sets the csv list of zones common for all frontend IP configurations. Note this is given
         ///  precedence only if frontend IP configurations settings are not present.

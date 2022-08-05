@@ -76,10 +76,9 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath { get; }
 
         /// <summary>
-        /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
+        /// Gets the ID used to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
-        /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
@@ -246,7 +245,7 @@ namespace Azure.Messaging.ServiceBus
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
             EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+            Identifier = string.IsNullOrEmpty(Options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : Options.Identifier;
 
             ReceiveMode = Options.ReceiveMode;
             PrefetchCount = Options.PrefetchCount;
@@ -898,6 +897,7 @@ namespace Azure.Messaging.ServiceBus
                                     ServiceBusErrorSource.Receive,
                                     FullyQualifiedNamespace,
                                     EntityPath,
+                                    Identifier,
                                     cancellationToken))
                             .ConfigureAwait(false);
                     }

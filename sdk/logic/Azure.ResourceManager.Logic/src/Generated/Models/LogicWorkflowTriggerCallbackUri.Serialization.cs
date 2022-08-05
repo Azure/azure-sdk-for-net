@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         internal static LogicWorkflowTriggerCallbackUri DeserializeLogicWorkflowTriggerCallbackUri(JsonElement element)
         {
             Optional<string> value = default;
-            Optional<string> method = default;
+            Optional<RequestMethod> method = default;
             Optional<string> basePath = default;
             Optional<string> relativePath = default;
             Optional<IReadOnlyList<string>> relativePathParameters = default;
@@ -30,7 +30,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("method"))
                 {
-                    method = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    method = new RequestMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("basePath"))
@@ -69,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerCallbackUri(value.Value, method.Value, basePath.Value, relativePath.Value, Optional.ToList(relativePathParameters), queries.Value);
+            return new LogicWorkflowTriggerCallbackUri(value.Value, Optional.ToNullable(method), basePath.Value, relativePath.Value, Optional.ToList(relativePathParameters), queries.Value);
         }
     }
 }

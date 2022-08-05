@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Json source. </summary>
-    public partial class JsonSource : CopySource
+    public partial class JsonSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of JsonSource. </summary>
         public JsonSource()

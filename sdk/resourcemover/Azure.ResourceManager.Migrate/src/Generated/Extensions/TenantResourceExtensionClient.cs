@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: OperationsDiscovery_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationsDiscovery> GetOperationsDiscoveriesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationsDiscovery>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MoverOperationsDiscovery>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = OperationsDiscoveryClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationsDiscoveries");
                 scope.Start();
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Migrate
         /// Operation Id: OperationsDiscovery_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationsDiscovery> GetOperationsDiscoveries(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(CancellationToken cancellationToken = default)
         {
-            Page<OperationsDiscovery> FirstPageFunc(int? pageSizeHint)
+            Page<MoverOperationsDiscovery> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = OperationsDiscoveryClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationsDiscoveries");
                 scope.Start();

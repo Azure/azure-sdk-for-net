@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Rest service source. </summary>
-    public partial class RestSource : CopySource
+    public partial class RestSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of RestSource. </summary>
         public RestSource()

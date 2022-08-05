@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the virtual network subnets resource settings. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="name"> Gets or sets the Subnet name. </param>
         /// <param name="addressPrefix"> Gets or sets address prefix for the subnet. </param>
         /// <param name="networkSecurityGroup"> Defines reference to NSG. </param>
-        internal SubnetResourceSettings(string name, string addressPrefix, NsgReference networkSecurityGroup)
+        internal SubnetResourceSettings(string name, string addressPrefix, NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup)
         {
             Name = name;
             AddressPrefix = addressPrefix;
@@ -31,12 +33,12 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Gets or sets address prefix for the subnet. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> Defines reference to NSG. </summary>
-        internal NsgReference NetworkSecurityGroup { get; set; }
+        internal NetworkSecurityGroupResourceReferenceInfo NetworkSecurityGroup { get; set; }
         /// <summary> Gets the ARM resource ID of the tracked resource being referenced. </summary>
-        public string NetworkSecurityGroupSourceArmResourceId
+        public ResourceIdentifier NetworkSecurityGroupSourceArmResourceId
         {
             get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.SourceArmResourceId;
-            set => NetworkSecurityGroup = new NsgReference(value);
+            set => NetworkSecurityGroup = new NetworkSecurityGroupResourceReferenceInfo(value);
         }
     }
 }

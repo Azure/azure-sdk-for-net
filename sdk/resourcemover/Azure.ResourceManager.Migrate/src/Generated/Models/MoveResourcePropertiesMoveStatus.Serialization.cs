@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         internal static MoveResourcePropertiesMoveStatus DeserializeMoveResourcePropertiesMoveStatus(JsonElement element)
         {
-            Optional<MoveState> moveState = default;
-            Optional<JobStatus> jobStatus = default;
+            Optional<MoveResourceState> moveState = default;
+            Optional<MoveResourceJobStatus> jobStatus = default;
             Optional<MoveResourceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    moveState = new MoveState(property.Value.GetString());
+                    moveState = new MoveResourceState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobStatus"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobStatus = JobStatus.DeserializeJobStatus(property.Value);
+                    jobStatus = MoveResourceJobStatus.DeserializeMoveResourceJobStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errors"))
