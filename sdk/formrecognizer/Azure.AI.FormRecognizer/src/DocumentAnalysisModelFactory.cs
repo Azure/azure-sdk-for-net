@@ -403,7 +403,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocTypeInfo>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, apiVersion: null, tags, docTypes);
+            return new DocumentModelDetails(modelId, description, createdOn, tags, docTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelSummary. </summary>

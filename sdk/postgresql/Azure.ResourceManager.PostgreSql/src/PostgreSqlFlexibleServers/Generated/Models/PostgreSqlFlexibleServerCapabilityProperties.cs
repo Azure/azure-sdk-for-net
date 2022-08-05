@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
         /// <param name="zone"> zone name. </param>
-        /// <param name="geoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
-        /// <param name="zoneRedundantHaSupported"> A value indicating whether a new server in this region can support multi zone HA. </param>
-        /// <param name="zoneRedundantHaAndGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
+        /// <param name="isGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
+        /// <param name="isZoneRedundantHASupported"> A value indicating whether a new server in this region can support multi zone HA. </param>
+        /// <param name="isZoneRedundantHAAndGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
         /// <param name="supportedFlexibleServerEditions"></param>
         /// <param name="supportedHyperscaleNodeEditions"></param>
         /// <param name="supportedHAModes"> Supported high availability mode. </param>
         /// <param name="status"> The status. </param>
-        internal PostgreSqlFlexibleServerCapabilityProperties(string zone, bool? geoBackupSupported, bool? zoneRedundantHaSupported, bool? zoneRedundantHaAndGeoBackupSupported, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions, IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions, IReadOnlyList<string> supportedHAModes, string status)
+        internal PostgreSqlFlexibleServerCapabilityProperties(string zone, bool? isGeoBackupSupported, bool? isZoneRedundantHASupported, bool? isZoneRedundantHAAndGeoBackupSupported, IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions, IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions, IReadOnlyList<string> supportedHAModes, string status)
         {
             Zone = zone;
-            GeoBackupSupported = geoBackupSupported;
-            ZoneRedundantHaSupported = zoneRedundantHaSupported;
-            ZoneRedundantHaAndGeoBackupSupported = zoneRedundantHaAndGeoBackupSupported;
+            IsGeoBackupSupported = isGeoBackupSupported;
+            IsZoneRedundantHASupported = isZoneRedundantHASupported;
+            IsZoneRedundantHAAndGeoBackupSupported = isZoneRedundantHAAndGeoBackupSupported;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
             SupportedHyperscaleNodeEditions = supportedHyperscaleNodeEditions;
             SupportedHAModes = supportedHAModes;
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> zone name. </summary>
         public string Zone { get; }
         /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region. </summary>
-        public bool? GeoBackupSupported { get; }
+        public bool? IsGeoBackupSupported { get; }
         /// <summary> A value indicating whether a new server in this region can support multi zone HA. </summary>
-        public bool? ZoneRedundantHaSupported { get; }
+        public bool? IsZoneRedundantHASupported { get; }
         /// <summary> A value indicating whether a new server in this region can have geo-backups to paired region. </summary>
-        public bool? ZoneRedundantHaAndGeoBackupSupported { get; }
+        public bool? IsZoneRedundantHAAndGeoBackupSupported { get; }
         /// <summary> Gets the supported flexible server editions. </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> SupportedFlexibleServerEditions { get; }
         /// <summary> Gets the supported hyperscale node editions. </summary>

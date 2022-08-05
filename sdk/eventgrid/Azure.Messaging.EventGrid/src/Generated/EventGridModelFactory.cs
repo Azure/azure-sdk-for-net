@@ -1231,17 +1231,29 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
         /// <param name="id"> The Id of the communication user. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.CommunicationUserIdentifierModel"/> instance for mocking. </returns>
         public static CommunicationUserIdentifierModel CommunicationUserIdentifierModel(string id = null)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
             return new CommunicationUserIdentifierModel(id);
         }
 
         /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
         /// <param name="value"> The phone number in E.164 format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.PhoneNumberIdentifierModel"/> instance for mocking. </returns>
         public static PhoneNumberIdentifierModel PhoneNumberIdentifierModel(string value = null)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             return new PhoneNumberIdentifierModel(value);
         }
 
