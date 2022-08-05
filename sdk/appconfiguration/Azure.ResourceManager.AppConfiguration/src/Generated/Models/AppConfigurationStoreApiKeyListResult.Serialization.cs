@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    internal partial class ApiKeyListResult
+    internal partial class AppConfigurationStoreApiKeyListResult
     {
-        internal static ApiKeyListResult DeserializeApiKeyListResult(JsonElement element)
+        internal static AppConfigurationStoreApiKeyListResult DeserializeAppConfigurationStoreApiKeyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiKey>> value = default;
+            Optional<IReadOnlyList<AppConfigurationStoreApiKey>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiKey> array = new List<ApiKey>();
+                    List<AppConfigurationStoreApiKey> array = new List<AppConfigurationStoreApiKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiKey.DeserializeApiKey(item));
+                        array.Add(AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ApiKeyListResult(Optional.ToList(value), nextLink.Value);
+            return new AppConfigurationStoreApiKeyListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

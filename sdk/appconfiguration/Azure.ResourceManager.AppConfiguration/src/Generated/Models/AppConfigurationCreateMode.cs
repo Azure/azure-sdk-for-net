@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Indicates whether the configuration store need to be recovered. </summary>
-    public enum CreateMode
+    public enum AppConfigurationCreateMode
     {
         /// <summary> Recover. </summary>
         Recover,

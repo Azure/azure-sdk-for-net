@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The ARM resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
-        internal EncryptionProperties Encryption { get; set; }
+        internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
         /// <summary> Key vault properties. </summary>
-        public KeyVaultProperties EncryptionKeyVaultProperties
+        public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
             set
             {
                 if (Encryption is null)
-                    Encryption = new EncryptionProperties();
+                    Encryption = new AppConfigurationStoreEncryptionProperties();
                 Encryption.KeyVaultProperties = value;
             }
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         public bool? EnablePurgeProtection { get; set; }
     }

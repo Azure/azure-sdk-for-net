@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class KeyVaultProperties : IUtf8JsonSerializable
+    public partial class AppConfigurationKeyVaultProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
+        internal static AppConfigurationKeyVaultProperties DeserializeAppConfigurationKeyVaultProperties(JsonElement element)
         {
             Optional<string> keyIdentifier = default;
             Optional<string> identityClientId = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyIdentifier.Value, identityClientId.Value);
+            return new AppConfigurationKeyVaultProperties(keyIdentifier.Value, identityClientId.Value);
         }
     }
 }

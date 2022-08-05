@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.AppConfiguration
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<AppConfigurationProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> endpoint = default;
-            Optional<Models.EncryptionProperties> encryption = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<AppConfigurationStoreEncryptionProperties> encryption = default;
+            Optional<IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference>> privateEndpointConnections = default;
+            Optional<AppConfigurationPublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<int> softDeleteRetentionInDays = default;
             Optional<bool> enablePurgeProtection = default;
-            Optional<CreateMode> createMode = default;
+            Optional<AppConfigurationCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new AppConfigurationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = AppConfigurationStoreEncryptionProperties.DeserializeAppConfigurationStoreEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.AppConfiguration
                                 privateEndpointConnections = null;
                                 continue;
                             }
-                            List<PrivateEndpointConnectionReference> array = new List<PrivateEndpointConnectionReference>();
+                            List<AppConfigurationPrivateEndpointConnectionReference> array = new List<AppConfigurationPrivateEndpointConnectionReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionReference.DeserializePrivateEndpointConnectionReference(item));
+                                array.Add(AppConfigurationPrivateEndpointConnectionReference.DeserializeAppConfigurationPrivateEndpointConnectionReference(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new AppConfigurationPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disableLocalAuth"))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createMode = property0.Value.GetString().ToCreateMode();
+                            createMode = property0.Value.GetString().ToAppConfigurationCreateMode();
                             continue;
                         }
                     }

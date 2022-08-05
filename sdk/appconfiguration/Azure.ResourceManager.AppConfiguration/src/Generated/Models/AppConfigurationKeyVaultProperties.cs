@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
-    public partial class KeyVaultProperties
+    public partial class AppConfigurationKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
-        public KeyVaultProperties()
+        /// <summary> Initializes a new instance of AppConfigurationKeyVaultProperties. </summary>
+        public AppConfigurationKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationKeyVaultProperties. </summary>
         /// <param name="keyIdentifier"> The URI of the key vault key used to encrypt data. </param>
         /// <param name="identityClientId"> The client id of the identity which will be used to access key vault. </param>
-        internal KeyVaultProperties(string keyIdentifier, string identityClientId)
+        internal AppConfigurationKeyVaultProperties(string keyIdentifier, string identityClientId)
         {
             KeyIdentifier = keyIdentifier;
             IdentityClientId = identityClientId;

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 ConfigurationStoreName = Recording.GenerateAssetName("testapp-");
                 AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    PublicNetworkAccess = PublicNetworkAccess.Disabled
+                    AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
                 ConfigStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, ConfigurationStoreName, configurationStoreData)).Value;
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationStoreResource configurationStore = await ConfigStore.GetAsync();
 
             Assert.IsTrue(ConfigurationStoreName.Equals(configurationStore.Data.Name));
-            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
 
         [Test]
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task RegenerateKeyTest()
         {
-            List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
-            ApiKey orignalKey = keys.FirstOrDefault();
+            List<AppConfigurationStoreApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
+            AppConfigurationStoreApiKey orignalKey = keys.FirstOrDefault();
 
-            RegenerateKeyContent regenerateKeyOptions = new RegenerateKeyContent() { Id = orignalKey.Id };
-            ApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
+            AppConfigurationRegenerateKeyContent regenerateKeyOptions = new AppConfigurationRegenerateKeyContent() { Id = orignalKey.Id };
+            AppConfigurationStoreApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
             Assert.IsTrue(keys.Where(x => x.Name == orignalKey.Name).FirstOrDefault().Value != orignalKey.Value);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetKeysTest()
         {
-            List<ApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
+            List<AppConfigurationStoreApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
             Assert.IsTrue(keys.Count >= 1);
         }
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task UpdateTest()
         {
-            AppConfigurationStorePatch PatchableconfigurationStoreData = new AppConfigurationStorePatch() { PublicNetworkAccess = PublicNetworkAccess.Enabled };
+            AppConfigurationStorePatch PatchableconfigurationStoreData = new AppConfigurationStorePatch() { AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled };
             AppConfigurationStoreResource configurationStore = (await ConfigStore.UpdateAsync(WaitUntil.Completed, PatchableconfigurationStoreData)).Value;
 
-            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == PublicNetworkAccess.Enabled);
+            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
         }
     }
 }

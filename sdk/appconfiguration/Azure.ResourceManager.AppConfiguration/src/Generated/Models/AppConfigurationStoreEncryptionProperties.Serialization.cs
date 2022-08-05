@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    internal partial class EncryptionProperties : IUtf8JsonSerializable
+    internal partial class AppConfigurationStoreEncryptionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
+        internal static AppConfigurationStoreEncryptionProperties DeserializeAppConfigurationStoreEncryptionProperties(JsonElement element)
         {
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"))
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         keyVaultProperties = null;
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value);
                     continue;
                 }
             }
-            return new EncryptionProperties(keyVaultProperties.Value);
+            return new AppConfigurationStoreEncryptionProperties(keyVaultProperties.Value);
         }
     }
 }

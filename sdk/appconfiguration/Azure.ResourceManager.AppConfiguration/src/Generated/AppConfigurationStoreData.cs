@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
 
             Sku = sku;
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionReference>();
+            PrivateEndpointConnections = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
         /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
-        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, ProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, Models.EncryptionProperties encryption, IReadOnlyList<PrivateEndpointConnectionReference> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
+        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -78,29 +78,29 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The provisioning state of the configuration store. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public AppConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of configuration store. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
         public string Endpoint { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
-        internal Models.EncryptionProperties Encryption { get; set; }
+        internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
         /// <summary> Key vault properties. </summary>
-        public Models.KeyVaultProperties EncryptionKeyVaultProperties
+        public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
             set
             {
                 if (Encryption is null)
-                    Encryption = new Models.EncryptionProperties();
+                    Encryption = new AppConfigurationStoreEncryptionProperties();
                 Encryption.KeyVaultProperties = value;
             }
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
+        public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
@@ -108,6 +108,6 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
-        public CreateMode? CreateMode { get; set; }
+        public AppConfigurationCreateMode? CreateMode { get; set; }
     }
 }

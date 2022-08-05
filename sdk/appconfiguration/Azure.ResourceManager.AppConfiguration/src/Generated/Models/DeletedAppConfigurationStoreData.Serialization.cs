@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> configurationStoreId = default;
+            Optional<ResourceIdentifier> configurationStoreId = default;
             Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
@@ -65,7 +65,12 @@ namespace Azure.ResourceManager.AppConfiguration
                     {
                         if (property0.NameEquals("configurationStoreId"))
                         {
-                            configurationStoreId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            configurationStoreId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("location"))

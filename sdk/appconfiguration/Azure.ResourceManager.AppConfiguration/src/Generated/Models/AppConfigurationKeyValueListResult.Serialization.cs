@@ -12,11 +12,11 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    internal partial class ConfigurationStoreListResult
+    internal partial class AppConfigurationKeyValueListResult
     {
-        internal static ConfigurationStoreListResult DeserializeConfigurationStoreListResult(JsonElement element)
+        internal static AppConfigurationKeyValueListResult DeserializeAppConfigurationKeyValueListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AppConfigurationStoreData>> value = default;
+            Optional<IReadOnlyList<AppConfigurationKeyValueData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppConfigurationStoreData> array = new List<AppConfigurationStoreData>();
+                    List<AppConfigurationKeyValueData> array = new List<AppConfigurationKeyValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationStoreData.DeserializeAppConfigurationStoreData(item));
+                        array.Add(AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ConfigurationStoreListResult(Optional.ToList(value), nextLink.Value);
+            return new AppConfigurationKeyValueListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -7,29 +7,30 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to list API keys. </summary>
-    internal partial class ApiKeyListResult
+    /// <summary> The result of a request to list configuration stores. </summary>
+    internal partial class AppConfigurationStoreListResult
     {
-        /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
-        internal ApiKeyListResult()
+        /// <summary> Initializes a new instance of AppConfigurationStoreListResult. </summary>
+        internal AppConfigurationStoreListResult()
         {
-            Value = new ChangeTrackingList<ApiKey>();
+            Value = new ChangeTrackingList<AppConfigurationStoreData>();
         }
 
-        /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationStoreListResult. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        internal ApiKeyListResult(IReadOnlyList<ApiKey> value, string nextLink)
+        internal AppConfigurationStoreListResult(IReadOnlyList<AppConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<ApiKey> Value { get; }
+        public IReadOnlyList<AppConfigurationStoreData> Value { get; }
         /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }
     }

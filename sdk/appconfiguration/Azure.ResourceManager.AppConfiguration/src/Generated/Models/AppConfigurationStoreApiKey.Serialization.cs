@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class ApiKey
+    public partial class AppConfigurationStoreApiKey
     {
-        internal static ApiKey DeserializeApiKey(JsonElement element)
+        internal static AppConfigurationStoreApiKey DeserializeAppConfigurationStoreApiKey(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new ApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
+            return new AppConfigurationStoreApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
         }
     }
 }

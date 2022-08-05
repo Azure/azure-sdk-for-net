@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration
             Optional<string> label = default;
             Optional<string> value = default;
             Optional<string> contentType = default;
-            Optional<string> eTag = default;
+            Optional<ETag> eTag = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<bool> locked = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -117,7 +118,12 @@ namespace Azure.ResourceManager.AppConfiguration
                         }
                         if (property0.NameEquals("eTag"))
                         {
-                            eTag = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastModified"))
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, eTag.Value, Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
+            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Optional.ToNullable(eTag), Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
         }
     }
 }

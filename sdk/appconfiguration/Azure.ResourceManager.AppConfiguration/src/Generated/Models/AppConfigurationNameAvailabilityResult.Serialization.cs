@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class NameAvailabilityStatus
+    public partial class AppConfigurationNameAvailabilityResult
     {
-        internal static NameAvailabilityStatus DeserializeNameAvailabilityStatus(JsonElement element)
+        internal static AppConfigurationNameAvailabilityResult DeserializeAppConfigurationNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new NameAvailabilityStatus(Optional.ToNullable(nameAvailable), message.Value, reason.Value);
+            return new AppConfigurationNameAvailabilityResult(Optional.ToNullable(nameAvailable), message.Value, reason.Value);
         }
     }
 }

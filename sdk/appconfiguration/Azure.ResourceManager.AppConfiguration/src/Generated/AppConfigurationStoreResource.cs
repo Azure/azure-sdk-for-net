@@ -367,10 +367,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppConfigurationStoreApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiKey>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppConfigurationStoreApiKey>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
                 scope.Start();
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            async Task<Page<ApiKey>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppConfigurationStoreApiKey>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
                 scope.Start();
@@ -410,10 +410,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppConfigurationStoreApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiKey> FirstPageFunc(int? pageSizeHint)
+            Page<AppConfigurationStoreApiKey> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
                 scope.Start();
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            Page<ApiKey> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppConfigurationStoreApiKey> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.GetKeys");
                 scope.Start();
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="content"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ApiKey>> RegenerateKeyAsync(RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationStoreApiKey>> RegenerateKeyAsync(AppConfigurationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="content"> The parameters for regenerating an access key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ApiKey> RegenerateKey(RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationStoreApiKey> RegenerateKey(AppConfigurationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

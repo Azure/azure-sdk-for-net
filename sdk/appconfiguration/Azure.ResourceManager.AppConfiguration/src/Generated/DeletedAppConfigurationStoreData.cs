@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="tags"> Tags of the original configuration store. </param>
-        /// <param name="purgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
-        internal DeletedAppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? purgeProtectionEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="isPurgeProtectionEnabled"> Purge protection status of the original configuration store. </param>
+        internal DeletedAppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier configurationStoreId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, IReadOnlyDictionary<string, string> tags, bool? isPurgeProtectionEnabled) : base(id, name, resourceType, systemData)
         {
             ConfigurationStoreId = configurationStoreId;
             Location = location;
             DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             Tags = tags;
-            PurgeProtectionEnabled = purgeProtectionEnabled;
+            IsPurgeProtectionEnabled = isPurgeProtectionEnabled;
         }
 
         /// <summary> The resource id of the original configuration store. </summary>
-        public string ConfigurationStoreId { get; }
+        public ResourceIdentifier ConfigurationStoreId { get; }
         /// <summary> The location of the original configuration store. </summary>
         public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Tags of the original configuration store. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Purge protection status of the original configuration store. </summary>
-        public bool? PurgeProtectionEnabled { get; }
+        public bool? IsPurgeProtectionEnabled { get; }
     }
 }

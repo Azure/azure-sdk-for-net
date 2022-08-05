@@ -41,7 +41,7 @@ Now that we have the resource group created, we can manage the ConfigurationStor
 string configurationStoreName = ("myApp");
 AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData("westus", new AppConfigurationSku("Standard"))
 {
-    PublicNetworkAccess = PublicNetworkAccess.Disabled
+    AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
 };
 AppConfigurationStoreResource configurationStore = (await resourceGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 ```

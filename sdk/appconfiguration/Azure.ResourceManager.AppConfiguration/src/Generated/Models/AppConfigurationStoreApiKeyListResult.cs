@@ -7,30 +7,29 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> The result of a request to list configuration stores. </summary>
-    internal partial class ConfigurationStoreListResult
+    /// <summary> The result of a request to list API keys. </summary>
+    internal partial class AppConfigurationStoreApiKeyListResult
     {
-        /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
-        internal ConfigurationStoreListResult()
+        /// <summary> Initializes a new instance of AppConfigurationStoreApiKeyListResult. </summary>
+        internal AppConfigurationStoreApiKeyListResult()
         {
-            Value = new ChangeTrackingList<AppConfigurationStoreData>();
+            Value = new ChangeTrackingList<AppConfigurationStoreApiKey>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationStoreApiKeyListResult. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        internal ConfigurationStoreListResult(IReadOnlyList<AppConfigurationStoreData> value, string nextLink)
+        internal AppConfigurationStoreApiKeyListResult(IReadOnlyList<AppConfigurationStoreApiKey> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<AppConfigurationStoreData> Value { get; }
+        public IReadOnlyList<AppConfigurationStoreApiKey> Value { get; }
         /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }
     }

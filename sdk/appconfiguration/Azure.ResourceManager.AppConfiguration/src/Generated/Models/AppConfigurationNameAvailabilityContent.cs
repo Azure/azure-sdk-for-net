@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Parameters used for checking whether a resource name is available. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class AppConfigurationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationNameAvailabilityContent. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <param name="resourceType"> The resource type to check for name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityContent(string name, ConfigurationResourceType resourceType)
+        public AppConfigurationNameAvailabilityContent(string name, AppConfigurationResourceType resourceType)
         {
             if (name == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> The name to check for availability. </summary>
         public string Name { get; }
         /// <summary> The resource type to check for name availability. </summary>
-        public ConfigurationResourceType ResourceType { get; }
+        public AppConfigurationResourceType ResourceType { get; }
     }
 }
