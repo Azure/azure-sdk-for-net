@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal ContainerRegistryPrivateLinkServiceConnectionState(ConnectionStatus? status, string description, ActionsRequired? actionsRequired)
+        internal ContainerRegistryPrivateLinkServiceConnectionState(ContainerRegistryPrivateLinkServiceConnectionStatus? status, string description, ActionsRequiredForPrivateLinkServiceConsumer? actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The private link service connection status. </summary>
-        public ConnectionStatus? Status { get; set; }
+        public ContainerRegistryPrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
-        public ActionsRequired? ActionsRequired { get; set; }
+        public ActionsRequiredForPrivateLinkServiceConsumer? ActionsRequired { get; set; }
     }
 }

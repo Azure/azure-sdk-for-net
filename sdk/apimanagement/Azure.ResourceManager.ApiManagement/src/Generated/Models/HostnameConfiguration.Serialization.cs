@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("certificatePassword");
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (Optional.IsDefined(DefaultSslBinding))
+            if (Optional.IsDefined(EnableDefaultSslBinding))
             {
                 writer.WritePropertyName("defaultSslBinding");
-                writer.WriteBooleanValue(DefaultSslBinding.Value);
+                writer.WriteBooleanValue(EnableDefaultSslBinding.Value);
             }
-            if (Optional.IsDefined(NegotiateClientCertificate))
+            if (Optional.IsDefined(EnableClientCertificateNegotiation))
             {
                 writer.WritePropertyName("negotiateClientCertificate");
-                writer.WriteBooleanValue(NegotiateClientCertificate.Value);
+                writer.WriteBooleanValue(EnableClientCertificateNegotiation.Value);
             }
             if (Optional.IsDefined(Certificate))
             {

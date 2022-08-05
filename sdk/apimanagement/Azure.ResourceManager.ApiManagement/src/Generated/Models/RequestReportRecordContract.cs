@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -33,10 +34,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiTime"> The total time it took to process this request. </param>
         /// <param name="serviceTime"> he time it took to forward this request to the backend and get the response back. </param>
         /// <param name="apiRegion"> Azure region where the gateway that processed this request is located. </param>
-        /// <param name="subscriptionId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
+        /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="requestId"> Request Identifier. </param>
         /// <param name="requestSize"> The size of this request.. </param>
-        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, string method, Uri uri, string ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, string subscriptionId, string requestId, int? requestSize)
+        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, string method, Uri uri, string ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize)
         {
             ApiId = apiId;
             OperationId = operationId;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiTime = apiTime;
             ServiceTime = serviceTime;
             ApiRegion = apiRegion;
-            SubscriptionId = subscriptionId;
+            SubscriptionResourceId = subscriptionResourceId;
             RequestId = requestId;
             RequestSize = requestSize;
         }
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Azure region where the gateway that processed this request is located. </summary>
         public string ApiRegion { get; }
         /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
-        public string SubscriptionId { get; }
+        public ResourceIdentifier SubscriptionResourceId { get; }
         /// <summary> Request Identifier. </summary>
         public string RequestId { get; }
         /// <summary> The size of this request.. </summary>

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("sourceServerResourceId");
                 writer.WriteStringValue(SourceServerResourceId);
             }
-            if (Optional.IsDefined(PointInTimeUTC))
+            if (Optional.IsDefined(PointInTimeUtc))
             {
                 writer.WritePropertyName("pointInTimeUTC");
-                writer.WriteStringValue(PointInTimeUTC.Value, "O");
+                writer.WriteStringValue(PointInTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(AvailabilityZone))
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache.Models
         /// <summary> Redis eviction policy - default is VolatileLRU. </summary>
         public RedisEnterpriseEvictionPolicy? EvictionPolicy { get; set; }
         /// <summary> Persistence settings. </summary>
-        public PersistenceSettings Persistence { get; set; }
+        public RedisPersistenceSettings Persistence { get; set; }
         /// <summary> Optional set of redis modules to enable in this database - modules can only be added at creation time. </summary>
         public IList<RedisEnterpriseModule> Modules { get; }
         /// <summary> Optional set of properties to configure geo replication for this database. </summary>

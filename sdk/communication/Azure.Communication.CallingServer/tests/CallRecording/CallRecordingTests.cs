@@ -80,7 +80,7 @@ namespace Azure.Communication.CallingServer
 
         private CallRecording getMockCallRecording(int statusCode, string? responseContent = null)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(statusCode, responseContent: responseContent);
+            CallAutomationClient serverCallRestClient = CreateMockCallingServerClient(statusCode, responseContent: responseContent);
             return serverCallRestClient.GetCallRecording();
         }
 

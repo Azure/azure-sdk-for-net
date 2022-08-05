@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// This class represent a single filter object that defines a multidimensional set. The dimensions of this set are Regions, ClusterFlavors, NodeTypes and ClusterVersions. The constraint should be defined based on the following: FilterMode (Exclude vs Include), VMSizes (the vm sizes in affect of exclusion/inclusion) and the ordering of the Filters. Later filters override previous settings if conflicted.
-    /// Serialized Name: VmSizeCompatibilityFilterV2
-    /// </summary>
+    /// <summary> This class represent a single filter object that defines a multidimensional set. The dimensions of this set are Regions, ClusterFlavors, NodeTypes and ClusterVersions. The constraint should be defined based on the following: FilterMode (Exclude vs Include), VMSizes (the vm sizes in affect of exclusion/inclusion) and the ordering of the Filters. Later filters override previous settings if conflicted. </summary>
     public partial class HDInsightVmSizeCompatibilityFilterV2
     {
         /// <summary> Initializes a new instance of HDInsightVmSizeCompatibilityFilterV2. </summary>
@@ -28,42 +25,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightVmSizeCompatibilityFilterV2. </summary>
-        /// <param name="filterMode">
-        /// The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.filterMode
-        /// </param>
-        /// <param name="regions">
-        /// The list of regions under the effect of the filter.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.regions
-        /// </param>
-        /// <param name="clusterFlavors">
-        /// The list of cluster flavors under the effect of the filter.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.clusterFlavors
-        /// </param>
-        /// <param name="nodeTypes">
-        /// The list of node types affected by the filter.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.nodeTypes
-        /// </param>
-        /// <param name="clusterVersions">
-        /// The list of cluster versions affected in Major.Minor format.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.clusterVersions
-        /// </param>
-        /// <param name="osType">
-        /// The OSType affected, Windows or Linux.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.osType
-        /// </param>
-        /// <param name="vmSizes">
-        /// The list of virtual machine sizes to include or exclude.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.vmSizes
-        /// </param>
-        /// <param name="espApplied">
-        /// Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.espApplied
-        /// </param>
-        /// <param name="computeIsolationSupported">
-        /// Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.computeIsolationSupported
-        /// </param>
+        /// <param name="filterMode"> The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set. </param>
+        /// <param name="regions"> The list of regions under the effect of the filter. </param>
+        /// <param name="clusterFlavors"> The list of cluster flavors under the effect of the filter. </param>
+        /// <param name="nodeTypes"> The list of node types affected by the filter. </param>
+        /// <param name="clusterVersions"> The list of cluster versions affected in Major.Minor format. </param>
+        /// <param name="osType"> The OSType affected, Windows or Linux. </param>
+        /// <param name="vmSizes"> The list of virtual machine sizes to include or exclude. </param>
+        /// <param name="espApplied"> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </param>
+        /// <param name="computeIsolationSupported"> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </param>
         internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string computeIsolationSupported)
         {
             FilterMode = filterMode;
@@ -77,50 +47,23 @@ namespace Azure.ResourceManager.HDInsight.Models
             ComputeIsolationSupported = computeIsolationSupported;
         }
 
-        /// <summary>
-        /// The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.filterMode
-        /// </summary>
+        /// <summary> The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular set. </summary>
         public HDInsightFilterMode? FilterMode { get; }
-        /// <summary>
-        /// The list of regions under the effect of the filter.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.regions
-        /// </summary>
+        /// <summary> The list of regions under the effect of the filter. </summary>
         public IReadOnlyList<string> Regions { get; }
-        /// <summary>
-        /// The list of cluster flavors under the effect of the filter.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.clusterFlavors
-        /// </summary>
+        /// <summary> The list of cluster flavors under the effect of the filter. </summary>
         public IReadOnlyList<string> ClusterFlavors { get; }
-        /// <summary>
-        /// The list of node types affected by the filter.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.nodeTypes
-        /// </summary>
+        /// <summary> The list of node types affected by the filter. </summary>
         public IReadOnlyList<string> NodeTypes { get; }
-        /// <summary>
-        /// The list of cluster versions affected in Major.Minor format.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.clusterVersions
-        /// </summary>
+        /// <summary> The list of cluster versions affected in Major.Minor format. </summary>
         public IReadOnlyList<string> ClusterVersions { get; }
-        /// <summary>
-        /// The OSType affected, Windows or Linux.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.osType
-        /// </summary>
+        /// <summary> The OSType affected, Windows or Linux. </summary>
         public IReadOnlyList<HDInsightOSType> OSType { get; }
-        /// <summary>
-        /// The list of virtual machine sizes to include or exclude.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.vmSizes
-        /// </summary>
+        /// <summary> The list of virtual machine sizes to include or exclude. </summary>
         public IReadOnlyList<string> VmSizes { get; }
-        /// <summary>
-        /// Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.espApplied
-        /// </summary>
+        /// <summary> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </summary>
         public string EspApplied { get; }
-        /// <summary>
-        /// Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster.
-        /// Serialized Name: VmSizeCompatibilityFilterV2.computeIsolationSupported
-        /// </summary>
+        /// <summary> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </summary>
         public string ComputeIsolationSupported { get; }
     }
 }

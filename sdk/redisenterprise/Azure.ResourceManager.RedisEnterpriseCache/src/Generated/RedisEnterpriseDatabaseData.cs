@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="persistence"> Persistence settings. </param>
         /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
         /// <param name="geoReplication"> Optional set of properties to configure geo replication for this database. </param>
-        internal RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, PersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication) : base(id, name, resourceType, systemData)
+        internal RedisEnterpriseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseClientProtocol? clientProtocol, int? port, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseClusterResourceState? resourceState, RedisEnterpriseClusteringPolicy? clusteringPolicy, RedisEnterpriseEvictionPolicy? evictionPolicy, RedisPersistenceSettings persistence, IList<RedisEnterpriseModule> modules, RedisEnterpriseDatabaseGeoReplication geoReplication) : base(id, name, resourceType, systemData)
         {
             ClientProtocol = clientProtocol;
             Port = port;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <summary> Redis eviction policy - default is VolatileLRU. </summary>
         public RedisEnterpriseEvictionPolicy? EvictionPolicy { get; set; }
         /// <summary> Persistence settings. </summary>
-        public PersistenceSettings Persistence { get; set; }
+        public RedisPersistenceSettings Persistence { get; set; }
         /// <summary> Optional set of redis modules to enable in this database - modules can only be added at creation time. </summary>
         public IList<RedisEnterpriseModule> Modules { get; }
         /// <summary> Optional set of properties to configure geo replication for this database. </summary>

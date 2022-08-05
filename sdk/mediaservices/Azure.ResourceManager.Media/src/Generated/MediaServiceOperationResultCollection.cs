@@ -59,11 +59,10 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<MediaServiceOperationResultResource>> GetAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public virtual async Task<Response<MediaServiceOperationResultResource>> GetAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Get");
@@ -90,11 +89,10 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual Response<MediaServiceOperationResultResource> Get(string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public virtual Response<MediaServiceOperationResultResource> Get(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Get");
@@ -121,11 +119,10 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Exists");
@@ -150,11 +147,10 @@ namespace Azure.ResourceManager.Media
         /// <param name="locationName"> Location name. </param>
         /// <param name="operationId"> Operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual Response<bool> Exists(string locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        public virtual Response<bool> Exists(AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var scope = _mediaServiceOperationResultMediaServicesOperationResultsClientDiagnostics.CreateScope("MediaServiceOperationResultCollection.Exists");

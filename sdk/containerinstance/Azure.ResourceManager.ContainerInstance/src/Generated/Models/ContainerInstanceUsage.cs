@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name object of the resource. </param>
-        internal ContainerInstanceUsage(string unit, int? currentValue, int? limit, UsageName name)
+        internal ContainerInstanceUsage(string unit, int? currentValue, int? limit, ContainerInstanceUsageName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The maximum permitted usage of the resource. </summary>
         public int? Limit { get; }
         /// <summary> The name object of the resource. </summary>
-        public UsageName Name { get; }
+        public ContainerInstanceUsageName Name { get; }
     }
 }

@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element)
         {
-            Optional<SkuDescription> sku = default;
+            Optional<AppServiceSkuDescription> sku = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"))

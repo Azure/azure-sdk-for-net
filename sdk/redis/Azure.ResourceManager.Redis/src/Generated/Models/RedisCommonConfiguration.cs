@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
-        /// <param name="rdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
+        /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
         /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup. </param>
         /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
         /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
-        /// <param name="aofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
+        /// <param name="isAofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
         /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
         /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
         /// <param name="maxFragmentationMemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
         /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RedisCommonConfiguration(string rdbBackupEnabled, string rdbBackupFrequency, string rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, string aofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, IDictionary<string, BinaryData> additionalProperties)
+        internal RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, IDictionary<string, BinaryData> additionalProperties)
         {
-            RdbBackupEnabled = rdbBackupEnabled;
+            IsRdbBackupEnabled = isRdbBackupEnabled;
             RdbBackupFrequency = rdbBackupFrequency;
             RdbBackupMaxSnapshotCount = rdbBackupMaxSnapshotCount;
             RdbStorageConnectionString = rdbStorageConnectionString;
-            AofBackupEnabled = aofBackupEnabled;
+            IsAofBackupEnabled = isAofBackupEnabled;
             AofStorageConnectionString0 = aofStorageConnectionString0;
             AofStorageConnectionString1 = aofStorageConnectionString1;
             MaxFragmentationMemoryReserved = maxFragmentationMemoryReserved;
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Specifies whether the rdb backup is enabled. </summary>
-        public string RdbBackupEnabled { get; set; }
+        public bool? IsRdbBackupEnabled { get; set; }
         /// <summary> Specifies the frequency for creating rdb backup. </summary>
         public string RdbBackupFrequency { get; set; }
         /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
-        public string RdbBackupMaxSnapshotCount { get; set; }
+        public int? RdbBackupMaxSnapshotCount { get; set; }
         /// <summary> The storage account connection string for storing rdb file. </summary>
         public string RdbStorageConnectionString { get; set; }
         /// <summary> Specifies whether the aof backup is enabled. </summary>
-        public string AofBackupEnabled { get; set; }
+        public bool? IsAofBackupEnabled { get; set; }
         /// <summary> First storage account connection string. </summary>
         public string AofStorageConnectionString0 { get; set; }
         /// <summary> Second storage account connection string. </summary>

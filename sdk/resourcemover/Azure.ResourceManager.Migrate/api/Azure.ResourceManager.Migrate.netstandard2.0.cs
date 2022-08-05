@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Migrate
         public static Azure.Pageable<Azure.ResourceManager.Migrate.MoveCollectionResource> GetMoveCollections(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Migrate.MoveCollectionResource> GetMoveCollectionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Migrate.MoveResource GetMoveResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Migrate.Models.OperationsDiscovery> GetOperationsDiscoveries(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Migrate.Models.OperationsDiscovery> GetOperationsDiscoveriesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Migrate.Models.MoverOperationsDiscovery> GetOperationsDiscoveries(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Migrate.Models.MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MoveCollectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Migrate.MoveCollectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Migrate.MoveCollectionResource>, System.Collections.IEnumerable
     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Migrate
     {
         public MoveCollectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Migrate.Models.MoveCollectionProperties Properties { get { throw null; } set { } }
     }
     public partial class MoveCollectionResource : Azure.ResourceManager.ArmResource
@@ -42,32 +42,32 @@ namespace Azure.ResourceManager.Migrate
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> BulkRemove(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.BulkRemoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> BulkRemoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.BulkRemoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> Commit(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.CommitContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> CommitAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.CommitContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> BulkRemove(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverBulkRemoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> BulkRemoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverBulkRemoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> Commit(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverCommitContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> CommitAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverCommitContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moveCollectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> Discard(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.DiscardContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> DiscardAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.DiscardContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> Discard(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverDiscardContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> DiscardAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverDiscardContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveResource> GetMoveResource(string moveResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.MoveResource>> GetMoveResourceAsync(string moveResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Migrate.MoveResourceCollection GetMoveResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Migrate.Models.RequiredForResourcesCollection> GetRequiredFor(string sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.Models.RequiredForResourcesCollection>> GetRequiredForAsync(string sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Migrate.Models.UnresolvedDependency> GetUnresolvedDependencies(Azure.ResourceManager.Migrate.Models.DependencyLevel? dependencyLevel = default(Azure.ResourceManager.Migrate.Models.DependencyLevel?), string orderby = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Migrate.Models.UnresolvedDependency> GetUnresolvedDependenciesAsync(Azure.ResourceManager.Migrate.Models.DependencyLevel? dependencyLevel = default(Azure.ResourceManager.Migrate.Models.DependencyLevel?), string orderby = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> InitiateMove(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.ResourceMoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> InitiateMoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.ResourceMoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> Prepare(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.PrepareContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> PrepareAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.PrepareContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Migrate.Models.RequiredForResourcesList> GetRequiredForResources(Azure.Core.ResourceIdentifier sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.Models.RequiredForResourcesList>> GetRequiredForResourcesAsync(Azure.Core.ResourceIdentifier sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Migrate.Models.MoverUnresolvedDependency> GetUnresolvedDependencies(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel? dependencyLevel = default(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel?), string orderby = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Migrate.Models.MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel? dependencyLevel = default(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel?), string orderby = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> InitiateMove(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverResourceMoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> InitiateMoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverResourceMoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> Prepare(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverPrepareContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> PrepareAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.Models.MoverPrepareContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> ResolveDependencies(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> ResolveDependenciesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> ResolveDependencies(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> ResolveDependenciesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveCollectionResource> Update(Azure.ResourceManager.Migrate.Models.MoveCollectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Migrate
         public virtual Azure.ResourceManager.Migrate.MoveResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moveCollectionName, string moveResourceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.OperationStatus>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.Models.MoverOperationStatus>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Migrate.MoveResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Migrate.MoveResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Migrate.MoveResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Migrate.MoveResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -110,155 +110,41 @@ namespace Azure.ResourceManager.Migrate
 }
 namespace Azure.ResourceManager.Migrate.Models
 {
-    public partial class AffectedMoveResource
-    {
-        internal AffectedMoveResource() { }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.AffectedMoveResource> MoveResources { get { throw null; } }
-        public string SourceId { get { throw null; } }
-    }
-    public partial class AvailabilitySetResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
-    {
-        public AvailabilitySetResourceSettings(string targetResourceName) : base (default(string)) { }
-        public int? FaultDomain { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public int? UpdateDomain { get { throw null; } set { } }
-    }
-    public partial class AzureResourceReference
-    {
-        public AzureResourceReference(string sourceArmResourceId) { }
-        public string SourceArmResourceId { get { throw null; } set { } }
-    }
-    public partial class BulkRemoveContent
-    {
-        public BulkRemoveContent() { }
-        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
-    }
-    public partial class CommitContent
-    {
-        public CommitContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
-        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DependencyLevel : System.IEquatable<Azure.ResourceManager.Migrate.Models.DependencyLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DependencyLevel(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.DependencyLevel Descendant { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.DependencyLevel Direct { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.DependencyLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.DependencyLevel left, Azure.ResourceManager.Migrate.Models.DependencyLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.DependencyLevel (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.DependencyLevel left, Azure.ResourceManager.Migrate.Models.DependencyLevel right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DependencyType : System.IEquatable<Azure.ResourceManager.Migrate.Models.DependencyType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DependencyType(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.DependencyType RequiredForMove { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.DependencyType RequiredForPrepare { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.DependencyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.DependencyType left, Azure.ResourceManager.Migrate.Models.DependencyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.DependencyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.DependencyType left, Azure.ResourceManager.Migrate.Models.DependencyType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DiscardContent
-    {
-        public DiscardContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
-        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
-    }
-    public partial class DiskEncryptionSetResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class DiskEncryptionSetResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public DiskEncryptionSetResourceSettings(string targetResourceName) : base (default(string)) { }
     }
-    public partial class Display
-    {
-        internal Display() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
-    public partial class Identity
-    {
-        public Identity() { }
-        public string PrincipalId { get { throw null; } set { } }
-        public Azure.ResourceManager.Migrate.Models.ResourceIdentityType? ResourceIdentityType { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobName : System.IEquatable<Azure.ResourceManager.Migrate.Models.JobName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobName(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.JobName InitialSync { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.JobName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.JobName left, Azure.ResourceManager.Migrate.Models.JobName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.JobName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.JobName left, Azure.ResourceManager.Migrate.Models.JobName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JobStatus
-    {
-        internal JobStatus() { }
-        public Azure.ResourceManager.Migrate.Models.JobName? JobName { get { throw null; } }
-        public string JobProgress { get { throw null; } }
-    }
-    public partial class KeyVaultResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class KeyVaultResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public KeyVaultResourceSettings(string targetResourceName) : base (default(string)) { }
     }
-    public partial class LBBackendAddressPoolResourceSettings
+    public partial class LoadBalancerBackendAddressPoolReferenceInfo : Azure.ResourceManager.Migrate.Models.ProxyResourceReferenceInfo
     {
-        public LBBackendAddressPoolResourceSettings() { }
+        public LoadBalancerBackendAddressPoolReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
+    }
+    public partial class LoadBalancerBackendAddressPoolResourceSettings
+    {
+        public LoadBalancerBackendAddressPoolResourceSettings() { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class LBFrontendIPConfigurationResourceSettings
+    public partial class LoadBalancerFrontendIPConfigurationResourceSettings
     {
-        public LBFrontendIPConfigurationResourceSettings() { }
+        public LoadBalancerFrontendIPConfigurationResourceSettings() { }
         public string Name { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public string PrivateIPAllocationMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Migrate.Models.SubnetReference Subnet { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.SubnetReferenceInfo Subnet { get { throw null; } set { } }
         public string Zones { get { throw null; } set { } }
     }
-    public partial class LoadBalancerBackendAddressPoolReference : Azure.ResourceManager.Migrate.Models.ProxyResourceReference
+    public partial class LoadBalancerNatRuleReferenceInfo : Azure.ResourceManager.Migrate.Models.ProxyResourceReferenceInfo
     {
-        public LoadBalancerBackendAddressPoolReference(string sourceArmResourceId) : base (default(string)) { }
+        public LoadBalancerNatRuleReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
     }
-    public partial class LoadBalancerNatRuleReference : Azure.ResourceManager.Migrate.Models.ProxyResourceReference
-    {
-        public LoadBalancerNatRuleReference(string sourceArmResourceId) : base (default(string)) { }
-    }
-    public partial class LoadBalancerResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class LoadBalancerResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public LoadBalancerResourceSettings(string targetResourceName) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LBBackendAddressPoolResourceSettings> BackendAddressPools { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LBFrontendIPConfigurationResourceSettings> FrontendIPConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerBackendAddressPoolResourceSettings> BackendAddressPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerFrontendIPConfigurationResourceSettings> FrontendIPConfigurations { get { throw null; } }
         public string Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Zones { get { throw null; } set { } }
@@ -266,33 +152,117 @@ namespace Azure.ResourceManager.Migrate.Models
     public partial class MoveCollectionPatch
     {
         public MoveCollectionPatch() { }
-        public Azure.ResourceManager.Migrate.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class MoveCollectionProperties
     {
         public MoveCollectionProperties(string sourceRegion, string targetRegion) { }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
         public string SourceRegion { get { throw null; } set { } }
         public string TargetRegion { get { throw null; } set { } }
+    }
+    public partial class MoverAffectedMoveResourceInfo
+    {
+        internal MoverAffectedMoveResourceInfo() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoverAffectedMoveResourceInfo> MoveResources { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } }
+    }
+    public partial class MoverAvailabilitySetResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
+    {
+        public MoverAvailabilitySetResourceSettings(string targetResourceName) : base (default(string)) { }
+        public int? FaultDomain { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public int? UpdateDomain { get { throw null; } set { } }
+    }
+    public partial class MoverAzureResourceReferenceInfo
+    {
+        public MoverAzureResourceReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) { }
+        public Azure.Core.ResourceIdentifier SourceArmResourceId { get { throw null; } set { } }
+    }
+    public partial class MoverBulkRemoveContent
+    {
+        public MoverBulkRemoveContent() { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
+    }
+    public partial class MoverCommitContent
+    {
+        public MoverCommitContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MoverDependencyLevel : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoverDependencyLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MoverDependencyLevel(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoverDependencyLevel Descendant { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverDependencyLevel Direct { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel left, Azure.ResourceManager.Migrate.Models.MoverDependencyLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoverDependencyLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoverDependencyLevel left, Azure.ResourceManager.Migrate.Models.MoverDependencyLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MoverDependencyType : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoverDependencyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MoverDependencyType(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoverDependencyType RequiredForMove { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverDependencyType RequiredForPrepare { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoverDependencyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoverDependencyType left, Azure.ResourceManager.Migrate.Models.MoverDependencyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoverDependencyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoverDependencyType left, Azure.ResourceManager.Migrate.Models.MoverDependencyType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MoverDiscardContent
+    {
+        public MoverDiscardContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
+    }
+    public partial class MoverDisplayInfo
+    {
+        internal MoverDisplayInfo() { }
+        public string Description { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
     }
     public partial class MoveResourceDependency
     {
         internal MoveResourceDependency() { }
-        public string AutomaticResolutionMoveResourceId { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.DependencyType? DependencyType { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string IsOptional { get { throw null; } }
-        public string ManualResolutionTargetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AutomaticResolutionMoveResourceId { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoverDependencyType? DependencyType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsOptional { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManualResolutionTargetId { get { throw null; } }
         public string ResolutionStatus { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.ResolutionType? ResolutionType { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType? ResolutionType { get { throw null; } }
     }
     public partial class MoveResourceDependencyOverride
     {
         public MoveResourceDependencyOverride() { }
-        public string Id { get { throw null; } set { } }
-        public string TargetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MoveResourceInputType : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoveResourceInputType>
@@ -312,91 +282,219 @@ namespace Azure.ResourceManager.Migrate.Models
         public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoveResourceInputType left, Azure.ResourceManager.Migrate.Models.MoveResourceInputType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MoveResourceJobName : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoveResourceJobName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MoveResourceJobName(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceJobName InitialSync { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoveResourceJobName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoveResourceJobName left, Azure.ResourceManager.Migrate.Models.MoveResourceJobName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoveResourceJobName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoveResourceJobName left, Azure.ResourceManager.Migrate.Models.MoveResourceJobName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MoveResourceJobStatus
+    {
+        internal MoveResourceJobStatus() { }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceJobName? JobName { get { throw null; } }
+        public string JobProgress { get { throw null; } }
+    }
     public partial class MoveResourceProperties
     {
-        public MoveResourceProperties(string sourceId) { }
+        public MoveResourceProperties(Azure.Core.ResourceIdentifier sourceId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoveResourceDependency> DependsOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.MoveResourceDependencyOverride> DependsOnOverrides { get { throw null; } }
         public Azure.ResponseError ErrorsProperties { get { throw null; } }
-        public string ExistingTargetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ExistingTargetId { get { throw null; } set { } }
         public bool? IsResolveRequired { get { throw null; } }
         public Azure.ResourceManager.Migrate.Models.MoveResourcePropertiesMoveStatus MoveStatus { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.ResourceSettings ResourceSettings { get { throw null; } set { } }
-        public string SourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Migrate.Models.ResourceSettings SourceResourceSettings { get { throw null; } }
-        public string TargetId { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoverResourceSettings ResourceSettings { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoverResourceSettings SourceResourceSettings { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetId { get { throw null; } }
     }
     public partial class MoveResourcePropertiesMoveStatus : Azure.ResourceManager.Migrate.Models.MoveResourceStatus
     {
         internal MoveResourcePropertiesMoveStatus() { }
     }
-    public partial class MoveResourceStatus
-    {
-        internal MoveResourceStatus() { }
-        public Azure.ResponseError ErrorsProperties { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.JobStatus JobStatus { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.MoveState? MoveState { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MoveState : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoveState>
+    public readonly partial struct MoveResourceResolutionType : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MoveState(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.MoveState AssignmentPending { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState CommitFailed { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState CommitInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState CommitPending { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState Committed { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState DeleteSourcePending { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState DiscardFailed { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState DiscardInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState MoveFailed { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState MoveInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState MovePending { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState PrepareFailed { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState PrepareInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState PreparePending { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.MoveState ResourceMoveCompleted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.MoveState other) { throw null; }
+        public MoveResourceResolutionType(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType Automatic { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType Manual { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoveState left, Azure.ResourceManager.Migrate.Models.MoveState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.MoveState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoveState left, Azure.ResourceManager.Migrate.Models.MoveState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType left, Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType left, Azure.ResourceManager.Migrate.Models.MoveResourceResolutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MoveResourceState : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoveResourceState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MoveResourceState(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState AssignmentPending { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState CommitFailed { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState CommitInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState CommitPending { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState Committed { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState DeleteSourcePending { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState DiscardFailed { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState DiscardInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState MoveFailed { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState MoveInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState MovePending { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState PrepareFailed { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState PrepareInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState PreparePending { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoveResourceState ResourceMoveCompleted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoveResourceState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoveResourceState left, Azure.ResourceManager.Migrate.Models.MoveResourceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoveResourceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoveResourceState left, Azure.ResourceManager.Migrate.Models.MoveResourceState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MoveResourceStatus
+    {
+        internal MoveResourceStatus() { }
+        public Azure.ResponseError ErrorsProperties { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceJobStatus JobStatus { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceState? MoveState { get { throw null; } }
+    }
+    public partial class MoverOperationErrorAdditionalInfo
+    {
+        internal MoverOperationErrorAdditionalInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoverAffectedMoveResourceInfo> InfoMoveResources { get { throw null; } }
+        public string OperationErrorAdditionalInfoType { get { throw null; } }
+    }
+    public partial class MoverOperationsDiscovery
+    {
+        internal MoverOperationsDiscovery() { }
+        public Azure.ResourceManager.Migrate.Models.MoverDisplayInfo Display { get { throw null; } }
+        public bool? IsDataAction { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Origin { get { throw null; } }
+        public System.BinaryData Properties { get { throw null; } }
+    }
+    public partial class MoverOperationStatus
+    {
+        internal MoverOperationStatus() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.ResourceManager.Migrate.Models.MoverOperationStatusError Error { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Properties { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
+    public partial class MoverOperationStatusError
+    {
+        internal MoverOperationStatusError() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoverOperationErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.MoverOperationStatusError> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class MoverPrepareContent
+    {
+        public MoverPrepareContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MoverProvisioningState : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoverProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MoverProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoverProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoverProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoverProvisioningState left, Azure.ResourceManager.Migrate.Models.MoverProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoverProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoverProvisioningState left, Azure.ResourceManager.Migrate.Models.MoverProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MoverResourceMoveContent
+    {
+        public MoverResourceMoveContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> moveResources) { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MoveResources { get { throw null; } }
+    }
+    public partial class MoverResourceSettings
+    {
+        public MoverResourceSettings(string targetResourceName) { }
+        public string TargetResourceName { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MoverTargetAvailabilityZone : System.IEquatable<Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MoverTargetAvailabilityZone(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone NA { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone One { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone Three { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone Two { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone left, Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone left, Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MoverUnresolvedDependency
+    {
+        internal MoverUnresolvedDependency() { }
+        public int? Count { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+    }
+    public partial class NetworkInterfaceResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public NetworkInterfaceResourceSettings(string targetResourceName) : base (default(string)) { }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.NicIPConfigurationResourceSettings> IPConfigurations { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class NetworkSecurityGroupResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class NetworkSecurityGroupResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public NetworkSecurityGroupResourceSettings(string targetResourceName) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.NsgSecurityRule> SecurityRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.NetworkSecurityGroupSecurityRule> SecurityRules { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class NicIPConfigurationResourceSettings
+    public partial class NetworkSecurityGroupSecurityRule
     {
-        public NicIPConfigurationResourceSettings() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerBackendAddressPoolReference> LoadBalancerBackendAddressPools { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerNatRuleReference> LoadBalancerNatRules { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public bool? Primary { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
-        public string PrivateIPAllocationMethod { get { throw null; } set { } }
-        public string PublicIPSourceArmResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Migrate.Models.SubnetReference Subnet { get { throw null; } set { } }
-    }
-    public partial class NsgSecurityRule
-    {
-        public NsgSecurityRule() { }
+        public NetworkSecurityGroupSecurityRule() { }
         public string Access { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DestinationAddressPrefix { get { throw null; } set { } }
@@ -408,73 +506,24 @@ namespace Azure.ResourceManager.Migrate.Models
         public string SourceAddressPrefix { get { throw null; } set { } }
         public string SourcePortRange { get { throw null; } set { } }
     }
-    public partial class OperationErrorAdditionalInfo
+    public partial class NicIPConfigurationResourceSettings
     {
-        internal OperationErrorAdditionalInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.AffectedMoveResource> InfoMoveResources { get { throw null; } }
-        public string OperationErrorAdditionalInfoType { get { throw null; } }
+        public NicIPConfigurationResourceSettings() { }
+        public bool? IsValidateOnly { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.LoadBalancerNatRuleReferenceInfo> LoadBalancerNatRules { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
+        public string PrivateIPAllocationMethod { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PublicIPSourceArmResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.SubnetReferenceInfo Subnet { get { throw null; } set { } }
     }
-    public partial class OperationsDiscovery
+    public partial class ProxyResourceReferenceInfo : Azure.ResourceManager.Migrate.Models.MoverAzureResourceReferenceInfo
     {
-        internal OperationsDiscovery() { }
-        public Azure.ResourceManager.Migrate.Models.Display Display { get { throw null; } }
-        public bool? IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Origin { get { throw null; } }
-        public System.BinaryData Properties { get { throw null; } }
-    }
-    public partial class OperationStatus
-    {
-        internal OperationStatus() { }
-        public string EndTime { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.OperationStatusError Error { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.BinaryData Properties { get { throw null; } }
-        public string StartTime { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public partial class OperationStatusError
-    {
-        internal OperationStatusError() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.OperationErrorAdditionalInfo> AdditionalInfo { get { throw null; } }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Migrate.Models.OperationStatusError> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class PrepareContent
-    {
-        public PrepareContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
-        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Migrate.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.ProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.ProvisioningState left, Azure.ResourceManager.Migrate.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.ProvisioningState left, Azure.ResourceManager.Migrate.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ProxyResourceReference : Azure.ResourceManager.Migrate.Models.AzureResourceReference
-    {
-        public ProxyResourceReference(string sourceArmResourceId) : base (default(string)) { }
+        public ProxyResourceReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class PublicIPAddressResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class PublicIPAddressResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public PublicIPAddressResourceSettings(string targetResourceName) : base (default(string)) { }
         public string DomainNameLabel { get { throw null; } set { } }
@@ -484,127 +533,70 @@ namespace Azure.ResourceManager.Migrate.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Zones { get { throw null; } set { } }
     }
-    public partial class RequiredForResourcesCollection
+    public partial class RequiredForResourcesList
     {
-        internal RequiredForResourcesCollection() { }
+        internal RequiredForResourcesList() { }
         public System.Collections.Generic.IReadOnlyList<string> SourceIds { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResolutionType : System.IEquatable<Azure.ResourceManager.Migrate.Models.ResolutionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResolutionType(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.ResolutionType Automatic { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ResolutionType Manual { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.ResolutionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.ResolutionType left, Azure.ResourceManager.Migrate.Models.ResolutionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.ResolutionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.ResolutionType left, Azure.ResourceManager.Migrate.Models.ResolutionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ResourceGroupResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class ResourceGroupResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public ResourceGroupResourceSettings(string targetResourceName) : base (default(string)) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.Migrate.Models.ResourceIdentityType>
+    public readonly partial struct ResourceZoneRedundantSetting : System.IEquatable<Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ResourceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.ResourceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ResourceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.ResourceIdentityType other) { throw null; }
+        public ResourceZoneRedundantSetting(string value) { throw null; }
+        public static Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting Disable { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting Enable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.ResourceIdentityType left, Azure.ResourceManager.Migrate.Models.ResourceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.ResourceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.ResourceIdentityType left, Azure.ResourceManager.Migrate.Models.ResourceIdentityType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting left, Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting left, Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceMoveContent
-    {
-        public ResourceMoveContent(System.Collections.Generic.IEnumerable<string> moveResources) { }
-        public Azure.ResourceManager.Migrate.Models.MoveResourceInputType? MoveResourceInputType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MoveResources { get { throw null; } }
-        public bool? ValidateOnly { get { throw null; } set { } }
-    }
-    public partial class ResourceSettings
-    {
-        public ResourceSettings(string targetResourceName) { }
-        public string TargetResourceName { get { throw null; } set { } }
-    }
-    public partial class SqlDatabaseResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class SqlDatabaseResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public SqlDatabaseResourceSettings(string targetResourceName) : base (default(string)) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.ZoneRedundant? ZoneRedundant { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting? ZoneRedundant { get { throw null; } set { } }
     }
-    public partial class SqlElasticPoolResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class SqlElasticPoolResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public SqlElasticPoolResourceSettings(string targetResourceName) : base (default(string)) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.Migrate.Models.ZoneRedundant? ZoneRedundant { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.ResourceZoneRedundantSetting? ZoneRedundant { get { throw null; } set { } }
     }
-    public partial class SqlServerResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class SqlServerResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public SqlServerResourceSettings(string targetResourceName) : base (default(string)) { }
     }
-    public partial class SubnetReference : Azure.ResourceManager.Migrate.Models.ProxyResourceReference
+    public partial class SubnetReferenceInfo : Azure.ResourceManager.Migrate.Models.ProxyResourceReferenceInfo
     {
-        public SubnetReference(string sourceArmResourceId) : base (default(string)) { }
+        public SubnetReferenceInfo(Azure.Core.ResourceIdentifier sourceArmResourceId) : base (default(Azure.Core.ResourceIdentifier)) { }
     }
     public partial class SubnetResourceSettings
     {
         public SubnetResourceSettings() { }
         public string AddressPrefix { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string NetworkSecurityGroupSourceArmResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupSourceArmResourceId { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TargetAvailabilityZone : System.IEquatable<Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TargetAvailabilityZone(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone NA { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone One { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone Three { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone Two { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone left, Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone left, Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UnresolvedDependency
-    {
-        internal UnresolvedDependency() { }
-        public int? Count { get { throw null; } }
-        public string Id { get { throw null; } }
-    }
-    public partial class VirtualMachineResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class VirtualMachineResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public VirtualMachineResourceSettings(string targetResourceName) : base (default(string)) { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public string TargetAvailabilitySetId { get { throw null; } set { } }
-        public Azure.ResourceManager.Migrate.Models.TargetAvailabilityZone? TargetAvailabilityZone { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetAvailabilitySetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Migrate.Models.MoverTargetAvailabilityZone? TargetAvailabilityZone { get { throw null; } set { } }
         public string TargetVmSize { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> UserManagedIdentities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> UserManagedIdentities { get { throw null; } }
     }
-    public partial class VirtualNetworkResourceSettings : Azure.ResourceManager.Migrate.Models.ResourceSettings
+    public partial class VirtualNetworkResourceSettings : Azure.ResourceManager.Migrate.Models.MoverResourceSettings
     {
         public VirtualNetworkResourceSettings(string targetResourceName) : base (default(string)) { }
         public System.Collections.Generic.IList<string> AddressSpace { get { throw null; } }
@@ -612,23 +604,5 @@ namespace Azure.ResourceManager.Migrate.Models
         public bool? EnableDdosProtection { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Migrate.Models.SubnetResourceSettings> Subnets { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ZoneRedundant : System.IEquatable<Azure.ResourceManager.Migrate.Models.ZoneRedundant>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ZoneRedundant(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.ZoneRedundant Disable { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.ZoneRedundant Enable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Migrate.Models.ZoneRedundant other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Migrate.Models.ZoneRedundant left, Azure.ResourceManager.Migrate.Models.ZoneRedundant right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Migrate.Models.ZoneRedundant (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Migrate.Models.ZoneRedundant left, Azure.ResourceManager.Migrate.Models.ZoneRedundant right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceId"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
         /// <param name="proxy"> Backend Proxy Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
-        internal ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, string resourceId, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol) : base(id, name, resourceType, systemData)
+        internal ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol) : base(id, name, resourceType, systemData)
         {
             Title = title;
             Description = description;
-            ResourceId = resourceId;
+            ResourceUri = resourceUri;
             Properties = properties;
             Credentials = credentials;
             Proxy = proxy;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Backend Description. </summary>
         public string Description { get; set; }
         /// <summary> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
         /// <summary> Backend Properties contract. </summary>
         internal BackendProperties Properties { get; set; }
         /// <summary> Backend Service Fabric Cluster Properties. </summary>

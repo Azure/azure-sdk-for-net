@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Redis.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RdbBackupEnabled))
+            if (Optional.IsDefined(IsRdbBackupEnabled))
             {
                 writer.WritePropertyName("rdb-backup-enabled");
-                writer.WriteStringValue(RdbBackupEnabled);
+                writer.WriteBooleanValue(IsRdbBackupEnabled.Value);
             }
             if (Optional.IsDefined(RdbBackupFrequency))
             {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count");
-                writer.WriteStringValue(RdbBackupMaxSnapshotCount);
+                writer.WriteNumberValue(RdbBackupMaxSnapshotCount.Value);
             }
             if (Optional.IsDefined(RdbStorageConnectionString))
             {
                 writer.WritePropertyName("rdb-storage-connection-string");
                 writer.WriteStringValue(RdbStorageConnectionString);
             }
-            if (Optional.IsDefined(AofBackupEnabled))
+            if (Optional.IsDefined(IsAofBackupEnabled))
             {
                 writer.WritePropertyName("aof-backup-enabled");
-                writer.WriteStringValue(AofBackupEnabled);
+                writer.WriteBooleanValue(IsAofBackupEnabled.Value);
             }
             if (Optional.IsDefined(AofStorageConnectionString0))
             {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisCommonConfiguration DeserializeRedisCommonConfiguration(JsonElement element)
         {
-            Optional<string> rdbBackupEnabled = default;
+            Optional<bool> rdbBackupEnabled = default;
             Optional<string> rdbBackupFrequency = default;
-            Optional<string> rdbBackupMaxSnapshotCount = default;
+            Optional<int> rdbBackupMaxSnapshotCount = default;
             Optional<string> rdbStorageConnectionString = default;
-            Optional<string> aofBackupEnabled = default;
+            Optional<bool> aofBackupEnabled = default;
             Optional<string> aofStorageConnectionString0 = default;
             Optional<string> aofStorageConnectionString1 = default;
             Optional<string> maxfragmentationmemoryReserved = default;
@@ -113,7 +113,12 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 if (property.NameEquals("rdb-backup-enabled"))
                 {
-                    rdbBackupEnabled = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    rdbBackupEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("rdb-backup-frequency"))
@@ -123,7 +128,12 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("rdb-backup-max-snapshot-count"))
                 {
-                    rdbBackupMaxSnapshotCount = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    rdbBackupMaxSnapshotCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rdb-storage-connection-string"))
@@ -133,7 +143,12 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("aof-backup-enabled"))
                 {
-                    aofBackupEnabled = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    aofBackupEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("aof-storage-connection-string-0"))
@@ -194,7 +209,7 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RedisCommonConfiguration(rdbBackupEnabled.Value, rdbBackupFrequency.Value, rdbBackupMaxSnapshotCount.Value, rdbStorageConnectionString.Value, aofBackupEnabled.Value, aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, additionalProperties);
+            return new RedisCommonConfiguration(Optional.ToNullable(rdbBackupEnabled), rdbBackupFrequency.Value, Optional.ToNullable(rdbBackupMaxSnapshotCount), rdbStorageConnectionString.Value, Optional.ToNullable(aofBackupEnabled), aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, additionalProperties);
         }
     }
 }

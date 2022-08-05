@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ClientAppId))
             {
                 writer.WritePropertyName("clientAppID");
-                writer.WriteStringValue(ClientAppId);
+                writer.WriteStringValue(ClientAppId.Value);
             }
             if (Optional.IsDefined(ServerAppId))
             {
                 writer.WritePropertyName("serverAppID");
-                writer.WriteStringValue(ServerAppId);
+                writer.WriteStringValue(ServerAppId.Value);
             }
             if (Optional.IsDefined(ServerAppSecret))
             {
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             Optional<bool> managed = default;
             Optional<bool> enableAzureRBAC = default;
-            Optional<IList<string>> adminGroupObjectIds = default;
-            Optional<string> clientAppId = default;
-            Optional<string> serverAppId = default;
+            Optional<IList<Guid>> adminGroupObjectIds = default;
+            Optional<Guid> clientAppId = default;
+            Optional<Guid> serverAppId = default;
             Optional<string> serverAppSecret = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
@@ -98,22 +98,32 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Guid> array = new List<Guid>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(item.GetGuid());
                     }
                     adminGroupObjectIds = array;
                     continue;
                 }
                 if (property.NameEquals("clientAppID"))
                 {
-                    clientAppId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientAppId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("serverAppID"))
                 {
-                    serverAppId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    serverAppId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("serverAppSecret"))
@@ -132,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), clientAppId.Value, serverAppId.Value, serverAppSecret.Value, Optional.ToNullable(tenantId));
+            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId));
         }
     }
 }

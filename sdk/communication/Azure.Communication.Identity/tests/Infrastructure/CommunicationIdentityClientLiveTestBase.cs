@@ -68,7 +68,10 @@ namespace Azure.Communication.Identity.Tests
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
                                                     .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
                                                     .Build();
-                string[] scopes = { TestEnvironment.CommunicationM365Scope };
+                string[] scopes = {
+                    "https://auth.msft.communication.azure.com/Teams.ManageCalls",
+                    "https://auth.msft.communication.azure.com/Teams.ManageChats"
+                };
                 SecureString communicationMsalPassword = new SecureString();
                 foreach (char c in TestEnvironment.CommunicationMsalPassword)
                 {

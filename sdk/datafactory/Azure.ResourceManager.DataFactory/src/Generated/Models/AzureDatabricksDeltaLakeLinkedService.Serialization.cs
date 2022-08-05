@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData domain = default;
-            Optional<SecretBase> accessToken = default;
+            Optional<FactorySecretBaseDefinition> accessToken = default;
             Optional<BinaryData> clusterId = default;
             Optional<BinaryData> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            Optional<FactoryCredentialReference> credential = default;
             Optional<BinaryData> workspaceResourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceResourceId"))
