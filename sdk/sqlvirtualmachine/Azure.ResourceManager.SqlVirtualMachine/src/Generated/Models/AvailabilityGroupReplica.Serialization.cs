@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlVirtualMachineInstanceId))
+            if (Optional.IsDefined(SqlVmInstanceId))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstanceId");
-                writer.WriteStringValue(SqlVirtualMachineInstanceId);
+                writer.WriteStringValue(SqlVmInstanceId);
             }
             if (Optional.IsDefined(Role))
             {
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AvailabilityGroupReplica DeserializeAvailabilityGroupReplica(JsonElement element)
         {
-            Optional<string> sqlVirtualMachineInstanceId = default;
+            Optional<string> sqlVmInstanceId = default;
             Optional<AvailabilityGroupReplicaRole> role = default;
             Optional<AvailabilityGroupReplicaCommitMode> commit = default;
             Optional<AvailabilityGroupReplicaFailoverMode> failover = default;
-            Optional<ReadableSecondary> readableSecondary = default;
+            Optional<ReadableSecondaryMode> readableSecondary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlVirtualMachineInstanceId"))
                 {
-                    sqlVirtualMachineInstanceId = property.Value.GetString();
+                    sqlVmInstanceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("role"))
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    readableSecondary = new ReadableSecondary(property.Value.GetString());
+                    readableSecondary = new ReadableSecondaryMode(property.Value.GetString());
                     continue;
                 }
             }
-            return new AvailabilityGroupReplica(sqlVirtualMachineInstanceId.Value, Optional.ToNullable(role), Optional.ToNullable(commit), Optional.ToNullable(failover), Optional.ToNullable(readableSecondary));
+            return new AvailabilityGroupReplica(sqlVmInstanceId.Value, Optional.ToNullable(role), Optional.ToNullable(commit), Optional.ToNullable(failover), Optional.ToNullable(readableSecondary));
         }
     }
 }

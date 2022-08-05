@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Initializes a new instance of AvailabilityGroupReplica. </summary>
-        /// <param name="sqlVirtualMachineInstanceId"> Sql VirtualMachine Instance Id. </param>
+        /// <param name="sqlVmInstanceId"> Sql VirtualMachine Instance Id. </param>
         /// <param name="role"> Replica Role in availability group. </param>
         /// <param name="commit"> Replica commit mode in availability group. </param>
         /// <param name="failover"> Replica failover mode in availability group. </param>
         /// <param name="readableSecondary"> Replica readable secondary mode in availability group. </param>
-        internal AvailabilityGroupReplica(string sqlVirtualMachineInstanceId, AvailabilityGroupReplicaRole? role, AvailabilityGroupReplicaCommitMode? commit, AvailabilityGroupReplicaFailoverMode? failover, ReadableSecondary? readableSecondary)
+        internal AvailabilityGroupReplica(string sqlVmInstanceId, AvailabilityGroupReplicaRole? role, AvailabilityGroupReplicaCommitMode? commit, AvailabilityGroupReplicaFailoverMode? failover, ReadableSecondaryMode? readableSecondary)
         {
-            SqlVirtualMachineInstanceId = sqlVirtualMachineInstanceId;
+            SqlVmInstanceId = sqlVmInstanceId;
             Role = role;
             Commit = commit;
             Failover = failover;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Sql VirtualMachine Instance Id. </summary>
-        public string SqlVirtualMachineInstanceId { get; set; }
+        public string SqlVmInstanceId { get; set; }
         /// <summary> Replica Role in availability group. </summary>
         public AvailabilityGroupReplicaRole? Role { get; set; }
         /// <summary> Replica commit mode in availability group. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Replica failover mode in availability group. </summary>
         public AvailabilityGroupReplicaFailoverMode? Failover { get; set; }
         /// <summary> Replica readable secondary mode in availability group. </summary>
-        public ReadableSecondary? ReadableSecondary { get; set; }
+        public ReadableSecondaryMode? ReadableSecondary { get; set; }
     }
 }
