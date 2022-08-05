@@ -176,7 +176,7 @@ namespace Azure.Monitor.Ingestion.Tests
             }
 
             // Make the request
-            Response response = await client.UploadAsync("dcr-4c0684412e0547b49be35f8c553702d5", TestEnvironment.StreamName, entries).ConfigureAwait(false);
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(204, response.Status);
