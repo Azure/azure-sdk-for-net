@@ -2,12 +2,6 @@ parameters:
 - name: SDKType
   type: string
   default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -24,6 +18,12 @@ parameters:
 - name: CloudConfig
   type: object
   default: {}
+- name: ProjectListOverrideFilePropertyName
+  type: string
+  default: ''
+- name: ServiceDirectory
+  type: string
+  default: ''
 
 jobs:
   - job:
@@ -43,10 +43,23 @@ jobs:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
+            ${{ if eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
-                - "/sdk/${{ parameters.ServiceToTest }}/**/SessionRecords"
+                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords"
+            ${{ else }}:
+              Paths:
+                - "/*"
+                - "!SessionRecords"
+                - "/sdk/*/**/SessionRecords"
+      - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: DependencyTestProjectReferences
+            patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
+            path: $(Build.SourcesDirectory)
+        
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
@@ -63,6 +76,15 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+      - pwsh: | 
+          if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '') {
+            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]$(${{ parameters.ProjectListOverrideFilePropertyName }})"
+          }
+          else 
+          {
+            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]"
+          }
+        displayName: Set variable for the project list file 
       - pwsh: >-
           dotnet test eng/service.proj
           --filter '(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))'
@@ -70,12 +92,12 @@ jobs:
           --logger 'trx;LogFileName=$(TestTargetFramework).trx' --logger:'console;verbosity=normal'
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
-          /p:EnableSourceLink=false
+          /p:EnableSourceLink=false /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
           $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
