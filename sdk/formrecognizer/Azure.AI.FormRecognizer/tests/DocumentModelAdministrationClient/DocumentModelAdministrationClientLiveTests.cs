@@ -429,6 +429,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         public async Task StartComposeModelWithTags()
         {
+            // Testing ci.
             var client = CreateDocumentModelAdministrationClient();
 
             var modelAId = Recording.GenerateId();
