@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Request from client to check resource name availability. </summary>
-    public partial class MySqlFlexibleServerNameAvailabilityContent
+    public partial class MySqlFlexibleServerNameAvailabilityRequest
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailabilityRequest. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public MySqlFlexibleServerNameAvailabilityContent(string name)
+        public MySqlFlexibleServerNameAvailabilityRequest(string name)
         {
             if (name == null)
             {

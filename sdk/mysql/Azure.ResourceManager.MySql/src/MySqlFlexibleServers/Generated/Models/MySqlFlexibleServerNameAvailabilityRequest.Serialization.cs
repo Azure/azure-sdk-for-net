@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerNameAvailabilityRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

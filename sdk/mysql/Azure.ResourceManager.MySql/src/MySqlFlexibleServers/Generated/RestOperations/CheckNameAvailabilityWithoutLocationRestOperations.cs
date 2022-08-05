@@ -16,20 +16,20 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal partial class CheckNameAvailabilityRestOperations
+    internal partial class CheckNameAvailabilityWithoutLocationRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityRestOperations. </summary>
+        /// <summary> Initializes a new instance of CheckNameAvailabilityWithoutLocationRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CheckNameAvailabilityRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public CheckNameAvailabilityWithoutLocationRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateExecuteRequest(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest)
+        internal HttpMessage CreateExecuteRequest(string subscriptionId, MySqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -46,9 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.DBforMySQL/locations/", false);
-            uri.AppendPath(locationName, true);
-            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/checkNameAvailability", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -62,17 +60,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary> Check the availability of name for server. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="locationName"> The name of the location. </param>
         /// <param name="nameAvailabilityRequest"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> ExecuteAsync(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> ExecuteAsync(string subscriptionId, MySqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
-            using var message = CreateExecuteRequest(subscriptionId, locationName, nameAvailabilityRequest);
+            using var message = CreateExecuteRequest(subscriptionId, nameAvailabilityRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -90,17 +87,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         /// <summary> Check the availability of name for server. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="locationName"> The name of the location. </param>
         /// <param name="nameAvailabilityRequest"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MySqlFlexibleServerNameAvailabilityResult> Execute(string subscriptionId, AzureLocation locationName, MySqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServerNameAvailabilityResult> Execute(string subscriptionId, MySqlFlexibleServerNameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
 
-            using var message = CreateExecuteRequest(subscriptionId, locationName, nameAvailabilityRequest);
+            using var message = CreateExecuteRequest(subscriptionId, nameAvailabilityRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
