@@ -186,9 +186,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
-                        SetExceptionDataDetailsOnTelemetryItem(evnt.Tags, exceptionTelemetryItem);
-                        telemetryItems.Add(exceptionTelemetryItem);
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+                        if (exceptionData == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                            exceptionTelemetryItem.Data = exceptionData;
+                            telemetryItems.Add(exceptionTelemetryItem);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -198,7 +206,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static void SetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags, TelemetryItem exceptionTelemetryItem)
+        internal static MonitorBase GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object>> activityEventTags)
         {
             string exceptionType = null;
             string exceptionStackTrace = null;
@@ -224,6 +232,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
+            if (exceptionMessage == null)
+            {
+                return null;
+            }
+
             TelemetryExceptionDetails exceptionDetails = new(exceptionMessage);
 
             exceptionDetails.Stack = exceptionStackTrace;
@@ -234,7 +247,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             TelemetryExceptionData exceptionData = new TelemetryExceptionData(Version, exceptions);
 
-            exceptionTelemetryItem.Data = new MonitorBase
+            return new MonitorBase
             {
                 BaseType = "ExceptionData",
                 BaseData = exceptionData,
