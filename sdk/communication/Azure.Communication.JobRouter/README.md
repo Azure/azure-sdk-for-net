@@ -238,9 +238,9 @@ updatedJob = await routerClient.GetJobAsync(job.Value.Id);
 Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
 ```
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture_Async
 // Optionally, a job can also be set up to be marked as closed in the future.
-var closeJobInFuture = routerClient.CloseJob(
+var closeJobInFuture = await routerClient.CloseJobAsync(
     options: new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         CloseTime = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
@@ -248,9 +248,9 @@ var closeJobInFuture = routerClient.CloseJob(
     });
 Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
 
-Thread.Sleep(TimeSpan.FromSeconds(2));
+await Task.Delay(TimeSpan.FromSeconds(2));
 
-updatedJob = routerClient.GetJob(job.Value.Id);
+updatedJob = await routerClient.GetJobAsync(job.Value.Id);
 Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
 ```
 
