@@ -283,7 +283,12 @@ namespace Azure.Communication.CallingServer
     }
     public static partial class EventParser
     {
+        public static Azure.Communication.CallingServer.CallingServerEventBase Parse(Azure.Messaging.CloudEvent cloudEvent) { throw null; }
+        public static Azure.Communication.CallingServer.CallingServerEventBase Parse(System.BinaryData content) { throw null; }
         public static Azure.Communication.CallingServer.CallingServerEventBase Parse(string content) { throw null; }
+        public static Azure.Communication.CallingServer.CallingServerEventBase[] ParseMany(Azure.Messaging.CloudEvent[] cloudEvents) { throw null; }
+        public static Azure.Communication.CallingServer.CallingServerEventBase[] ParseMany(System.BinaryData content) { throw null; }
+        public static Azure.Communication.CallingServer.CallingServerEventBase[] ParseMany(string content) { throw null; }
     }
     public partial class FileSource : Azure.Communication.CallingServer.PlaySource
     {
