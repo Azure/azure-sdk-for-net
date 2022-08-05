@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class DataSerialization : IUtf8JsonSerializable
+    public partial class StreamAnalyticsDataSerialization : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static DataSerialization DeserializeDataSerialization(JsonElement element)
+        internal static StreamAnalyticsDataSerialization DeserializeStreamAnalyticsDataSerialization(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new DataSerialization(type);
+            return new StreamAnalyticsDataSerialization(type);
         }
     }
 }

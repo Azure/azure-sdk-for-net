@@ -63,7 +63,7 @@ rename-mapping:
   CsvSerialization: CsvFormatSerialization
   DiagnosticCondition: StreamingJobDiagnosticCondition
   Diagnostics: StreamingJobDiagnostics
-  Encoding: DataSerializationEncoding
+  Encoding: StreamAnalyticsDataSerializationEncoding
   External: StreamingJobExternal
   Function: StreamingJobFunction
   FunctionBinding: StreamingJobFunctionBinding
@@ -94,7 +94,7 @@ rename-mapping:
   RefreshConfiguration: StreamingJobRefreshConfiguration
   RefreshType: DataRefreshType
   SampleInput: StreamAnalyticsSampleInputContent
-  Serialization: DataSerialization
+  Serialization: StreamAnalyticsDataSerialization
   Transformation: StreamingJobTransformation
   UpdateMode: StreamingJobFunctionUpdateMode
   UdfType: StreamingJobFunctionUdfType

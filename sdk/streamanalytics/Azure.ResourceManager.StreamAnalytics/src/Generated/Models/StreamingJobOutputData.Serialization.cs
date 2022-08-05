@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<StreamingJobOutputDataSource> datasource = default;
             Optional<DateTimeOffset> timeWindow = default;
             Optional<float> sizeWindow = default;
-            Optional<DataSerialization> serialization = default;
+            Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
             Optional<ETag> etag = default;
             Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serialization = DataSerialization.DeserializeDataSerialization(property0.Value);
+                            serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"))

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
-        /// Please note <see cref="DataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="StreamAnalyticsDataSerialization"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AvroFormatSerialization"/>, <see cref="CsvFormatSerialization"/>, <see cref="CustomClrFormatSerialization"/>, <see cref="JsonFormatSerialization"/> and <see cref="ParquetFormatSerialization"/>.
         /// </param>
         /// <param name="diagnostics"> Describes conditions applicable to the Input, Output, or the job overall, that warrant customer attention. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
         /// </param>
-        internal ReferenceInputProperties(string inputPropertiesType, DataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, ReferenceInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
+        internal ReferenceInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, ReferenceInputDataSource datasource) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
         {
             Datasource = datasource;
             InputPropertiesType = inputPropertiesType ?? "Reference";

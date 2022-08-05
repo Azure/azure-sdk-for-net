@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.StreamingJobDiagnosticCondition> DiagnosticsConditions { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.LastOutputEventTimestamp> LastOutputEventTimestamps { get { throw null; } }
-        public Azure.ResourceManager.StreamAnalytics.Models.DataSerialization Serialization { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization Serialization { get { throw null; } set { } }
         public float? SizeWindow { get { throw null; } set { } }
         public System.DateTimeOffset? TimeWindow { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkProperties WatermarkSettings { get { throw null; } set { } }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public AggregateFunctionProperties() { }
     }
-    public partial class AvroFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
+    public partial class AvroFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization
     {
         public AvroFormatSerialization() { }
         public System.BinaryData Properties { get { throw null; } set { } }
@@ -425,13 +425,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Script { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType? UdfType { get { throw null; } set { } }
     }
-    public partial class CsvFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
+    public partial class CsvFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization
     {
         public CsvFormatSerialization() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding? Encoding { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding? Encoding { get { throw null; } set { } }
         public string FieldDelimiter { get { throw null; } set { } }
     }
-    public partial class CustomClrFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
+    public partial class CustomClrFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization
     {
         public CustomClrFormatSerialization() { }
         public string SerializationClassName { get { throw null; } set { } }
@@ -469,27 +469,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType left, Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType right) { throw null; }
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType left, Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class DataSerialization
-    {
-        public DataSerialization() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataSerializationEncoding : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataSerializationEncoding(string value) { throw null; }
-        public static Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding Utf8 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding right) { throw null; }
-        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DocumentDbOutputDataSource : Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputDataSource
@@ -647,10 +626,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Script { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobFunctionUdfType? UdfType { get { throw null; } set { } }
     }
-    public partial class JsonFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
+    public partial class JsonFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization
     {
         public JsonFormatSerialization() { }
-        public Azure.ResourceManager.StreamAnalytics.Models.DataSerializationEncoding? Encoding { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding? Encoding { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.JsonOutputSerializationFormat? Format { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -734,7 +713,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string DataType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class ParquetFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.DataSerialization
+    public partial class ParquetFormatSerialization : Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization
     {
         public ParquetFormatSerialization() { }
         public System.BinaryData Properties { get { throw null; } set { } }
@@ -936,6 +915,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryInput> Inputs { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobType JobType { get { throw null; } }
         public string Query { get { throw null; } }
+    }
+    public partial class StreamAnalyticsDataSerialization
+    {
+        public StreamAnalyticsDataSerialization() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StreamAnalyticsDataSerializationEncoding : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StreamAnalyticsDataSerializationEncoding(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding Utf8 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding left, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerializationEncoding right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StreamAnalyticsError
     {
@@ -1289,7 +1289,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.StreamingJobDiagnosticCondition> DiagnosticsConditions { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public string PartitionKey { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.DataSerialization Serialization { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization Serialization { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobInputWatermarkMode? WatermarkMode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
