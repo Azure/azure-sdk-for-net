@@ -15,10 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private const string StatsBeat_ConnectionString = "<StatsBeat_ConnectionString>";
 
-        // TODO: Move IsWindowsOS() to new class
-        // Do we need to support OSX?
-        internal static string s_OS = StorageHelper.IsWindowsOS() ? "windows" : "linux";
-
         internal const int AttachStatsBeatInterval = 86400000;
 
         static Statsbeat()
@@ -29,11 +25,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // schedule of 24 hrs == 86400000 milliseconds.
             Sdk.CreateMeterProviderBuilder()
             .AddMeter("AttachStatsBeatMeter")
-            .AddStatsbeatExporter(o =>
+            .AddAzureMonitorMetricExporter(o =>
             {
                 o.ConnectionString = StatsBeat_ConnectionString;
                 o.DisableOfflineStorage = true;
-                o.StatsbeatIntervalInMilliseconds = AttachStatsBeatInterval;
+                o.PeriodicReaderExportIntervalInMilliseconds = AttachStatsBeatInterval;
             })
             .Build();
         }
@@ -43,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static Measurement<int> GetAttachStatsBeat()
         {
             // TODO: Add additional properties required for statbeat
-            return new(1, new("cikey", Customer_Ikey), new("language", "dotnet"), new("os", s_OS));
+            return new(1, new("cikey", Customer_Ikey), new("language", "dotnet"));
         }
     }
 }
