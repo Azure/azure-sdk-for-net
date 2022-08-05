@@ -10,8 +10,12 @@ input-file:
 namespace: Azure.Data.AppConfiguration
 title: ConfigurationClient
 public-clients: true
+```
+
+### Change Endpoint type to Uri
+``` yaml
 directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
-```
+  ```

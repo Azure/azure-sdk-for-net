@@ -79,6 +79,7 @@ namespace Azure.Data.AppConfiguration
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)), _syncTokenPolicy);
+            _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options);
         }
@@ -137,7 +138,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                using RequestContent content = CreateContent(setting);
+                using RequestContent content = ConfigurationSetting.CreateContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
@@ -161,22 +162,12 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private static RequestContent CreateContent(ConfigurationSetting setting)
-        {
-            Argument.AssertNotNull(setting, nameof(setting));
-            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
-
-            ReadOnlyMemory<byte> serializedSetting = ConfigurationServiceSerializer.SerializeRequestBody(setting);
-            RequestContent content = RequestContent.Create(serializedSetting);
-
-            return content;
-        }
-
         private static RequestContext CreateContext(CancellationToken cancellationToken)
         {
-            RequestContext context = new RequestContext();
-            context.CancellationToken = cancellationToken;
-
+            RequestContext context = new RequestContext()
+            {
+                CancellationToken = cancellationToken,
+            };
             return context;
         }
         /// <summary>
@@ -194,7 +185,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                using RequestContent content = CreateContent(setting);
+                using RequestContent content = ConfigurationSetting.CreateContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
@@ -437,7 +428,7 @@ namespace Azure.Data.AppConfiguration
                 ETag? eTag = requestOptions?.IfMatch;
                 if (requestOptions != null && requestOptions.IfMatch.HasValue)
                 {
-                     eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
+                     eTag = requestOptions.IfMatch.Value == ETag.All? new ETag(requestOptions.IfMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfMatch.Value.ToString()}\"");
                 }
                 RequestContext context = CreateContext(cancellationToken);
                 using Response response = await DeleteKeyValueAsync(key, label, eTag, context).ConfigureAwait(false);
@@ -470,7 +461,7 @@ namespace Azure.Data.AppConfiguration
                 ETag? eTag = requestOptions?.IfMatch;
                 if (requestOptions != null && requestOptions.IfMatch.HasValue)
                 {
-                    eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
+                    eTag = requestOptions.IfMatch.Value == ETag.All ? new ETag(requestOptions.IfMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfMatch.Value.ToString()}\"");
                 }
                 RequestContext context = CreateContext(cancellationToken);
                 using Response response = DeleteKeyValue(key, label, eTag, context);
