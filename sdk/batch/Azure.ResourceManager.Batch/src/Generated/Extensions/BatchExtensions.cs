@@ -62,12 +62,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return await GetExtensionClient(subscriptionResource).GetBatchQuotasAsync(locationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -79,12 +75,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public static Response<BatchLocationQuota> GetBatchQuotas(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static Response<BatchLocationQuota> GetBatchQuotas(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetBatchQuotas(locationName, cancellationToken);
         }
 
@@ -98,13 +90,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetBatchSupportedVirtualMachineSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -118,13 +106,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetBatchSupportedVirtualMachineSkus(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -138,13 +122,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetBatchSupportedCloudServiceSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -158,13 +138,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;familyName&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             return GetExtensionClient(subscriptionResource).GetBatchSupportedCloudServiceSkus(locationName, maxresults, filter, cancellationToken);
         }
 
@@ -177,11 +153,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).CheckBatchNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
@@ -196,11 +170,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(this SubscriptionResource subscriptionResource, string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).CheckBatchNameAvailability(locationName, content, cancellationToken);
