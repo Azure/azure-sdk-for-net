@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Logic
 namespace: Azure.ResourceManager.Logic
-require: https://github.com/Azure/azure-rest-api-specs/blob/353d84dac009c19ae776c25eb361f07e85f26c8d/specification/logic/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/logic/resource-manager/readme.md
 tag: package-2019-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
