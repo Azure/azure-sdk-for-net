@@ -53,7 +53,6 @@ rename-rules:
   NO: No
   SQL: Sql
   Db: DB
-  Ou: OU
   SqlVirtualMachine: SqlVm
   Wsfc: WindowsServerFailoverCluster
 
@@ -96,6 +95,7 @@ rename-mapping:
   SqlVirtualMachine.properties.wsfcStaticIp: -|ip-address
   SqlStorageSettings.luns: LogicalUnitNumbers
   SQLTempDbSettings.luns: LogicalUnitNumbers
+  WsfcDomainProfile.ouPath: OrganizationalUnitPath
 
 override-operation-name:
   SqlVirtualMachines_ListBySqlVmGroup: GetSqlVmsBySqlVmGroup
