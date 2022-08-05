@@ -87,13 +87,16 @@ namespace Azure.Monitor.Ingestion
                 else
                 {
                     WriteMemory(stream, memory);
-                    WriteMemory(stream, BinaryData.FromString(",").ToMemory());
                     if ((entryCount + 1) == logEntries.Count())
                     {
                         // reached end of logEntries and we haven't returned yet
                         WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                         stream.Position = 0;
                         yield return (BinaryData.FromStream(stream));
+                    }
+                    else
+                    {
+                        WriteMemory(stream, BinaryData.FromString(",").ToMemory());
                     }
                 }
                 entryCount++;
@@ -192,7 +195,9 @@ namespace Azure.Monitor.Ingestion
                 foreach (var partition in Batching(logEntries))
                 {
                     //TODO: catch errors and correlate with Batching.start
-                    return await UploadAsync(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                    string contentEncoding = null;
+                    //contentEncoding = "gzip";
+                    return await UploadAsync(ruleId, streamName, partition, contentEncoding, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
                 }
             }
             catch (Exception e)

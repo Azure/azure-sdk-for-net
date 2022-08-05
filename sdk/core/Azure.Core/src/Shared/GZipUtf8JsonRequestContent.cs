@@ -13,8 +13,10 @@ namespace Azure.Core
 {
     internal class GZipUtf8JsonRequestContent: RequestContent
     {
+#pragma warning disable CA2213 // Disposable fields should be disposed
         private GZipStream _gzip;
         private readonly MemoryStream _stream;
+#pragma warning restore CA2213 // Disposable fields should be disposed
         private readonly RequestContent _content;
 
         public Utf8JsonWriter JsonWriter { get; }
@@ -69,6 +71,10 @@ namespace Azure.Core
 
         public override void Dispose()
         {
+            //WORKS:
+            //JsonWriter.Dispose();
+            //_content.Dispose();
+
             JsonWriter.Dispose();
             _content.Dispose();
             _stream.Dispose();

@@ -20,7 +20,7 @@ namespace Azure.Monitor.Ingestion.Tests
 {
     public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
     {
-        public IngestionClientLiveTest(bool isAsync) : base(isAsync)
+        public IngestionClientLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -117,17 +117,58 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.Greater(1, count);
         }
 
+        //[Test]
+        //public async Task ValidInputFromArrayAsJsonWithSingleBatch()
+        //{
+        //    LogsIngestionClient client = CreateClient();
+
+        //    var entries = new List<IEnumerable>();
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        entries.Add(new Object[] {
+        //            new {
+        //                Time = "2021",
+        //                Computer = "Computer" + i.ToString(),
+        //                AdditionalContext = i
+        //            }
+        //        });
+        //    }
+
+        //    // Make the request
+        //    Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+
+        //    // Check the response
+        //    Assert.AreEqual(204, response.Status);
+
+        //    LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
+        //    var batch = new LogsBatchQuery();
+
+        //    string query = TestEnvironment.TableName + " | count;";
+        //    string countQueryId = batch.AddWorkspaceQuery(
+        //        TestEnvironment.Ingestion_WorkspaceId,
+        //        query,
+        //        new QueryTimeRange(TimeSpan.FromDays(1)));
+
+        //    Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
+
+        //    // Check the Azure.Monitor.Query Response
+        //    Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
+        //    Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
+        //}
+
         [Test]
         public async Task ValidInputFromArrayAsJsonWithSingleBatch()
         {
             LogsIngestionClient client = CreateClient();
 
-            var entries = new List<IEnumerable>();
+            DateTime now = DateTime.Now;
+
+            var entries = new List<Object>();
             for (int i = 0; i < 10; i++)
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = "2021",
+                        Time = DateTime.Now,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
@@ -135,7 +176,7 @@ namespace Azure.Monitor.Ingestion.Tests
             }
 
             // Make the request
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+            Response response = await client.UploadAsync("dcr-4c0684412e0547b49be35f8c553702d5", TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(204, response.Status);
