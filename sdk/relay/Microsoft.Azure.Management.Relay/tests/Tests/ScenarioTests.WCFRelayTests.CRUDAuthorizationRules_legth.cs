@@ -104,7 +104,6 @@ namespace Relay.Tests.ScenarioTests
                 
                 // Create a WCFRelay AuthorizationRule
                 var authorizationRuleName = RelayManagementHelper.AuthorizationRulesPrefix + "thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit";
-                string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new AuthorizationRule()
                 {
                     Rights = new List<String>() { AccessRights.Listen, AccessRights.Send }
@@ -139,7 +138,6 @@ namespace Relay.Tests.ScenarioTests
                 Assert.Contains(getAllNamespaceAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);
 
                 // Update WCFRelay authorizationRule
-                string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<String>() { AccessRights.Listen };
 
@@ -177,34 +175,43 @@ namespace Relay.Tests.ScenarioTests
                 //Primary Key
                 var regenerateKeysPrimaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, KeyType.PrimaryKey);
                 Assert.NotNull(regenerateKeysPrimaryResponse);
-
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-                {
-                    Assert.Equal("Sanitized", regenerateKeysPrimaryResponse.PrimaryKey);
-                    Assert.Equal("Sanitized", regenerateKeysPrimaryResponse.SecondaryKey);
-                }
-                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
-                {
-                    Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
-                    Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
-                }
+                Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
+                Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
 
                 regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
 
                 //Secondary Key
                 var regenerateKeysSecondaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, KeyType.SecondaryKey);
                 Assert.NotNull(regenerateKeysSecondaryResponse);
+                Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
+                Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);
 
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                ///Regenrate Key using provided Key value
+                // PrimaryKey
+                RegenerateAccessKeyParameters keyObject = new RegenerateAccessKeyParameters()
                 {
-                    Assert.Equal("Sanitized", regenerateKeysSecondaryResponse.PrimaryKey);
-                    Assert.Equal("Sanitized", regenerateKeysSecondaryResponse.SecondaryKey);
-                }
-                else if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    Key = RelayManagementHelper.GenerateRandomKey(),
+                    KeyType = KeyType.PrimaryKey
+                };
+
+                regenerateKeysPrimaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
+                Assert.NotNull(regenerateKeysPrimaryResponse);
+                Assert.Equal(keyObject.Key, regenerateKeysPrimaryResponse.PrimaryKey);
+                Assert.Equal(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
+
+
+                //SecondaryKey 
+
+                keyObject = new RegenerateAccessKeyParameters()
                 {
-                    Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
-                    Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);
-                }
+                    Key = RelayManagementHelper.GenerateRandomKey(),
+                    KeyType = KeyType.SecondaryKey
+                };
+
+                regenerateKeysSecondaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
+                Assert.NotNull(regenerateKeysSecondaryResponse);
+                Assert.Equal(regenerateKeysPrimaryResponse.PrimaryKey, regenerateKeysSecondaryResponse.PrimaryKey);
+                Assert.Equal(keyObject.Key, regenerateKeysSecondaryResponse.SecondaryKey);
 
 
                 // Delete WCFRelay authorizationRule

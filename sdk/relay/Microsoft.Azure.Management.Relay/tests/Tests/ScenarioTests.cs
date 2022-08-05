@@ -21,6 +21,7 @@ namespace Relay.Tests.ScenarioTests
     using Microsoft.Azure.Management.Network;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Relay.Tests.TestHelper;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public partial class ScenarioTests 
     {
@@ -34,7 +35,13 @@ namespace Relay.Tests.ScenarioTests
         public string Location { get; set; }
         public string ResourceGroupName { get; set; }
         public string NamespaceName { get; set; }
-               
+
+        static ScenarioTests()
+        {
+            RecorderUtilities.JsonPathSanitizers.Add("$..key");
+            RecorderUtilities.JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
+            RecorderUtilities.JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
+        }
 
         protected void InitializeClients(MockContext context)
         {
