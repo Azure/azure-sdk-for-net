@@ -577,8 +577,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataRefreshType(string value) { throw null; }
-        public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType Blocking { get { throw null; } }
-        public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType Nonblocking { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType RefreshPeriodicallyWithDelta { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType RefreshPeriodicallyWithFull { get { throw null; } }
         public static Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType Static { get { throw null; } }
@@ -698,6 +696,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy left, Azure.ResourceManager.StreamAnalytics.Models.EventsOutOfOrderPolicy right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FileReferenceInputDataSource : Azure.ResourceManager.StreamAnalytics.Models.ReferenceInputDataSource
+    {
+        public FileReferenceInputDataSource() { }
+        public string Path { get { throw null; } set { } }
     }
     public partial class FunctionRetrieveDefaultDefinitionContent
     {
@@ -1403,7 +1406,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string DateFormat { get { throw null; } set { } }
         public string PathPattern { get { throw null; } set { } }
         public string RefreshInterval { get { throw null; } set { } }
-        public Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType? RefreshType { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType? RefreshType { get { throw null; } set { } }
         public string TimeFormat { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1462,5 +1465,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public StreamInputProperties() { }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamInputDataSource Datasource { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UpdatableUdfRefreshType : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UpdatableUdfRefreshType(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType Blocking { get { throw null; } }
+        public static Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType Nonblocking { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType left, Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType left, Azure.ResourceManager.StreamAnalytics.Models.UpdatableUdfRefreshType right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "File": return FileReferenceInputDataSource.DeserializeFileReferenceInputDataSource(element);
                     case "Microsoft.Sql/Server/Database": return AzureSqlReferenceInputDataSource.DeserializeAzureSqlReferenceInputDataSource(element);
                     case "Microsoft.Storage/Blob": return BlobReferenceInputDataSource.DeserializeBlobReferenceInputDataSource(element);
                     case "Raw": return RawReferenceInputDataSource.DeserializeRawReferenceInputDataSource(element);

@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         private const string StaticValue = "Static";
         private const string RefreshPeriodicallyWithFullValue = "RefreshPeriodicallyWithFull";
         private const string RefreshPeriodicallyWithDeltaValue = "RefreshPeriodicallyWithDelta";
-        private const string BlockingValue = "Blocking";
-        private const string NonblockingValue = "Nonblocking";
 
         /// <summary> Static. </summary>
         public static DataRefreshType Static { get; } = new DataRefreshType(StaticValue);
@@ -34,10 +32,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static DataRefreshType RefreshPeriodicallyWithFull { get; } = new DataRefreshType(RefreshPeriodicallyWithFullValue);
         /// <summary> RefreshPeriodicallyWithDelta. </summary>
         public static DataRefreshType RefreshPeriodicallyWithDelta { get; } = new DataRefreshType(RefreshPeriodicallyWithDeltaValue);
-        /// <summary> Blocking. </summary>
-        public static DataRefreshType Blocking { get; } = new DataRefreshType(BlockingValue);
-        /// <summary> Nonblocking. </summary>
-        public static DataRefreshType Nonblocking { get; } = new DataRefreshType(NonblockingValue);
         /// <summary> Determines if two <see cref="DataRefreshType"/> values are the same. </summary>
         public static bool operator ==(DataRefreshType left, DataRefreshType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataRefreshType"/> values are not the same. </summary>

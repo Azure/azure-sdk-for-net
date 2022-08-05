@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
             Optional<string> refreshInterval = default;
-            Optional<DataRefreshType> refreshType = default;
+            Optional<UpdatableUdfRefreshType> refreshType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pathPattern"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    refreshType = new DataRefreshType(property.Value.GetString());
+                    refreshType = new UpdatableUdfRefreshType(property.Value.GetString());
                     continue;
                 }
             }

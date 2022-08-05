@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="timeFormat"> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </param>
         /// <param name="refreshInterval"> The refresh interval. </param>
         /// <param name="refreshType"> This property indicates which data refresh option to use, Blocking or Nonblocking. </param>
-        internal StreamingJobRefreshConfiguration(string pathPattern, string dateFormat, string timeFormat, string refreshInterval, DataRefreshType? refreshType)
+        internal StreamingJobRefreshConfiguration(string pathPattern, string dateFormat, string timeFormat, string refreshInterval, UpdatableUdfRefreshType? refreshType)
         {
             PathPattern = pathPattern;
             DateFormat = dateFormat;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The refresh interval. </summary>
         public string RefreshInterval { get; set; }
         /// <summary> This property indicates which data refresh option to use, Blocking or Nonblocking. </summary>
-        public DataRefreshType? RefreshType { get; set; }
+        public UpdatableUdfRefreshType? RefreshType { get; set; }
     }
 }
