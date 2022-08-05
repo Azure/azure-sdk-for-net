@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of CalculateExchangeContentProperties. </summary>
         public CalculateExchangeContentProperties()
         {
-            ReservationsToPurchase = new ChangeTrackingList<PurchaseRequestContent>();
+            ReservationsToPurchase = new ChangeTrackingList<ReservationPurchaseContent>();
             ReservationsToExchange = new ChangeTrackingList<ReservationToReturn>();
         }
 
         /// <summary> List of reservations that are being purchased in this exchange. </summary>
-        public IList<PurchaseRequestContent> ReservationsToPurchase { get; }
+        public IList<ReservationPurchaseContent> ReservationsToPurchase { get; }
         /// <summary> List of reservations that are being returned in this exchange. </summary>
         public IList<ReservationToReturn> ReservationsToExchange { get; }
     }

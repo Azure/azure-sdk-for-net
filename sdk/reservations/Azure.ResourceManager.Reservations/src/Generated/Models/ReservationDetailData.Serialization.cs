@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<int> etag = default;
             Optional<ReservationsSkuName> sku = default;
             Optional<ReservationProperties> properties = default;
-            Optional<ReservationsKind> kind = default;
+            Optional<ReservationKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new ReservationsKind(property.Value.GetString());
+                    kind = new ReservationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

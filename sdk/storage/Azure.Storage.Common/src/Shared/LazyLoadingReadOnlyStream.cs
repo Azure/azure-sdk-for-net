@@ -157,7 +157,7 @@ namespace Azure.Storage
             _bufferInvalidated = false;
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            if (!(validationOptions?.Validate ?? true))
+            if (!(validationOptions?.AutoValidateChecksum ?? true))
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
@@ -166,8 +166,8 @@ namespace Azure.Storage
                 ? default
                 : new DownloadTransferValidationOptions
                 {
-                    Algorithm = validationOptions.Algorithm,
-                    Validate = false
+                    ChecksumAlgorithm = validationOptions.ChecksumAlgorithm,
+                    AutoValidateChecksum = false
                 };
         }
 
@@ -291,9 +291,9 @@ namespace Azure.Storage
 
             // if we deferred transactional hash validation on download, validate now
             // currently we always defer but that may change
-            if (_validationOptions != default && _validationOptions.Algorithm != ValidationAlgorithm.None && !_validationOptions.Validate)
+            if (_validationOptions != default && _validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && !_validationOptions.AutoValidateChecksum)
             {
-                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _validationOptions.Algorithm, response.GetRawResponse());
+                ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _validationOptions.ChecksumAlgorithm, response.GetRawResponse());
             }
 
             return totalCopiedBytes;

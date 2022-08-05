@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="name"> The xml element or attribute name. </param>
         /// <param name="namespace"> The xml namespace. </param>
         /// <param name="prefix"> The name prefix. </param>
-        /// <param name="attribute"> Indicates whether the property should be an attribute instead of an element. </param>
-        /// <param name="wrapped"> Indicates whether the array elements are wrapped in a container element. </param>
+        /// <param name="isAttribute"> Indicates whether the property should be an attribute instead of an element. </param>
+        /// <param name="isWrapped"> Indicates whether the array elements are wrapped in a container element. </param>
         /// <param name="extensions"> The vendor extensions. </param>
-        internal SwaggerXml(string name, string @namespace, string prefix, bool? attribute, bool? wrapped, IDictionary<string, BinaryData> extensions)
+        internal SwaggerXml(string name, string @namespace, string prefix, bool? isAttribute, bool? isWrapped, IDictionary<string, BinaryData> extensions)
         {
             Name = name;
             Namespace = @namespace;
             Prefix = prefix;
-            Attribute = attribute;
-            Wrapped = wrapped;
+            IsAttribute = isAttribute;
+            IsWrapped = isWrapped;
             Extensions = extensions;
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The name prefix. </summary>
         public string Prefix { get; set; }
         /// <summary> Indicates whether the property should be an attribute instead of an element. </summary>
-        public bool? Attribute { get; set; }
+        public bool? IsAttribute { get; set; }
         /// <summary> Indicates whether the array elements are wrapped in a container element. </summary>
-        public bool? Wrapped { get; set; }
+        public bool? IsWrapped { get; set; }
         /// <summary> The vendor extensions. </summary>
         public IDictionary<string, BinaryData> Extensions { get; }
     }

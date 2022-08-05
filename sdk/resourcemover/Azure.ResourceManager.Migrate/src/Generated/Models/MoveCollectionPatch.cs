@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Migrate.Models
 
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Defines the MSI properties of the Move Collection. </summary>
-        public Identity Identity { get; set; }
+        /// <summary> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

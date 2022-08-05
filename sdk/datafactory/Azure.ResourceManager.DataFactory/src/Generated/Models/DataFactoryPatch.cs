@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Managed service identity of the factory. </summary>
         public FactoryIdentity Identity { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public FactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

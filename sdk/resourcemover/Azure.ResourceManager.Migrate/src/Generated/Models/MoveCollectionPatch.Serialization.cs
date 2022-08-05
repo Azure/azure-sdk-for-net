@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Migrate.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WriteEndObject();
         }

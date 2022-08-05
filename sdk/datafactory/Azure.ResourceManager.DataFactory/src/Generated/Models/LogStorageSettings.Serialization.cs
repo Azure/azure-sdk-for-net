@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LogStorageSettings DeserializeLogStorageSettings(JsonElement element)
         {
-            LinkedServiceReference linkedServiceName = default;
+            FactoryLinkedServiceReference linkedServiceName = default;
             Optional<BinaryData> path = default;
             Optional<BinaryData> logLevel = default;
             Optional<BinaryData> enableReliableLogging = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"))

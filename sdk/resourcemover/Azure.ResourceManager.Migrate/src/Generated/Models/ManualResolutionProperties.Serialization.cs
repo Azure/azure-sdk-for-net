@@ -14,12 +14,17 @@ namespace Azure.ResourceManager.Migrate.Models
     {
         internal static ManualResolutionProperties DeserializeManualResolutionProperties(JsonElement element)
         {
-            Optional<string> targetId = default;
+            Optional<ResourceIdentifier> targetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetId"))
                 {
-                    targetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

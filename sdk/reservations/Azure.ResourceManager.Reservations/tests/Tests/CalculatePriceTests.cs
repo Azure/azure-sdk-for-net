@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             }
         }
 
-        private PurchaseRequestContent CreatePurchaseRequestContent(string scope, string billingPlan)
+        private ReservationPurchaseContent CreatePurchaseRequestContent(string scope, string billingPlan)
         {
-            var request = new PurchaseRequestContent
+            var request = new ReservationPurchaseContent
             {
                 Sku = new ReservationsSkuName("Standard_B1ls"),
                 Location = new Core.AzureLocation("westus"),
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 Quantity = 1,
                 DisplayName = "testVM",
                 AppliedScopeType = new AppliedScopeType(scope),
-                Renew = false,
+                IsRenewEnabled = false,
                 ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
             };
 

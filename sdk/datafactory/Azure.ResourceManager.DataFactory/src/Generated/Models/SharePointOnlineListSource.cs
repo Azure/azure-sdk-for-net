@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity source for sharePoint online list source. </summary>
-    public partial class SharePointOnlineListSource : CopySource
+    public partial class SharePointOnlineListSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of SharePointOnlineListSource. </summary>
         public SharePointOnlineListSource()

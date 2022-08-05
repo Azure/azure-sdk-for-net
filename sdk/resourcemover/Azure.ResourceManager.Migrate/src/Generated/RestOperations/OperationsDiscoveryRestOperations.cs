@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OperationsDiscoveryCollection>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<MoverOperationsDiscoveryList>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        OperationsDiscoveryCollection value = default;
+                        MoverOperationsDiscoveryList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationsDiscoveryCollection.DeserializeOperationsDiscoveryCollection(document.RootElement);
+                        value = MoverOperationsDiscoveryList.DeserializeMoverOperationsDiscoveryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Migrate
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OperationsDiscoveryCollection> Get(CancellationToken cancellationToken = default)
+        public Response<MoverOperationsDiscoveryList> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
             _pipeline.Send(message, cancellationToken);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        OperationsDiscoveryCollection value = default;
+                        MoverOperationsDiscoveryList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationsDiscoveryCollection.DeserializeOperationsDiscoveryCollection(document.RootElement);
+                        value = MoverOperationsDiscoveryList.DeserializeMoverOperationsDiscoveryList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

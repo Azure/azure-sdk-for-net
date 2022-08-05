@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="locationType"> The type of SSIS package location. </param>
         /// <param name="packagePassword">
         /// Password of the package.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="accessCredential"> The package access credential. </param>
         /// <param name="configurationPath"> The configuration file of the package execution. Type: string (or Expression with resultType string). </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageContent"> The embedded package content. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
         /// <param name="childPackages"> The embedded child package list. </param>
-        internal SsisPackageLocation(BinaryData packagePath, SsisPackageLocationType? locationType, SecretBase packagePassword, SsisAccessCredential accessCredential, BinaryData configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, BinaryData packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
+        internal SsisPackageLocation(BinaryData packagePath, SsisPackageLocationType? locationType, FactorySecretBaseDefinition packagePassword, SsisAccessCredential accessCredential, BinaryData configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, BinaryData packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
         {
             PackagePath = packagePath;
             LocationType = locationType;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public SsisPackageLocationType? LocationType { get; set; }
         /// <summary>
         /// Password of the package.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase PackagePassword { get; set; }
+        public FactorySecretBaseDefinition PackagePassword { get; set; }
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
-        public TriggerDependencyReference(TriggerReference referenceTrigger)
+        public TriggerDependencyReference(FactoryTriggerReference referenceTrigger)
         {
             if (referenceTrigger == null)
             {
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
-        internal TriggerDependencyReference(string dependencyReferenceType, TriggerReference referenceTrigger) : base(dependencyReferenceType)
+        internal TriggerDependencyReference(string dependencyReferenceType, FactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)
         {
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = dependencyReferenceType ?? "TriggerDependencyReference";
         }
 
         /// <summary> Referenced trigger. </summary>
-        public TriggerReference ReferenceTrigger { get; set; }
+        public FactoryTriggerReference ReferenceTrigger { get; set; }
     }
 }

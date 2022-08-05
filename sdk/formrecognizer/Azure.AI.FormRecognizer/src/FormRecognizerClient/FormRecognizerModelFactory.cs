@@ -719,20 +719,20 @@ namespace Azure.AI.FormRecognizer.Models
             return new DocumentModelSummary(modelId, description, createdOn, apiVersion, tags);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <summary> Initializes a new instance of DocumentModel. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="apiVersion"> API version used to create this model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="docTypes"> Supported document types. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentModelDetails"/> instance for mocking. </returns>
-        internal static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdOn = default, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
+        /// <returns> A new <see cref="DocumentAnalysis.DocumentModel"/> instance for mocking. </returns>
+        internal static DocumentModel DocumentModel(string modelId = null, string description = null, DateTimeOffset createdOn = default, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, IReadOnlyDictionary<string, DocTypeInfo> docTypes = null)
         {
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocTypeInfo>();
 
-            return new DocumentModelDetails(modelId, description, createdOn, apiVersion, tags, docTypes);
+            return new DocumentModel(modelId, description, createdOn, apiVersion, tags, docTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
@@ -746,7 +746,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationSummary"/> instance for mocking. </returns>
-        internal static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
+        internal static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 

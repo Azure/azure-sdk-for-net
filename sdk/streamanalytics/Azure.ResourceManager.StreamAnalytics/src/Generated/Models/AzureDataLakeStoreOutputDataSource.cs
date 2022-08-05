@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an Azure Data Lake Store output data source. </summary>
-    public partial class AzureDataLakeStoreOutputDataSource : OutputDataSource
+    public partial class AzureDataLakeStoreOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreOutputDataSource. </summary>
         public AzureDataLakeStoreOutputDataSource()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="dateFormat"> The date format. Wherever {date} appears in filePathPrefix, the value of this property is used as the date format instead. </param>
         /// <param name="timeFormat"> The time format. Wherever {time} appears in filePathPrefix, the value of this property is used as the time format instead. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal AzureDataLakeStoreOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string accountName, Guid? tenantId, string filePathPrefix, string dateFormat, string timeFormat, AuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal AzureDataLakeStoreOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string accountName, Guid? tenantId, string filePathPrefix, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
         {
             RefreshToken = refreshToken;
             TokenUserPrincipalName = tokenUserPrincipalName;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The time format. Wherever {time} appears in filePathPrefix, the value of this property is used as the time format instead. </summary>
         public string TimeFormat { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
     }
 }

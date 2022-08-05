@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Default))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default");
-                writer.WriteBooleanValue(Default.Value);
+                writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(Forced))
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("forced");
-                writer.WriteBooleanValue(Forced.Value);
+                writer.WriteBooleanValue(IsForced.Value);
             }
             if (Optional.IsDefined(Characteristics))
             {

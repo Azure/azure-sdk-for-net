@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Migrate.Models
 
         internal static MoveResourceProperties DeserializeMoveResourceProperties(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
-            string sourceId = default;
-            Optional<string> targetId = default;
-            Optional<string> existingTargetId = default;
-            Optional<ResourceSettings> resourceSettings = default;
-            Optional<ResourceSettings> sourceResourceSettings = default;
+            Optional<MoverProvisioningState> provisioningState = default;
+            ResourceIdentifier sourceId = default;
+            Optional<ResourceIdentifier> targetId = default;
+            Optional<ResourceIdentifier> existingTargetId = default;
+            Optional<MoverResourceSettings> resourceSettings = default;
+            Optional<MoverResourceSettings> sourceResourceSettings = default;
             Optional<MoveResourcePropertiesMoveStatus> moveStatus = default;
             Optional<IReadOnlyList<MoveResourceDependency>> dependsOn = default;
             Optional<IList<MoveResourceDependencyOverride>> dependsOnOverrides = default;
@@ -63,22 +63,32 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new MoverProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceId"))
                 {
-                    sourceId = property.Value.GetString();
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetId"))
                 {
-                    targetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("existingTargetId"))
                 {
-                    existingTargetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    existingTargetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceSettings"))
@@ -88,7 +98,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceSettings = ResourceSettings.DeserializeResourceSettings(property.Value);
+                    resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sourceResourceSettings"))
@@ -98,7 +108,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceResourceSettings = ResourceSettings.DeserializeResourceSettings(property.Value);
+                    sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("moveStatus"))

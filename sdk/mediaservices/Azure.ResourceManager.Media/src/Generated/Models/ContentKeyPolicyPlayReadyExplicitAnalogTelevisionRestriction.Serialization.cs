@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bestEffort");
-            writer.WriteBooleanValue(BestEffort);
+            writer.WriteBooleanValue(IsBestEffort);
             writer.WritePropertyName("configurationData");
             writer.WriteNumberValue(ConfigurationData);
             writer.WriteEndObject();

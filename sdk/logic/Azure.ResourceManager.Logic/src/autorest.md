@@ -28,6 +28,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}: LogicWorkflowRunActionScopeRepetition
 
 rename-mapping:
+  AS2EnvelopeSettings.autogenerateFileName: AutoGenerateFileName
+  SwaggerCustomDynamicTreeParameter.required: IsRequired
+  SwaggerXml.attribute: IsAttribute
+  SwaggerXml.wrapped: IsWrapped
   AgreementContent: IntegrationAccountAgreementContent
   AssemblyDefinition: IntegrationAccountAssemblyDefinition
   AssemblyProperties: IntegrationAccountAssemblyProperties

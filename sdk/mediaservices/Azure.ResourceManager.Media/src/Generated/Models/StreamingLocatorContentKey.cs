@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingLocatorContentKey(Guid id)
         {
             Id = id;
-            Tracks = new ChangeTrackingList<TrackSelection>();
+            Tracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="value"> Value of Content Key. </param>
         /// <param name="policyName"> ContentKeyPolicy used by Content Key. </param>
         /// <param name="tracks"> Tracks which use this Content Key. </param>
-        internal StreamingLocatorContentKey(Guid id, StreamingLocatorContentKeyType? keyType, string labelReferenceInStreamingPolicy, string value, string policyName, IReadOnlyList<TrackSelection> tracks)
+        internal StreamingLocatorContentKey(Guid id, StreamingLocatorContentKeyType? keyType, string labelReferenceInStreamingPolicy, string value, string policyName, IReadOnlyList<MediaTrackSelection> tracks)
         {
             Id = id;
             KeyType = keyType;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> ContentKeyPolicy used by Content Key. </summary>
         public string PolicyName { get; }
         /// <summary> Tracks which use this Content Key. </summary>
-        public IReadOnlyList<TrackSelection> Tracks { get; }
+        public IReadOnlyList<MediaTrackSelection> Tracks { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The notification channel indicates the type of receivers subscribed to the notification, either user or subscription.
-    /// Serialized Name: NotificationChannel
-    /// </summary>
+    /// <summary> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </summary>
     public readonly partial struct ClusterNotificationChannel : IEquatable<ClusterNotificationChannel>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string EmailUserValue = "EmailUser";
         private const string EmailSubscriptionValue = "EmailSubscription";
 
-        /// <summary>
-        /// For email user receivers. In this case, the parameter receivers should be a list of email addresses that will receive the notifications.
-        /// Serialized Name: NotificationChannel.EmailUser
-        /// </summary>
+        /// <summary> For email user receivers. In this case, the parameter receivers should be a list of email addresses that will receive the notifications. </summary>
         public static ClusterNotificationChannel EmailUser { get; } = new ClusterNotificationChannel(EmailUserValue);
-        /// <summary>
-        /// For subscription receivers. In this case, the parameter receivers should be a list of roles of the subscription for the cluster (eg. Owner, AccountAdmin, etc) that will receive the notifications.
-        /// Serialized Name: NotificationChannel.EmailSubscription
-        /// </summary>
+        /// <summary> For subscription receivers. In this case, the parameter receivers should be a list of roles of the subscription for the cluster (eg. Owner, AccountAdmin, etc) that will receive the notifications. </summary>
         public static ClusterNotificationChannel EmailSubscription { get; } = new ClusterNotificationChannel(EmailSubscriptionValue);
         /// <summary> Determines if two <see cref="ClusterNotificationChannel"/> values are the same. </summary>
         public static bool operator ==(ClusterNotificationChannel left, ClusterNotificationChannel right) => left.Equals(right);

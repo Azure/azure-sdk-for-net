@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return dataFactory.Value;
         }
 
-        protected async Task<LinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
+        protected async Task<FactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
             {
                 ConnectionString = BinaryData.FromString($"\"{accessKey}\""),
             };
-            LinkedServiceResourceData data = new LinkedServiceResourceData(azureBlobStorageLinkedService);
-            var linkedService = await dataFactory.GetLinkedServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
+            FactoryLinkedServiceData data = new FactoryLinkedServiceData(azureBlobStorageLinkedService);
+            var linkedService = await dataFactory.GetFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             return linkedService.Value;
         }
 
         protected async Task<string> GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
         {
-            string storageAccountName = Recording.GenerateAssetName($"{DateTime.Now.ToString("yyMMdd")}datafactory");
+            string storageAccountName = Recording.GenerateAssetName("datafactory");
             StorageAccountCreateOrUpdateContent data = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.BlobStorage, resourceGroup.Data.Location)
             {
                 AccessTier = StorageAccountAccessTier.Hot,
             };
             var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
-            var keylist = await storage.Value.GetKeysAsync();
-            return keylist.Value.Keys.FirstOrDefault().Value;
+            var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
+            return key.Value;
         }
     }
 }
