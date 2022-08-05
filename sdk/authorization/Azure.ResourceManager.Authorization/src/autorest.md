@@ -9,7 +9,7 @@ csharp: true
 tag: package-2020-10-01
 library-name: Authorization
 namespace: Azure.ResourceManager.Authorization
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a416080c85111fbe4e0a483a1b99f1126ca6e97c/specification/authorization/resource-manager/readme.md
+require: /mnt/vss/_work/1/s/azure-rest-api-specs/specification/authorization/resource-manager/readme.md
 output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
