@@ -201,17 +201,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await InvokeAccountSasTest(services: services);
         }
-
-        [RecordedTest]
-        [TestCase("racwdlxyuptf")]
-        [TestCase("racuptwdf")]
-        [TestCase("acwdrlxy")]
-        [TestCase("cuprwdyla")]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        public async Task AccountSas_PermissionsOrder(string permissions)
-        {
-            await InvokeAccountSasTest(permissions: permissions);
-        }
         #endregion
 
         #region DataLakeServiceClient

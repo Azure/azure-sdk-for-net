@@ -389,26 +389,15 @@ namespace Azure.Storage.Files.DataLake.Tests
         /// <param name="resourceType"></param>
         /// <param name="sharedKeyCredential"></param>
         /// <returns></returns>
-        public string GetCustomAccountSas(
+        public override string GetCustomAccountSas(
             string permissions = default,
             string services = default,
             string resourceType = default,
             StorageSharedKeyCredential sharedKeyCredential = default)
         {
+            // Default to the HNS credentials instead of the primary credentials in the base method
             sharedKeyCredential ??= Tenants.GetNewHnsSharedKeyCredentials();
-            permissions ??= "racwdlxyuptf";
-            services ??= "bqtf";
-            resourceType ??= "sco";
-
-            // Generate a SAS that would set the srt / ResourceTypes in a different order than
-            // the .NET SDK would normally create the SAS
-            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
-                permissions: permissions,
-                expiresOn: Recording.UtcNow.AddDays(1),
-                services: services,
-                resourceTypes: resourceType);
-
-            return accountSasBuilder.ToTestSasQueryParameters(sharedKeyCredential).ToString();
+            return base.GetCustomAccountSas(permissions, services, resourceType, sharedKeyCredential);
         }
 
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>

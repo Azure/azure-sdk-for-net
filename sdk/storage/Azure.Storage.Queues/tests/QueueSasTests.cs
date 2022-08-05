@@ -118,19 +118,6 @@ namespace Azure.Storage.Queues.Test
             await InvokeAccountSasTest(services: services);
         }
 
-        [RecordedTest]
-        [TestCase("rwdylacuptfi")]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        [TestCase("rywdlcaup")]
-        [TestCase("larwdycup")]
-        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2020_06_12)]
-        public async Task AccountSas_PermissionsOrder(string permissions)
-        {
-            await InvokeAccountSasTest(permissions: permissions);
-        }
-
         // Creating Client from GetStorageClient
         #region QueueServiceClient
         private async Task InvokeAccountServiceToQueueSasTest(

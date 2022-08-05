@@ -174,19 +174,6 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             await InvokeAccountSasTest(services: services);
         }
-
-        [RecordedTest]
-        [TestCase("rwdylacuptfi")]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        [TestCase("rywdlcaup")]
-        [TestCase("larwdycup")]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
-        public async Task AccountSas_PermissionsOrder(string permissions)
-        {
-            await InvokeAccountSasTest(permissions: permissions);
-        }
         #endregion
 
         // Creating Client from GetStorageClient

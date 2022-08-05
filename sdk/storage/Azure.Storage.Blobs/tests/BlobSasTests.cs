@@ -412,17 +412,9 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
             await blob.CreateAsync();
 
-            // Generate a SAS that would set the srt / ResourceTypes in a different order than
-            // the .NET SDK would normally create the SAS
-            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
-                permissions: permissions,
-                expiresOn: Recording.UtcNow.AddDays(1),
-                services: services,
-                resourceTypes: resourceType);
-
             UriBuilder blobUriBuilder = new UriBuilder(blob.Uri)
             {
-                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
+                Query = GetCustomAccountSas(permissions, services, resourceType)
             };
 
             // Assert
@@ -454,19 +446,6 @@ namespace Azure.Storage.Blobs.Test
         public async Task AccountSas_ServiceOrder(string services)
         {
             await InvokeAccountSasTest(services: services);
-        }
-
-        [RecordedTest]
-        [TestCase("rwdylacuptfi")]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        [TestCase("rywdlcaup")]
-        [TestCase("larwdycup")]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
-        public async Task AccountSas_PermissionsOrder(string permissions)
-        {
-            await InvokeAccountSasTest(permissions: permissions);
         }
         #endregion CreateClientRaw
 
@@ -1562,6 +1541,206 @@ namespace Azure.Storage.Blobs.Test
             await InvokeAccountSasAppendBlobVersionTest(permissions: permissions);
         }
         #endregion AppendBlobClient
+
+        #region BlockBlobClient
+        private async Task InvokeAccountSasBlockBlobCpkTest(
+            string permissions = default,
+            string services = default,
+            string resourceType = default)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlockBlobClient cpkBlockBlobClient = test.Container.GetBlockBlobClient(GetNewBlobName()).WithCustomerProvidedKey(customerProvidedKey);
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await cpkBlockBlobClient.UploadAsync(stream);
+            }
+
+            // Use UriBuilder over DataLakeUriBuilder to apply custom SAS, DataLakeUriBuilder requires SasQueryParameters
+            UriBuilder uriBuilder = new UriBuilder(cpkBlockBlobClient.Uri)
+            {
+                Query = GetCustomAccountSas(permissions, services, resourceType)
+            };
+
+            BlockBlobClient sasBlockBlobClient = InstrumentClient(new BlockBlobClient(uriBuilder.Uri, GetOptions()));
+
+            // Act
+            BlockBlobClient cpkSasBlockBlobClient = sasBlockBlobClient.WithCustomerProvidedKey(customerProvidedKey);
+
+            // Assert
+            Assert.AreEqual(sasBlockBlobClient.Uri.Query, cpkSasBlockBlobClient.Uri.Query);
+            await cpkSasBlockBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task AccountSasResources_BlockBlobToCpk()
+        {
+            string resourceType = "soc";
+            await InvokeAccountSasBlockBlobCpkTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
+        public async Task AccountSasServices_BlockBlobToCpk()
+        {
+            string services = "fqb";
+            await InvokeAccountSasBlockBlobCpkTest(services: services);
+        }
+
+        [RecordedTest]
+        public async Task AccountSasPermissions_BlockBlobToCpk()
+        {
+            string permissions = "cuprwdyla";
+            await InvokeAccountSasBlockBlobCpkTest(permissions: permissions);
+        }
+
+        private void InvokeAccountSasBlockBlobToEncryptionScopeTest(
+            string permissions = default,
+            string services = default,
+            string resourceType = default)
+        {
+            // Arrange
+            string fakeEncryptionScope = "fakeEncryptionScope";
+            BlockBlobClient cpkBlobClient = new BlockBlobClient(new Uri("http://accountname.storage.azure.net/"), GetOptions()).WithEncryptionScope(fakeEncryptionScope);
+
+            // Use UriBuilder over DataLakeUriBuilder to apply custom SAS, DataLakeUriBuilder requires SasQueryParameters
+            UriBuilder uriBuilder = new UriBuilder(cpkBlobClient.Uri)
+            {
+                Query = GetCustomAccountSas(permissions, services, resourceType)
+            };
+
+            BlockBlobClient sasBlobClient = InstrumentClient(new BlockBlobClient(uriBuilder.Uri, GetOptions()));
+
+            // Act
+            BlockBlobClient cpkSasBlobClient = sasBlobClient.WithEncryptionScope(fakeEncryptionScope);
+
+            // Assert
+            Assert.AreEqual(sasBlobClient.Uri.Query, cpkSasBlobClient.Uri.Query);
+        }
+
+        [RecordedTest]
+        public void AccountSasResources_BlockBlobToEncryptionScope()
+        {
+            string resourceType = "soc";
+            InvokeAccountSasBlockBlobToEncryptionScopeTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
+        public void AccountSasServices_BlockBlobToEncryptionScope()
+        {
+            string services = "fqb";
+            InvokeAccountSasBlockBlobToEncryptionScopeTest(services: services);
+        }
+
+        [RecordedTest]
+        public void AccountSasPermissions_BlockBlobToEncryptionScope()
+        {
+            string permissions = "cuprwdyla";
+            InvokeAccountSasBlockBlobToEncryptionScopeTest(permissions: permissions);
+        }
+
+        private async Task InvokeAccountSasBlockBlobSnapshotTest(
+            string permissions = default,
+            string services = default,
+            string resourceType = default)
+        {
+            // Arrange
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient BlockBlobClient = (BlockBlobClient) await GetNewBlobClient(test.Container, blobName);
+            Response<BlobSnapshotInfo> createSnapshotResponse = await BlockBlobClient.CreateSnapshotAsync();
+
+            // Use UriBuilder over ShareUriBuilder to apply custom SAS, ShareUriBuilder requires SasQueryParameters
+            string sasToken = GetCustomAccountSas(permissions, services, resourceType);
+            UriBuilder uriBuilder = new UriBuilder(BlockBlobClient.Uri)
+            {
+                Query = sasToken
+            };
+
+            BlockBlobClient sasBlockBlobClient = InstrumentClient(new BlockBlobClient(uriBuilder.Uri, GetOptions()));
+
+            // Act
+            BlockBlobClient snapshotBlockBlobClient = sasBlockBlobClient.WithSnapshot(createSnapshotResponse.Value.Snapshot);
+
+            // Assert
+            // The original client will not have the snapshot appended to the uri, so having the same SAS
+            // in the query should suffice
+            Assert.IsTrue(snapshotBlockBlobClient.Uri.Query.EndsWith(sasToken));
+            await snapshotBlockBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task AccountSasResources_BlockBlobToSnapshot()
+        {
+            string resourceType = "soc";
+            await InvokeAccountSasBlockBlobSnapshotTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
+        public async Task AccountSasServices_BlockBlobToSnapshot()
+        {
+            string services = "fqb";
+            await InvokeAccountSasBlockBlobSnapshotTest(services: services);
+        }
+
+        [RecordedTest]
+        public async Task AccountSasPermissions_BlockBlobToSnapshot()
+        {
+            string permissions = "cuprwdyla";
+            await InvokeAccountSasBlockBlobSnapshotTest(permissions: permissions);
+        }
+
+        private async Task InvokeAccountSasBlockBlobVersionTest(
+            string permissions = default,
+            string services = default,
+            string resourceType = default)
+        {
+            // Arrange
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient BlockBlobClient = (BlockBlobClient)await GetNewBlobClient(test.Container, blobName);
+
+            // Use UriBuilder over ShareUriBuilder to apply custom SAS, ShareUriBuilder requires SasQueryParameters
+            string sasToken = GetCustomAccountSas(permissions, services, resourceType);
+            UriBuilder uriBuilder = new UriBuilder(BlockBlobClient.Uri)
+            {
+                Query = sasToken
+            };
+
+            BlockBlobClient sasBlockBlobClient = InstrumentClient(new BlockBlobClient(uriBuilder.Uri, GetOptions()));
+
+            // Act
+            string fakeVersion = "2020-04-17T21:55:48.6692074Z";
+            BlockBlobClient versionBlockBlobClient = sasBlockBlobClient.WithVersion(fakeVersion);
+
+            // Assert
+            // The original client will not have the Version appended to the uri, so having the same SAS
+            // in the query should suffice
+            Assert.IsTrue(versionBlockBlobClient.Uri.Query.EndsWith(sasToken));
+        }
+
+        [RecordedTest]
+        public async Task AccountSasResources_BlockBlobToVersion()
+        {
+            string resourceType = "soc";
+            await InvokeAccountSasBlockBlobVersionTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
+        public async Task AccountSasServices_BlockBlobToVersion()
+        {
+            string services = "fqb";
+            await InvokeAccountSasBlockBlobVersionTest(services: services);
+        }
+
+        [RecordedTest]
+        public async Task AccountSasPermissions_BlockBlobToVersion()
+        {
+            string permissions = "cuprwdyla";
+            await InvokeAccountSasBlockBlobVersionTest(permissions: permissions);
+        }
+        #endregion BlockBlobClient
 
         #region PageBlobClient
         private async Task InvokeAccountSasPageBlobCpkTest(
