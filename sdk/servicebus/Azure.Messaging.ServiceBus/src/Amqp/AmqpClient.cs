@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
         /// </summary>
-        private readonly AmqpMessageConverter _messageConverter;
+        private readonly AmqpMessageConverter MessageConverter;
 
         public override ServiceBusTransportMetrics TransportMetrics { get; }
 
