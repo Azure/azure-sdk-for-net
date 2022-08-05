@@ -16,6 +16,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out _);
                 Statsbeat.Customer_Ikey = instrumentationKey;
+
+                // TODO: set statsbeat connectionstring based on customer's connectionstring endpoint.
             }
         }
     }
