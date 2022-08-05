@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>
+    /// <summary>
+    /// The private link configuration provisioning state, which only appears in the response.
+    /// Serialized Name: PrivateLinkConfigurationProvisioningState
+    /// </summary>
     public readonly partial struct HDInsightPrivateLinkConfigurationProvisioningState : IEquatable<HDInsightPrivateLinkConfigurationProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.InProgress
+        /// </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState InProgress { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(InProgressValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Failed
+        /// </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Failed { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Succeeded
+        /// </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Succeeded { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Canceled
+        /// </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Canceled { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Deleting
+        /// </summary>
         public static HDInsightPrivateLinkConfigurationProvisioningState Deleting { get; } = new HDInsightPrivateLinkConfigurationProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateLinkConfigurationProvisioningState left, HDInsightPrivateLinkConfigurationProvisioningState right) => left.Equals(right);

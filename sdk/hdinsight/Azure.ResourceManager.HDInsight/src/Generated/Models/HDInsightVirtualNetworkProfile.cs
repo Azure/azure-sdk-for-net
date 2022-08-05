@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The virtual network properties. </summary>
+    /// <summary>
+    /// The virtual network properties.
+    /// Serialized Name: VirtualNetworkProfile
+    /// </summary>
     public partial class HDInsightVirtualNetworkProfile
     {
         /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightVirtualNetworkProfile. </summary>
-        /// <param name="id"> The ID of the virtual network. </param>
-        /// <param name="subnet"> The name of the subnet. </param>
+        /// <param name="id">
+        /// The ID of the virtual network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </param>
+        /// <param name="subnet">
+        /// The name of the subnet.
+        /// Serialized Name: VirtualNetworkProfile.subnet
+        /// </param>
         internal HDInsightVirtualNetworkProfile(ResourceIdentifier id, string subnet)
         {
             Id = id;
             Subnet = subnet;
         }
 
-        /// <summary> The ID of the virtual network. </summary>
+        /// <summary>
+        /// The ID of the virtual network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary> The name of the subnet. </summary>
+        /// <summary>
+        /// The name of the subnet.
+        /// Serialized Name: VirtualNetworkProfile.subnet
+        /// </summary>
         public string Subnet { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The response of cluster create request validation. </summary>
+    /// <summary>
+    /// The response of cluster create request validation.
+    /// Serialized Name: ClusterCreateValidationResult
+    /// </summary>
     public partial class HDInsightClusterCreationValidateResult
     {
         /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
@@ -23,10 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
-        /// <param name="validationErrors"> The validation errors. </param>
-        /// <param name="validationWarnings"> The validation warnings. </param>
-        /// <param name="estimatedCreationDuration"> The estimated creation duration. </param>
-        /// <param name="aaddsResourcesDetails"> The Azure active directory domain service resource details. </param>
+        /// <param name="validationErrors">
+        /// The validation errors.
+        /// Serialized Name: ClusterCreateValidationResult.validationErrors
+        /// </param>
+        /// <param name="validationWarnings">
+        /// The validation warnings.
+        /// Serialized Name: ClusterCreateValidationResult.validationWarnings
+        /// </param>
+        /// <param name="estimatedCreationDuration">
+        /// The estimated creation duration.
+        /// Serialized Name: ClusterCreateValidationResult.estimatedCreationDuration
+        /// </param>
+        /// <param name="aaddsResourcesDetails">
+        /// The Azure active directory domain service resource details.
+        /// Serialized Name: ClusterCreateValidationResult.aaddsResourcesDetails
+        /// </param>
         internal HDInsightClusterCreationValidateResult(IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors, IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings, TimeSpan? estimatedCreationDuration, IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails)
         {
             ValidationErrors = validationErrors;
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             AaddsResourcesDetails = aaddsResourcesDetails;
         }
 
-        /// <summary> The validation errors. </summary>
+        /// <summary>
+        /// The validation errors.
+        /// Serialized Name: ClusterCreateValidationResult.validationErrors
+        /// </summary>
         public IReadOnlyList<HDInsightClusterValidationErrorInfo> ValidationErrors { get; }
-        /// <summary> The validation warnings. </summary>
+        /// <summary>
+        /// The validation warnings.
+        /// Serialized Name: ClusterCreateValidationResult.validationWarnings
+        /// </summary>
         public IReadOnlyList<HDInsightClusterValidationErrorInfo> ValidationWarnings { get; }
-        /// <summary> The estimated creation duration. </summary>
+        /// <summary>
+        /// The estimated creation duration.
+        /// Serialized Name: ClusterCreateValidationResult.estimatedCreationDuration
+        /// </summary>
         public TimeSpan? EstimatedCreationDuration { get; }
-        /// <summary> The Azure active directory domain service resource details. </summary>
+        /// <summary>
+        /// The Azure active directory domain service resource details.
+        /// Serialized Name: ClusterCreateValidationResult.aaddsResourcesDetails
+        /// </summary>
         public IReadOnlyList<HDInsightClusterAaddsDetail> AaddsResourcesDetails { get; }
     }
 }

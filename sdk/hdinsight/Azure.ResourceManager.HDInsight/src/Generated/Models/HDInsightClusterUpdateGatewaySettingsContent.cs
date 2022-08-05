@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The update gateway settings request parameters. </summary>
+    /// <summary>
+    /// The update gateway settings request parameters.
+    /// Serialized Name: UpdateGatewaySettingsParameters
+    /// </summary>
     public partial class HDInsightClusterUpdateGatewaySettingsContent
     {
         /// <summary> Initializes a new instance of HDInsightClusterUpdateGatewaySettingsContent. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>
+        /// <summary>
+        /// Indicates whether or not the gateway settings based authorization is enabled.
+        /// Serialized Name: UpdateGatewaySettingsParameters.restAuthCredential.isEnabled
+        /// </summary>
         public bool? IsCredentialEnabled { get; set; }
-        /// <summary> The gateway settings user name. </summary>
+        /// <summary>
+        /// The gateway settings user name.
+        /// Serialized Name: UpdateGatewaySettingsParameters.restAuthCredential.username
+        /// </summary>
         public string UserName { get; set; }
-        /// <summary> The gateway settings user password. </summary>
+        /// <summary>
+        /// The gateway settings user password.
+        /// Serialized Name: UpdateGatewaySettingsParameters.restAuthCredential.password
+        /// </summary>
         public string Password { get; set; }
     }
 }

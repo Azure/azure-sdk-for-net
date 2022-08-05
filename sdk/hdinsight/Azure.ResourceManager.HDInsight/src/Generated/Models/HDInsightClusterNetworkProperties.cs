@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The network properties. </summary>
+    /// <summary>
+    /// The network properties.
+    /// Serialized Name: NetworkProperties
+    /// </summary>
     public partial class HDInsightClusterNetworkProperties
     {
         /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
-        /// <param name="resourceProviderConnection"> The direction for the resource provider connection. </param>
-        /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
+        /// <param name="resourceProviderConnection">
+        /// The direction for the resource provider connection.
+        /// Serialized Name: NetworkProperties.resourceProviderConnection
+        /// </param>
+        /// <param name="privateLink">
+        /// Indicates whether or not private link is enabled.
+        /// Serialized Name: NetworkProperties.privateLink
+        /// </param>
         internal HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink)
         {
             ResourceProviderConnection = resourceProviderConnection;
             PrivateLink = privateLink;
         }
 
-        /// <summary> The direction for the resource provider connection. </summary>
+        /// <summary>
+        /// The direction for the resource provider connection.
+        /// Serialized Name: NetworkProperties.resourceProviderConnection
+        /// </summary>
         public HDInsightResourceProviderConnection? ResourceProviderConnection { get; set; }
-        /// <summary> Indicates whether or not private link is enabled. </summary>
+        /// <summary>
+        /// Indicates whether or not private link is enabled.
+        /// Serialized Name: NetworkProperties.privateLink
+        /// </summary>
         public HDInsightPrivateLinkState? PrivateLink { get; set; }
     }
 }

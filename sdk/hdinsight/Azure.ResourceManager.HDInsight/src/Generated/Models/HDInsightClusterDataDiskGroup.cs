@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The data disks groups for the role. </summary>
+    /// <summary>
+    /// The data disks groups for the role.
+    /// Serialized Name: DataDisksGroups
+    /// </summary>
     public partial class HDInsightClusterDataDiskGroup
     {
         /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
-        /// <param name="disksPerNode"> The number of disks per node. </param>
-        /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
-        /// <param name="diskSizeInGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>
+        /// <param name="disksPerNode">
+        /// The number of disks per node.
+        /// Serialized Name: DataDisksGroups.disksPerNode
+        /// </param>
+        /// <param name="storageAccountType">
+        /// ReadOnly. The storage account type. Do not set this value.
+        /// Serialized Name: DataDisksGroups.storageAccountType
+        /// </param>
+        /// <param name="diskSizeInGB">
+        /// ReadOnly. The DiskSize in GB. Do not set this value.
+        /// Serialized Name: DataDisksGroups.diskSizeGB
+        /// </param>
         internal HDInsightClusterDataDiskGroup(int? disksPerNode, string storageAccountType, int? diskSizeInGB)
         {
             DisksPerNode = disksPerNode;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             DiskSizeInGB = diskSizeInGB;
         }
 
-        /// <summary> The number of disks per node. </summary>
+        /// <summary>
+        /// The number of disks per node.
+        /// Serialized Name: DataDisksGroups.disksPerNode
+        /// </summary>
         public int? DisksPerNode { get; set; }
-        /// <summary> ReadOnly. The storage account type. Do not set this value. </summary>
+        /// <summary>
+        /// ReadOnly. The storage account type. Do not set this value.
+        /// Serialized Name: DataDisksGroups.storageAccountType
+        /// </summary>
         public string StorageAccountType { get; }
-        /// <summary> ReadOnly. The DiskSize in GB. Do not set this value. </summary>
+        /// <summary>
+        /// ReadOnly. The DiskSize in GB. Do not set this value.
+        /// Serialized Name: DataDisksGroups.diskSizeGB
+        /// </summary>
         public int? DiskSizeInGB { get; }
     }
 }

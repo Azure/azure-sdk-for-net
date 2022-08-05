@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The details about the usage of a particular limited resource. </summary>
+    /// <summary>
+    /// The details about the usage of a particular limited resource.
+    /// Serialized Name: Usage
+    /// </summary>
     public partial class HDInsightUsage
     {
         /// <summary> Initializes a new instance of HDInsightUsage. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightUsage. </summary>
-        /// <param name="unit"> The type of measurement for usage. </param>
-        /// <param name="currentValue"> The current usage. </param>
-        /// <param name="limit"> The maximum allowed usage. </param>
-        /// <param name="name"> The details about the localizable name of the used resource. </param>
+        /// <param name="unit">
+        /// The type of measurement for usage.
+        /// Serialized Name: Usage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// The current usage.
+        /// Serialized Name: Usage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// The maximum allowed usage.
+        /// Serialized Name: Usage.limit
+        /// </param>
+        /// <param name="name">
+        /// The details about the localizable name of the used resource.
+        /// Serialized Name: Usage.name
+        /// </param>
         internal HDInsightUsage(string unit, long? currentValue, long? limit, HDInsightLocalizedName name)
         {
             Unit = unit;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             Name = name;
         }
 
-        /// <summary> The type of measurement for usage. </summary>
+        /// <summary>
+        /// The type of measurement for usage.
+        /// Serialized Name: Usage.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> The current usage. </summary>
+        /// <summary>
+        /// The current usage.
+        /// Serialized Name: Usage.currentValue
+        /// </summary>
         public long? CurrentValue { get; }
-        /// <summary> The maximum allowed usage. </summary>
+        /// <summary>
+        /// The maximum allowed usage.
+        /// Serialized Name: Usage.limit
+        /// </summary>
         public long? Limit { get; }
-        /// <summary> The details about the localizable name of the used resource. </summary>
+        /// <summary>
+        /// The details about the localizable name of the used resource.
+        /// Serialized Name: Usage.name
+        /// </summary>
         public HDInsightLocalizedName Name { get; }
     }
 }

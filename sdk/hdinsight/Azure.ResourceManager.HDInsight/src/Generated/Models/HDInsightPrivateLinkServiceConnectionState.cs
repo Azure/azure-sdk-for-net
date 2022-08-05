@@ -7,20 +7,35 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The private link service connection state. </summary>
+    /// <summary>
+    /// The private link service connection state.
+    /// Serialized Name: PrivateLinkServiceConnectionState
+    /// </summary>
     public partial class HDInsightPrivateLinkServiceConnectionState
     {
         /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The concrete private link service connection. </param>
+        /// <param name="status">
+        /// The concrete private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </param>
         public HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The concrete private link service connection. </param>
-        /// <param name="description"> The optional description of the status. </param>
-        /// <param name="actionsRequired"> Whether there is further actions. </param>
+        /// <param name="status">
+        /// The concrete private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </param>
+        /// <param name="description">
+        /// The optional description of the status.
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </param>
+        /// <param name="actionsRequired">
+        /// Whether there is further actions.
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
+        /// </param>
         internal HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
         {
             Status = status;
@@ -28,11 +43,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary> The concrete private link service connection. </summary>
+        /// <summary>
+        /// The concrete private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </summary>
         public HDInsightPrivateLinkServiceConnectionStatus Status { get; set; }
-        /// <summary> The optional description of the status. </summary>
+        /// <summary>
+        /// The optional description of the status.
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Whether there is further actions. </summary>
+        /// <summary>
+        /// Whether there is further actions.
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
+        /// </summary>
         public string ActionsRequired { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The method that private IP address is allocated. </summary>
+    /// <summary>
+    /// The method that private IP address is allocated.
+    /// Serialized Name: PrivateIPAllocationMethod
+    /// </summary>
     public readonly partial struct HDInsightPrivateIPAllocationMethod : IEquatable<HDInsightPrivateIPAllocationMethod>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string DynamicValue = "dynamic";
         private const string StaticValue = "static";
 
-        /// <summary> dynamic. </summary>
+        /// <summary>
+        /// dynamic
+        /// Serialized Name: PrivateIPAllocationMethod.dynamic
+        /// </summary>
         public static HDInsightPrivateIPAllocationMethod Dynamic { get; } = new HDInsightPrivateIPAllocationMethod(DynamicValue);
-        /// <summary> static. </summary>
+        /// <summary>
+        /// static
+        /// Serialized Name: PrivateIPAllocationMethod.static
+        /// </summary>
         public static HDInsightPrivateIPAllocationMethod Static { get; } = new HDInsightPrivateIPAllocationMethod(StaticValue);
         /// <summary> Determines if two <see cref="HDInsightPrivateIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateIPAllocationMethod left, HDInsightPrivateIPAllocationMethod right) => left.Equals(right);

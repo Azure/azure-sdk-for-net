@@ -17,7 +17,10 @@ namespace Azure.ResourceManager.HDInsight
     public partial class HDInsightPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionData. </summary>
-        /// <param name="connectionState"> The private link service connection state. </param>
+        /// <param name="connectionState">
+        /// The private link service connection state.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public HDInsightPrivateEndpointConnectionData(HDInsightPrivateLinkServiceConnectionState connectionState)
         {
@@ -34,10 +37,22 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> The private endpoint of the private endpoint connection. </param>
-        /// <param name="connectionState"> The private link service connection state. </param>
-        /// <param name="linkIdentifier"> The link identifier. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="privateEndpoint">
+        /// The private endpoint of the private endpoint connection
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </param>
+        /// <param name="connectionState">
+        /// The private link service connection state.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
+        /// <param name="linkIdentifier">
+        /// The link identifier.
+        /// Serialized Name: PrivateEndpointConnection.properties.linkIdentifier
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state, which only appears in the response.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </param>
         internal HDInsightPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, HDInsightPrivateLinkServiceConnectionState connectionState, string linkIdentifier, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
@@ -46,7 +61,10 @@ namespace Azure.ResourceManager.HDInsight
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The private endpoint of the private endpoint connection. </summary>
+        /// <summary>
+        /// The private endpoint of the private endpoint connection
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
@@ -54,11 +72,20 @@ namespace Azure.ResourceManager.HDInsight
             get => PrivateEndpoint?.Id;
         }
 
-        /// <summary> The private link service connection state. </summary>
+        /// <summary>
+        /// The private link service connection state.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </summary>
         public HDInsightPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> The link identifier. </summary>
+        /// <summary>
+        /// The link identifier.
+        /// Serialized Name: PrivateEndpointConnection.properties.linkIdentifier
+        /// </summary>
         public string LinkIdentifier { get; }
-        /// <summary> The provisioning state, which only appears in the response. </summary>
+        /// <summary>
+        /// The provisioning state, which only appears in the response.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </summary>
         public HDInsightPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

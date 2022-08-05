@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The Azure active directory domain service resource details. </summary>
+    /// <summary>
+    /// The Azure active directory domain service resource details.
+    /// Serialized Name: AaddsResourceDetails
+    /// </summary>
     public partial class HDInsightClusterAaddsDetail
     {
         /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
@@ -18,13 +21,34 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
-        /// <param name="domainName"> The Azure active directory domain service name. </param>
-        /// <param name="isInitialSyncComplete"> This indicates whether initial sync complete or not. </param>
-        /// <param name="isLdapsEnabled"> This indicates whether enable ldaps or not. </param>
-        /// <param name="ldapsPublicCertificateInBase64"> The base 64 format string of public ldap certificate. </param>
-        /// <param name="resourceId"> The resource id of azure active directory domain service. </param>
-        /// <param name="subnetId"> The subnet resource id. </param>
-        /// <param name="tenantId"> The tenant id of azure active directory domain service . </param>
+        /// <param name="domainName">
+        /// The Azure active directory domain service name.
+        /// Serialized Name: AaddsResourceDetails.domainName
+        /// </param>
+        /// <param name="isInitialSyncComplete">
+        /// This indicates whether initial sync complete or not.
+        /// Serialized Name: AaddsResourceDetails.initialSyncComplete
+        /// </param>
+        /// <param name="isLdapsEnabled">
+        /// This indicates whether enable ldaps or not.
+        /// Serialized Name: AaddsResourceDetails.ldapsEnabled
+        /// </param>
+        /// <param name="ldapsPublicCertificateInBase64">
+        /// The base 64 format string of public ldap certificate.
+        /// Serialized Name: AaddsResourceDetails.ldapsPublicCertificateInBase64
+        /// </param>
+        /// <param name="resourceId">
+        /// The resource id of azure active directory domain service.
+        /// Serialized Name: AaddsResourceDetails.resourceId
+        /// </param>
+        /// <param name="subnetId">
+        /// The subnet resource id.
+        /// Serialized Name: AaddsResourceDetails.subnetId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant id of azure active directory domain service .
+        /// Serialized Name: AaddsResourceDetails.tenantId
+        /// </param>
         internal HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, string resourceId, string subnetId, Guid? tenantId)
         {
             DomainName = domainName;
@@ -36,19 +60,40 @@ namespace Azure.ResourceManager.HDInsight.Models
             TenantId = tenantId;
         }
 
-        /// <summary> The Azure active directory domain service name. </summary>
+        /// <summary>
+        /// The Azure active directory domain service name.
+        /// Serialized Name: AaddsResourceDetails.domainName
+        /// </summary>
         public string DomainName { get; }
-        /// <summary> This indicates whether initial sync complete or not. </summary>
+        /// <summary>
+        /// This indicates whether initial sync complete or not.
+        /// Serialized Name: AaddsResourceDetails.initialSyncComplete
+        /// </summary>
         public bool? IsInitialSyncComplete { get; }
-        /// <summary> This indicates whether enable ldaps or not. </summary>
+        /// <summary>
+        /// This indicates whether enable ldaps or not.
+        /// Serialized Name: AaddsResourceDetails.ldapsEnabled
+        /// </summary>
         public bool? IsLdapsEnabled { get; }
-        /// <summary> The base 64 format string of public ldap certificate. </summary>
+        /// <summary>
+        /// The base 64 format string of public ldap certificate.
+        /// Serialized Name: AaddsResourceDetails.ldapsPublicCertificateInBase64
+        /// </summary>
         public string LdapsPublicCertificateInBase64 { get; }
-        /// <summary> The resource id of azure active directory domain service. </summary>
+        /// <summary>
+        /// The resource id of azure active directory domain service.
+        /// Serialized Name: AaddsResourceDetails.resourceId
+        /// </summary>
         public string ResourceId { get; }
-        /// <summary> The subnet resource id. </summary>
+        /// <summary>
+        /// The subnet resource id.
+        /// Serialized Name: AaddsResourceDetails.subnetId
+        /// </summary>
         public string SubnetId { get; }
-        /// <summary> The tenant id of azure active directory domain service . </summary>
+        /// <summary>
+        /// The tenant id of azure active directory domain service .
+        /// Serialized Name: AaddsResourceDetails.tenantId
+        /// </summary>
         public Guid? TenantId { get; }
     }
 }

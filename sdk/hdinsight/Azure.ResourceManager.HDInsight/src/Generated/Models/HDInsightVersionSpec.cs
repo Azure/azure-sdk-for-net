@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The version properties. </summary>
+    /// <summary>
+    /// The version properties.
+    /// Serialized Name: VersionSpec
+    /// </summary>
     public partial class HDInsightVersionSpec
     {
         /// <summary> Initializes a new instance of HDInsightVersionSpec. </summary>
@@ -20,10 +23,22 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightVersionSpec. </summary>
-        /// <param name="friendlyName"> The friendly name. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="isDefault"> Whether or not the version is the default version. </param>
-        /// <param name="componentVersions"> The component version property. </param>
+        /// <param name="friendlyName">
+        /// The friendly name
+        /// Serialized Name: VersionSpec.friendlyName
+        /// </param>
+        /// <param name="displayName">
+        /// The display name
+        /// Serialized Name: VersionSpec.displayName
+        /// </param>
+        /// <param name="isDefault">
+        /// Whether or not the version is the default version.
+        /// Serialized Name: VersionSpec.isDefault
+        /// </param>
+        /// <param name="componentVersions">
+        /// The component version property.
+        /// Serialized Name: VersionSpec.componentVersions
+        /// </param>
         internal HDInsightVersionSpec(string friendlyName, string displayName, bool? isDefault, IReadOnlyDictionary<string, string> componentVersions)
         {
             FriendlyName = friendlyName;
@@ -32,13 +47,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             ComponentVersions = componentVersions;
         }
 
-        /// <summary> The friendly name. </summary>
+        /// <summary>
+        /// The friendly name
+        /// Serialized Name: VersionSpec.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The display name. </summary>
+        /// <summary>
+        /// The display name
+        /// Serialized Name: VersionSpec.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Whether or not the version is the default version. </summary>
+        /// <summary>
+        /// Whether or not the version is the default version.
+        /// Serialized Name: VersionSpec.isDefault
+        /// </summary>
         public bool? IsDefault { get; }
-        /// <summary> The component version property. </summary>
+        /// <summary>
+        /// The component version property.
+        /// Serialized Name: VersionSpec.componentVersions
+        /// </summary>
         public IReadOnlyDictionary<string, string> ComponentVersions { get; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The Disk Encryption Cluster request parameters. </summary>
+    /// <summary>
+    /// The Disk Encryption Cluster request parameters.
+    /// Serialized Name: ClusterDiskEncryptionParameters
+    /// </summary>
     public partial class HDInsightClusterDiskEncryptionContent
     {
         /// <summary> Initializes a new instance of HDInsightClusterDiskEncryptionContent. </summary>
@@ -17,11 +20,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </summary>
+        /// <summary>
+        /// Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net
+        /// Serialized Name: ClusterDiskEncryptionParameters.vaultUri
+        /// </summary>
         public Uri VaultUri { get; set; }
-        /// <summary> Key name that is used for enabling disk encryption. </summary>
+        /// <summary>
+        /// Key name that is used for enabling disk encryption.
+        /// Serialized Name: ClusterDiskEncryptionParameters.keyName
+        /// </summary>
         public string KeyName { get; set; }
-        /// <summary> Specific key version that is used for enabling disk encryption. </summary>
+        /// <summary>
+        /// Specific key version that is used for enabling disk encryption.
+        /// Serialized Name: ClusterDiskEncryptionParameters.keyVersion
+        /// </summary>
         public string KeyVersion { get; set; }
     }
 }

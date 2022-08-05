@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The response spec of checking name availability. </summary>
+    /// <summary>
+    /// The response spec of checking name availability.
+    /// Serialized Name: NameAvailabilityCheckResult
+    /// </summary>
     public partial class HDInsightNameAvailabilityResult
     {
         /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable"> This indicates whether the name is available. </param>
-        /// <param name="reason"> The reason of the result. </param>
-        /// <param name="message"> The related message. </param>
+        /// <param name="isNameAvailable">
+        /// This indicates whether the name is available.
+        /// Serialized Name: NameAvailabilityCheckResult.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason of the result.
+        /// Serialized Name: NameAvailabilityCheckResult.reason
+        /// </param>
+        /// <param name="message">
+        /// The related message.
+        /// Serialized Name: NameAvailabilityCheckResult.message
+        /// </param>
         internal HDInsightNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
             IsNameAvailable = isNameAvailable;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             Message = message;
         }
 
-        /// <summary> This indicates whether the name is available. </summary>
+        /// <summary>
+        /// This indicates whether the name is available.
+        /// Serialized Name: NameAvailabilityCheckResult.nameAvailable
+        /// </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary> The reason of the result. </summary>
+        /// <summary>
+        /// The reason of the result.
+        /// Serialized Name: NameAvailabilityCheckResult.reason
+        /// </summary>
         public string Reason { get; }
-        /// <summary> The related message. </summary>
+        /// <summary>
+        /// The related message.
+        /// Serialized Name: NameAvailabilityCheckResult.message
+        /// </summary>
         public string Message { get; }
     }
 }

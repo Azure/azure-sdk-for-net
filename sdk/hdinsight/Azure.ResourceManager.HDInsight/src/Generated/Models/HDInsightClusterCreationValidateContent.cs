@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The cluster create request specification. </summary>
+    /// <summary>
+    /// The cluster create request specification.
+    /// Serialized Name: ClusterCreateRequestValidationParameters
+    /// </summary>
     public partial class HDInsightClusterCreationValidateContent : HDInsightClusterCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of HDInsightClusterCreationValidateContent. </summary>
@@ -17,13 +20,25 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary> The cluster name. </summary>
+        /// <summary>
+        /// The cluster name.
+        /// Serialized Name: ClusterCreateRequestValidationParameters.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The resource type. </summary>
+        /// <summary>
+        /// The resource type.
+        /// Serialized Name: ClusterCreateRequestValidationParameters.type
+        /// </summary>
         public string ClusterCreateRequestValidationParametersType { get; set; }
-        /// <summary> The tenant id. </summary>
+        /// <summary>
+        /// The tenant id.
+        /// Serialized Name: ClusterCreateRequestValidationParameters.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> This indicates whether fetch Aadds resource or not. </summary>
+        /// <summary>
+        /// This indicates whether fetch Aadds resource or not.
+        /// Serialized Name: ClusterCreateRequestValidationParameters.fetchAaddsResource
+        /// </summary>
         public bool? FetchAaddsResource { get; set; }
     }
 }

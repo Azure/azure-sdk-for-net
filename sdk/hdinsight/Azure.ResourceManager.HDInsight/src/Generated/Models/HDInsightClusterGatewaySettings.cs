@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> Gateway settings. </summary>
+    /// <summary>
+    /// Gateway settings.
+    /// Serialized Name: GatewaySettings
+    /// </summary>
     public partial class HDInsightClusterGatewaySettings
     {
         /// <summary> Initializes a new instance of HDInsightClusterGatewaySettings. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterGatewaySettings. </summary>
-        /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
-        /// <param name="userName"> The gateway settings user name. </param>
-        /// <param name="password"> The gateway settings user password. </param>
+        /// <param name="isCredentialEnabled">
+        /// Indicates whether or not the gateway settings based authorization is enabled.
+        /// Serialized Name: GatewaySettings.restAuthCredential.isEnabled
+        /// </param>
+        /// <param name="userName">
+        /// The gateway settings user name.
+        /// Serialized Name: GatewaySettings.restAuthCredential.username
+        /// </param>
+        /// <param name="password">
+        /// The gateway settings user password.
+        /// Serialized Name: GatewaySettings.restAuthCredential.password
+        /// </param>
         internal HDInsightClusterGatewaySettings(string isCredentialEnabled, string userName, string password)
         {
             IsCredentialEnabled = isCredentialEnabled;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             Password = password;
         }
 
-        /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>
+        /// <summary>
+        /// Indicates whether or not the gateway settings based authorization is enabled.
+        /// Serialized Name: GatewaySettings.restAuthCredential.isEnabled
+        /// </summary>
         public string IsCredentialEnabled { get; }
-        /// <summary> The gateway settings user name. </summary>
+        /// <summary>
+        /// The gateway settings user name.
+        /// Serialized Name: GatewaySettings.restAuthCredential.username
+        /// </summary>
         public string UserName { get; }
-        /// <summary> The gateway settings user password. </summary>
+        /// <summary>
+        /// The gateway settings user password.
+        /// Serialized Name: GatewaySettings.restAuthCredential.password
+        /// </summary>
         public string Password { get; }
     }
 }

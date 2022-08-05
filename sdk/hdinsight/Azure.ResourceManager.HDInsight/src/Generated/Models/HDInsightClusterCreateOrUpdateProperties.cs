@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The cluster create parameters. </summary>
+    /// <summary>
+    /// The cluster create parameters.
+    /// Serialized Name: ClusterCreateProperties
+    /// </summary>
     public partial class HDInsightClusterCreateOrUpdateProperties
     {
         /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateProperties. </summary>
@@ -19,21 +22,45 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
         }
 
-        /// <summary> The version of the cluster. </summary>
+        /// <summary>
+        /// The version of the cluster.
+        /// Serialized Name: ClusterCreateProperties.clusterVersion
+        /// </summary>
         public string ClusterVersion { get; set; }
-        /// <summary> The type of operating system. </summary>
+        /// <summary>
+        /// The type of operating system.
+        /// Serialized Name: ClusterCreateProperties.osType
+        /// </summary>
         public HDInsightOSType? OSType { get; set; }
-        /// <summary> The cluster tier. </summary>
+        /// <summary>
+        /// The cluster tier.
+        /// Serialized Name: ClusterCreateProperties.tier
+        /// </summary>
         public HDInsightTier? Tier { get; set; }
-        /// <summary> The cluster definition. </summary>
+        /// <summary>
+        /// The cluster definition.
+        /// Serialized Name: ClusterCreateProperties.clusterDefinition
+        /// </summary>
         public HDInsightClusterDefinition ClusterDefinition { get; set; }
-        /// <summary> The cluster kafka rest proxy configuration. </summary>
+        /// <summary>
+        /// The cluster kafka rest proxy configuration.
+        /// Serialized Name: ClusterCreateProperties.kafkaRestProperties
+        /// </summary>
         public KafkaRestProperties KafkaRestProperties { get; set; }
-        /// <summary> The security profile. </summary>
+        /// <summary>
+        /// The security profile.
+        /// Serialized Name: ClusterCreateProperties.securityProfile
+        /// </summary>
         public HDInsightSecurityProfile SecurityProfile { get; set; }
-        /// <summary> The compute profile. </summary>
+        /// <summary>
+        /// The compute profile.
+        /// Serialized Name: ClusterCreateProperties.computeProfile
+        /// </summary>
         internal ComputeProfile ComputeProfile { get; set; }
-        /// <summary> The list of roles in the cluster. </summary>
+        /// <summary>
+        /// The list of roles in the cluster.
+        /// Serialized Name: ComputeProfile.roles
+        /// </summary>
         public IList<HDInsightClusterRole> ComputeRoles
         {
             get
@@ -44,9 +71,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <summary> The storage profile. </summary>
+        /// <summary>
+        /// The storage profile.
+        /// Serialized Name: ClusterCreateProperties.storageProfile
+        /// </summary>
         internal StorageProfile StorageProfile { get; set; }
-        /// <summary> The list of storage accounts in the cluster. </summary>
+        /// <summary>
+        /// The list of storage accounts in the cluster.
+        /// Serialized Name: StorageProfile.storageaccounts
+        /// </summary>
         public IList<HDInsightStorageAccountInfo> StorageAccounts
         {
             get
@@ -57,11 +90,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <summary> The disk encryption properties. </summary>
+        /// <summary>
+        /// The disk encryption properties.
+        /// Serialized Name: ClusterCreateProperties.diskEncryptionProperties
+        /// </summary>
         public HDInsightDiskEncryptionProperties DiskEncryptionProperties { get; set; }
-        /// <summary> The encryption-in-transit properties. </summary>
+        /// <summary>
+        /// The encryption-in-transit properties.
+        /// Serialized Name: ClusterCreateProperties.encryptionInTransitProperties
+        /// </summary>
         internal EncryptionInTransitProperties EncryptionInTransitProperties { get; set; }
-        /// <summary> Indicates whether or not inter cluster node communication is encrypted in transit. </summary>
+        /// <summary>
+        /// Indicates whether or not inter cluster node communication is encrypted in transit.
+        /// Serialized Name: EncryptionInTransitProperties.isEncryptionInTransitEnabled
+        /// </summary>
         public bool? IsEncryptionInTransitEnabled
         {
             get => EncryptionInTransitProperties is null ? default : EncryptionInTransitProperties.IsEncryptionInTransitEnabled;
@@ -73,13 +115,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <summary> The minimal supported tls version. </summary>
+        /// <summary>
+        /// The minimal supported tls version.
+        /// Serialized Name: ClusterCreateProperties.minSupportedTlsVersion
+        /// </summary>
         public string MinSupportedTlsVersion { get; set; }
-        /// <summary> The network properties. </summary>
+        /// <summary>
+        /// The network properties.
+        /// Serialized Name: ClusterCreateProperties.networkProperties
+        /// </summary>
         public HDInsightClusterNetworkProperties NetworkProperties { get; set; }
-        /// <summary> The compute isolation properties. </summary>
+        /// <summary>
+        /// The compute isolation properties.
+        /// Serialized Name: ClusterCreateProperties.computeIsolationProperties
+        /// </summary>
         public HDInsightComputeIsolationProperties ComputeIsolationProperties { get; set; }
-        /// <summary> The private link configurations. </summary>
+        /// <summary>
+        /// The private link configurations.
+        /// Serialized Name: ClusterCreateProperties.privateLinkConfigurations
+        /// </summary>
         public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
     }
 }

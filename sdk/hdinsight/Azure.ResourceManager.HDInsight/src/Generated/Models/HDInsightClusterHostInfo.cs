@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The cluster host information. </summary>
+    /// <summary>
+    /// The cluster host information.
+    /// Serialized Name: HostInfo
+    /// </summary>
     public partial class HDInsightClusterHostInfo
     {
         /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
-        /// <param name="name"> The host name. </param>
-        /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
-        /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>
+        /// <param name="name">
+        /// The host name
+        /// Serialized Name: HostInfo.name
+        /// </param>
+        /// <param name="fqdn">
+        /// The Fully Qualified Domain Name of host
+        /// Serialized Name: HostInfo.fqdn
+        /// </param>
+        /// <param name="effectiveDiskEncryptionKeyUri">
+        /// The effective disk encryption key URL used by the host
+        /// Serialized Name: HostInfo.effectiveDiskEncryptionKeyUrl
+        /// </param>
         internal HDInsightClusterHostInfo(string name, string fqdn, Uri effectiveDiskEncryptionKeyUri)
         {
             Name = name;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             EffectiveDiskEncryptionKeyUri = effectiveDiskEncryptionKeyUri;
         }
 
-        /// <summary> The host name. </summary>
+        /// <summary>
+        /// The host name
+        /// Serialized Name: HostInfo.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The Fully Qualified Domain Name of host. </summary>
+        /// <summary>
+        /// The Fully Qualified Domain Name of host
+        /// Serialized Name: HostInfo.fqdn
+        /// </summary>
         public string Fqdn { get; }
-        /// <summary> The effective disk encryption key URL used by the host. </summary>
+        /// <summary>
+        /// The effective disk encryption key URL used by the host
+        /// Serialized Name: HostInfo.effectiveDiskEncryptionKeyUrl
+        /// </summary>
         public Uri EffectiveDiskEncryptionKeyUri { get; }
     }
 }

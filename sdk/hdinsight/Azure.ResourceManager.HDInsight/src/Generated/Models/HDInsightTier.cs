@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The cluster tier. </summary>
+    /// <summary>
+    /// The cluster tier.
+    /// Serialized Name: Tier
+    /// </summary>
     public readonly partial struct HDInsightTier : IEquatable<HDInsightTier>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: Tier.Standard
+        /// </summary>
         public static HDInsightTier Standard { get; } = new HDInsightTier(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary>
+        /// Premium
+        /// Serialized Name: Tier.Premium
+        /// </summary>
         public static HDInsightTier Premium { get; } = new HDInsightTier(PremiumValue);
         /// <summary> Determines if two <see cref="HDInsightTier"/> values are the same. </summary>
         public static bool operator ==(HDInsightTier left, HDInsightTier right) => left.Equals(right);

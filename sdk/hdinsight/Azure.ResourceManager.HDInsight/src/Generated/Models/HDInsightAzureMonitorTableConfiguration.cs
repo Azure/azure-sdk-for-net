@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The table configuration for the Log Analytics integration. </summary>
+    /// <summary>
+    /// The table configuration for the Log Analytics integration.
+    /// Serialized Name: AzureMonitorTableConfiguration
+    /// </summary>
     public partial class HDInsightAzureMonitorTableConfiguration
     {
         /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
-        /// <param name="name"> The name. </param>
+        /// <param name="name">
+        /// The name.
+        /// Serialized Name: AzureMonitorTableConfiguration.name
+        /// </param>
         internal HDInsightAzureMonitorTableConfiguration(string name)
         {
             Name = name;
         }
 
-        /// <summary> The name. </summary>
+        /// <summary>
+        /// The name.
+        /// Serialized Name: AzureMonitorTableConfiguration.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

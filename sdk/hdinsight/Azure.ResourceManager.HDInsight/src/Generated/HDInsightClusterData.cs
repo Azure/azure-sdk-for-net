@@ -30,10 +30,22 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> The ETag for the resource. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> The properties of the cluster. </param>
-        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <param name="etag">
+        /// The ETag for the resource
+        /// Serialized Name: Cluster.etag
+        /// </param>
+        /// <param name="zones">
+        /// The availability zones.
+        /// Serialized Name: Cluster.zones
+        /// </param>
+        /// <param name="properties">
+        /// The properties of the cluster.
+        /// Serialized Name: Cluster.properties
+        /// </param>
+        /// <param name="identity">
+        /// The identity of the cluster, if configured.
+        /// Serialized Name: Cluster.identity
+        /// </param>
         internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, HDInsightClusterProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
@@ -42,13 +54,25 @@ namespace Azure.ResourceManager.HDInsight
             Identity = identity;
         }
 
-        /// <summary> The ETag for the resource. </summary>
+        /// <summary>
+        /// The ETag for the resource
+        /// Serialized Name: Cluster.etag
+        /// </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The availability zones. </summary>
+        /// <summary>
+        /// The availability zones.
+        /// Serialized Name: Cluster.zones
+        /// </summary>
         public IList<string> Zones { get; }
-        /// <summary> The properties of the cluster. </summary>
+        /// <summary>
+        /// The properties of the cluster.
+        /// Serialized Name: Cluster.properties
+        /// </summary>
         public HDInsightClusterProperties Properties { get; set; }
-        /// <summary> The identity of the cluster, if configured. </summary>
+        /// <summary>
+        /// The identity of the cluster, if configured.
+        /// Serialized Name: Cluster.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

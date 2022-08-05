@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The cluster monitor parameters. </summary>
+    /// <summary>
+    /// The cluster monitor parameters.
+    /// Serialized Name: ClusterMonitoringRequest
+    /// </summary>
     public partial class HDInsightClusterEnableClusterMonitoringContent
     {
         /// <summary> Initializes a new instance of HDInsightClusterEnableClusterMonitoringContent. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary> The cluster monitor workspace ID. </summary>
+        /// <summary>
+        /// The cluster monitor workspace ID.
+        /// Serialized Name: ClusterMonitoringRequest.workspaceId
+        /// </summary>
         public string WorkspaceId { get; set; }
-        /// <summary> The cluster monitor workspace key. </summary>
+        /// <summary>
+        /// The cluster monitor workspace key.
+        /// Serialized Name: ClusterMonitoringRequest.primaryKey
+        /// </summary>
         public string PrimaryKey { get; set; }
     }
 }

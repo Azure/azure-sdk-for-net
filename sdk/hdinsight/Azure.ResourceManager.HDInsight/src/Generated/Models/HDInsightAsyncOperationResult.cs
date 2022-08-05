@@ -9,7 +9,10 @@ using Azure;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The azure async operation response. </summary>
+    /// <summary>
+    /// The azure async operation response.
+    /// Serialized Name: AsyncOperationResult
+    /// </summary>
     public partial class HDInsightAsyncOperationResult
     {
         /// <summary> Initializes a new instance of HDInsightAsyncOperationResult. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightAsyncOperationResult. </summary>
-        /// <param name="status"> The async operation state. </param>
-        /// <param name="error"> The operation error information. </param>
+        /// <param name="status">
+        /// The async operation state.
+        /// Serialized Name: AsyncOperationResult.status
+        /// </param>
+        /// <param name="error">
+        /// The operation error information.
+        /// Serialized Name: AsyncOperationResult.error
+        /// </param>
         internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ResponseError error)
         {
             Status = status;
             Error = error;
         }
 
-        /// <summary> The async operation state. </summary>
+        /// <summary>
+        /// The async operation state.
+        /// Serialized Name: AsyncOperationResult.status
+        /// </summary>
         public HDInsightAsyncOperationState? Status { get; }
-        /// <summary> The operation error information. </summary>
+        /// <summary>
+        /// The operation error information.
+        /// Serialized Name: AsyncOperationResult.error
+        /// </summary>
         public ResponseError Error { get; }
     }
 }

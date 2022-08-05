@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> Gets the application SSH endpoint. </summary>
+    /// <summary>
+    /// Gets the application SSH endpoint
+    /// Serialized Name: ApplicationGetEndpoint
+    /// </summary>
     public partial class HDInsightApplicationEndpoint
     {
         /// <summary> Initializes a new instance of HDInsightApplicationEndpoint. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationEndpoint. </summary>
-        /// <param name="location"> The location of the endpoint. </param>
-        /// <param name="destinationPort"> The destination port to connect to. </param>
-        /// <param name="publicPort"> The public port to connect to. </param>
-        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
+        /// <param name="location">
+        /// The location of the endpoint.
+        /// Serialized Name: ApplicationGetEndpoint.location
+        /// </param>
+        /// <param name="destinationPort">
+        /// The destination port to connect to.
+        /// Serialized Name: ApplicationGetEndpoint.destinationPort
+        /// </param>
+        /// <param name="publicPort">
+        /// The public port to connect to.
+        /// Serialized Name: ApplicationGetEndpoint.publicPort
+        /// </param>
+        /// <param name="privateIPAddress">
+        /// The private ip address of the endpoint.
+        /// Serialized Name: ApplicationGetEndpoint.privateIPAddress
+        /// </param>
         internal HDInsightApplicationEndpoint(AzureLocation? location, int? destinationPort, int? publicPort, string privateIPAddress)
         {
             Location = location;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateIPAddress = privateIPAddress;
         }
 
-        /// <summary> The location of the endpoint. </summary>
+        /// <summary>
+        /// The location of the endpoint.
+        /// Serialized Name: ApplicationGetEndpoint.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary> The destination port to connect to. </summary>
+        /// <summary>
+        /// The destination port to connect to.
+        /// Serialized Name: ApplicationGetEndpoint.destinationPort
+        /// </summary>
         public int? DestinationPort { get; set; }
-        /// <summary> The public port to connect to. </summary>
+        /// <summary>
+        /// The public port to connect to.
+        /// Serialized Name: ApplicationGetEndpoint.publicPort
+        /// </summary>
         public int? PublicPort { get; set; }
-        /// <summary> The private ip address of the endpoint. </summary>
+        /// <summary>
+        /// The private ip address of the endpoint.
+        /// Serialized Name: ApplicationGetEndpoint.privateIPAddress
+        /// </summary>
         public string PrivateIPAddress { get; set; }
     }
 }

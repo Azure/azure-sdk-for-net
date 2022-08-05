@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The Get Capabilities operation response. </summary>
+    /// <summary>
+    /// The Get Capabilities operation response.
+    /// Serialized Name: CapabilitiesResult
+    /// </summary>
     public partial class HDInsightCapabilitiesResult
     {
         /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
@@ -22,10 +25,22 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
-        /// <param name="versions"> The version capability. </param>
-        /// <param name="regions"> The virtual machine size compatibility features. </param>
-        /// <param name="features"> The capability features. </param>
-        /// <param name="quota"> The quota capability. </param>
+        /// <param name="versions">
+        /// The version capability.
+        /// Serialized Name: CapabilitiesResult.versions
+        /// </param>
+        /// <param name="regions">
+        /// The virtual machine size compatibility features.
+        /// Serialized Name: CapabilitiesResult.regions
+        /// </param>
+        /// <param name="features">
+        /// The capability features.
+        /// Serialized Name: CapabilitiesResult.features
+        /// </param>
+        /// <param name="quota">
+        /// The quota capability.
+        /// Serialized Name: CapabilitiesResult.quota
+        /// </param>
         internal HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions, IReadOnlyDictionary<string, RegionsCapability> regions, IReadOnlyList<string> features, QuotaCapability quota)
         {
             Versions = versions;
@@ -34,13 +49,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             Quota = quota;
         }
 
-        /// <summary> The version capability. </summary>
+        /// <summary>
+        /// The version capability.
+        /// Serialized Name: CapabilitiesResult.versions
+        /// </summary>
         public IReadOnlyDictionary<string, HDInsightVersionsCapability> Versions { get; }
-        /// <summary> The virtual machine size compatibility features. </summary>
+        /// <summary>
+        /// The virtual machine size compatibility features.
+        /// Serialized Name: CapabilitiesResult.regions
+        /// </summary>
         public IReadOnlyDictionary<string, RegionsCapability> Regions { get; }
-        /// <summary> The capability features. </summary>
+        /// <summary>
+        /// The capability features.
+        /// Serialized Name: CapabilitiesResult.features
+        /// </summary>
         public IReadOnlyList<string> Features { get; }
-        /// <summary> The quota capability. </summary>
+        /// <summary>
+        /// The quota capability.
+        /// Serialized Name: CapabilitiesResult.quota
+        /// </summary>
         public QuotaCapability Quota { get; }
     }
 }

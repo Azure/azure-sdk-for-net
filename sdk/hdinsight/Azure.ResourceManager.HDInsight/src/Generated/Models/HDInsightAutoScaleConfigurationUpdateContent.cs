@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The autoscale configuration update parameter. </summary>
+    /// <summary>
+    /// The autoscale configuration update parameter.
+    /// Serialized Name: AutoscaleConfigurationUpdateParameter
+    /// </summary>
     public partial class HDInsightAutoScaleConfigurationUpdateContent
     {
         /// <summary> Initializes a new instance of HDInsightAutoScaleConfigurationUpdateContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary> The autoscale configuration. </summary>
+        /// <summary>
+        /// The autoscale configuration.
+        /// Serialized Name: AutoscaleConfigurationUpdateParameter.autoscale
+        /// </summary>
         public HDInsightAutoScaleConfiguration AutoScale { get; set; }
     }
 }

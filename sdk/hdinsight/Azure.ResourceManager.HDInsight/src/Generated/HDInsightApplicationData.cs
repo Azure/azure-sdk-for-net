@@ -27,9 +27,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag for the application. </param>
-        /// <param name="tags"> The tags for the application. </param>
-        /// <param name="properties"> The properties of the application. </param>
+        /// <param name="etag">
+        /// The ETag for the application
+        /// Serialized Name: Application.etag
+        /// </param>
+        /// <param name="tags">
+        /// The tags for the application.
+        /// Serialized Name: Application.tags
+        /// </param>
+        /// <param name="properties">
+        /// The properties of the application.
+        /// Serialized Name: Application.properties
+        /// </param>
         internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
@@ -37,11 +46,20 @@ namespace Azure.ResourceManager.HDInsight
             Properties = properties;
         }
 
-        /// <summary> The ETag for the application. </summary>
+        /// <summary>
+        /// The ETag for the application
+        /// Serialized Name: Application.etag
+        /// </summary>
         public ETag? ETag { get; set; }
-        /// <summary> The tags for the application. </summary>
+        /// <summary>
+        /// The tags for the application.
+        /// Serialized Name: Application.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The properties of the application. </summary>
+        /// <summary>
+        /// The properties of the application.
+        /// Serialized Name: Application.properties
+        /// </summary>
         public HDInsightApplicationProperties Properties { get; set; }
     }
 }
