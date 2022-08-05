@@ -215,6 +215,7 @@ rename-mapping:
   VirtualNetworkSubnetUsageResult: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
   VcoreCapability: PostgreSqlFlexibleServerVCoreCapability
   ServerVersionCapability: PostgreSqlFlexibleServerServerVersionCapability
+  ServerVersionCapability.supportedVcores: SupportedVCores
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
   ServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   CapabilityProperties: PostgreSqlFlexibleServerCapabilityProperties
