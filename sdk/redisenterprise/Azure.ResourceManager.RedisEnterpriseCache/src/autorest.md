@@ -37,7 +37,7 @@ rename-mapping:
   PrivateEndpointConnectionProvisioningState: RedisEnterprisePrivateEndpointConnectionProvisioningState
   PrivateEndpointConnectionListResult: RedisEnterprisePrivateEndpointConnectionListResult
   PrivateEndpointConnection: RedisEnterprisePrivateEndpointConnection
-  Persistence: PersistenceSettings
+  Persistence: RedisPersistenceSettings
   AofFrequency.1s: OneSecond
   AofFrequency: PersistenceSettingAofFrequency
   RdbFrequency.1h: OneHour

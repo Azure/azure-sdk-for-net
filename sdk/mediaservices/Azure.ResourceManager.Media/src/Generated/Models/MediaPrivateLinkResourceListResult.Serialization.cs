@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaPrivateLinkResourceListResult DeserializeMediaPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MediaPrivateLinkData>> value = default;
+            Optional<IReadOnlyList<MediaPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MediaPrivateLinkData> array = new List<MediaPrivateLinkData>();
+                    List<MediaPrivateLinkResourceData> array = new List<MediaPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaPrivateLinkData.DeserializeMediaPrivateLinkData(item));
+                        array.Add(MediaPrivateLinkResourceData.DeserializeMediaPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

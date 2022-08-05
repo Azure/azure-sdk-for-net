@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the virtual network resource settings. </summary>
-    public partial class VirtualNetworkResourceSettings : ResourceSettings
+    public partial class VirtualNetworkResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of VirtualNetworkResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

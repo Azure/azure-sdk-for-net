@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errors"> An error response from the azure resource mover service. </param>
-        internal MoveResourcePropertiesMoveStatus(MoveState? moveState, JobStatus jobStatus, MoveResourceError errors) : base(moveState, jobStatus, errors)
+        internal MoveResourcePropertiesMoveStatus(MoveResourceState? moveState, MoveResourceJobStatus jobStatus, MoveResourceError errors) : base(moveState, jobStatus, errors)
         {
         }
     }

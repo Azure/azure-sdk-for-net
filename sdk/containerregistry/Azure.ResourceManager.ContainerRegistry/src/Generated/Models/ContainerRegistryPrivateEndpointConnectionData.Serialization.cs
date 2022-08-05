@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<ContainerRegistryPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ContainerRegistryProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

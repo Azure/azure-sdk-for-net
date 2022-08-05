@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void DownloadMetadata_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, DummyRecordingMetadata);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(200, DummyRecordingMetadata);
 
             Stream metadata = _callingserverClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation);
 
@@ -59,7 +59,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public async Task DownloadMetadataAsync_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, DummyRecordingMetadata);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(200, DummyRecordingMetadata);
 
             Stream metadata = await _callingserverClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation);
 
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void DownloadRecording_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, _dummyRecordingStream);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(200, _dummyRecordingStream);
 
             Response<Stream> recording = _callingserverClient.GetCallRecording().DownloadStreaming(_dummyRecordingLocation);
 
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void DownloadRecordingByRanges_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
 
             Response<Stream> recording = _callingserverClient.GetCallRecording().DownloadStreaming(_dummyRecordingLocation, new HttpRange(0, 4));
 
@@ -89,7 +89,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public async Task DownloadRecordingAsync_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(200, _dummyRecordingStream);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(200, _dummyRecordingStream);
 
             Response<Stream> recording = await _callingserverClient.GetCallRecording().DownloadStreamingAsync(_dummyRecordingLocation);
 
@@ -99,7 +99,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public async Task DownloadRecordingByRangesAsync_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream.Take(5).ToArray(), _rangeResponseHeaders);
 
             Response<Stream> recording = await _callingserverClient.GetCallRecording().DownloadStreamingAsync(_dummyRecordingLocation, new HttpRange(0, 4));
 
@@ -118,7 +118,7 @@ namespace Azure.Communication.CallingServer
             ContentTransferOptions options = new();
             options.InitialTransferSize = 10;
 
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream, rangeHeaderResponse);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(206, _dummyRecordingStream, rangeHeaderResponse);
 
             Stream destination = new MemoryStream();
             _callingserverClient.GetCallRecording().DownloadTo(_dummyRecordingLocation, destination, options);
@@ -160,7 +160,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void DownloadNotExistentContent_Failure_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(404);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callingserverClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
@@ -169,7 +169,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void DownloadNotExistentContentAsync_Failure_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(404);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callingserverClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
@@ -178,7 +178,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void AccessDenied_Failure_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(401);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => _callingserverClient.GetCallRecording().DownloadStreaming(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
@@ -187,7 +187,7 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void AccessDeniedAsync_Failure_Test()
         {
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(401);
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(401);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await _callingserverClient.GetCallRecording().DownloadStreamingAsync(_dummyMetadataLocation));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
@@ -213,7 +213,7 @@ namespace Azure.Communication.CallingServer
                 MaximumTransferSize = 5
             };
 
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
             Stream destination = new MemoryStream();
             _callingserverClient.GetCallRecording().DownloadTo(_dummyRecordingLocation, destination, options);
 
@@ -240,7 +240,7 @@ namespace Azure.Communication.CallingServer
                 MaximumTransferSize = 5
             };
 
-            CallingServerClient _callingserverClient = CreateMockCallingServerClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
+            CallAutomationClient _callingserverClient = CreateMockCallingServerClient(new MockResponse[] { invalidResponse, validResponse1, validResponse2 });
             Stream destination = new MemoryStream();
             await _callingserverClient.GetCallRecording().DownloadToAsync(_dummyRecordingLocation, destination, options);
 

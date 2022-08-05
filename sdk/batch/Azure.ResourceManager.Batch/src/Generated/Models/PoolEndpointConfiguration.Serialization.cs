@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static PoolEndpointConfiguration DeserializePoolEndpointConfiguration(JsonElement element)
         {
-            IList<InboundNatPool> inboundNatPools = default;
+            IList<BatchInboundNatPool> inboundNatPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatPools"))
                 {
-                    List<InboundNatPool> array = new List<InboundNatPool>();
+                    List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatPool.DeserializeInboundNatPool(item));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item));
                     }
                     inboundNatPools = array;
                     continue;

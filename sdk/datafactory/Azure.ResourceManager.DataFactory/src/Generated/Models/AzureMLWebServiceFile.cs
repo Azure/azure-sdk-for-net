@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureMLWebServiceFile(BinaryData filePath, LinkedServiceReference linkedServiceName)
+        public AzureMLWebServiceFile(BinaryData filePath, FactoryLinkedServiceReference linkedServiceName)
         {
             if (filePath == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </summary>
         public BinaryData FilePath { get; set; }
         /// <summary> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </summary>
-        public LinkedServiceReference LinkedServiceName { get; set; }
+        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
     }
 }

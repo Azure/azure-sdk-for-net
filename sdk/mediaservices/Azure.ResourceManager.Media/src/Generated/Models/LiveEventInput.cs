@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Access control for live event input. </summary>
         internal LiveEventInputAccessControl AccessControl { get; set; }
         /// <summary> The IP allow list. </summary>
-        public IList<IPRange> IPAllow
+        public IList<IPRange> IPAllowedIPs
         {
             get
             {
                 if (AccessControl is null)
                     AccessControl = new LiveEventInputAccessControl();
-                return AccessControl.IPAllow;
+                return AccessControl.IPAllowedIPs;
             }
         }
 

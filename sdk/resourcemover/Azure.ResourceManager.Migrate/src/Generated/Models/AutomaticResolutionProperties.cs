@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the properties for automatic resolution. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </param>
-        internal AutomaticResolutionProperties(string moveResourceId)
+        internal AutomaticResolutionProperties(ResourceIdentifier moveResourceId)
         {
             MoveResourceId = moveResourceId;
         }
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </summary>
-        public string MoveResourceId { get; }
+        public ResourceIdentifier MoveResourceId { get; }
     }
 }

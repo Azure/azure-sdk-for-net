@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
         /// <param name="subscriptions"> Subscriptions delegation settings. </param>
         /// <param name="userRegistration"> User registration delegation settings. </param>
-        internal ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionsDelegationSettingsProperties subscriptions, RegistrationDelegationSettingsProperties userRegistration) : base(id, name, resourceType, systemData)
+        internal ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionDelegationSettingProperties subscriptions, RegistrationDelegationSettingProperties userRegistration) : base(id, name, resourceType, systemData)
         {
             Uri = uri;
             ValidationKey = validationKey;
@@ -42,30 +42,30 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
         public string ValidationKey { get; set; }
         /// <summary> Subscriptions delegation settings. </summary>
-        internal SubscriptionsDelegationSettingsProperties Subscriptions { get; set; }
+        internal SubscriptionDelegationSettingProperties Subscriptions { get; set; }
         /// <summary> Enable or disable delegation for subscriptions. </summary>
-        public bool? SubscriptionsEnabled
+        public bool? EnableSubscriptionDelegation
         {
-            get => Subscriptions is null ? default : Subscriptions.Enabled;
+            get => Subscriptions is null ? default : Subscriptions.EnableSubscriptionDelegation;
             set
             {
                 if (Subscriptions is null)
-                    Subscriptions = new SubscriptionsDelegationSettingsProperties();
-                Subscriptions.Enabled = value;
+                    Subscriptions = new SubscriptionDelegationSettingProperties();
+                Subscriptions.EnableSubscriptionDelegation = value;
             }
         }
 
         /// <summary> User registration delegation settings. </summary>
-        internal RegistrationDelegationSettingsProperties UserRegistration { get; set; }
+        internal RegistrationDelegationSettingProperties UserRegistration { get; set; }
         /// <summary> Enable or disable delegation for user registration. </summary>
-        public bool? UserRegistrationEnabled
+        public bool? EnableUserRegistrationDelegation
         {
-            get => UserRegistration is null ? default : UserRegistration.Enabled;
+            get => UserRegistration is null ? default : UserRegistration.EnableUserRegistrationDelegation;
             set
             {
                 if (UserRegistration is null)
-                    UserRegistration = new RegistrationDelegationSettingsProperties();
-                UserRegistration.Enabled = value;
+                    UserRegistration = new RegistrationDelegationSettingProperties();
+                UserRegistration.EnableUserRegistrationDelegation = value;
             }
         }
     }

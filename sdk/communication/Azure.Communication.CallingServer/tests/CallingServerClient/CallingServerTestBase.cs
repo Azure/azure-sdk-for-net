@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
                                                  "\"callConnectionId\": \"cad9df7b-f3ac-4c53-96f7-c76e7437b3c1\"" +
                                                  "}";
 
-        internal CallingServerClient CreateMockCallingServerClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
+        internal CallAutomationClient CreateMockCallingServerClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -37,22 +37,22 @@ namespace Azure.Communication.CallingServer
                 }
             }
 
-            var callingServerClientOptions = new CallingServerClientOptions
+            var callingServerClientOptions = new CallAutomationClientOptions
             {
                 Transport = new MockTransport(mockResponse)
             };
 
-            return new CallingServerClient(connectionString, callingServerClientOptions);
+            return new CallAutomationClient(connectionString, callingServerClientOptions);
         }
 
-        internal CallingServerClient CreateMockCallingServerClient(params MockResponse[] mockResponses)
+        internal CallAutomationClient CreateMockCallingServerClient(params MockResponse[] mockResponses)
         {
-            var callingServerClientOptions = new CallingServerClientOptions
+            var callingServerClientOptions = new CallAutomationClientOptions
             {
                 Transport = new MockTransport(mockResponses)
             };
 
-            return new CallingServerClient(connectionString, callingServerClientOptions);
+            return new CallAutomationClient(connectionString, callingServerClientOptions);
         }
     }
 }

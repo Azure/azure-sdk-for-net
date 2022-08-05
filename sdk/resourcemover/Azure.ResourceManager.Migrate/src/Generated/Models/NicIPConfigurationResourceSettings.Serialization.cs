@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Migrate.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress");
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -36,10 +37,10 @@ namespace Azure.ResourceManager.Migrate.Models
                 writer.WritePropertyName("subnet");
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("primary");
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsValidateOnly.Value);
             }
             if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
@@ -72,13 +73,13 @@ namespace Azure.ResourceManager.Migrate.Models
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
-            Optional<SubnetReference> subnet = default;
+            Optional<SubnetReferenceInfo> subnet = default;
             Optional<bool> primary = default;
-            Optional<IList<LoadBalancerBackendAddressPoolReference>> loadBalancerBackendAddressPools = default;
-            Optional<IList<LoadBalancerNatRuleReference>> loadBalancerNatRules = default;
-            Optional<PublicIPReference> publicIP = default;
+            Optional<IList<LoadBalancerBackendAddressPoolReferenceInfo>> loadBalancerBackendAddressPools = default;
+            Optional<IList<LoadBalancerNatRuleReferenceInfo>> loadBalancerNatRules = default;
+            Optional<PublicIPReferenceInfo> publicIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -88,7 +89,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"))
@@ -103,7 +109,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    subnet = SubnetReference.DeserializeSubnetReference(property.Value);
+                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("primary"))
@@ -123,10 +129,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadBalancerBackendAddressPoolReference> array = new List<LoadBalancerBackendAddressPoolReference>();
+                    List<LoadBalancerBackendAddressPoolReferenceInfo> array = new List<LoadBalancerBackendAddressPoolReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerBackendAddressPoolReference.DeserializeLoadBalancerBackendAddressPoolReference(item));
+                        array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item));
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -138,10 +144,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadBalancerNatRuleReference> array = new List<LoadBalancerNatRuleReference>();
+                    List<LoadBalancerNatRuleReferenceInfo> array = new List<LoadBalancerNatRuleReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerNatRuleReference.DeserializeLoadBalancerNatRuleReference(item));
+                        array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item));
                     }
                     loadBalancerNatRules = array;
                     continue;
@@ -153,7 +159,7 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publicIP = PublicIPReference.DeserializePublicIPReference(property.Value);
+                    publicIP = PublicIPReferenceInfo.DeserializePublicIPReferenceInfo(property.Value);
                     continue;
                 }
             }

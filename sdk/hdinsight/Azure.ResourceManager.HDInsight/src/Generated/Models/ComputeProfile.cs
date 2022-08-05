@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
         public ComputeProfile()
         {
-            Roles = new ChangeTrackingList<Role>();
+            Roles = new ChangeTrackingList<HDInsightClusterRole>();
         }
 
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
         /// <param name="roles"> The list of roles in the cluster. </param>
-        internal ComputeProfile(IList<Role> roles)
+        internal ComputeProfile(IList<HDInsightClusterRole> roles)
         {
             Roles = roles;
         }
 
         /// <summary> The list of roles in the cluster. </summary>
-        public IList<Role> Roles { get; }
+        public IList<HDInsightClusterRole> Roles { get; }
     }
 }

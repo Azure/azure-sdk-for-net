@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static WorkerPoolData DeserializeWorkerPoolData(JsonElement element)
         {
-            Optional<SkuDescription> sku = default;
+            Optional<AppServiceSkuDescription> sku = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(property.Value);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))

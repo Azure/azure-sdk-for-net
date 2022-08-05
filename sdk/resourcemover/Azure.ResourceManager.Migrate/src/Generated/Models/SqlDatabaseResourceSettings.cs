@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the Sql Database resource settings. </summary>
-    public partial class SqlDatabaseResourceSettings : ResourceSettings
+    public partial class SqlDatabaseResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of SqlDatabaseResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="zoneRedundant"> Defines the zone redundant resource setting. </param>
-        internal SqlDatabaseResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, ZoneRedundant? zoneRedundant) : base(resourceType, targetResourceName)
+        internal SqlDatabaseResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, ResourceZoneRedundantSetting? zoneRedundant) : base(resourceType, targetResourceName)
         {
             Tags = tags;
             ZoneRedundant = zoneRedundant;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Gets or sets the Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Defines the zone redundant resource setting. </summary>
-        public ZoneRedundant? ZoneRedundant { get; set; }
+        public ResourceZoneRedundantSetting? ZoneRedundant { get; set; }
     }
 }
