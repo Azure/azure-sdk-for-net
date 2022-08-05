@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string FourteenValue = "14";
         private const string ThirteenValue = "13";
         private const string TwelveValue = "12";
         private const string ElevenValue = "11";
 
+        /// <summary> 14. </summary>
+        public static PostgreSqlFlexibleServerVersion Fourteen { get; } = new PostgreSqlFlexibleServerVersion(FourteenValue);
         /// <summary> 13. </summary>
         public static PostgreSqlFlexibleServerVersion Thirteen { get; } = new PostgreSqlFlexibleServerVersion(ThirteenValue);
         /// <summary> 12. </summary>
