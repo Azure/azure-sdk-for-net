@@ -7,9 +7,9 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 title: Media Composition
-tag: package-2022-07-16-preview1
-generation1-convenience-client: true
+tag: package-2022-07-16-preview
 model-namespace: false
+generation1-convenience-client: true
 payload-flattening-threshold: 10
 input-file:
     - mediaComposition.json

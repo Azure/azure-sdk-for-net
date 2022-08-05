@@ -70,18 +70,15 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
             #region Snippet:UpdateLayout
-            var layout = new PresenterLayout(presenterId: "jill", supportId: "jack")
+            var layout = new AutoGridLayout(new List<string>() { "teamsMeeting" })
             {
                 Resolution = new(720, 480),
-                SupportPosition = SupportPosition.BottomRight,
-                SupportAspectRatio = 3 / 2
             };
 
             var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
             #endregion Snippet:UpdateLayout
             Assert.IsNotNull(response.Value.Layout);
-            Assert.IsTrue(response.Value.Layout is PresentationLayout);
-            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            Assert.IsTrue(response.Value.Layout is AutoGridLayout);
             Assert.AreEqual(response.Value.Layout.Resolution.Width, 720);
             Assert.AreEqual(response.Value.Layout.Resolution.Height, 480);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
@@ -120,11 +117,9 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var layout = new PresenterLayout("jill", "jack")
+            var layout = new AutoGridLayout(new List<string>() { "teamsMeeting" })
             {
                 Resolution = new(720, 480),
-                SupportPosition = SupportPosition.BottomRight,
-                SupportAspectRatio = 3 / 2
             };
 
             await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
@@ -214,11 +209,10 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             #endregion Snippet:DeleteMediaComposition
         }
 
-        private async Task<Response<MediaCompositionBody>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
+        private async Task<Response<MediaComposition>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
         {
             #region Snippet:CreateMediaComposition
-            var layout = new GridLayout(2, 2,
-                                        new List<List<string>>{ new List<string> { "jill", "jack" }, new List<string> { "jane", "jerry" } })
+            var layout = new GridLayout(2, 2, new List<List<string>>{ new List<string> { "jill", "jack" }, new List<string> { "jane", "jerry" } })
             {
                 Resolution = new(1920, 1080)
             };

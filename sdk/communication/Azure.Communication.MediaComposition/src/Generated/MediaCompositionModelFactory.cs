@@ -19,7 +19,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
-        /// <returns> A new <see cref="MediaComposition.CommunicationError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Communication.MediaComposition.CommunicationError"/> instance for mocking. </returns>
         public static CommunicationError CommunicationError(string code = null, string message = null, string target = null, IEnumerable<CommunicationError> details = null, CommunicationError innerError = null)
         {
             details ??= new List<CommunicationError>();

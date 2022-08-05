@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class MediaCompositionBody : IUtf8JsonSerializable
+    public partial class MediaComposition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,12 +52,12 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(StreamState))
             {
                 writer.WritePropertyName("streamState");
-                writer.WriteStringValue(StreamState.Value.ToString());
+                writer.WriteObjectValue(StreamState);
             }
             writer.WriteEndObject();
         }
 
-        internal static MediaCompositionBody DeserializeMediaCompositionBody(JsonElement element)
+        internal static MediaComposition DeserializeMediaComposition(JsonElement element)
         {
             Optional<string> id = default;
             Optional<MediaCompositionLayout> layout = default;
@@ -118,11 +118,11 @@ namespace Azure.Communication.MediaComposition
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    streamState = new CompositionStreamState(property.Value.GetString());
+                    streamState = CompositionStreamState.DeserializeCompositionStreamState(property.Value);
                     continue;
                 }
             }
-            return new MediaCompositionBody(id.Value, layout.Value, Optional.ToDictionary(inputs), Optional.ToDictionary(outputs), Optional.ToNullable(streamState));
+            return new MediaComposition(id.Value, layout.Value, Optional.ToDictionary(inputs), Optional.ToDictionary(outputs), streamState.Value);
         }
     }
 }

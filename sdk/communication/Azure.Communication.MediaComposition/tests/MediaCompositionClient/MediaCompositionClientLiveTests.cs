@@ -43,11 +43,11 @@ namespace Azure.Communication.MediaComposition.Tests
         {
             var mediaCompositionClient = CreateClient(authMethod);
             var response = await CreateMediaCompositionHelper(mediaCompositionClient);
-            Assert.IsNotNull(response.Value.Layout is PresenterLayout);
-            Assert.IsNull(response.Value.Layout is not GridLayout);
+            Assert.IsTrue(response.Value.Layout is PresenterLayout);
+            Assert.IsTrue(response.Value.Layout is not GridLayout);
             Assert.AreEqual(response.Value.Inputs.Count, 3);
             Assert.AreEqual(response.Value.Outputs.Count, 1);
-            Assert.AreEqual(response.Value.StreamState, CompositionStreamState.NotStarted);
+            Assert.AreEqual(response.Value.StreamState.Status, StreamStatus.NotStarted);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Communication.MediaComposition.Tests
             Assert.IsTrue(response.Value.Layout is PresenterLayout);
             Assert.AreEqual(response.Value.Inputs.Count, 3);
             Assert.AreEqual(response.Value.Outputs.Count, 1);
-            Assert.AreEqual(response.Value.StreamState, CompositionStreamState.NotStarted);
+            Assert.AreEqual(response.Value.StreamState.Status, StreamStatus.NotStarted);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -195,7 +195,7 @@ namespace Azure.Communication.MediaComposition.Tests
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
             var response = await mediaCompositionClient.StartAsync(mediaCompositionId);
-            Assert.AreEqual(response.Value, CompositionStreamState.Running);
+            Assert.AreEqual(response.Value.Status, StreamStatus.Running);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.Communication.MediaComposition.Tests
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
             var response = await mediaCompositionClient.StopAsync(mediaCompositionId);
-            Assert.AreEqual(response.Value, CompositionStreamState.NotStarted);
+            Assert.AreEqual(response.Value.Status, StreamStatus.NotStarted);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -233,9 +233,9 @@ namespace Azure.Communication.MediaComposition.Tests
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
             var startResponse = await mediaCompositionClient.StartAsync(mediaCompositionId);
-            Assert.AreEqual(startResponse.Value, CompositionStreamState.Running);
+            Assert.AreEqual(startResponse.Value.Status, StreamStatus.Running);
             var stopResponse = await mediaCompositionClient.StopAsync(mediaCompositionId);
-            Assert.AreEqual(stopResponse.Value, CompositionStreamState.Stopped);
+            Assert.AreEqual(stopResponse.Value.Status, StreamStatus.Stopped);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -342,7 +342,7 @@ namespace Azure.Communication.MediaComposition.Tests
             response.Value.Inputs.TryGetValue("presenter", out var presenter);
             var participant = presenter as ParticipantInput;
             Assert.IsNotNull(participant);
-            Assert.AreEqual(participant?.Id, updatedUserId);
+            Assert.AreEqual(participant?.Id.MicrosoftTeamsUser.UserId, updatedUserId);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -505,7 +505,7 @@ namespace Azure.Communication.MediaComposition.Tests
             Assert.AreEqual(deleteResponse.Status, 204);
         }
 
-        private async Task<Response<MediaCompositionBody>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
+        private async Task<Response<MediaComposition>> CreateMediaCompositionHelper(MediaCompositionClient mediaCompositionClient)
         {
             var layout = new PresenterLayout(presenterId: "presenter", supportId: "support")
             {

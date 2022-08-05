@@ -35,7 +35,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/MediaCompositionBody"
+                            "$ref": "#/definitions/MediaComposition"
                         }
                     },
                     "400": {
@@ -118,7 +118,7 @@
                         "name": "body",
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/MediaCompositionBody"
+                            "$ref": "#/definitions/MediaComposition"
                         }
                     }
                 ],
@@ -126,7 +126,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/MediaCompositionBody"
+                            "$ref": "#/definitions/MediaComposition"
                         }
                     },
                     "400": {
@@ -209,7 +209,7 @@
                         "name": "body",
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/MediaCompositionBody"
+                            "$ref": "#/definitions/MediaComposition"
                         }
                     }
                 ],
@@ -217,7 +217,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/MediaCompositionBody"
+                            "$ref": "#/definitions/MediaComposition"
                         }
                     },
                     "400": {
@@ -347,7 +347,7 @@
                 }
             }
         },
-        "/mediaCompositions/{mediaCompositionId}/:start": {
+        "/mediaCompositions/{mediaCompositionId}:start": {
             "post": {
                 "tags": [
                     "MediaComposition"
@@ -429,7 +429,7 @@
                 }
             }
         },
-        "/mediaCompositions/{mediaCompositionId}/:stop": {
+        "/mediaCompositions/{mediaCompositionId}:stop": {
             "post": {
                 "tags": [
                     "MediaComposition"
@@ -571,9 +571,6 @@
             },
             "x-ms-discriminator-value": "autoGrid"
         },
-        "CommunicationCloudEnvironment": {
-            "type": "object"
-        },
         "CommunicationError": {
             "$ref": "common.json#/definitions/CommunicationError"
         },
@@ -585,27 +582,23 @@
             "type": "object",
             "properties": {
                 "communicationUser": {
-                    "$ref": "#/definitions/CommunicationUserIdentifier"
+                    "$ref": "#/definitions/CommunicationUserIdentifierModel"
                 },
                 "microsoftTeamsUser": {
-                    "$ref": "#/definitions/MicrosoftTeamsUserIdentifier"
+                    "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel"
                 }
             }
         },
-        "CommunicationUserIdentifier": {
+        "CommunicationUserIdentifierModel": {
             "$ref": "common.json#/definitions/CommunicationUserIdentifierModel"
         },
         "CompositionStreamState": {
-            "description": "State of the composition stream",
-            "enum": [
-                "notStarted",
-                "running",
-                "stopped"
-            ],
-            "type": "string",
-            "x-ms-enum": {
-                "name": "CompositionStreamState",
-                "modelAsString": true
+            "description": "Provides the state of the media composition",
+            "type": "object",
+            "properties": {
+                "status": {
+                    "$ref": "#/definitions/StreamStatus"
+                }
             }
         },
         "CustomLayout": {
@@ -854,7 +847,7 @@
                 "modelAsString": true
             }
         },
-        "MediaCompositionBody": {
+        "MediaComposition": {
             "description": "Body of a media composition",
             "type": "object",
             "properties": {
@@ -949,7 +942,7 @@
                 "modelAsString": true
             }
         },
-        "MicrosoftTeamsUserIdentifier": {
+        "MicrosoftTeamsUserIdentifierModel": {
             "$ref": "common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
         },
         "Participant": {
@@ -1256,6 +1249,19 @@
                 }
             },
             "x-ms-discriminator-value": "srt"
+        },
+        "StreamStatus": {
+            "description": "State of the composition stream",
+            "enum": [
+                "notStarted",
+                "running",
+                "stopped"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "StreamStatus",
+                "modelAsString": true
+            }
         },
         "SupportPosition": {
             "description": "Position of the support stream",

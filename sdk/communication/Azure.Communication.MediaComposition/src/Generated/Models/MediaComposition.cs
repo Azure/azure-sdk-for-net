@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.Communication.MediaComposition
 {
     /// <summary> Body of a media composition. </summary>
-    public partial class MediaCompositionBody
+    public partial class MediaComposition
     {
-        /// <summary> Initializes a new instance of MediaCompositionBody. </summary>
-        public MediaCompositionBody()
+        /// <summary> Initializes a new instance of MediaComposition. </summary>
+        public MediaComposition()
         {
             Inputs = new ChangeTrackingDictionary<string, MediaInput>();
             Outputs = new ChangeTrackingDictionary<string, MediaOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaCompositionBody. </summary>
+        /// <summary> Initializes a new instance of MediaComposition. </summary>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout"> Configure a layout. </param>
         /// <param name="inputs"> Inputs used in the composition. </param>
         /// <param name="outputs"> Outputs used in the composition. </param>
-        /// <param name="streamState"> State of the composition stream. </param>
-        internal MediaCompositionBody(string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState? streamState)
+        /// <param name="streamState"> Provides the state of the media composition. </param>
+        internal MediaComposition(string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
         {
             Id = id;
             Layout = layout;
@@ -44,7 +44,7 @@ namespace Azure.Communication.MediaComposition
         public IDictionary<string, MediaInput> Inputs { get; }
         /// <summary> Outputs used in the composition. </summary>
         public IDictionary<string, MediaOutput> Outputs { get; }
-        /// <summary> State of the composition stream. </summary>
-        public CompositionStreamState? StreamState { get; set; }
+        /// <summary> Provides the state of the media composition. </summary>
+        public CompositionStreamState StreamState { get; set; }
     }
 }
