@@ -1324,9 +1324,9 @@ namespace Azure.ResourceManager.MySql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlMinimalTlsVersionEnum(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLS10 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLS11 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLS12 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_2 { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLSEnforcementDisabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1648,9 +1648,9 @@ namespace Azure.ResourceManager.MySql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlServerVersion(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion EightPointZero { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion FivePointSeven { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion FivePointSix { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver5_6 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver5_7 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver8_0 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlServerVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

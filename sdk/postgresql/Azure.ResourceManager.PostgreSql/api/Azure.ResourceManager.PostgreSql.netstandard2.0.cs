@@ -1090,9 +1090,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PostgreSqlMinimalTlsVersionEnum(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum TLS10 { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum TLS11 { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum TLS12 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum Tls1_2 { get { throw null; } }
         public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum TLSEnforcementDisabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PostgreSql.Models.PostgreSqlMinimalTlsVersionEnum other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1385,12 +1385,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PostgreSqlServerVersion(string value) { throw null; }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Eleven { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion NinePointFive { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion NinePointSix { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ten { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion TenPointTwo { get { throw null; } }
-        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion TenPointZero { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ver10 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ver10_0 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ver10_2 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ver11 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ver9_5 { get { throw null; } }
+        public static Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion Ver9_6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PostgreSql.Models.PostgreSqlServerVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
