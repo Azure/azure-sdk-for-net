@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1Response = await routerClient.CreateJobAsync(
                 new CreateJobOptions(jobId1, channelId, createQueue.Id)
                 {
-                    Priority = 1
+                    Priority = 1,
                 });
             var createJob1 = createJob1Response.Value;
 

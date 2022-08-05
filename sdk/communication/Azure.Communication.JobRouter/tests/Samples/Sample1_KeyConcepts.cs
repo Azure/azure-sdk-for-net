@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
@@ -134,25 +135,28 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
             Console.WriteLine($"Job has been successfully closed: {closeJob.GetRawResponse().Status == 200}");
 
-            /*
+            updatedJob = routerClient.GetJob(job.Value.Id);
+            Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
+
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture
+
             // Optionally, a job can also be set up to be marked as closed in the future.
             var closeJobInFuture = routerClient.CloseJob(
-                jobId: job.Value.Id,
-                assignmentId: acceptJobOfferResult.Value.AssignmentId,
-                options: new CloseJobOptions()  // this is optional
+                options: new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
                 {
                     CloseTime = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
                     Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
             Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
 
-            await Task.Delay(TimeSpan.FromSeconds(2));
-            */
+            Thread.Sleep(TimeSpan.FromSeconds(2));
 
             updatedJob = routerClient.GetJob(job.Value.Id);
             Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
 
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture
         }
     }
 }

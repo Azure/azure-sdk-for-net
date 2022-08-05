@@ -98,39 +98,29 @@ For this scenario, we are going to assume Webhooks for event delivery. [Learn mo
 
 Once events are delivered to the event handler, we can deserialize the JSON payload into a list of events.
 
-```C#
+```C# Snippet:EGEventParseJson
 // Parse the JSON payload into a list of events
 EventGridEvent[] egEvents = EventGridEvent.ParseMany(BinaryData.FromStream(httpContent));
 ```
 
-```C#
-string offerId = null;
+```C# Snippet:DeserializePayloadUsingAsSystemEventData
+string offerId;
 foreach (EventGridEvent egEvent in egEvents)
 {
-    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
-    if (egEvent.TryGetSystemEventData(out object systemEvent))
+    // This is a temporary fix before Router events are on-boarded as system events
+    switch (egEvent.EventType)
     {
-        switch (systemEvent)
-        {
-            case SubscriptionValidationEventData subscriptionValidated:
-                Console.WriteLine(subscriptionValidated.ValidationCode);
-                break;
-            ...
-            ...
-            case AcsRouterWorkerOfferIssuedEventData issuedOffer:
-                Console.WriteLine($"Received offer with id: {issuedOffer.OfferId}");
-                offerId = issuedOffer.OfferId;
-                break;
-             ...
-             ...
-             ...
-            // Handle any other system event type
-            default:
-                Console.WriteLine(egEvent.EventType);
-                // we can get the raw Json for the event using Data
-                Console.WriteLine(egEvent.Data.ToString());
-                break;
-        }
+        case "Microsoft.Communication.RouterWorkerOfferIssued":
+            AcsRouterWorkerOfferIssuedEventData deserializedEventData =
+                egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
+            Console.Write(deserializedEventData.OfferId); // Offer Id
+            offerId = deserializedEventData.OfferId;
+            break;
+        // Handle any other custom event type
+        default:
+            Console.Write(egEvent.EventType);
+            Console.WriteLine(egEvent.Data.ToString());
+            break;
     }
 }
 ```
@@ -196,22 +186,23 @@ Response<CloseJobResult> closeJob = await routerClient.CloseJobAsync(
     });
 Console.WriteLine($"Job has been successfully closed: {closeJob.GetRawResponse().Status == 200}");
 
-/*
+updatedJob = await routerClient.GetJobAsync(job.Value.Id);
+Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
+```
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture
 // Optionally, a job can also be set up to be marked as closed in the future.
-var closeJobInFuture = await routerClient.CloseJobAsync(
-    jobId: job.Value.Id,
-    assignmentId: acceptJobOfferResult.Value.AssignmentId,
-    options: new CloseJobOptions()  // this is optional
+var closeJobInFuture = routerClient.CloseJob(
+    options: new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         CloseTime = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
         Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
 Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
 
-await Task.Delay(TimeSpan.FromSeconds(2));
-*/
+Thread.Sleep(TimeSpan.FromSeconds(2));
 
-updatedJob = await routerClient.GetJobAsync(job.Value.Id);
+updatedJob = routerClient.GetJob(job.Value.Id);
 Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
 ```
 

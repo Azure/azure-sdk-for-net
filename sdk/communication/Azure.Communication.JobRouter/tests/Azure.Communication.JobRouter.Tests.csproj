@@ -13,10 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="coverlet.collector" />
+    <ExcludeFromProjectReferenceToConversion Include="Azure.Messaging.EventGrid" />
   </ItemGroup>
 
   <ItemGroup>
