@@ -154,6 +154,13 @@ namespace Azure.Storage.Queues
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
+        /// Strategy to take when sending requests and retries between primary and secondary endpoints.
+        /// Ignored when <see cref="GeoRedundantSecondaryUri"/> is not set.
+        /// Defaults to <see cref="GeoRedundantReadMode.PrimaryThenSecondary"/>.
+        /// </summary>
+        public GeoRedundantReadMode GeoRedundantReadMode { get; set; }
+
+        /// <summary>
         /// Gets or sets a message encoding that determines how <see cref="QueueMessage.Body"/> is represented in HTTP requests and responses.
         /// The default is <see cref="QueueMessageEncoding.None"/>.
         /// </summary>
@@ -266,7 +273,7 @@ namespace Azure.Storage.Queues
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri);
+            return this.Build(authentication, GeoRedundantSecondaryUri, GeoRedundantReadMode);
         }
 
         /// <summary>
@@ -276,7 +283,7 @@ namespace Azure.Storage.Queues
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri);
+            return this.Build(credentials, GeoRedundantSecondaryUri, GeoRedundantReadMode);
         }
     }
 }
