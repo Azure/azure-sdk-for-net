@@ -277,6 +277,7 @@ rename-mapping:
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
+  Configurations_BatchUpdate: UpdateConfigurations
 
 directive:
   - from: mysql.json
