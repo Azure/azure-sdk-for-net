@@ -673,6 +673,7 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (message.Response.Status)
             {
                 case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -697,6 +698,7 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (message.Response.Status)
             {
                 case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

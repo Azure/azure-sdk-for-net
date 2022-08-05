@@ -14,12 +14,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerInstanceUsage DeserializeContainerInstanceUsage(JsonElement element)
         {
+            Optional<string> id = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
             Optional<ContainerInstanceUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("unit"))
                 {
                     unit = property.Value.GetString();
@@ -56,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceUsage(unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new ContainerInstanceUsage(id.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }
