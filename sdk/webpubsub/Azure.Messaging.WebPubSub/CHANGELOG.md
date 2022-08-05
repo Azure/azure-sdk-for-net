@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2022-08-03)
+## 1.1.0-beta.1 (2022-08-06)
 
 ### Bugs Fixed
 - Fix the issue that when `expiresAfter` is less than 1 minute it requests a token with 0 ttl 
