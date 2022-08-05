@@ -2179,6 +2179,7 @@ namespace Azure.ResourceManager.ApiManagement
         public Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? HttpCorrelationProtocol { get { throw null; } set { } }
         public bool? LogClientIP { get { throw null; } set { } }
         public string LoggerId { get { throw null; } set { } }
+        public bool? Metrics { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? OperationNameFormat { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SamplingSettings Sampling { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TraceVerbosityLevel? Verbosity { get { throw null; } set { } }
