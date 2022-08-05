@@ -118,18 +118,34 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimeMinutes"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
         /// <returns> A new <see cref="Models.JobPositionDetails"/> instance for mocking. </returns>
         public static JobPositionDetails JobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, double estimatedWaitTimeMinutes = default)
         {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+
             return new JobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
         }
 
         /// <summary> Initializes a new instance of UnassignJobResult. </summary>
         /// <param name="jobId"> The Id of the job unassigned. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <returns> A new <see cref="Models.UnassignJobResult"/> instance for mocking. </returns>
         public static UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = default)
         {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+
             return new UnassignJobResult(jobId, unassignmentCount);
         }
 
@@ -137,9 +153,23 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
         /// <returns> A new <see cref="Models.AcceptJobOfferResult"/> instance for mocking. </returns>
         public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
         {
+            if (assignmentId == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentId));
+            }
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (workerId == null)
+            {
+                throw new ArgumentNullException(nameof(workerId));
+            }
+
             return new AcceptJobOfferResult(assignmentId, jobId, workerId);
         }
 
@@ -182,9 +212,19 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="jobId"> The Id of the Job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignTime"> The assignment time of the job. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="jobId"/> is null. </exception>
         /// <returns> A new <see cref="Models.WorkerAssignment"/> instance for mocking. </returns>
         public static WorkerAssignment WorkerAssignment(string id = null, string jobId = null, int capacityCost = default, DateTimeOffset assignTime = default)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+
             return new WorkerAssignment(id, jobId, capacityCost, assignTime);
         }
 
