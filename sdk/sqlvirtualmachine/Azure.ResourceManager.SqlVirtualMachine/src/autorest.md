@@ -53,12 +53,8 @@ rename-rules:
   NO: No
   SQL: Sql
   Db: DB
-  Ou: OU
-
-prepend-rp-prefix:
-  - ClusterConfiguration
-  - AssessmentSettings
-  - AssessmentDayOfWeek
+  SqlVirtualMachine: SqlVm
+  Wsfc: WindowsServerFailoverCluster
 
 rename-mapping:
   LoadBalancerConfiguration: AvailabilityGroupListenerLoadBalancerConfiguration
@@ -68,19 +64,48 @@ rename-mapping:
   Commit: AvailabilityGroupReplicaCommitMode
   Failover: AvailabilityGroupReplicaFailoverMode
   Role: AvailabilityGroupReplicaRole
-  AutoBackupSettings.backupSystemDbs: IsSystemDbsIncludedInBackup
+  AutoBackupSettings.backupSystemDbs: AreSystemDbsIncludedInBackup
   AutoBackupSettings.enableEncryption: IsEncryptionEnabled
-  DayOfWeek: AutoPatchingDayOfWeek
+  DayOfWeek: SqlVmAutoPatchingDayOfWeek
   ConnectivityType: SqlServerConnectivityType
-  FullBackupFrequencyType: FullBackupFrequency
-  ScaleType: SqlVirtualMachineGroupScaleType
-  Schedule: SqlVirtualMachineAssessmentSchedule
+  FullBackupFrequencyType: SqlVmFullBackupFrequency
+  ScaleType: SqlVmGroupScaleType
+  Schedule: SqlVmAssessmentSchedule
   SQLInstanceSettings.maxServerMemoryMB: MaxServerMemoryInMB
   SQLInstanceSettings.minServerMemoryMB: MinServerMemoryInMB
+  ReadableSecondary: ReadableSecondaryMode
+  AutoBackupSettings: SqlVmAutoBackupSettings
+  AutoBackupSettings.fullBackupStartTime: FullBackupStartHour
+  AutoBackupSettings.retentionPeriod: RetentionPeriodInDays
+  AutoPatchingSettings: SqlVmAutoPatchingSettings
+  AutoPatchingSettings.maintenanceWindowDuration: MaintenanceWindowDurationInMinutes
+  BackupScheduleType: SqVmBackupScheduleType
+  ClusterConfiguration: SqlVmClusterConfiguration
+  AssessmentSettings: SqlVmAssessmentSettings
+  AssessmentDayOfWeek: SqlVmAssessmentDayOfWeek
+  ClusterManagerType: SqlVmClusterManagerType
+  ClusterSubnetType: SqlVmClusterSubnetType
+  StorageConfigurationSettings: SqlVmStorageConfigurationSettings
+  StorageConfigurationSettings.sqlSystemDbOnDataDisk: IsSqlSystemDBOnDataDisk
+  KeyVaultCredentialSettings: SqlVmKeyVaultCredentialSettings
+  ServerConfigurationsManagementSettings: SqlServerConfigurationsManagementSettings
+  DiskConfigurationType: SqlVmDiskConfigurationType
+  StorageWorkloadType: SqlVmStorageWorkloadType
+  AutoBackupDaysOfWeek: SqlVmAutoBackupDayOfWeek
+  SqlVirtualMachine.properties.wsfcStaticIp: -|ip-address
+  SqlStorageSettings.luns: LogicalUnitNumbers
+  SQLTempDbSettings.luns: LogicalUnitNumbers
+  WsfcDomainProfile.ouPath: OrganizationalUnitPath
 
+override-operation-name:
+  SqlVirtualMachines_ListBySqlVmGroup: GetSqlVmsBySqlVmGroup
 directive:
   - from: sqlvm.json
     where: $.definitions..enable
     transform: >
       $['x-ms-client-name'] = 'IsEnabled';
+  - from: sqlvm.json
+    where: $.definitions.LoadBalancerConfiguration.properties.sqlVirtualMachineInstances.items
+    transform: >
+      $['x-ms-format'] = 'arm-id';
 ```

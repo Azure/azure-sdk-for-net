@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CreationData> creationData = default;
+            Optional<ContainerServiceCreationData> creationData = default;
             Optional<SnapshotType> snapshotType = default;
             Optional<string> kubernetesVersion = default;
             Optional<string> nodeImageVersion = default;
-            Optional<OSType> osType = default;
-            Optional<OSSku> osSku = default;
+            Optional<ContainerServiceOSType> osType = default;
+            Optional<ContainerServiceOSSku> osSku = default;
             Optional<string> vmSize = default;
             Optional<bool> enableFIPS = default;
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            creationData = CreationData.DeserializeCreationData(property0.Value);
+                            creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("snapshotType"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = new OSType(property0.Value.GetString());
+                            osType = new ContainerServiceOSType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osSku"))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osSku = new OSSku(property0.Value.GetString());
+                            osSku = new ContainerServiceOSSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("vmSize"))
