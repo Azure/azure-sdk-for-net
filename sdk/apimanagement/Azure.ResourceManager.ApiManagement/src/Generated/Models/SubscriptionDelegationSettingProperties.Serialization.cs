@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class SubscriptionsDelegationSettingsProperties : IUtf8JsonSerializable
+    internal partial class SubscriptionDelegationSettingProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(EnableSubscriptionDelegation))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(EnableSubscriptionDelegation.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionsDelegationSettingsProperties DeserializeSubscriptionsDelegationSettingsProperties(JsonElement element)
+        internal static SubscriptionDelegationSettingProperties DeserializeSubscriptionDelegationSettingProperties(JsonElement element)
         {
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new SubscriptionsDelegationSettingsProperties(Optional.ToNullable(enabled));
+            return new SubscriptionDelegationSettingProperties(Optional.ToNullable(enabled));
         }
     }
 }

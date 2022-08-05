@@ -687,10 +687,10 @@ namespace Azure.ResourceManager.ApiManagement
         public ApiManagementGatewayHostnameConfigurationData() { }
         public string CertificateId { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
+        public bool? IsClientCertificateRequired { get { throw null; } set { } }
         public bool? IsHttp2_0Enabled { get { throw null; } set { } }
         public bool? IsTls1_0Enabled { get { throw null; } set { } }
         public bool? IsTls1_1Enabled { get { throw null; } set { } }
-        public bool? NegotiateClientCertificate { get { throw null; } set { } }
     }
     public partial class ApiManagementGatewayHostnameConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -1111,9 +1111,9 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalDelegationSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalDelegationSettingData() { }
-        public bool? SubscriptionsEnabled { get { throw null; } set { } }
+        public bool? EnableSubscriptionDelegation { get { throw null; } set { } }
+        public bool? EnableUserRegistrationDelegation { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
-        public bool? UserRegistrationEnabled { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalDelegationSettingResource : Azure.ResourceManager.ArmResource
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignInSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalSignInSettingData() { }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? EnableRedirect { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalSignInSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignUpSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalSignUpSettingData() { }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? EnableSignUpDeveloperPortal { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalSignUpSettingResource : Azure.ResourceManager.ArmResource
@@ -2175,9 +2175,9 @@ namespace Azure.ResourceManager.ApiManagement
         public DiagnosticContractData() { }
         public Azure.ResourceManager.ApiManagement.Models.AlwaysLog? AlwaysLog { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
+        public bool? EnableLogClientIP { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? HttpCorrelationProtocol { get { throw null; } set { } }
-        public bool? LogClientIP { get { throw null; } set { } }
         public string LoggerId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? OperationNameFormat { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SamplingSettings Sampling { get { throw null; } set { } }
@@ -2240,7 +2240,7 @@ namespace Azure.ResourceManager.ApiManagement
     {
         public TenantAccessInfoData() { }
         public string AccessInfoType { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
     }
     public partial class TenantAccessInfoResource : Azure.ResourceManager.ArmResource
@@ -2807,7 +2807,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class ApiManagementSkuRestrictionInfo
     {
         internal ApiManagementSkuRestrictionInfo() { }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     public partial class ApiManagementSkuRestrictions
@@ -3207,8 +3207,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class BackendTlsProperties
     {
         public BackendTlsProperties() { }
-        public bool? ValidateCertificateChain { get { throw null; } set { } }
-        public bool? ValidateCertificateName { get { throw null; } set { } }
+        public bool? ShouldValidateCertificateChain { get { throw null; } set { } }
+        public bool? ShouldValidateCertificateName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BearerTokenSendingMethod : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.BearerTokenSendingMethod>
@@ -3665,13 +3665,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string CertificatePassword { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateSource? CertificateSource { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateStatus? CertificateStatus { get { throw null; } set { } }
-        public bool? DefaultSslBinding { get { throw null; } set { } }
+        public bool? EnableClientCertificateNegotiation { get { throw null; } set { } }
+        public bool? EnableDefaultSslBinding { get { throw null; } set { } }
         public string EncodedCertificate { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HostnameType HostnameType { get { throw null; } set { } }
         public string IdentityClientId { get { throw null; } set { } }
         public System.Uri KeyVaultSecretUri { get { throw null; } set { } }
-        public bool? NegotiateClientCertificate { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HostnameType : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.HostnameType>
@@ -4108,9 +4108,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class PortalSettingsContractData : Azure.ResourceManager.Models.ResourceData
     {
         public PortalSettingsContractData() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public bool? IsSubscriptionsEnabled { get { throw null; } set { } }
-        public bool? IsUserRegistrationEnabled { get { throw null; } set { } }
+        public bool? EnableRedirect { get { throw null; } set { } }
+        public bool? EnableSubscriptionDelegation { get { throw null; } set { } }
+        public bool? EnableUserRegistrationDelegation { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
@@ -4446,7 +4446,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoCreateOrUpdateContent
     {
         public TenantAccessInfoCreateOrUpdateContent() { }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
         public string PrimaryKey { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
         public string SecondaryKey { get { throw null; } set { } }
@@ -4454,13 +4454,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoPatch
     {
         public TenantAccessInfoPatch() { }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsDirectAccessEnabled { get { throw null; } set { } }
     }
     public partial class TenantAccessInfoSecretsDetails
     {
         internal TenantAccessInfoSecretsDetails() { }
         public string AccessInfoType { get { throw null; } }
-        public bool? IsEnabled { get { throw null; } }
+        public bool? IsDirectAccessEnabled { get { throw null; } }
         public string PrimaryKey { get { throw null; } }
         public string PrincipalId { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
@@ -4471,7 +4471,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Branch { get { throw null; } set { } }
         public string CommitId { get { throw null; } set { } }
         public System.DateTimeOffset? ConfigurationChangeOn { get { throw null; } set { } }
-        public bool? IsExport { get { throw null; } set { } }
+        public bool? IsExported { get { throw null; } set { } }
         public bool? IsGitEnabled { get { throw null; } set { } }
         public bool? IsSynced { get { throw null; } set { } }
         public string LastOperationId { get { throw null; } set { } }
@@ -4481,7 +4481,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         public TermsOfServiceProperties() { }
         public bool? IsConsentRequired { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
+        public bool? IsDisplayEnabled { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
     }
     public partial class TokenBodyParameterContract
