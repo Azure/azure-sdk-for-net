@@ -181,6 +181,21 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Throws if <paramref name="value"/> is not defined in enum <paramref name="enumType"/>.
+        /// </summary>
+        /// <param name="enumType">The type to validate against.</param>
+        /// <param name="value">The value to validate.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <exception cref="ArgumentException"></exception>
+        public static void AssertEnumDefined(Type enumType, object value, string name)
+        {
+            if (!Enum.IsDefined(enumType, value))
+            {
+                throw new ArgumentException($"Value not defined in enum {value.GetType().FullName}.", name);
+            }
+        }
+
+        /// <summary>
         /// Throws if <paramref name="value"/> has not been initialized; otherwise, returns <paramref name="value"/>.
         /// </summary>
         /// <param name="value">The value to validate.</param>

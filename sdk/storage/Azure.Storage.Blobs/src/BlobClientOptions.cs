@@ -136,6 +136,13 @@ namespace Azure.Storage.Blobs
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
+        /// Strategy to take when sending requests and retries between primary and secondary endpoints.
+        /// Ignored when <see cref="GeoRedundantSecondaryUri"/> is not set.
+        /// Defaults to <see cref="GeoRedundantReadMode.PrimaryThenSecondary"/>.
+        /// </summary>
+        public GeoRedundantReadMode GeoRedundantReadMode { get; set; }
+
+        /// <summary>
         /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
         /// can optionally validate that the content matches the checksum.
         /// </summary>
