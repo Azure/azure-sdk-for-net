@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Availability group replica configuration. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="commit"> Replica commit mode in availability group. </param>
         /// <param name="failover"> Replica failover mode in availability group. </param>
         /// <param name="readableSecondary"> Replica readable secondary mode in availability group. </param>
-        internal AvailabilityGroupReplica(string sqlVmInstanceId, AvailabilityGroupReplicaRole? role, AvailabilityGroupReplicaCommitMode? commit, AvailabilityGroupReplicaFailoverMode? failover, ReadableSecondaryMode? readableSecondary)
+        internal AvailabilityGroupReplica(ResourceIdentifier sqlVmInstanceId, AvailabilityGroupReplicaRole? role, AvailabilityGroupReplicaCommitMode? commit, AvailabilityGroupReplicaFailoverMode? failover, ReadableSecondaryMode? readableSecondary)
         {
             SqlVmInstanceId = sqlVmInstanceId;
             Role = role;
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Sql VirtualMachine Instance Id. </summary>
-        public string SqlVmInstanceId { get; set; }
+        public ResourceIdentifier SqlVmInstanceId { get; set; }
         /// <summary> Replica Role in availability group. </summary>
         public AvailabilityGroupReplicaRole? Role { get; set; }
         /// <summary> Replica commit mode in availability group. </summary>

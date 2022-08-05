@@ -1226,8 +1226,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlFlexibleServerVersion(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Eight021 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion FivePointSeven { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Ver5_7 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Ver8_0_21 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

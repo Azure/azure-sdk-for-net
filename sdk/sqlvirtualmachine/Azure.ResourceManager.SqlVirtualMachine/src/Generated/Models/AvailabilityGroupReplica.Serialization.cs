@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AvailabilityGroupReplica DeserializeAvailabilityGroupReplica(JsonElement element)
         {
-            Optional<string> sqlVmInstanceId = default;
+            Optional<ResourceIdentifier> sqlVmInstanceId = default;
             Optional<AvailabilityGroupReplicaRole> role = default;
             Optional<AvailabilityGroupReplicaCommitMode> commit = default;
             Optional<AvailabilityGroupReplicaFailoverMode> failover = default;
@@ -54,7 +54,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 if (property.NameEquals("sqlVirtualMachineInstanceId"))
                 {
-                    sqlVmInstanceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sqlVmInstanceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("role"))

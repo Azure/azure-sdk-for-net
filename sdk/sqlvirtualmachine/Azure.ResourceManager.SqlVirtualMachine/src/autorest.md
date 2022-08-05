@@ -61,6 +61,7 @@ rename-mapping:
   PrivateIPAddress: AvailabilityGroupListenerPrivateIPAddress
   AgConfiguration: AvailabilityGroupConfiguration
   AgReplica: AvailabilityGroupReplica
+  AgReplica.sqlVirtualMachineInstanceId: -|arm-id
   Commit: AvailabilityGroupReplicaCommitMode
   Failover: AvailabilityGroupReplicaFailoverMode
   Role: AvailabilityGroupReplicaRole
