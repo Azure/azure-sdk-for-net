@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiSchemaTests : ApiManagementManagementTestBase
     {
         public ApiSchemaTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -209,17 +209,17 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // Get new api to check it was added
             var apiGetResponse = (await apiCollection.GetAsync(newApiId)).Value;
-            //Assert.NotNull(apiGetResponse);
-            //Assert.AreEqual(newApiId, apiGetResponse.Data.Name);
-            //Assert.AreEqual(newApiName, apiGetResponse.Data.DisplayName);
-            //Assert.AreEqual(newApiDescription, apiGetResponse.Data.Description);
-            //Assert.AreEqual(newApiPath, apiGetResponse.Data.Path);
-            //Assert.AreEqual(newApiServiceUrl, apiGetResponse.Data.ServiceUri.ToString());
-            //Assert.AreEqual(subscriptionKeyParametersHeader, apiGetResponse.Data.SubscriptionKeyParameterNames.Header);
-            //Assert.AreEqual(subscriptionKeyQueryStringParamName, apiGetResponse.Data.SubscriptionKeyParameterNames.Query);
-            //Assert.AreEqual(2, apiGetResponse.Data.Protocols.Count);
-            //Assert.IsTrue(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Http));
-            //Assert.IsTrue(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Https));
+            Assert.NotNull(apiGetResponse);
+            Assert.AreEqual(newApiId, apiGetResponse.Data.Name);
+            Assert.AreEqual(newApiName, apiGetResponse.Data.DisplayName);
+            Assert.AreEqual(newApiDescription, apiGetResponse.Data.Description);
+            Assert.AreEqual(newApiPath, apiGetResponse.Data.Path);
+            Assert.AreEqual(newApiServiceUrl, apiGetResponse.Data.ServiceUri.ToString());
+            Assert.AreEqual(subscriptionKeyParametersHeader, apiGetResponse.Data.SubscriptionKeyParameterNames.Header);
+            Assert.AreEqual(subscriptionKeyQueryStringParamName, apiGetResponse.Data.SubscriptionKeyParameterNames.Query);
+            Assert.AreEqual(2, apiGetResponse.Data.Protocols.Count);
+            Assert.IsTrue(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Http));
+            Assert.IsTrue(apiGetResponse.Data.Protocols.Contains(ApiOperationInvokableProtocol.Https));
 
             var schemaCollection = apiGetResponse.GetApiSchemas();
             var schemaData = new ApiSchemaData()
@@ -228,21 +228,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 Value = JsonSchemaString1
             };
             var schemaContract = (await schemaCollection.CreateOrUpdateAsync(WaitUntil.Completed, newSchemaId, schemaData)).Value;
-            //Assert.NotNull(schemaContract);
-            //Assert.AreEqual(schemaData.ContentType, schemaContract.Data.ContentType);
-            //Assert.NotNull(schemaContract.Data.Definitions);
-            //Assert.Null(schemaContract.Data.Value);
+            Assert.NotNull(schemaContract);
+            Assert.AreEqual(schemaData.ContentType, schemaContract.Data.ContentType);
+            Assert.NotNull(schemaContract.Data.Definitions);
+            Assert.Null(schemaContract.Data.Value);
 
             // list the schemas attached to the api
             var schemasList = await schemaCollection.GetAllAsync().ToEnumerableAsync();
-            //Assert.NotNull(schemasList);
-            //Assert.AreEqual(schemasList.Count, 1);
-            //Assert.AreEqual(schemaData.ContentType, schemasList.FirstOrDefault().Data.ContentType);
+            Assert.NotNull(schemasList);
+            Assert.AreEqual(schemasList.Count, 1);
+            Assert.AreEqual(schemaData.ContentType, schemasList.FirstOrDefault().Data.ContentType);
 
             // delete the schema
             await schemaContract.DeleteAsync(WaitUntil.Completed, "*");
             var resultFalse = (await schemaCollection.ExistsAsync(newSchemaId)).Value;
-            //Assert.IsFalse(resultFalse);
+            Assert.IsFalse(resultFalse);
         }
     }
 }
