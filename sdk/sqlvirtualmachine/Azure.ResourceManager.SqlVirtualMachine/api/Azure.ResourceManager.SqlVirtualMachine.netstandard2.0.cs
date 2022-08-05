@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterSubnetType? ClusterSubnetType { get { throw null; } set { } }
         public string DomainFqdn { get { throw null; } set { } }
         public string FileShareWitnessPath { get { throw null; } set { } }
-        public string OUPath { get { throw null; } set { } }
+        public string OrganizationalUnitPath { get { throw null; } set { } }
         public string SqlServiceAccount { get { throw null; } set { } }
         public string StorageAccountPrimaryKey { get { throw null; } set { } }
         public System.Uri StorageAccountUri { get { throw null; } set { } }
