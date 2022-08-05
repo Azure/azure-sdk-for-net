@@ -42,6 +42,7 @@ format-by-name-rules:
   'ETag': 'etag'
   'location': 'azure-location'
   'locations': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'ApiVersionSetId': 'arm-id'
