@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Redis.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </summary>
         public RedisCommonConfiguration RedisConfiguration { get; set; }
-        /// <summary> Redis version. Only major version will be used in PUT/PATCH request with current valid values: (4, 6). </summary>
+        /// <summary> Redis version. This should be in the form &apos;major[.minor[.build]]&apos; (only &apos;major&apos; is required) or the value &apos;latest&apos; which refers to the latest stable Redis version that is available. Only the major and minor version are used in a PUT/PATCH request. Supported versions: 4.0, 6.0. </summary>
         public string RedisVersion { get; set; }
         /// <summary> Specifies whether the non-ssl Redis server port (6379) is enabled. </summary>
         public bool? EnableNonSslPort { get; set; }
