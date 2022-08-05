@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
                 AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
                 ConfigStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 // Prepare VNet and Private Endpoint
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string configurationStoreName2 = Recording.GenerateAssetName("testapp-");
             AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
-                AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
             };
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName1, configurationStoreData);
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName2, configurationStoreData);
             List<AppConfigurationStoreResource> configurationStores = await ResGroup.GetAppConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(configurationStores.Count >= 2);
-            Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStores.Where(x => x.Data.Name == configurationStoreName1).FirstOrDefault().Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
     }
 }

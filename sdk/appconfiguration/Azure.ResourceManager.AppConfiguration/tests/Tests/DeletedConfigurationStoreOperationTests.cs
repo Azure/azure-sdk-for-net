@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 configurationStoreName = Recording.GenerateAssetName("testapp-");
                 AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
                 var configStore = (await resGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 await configStore.DeleteAsync(WaitUntil.Completed);

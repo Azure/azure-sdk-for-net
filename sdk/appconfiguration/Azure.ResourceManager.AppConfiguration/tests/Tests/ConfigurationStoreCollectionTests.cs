@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string configurationStoreName = Recording.GenerateAssetName("testapp-");
             AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
-                AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
             };
             AppConfigurationStoreResource configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 
             Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
-            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
 
-            configurationStore.Data.AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled;
+            configurationStore.Data.PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled;
             configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStore.Data)).Value;
 
-            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
         }
 
         [Test]
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string configurationStoreName = Recording.GenerateAssetName("testapp-");
             AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
-                AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
             };
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(configurationStoreName);
 
             Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
-            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
 
         [Test]
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             string configurationStoreName2 = Recording.GenerateAssetName("testapp-");
             AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
             {
-                AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
             };
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName1, configurationStoreData);
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName2, configurationStoreData);
             List<AppConfigurationStoreResource> configurationStores = await ResGroup.GetAppConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(configurationStores.Count == 2);
-            Assert.IsTrue(configurationStores.First(x => x.Data.Name == configurationStoreName1).Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStores.First(x => x.Data.Name == configurationStoreName1).Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
     }
 }

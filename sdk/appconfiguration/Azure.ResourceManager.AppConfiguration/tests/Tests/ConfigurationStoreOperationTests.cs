@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 ConfigurationStoreName = Recording.GenerateAssetName("testapp-");
                 AppConfigurationStoreData configurationStoreData = new AppConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
-                    AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
+                    PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Disabled
                 };
                 ConfigStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, ConfigurationStoreName, configurationStoreData)).Value;
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationStoreResource configurationStore = await ConfigStore.GetAsync();
 
             Assert.IsTrue(ConfigurationStoreName.Equals(configurationStore.Data.Name));
-            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
 
         [Test]
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task UpdateTest()
         {
-            AppConfigurationStorePatch PatchableconfigurationStoreData = new AppConfigurationStorePatch() { AppConfigurationPublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled };
+            AppConfigurationStorePatch PatchableconfigurationStoreData = new AppConfigurationStorePatch() { PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled };
             AppConfigurationStoreResource configurationStore = (await ConfigStore.UpdateAsync(WaitUntil.Completed, PatchableconfigurationStoreData)).Value;
 
-            Assert.IsTrue(configurationStore.Data.AppConfigurationPublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
         }
     }
 }
