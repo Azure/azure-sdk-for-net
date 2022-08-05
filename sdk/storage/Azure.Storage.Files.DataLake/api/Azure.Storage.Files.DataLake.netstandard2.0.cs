@@ -5,6 +5,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_10_04) { }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
+        public Azure.Storage.GeoRedundantReadMode GeoRedundantReadMode { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
