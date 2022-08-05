@@ -161,24 +161,21 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.NotEqual(afterKey, beforeKey);
                 }
 
-                    Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeysResponse.PrimaryKey);
-                
-
+                Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeysResponse.PrimaryKey);
                 listKeysResponse = regenerateSecondaryKeysResponse;
 
-                
                 RegenerateAccessKeyParameters keyObject = new RegenerateAccessKeyParameters()
                 {
                     Key = ServiceBusManagementHelper.GenerateRandomKey(),
                     KeyType = KeyType.PrimaryKey
                 };
-                regeneratePrimaryKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, keyObject);
+                var regeneratePrimaryKeyResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, keyObject);
 
-                Assert.Equal(keyObject.Key, regeneratePrimaryKeysResponse.PrimaryKey);
-                Assert.Equal(listKeysResponse.SecondaryKey, regeneratePrimaryKeysResponse.SecondaryKey);
+                Assert.Equal(keyObject.Key, regeneratePrimaryKeyResponse.PrimaryKey);
+                Assert.Equal(listKeysResponse.SecondaryKey, regeneratePrimaryKeyResponse.SecondaryKey);
                 
 
-                listKeysResponse = regeneratePrimaryKeysResponse;
+                listKeysResponse = regeneratePrimaryKeyResponse;
                                 
 
                  keyObject = new RegenerateAccessKeyParameters()
@@ -187,10 +184,10 @@ namespace ServiceBus.Tests.ScenarioTests
                     KeyType = KeyType.SecondaryKey
                 };
 
-                regenerateSecondaryKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, keyObject);
+                var regenerateSecondaryKeyResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, keyObject);
 
-                Assert.Equal(keyObject.Key, regenerateSecondaryKeysResponse.SecondaryKey);
-                Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeysResponse.PrimaryKey);
+                Assert.Equal(keyObject.Key, regenerateSecondaryKeyResponse.SecondaryKey);
+                Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeyResponse.PrimaryKey);
                 
 
                 // Delete namespace authorizationRule

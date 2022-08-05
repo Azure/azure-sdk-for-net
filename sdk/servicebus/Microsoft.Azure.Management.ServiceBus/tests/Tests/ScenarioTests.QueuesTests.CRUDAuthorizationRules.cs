@@ -147,16 +147,28 @@ namespace ServiceBus.Tests.ScenarioTests
                 regenerateKeysParameters.KeyType = KeyType.PrimaryKey;
 
                 var regeneratePrimaryKeysResponse = ServiceBusManagementClient.Queues.RegenerateKeys(resourceGroup, namespaceName, queueName, authorizationRuleName, regenerateKeysParameters);
-                               
-                Assert.NotEqual(listKeysResponse.PrimaryKey, regeneratePrimaryKeysResponse.PrimaryKey);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var beforeKey = listKeysResponse.PrimaryKey;
+                    var afterKey = regeneratePrimaryKeysResponse.PrimaryKey;
+                    Assert.NotEqual(afterKey, beforeKey);
+                }
+
                 Assert.Equal(listKeysResponse.SecondaryKey, regeneratePrimaryKeysResponse.SecondaryKey);
                 
                 listKeysResponse = regeneratePrimaryKeysResponse;
 
                 var regenerateSecondaryKeysResponse = ServiceBusManagementClient.Queues.RegenerateKeys(resourceGroup, namespaceName, queueName, authorizationRuleName, new RegenerateAccessKeyParameters() { KeyType = KeyType.SecondaryKey });
-                                
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var beforeKey = listKeysResponse.SecondaryKey;
+                    var afterKey = regenerateSecondaryKeysResponse.SecondaryKey;
+                    Assert.NotEqual(afterKey, beforeKey);
+                }
+
                 Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeysResponse.PrimaryKey);
-                Assert.NotEqual(listKeysResponse.SecondaryKey, regenerateSecondaryKeysResponse.SecondaryKey);
                 
 
                 listKeysResponse = regenerateSecondaryKeysResponse;              
