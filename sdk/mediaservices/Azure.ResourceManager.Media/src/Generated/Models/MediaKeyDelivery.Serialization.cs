@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class KeyDelivery : IUtf8JsonSerializable
+    internal partial class MediaKeyDelivery : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyDelivery DeserializeKeyDelivery(JsonElement element)
+        internal static MediaKeyDelivery DeserializeMediaKeyDelivery(JsonElement element)
         {
-            Optional<AccessControl> accessControl = default;
+            Optional<MediaAccessControl> accessControl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessControl"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessControl = AccessControl.DeserializeAccessControl(property.Value);
+                    accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value);
                     continue;
                 }
             }
-            return new KeyDelivery(accessControl.Value);
+            return new MediaKeyDelivery(accessControl.Value);
         }
     }
 }

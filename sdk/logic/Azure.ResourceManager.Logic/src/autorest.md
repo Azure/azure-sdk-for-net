@@ -151,6 +151,7 @@ rename-mapping:
   WorkflowTriggerHistory: LogicWorkflowTriggerHistory
   WorkflowTriggerHistory.properties.fired: IsFired
   WorkflowTriggerHistoryListResult: LogicWorkflowTriggerHistoryListResult
+  WorkflowTriggerCallbackUrl.method: -|request-method
   WorkflowTriggerCallbackUrl: LogicWorkflowTriggerCallbackUri
   WorkflowReference: LogicWorkflowReference
   WorkflowRunActionListResult: LogicWorkflowRunActionListResult

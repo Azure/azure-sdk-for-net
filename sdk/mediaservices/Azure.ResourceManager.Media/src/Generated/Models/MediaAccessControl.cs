@@ -6,23 +6,24 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The AccessControl. </summary>
-    public partial class AccessControl
+    /// <summary> The MediaAccessControl. </summary>
+    public partial class MediaAccessControl
     {
-        /// <summary> Initializes a new instance of AccessControl. </summary>
-        public AccessControl()
+        /// <summary> Initializes a new instance of MediaAccessControl. </summary>
+        public MediaAccessControl()
         {
-            IPAllowList = new ChangeTrackingList<string>();
+            IPAllowList = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of AccessControl. </summary>
+        /// <summary> Initializes a new instance of MediaAccessControl. </summary>
         /// <param name="defaultAction"> The behavior for IP access control in Key Delivery. </param>
         /// <param name="ipAllowList"> The IP allow list for access control in Key Delivery. If the default action is set to &apos;Allow&apos;, the IP allow list must be empty. </param>
-        internal AccessControl(IPAccessControlDefaultAction? defaultAction, IList<string> ipAllowList)
+        internal MediaAccessControl(IPAccessControlDefaultAction? defaultAction, IList<IPAddress> ipAllowList)
         {
             DefaultAction = defaultAction;
             IPAllowList = ipAllowList;
@@ -31,6 +32,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The behavior for IP access control in Key Delivery. </summary>
         public IPAccessControlDefaultAction? DefaultAction { get; set; }
         /// <summary> The IP allow list for access control in Key Delivery. If the default action is set to &apos;Allow&apos;, the IP allow list must be empty. </summary>
-        public IList<string> IPAllowList { get; }
+        public IList<IPAddress> IPAllowList { get; }
     }
 }

@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal LogicWorkflowTriggerCallbackUri() { }
         public string BasePath { get { throw null; } }
-        public string Method { get { throw null; } }
+        public Azure.Core.RequestMethod? Method { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackQueryParameterInfo Queries { get { throw null; } }
         public string RelativePath { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RelativePathParameters { get { throw null; } }

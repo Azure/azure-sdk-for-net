@@ -6,12 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AccessControl : IUtf8JsonSerializable
+    public partial class MediaAccessControl : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,17 +28,17 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAllowList)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
-        internal static AccessControl DeserializeAccessControl(JsonElement element)
+        internal static MediaAccessControl DeserializeMediaAccessControl(JsonElement element)
         {
             Optional<IPAccessControlDefaultAction> defaultAction = default;
-            Optional<IList<string>> ipAllowList = default;
+            Optional<IList<IPAddress>> ipAllowList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"))
@@ -57,16 +58,16 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(IPAddress.Parse(item.GetString()));
                     }
                     ipAllowList = array;
                     continue;
                 }
             }
-            return new AccessControl(Optional.ToNullable(defaultAction), Optional.ToList(ipAllowList));
+            return new MediaAccessControl(Optional.ToNullable(defaultAction), Optional.ToList(ipAllowList));
         }
     }
 }

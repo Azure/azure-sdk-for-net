@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("gcmEndpoint");
                 writer.WriteStringValue(GcmEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(GoogleApiKey))
+            if (Optional.IsDefined(GcmApiKey))
             {
                 writer.WritePropertyName("googleApiKey");
-                writer.WriteStringValue(GoogleApiKey);
+                writer.WriteStringValue(GcmApiKey);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
