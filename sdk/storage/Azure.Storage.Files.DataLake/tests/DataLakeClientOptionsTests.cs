@@ -8,20 +8,20 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Files.DataLake.Tests
 {
-    public class BlobClientOptionsTests
+    public class DataLakeClientOptionsTests
     {
         [Test]
         public void SetGeoRedundancyMode()
         {
-            const string primaryHost = "foo.blob.core.windows.net";
+            const string primaryHost = "foo.dfs.core.windows.net";
             var primaryUri = new Uri("https://" + primaryHost);
-            const string secondaryHost = "foo-secondary.blob.core.windows.net";
+            const string secondaryHost = "foo-secondary.dfs.core.windows.net";
             var secondaryUri = new Uri("https://" + secondaryHost);
 
             // set mode that changes first request
-            var options = new BlobClientOptions
+            var options = new DataLakeClientOptions
             {
                 GeoRedundantSecondaryUri = secondaryUri,
                 GeoRedundantReadMode = GeoRedundantReadMode.SecondaryOnly,
