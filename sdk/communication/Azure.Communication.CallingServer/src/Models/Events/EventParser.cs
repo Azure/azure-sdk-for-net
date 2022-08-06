@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static CallingServerEventBase Parse(string content)
+        public static CallAutomationEventBase Parse(string content)
         {
             CloudEvent cloudEvent = CloudEvent.Parse(BinaryData.FromString(content));
             var eventType = cloudEvent.Type.Replace(EventPrefix, "");

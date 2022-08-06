@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class ServerCallingModelFactory
+    public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
