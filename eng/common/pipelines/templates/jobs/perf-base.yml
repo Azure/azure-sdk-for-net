@@ -1,5 +1,14 @@
 parameters:
-- name: RepoName
+- name: JobName
+  type: string
+  default: 'Perf'
+- name: LanguageRepoName
+  type: string
+  default: ''
+- name: LanguageRepoCommitish
+  type: string
+  default: ''
+- name: ToolsRepoCommitish
   type: string
   default: ''
 - name: Variables
@@ -40,7 +49,7 @@ parameters:
   default: {}
 
 jobs:
-- job: Perf
+- job: ${{ parameters.JobName }}
   timeoutInMinutes: 360
   strategy:
     matrix:
@@ -70,11 +79,11 @@ jobs:
       - '!sdk/**/SessionRecords/*'
       - '!sdk/**/session-records/*'
       Repositories:
-      - Name: ${{ parameters.RepoName }}
-        Commitish: main
+      - Name: ${{ parameters.LanguageRepoName }}
+        Commitish: ${{ parameters.LanguageRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)
       - Name: Azure/azure-sdk-tools
-        Commitish: $(Build.SourceVersion)
+        Commitish: ${{ parameters.LanguageRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
 
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
