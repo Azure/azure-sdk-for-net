@@ -2,6 +2,9 @@ parameters:
 - name: JobName
   type: string
   default: 'Perf'
+- name: Language
+  type: string
+  default: ''
 - name: LanguageRepoName
   type: string
   default: ''
@@ -17,9 +20,6 @@ parameters:
 - name: OperatingSystems
   type: string
   default: 'Linux'
-- name: Language
-  type: string
-  default: ''
 - name: InstallLanguageSteps
   type: stepList
   default: []
