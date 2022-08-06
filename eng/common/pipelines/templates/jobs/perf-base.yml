@@ -147,7 +147,7 @@ jobs:
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      artifactName: results-$(Language)-$(MatrixName)
+      artifactName: results-${{ parameters.Language }}-$(MatrixName)
     condition: always()
 
   - template: /eng/common/TestResources/remove-test-resources.yml
