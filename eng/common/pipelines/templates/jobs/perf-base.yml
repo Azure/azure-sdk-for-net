@@ -83,7 +83,7 @@ jobs:
         Commitish: ${{ parameters.LanguageRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)
       - Name: Azure/azure-sdk-tools
-        Commitish: ${{ parameters.LanguageRepoCommitish }}
+        Commitish: ${{ parameters.ToolsRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
 
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
@@ -144,11 +144,10 @@ jobs:
     displayName: Print results.json
     condition: always()
 
-  # TODO: Add $(Language) to disambiguate
   - task: PublishPipelineArtifact@1
     inputs:
       targetPath: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
-      artifactName: results-$(MatrixName)
+      artifactName: results-$(Language)-$(MatrixName)
     condition: always()
 
   - template: /eng/common/TestResources/remove-test-resources.yml
