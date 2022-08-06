@@ -42,7 +42,7 @@ extends:
     Language: ${{ parameters.Language }}
     LanguageRepoName: $(Build.Repository.Name)
     LanguageRepoCommitish: $(Build.SourceVersion)
-    ToolsRepoCommitish: 'main'
+    ToolsRepoCommitish: 'refs/pull/3874/merge'
     Variables: ${{ parameters.Variables }}
     OperatingSystems: ${{ parameters.OperatingSystems }}
     InstallLanguageSteps: ${{ parameters.InstallLanguageSteps }}
