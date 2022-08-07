@@ -8,7 +8,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests

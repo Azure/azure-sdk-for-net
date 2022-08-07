@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -12,7 +10,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
+namespace Azure.ResourceManager.ApiManagement.Tests
 {
     public class AuthorizationServerTests : ApiManagementManagementTestBase
     {

@@ -5,4 +5,9 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ApiManagement.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\sdktest.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
