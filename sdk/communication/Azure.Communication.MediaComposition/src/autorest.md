@@ -11,8 +11,8 @@ tag: package-2022-07-16-preview
 model-namespace: false
 generation1-convenience-client: true
 payload-flattening-threshold: 10
-input-file:
-    - mediaComposition.json
+require:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d0065fc88b192e819305eacac33e151f055e097e/specification/communication/data-plane/MediaComposition/readme.md
 ```
 
 ``` yaml

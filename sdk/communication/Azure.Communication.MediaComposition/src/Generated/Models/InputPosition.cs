@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Communication.MediaComposition;
-
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The (x,y) position on scene or input group. </summary>
-    public partial class InputPosition : ValueType
+    public partial class InputPosition
     {
         /// <summary> Initializes a new instance of InputPosition. </summary>
         /// <param name="x"> The x-position. </param>
@@ -19,18 +17,6 @@ namespace Azure.Communication.MediaComposition.Models
         {
             X = x;
             Y = y;
-            Kind = "Position";
-        }
-
-        /// <summary> Initializes a new instance of InputPosition. </summary>
-        /// <param name="kind"></param>
-        /// <param name="x"> The x-position. </param>
-        /// <param name="y"> The y-position. </param>
-        internal InputPosition(string kind, int x, int y) : base(kind)
-        {
-            X = x;
-            Y = y;
-            Kind = kind ?? "Position";
         }
 
         /// <summary> The x-position. </summary>
