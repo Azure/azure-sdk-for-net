@@ -351,37 +351,40 @@ namespace Azure.Communication.Rooms.Tests
         [Test]
         public async Task AcsRoomTimePartialUpdateLiveTest()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
-
-            var validFrom = DateTime.UtcNow;
-            var validUntil = validFrom.AddDays(1);
-
-            try
+            if (Mode != Core.TestFramework.RecordedTestMode.Playback)
             {
-                Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom);
-                CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
-                Assert.AreEqual(validFrom, createCommunicationRoom.ValidFrom?.UtcDateTime);
+                RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2022_02_01_Preview);
 
-                var createdRoomId = createCommunicationRoom.Id;
+                var validFrom = DateTime.UtcNow;
+                var validUntil = validFrom.AddDays(1);
 
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
-                CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
-                Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
-                Assert.AreEqual(validFrom, updateCommunicationRoom.ValidFrom?.UtcDateTime);
-                Assert.AreEqual(validUntil, updateCommunicationRoom.ValidUntil?.UtcDateTime);
+                try
+                {
+                    Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom);
+                    CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+                    Assert.AreEqual(validFrom, createCommunicationRoom.ValidFrom?.UtcDateTime);
 
-                Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
-                Assert.AreEqual(204, deleteRoomResponse.Status);
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Assert.Fail($"Unexpected error: {ex}");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected error: {ex}");
+                    var createdRoomId = createCommunicationRoom.Id;
+
+                    Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
+                    CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+                    Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
+                    Assert.AreEqual(validFrom, updateCommunicationRoom.ValidFrom?.UtcDateTime);
+                    Assert.AreEqual(validUntil, updateCommunicationRoom.ValidUntil?.UtcDateTime);
+
+                    Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
+                    Assert.AreEqual(204, deleteRoomResponse.Status);
+                }
+                catch (RequestFailedException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Assert.Fail($"Unexpected error: {ex}");
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"Unexpected error: {ex}");
+                }
             }
         }
     }
