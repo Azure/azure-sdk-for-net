@@ -187,11 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     try
                     {
                         var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
-                        if (exceptionData == null)
-                        {
-                            continue;
-                        }
-                        else
+                        if (exceptionData != null)
                         {
                             var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
                             exceptionTelemetryItem.Data = exceptionData;
