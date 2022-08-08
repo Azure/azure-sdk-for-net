@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             //var dnsLro = await CreateADnsZone($"2022{SessionRecording.GenerateAssetName("dnszone")}.com", rgLro.Value);
             //_dnsZoneIdentifier = dnsLro.Data.Id;
             _dnsZoneIdentifier = null;
+            await StopSessionRecordingAsync();
         }
 
         [SetUp]
