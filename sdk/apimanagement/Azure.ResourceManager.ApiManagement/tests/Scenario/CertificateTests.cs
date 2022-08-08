@@ -74,35 +74,35 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(cert.Thumbprint.ToLower(), getResponse.Data.Thumbprint.ToLower());
 
             //create key vault certificate
-            string kvcertificateId = Recording.GenerateAssetName("kvcertificateId");
-            content = new ApiManagementCertificateCreateOrUpdateContent()
-            {
-                KeyVaultDetails = new KeyVaultContractCreateProperties()
-                {
-                    SecretIdentifier = "https://sdktestvault.vault.azure.net/secrets/aspnetuser/230e6c29e36244978368aa6c94130acc"
-                }
-            };
-            var kvCertificateIdResponse = (await certCollection.CreateOrUpdateAsync(WaitUntil.Completed, kvcertificateId, content)).Value;
-            Assert.NotNull(kvCertificateIdResponse);
-            Assert.AreEqual(kvcertificateId, kvCertificateIdResponse.Data.Name);
+            //string kvcertificateId = Recording.GenerateAssetName("kvcertificateId");
+            //content = new ApiManagementCertificateCreateOrUpdateContent()
+            //{
+            //    KeyVaultDetails = new KeyVaultContractCreateProperties()
+            //    {
+            //        SecretIdentifier = "https://sdktestvault.vault.azure.net/secrets/aspnetuser/230e6c29e36244978368aa6c94130acc"
+            //    }
+            //};
+            //var kvCertificateIdResponse = (await certCollection.CreateOrUpdateAsync(WaitUntil.Completed, kvcertificateId, content)).Value;
+            //Assert.NotNull(kvCertificateIdResponse);
+            //Assert.AreEqual(kvcertificateId, kvCertificateIdResponse.Data.Name);
 
             // get the certificate to check is was created
-            kvCertificateIdResponse = (await kvCertificateIdResponse.GetAsync()).Value;
-            Assert.NotNull(kvCertificateIdResponse);
-            Assert.AreEqual(kvcertificateId, kvCertificateIdResponse.Data.Name);
+            //kvCertificateIdResponse = (await kvCertificateIdResponse.GetAsync()).Value;
+            //Assert.NotNull(kvCertificateIdResponse);
+            //Assert.AreEqual(kvcertificateId, kvCertificateIdResponse.Data.Name);
 
             //refresh secret of key vault client
-            var refreshKvCertificateResponse = (await kvCertificateIdResponse.RefreshSecretAsync()).Value;
-            Assert.NotNull(refreshKvCertificateResponse);
+            //var refreshKvCertificateResponse = (await getResponse.RefreshSecretAsync()).Value;
+            //Assert.NotNull(refreshKvCertificateResponse);
 
             // list certificates
             listResponse = await certCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(listResponse);
-            Assert.AreEqual(2, listResponse.Count);
+            Assert.AreEqual(1, listResponse.Count);
 
             // remove the certificate
-            await kvCertificateIdResponse.DeleteAsync(WaitUntil.Completed, "*");
-            var resultFalse = (await certCollection.ExistsAsync(kvcertificateId));
+            await getResponse.DeleteAsync(WaitUntil.Completed, "*");
+            var resultFalse = (await certCollection.ExistsAsync(certificateId));
             Assert.IsFalse(resultFalse);
         }
     }

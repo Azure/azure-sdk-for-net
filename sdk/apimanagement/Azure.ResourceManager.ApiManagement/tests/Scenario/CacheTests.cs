@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class CacheTests : ApiManagementManagementTestBase
     {
         public CacheTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
