@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartBuildModelEncodesBlankSpaces()
+        public async Task BuildModelEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("operation-location", "host/operations/00000000000000000000000000000000?api-version=2021-07-30-preview"));
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartBuildModelGeneratesModelID()
+        public async Task BuildModelGeneratesModelID()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("operation-location", "host/operations/00000000000000000000000000000000?api-version=2021-07-30-preview"));
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartCreateComposedModelGeneratesModelID()
+        public async Task ComposeModelGeneratesModelID()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("operation-location", "host/operations/00000000000000000000000000000000?api-version=2021-07-30-preview"));

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.MachineLearning/WebService": return AzureMachineLearningStudioFunctionBinding.DeserializeAzureMachineLearningStudioFunctionBinding(element);
-                    case "Microsoft.MachineLearningServices": return AzureMachineLearningServiceFunctionBinding.DeserializeAzureMachineLearningServiceFunctionBinding(element);
+                    case "Microsoft.MachineLearning/WebService": return EMachineLearningStudioFunctionBinding.DeserializeEMachineLearningStudioFunctionBinding(element);
+                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionBinding.DeserializeMachineLearningServiceFunctionBinding(element);
                     case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionBinding.DeserializeCSharpFunctionBinding(element);
                     case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionBinding.DeserializeJavaScriptFunctionBinding(element);
                 }

@@ -7,43 +7,22 @@
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// The Sku description for a namespace
-    /// Serialized Name: Sku
-    /// </summary>
+    /// <summary> The Sku description for a namespace. </summary>
     public partial class NotificationHubSku
     {
         /// <summary> Initializes a new instance of NotificationHubSku. </summary>
-        /// <param name="name">
-        /// Name of the notification hub sku
-        /// Serialized Name: Sku.name
-        /// </param>
+        /// <param name="name"> Name of the notification hub sku. </param>
         public NotificationHubSku(NotificationHubSkuName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of NotificationHubSku. </summary>
-        /// <param name="name">
-        /// Name of the notification hub sku
-        /// Serialized Name: Sku.name
-        /// </param>
-        /// <param name="tier">
-        /// The tier of particular sku
-        /// Serialized Name: Sku.tier
-        /// </param>
-        /// <param name="size">
-        /// The Sku size
-        /// Serialized Name: Sku.size
-        /// </param>
-        /// <param name="family">
-        /// The Sku Family
-        /// Serialized Name: Sku.family
-        /// </param>
-        /// <param name="capacity">
-        /// The capacity of the resource
-        /// Serialized Name: Sku.capacity
-        /// </param>
+        /// <param name="name"> Name of the notification hub sku. </param>
+        /// <param name="tier"> The tier of particular sku. </param>
+        /// <param name="size"> The Sku size. </param>
+        /// <param name="family"> The Sku Family. </param>
+        /// <param name="capacity"> The capacity of the resource. </param>
         internal NotificationHubSku(NotificationHubSkuName name, string tier, string size, string family, int? capacity)
         {
             Name = name;
@@ -53,30 +32,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// Name of the notification hub sku
-        /// Serialized Name: Sku.name
-        /// </summary>
+        /// <summary> Name of the notification hub sku. </summary>
         public NotificationHubSkuName Name { get; set; }
-        /// <summary>
-        /// The tier of particular sku
-        /// Serialized Name: Sku.tier
-        /// </summary>
+        /// <summary> The tier of particular sku. </summary>
         public string Tier { get; set; }
-        /// <summary>
-        /// The Sku size
-        /// Serialized Name: Sku.size
-        /// </summary>
+        /// <summary> The Sku size. </summary>
         public string Size { get; set; }
-        /// <summary>
-        /// The Sku Family
-        /// Serialized Name: Sku.family
-        /// </summary>
+        /// <summary> The Sku Family. </summary>
         public string Family { get; set; }
-        /// <summary>
-        /// The capacity of the resource
-        /// Serialized Name: Sku.capacity
-        /// </summary>
+        /// <summary> The capacity of the resource. </summary>
         public int? Capacity { get; set; }
     }
 }
