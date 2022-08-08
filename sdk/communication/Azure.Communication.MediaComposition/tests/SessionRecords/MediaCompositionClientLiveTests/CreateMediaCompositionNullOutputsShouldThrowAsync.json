@@ -6,13 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "627",
+        "Content-Length": "589",
         "Content-Type": "application/json",
-        "traceparent": "00-f3fd82151db9c945b1b819f3cd7cb1ff-34bdddf09089754b-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "cf9c907f36683fb732934a42df622d10",
+        "traceparent": "00-5932c88de6951347940f874ca69f19d1-139ed937a2234e4d-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "077dd0baa902e75b9eda98e5a1b3c883",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 05 Aug 2022 18:25:08 GMT",
+        "x-ms-date": "Mon, 08 Aug 2022 21:05:42 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -51,18 +51,15 @@
             "teamsJoinUrl": "https://teamsJoinUrl",
             "kind": "teamsMeeting"
           }
-        },
-        "streamState": {
-          "status": "notStarted"
         }
       },
       "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Aug 2022 18:25:10 GMT",
+        "Date": "Mon, 08 Aug 2022 21:05:42 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0hmDtYgAAAABWMo7cnfdSRbGggEmwFSPXWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0pnrxYgAAAACuPOkO8RlmR4t\u002BWn2U/ASeWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Outputs are required to be defined for media composition\u0022"
@@ -70,6 +67,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "442540146"
+    "RandomSeed": "1737478188"
   }
 }
