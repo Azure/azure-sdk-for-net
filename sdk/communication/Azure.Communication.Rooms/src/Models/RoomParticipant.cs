@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Communication.Rooms.Models;
 
 namespace Azure.Communication.Rooms
@@ -14,11 +15,7 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public RoomParticipant(CommunicationIdentifier communicationIdentifier)
         {
-            if (communicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(communicationIdentifier));
-            }
-
+            Argument.CheckNotNull(communicationIdentifier, nameof(communicationIdentifier));
             CommunicationIdentifier = communicationIdentifier;
         }
 

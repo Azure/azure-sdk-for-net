@@ -40,6 +40,9 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 
 ### Using statements
 ```C# Snippet:Azure_Communication_Rooms_Tests_UsingStatements
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Communication.Rooms
 ```
 
@@ -53,7 +56,7 @@ RoomsClient client = new RoomsClient(connectionString);
 
 ## Examples
 
-The following sections provide several code snippets covering some of the most common tasks, which is available at Sample1_RoomsRequesets.md
+The following sections provide several code snippets covering some of the most common tasks, which is available at Sample1_RoomsRequests.md
 
 ## Troubleshooting
 ### Service Responses

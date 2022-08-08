@@ -322,8 +322,8 @@ namespace Azure.Communication.Rooms.Tests
                 toUpdateCommunicationUsers.Add(participant4);
                 toUpdateCommunicationUsers.Add(participant5);
 
-                Response updteParticipantsResponse = await roomsClient.UpdateParticipantsAsync(createdRoomId, toUpdateCommunicationUsers);
-                Assert.AreEqual(200, updteParticipantsResponse.Status);
+                Response updateParticipantsResponse = await roomsClient.UpdateParticipantsAsync(createdRoomId, toUpdateCommunicationUsers);
+                Assert.AreEqual(200, updateParticipantsResponse.Status);
                 Response<ParticipantsCollection> getParticipantsResponse = await roomsClient.GetParticipantsAsync(createdRoomId);
                 ParticipantsCollection updateParticipantsRoom = getParticipantsResponse.Value;
                 List<RoomParticipant> updateRoomParticipantsResult = updateParticipantsRoom.Participants.ToList();
