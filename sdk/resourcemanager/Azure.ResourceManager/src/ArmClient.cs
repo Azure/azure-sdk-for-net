@@ -24,7 +24,7 @@ namespace Azure.ResourceManager
         private TenantResource _tenant;
         private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
-        private bool? _isTagResourcePresent;
+        private bool? _canUseTagResource;
 
         internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
@@ -87,40 +87,26 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
-
-            _isTagResourcePresent = options.ShouldUseTagResourceApi;
         }
 
-        /// <summary>
-        /// Checks to see if the TagResource API is deployed in the current environment.
-        /// </summary>
-        /// <returns></returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual bool IsTagResourcePresent(CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
+        internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)
         {
-            if (_isTagResourcePresent == null)
+            if (_canUseTagResource == null)
             {
                 var tagRp = GetDefaultSubscription(cancellationToken).GetResourceProvider(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken);
-                _isTagResourcePresent = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+                _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
             }
-            return _isTagResourcePresent.Value;
+            return _canUseTagResource.Value;
         }
 
-        /// <summary>
-        /// Checks to see if the TagResource API is deployed in the current environment.
-        /// </summary>
-        /// <returns></returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<bool> IsTagResourcePresentAsync(CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
+        internal virtual async Task<bool> CanUseTagResourceAsync(CancellationToken cancellationToken = default)
         {
-            if (_isTagResourcePresent == null)
+            if (_canUseTagResource == null)
             {
                 var tagRp = await GetDefaultSubscription(cancellationToken).GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
-                _isTagResourcePresent = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+                _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
             }
-            return _isTagResourcePresent.Value;
+            return _canUseTagResource.Value;
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)
