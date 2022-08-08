@@ -15,7 +15,7 @@ namespace Azure.Identity.BrokeredAuthentication.Tests
         private static extern IntPtr GetForegroundWindow();
 
         [Test]
-        //[Ignore("This test is an integration test which can only be run with user interaction")]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerAsync()
         {
             IntPtr parentWindowHandle = GetForegroundWindow();
