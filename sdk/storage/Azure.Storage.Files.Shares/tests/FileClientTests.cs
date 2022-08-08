@@ -2928,7 +2928,11 @@ namespace Azure.Storage.Files.Shares.Tests
                 progressHandler: null,
                 conditions: null,
                 transferValidationOverride: default,
-                singleRangeThreshold: 512,
+                new StorageTransferOptions
+                {
+                    InitialTransferSize = 512,
+                    MaximumTransferSize = 512
+                },
                 async: IsAsync,
                 cancellationToken: CancellationToken.None);
 
@@ -3038,7 +3042,11 @@ namespace Azure.Storage.Files.Shares.Tests
                     progressHandler: default,
                     conditions: default,
                     transferValidationOverride: default,
-                    singleRangeThreshold: singleRangeThreshold,
+                    new StorageTransferOptions
+                    {
+                        InitialTransferSize = singleRangeThreshold,
+                        MaximumTransferSize = singleRangeThreshold
+                    },
                     async: true,
                     cancellationToken: CancellationToken.None);
             }

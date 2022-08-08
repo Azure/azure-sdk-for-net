@@ -4820,7 +4820,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProgressHandler,
                 options?.Conditions,
                 options?.TransferValidationOptions,
-                Constants.File.MaxFileUpdateRange,
+                transferOptions: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4861,7 +4861,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProgressHandler,
                 options?.Conditions,
                 options?.TransferValidationOptions,
-                Constants.File.MaxFileUpdateRange,
+                transferOptions: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4911,7 +4911,7 @@ namespace Azure.Storage.Files.Shares
                 progressHandler,
                 conditions,
                 transferValidationOverride: default,
-                Constants.File.MaxFileUpdateRange,
+                transferOptions: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4956,7 +4956,7 @@ namespace Azure.Storage.Files.Shares
                 progressHandler,
                 conditions: default,
                 transferValidationOverride: default,
-                Constants.File.MaxFileUpdateRange,
+                transferOptions: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -5006,7 +5006,7 @@ namespace Azure.Storage.Files.Shares
                 progressHandler,
                 conditions,
                 transferValidationOverride: default,
-                Constants.File.MaxFileUpdateRange,
+                transferOptions: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -5051,7 +5051,7 @@ namespace Azure.Storage.Files.Shares
                 progressHandler,
                 conditions: default,
                 transferValidationOverride: default,
-                Constants.File.MaxFileUpdateRange,
+                transferOptions: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -5078,9 +5078,8 @@ namespace Azure.Storage.Files.Shares
         /// <param name="transferValidationOverride">
         /// Optional override for client-configured transfer validation options.
         /// </param>
-        /// <param name="singleRangeThreshold">
-        /// The maximum size stream that we'll upload as a single range.  The
-        /// default value is 4MB.
+        /// <param name="transferOptions">
+        /// Partitioned transfer options for upload.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -5102,20 +5101,16 @@ namespace Azure.Storage.Files.Shares
             IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
             UploadTransferValidationOptions transferValidationOverride,
-            int singleRangeThreshold,
+            StorageTransferOptions transferOptions,
             bool async,
             CancellationToken cancellationToken)
         {
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
+            transferOptions = StorageArgument.PopulateShareFileUploadTransferOptionDefaults(transferOptions);
+            StorageArgument.AssertShareFileUploadTransferOptionBounds(transferOptions, nameof(transferOptions));
 
             var uploader = GetPartitionedUploader(
-                new StorageTransferOptions
-                {
-                    // shares can't suppot parallel upload
-                    MaximumConcurrency = 1,
-                    MaximumTransferSize = singleRangeThreshold,
-                    InitialTransferSize = singleRangeThreshold
-                },
+                transferOptions,
                 validationOptions,
                 operationName: $"{nameof(ShareFileClient)}.{nameof(Upload)}");
 
