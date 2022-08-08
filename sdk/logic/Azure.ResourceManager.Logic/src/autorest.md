@@ -86,8 +86,8 @@ rename-mapping:
   KeyVaultKey: IntegrationAccountKeyVaultKey
   KeyVaultKey.kid: KeyId
   KeyVaultKey.attributes.enabled: IsEnabled
-  KeyVaultKey.attributes.created: CreatedOnInTicks
-  KeyVaultKey.attributes.updated: UpdatedOnInTicks
+  KeyVaultKey.attributes.created: CreatedOn
+  KeyVaultKey.attributes.updated: UpdatedOn
   KeyVaultKeyReference: IntegrationAccountKeyVaultKeyReference
   KeyVaultKeyReference.keyVault.id: ResourceId
   KeyVaultKeyReference.keyVault.name: ResourceName
@@ -151,6 +151,7 @@ rename-mapping:
   WorkflowTriggerHistory: LogicWorkflowTriggerHistory
   WorkflowTriggerHistory.properties.fired: IsFired
   WorkflowTriggerHistoryListResult: LogicWorkflowTriggerHistoryListResult
+  WorkflowTriggerCallbackUrl.method: -|request-method
   WorkflowTriggerCallbackUrl: LogicWorkflowTriggerCallbackUri
   WorkflowReference: LogicWorkflowReference
   WorkflowRunActionListResult: LogicWorkflowRunActionListResult

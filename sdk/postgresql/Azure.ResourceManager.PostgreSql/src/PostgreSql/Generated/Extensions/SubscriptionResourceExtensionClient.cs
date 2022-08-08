@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             async Task<Page<PostgreSqlPerformanceTierProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Page<PostgreSqlPerformanceTierProperties> FirstPageFunc(int? pageSizeHint)
             {

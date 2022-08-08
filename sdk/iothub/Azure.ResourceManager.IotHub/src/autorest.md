@@ -55,6 +55,7 @@ rename-mapping:
   RoutingServiceBusQueueEndpointProperties.endpointUri: Endpoint
   RoutingServiceBusTopicEndpointProperties.endpointUri: Endpoint
   RoutingStorageContainerProperties.endpointUri: Endpoint
+  IotHubSkuDescription.resourceType: -|resource-type
 
 prepend-rp-prefix:
   - AuthenticationType

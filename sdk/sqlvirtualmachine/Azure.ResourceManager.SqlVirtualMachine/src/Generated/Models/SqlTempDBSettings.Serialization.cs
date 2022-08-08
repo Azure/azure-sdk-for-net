@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("persistFolderPath");
                 writer.WriteStringValue(PersistFolderPath);
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
             {
                 writer.WritePropertyName("luns");
                 writer.WriteStartArray();
-                foreach (var item in Luns)
+                foreach (var item in LogicalUnitNumbers)
                 {
                     writer.WriteNumberValue(item);
                 }
