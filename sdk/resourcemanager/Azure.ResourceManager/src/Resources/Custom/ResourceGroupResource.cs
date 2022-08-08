@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (await Client.IsTagResourcePresentAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Client.IsTagResourcePresent(cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (await Client.IsTagResourcePresentAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
                     await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Client.IsTagResourcePresent(cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
                     GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                     var originalTags = GetTagResource().Get(cancellationToken);
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (await Client.IsTagResourcePresentAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                if (Client.IsTagResourcePresent(cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);

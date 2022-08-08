@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.TestFramework
@@ -50,6 +51,12 @@ namespace Azure.ResourceManager.TestFramework
         {
             _resourceType = resourceType;
             ApiVersion = apiVersion;
+        }
+
+        protected void SetTagResourceUsage(ArmClient client, bool useTagResource)
+        {
+            var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
+            target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
         }
 
         private void Initialize()
