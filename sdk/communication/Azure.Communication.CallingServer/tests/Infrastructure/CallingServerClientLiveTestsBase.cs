@@ -34,6 +34,7 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
         {
             //var connectionString = TestEnvironment.LiveTestStaticConnectionString;
             var connectionString = "endpoint=https://acs-recording-common-e2e.communication.azure.com/;accesskey=bSHJgxhB3/I52CmZkwf3u2ojPNVwEuEyba7SeWbfrKFmYgd7C2eujSD/ArlSBcQzo/dp5ZX7OS2LZ86hIt5UQg==";
+            //var connectionString = "endpoint=https://recording-e2e-sample-xiaoxli.communication.azure.com/;accesskey=TyYsQlMbQ7+zgmepk1+XbNJt4k0wqSsxnhvAGin8+oMkK6XPWcVzz6NHZ2CggW+Sj2w52/51/z12PP8zDuZClw==";
 
             CallingServerClient callingServerClient;
             //if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
@@ -44,7 +45,7 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
             //{
             //    callingServerClient = new CallingServer.CallingServerClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             //}
-            callingServerClient = new CallingServerClient(new Uri("https://pma-dev-fmorales.plat-dev.skype.net/"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            callingServerClient = new CallingServerClient(new Uri("https://nextpma.plat.skype.com:6448/"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             return InstrumentClient(callingServerClient);
         }
 
@@ -78,7 +79,9 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    "endpoint=https://minwoolee-comm2.communication.azure.com/;accesskey=75HV1Ivj4upqENZnOaKcxaJ6tQGbd9pkIEHHuyAefb8tKFGiYxOLjHeRbg4f/9W3vSWKztx+YLmXxrl9mzArfA==",
+                    //"endpoint=https://minwoolee-comm2.communication.azure.com/;accesskey=75HV1Ivj4upqENZnOaKcxaJ6tQGbd9pkIEHHuyAefb8tKFGiYxOLjHeRbg4f/9W3vSWKztx+YLmXxrl9mzArfA==",
+                    //"endpoint=https://recording-e2e-sample-xiaoxli.communication.azure.com/;accesskey=TyYsQlMbQ7+zgmepk1+XbNJt4k0wqSsxnhvAGin8+oMkK6XPWcVzz6NHZ2CggW+Sj2w52/51/z12PP8zDuZClw==",
+                    "endpoint = https://acs-recording-common-e2e.communication.azure.com/;accesskey=bSHJgxhB3/I52CmZkwf3u2ojPNVwEuEyba7SeWbfrKFmYgd7C2eujSD/ArlSBcQzo/dp5ZX7OS2LZ86hIt5UQg==",
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
