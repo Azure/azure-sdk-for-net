@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
     internal class DnsZoneTest : DnsServiceClientTestBase
     {
+        private ResourceIdentifier _resourceGroupIdentifier;
         private ResourceGroupResource _resourceGroup;
 
         public DnsZoneTest(bool isAsync) : base(isAsync)
@@ -27,9 +28,15 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string rgName = SessionRecording.GenerateAssetName("Dns-RG-");
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            _resourceGroup = rgLro.Value;
+            _resourceGroupIdentifier = rgLro.Value.Data.Id;
 
             await StopSessionRecordingAsync();
+        }
+
+        [SetUp]
+        public async Task TestSetUp()
+        {
+            _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

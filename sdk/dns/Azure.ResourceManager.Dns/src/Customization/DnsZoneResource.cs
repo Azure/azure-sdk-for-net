@@ -18,6 +18,8 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 
+[assembly: CodeGenSuppressType("DnsZoneResource")]
+
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
