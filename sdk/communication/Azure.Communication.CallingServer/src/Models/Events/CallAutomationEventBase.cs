@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Gets the Event type. </summary>
         [CodeGenMember("Type")]
-        public AcsEventType EventType { get; internal set; }
+        internal AcsEventType EventType { get; set; }
 
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; internal set; }
