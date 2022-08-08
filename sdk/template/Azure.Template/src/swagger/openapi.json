@@ -132,7 +132,7 @@
       "properties": {
         "discriminatorProperty": {
           "type": "string",
-          "description": "Example discriminator property."
+          "description": "Discriminator property for BaseClassWithDiscriminator."
         }
       },
       "description": "Example base class that has a discriminator property.",
@@ -145,6 +145,26 @@
           "$ref": "#/definitions/BaseClass"
         }
       ]
+    },
+    "DerivedFromBaseClassWithDiscriminatorA": {
+      "type": "object",
+      "properties": {},
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseClassWithDiscriminator"
+        }
+      ],
+      "x-ms-discriminator-value": "A"
+    },
+    "DerivedFromBaseClassWithDiscriminatorB": {
+      "type": "object",
+      "properties": {},
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseClassWithDiscriminator"
+        }
+      ],
+      "x-ms-discriminator-value": "B"
     }
   },
   "parameters": {}

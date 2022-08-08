@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class BaseClassWithDiscriminator : IUtf8JsonSerializable
+    public partial class DerivedFromBaseClassWithDiscriminatorB : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,16 +22,8 @@ namespace Azure.Template.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseClassWithDiscriminator DeserializeBaseClassWithDiscriminator(JsonElement element)
+        internal static DerivedFromBaseClassWithDiscriminatorB DeserializeDerivedFromBaseClassWithDiscriminatorB(JsonElement element)
         {
-            if (element.TryGetProperty("discriminatorProperty", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "A": return DerivedFromBaseClassWithDiscriminatorA.DeserializeDerivedFromBaseClassWithDiscriminatorA(element);
-                    case "B": return DerivedFromBaseClassWithDiscriminatorB.DeserializeDerivedFromBaseClassWithDiscriminatorB(element);
-                }
-            }
             string discriminatorProperty = default;
             string baseClassProperty = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +39,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new BaseClassWithDiscriminator(baseClassProperty, discriminatorProperty);
+            return new DerivedFromBaseClassWithDiscriminatorB(baseClassProperty, discriminatorProperty);
         }
     }
 }

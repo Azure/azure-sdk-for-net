@@ -9,4 +9,12 @@ namespace Azure.Template.Models
     {
         public BaseClassWithDiscriminator(string baseClassProperty) : base (default(string)) { }
     }
+    public partial class DerivedFromBaseClassWithDiscriminatorA : Azure.Template.Models.BaseClassWithDiscriminator
+    {
+        public DerivedFromBaseClassWithDiscriminatorA(string baseClassProperty) : base (default(string)) { }
+    }
+    public partial class DerivedFromBaseClassWithDiscriminatorB : Azure.Template.Models.BaseClassWithDiscriminator
+    {
+        public DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty) : base (default(string)) { }
+    }
 }

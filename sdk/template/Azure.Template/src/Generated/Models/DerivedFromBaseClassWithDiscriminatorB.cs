@@ -9,35 +9,34 @@ using System;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Example base class that has a discriminator property. </summary>
-    public partial class BaseClassWithDiscriminator : BaseClass
+    /// <summary> The DerivedFromBaseClassWithDiscriminatorB. </summary>
+    public partial class DerivedFromBaseClassWithDiscriminatorB : BaseClassWithDiscriminator
     {
-        /// <summary> Initializes a new instance of BaseClassWithDiscriminator. </summary>
+        /// <summary> Initializes a new instance of DerivedFromBaseClassWithDiscriminatorB. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        public BaseClassWithDiscriminator(string baseClassProperty) : base(baseClassProperty)
+        public DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty) : base(baseClassProperty)
         {
             if (baseClassProperty == null)
             {
                 throw new ArgumentNullException(nameof(baseClassProperty));
             }
+
+            DiscriminatorProperty = "B";
         }
 
-        /// <summary> Initializes a new instance of BaseClassWithDiscriminator. </summary>
+        /// <summary> Initializes a new instance of DerivedFromBaseClassWithDiscriminatorB. </summary>
         /// <param name="baseClassProperty"> An example property. </param>
         /// <param name="discriminatorProperty"> Discriminator property for BaseClassWithDiscriminator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseClassProperty"/> is null. </exception>
-        internal BaseClassWithDiscriminator(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty)
+        internal DerivedFromBaseClassWithDiscriminatorB(string baseClassProperty, string discriminatorProperty) : base(baseClassProperty, discriminatorProperty)
         {
             if (baseClassProperty == null)
             {
                 throw new ArgumentNullException(nameof(baseClassProperty));
             }
 
-            DiscriminatorProperty = discriminatorProperty;
+            DiscriminatorProperty = discriminatorProperty ?? "B";
         }
-
-        /// <summary> Discriminator property for BaseClassWithDiscriminator. </summary>
-        internal string DiscriminatorProperty { get; set; }
     }
 }
