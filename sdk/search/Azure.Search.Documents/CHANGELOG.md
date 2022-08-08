@@ -1,5 +1,15 @@
 # Release History
 
+## 11.4.0-beta.10 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 11.4.0-beta.9 (2022-08-08)
 
 ### Features Added

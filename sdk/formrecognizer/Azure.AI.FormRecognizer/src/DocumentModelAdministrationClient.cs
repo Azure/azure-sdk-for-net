@@ -685,9 +685,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
+        /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual CopyModelOperation CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual CopyModelToOperation CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
@@ -698,7 +698,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = ServiceClient.CopyDocumentModelTo(modelId, target, cancellationToken);
-                var operation = new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new CopyModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -725,9 +725,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
+        /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual async Task<CopyModelOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyModelToOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
@@ -738,7 +738,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = await ServiceClient.CopyDocumentModelToAsync(modelId, target, cancellationToken).ConfigureAwait(false);
-                var operation = new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new CopyModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -856,10 +856,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual BuildModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual ComposeModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -883,7 +883,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = ServiceClient.ComposeDocumentModel(composeRequest, cancellationToken);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -915,10 +915,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual async Task<BuildModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ComposeModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -942,7 +942,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = await ServiceClient.ComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
