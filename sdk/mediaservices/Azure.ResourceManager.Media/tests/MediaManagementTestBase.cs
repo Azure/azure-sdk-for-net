@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Media.Models;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
@@ -49,6 +50,19 @@ namespace Azure.ResourceManager.Media.Tests
             };
             var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storagedata);
             return storage.Value;
+        }
+
+        protected async Task<VirtualNetworkResource> CreateVirtualNetwork(ResourceGroupResource resourceGroup, string vnetName)
+        {
+            VirtualNetworkData data = new VirtualNetworkData()
+            {
+                Location = resourceGroup.Data.Location,
+            };
+            data.AddressPrefixes.Add("10.10.0.0/16");
+            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24" });
+            data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
+            return vnet.Value;
         }
 
         protected async Task<MediaServiceResource> CreateMediaService(ResourceGroupResource resourceGroup, string mediaServiceName, ResourceIdentifier storageAccountIdentifier)

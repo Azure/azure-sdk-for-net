@@ -1,26 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage;
-using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Media.Tests
 {
-    public class AssetFilterTests : MediaManagementTestBase
+    public class MediaAssetTests : MediaManagementTestBase
     {
         private ResourceIdentifier _mediaServiceIdentifier;
         private MediaServiceResource _mediaService;
 
         private MediaAssetCollection mediaAssetCollection => _mediaService.GetMediaAssets();
 
-        public AssetFilterTests(bool isAsync) : base(isAsync)
+        public MediaAssetTests(bool isAsync) : base(isAsync)
         {
         }
 
