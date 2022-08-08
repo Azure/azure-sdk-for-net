@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,7 +23,17 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(CategoryType))
             {
                 writer.WritePropertyName("categoryType");
-                writer.WriteStringValue(CategoryType.Value.ToSerialString());
+                writer.WriteStringValue(CategoryType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(CategoryGroups))
+            {
+                writer.WritePropertyName("categoryGroups");
+                writer.WriteStartArray();
+                foreach (var item in CategoryGroups)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -33,8 +44,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<CategoryType> categoryType = default;
+            Optional<SystemData> systemData = default;
+            Optional<MonitorCategoryType> categoryType = default;
+            Optional<IList<string>> categoryGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -54,6 +66,11 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -73,14 +90,29 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            categoryType = property0.Value.GetString().ToCategoryType();
+                            categoryType = new MonitorCategoryType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("categoryGroups"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            categoryGroups = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DiagnosticSettingsCategoryData(id, name, type, systemData, Optional.ToNullable(categoryType));
+            return new DiagnosticSettingsCategoryData(id, name, type, systemData.Value, Optional.ToNullable(categoryType), Optional.ToList(categoryGroups));
         }
     }
 }

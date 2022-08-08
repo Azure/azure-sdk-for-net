@@ -7,7 +7,6 @@
                 "%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D",
                 "fake",
                 "Test12345",
-                "default",
                 "randompasswdcd",
                 "__CLIENT_SECRET__",
                 "userPassword7294",
@@ -90,6 +89,12 @@
                 "sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/SessionRecords/CertificateClientLiveTests/VerifyImportCertificatePemWithoutIssuerAsync.json"
             ],
             "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
+        },
+        {
+            "file":[
+                "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
+            ],
+            "_justification": "File contains a string value that ends with credential, not a true credential."
         }
     ]
 }

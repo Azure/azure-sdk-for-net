@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Linq;
 
     /// <summary>
-    /// The object that represents the operation.
+    /// Operation display payload
     /// </summary>
     public partial class OperationDisplay
     {
@@ -29,17 +29,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">Service provider:
-        /// Microsoft.ServiceBus</param>
-        /// <param name="resource">Resource on which the operation is
-        /// performed: Invoice, etc.</param>
-        /// <param name="operation">Operation type: Read, write, delete,
-        /// etc.</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
+        /// <param name="provider">Resource provider of the operation</param>
+        /// <param name="resource">Resource of the operation</param>
+        /// <param name="operation">Localized friendly name for the
+        /// operation</param>
+        /// <param name="description">Localized friendly description for the
+        /// operation</param>
+        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
+            Description = description;
             CustomInit();
         }
 
@@ -49,22 +50,28 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service provider: Microsoft.ServiceBus
+        /// Gets resource provider of the operation
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets resource on which the operation is performed: Invoice, etc.
+        /// Gets resource of the operation
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets operation type: Read, write, delete, etc.
+        /// Gets localized friendly name for the operation
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; private set; }
+
+        /// <summary>
+        /// Gets localized friendly description for the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; private set; }
 
     }
 }

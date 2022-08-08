@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
         internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Sku = sku;
             IPConfigurations = ipConfigurations;
             DnsName = dnsName;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
         internal NetworkSku Sku { get; set; }
         /// <summary> The name of this Bastion Host. </summary>

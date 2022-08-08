@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the ManagedHsmPrivateEndpointConnection data model. </summary>
-    public partial class ManagedHsmPrivateEndpointConnectionData : ManagedHsmTrackedResourceData
+    public partial class ManagedHsmPrivateEndpointConnectionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>
         /// <param name="location"> The location. </param>
@@ -30,21 +30,22 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> SKU details. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location, sku)
+        /// <param name="sku"> SKU details. </param>
+        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, ManagedHsmSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
-            Etag = etag;
+            ETag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
+            Sku = sku;
         }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public ETag? Etag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
@@ -56,6 +57,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Approval state of the private link connection. </summary>
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
-        public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+        public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        /// <summary> SKU details. </summary>
+        public ManagedHsmSku Sku { get; set; }
     }
 }

@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element)
         {
             string name = default;
-            ScaleCapacity capacity = default;
+            MonitorScaleCapacity capacity = default;
             IList<ScaleRule> rules = default;
-            Optional<TimeWindow> fixedDate = default;
+            Optional<MonitorTimeWindow> fixedDate = default;
             Optional<MonitorRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("capacity"))
                 {
-                    capacity = ScaleCapacity.DeserializeScaleCapacity(property.Value);
+                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rules"))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fixedDate = TimeWindow.DeserializeTimeWindow(property.Value);
+                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recurrence"))

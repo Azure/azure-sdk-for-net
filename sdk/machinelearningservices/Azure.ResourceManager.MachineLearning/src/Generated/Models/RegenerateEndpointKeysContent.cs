@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The RegenerateEndpointKeysRequest. </summary>
+    /// <summary> The RegenerateEndpointKeysContent. </summary>
     public partial class RegenerateEndpointKeysContent
     {
         /// <summary> Initializes a new instance of RegenerateEndpointKeysContent. </summary>

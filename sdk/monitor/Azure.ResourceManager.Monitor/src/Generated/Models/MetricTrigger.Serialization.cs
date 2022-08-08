@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(MetricResourceLocation))
             {
                 writer.WritePropertyName("metricResourceLocation");
-                writer.WriteStringValue(MetricResourceLocation);
+                writer.WriteStringValue(MetricResourceLocation.Value);
             }
             writer.WritePropertyName("timeGrain");
             writer.WriteStringValue(TimeGrain, "P");
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(DividePerInstance))
+            if (Optional.IsDefined(IsDividedPerInstance))
             {
                 writer.WritePropertyName("dividePerInstance");
-                writer.WriteBooleanValue(DividePerInstance.Value);
+                writer.WriteBooleanValue(IsDividedPerInstance.Value);
             }
             writer.WriteEndObject();
         }
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             string metricName = default;
             Optional<string> metricNamespace = default;
-            string metricResourceUri = default;
-            Optional<string> metricResourceLocation = default;
+            ResourceIdentifier metricResourceUri = default;
+            Optional<AzureLocation> metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
-            TimeAggregationType timeAggregation = default;
+            MonitorTimeAggregationType timeAggregation = default;
             ComparisonOperationType @operator = default;
             double threshold = default;
             Optional<IList<ScaleRuleMetricDimension>> dimensions = default;
@@ -96,12 +96,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("metricResourceUri"))
                 {
-                    metricResourceUri = property.Value.GetString();
+                    metricResourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metricResourceLocation"))
                 {
-                    metricResourceLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    metricResourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("timeGrain"))
@@ -121,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("timeAggregation"))
                 {
-                    timeAggregation = property.Value.GetString().ToTimeAggregationType();
+                    timeAggregation = property.Value.GetString().ToMonitorTimeAggregationType();
                     continue;
                 }
                 if (property.NameEquals("operator"))
@@ -160,7 +165,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, metricResourceLocation.Value, timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, Optional.ToList(dimensions), Optional.ToNullable(dividePerInstance));
+            return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, Optional.ToNullable(metricResourceLocation), timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, Optional.ToList(dimensions), Optional.ToNullable(dividePerInstance));
         }
     }
 }

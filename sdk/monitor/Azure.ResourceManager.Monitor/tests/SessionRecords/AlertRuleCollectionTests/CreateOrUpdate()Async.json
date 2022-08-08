@@ -131,7 +131,7 @@
             "dataSource": {
               "metricName": "testrulemetric",
               "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-              "resourceId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01",
+              "resourceUri": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/deleteme0122/providers/Microsoft.Compute/virtualMachines/MetricAlertActionTestVM01",
               "resourceLocation": "eastus2",
               "metricNamespace": "Microsoft.Compute/virtualMachines"
             }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
             string name = default;
             Optional<int> testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
-            Optional<PreferredIPVersion> preferredIPVersion = default;
+            Optional<TestEvalPreferredIPVersion> preferredIPVersion = default;
             Optional<ConnectionMonitorHttpConfiguration> httpConfiguration = default;
             Optional<ConnectionMonitorTcpConfiguration> tcpConfiguration = default;
             Optional<ConnectionMonitorIcmpConfiguration> icmpConfiguration = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preferredIPVersion = new PreferredIPVersion(property.Value.GetString());
+                    preferredIPVersion = new TestEvalPreferredIPVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpConfiguration"))

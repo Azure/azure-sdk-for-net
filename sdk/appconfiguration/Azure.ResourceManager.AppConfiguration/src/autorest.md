@@ -4,19 +4,63 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
+csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
-require: https://github.com/Azure/azure-rest-api-specs/blob/d0b5e9937f89a600dd25c1aa450b42fe911e067d/specification/appconfiguration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d7b7399fb1e1a328b49cd6a998714c6efb877bf2/specification/appconfiguration/resource-manager/readme.md
+tag: package-2022-05-01
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
 no-property-type-replacement: RegenerateKeyContent
+
+rename-mapping:
+  ApiKey.lastModified: LastModifiedOn
+  ApiKey.readOnly: IsReadOnly
+  DeletedConfigurationStore.properties.purgeProtectionEnabled: IsPurgeProtectionEnabled
+  DeletedConfigurationStore.properties.configurationStoreId: -|arm-id
+  NameAvailabilityStatus.nameAvailable: IsNameAvailable
+  KeyValue.properties.lastModified: LastModifiedOn
+  KeyValue.properties.locked: IsLocked
+  ApiKey: AppConfigurationStoreApiKey
+  ApiKeyListResult: AppConfigurationStoreApiKeyListResult
+  CheckNameAvailabilityParameters: AppConfigurationNameAvailabilityContent
+  ConfigurationResourceType: AppConfigurationResourceType
+  ConfigurationStore: AppConfigurationStore
+  ConfigurationStoreListResult: AppConfigurationStoreListResult
+  ConnectionStatus: AppConfigurationPrivateLinkServiceConnectionStatus
+  DeletedConfigurationStore: DeletedAppConfigurationStore
+  EncryptionProperties: AppConfigurationStoreEncryptionProperties
+  NameAvailabilityStatus: AppConfigurationNameAvailabilityResult
+  PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
+
+prepend-rp-prefix:
+  - ActionsRequired
+  - CreateMode
+  - KeyValue
+  - KeyValueListResult
+  - KeyVaultProperties
+  - ProvisioningState
+  - PublicNetworkAccess
+  - RegenerateKeyParameters
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'eTag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -26,11 +70,12 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   
 request-path-to-parent:
   /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/deletedConfigurationStores: /subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/locations/{location}/deletedConfigurationStores/{configStoreName}
@@ -43,9 +88,6 @@ directive:
     where: $.definitions.ConfigurationStoreProperties
     transform: >
       $.properties.privateEndpointConnections["x-nullable"] = true;
-  - from: swagger-document
-    where: $.definitions.ResourceIdentity.properties.type["x-ms-enum"]["name"]
-    transform: return "ResourceIdentityType"
   - rename-operation:
       from: Operations_CheckNameAvailability
       to: CheckAppConfigurationNameAvailability

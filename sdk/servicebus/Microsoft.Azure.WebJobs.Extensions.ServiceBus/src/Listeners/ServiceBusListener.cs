@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
+        private Lazy<EntityScopeFactory> _scopeFactory;
 
         public ServiceBusListener(
             string functionId,
@@ -103,6 +105,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     loggerFactory,
                     clientFactory));
 
+            _scopeFactory = new Lazy<EntityScopeFactory>(
+                () => new EntityScopeFactory(_batchReceiver.Value.EntityPath, _batchReceiver.Value.FullyQualifiedNamespace));
+
             if (concurrencyManager.Enabled)
             {
                 _concurrencyUpdateManager = new ConcurrencyUpdateManager(concurrencyManager, _messageProcessor, _sessionMessageProcessor, _isSessionsEnabled, _functionId, _logger);
@@ -123,27 +128,37 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 throw new InvalidOperationException("The listener has already been started.");
             }
+            Started = true;
 
-            if (_singleDispatch)
+            try
             {
-                if (_isSessionsEnabled)
+                if (_singleDispatch)
                 {
-                    _sessionMessageProcessor.Value.Processor.ProcessMessageAsync += ProcessSessionMessageAsync;
-                    await _sessionMessageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    if (_isSessionsEnabled)
+                    {
+                        _sessionMessageProcessor.Value.Processor.ProcessMessageAsync += ProcessSessionMessageAsync;
+                        await _sessionMessageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _messageProcessor.Value.Processor.ProcessMessageAsync += ProcessMessageAsync;
+                        await _messageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    _concurrencyUpdateManager?.Start();
                 }
                 else
                 {
-                    _messageProcessor.Value.Processor.ProcessMessageAsync += ProcessMessageAsync;
-                    await _messageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
                 }
-
-                _concurrencyUpdateManager?.Start();
             }
-            else
+            catch
             {
-                _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
+                // If we get an exception while attempting to start, reset the Started flag to false so that the host can attempt to
+                // start the listener again.
+                Started = false;
+                throw;
             }
-            Started = true;
 
             _logger.LogDebug($"ServiceBus listener started ({_details.Value})");
         }
@@ -380,10 +395,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
                     }
 
-                    IReadOnlyList<ServiceBusReceivedMessage> messages =
-                        await receiver.ReceiveMessagesAsync(
-                            _serviceBusOptions.MaxMessageBatchSize,
-                            cancellationToken: cancellationToken).AwaitWithCancellation(cancellationToken);
+                    // For non-session receiver, we just fall back to the operation timeout.
+                    TimeSpan? maxWaitTime = _isSessionsEnabled ? _serviceBusOptions.SessionIdleTimeout : null;
+
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
+                        _serviceBusOptions.MaxMessageBatchSize,
+                        maxWaitTime,
+                        cancellationToken).ConfigureAwait(false);
 
                     if (messages.Count > 0)
                     {
@@ -399,7 +417,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             receiveActions,
                             _client.Value);
 
+                        using DiagnosticScope scope = _scopeFactory.Value.CreateScope(
+                            _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
+                            DiagnosticScope.ActivityKind.Consumer);
+                        scope.SetMessageData(messagesArray);
+
+                        scope.Start();
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
+                        if (result.Exception != null)
+                        {
+                            scope.Failed(result.Exception);
+                        }
                         receiveActions.EndExecutionScope();
 
                         var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);

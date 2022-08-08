@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
-        internal AppConfigurationPrivateLinkServiceConnectionState(ConnectionStatus? status, string description, ActionsRequired? actionsRequired)
+        internal AppConfigurationPrivateLinkServiceConnectionState(AppConfigurationPrivateLinkServiceConnectionStatus? status, string description, AppConfigurationActionsRequired? actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The private link service connection status. </summary>
-        public ConnectionStatus? Status { get; set; }
+        public AppConfigurationPrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The private link service connection description. </summary>
         public string Description { get; set; }
         /// <summary> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </summary>
-        public ActionsRequired? ActionsRequired { get; }
+        public AppConfigurationActionsRequired? ActionsRequired { get; }
     }
 }

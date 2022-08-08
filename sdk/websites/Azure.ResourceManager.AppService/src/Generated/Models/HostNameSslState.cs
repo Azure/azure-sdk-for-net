@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="sslState"> SSL type. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="thumbprint"> SSL certificate thumbprint. </param>
-        /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
+        /// <param name="isToUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
         /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
-        internal HostNameSslState(string name, SslState? sslState, string virtualIP, string thumbprint, bool? toUpdate, HostType? hostType)
+        internal HostNameSslState(string name, SslState? sslState, string virtualIP, string thumbprint, bool? isToUpdate, HostType? hostType)
         {
             Name = name;
             SslState = sslState;
             VirtualIP = virtualIP;
             Thumbprint = thumbprint;
-            ToUpdate = toUpdate;
+            IsToUpdate = isToUpdate;
             HostType = hostType;
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> SSL certificate thumbprint. </summary>
         public string Thumbprint { get; set; }
         /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
-        public bool? ToUpdate { get; set; }
+        public bool? IsToUpdate { get; set; }
         /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
         public HostType? HostType { get; set; }
     }

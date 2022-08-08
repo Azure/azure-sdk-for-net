@@ -42,6 +42,12 @@ jobs:
     pool:
       name: azsdk-pool-mms-win-2019-general
       vmImage: MMS2019
+
+    variables:
+      Codeql.Enabled: true
+      Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
+      Codeql.SkipTaskAutoInjection: false
+
     steps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
@@ -110,16 +116,17 @@ jobs:
           ArtifactPath: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'packages'
 
-      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-        displayName: 'Upload Package SBOM'
-        condition: succeededOrFailed()
-        inputs:
-          BuildDropPath: $(Build.ArtifactStagingDirectory)
+      - ${{if eq(variables['System.TeamProject'], 'internal') }}:
+        - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+          displayName: 'Upload Package SBOM'
+          condition: succeededOrFailed()
+          inputs:
+            BuildDropPath: $(Build.ArtifactStagingDirectory)
 
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
-          ArtifactName: 'manifest'
+        - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+          parameters:
+            ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
+            ArtifactName: 'manifest'
 
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
@@ -134,17 +141,19 @@ jobs:
           ignoreDirectories: '.nuget'
 
   - job: "Analyze"
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
       name: azsdk-pool-mms-ubuntu-2004-general
       vmImage: MMSUbuntu20.04
-    steps:      
+    steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
               Paths:
                 - "/*"
                 - "!SessionRecords"
+      - template: /eng/common/pipelines/templates/steps/validate-filename.yml
       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -212,7 +221,7 @@ jobs:
     pool:
       name: azsdk-pool-mms-win-2019-general
       vmImage: MMS2019
-    steps:      
+    steps:
       - template: /eng/common/pipelines/templates/steps/credscan.yml
         parameters:
           BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines

@@ -20,11 +20,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Transactions;
+using Azure.Core.Tests;
+using Azure.Messaging.ServiceBus.Diagnostics;
+using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -344,6 +346,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_ReceiveFromDeadLetterQueue()
+        {
+            await WriteTopicMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestReceiveFromDeadLetterQueue>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
         public async Task TestBatch_ReceiveFromFunction()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
@@ -368,6 +383,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestBatch_JsonPoco()
         {
             await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
+        }
+
+        [Test]
+        public async Task TestBatch_ProcessMessagesSpan()
+        {
+            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>();
+            var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
+            var tags = scope.Activity.Tags.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.AreEqual(2, scope.LinkedActivities.Count);
+            Assert.IsTrue(scope.IsCompleted);
+        }
+
+        [Test]
+        public async Task TestBatch_ProcessMessagesSpan_FailedScope()
+        {
+            ExpectedRemainingMessages = 2;
+            using var listener = new ClientDiagnosticListener(EntityScopeFactory.DiagnosticNamespace);
+            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws>();
+            var scope = listener.AssertAndRemoveScope(Constants.ProcessMessagesActivityName);
+            var tags = scope.Activity.Tags.ToList();
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EntityAttribute, FirstQueueScope.QueueName));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext));
+            Assert.AreEqual(2, scope.LinkedActivities.Count);
+            Assert.IsTrue(scope.IsFailed);
         }
 
         [Test]
@@ -937,6 +981,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string label,
                 string correlationId,
                 string sessionId,
+                string replyToSessionId,
                 IDictionary<string, object> applicationProperties,
                 IDictionary<string, object> userProperties,
                 ServiceBusMessageActions messageActions,
@@ -959,6 +1004,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.Less(enqueuedTimeUtc, DateTime.UtcNow);
                 Assert.AreEqual(enqueuedTime.DateTime, enqueuedTimeUtc);
                 Assert.IsNull(sessionId);
+                Assert.IsNull(replyToSessionId);
 
                 var message = SBQueue2SBQueue_GetOutputMessage(body);
                 await messageSender.SendMessageAsync(message);
@@ -1178,6 +1224,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string[] labelArray,
                 string[] correlationIdArray,
                 string[] sessionIdArray,
+                string[] replyToSessionIdArray,
                 IDictionary<string, object>[] applicationPropertiesArray,
                 IDictionary<string, object>[] userPropertiesArray,
                 ServiceBusMessageActions messageActions)
@@ -1200,6 +1247,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.Less(enqueuedTimeUtcArray[i], DateTime.UtcNow);
                     Assert.AreEqual(enqueuedTimeArray[i].DateTime, enqueuedTimeUtcArray[i]);
                     Assert.IsNull(sessionIdArray[i]);
+                    Assert.IsNull(replyToSessionIdArray[i]);
                 }
                 string[] messages = array.Select(x => x.Body.ToString()).ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
@@ -1214,6 +1262,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+            }
+        }
+
+        public class ServiceBusMultipleMessagesTestJob_BindToPocoArray_Throws
+        {
+            public static void Run(
+                [ServiceBusTrigger(FirstQueueNameKey)] TestPoco[] array,
+                ServiceBusMessageActions messageActions)
+            {
+                string[] messages = array.Select(x => "{'Name': '" + x.Name + "', 'Value': 'Value'}").ToArray();
+                ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
+                throw new Exception("Test exception");
             }
         }
 
@@ -1468,6 +1528,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var received = await receiveActions.ReceiveMessagesAsync(1);
                 Assert.IsNotNull(received);
 
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestReceiveFromDeadLetterQueue
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                await messageActions.DeadLetterMessageAsync(message, "DLQ");
+            }
+
+            public static async Task ReceiveFromDeadLetterAsync(
+                [ServiceBusTrigger(TopicNameKey,  FirstSubscriptionNameKey + "/$deadletterqueue")]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                Assert.AreEqual("DLQ", message.DeadLetterReason);
+                await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
             }
         }

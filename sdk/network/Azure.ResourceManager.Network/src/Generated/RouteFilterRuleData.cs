@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
         /// <param name="communities"> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal RouteFilterRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, ETag? etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal RouteFilterRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, ETag? etag, NetworkAccess? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Location = location;
-            Etag = etag;
+            ETag = etag;
             Access = access;
             RouteFilterRuleType = routeFilterRuleType;
             Communities = communities;
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The access type of the rule. </summary>
-        public Access? Access { get; set; }
+        public NetworkAccess? Access { get; set; }
         /// <summary> The rule type of the rule. </summary>
         public RouteFilterRuleType? RouteFilterRuleType { get; set; }
         /// <summary> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </summary>

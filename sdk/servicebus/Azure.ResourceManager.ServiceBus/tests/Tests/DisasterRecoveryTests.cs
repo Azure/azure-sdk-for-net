@@ -55,72 +55,72 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             ServiceBusAuthorizationRuleData ruleParameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
-            NamespaceAuthorizationRuleResource authorizationRule = (await serviceBusNamespace1.GetNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
+            ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await serviceBusNamespace1.GetServiceBusNamespaceAuthorizationRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, ruleParameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, ruleParameter.Rights.Count);
 
             //create a disaster recovery
             string disasterRecoveryName = Recording.GenerateAssetName("disasterrecovery");
-            DisasterRecoveryData parameter = new DisasterRecoveryData()
+            ServiceBusDisasterRecoveryData parameter = new ServiceBusDisasterRecoveryData()
             {
                 PartnerNamespace = serviceBusNamespace2.Id
             };
-            DisasterRecoveryResource disasterRecovery = (await serviceBusNamespace1.GetDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
+            ServiceBusDisasterRecoveryResource disasterRecovery = (await serviceBusNamespace1.GetServiceBusDisasterRecoveries().CreateOrUpdateAsync(WaitUntil.Completed, disasterRecoveryName, parameter)).Value;
             Assert.NotNull(disasterRecovery);
             Assert.AreEqual(disasterRecovery.Id.Name, disasterRecoveryName);
             Assert.AreEqual(disasterRecovery.Data.PartnerNamespace, serviceBusNamespace2.Id.ToString());
 
             //get the disaster recovery - primary
-            disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
-            Assert.AreEqual(disasterRecovery.Data.Role, RoleDisasterRecovery.Primary);
+            disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
+            Assert.AreEqual(disasterRecovery.Data.Role, ServiceBusDisasterRecoveryRole.Primary);
 
             //get the disaster recovery - secondary
-            DisasterRecoveryResource disasterRecoverySec = await serviceBusNamespace2.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
-            Assert.AreEqual(disasterRecoverySec.Data.Role, RoleDisasterRecovery.Secondary);
+            ServiceBusDisasterRecoveryResource disasterRecoverySec = await serviceBusNamespace2.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
+            Assert.AreEqual(disasterRecoverySec.Data.Role, ServiceBusDisasterRecoveryRole.Secondary);
 
             //wait for completion, this may take several minutes in live and record mode
-            disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+            disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (disasterRecovery.Data.ProvisioningState != DisasterRecoveryProvisioningState.Succeeded && i < 100)
+            while (disasterRecovery.Data.ProvisioningState != ServiceBusDisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(5000);
                 }
                 i++;
-                disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+                disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //check name availability
-            CheckNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckDisasterRecoveryNameAvailabilityAsync(new CheckNameAvailability(disasterRecoveryName));
-            Assert.IsFalse(nameAvailability.NameAvailable);
+            ServiceBusNameAvailabilityResult nameAvailability = await serviceBusNamespace1.CheckServiceBusDisasterRecoveryNameAvailabilityAsync(new ServiceBusNameAvailabilityContent(disasterRecoveryName));
+            Assert.IsFalse(nameAvailability.IsNameAvailable);
 
-            List<NamespaceDisasterRecoveryAuthorizationRuleResource> rules = await disasterRecovery.GetNamespaceDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusDisasterRecoveryAuthorizationRuleResource> rules = await disasterRecovery.GetServiceBusDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(rules.Count > 0);
 
             //get access keys of the authorization rule
-            NamespaceDisasterRecoveryAuthorizationRuleResource rule = rules.First();
-            AccessKeys keys = await rule.GetKeysAsync();
+            ServiceBusDisasterRecoveryAuthorizationRuleResource rule = rules.First();
+            ServiceBusAccessKeys keys = await rule.GetKeysAsync();
             Assert.NotNull(keys);
 
             //break pairing and wait for competion
             await disasterRecovery.BreakPairingAsync();
-            disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+            disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (disasterRecovery.Data.ProvisioningState != DisasterRecoveryProvisioningState.Succeeded && i < 100)
+            while (disasterRecovery.Data.ProvisioningState != ServiceBusDisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(5000);
                 }
                 i++;
-                disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
+                disasterRecovery = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAsync(disasterRecoveryName);
             }
 
             //get all disaster recoveries for a name space
-            List<DisasterRecoveryResource> disasterRcoveries = await serviceBusNamespace1.GetDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusDisasterRecoveryResource> disasterRcoveries = await serviceBusNamespace1.GetServiceBusDisasterRecoveries().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(disasterRcoveries.Count >= 1);
 
             //delete disaster recovery;

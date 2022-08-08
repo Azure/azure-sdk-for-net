@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="fqdnTagName"> The name of this FQDN Tag. </param>
         internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ProvisioningState = provisioningState;
             FqdnTagName = fqdnTagName;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the Azure firewall FQDN tag resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The name of this FQDN Tag. </summary>

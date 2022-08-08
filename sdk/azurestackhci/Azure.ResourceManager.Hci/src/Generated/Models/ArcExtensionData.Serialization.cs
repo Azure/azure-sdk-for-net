@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(TypePropertiesExtensionParametersType))
+            if (Optional.IsDefined(ArcExtensionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesExtensionParametersType);
+                writer.WriteStringValue(ArcExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion");
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion");
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(Settings))
             {
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ExtensionAggregateState> aggregateState = default;
+            Optional<SystemData> systemData = default;
+            Optional<HciProvisioningState> provisioningState = default;
+            Optional<ArcExtensionAggregateState> aggregateState = default;
             Optional<IReadOnlyList<PerNodeExtensionState>> perNodeExtensionDetails = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -125,7 +130,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("aggregateState"))
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.Hci
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            aggregateState = new ExtensionAggregateState(property0.Value.GetString());
+                            aggregateState = new ArcExtensionAggregateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("perNodeExtensionDetails"))
@@ -219,7 +224,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new ArcExtensionData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value);
+            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value);
         }
     }
 }

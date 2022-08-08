@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the WebJob data model. </summary>
-    public partial class WebJobData : ProxyOnlyResource
+    public partial class WebJobData : ResourceData
     {
         /// <summary> Initializes a new instance of WebJobData. </summary>
         public WebJobData()
@@ -27,23 +27,24 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="runCommand"> Run command. </param>
         /// <param name="uri"> Job URL. </param>
         /// <param name="extraInfoUri"> Extra Info URL. </param>
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
-        /// <param name="usingSdk"> Using SDK?. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind) : base(id, name, resourceType, systemData)
         {
             RunCommand = runCommand;
             Uri = uri;
             ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
-            UsingSdk = usingSdk;
+            IsUsingSdk = isUsingSdk;
             Settings = settings;
+            Kind = kind;
         }
 
         /// <summary> Run command. </summary>
@@ -57,8 +58,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Error information. </summary>
         public string Error { get; set; }
         /// <summary> Using SDK?. </summary>
-        public bool? UsingSdk { get; set; }
+        public bool? IsUsingSdk { get; set; }
         /// <summary> Job settings. </summary>
         public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

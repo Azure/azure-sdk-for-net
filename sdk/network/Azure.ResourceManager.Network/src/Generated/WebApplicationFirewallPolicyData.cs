@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
         internal WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             PolicySettings = policySettings;
             CustomRules = customRules;
             ApplicationGateways = applicationGateways;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The PolicySettings for policy. </summary>
         public PolicySettings PolicySettings { get; set; }
         /// <summary> The custom rules inside the policy. </summary>

@@ -6,14 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
-        public async Task ManageModels()
+        [RecordedTest]
+        public void ManageModels()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -23,20 +22,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
-            AccountProperties accountProperties = client.GetAccountProperties();
-            Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
-            Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
+            ResourceDetails resourceDetails = client.GetResourceDetails();
+            Console.WriteLine($"Resource has {resourceDetails.DocumentModelCount} models.");
+            Console.WriteLine($"It can have at most {resourceDetails.DocumentModelLimit} models.");
 
             // List the first ten or fewer models currently stored in the account.
-            Pageable<DocumentModelInfo> models = client.GetModels();
+            Pageable<DocumentModelSummary> models = client.GetModels();
 
-            foreach (DocumentModelInfo modelInfo in models.Take(10))
+            foreach (DocumentModelSummary modelSummary in models.Take(10))
             {
-                Console.WriteLine($"Custom Model Info:");
-                Console.WriteLine($"  Model Id: {modelInfo.ModelId}");
-                if (string.IsNullOrEmpty(modelInfo.Description))
-                    Console.WriteLine($"  Model description: {modelInfo.Description}");
-                Console.WriteLine($"  Created on: {modelInfo.CreatedOn}");
+                Console.WriteLine($"Custom Model Summary:");
+                Console.WriteLine($"  Model Id: {modelSummary.ModelId}");
+                if (string.IsNullOrEmpty(modelSummary.Description))
+                    Console.WriteLine($"  Model description: {modelSummary.Description}");
+                Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
             }
 
             // Create a new model to store in the account
@@ -46,12 +45,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = client.BuildModel(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             // Get the model that was just created
-            DocumentModel newCreatedModel = client.GetModel(model.ModelId);
+            DocumentModelDetails newCreatedModel = client.GetModel(model.ModelId);
 
             Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
 

@@ -5,13 +5,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task ExtractLayoutFromUriAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -26,10 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-layout", fileUri);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -44,7 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+                    for (int j = 0; j < line.BoundingPolygon.Length; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
                     }
@@ -57,10 +53,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
                     Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
 
-                    for (int j = 0; j < selectionMark.BoundingPolygon.Points.Length; j++)
+                    for (int j = 0; j < selectionMark.BoundingPolygon.Length; j++)
                     {
                         Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
                     }
+                }
+            }
+
+            Console.WriteLine("Paragraphs:");
+
+            foreach (DocumentParagraph paragraph in result.Paragraphs)
+            {
+                Console.WriteLine($"  Paragraph content: {paragraph.Content}");
+
+                if (paragraph.Role != null)
+                {
+                    Console.WriteLine($"    Role: {paragraph.Role}");
                 }
             }
 

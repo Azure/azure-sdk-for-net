@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -12,148 +14,168 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public void AnalyzeConversationWithLanguage()
         {
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Tendremos 2 platos de nigiri de salmón braseado.")
-            {
-                Language = "es"
-            };
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
-
-#if SNIPPET
-            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-
-            Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                textConversationItem,
-                conversationsProject,
-                options);
-#else
-            Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                "Tendremos 2 platos de nigiri de salmón braseado.",
-                TestEnvironment.Project,
-                options);
+            string projectName = "Menu";
+            string deploymentName = "production";
+#if !SNIPPET
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
 #endif
 
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+            var data = new
+            {
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        text = "Enviar un email a Carol acerca de la presentación de mañana",
+                        language = "es",
+                        id = "1",
+                        participantId = "1",
+                    }
+                },
+                parameters = new
+                {
+                    projectName,
+                    deploymentName,
+                    verbose = true,
 
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
-            Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+                    // Use Utf16CodeUnit for strings in .NET.
+                    stringIndexType = "Utf16CodeUnit",
+                },
+                kind = "Conversation",
+            };
+
+            Response response = client.AnalyzeConversation(RequestContent.Create(data));
+            #endregion
+
+            using JsonDocument result = JsonDocument.Parse(response.ContentStream);
+            JsonElement conversationalTaskResult = result.RootElement;
+            JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+
+            Console.WriteLine($"Project Kind: {conversationPrediction.GetProperty("projectKind").GetString()}");
+            Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
 
             Console.WriteLine("Intents:");
-            foreach (ConversationIntent intent in conversationPrediction.Intents)
+            foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
             {
-                Console.WriteLine($"Category: {intent.Category}");
-                Console.WriteLine($"Confidence: {intent.Confidence}");
+                Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
+                Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
                 Console.WriteLine();
             }
 
             Console.WriteLine("Entities:");
-            foreach (ConversationEntity entity in conversationPrediction.Entities)
+            foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
             {
-                Console.WriteLine($"Category: {entity.Category}");
-                Console.WriteLine($"Text: {entity.Text}");
-                Console.WriteLine($"Offset: {entity.Offset}");
-                Console.WriteLine($"Length: {entity.Length}");
-                Console.WriteLine($"Confidence: {entity.Confidence}");
+                Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
+                Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
+                Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
+                Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
                 Console.WriteLine();
 
-                foreach (BaseResolution resolution in entity.Resolutions)
+                if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
                 {
-                    if (resolution is DateTimeResolution dateTimeResolution)
+                    foreach (JsonElement resolution in resolutions.EnumerateArray())
                     {
-                        Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                        Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                        Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                        Console.WriteLine();
+                        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                        {
+                            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                            Console.WriteLine();
+                        }
                     }
                 }
             }
 
-            #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(conversationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("Send"));
         }
 
         [AsyncOnly]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26379")]
         public async Task AnalyzeConversationWithLanguageAsync()
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
-            TextConversationItem input = new TextConversationItem(
-                participantId: "1",
-                id: "1",
-                text: "Tendremos 2 platos de nigiri de salmón braseado.")
+            string projectName = TestEnvironment.ProjectName;
+            string deploymentName = TestEnvironment.DeploymentName;
+
+            var data = new
             {
-                Language = "es"
+                analysisInput = new
+                {
+                    conversationItem = new
+                    {
+                        text = "Enviar un email a Carol acerca de la presentación de mañana",
+                        language = "es",
+                        id = "1",
+                        participantId = "1",
+                    }
+                },
+                parameters = new
+                {
+                    projectName,
+                    deploymentName,
+                    verbose = true,
+
+                    // Use Utf16CodeUnit for strings in .NET.
+                    stringIndexType = "Utf16CodeUnit",
+                },
+                kind = "Conversation",
             };
-            AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
 
-#if SNIPPET
-            ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+            #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguageAsync
+            Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+            #endregion
 
-            Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                textConversationItem,
-                conversationsProject,
-                options);
-#else
-            Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversationAsync(
-                "Tendremos 2 platos de nigiri de salmón braseado.",
-                TestEnvironment.Project,
-                options);
-#endif
+            using JsonDocument result = await JsonDocument.ParseAsync(response.ContentStream);
+            JsonElement conversationalTaskResult = result.RootElement;
+            JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
 
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
-
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
-            Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+            Console.WriteLine($"Project Kind: {conversationPrediction.GetProperty("projectKind").GetString()}");
+            Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
 
             Console.WriteLine("Intents:");
-            foreach (ConversationIntent intent in conversationPrediction.Intents)
+            foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
             {
-                Console.WriteLine($"Category: {intent.Category}");
-                Console.WriteLine($"Confidence: {intent.Confidence}");
+                Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
+                Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
                 Console.WriteLine();
             }
 
             Console.WriteLine("Entities:");
-            foreach (ConversationEntity entity in conversationPrediction.Entities)
+            foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
             {
-                Console.WriteLine($"Category: {entity.Category}");
-                Console.WriteLine($"Text: {entity.Text}");
-                Console.WriteLine($"Offset: {entity.Offset}");
-                Console.WriteLine($"Length: {entity.Length}");
-                Console.WriteLine($"Confidence: {entity.Confidence}");
+                Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
+                Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
+                Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
+                Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
+                Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
                 Console.WriteLine();
 
-                foreach (BaseResolution resolution in entity.Resolutions)
+                if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
                 {
-                    if (resolution is DateTimeResolution dateTimeResolution)
+                    foreach (JsonElement resolution in resolutions.EnumerateArray())
                     {
-                        Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
-                        Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
-                        Console.WriteLine($"Value: {dateTimeResolution.Value}");
-                        Console.WriteLine();
+                        if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+                        {
+                            Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
+                            Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
+                            Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                            Console.WriteLine();
+                        }
                     }
                 }
             }
 
-            #endregion
-
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(conversationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("Send"));
         }
     }
 }

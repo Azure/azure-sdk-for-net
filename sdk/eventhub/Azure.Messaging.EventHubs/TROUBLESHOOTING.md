@@ -22,6 +22,7 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Logs reflect intermittent HTTP 412 and HTTP 409 responses from storage](#logs-reflect-intermittent-http-412-and-http-409-responses-from-storage)
   - [Partitions close and initialize intermittently or during scaling](#partitions-close-and-initialize-intermittently-or-during-scaling)
   - [Partitions close and initialize frequently](#partitions-close-and-initialize-frequently)
+  - [Warnings being raised to the error handler that starts with "A load balancing cycle has taken too long to complete."](#warnings-being-raised-to-the-error-handler-that-starts-with--a-load-balancing-cycle-has-taken-too-long-to-complete-)
   - ["Frequent errors for "...current receiver '< RECEIVER_NAME >' with epoch '0' is getting disconnected""](#frequent-errors-for-current-receiver--receiver_name--with-epoch-0-is-getting-disconnected)
   - [High CPU usage](#high-cpu-usage)
   - [A partition is not being processed](#a-partition-is-not-being-processed)
@@ -211,7 +212,7 @@ If the number of processors configured to us the same Event Hub, consumer group,
 
 The most frequent causes of this behavior are:
 
-**Exceptions being thrown in the event processing handler:**
+#### Exceptions being thrown in the event processing handler:
 
 It is very important that an application's handler code guards against exceptions; the event processor does not have enough understanding of the application and its state to know how an exception should be handled.  Any exception thrown in a handler will go uncaught by the processor and will **NOT** be directed to the error handler.  
 
@@ -219,21 +220,34 @@ Behavior is not guaranteed but, for most hosts, this will fault the task respons
 
 It is strongly recommended that all handlers be wrapped in a `try/catch` block and that exceptions are not permitted to bubble.
 
-**Too many partitions are owned:**
+#### Too many partitions are owned:
 
 The event processor works in a concurrent and highly asynchronous manner.  Each partition owned by the processor is hosted by a dedicated background task.  The processor infrastructure also relies on a background task to perform health checks, error recovery, and load balancing activities.  Each of these tasks relies on continuations for asynchronous operations being scheduled in a timely manner in order to make forward progress.
 
-When a processor owns too many partitions, it will often experience contention in the threadpool leading to starvation.  During this time, continuations will start to queue while waiting to be scheduled causing stalls in the processor.  Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
+When a processor owns too many partitions, it will often experience contention in the thread pool leading to starvation.  During this time, continuations will start to queue while waiting to be scheduled causing stalls in the processor.  Because there is no fairness guarantee in scheduling, some partitions may appear to stop processing or load balancing may not be able to update ownership, causing partitions to "bounce" between owners.
 
 It is generally recommended that an event processor own no more than three partitions for every 1 CPU core of the host.  It is often helpful to start a ratio of 1.5 partitions for each CPU core and test increasing the number of owned partitions gradually to measure what works best for the specific application.
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
+- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
-**"Soft Delete" is enabled for a Blob Storage checkpoint store:**
+#### "Soft Delete" is enabled for a Blob Storage checkpoint store:
 
 To coordinate with other event processors, the checkpoint store ownership records are inspected during each load balancing cycle.  When using an Azure Blob Storage as a checkpoint store, the "soft delete" feature can cause large delays when attempting to read the contents of a container.   It is strongly recommended that "soft delete" be disabled.  For more information, see: [Soft delete for blobs][SoftDeleteBlobStorage].
+
+### Warnings being raised to the error handler that starts with  "A load balancing cycle has taken too long to complete. ..."
+
+The full text of the error message looks something like:
+
+> A load balancing cycle has taken too long to complete.  A slow cycle can cause stability issues with partition ownership.  Consider investigating storage latency and thread pool health.  Common causes are soft delete being enabled for storage and too many partitions owned.  You may also want to consider increasing the 'PartitionOwnershipExpirationInterval' in the processor options.  Cycle Duration: < NUMBER > seconds.  Partition Ownership Interval '< NUMBER >' seconds.
+
+This warning indicates that the processor's load balancing loop is running slowly, which may result in other processors seeing it as unavailable.  This will cause partitions to move between owners, slowing forward progress and causing rewinds/duplication for processing.  If this is seen very occasionally without partition ownership changes, the host may be under a temporary heavy load and it can be ignored.   However, if this warning is triggered regularly, it signals a problem that should be addressed.
+
+The most likely cause is an event processor owning too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).  
+
+Another possible cause is soft delete being enabled on the container being used by the processor.  See: ["Soft Delete" is enabled for a Blob Storage checkpoint store](#soft-delete-is-enabled-for-a-blob-storage-checkpoint-store).
 
 ### Frequent errors for "...current receiver '< RECEIVER_NAME >' with epoch '0' is getting disconnected"
 
@@ -253,6 +267,10 @@ Another possible cause is an event processor owning too many partitions.  See: [
 ### High CPU usage
 
 High CPU usage is usually because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
+
+### One or more partitions have high latency for processing
+
+When processing for one or more partitions is delayed, it is most often because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
 
 ### A partition is not being processed
 
@@ -326,7 +344,7 @@ When filing GitHub issues, the following details are requested for all scenarios
 
 - Instructions on how to reproduce the issue locally.  Ideally, a small self-contained project that can reproduce the error is available.
 
-- Logs for the period of at least +/- 10 minutes from when the issue occurred.  Verbose logs are usually needed, but can be filtered by the type of issue.  _(see below)_
+- Logs for the period of at least +/- 5 minutes from when the issue occurred.  Verbose logs are usually needed, but can be filtered by the type of issue.  _(see below)_
 
 - How many partitions does the Event Hub have?
 
@@ -356,6 +374,8 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 88 (Buffered Producer Publish Start)
   - 89 (Buffered Producer Publish Complete)
   - 90 (Buffered Producer Publish Error)
+  - 126 (Buffered Producer Idle Start)
+  - 127 (Buffered Producer Idle Complete)
 
 ### Event processor issues
 
@@ -383,6 +403,9 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 45 (EventProcessorClaimOwnershipError)
   - 103 (EventProcessorLoadBalancingCycleSlowWarning)
   - 104 (EventProcessorHighPartitionOwnershipWarning)
+  - 123 (EventProcessorProcessingHandlerStart)
+  - 124 (EventProcessorProcessingHandlerComplete)
+  - 125 (EventProcessorProcessingHandlerError)
   
 ### Consuming issues
 
@@ -433,7 +456,7 @@ For more information on ways to request support, please see: [Support][SUPPORT].
 [IoTEventHubEndpoint]: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin
 [IoTHubSAS]: https://docs.microsoft.com/azure/iot-hub/iot-hub-dev-guide-sas#security-tokens
 [RBAC]: https://docs.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory
-[SoftDeleteBlobStorage]: https://docs.microsoft.comazure/storage/blobs/soft-delete-blob-overview
+[SoftDeleteBlobStorage]: https://docs.microsoft.com/azure/storage/blobs/soft-delete-blob-overview
 [TroubleshootAuthenticationAuthorization]: https://docs.microsoft.com/azure/event-hubs/troubleshoot-authentication-authorization
 [UnauthorizedAccessException]: https://docs.microsoft.com/dotnet/api/system.unauthorizedaccessexception
 

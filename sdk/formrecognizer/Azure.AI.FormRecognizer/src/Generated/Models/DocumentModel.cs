@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Model info. </summary>
-    public partial class DocumentModel : DocumentModelInfo
+    internal partial class DocumentModel : DocumentModelSummary
     {
         /// <summary> Initializes a new instance of DocumentModel. </summary>
         /// <param name="modelId"> Unique model name. </param>

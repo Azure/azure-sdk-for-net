@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task BuildCustomModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -38,9 +37,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // build modes and their differences, please see:
             // https://aka.ms/azsdk/formrecognizer/buildmode
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
             if (string.IsNullOrEmpty(model.Description))

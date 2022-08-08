@@ -1428,6 +1428,16 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
+        public override Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+        }
+
+        public override void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("Cancellation not supported by API versions v3.0, v3.1.");
+        }
+
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new AnalyzeActionsOptions();
@@ -1488,10 +1498,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToLegacyTasks(actions.RecognizeEntitiesActions);
             }
-            if (actions.RecognizeCustomEntitiesActions != null)
-            {
-                tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToLegacyTasks(actions.RecognizeCustomEntitiesActions);
-            }
             if (actions.ExtractKeyPhrasesActions != null)
             {
                 tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToLegacyTasks(actions.ExtractKeyPhrasesActions);
@@ -1503,18 +1509,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             if (actions.AnalyzeSentimentActions != null)
             {
                 tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToLegacyTasks(actions.AnalyzeSentimentActions);
-            }
-            if (actions.ExtractSummaryActions != null)
-            {
-                tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToLegacyTasks(actions.ExtractSummaryActions);
-            }
-            if (actions.SingleCategoryClassifyActions != null)
-            {
-                tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToLegacyTasks(actions.SingleCategoryClassifyActions);
-            }
-            if (actions.MultiCategoryClassifyActions != null)
-            {
-                tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToLegacyTasks(actions.MultiCategoryClassifyActions);
             }
             return tasks;
         }

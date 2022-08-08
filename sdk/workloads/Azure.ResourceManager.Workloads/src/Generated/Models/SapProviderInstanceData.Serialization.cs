@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<WorkloadMonitorProvisioningState> provisioningState = default;
             Optional<ResponseError> errors = default;
             Optional<ProviderSpecificProperties> providerSettings = default;
@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Workloads
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapProviderInstanceData(id, name, type, systemData, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value);
+            return new SapProviderInstanceData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value);
         }
     }
 }

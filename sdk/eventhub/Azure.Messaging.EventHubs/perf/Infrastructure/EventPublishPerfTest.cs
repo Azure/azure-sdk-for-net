@@ -56,6 +56,18 @@ namespace Azure.Messaging.EventHubs.Perf
         }
 
         /// <summary>
+        ///   Performs the tasks needed to initialize and set up the environment for the test scenario.
+        ///   This setup will take place once for each instance, running after the global setup has
+        ///   completed.
+        /// </summary>
+        ///
+        public override async Task SetupAsync()
+        {
+            await base.SetupAsync();
+            _sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
+        }
+
+        /// <summary>
         ///   Performs the tasks needed to clean up the environment for the test scenario.
         ///   When multiple instances are run in parallel, the cleanup will take place once,
         ///   after the execution of all test instances.

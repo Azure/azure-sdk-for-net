@@ -24,14 +24,17 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
@@ -76,17 +79,17 @@ namespace Azure.ResourceManager.StoragePool
             Optional<StoragePoolSku> sku = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            ProvisioningStates provisioningState = default;
+            Optional<SystemData> systemData = default;
+            DiskPoolIscsiTargetProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
-            OperationalStatus status = default;
+            StoragePoolOperationalStatus status = default;
             Optional<IList<WritableSubResource>> disks = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             Optional<IList<string>> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -122,6 +125,11 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -152,6 +160,11 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -166,7 +179,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = new ProvisioningStates(property0.Value.GetString());
+                            provisioningState = new DiskPoolIscsiTargetProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"))
@@ -181,7 +194,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("status"))
                         {
-                            status = new OperationalStatus(property0.Value.GetString());
+                            status = new StoragePoolOperationalStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disks"))
@@ -201,7 +214,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))
@@ -223,7 +236,7 @@ namespace Azure.ResourceManager.StoragePool
                     continue;
                 }
             }
-            return new DiskPoolData(id, name, type, systemData, tags, location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
+            return new DiskPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
         }
     }
 }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<AfdEndpointResource> CreateAfdEndpoint(ProfileResource profile, string endpointName)
+        protected async Task<FrontDoorEndpointResource> CreateAfdEndpoint(ProfileResource profile, string endpointName)
         {
-            AfdEndpointData input = ResourceDataHelper.CreateAfdEndpointData();
-            var lro = await profile.GetAfdEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, endpointName, input);
+            FrontDoorEndpointData input = ResourceDataHelper.CreateAfdEndpointData();
+            var lro = await profile.GetFrontDoorEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, endpointName, input);
             return lro.Value;
         }
 
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<AfdOriginResource> CreateAfdOrigin(AfdOriginGroupResource originGroup, string originName)
+        protected async Task<FrontDoorOriginResource> CreateAfdOrigin(FrontDoorOriginGroupResource originGroup, string originName)
         {
-            AfdOriginData input = ResourceDataHelper.CreateAfdOriginData();
-            var lro = await originGroup.GetAfdOrigins().CreateOrUpdateAsync(WaitUntil.Completed, originName, input);
+            FrontDoorOriginData input = ResourceDataHelper.CreateAfdOriginData();
+            var lro = await originGroup.GetFrontDoorOrigins().CreateOrUpdateAsync(WaitUntil.Completed, originName, input);
             return lro.Value;
         }
 
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<AfdOriginGroupResource> CreateAfdOriginGroup(ProfileResource profile, string originGroupName)
+        protected async Task<FrontDoorOriginGroupResource> CreateAfdOriginGroup(ProfileResource profile, string originGroupName)
         {
-            AfdOriginGroupData input = ResourceDataHelper.CreateAfdOriginGroupData();
-            var lro = await profile.GetAfdOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, originGroupName, input);
+            FrontDoorOriginGroupData input = ResourceDataHelper.CreateAfdOriginGroupData();
+            var lro = await profile.GetFrontDoorOriginGroups().CreateOrUpdateAsync(WaitUntil.Completed, originGroupName, input);
             return lro.Value;
         }
 
@@ -130,60 +130,60 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<AfdCustomDomainResource> CreateAfdCustomDomain(ProfileResource profile, string customDomainName, string hostName)
+        protected async Task<FrontDoorCustomDomainResource> CreateAfdCustomDomain(ProfileResource profile, string customDomainName, string hostName)
         {
-            AfdCustomDomainData input = ResourceDataHelper.CreateAfdCustomDomainData(hostName);
-            var lro = await profile.GetAfdCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, input);
+            FrontDoorCustomDomainData input = ResourceDataHelper.CreateAfdCustomDomainData(hostName);
+            var lro = await profile.GetFrontDoorCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, input);
             return lro.Value;
         }
 
-        protected async Task<AfdRuleSetResource> CreateAfdRuleSet(ProfileResource profile, string ruleSetName)
+        protected async Task<FrontDoorRuleSetResource> CreateAfdRuleSet(ProfileResource profile, string ruleSetName)
         {
-            var lro = await profile.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
+            var lro = await profile.GetFrontDoorRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
             return lro.Value;
         }
 
-        protected async Task<AfdRuleResource> CreateAfdRule(AfdRuleSetResource ruleSet, string ruleName)
+        protected async Task<FrontDoorRuleResource> CreateAfdRule(FrontDoorRuleSetResource ruleSet, string ruleName)
         {
-            AfdRuleData input = ResourceDataHelper.CreateAfdRuleData();
+            FrontDoorRuleData input = ResourceDataHelper.CreateAfdRuleData();
             DeliveryRuleCondition deliveryRuleCondition = ResourceDataHelper.CreateDeliveryRuleCondition();
             DeliveryRuleAction deliveryRuleAction = ResourceDataHelper.CreateDeliveryRuleOperation();
             input.Conditions.Add(deliveryRuleCondition);
             input.Actions.Add(deliveryRuleAction);
-            var lro = await ruleSet.GetAfdRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input);
+            var lro = await ruleSet.GetFrontDoorRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input);
             return lro.Value;
         }
 
-        protected async Task<AfdRouteResource> CreateAfdRoute(AfdEndpointResource endpoint, string routeName, AfdOriginGroupResource originGroup, AfdRuleSetResource ruleSet)
+        protected async Task<FrontDoorRouteResource> CreateAfdRoute(FrontDoorEndpointResource endpoint, string routeName, FrontDoorOriginGroupResource originGroup, FrontDoorRuleSetResource ruleSet)
         {
-            AfdRouteData input = ResourceDataHelper.CreateAfdRouteData(originGroup);
+            FrontDoorRouteData input = ResourceDataHelper.CreateAfdRouteData(originGroup);
             input.RuleSets.Add(new WritableSubResource
             {
                 Id = ruleSet.Id
             });
             input.PatternsToMatch.Add("/*");
-            var lro = await endpoint.GetAfdRoutes().CreateOrUpdateAsync(WaitUntil.Completed, routeName, input);
+            var lro = await endpoint.GetFrontDoorRoutes().CreateOrUpdateAsync(WaitUntil.Completed, routeName, input);
             return lro.Value;
         }
 
-        protected async Task<AfdSecurityPolicyResource> CreateAfdSecurityPolicy(ProfileResource profile, AfdEndpointResource endpoint, string securityPolicyName)
+        protected async Task<FrontDoorSecurityPolicyResource> CreateAfdSecurityPolicy(ProfileResource profile, FrontDoorEndpointResource endpoint, string securityPolicyName)
         {
-            AfdSecurityPolicyData input = ResourceDataHelper.CreateAfdSecurityPolicyData(endpoint);
+            FrontDoorSecurityPolicyData input = ResourceDataHelper.CreateAfdSecurityPolicyData(endpoint);
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();
-            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new ActivatedResourceReference
+            securityPolicyWebApplicationFirewallAssociation.Domains.Add(new FrontDoorActivatedResourceInfo
             {
                 Id = endpoint.Id
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
             ((SecurityPolicyWebApplicationFirewall)input.Properties).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
-            var lro = await profile.GetAfdSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, input);
+            var lro = await profile.GetFrontDoorSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, input);
             return lro.Value;
         }
 
-        protected async Task<AfdSecretResource> CreateAfdSecret(ProfileResource profile, string secretName)
+        protected async Task<FrontDoorSecretResource> CreateAfdSecret(ProfileResource profile, string secretName)
         {
-            AfdSecretData input = ResourceDataHelper.CreateAfdSecretData();
-            var lro = await profile.GetAfdSecrets().CreateOrUpdateAsync(WaitUntil.Completed, secretName, input);
+            FrontDoorSecretData input = ResourceDataHelper.CreateAfdSecretData();
+            var lro = await profile.GetFrontDoorSecrets().CreateOrUpdateAsync(WaitUntil.Completed, secretName, input);
             return lro.Value;
         }
 

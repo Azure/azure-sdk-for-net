@@ -1,0 +1,47 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/teamsUser/:exchangeAccessToken?api-version=2022-06-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "62",
+        "Content-Type": "application/json",
+        "traceparent": "00-9f472a30d803d20228d6df668dc4ce0b-534e907300d7dfe1-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d58c0f41216b0c5980fe1e0c77204f34",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 04 Aug 2022 06:50:46 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "token": "Sanitized",
+        "appId": "Sanitized",
+        "userId": "Sanitized"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-10-31-preview, 2022-06-01",
+        "Content-Length": "69",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 04 Aug 2022 06:50:47 GMT",
+        "MS-CV": "FA7SNUnm60CaJbYDe14sTw.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "X-Azure-Ref": "0R2zrYgAAAACzZl6iZme/Sq8b/9AVbOkVTE9OMjFFREdFMTgwNQBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "d58c0f41216b0c5980fe1e0c77204f34",
+        "X-Processing-Time": "811ms"
+      },
+      "ResponseBody": {
+        "token": "Sanitized",
+        "expiresOn": "2022-08-04T07:56:18.9124214\u002B00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "859764852"
+  }
+}

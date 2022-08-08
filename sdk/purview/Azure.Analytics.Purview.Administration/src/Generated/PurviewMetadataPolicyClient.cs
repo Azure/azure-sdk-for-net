@@ -38,79 +38,179 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateMetadataPolicyAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateMetadataPolicyAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+        /// 
+        /// var data = new {
+        ///     name = "<name>",
+        ///     id = "<id>",
+        ///     version = 1234,
+        ///     properties = new {
+        ///         description = "<description>",
+        ///         decisionRules = new[] {
+        ///             new {
+        ///                 effect = "Deny",
+        ///                 dnfCondition = new[] {
+        ///                     new[] {
+        ///                         new {
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
+        ///                             attributeValueIncludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
+        ///                             attributeValueExcludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                         }
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///         attributeRules = new[] {
+        ///             new {
+        ///                 id = "<id>",
+        ///                 name = "<name>",
+        ///                 dnfCondition = new[] {
+        ///                     new[] {
+        ///                         new {
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
+        ///                             attributeValueIncludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
+        ///                             attributeValueExcludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                         }
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///         collection = new {
+        ///             referenceName = "<referenceName>",
+        ///         },
+        ///         parentCollectionName = "<parentCollectionName>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -135,79 +235,179 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateMetadataPolicy with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateMetadataPolicy with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+        /// 
+        /// var data = new {
+        ///     name = "<name>",
+        ///     id = "<id>",
+        ///     version = 1234,
+        ///     properties = new {
+        ///         description = "<description>",
+        ///         decisionRules = new[] {
+        ///             new {
+        ///                 effect = "Deny",
+        ///                 dnfCondition = new[] {
+        ///                     new[] {
+        ///                         new {
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
+        ///                             attributeValueIncludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
+        ///                             attributeValueExcludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                         }
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///         attributeRules = new[] {
+        ///             new {
+        ///                 id = "<id>",
+        ///                 name = "<name>",
+        ///                 dnfCondition = new[] {
+        ///                     new[] {
+        ///                         new {
+        ///                             attributeName = "<attributeName>",
+        ///                             attributeValueIncludes = "<attributeValueIncludes>",
+        ///                             attributeValueIncludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                             attributeValueExcludes = "<attributeValueExcludes>",
+        ///                             attributeValueExcludedIn = new[] {
+        ///                                 "<String>"
+        ///                             },
+        ///                         }
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///         collection = new {
+        ///             referenceName = "<referenceName>",
+        ///         },
+        ///         parentCollectionName = "<parentCollectionName>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -232,48 +432,78 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetMetadataPolicyAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+        /// 
+        /// Response response = await client.GetMetadataPolicyAsync("<policyId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -298,48 +528,78 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Gets a metadata policy. </summary>
         /// <param name="policyId"> Id of an existing policy that needs to be fetched. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="policyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetMetadataPolicy with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
+        /// 
+        /// Response response = client.GetMetadataPolicy("<policyId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("effect").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("decisionRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("attributeRules")[0].GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("collection").GetProperty("referenceName").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("parentCollectionName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>MetadataPolicy</c>:
         /// <code>{
-        ///   name: string,
-        ///   id: string,
-        ///   version: number,
+        ///   name: string, # Optional. The name of policy
+        ///   id: string, # Optional. The id of policy
+        ///   version: number, # Optional. The version of policy
         ///   properties: {
-        ///     description: string,
+        ///     description: string, # Optional. The description of policy
         ///     decisionRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         effect: &quot;Deny&quot; | &quot;Permit&quot;, # Optional. The effect for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The DecisionRules of policy
         ///     attributeRules: [
         ///       {
-        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///         id: string,
-        ///         name: string,
-        ///         dnfCondition: [AttributeMatcher[]]
+        ///         kind: &quot;decisionrule&quot; | &quot;attributerule&quot;, # Optional. The kind of rule
+        ///         id: string, # Optional. The id for rule
+        ///         name: string, # Optional. The name for rule
+        ///         dnfCondition: [AttributeMatcher[]], # Optional. The dnf Condition for a rule
         ///       }
-        ///     ],
+        ///     ], # Optional. The AttributeRules of policy
         ///     collection: {
-        ///       type: string,
-        ///       referenceName: string
-        ///     },
-        ///     parentCollectionName: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
+        ///       type: string, # Optional. The type of reference
+        ///       referenceName: string, # Optional. The name of reference
+        ///     }, # Optional. The collection reference for a policy
+        ///     parentCollectionName: string, # Optional. The parent collection of the policy
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -363,55 +623,21 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   values: [
-        ///     {
-        ///       name: string,
-        ///       id: string,
-        ///       version: number,
-        ///       properties: {
-        ///         description: string,
-        ///         decisionRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         attributeRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             id: string,
-        ///             name: string,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         collection: {
-        ///           type: string,
-        ///           referenceName: string
-        ///         },
-        ///         parentCollectionName: string
-        ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
-        /// }
-        /// </code>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetMetadataPoliciesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
-        /// </remarks>
+        /// await foreach (var data in client.GetMetadataPoliciesAsync())
+        /// {
+        /// }
+        /// ]]></code>
+        /// </example>
         public virtual AsyncPageable<BinaryData> GetMetadataPoliciesAsync(RequestContext context = null)
         {
             return GetMetadataPoliciesImplementationAsync("PurviewMetadataPolicyClient.GetMetadataPolicies", context);
@@ -435,55 +661,21 @@ namespace Azure.Analytics.Purview.Administration
         }
 
         /// <summary> List or Get metadata policies. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   values: [
-        ///     {
-        ///       name: string,
-        ///       id: string,
-        ///       version: number,
-        ///       properties: {
-        ///         description: string,
-        ///         decisionRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             effect: &quot;Deny&quot; | &quot;Permit&quot;,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         attributeRules: [
-        ///           {
-        ///             kind: &quot;decisionrule&quot; | &quot;attributerule&quot;,
-        ///             id: string,
-        ///             name: string,
-        ///             dnfCondition: [AttributeMatcher[]]
-        ///           }
-        ///         ],
-        ///         collection: {
-        ///           type: string,
-        ///           referenceName: string
-        ///         },
-        ///         parentCollectionName: string
-        ///       }
-        ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorModelAutoGenerated]
-        ///   }
-        /// }
-        /// </code>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetMetadataPolicies and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewMetadataPolicyClient(endpoint, "<collectionName>", credential);
         /// 
-        /// </remarks>
+        /// foreach (var data in client.GetMetadataPolicies())
+        /// {
+        /// }
+        /// ]]></code>
+        /// </example>
         public virtual Pageable<BinaryData> GetMetadataPolicies(RequestContext context = null)
         {
             return GetMetadataPoliciesImplementation("PurviewMetadataPolicyClient.GetMetadataPolicies", context);

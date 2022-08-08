@@ -6,14 +6,14 @@
 ################
 
 # Git Hub integration and bot rules
-/.github/                                       @jsquire
+/.github/                                       @jsquire @ronniegeraghty
 
 #########
 # SDK
 #########
 
 # Catch all
-/sdk/                                           
+/sdk/                                           @pallavit @jsquire
 
 # ######## Core Libraries ########
 
@@ -263,7 +263,7 @@
 /sdk/containerregistry/Microsoft.*/ @toddysm @yugangw-MSFT
 
 # ServiceLabel: %Cosmos %Service Attention
-/sdk/cosmosdb/          @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve
+/sdk/cosmosdb/          @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
 # ServiceLabel: %Cost Management %Service Attention
 /sdk/cost-management/Microsoft.Azure.Management.CostManagement/           @ms-premp @ramaganesan-rg
@@ -319,7 +319,7 @@
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
-/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft @ngastelum-ms
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
@@ -366,7 +366,7 @@
 #/<NotInRepo>/            @madhurinms
 
 # PRLabel: %Iot
-/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @andyk-ms @brycewang-microsoft @tmahmood-microsoft
+/sdk/iot/                               @drwill-ms @timtay-microsoft @abhipsaMisra @andyk-ms @brycewang-microsoft @tmahmood-microsoft @ngastelum-ms
 
 # ServiceLabel: %IotCentral %Service Attention
 /sdk/iotcentral/Microsoft.Azure.Management.IotCentral/           @iluican @jlian
@@ -376,7 +376,7 @@
 
 # PRLabel: %IotHub
 # ServiceLabel: %IotHub %Service Attention
-/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @azabbasi @andyk-ms @brycewang-microsoft @tmahmood-microsoft
+/sdk/iothub/                            @drwill-ms @timtay-microsoft @abhipsaMisra @andyk-ms @brycewang-microsoft @tmahmood-microsoft @ngastelum-ms
 
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/            @rkmanda @chieftn
@@ -621,13 +621,13 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage/                                   @tg-msft
+/sdk/storage/                                   @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                   @amishra-dev @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage/Azure.Storage.*/                   @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/         @amishra-dev @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
+/sdk/storage/Microsoft.Azure.WebJobs.*/         @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
 
 # ServiceLabel: %Storage %Service Attention
 #/<NotInRepo>/                                   @xgithubtriage
@@ -687,7 +687,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ######## Management Plane ########
 
-/**/*Management*/                               @m-nash @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/**/*Management*/                               @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 /**/Azure.ResourceManager*/                     @m-nash @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
 # Reviewers to double check any API changes

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("refreshToken");
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime");
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> token = default;
             Optional<string> tokenSecret = default;
             Optional<string> refreshToken = default;
@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SourceControlData(id, name, type, systemData, kind.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime));
+            return new SourceControlData(id, name, type, systemData.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime), kind.Value);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -27,9 +28,9 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SyncMemberDbType> databaseType = default;
-            Optional<string> databaseId = default;
+            Optional<Guid> databaseId = default;
             Optional<string> description = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
@@ -53,6 +54,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -77,7 +83,12 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("databaseId"))
                         {
-                            databaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            databaseId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -104,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SyncAgentLinkedDatabase(id, name, type, systemData, Optional.ToNullable(databaseType), databaseId.Value, description.Value, serverName.Value, databaseName.Value, userName.Value);
+            return new SyncAgentLinkedDatabase(id, name, type, systemData.Value, Optional.ToNullable(databaseType), Optional.ToNullable(databaseId), description.Value, serverName.Value, databaseName.Value, userName.Value);
         }
     }
 }

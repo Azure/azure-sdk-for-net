@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
-        internal FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, string storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             TargetResourceId = targetResourceId;
             TargetResourceGuid = targetResourceGuid;
             StorageId = storageId;
@@ -50,30 +50,30 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> ID of network security group to which flow log will be applied. </summary>
         public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> Guid of network security group to which flow log will be applied. </summary>
         public Guid? TargetResourceGuid { get; }
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
-        public string StorageId { get; set; }
+        public ResourceIdentifier StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>
         public bool? Enabled { get; set; }
         /// <summary> Parameters that define the retention policy for flow log. </summary>
         public RetentionPolicyParameters RetentionPolicy { get; set; }
         /// <summary> Parameters that define the flow log format. </summary>
-        public FlowLogFormatParameters Format { get; set; }
+        public FlowLogProperties Format { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
-            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
             set
             {
                 if (FlowAnalyticsConfiguration is null)
                     FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
             }
         }
 

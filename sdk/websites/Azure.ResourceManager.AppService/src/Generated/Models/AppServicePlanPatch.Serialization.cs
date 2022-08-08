@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("hostingEnvironmentProfile");
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (Optional.IsDefined(PerSiteScaling))
+            if (Optional.IsDefined(IsPerSiteScaling))
             {
                 writer.WritePropertyName("perSiteScaling");
-                writer.WriteBooleanValue(PerSiteScaling.Value);
+                writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (Optional.IsDefined(ElasticScaleEnabled))
+            if (Optional.IsDefined(IsElasticScaleEnabled))
             {
                 writer.WritePropertyName("elasticScaleEnabled");
-                writer.WriteBooleanValue(ElasticScaleEnabled.Value);
+                writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
             if (Optional.IsDefined(MaximumElasticWorkerCount))
             {
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("freeOfferExpirationTime");
                 writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved");
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon");
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(HyperV))
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV");
-                writer.WriteBooleanValue(HyperV.Value);
+                writer.WriteBooleanValue(IsHyperV.Value);
             }
             if (Optional.IsDefined(TargetWorkerCount))
             {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("kubeEnvironmentProfile");
                 writer.WriteObjectValue(KubeEnvironmentProfile);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> workerTierName = default;
-            Optional<StatusOptions> status = default;
+            Optional<StatusOption> status = default;
             Optional<string> subscription = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
             Optional<int> maximumNumberOfWorkers = default;
@@ -156,6 +156,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToStatusOptions();
+                            status = property0.Value.GetString().ToStatusOption();
                             continue;
                         }
                         if (property0.NameEquals("subscription"))
@@ -372,7 +377,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServicePlanPatch(id, name, type, systemData, kind.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant));
+            return new AppServicePlanPatch(id, name, type, systemData.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
         }
     }
 }

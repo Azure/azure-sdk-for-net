@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metadata for the metrics. </summary>
-    public partial class ResourceMetricDefinition : ProxyOnlyResource
+    public partial class ResourceMetricDefinition : ResourceData
     {
         /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
         public ResourceMetricDefinition()
@@ -27,19 +27,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="unit"> Unit of the metric. </param>
         /// <param name="primaryAggregationType"> Primary aggregation type. </param>
         /// <param name="metricAvailabilities"> List of time grains supported for the metric together with retention period. </param>
         /// <param name="resourceUri"> Resource URI. </param>
         /// <param name="properties"> Resource metric definition properties. </param>
-        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
             MetricAvailabilities = metricAvailabilities;
             ResourceUri = resourceUri;
             Properties = properties;
+            Kind = kind;
         }
 
         /// <summary> Unit of the metric. </summary>
@@ -52,5 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Uri ResourceUri { get; }
         /// <summary> Resource metric definition properties. </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

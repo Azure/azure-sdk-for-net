@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// An optional, model description.
+        /// An optional model description.
         /// </summary>
-        public string ModelDescription { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// A case-sensitive prefix string to filter documents in the source path for building a model.

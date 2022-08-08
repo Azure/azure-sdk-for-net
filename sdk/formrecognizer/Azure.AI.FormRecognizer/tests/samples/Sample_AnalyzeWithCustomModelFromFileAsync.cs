@@ -7,13 +7,12 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.DocumentAnalysis.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeWithCustomModelFromFileAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -26,11 +25,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/labelingtool
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-
-            await buildOperation.WaitForCompletionAsync();
-
-            DocumentModel customModel = buildOperation.Value;
+            BuildModelOperation buildOperation = await adminClient.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModelDetails customModel = buildOperation.Value;
 
             // Proceed with the custom document recognition.
 
@@ -47,10 +43,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync(modelId, stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");

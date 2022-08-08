@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A class that describes the reason for a validation failure. </summary>
-    public partial class VnetValidationFailureDetails : ProxyOnlyResource
+    public partial class VnetValidationFailureDetails : ResourceData
     {
         /// <summary> Initializes a new instance of VnetValidationFailureDetails. </summary>
         public VnetValidationFailureDetails()
@@ -26,26 +26,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="message"> Text describing the validation outcome. </param>
-        /// <param name="failed"> A flag describing whether or not validation failed. </param>
+        /// <param name="isFailed"> A flag describing whether or not validation failed. </param>
         /// <param name="failedTests"> A list of tests that failed in the validation. </param>
         /// <param name="warnings"> A list of warnings generated during validation. </param>
-        internal VnetValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string message, bool? failed, IList<VnetValidationTestFailure> failedTests, IList<VnetValidationTestFailure> warnings) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal VnetValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, bool? isFailed, IList<VnetValidationTestFailure> failedTests, IList<VnetValidationTestFailure> warnings, string kind) : base(id, name, resourceType, systemData)
         {
             Message = message;
-            Failed = failed;
+            IsFailed = isFailed;
             FailedTests = failedTests;
             Warnings = warnings;
+            Kind = kind;
         }
 
         /// <summary> Text describing the validation outcome. </summary>
         public string Message { get; set; }
         /// <summary> A flag describing whether or not validation failed. </summary>
-        public bool? Failed { get; set; }
+        public bool? IsFailed { get; set; }
         /// <summary> A list of tests that failed in the validation. </summary>
         public IList<VnetValidationTestFailure> FailedTests { get; }
         /// <summary> A list of warnings generated during validation. </summary>
         public IList<VnetValidationTestFailure> Warnings { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

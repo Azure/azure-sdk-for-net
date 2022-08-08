@@ -32,14 +32,24 @@ namespace Azure.ResourceManager.TestFramework
 
         private ArmClient _cleanupClient;
         private WaitUntil _waitForCleanup;
+        private ResourceType _resourceType;
+        protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
+            : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
 
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
+        }
+
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
+            : this(isAsync, mode)
+        {
+            _resourceType = resourceType;
+            ApiVersion = apiVersion;
         }
 
         private void Initialize()
@@ -67,6 +77,8 @@ namespace Azure.ResourceManager.TestFramework
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            if (ApiVersion is not null)
+                options.SetApiVersion(_resourceType, ApiVersion);
 
             return InstrumentClient(new ArmClient(
                 TestEnvironment.Credential,

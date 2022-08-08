@@ -8,6 +8,9 @@ parameters:
 - name: DependsOn
   type: string
   default: Build
+- name: ShouldPublish
+  type: boolean
+  default: false
 
 
 jobs:
@@ -24,53 +27,51 @@ jobs:
       - download: current
         artifact: packages
         displayName: Download published Nuget Packages
-
-      - task: Powershell@2
-        displayName: 'Verify Package Tags and Create Git Releases'
-        inputs:
-          filePath: ${{ parameters.BuildToolsPath }}/scripts/create-tags-and-git-release.ps1
-          arguments: >
-            -artifactLocation '$(PIPELINE.WORKSPACE)/packages'
-            -workingDirectory $(System.DefaultWorkingDirectory)
-            -packageRepository 'Nuget'
-            -releaseSha '$(Build.SourceVersion)'
-            -repoOwner 'Azure'
-            -repoName 'azure-sdk-for-net'
-          pwsh: true
-        env:
-          GH_TOKEN: $(azuresdk-github-pat)
-        condition: and(succeeded(), ne(variables['SkipCreateTagAndGitRelease'], 'true'))
-
+      
       - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
         parameters:
           PackagesPath: '$(PIPELINE.WORKSPACE)/packages'
           BuildToolsPath: '${{ parameters.BuildToolsPath }}'
 
-      - task: MSBuild@1
-        displayName: 'Upload Symbols'
-        inputs:
-          solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
-          msbuildArguments: >
-            /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
-            /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
-            /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
-            /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
-        condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
+      - ${{ if and(eq(parameters.ShouldPublish, 'true'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net')) }}:
+        - task: Powershell@2
+          displayName: 'Verify Package Tags and Create Git Releases'
+          inputs:
+            filePath: ${{ parameters.BuildToolsPath }}/scripts/create-tags-and-git-release.ps1
+            arguments: >
+              -artifactLocation '$(PIPELINE.WORKSPACE)/packages'
+              -workingDirectory $(System.DefaultWorkingDirectory)
+              -packageRepository 'Nuget'
+              -releaseSha '$(Build.SourceVersion)'
+              -repoOwner 'Azure'
+              -repoName 'azure-sdk-for-net'
+            pwsh: true
+          env:
+            GH_TOKEN: $(azuresdk-github-pat)
+          condition: and(succeeded(), ne(variables['SkipCreateTagAndGitRelease'], 'true'))
 
-      - task: NuGetToolInstaller@1
-        displayName: 'Use NuGet ${{ parameters.NugetVersion }}'
-        inputs:
-          versionSpec: ${{ parameters.NugetVersion }}
-        condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
+        - task: MSBuild@1
+          displayName: 'Upload Symbols'
+          inputs:
+            solution: '${{ parameters.BuildToolsPath }}/tools/symboltool/SymbolUploader.proj'
+            msbuildArguments: >
+              /p:PackagesPath=$(PIPELINE.WORKSPACE)/packages
+              /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
+              /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
+              /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
 
-      - task: NuGetCommand@2
-        displayName: 'Publish to Nuget'
-        inputs:
-          command: push
-          packagesToPush: '$(PIPELINE.WORKSPACE)/packages/**/*.nupkg;!$(PIPELINE.WORKSPACE)/packages/**/*.symbols.nupkg'
-          nuGetFeedType: external
-          publishFeedCredentials: Nuget.org
-        condition: and(succeeded(), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net'))
+        - task: NuGetToolInstaller@1
+          displayName: 'Use NuGet ${{ parameters.NugetVersion }}'
+          inputs:
+            versionSpec: ${{ parameters.NugetVersion }}
+
+        - task: NuGetCommand@2
+          displayName: 'Publish to Nuget'
+          inputs:
+            command: push
+            packagesToPush: '$(PIPELINE.WORKSPACE)/packages/**/*.nupkg;!$(PIPELINE.WORKSPACE)/packages/**/*.symbols.nupkg'
+            nuGetFeedType: external
+            publishFeedCredentials: Nuget.org
 
       - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
         parameters:

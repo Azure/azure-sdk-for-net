@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagementLockResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Get");
-            scope.Start();
+            using var scope0 = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _managementLockRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementLockResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Get");
-            scope.Start();
+            using var scope0 = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Get");
+            scope0.Start();
             try
             {
                 var response = _managementLockRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Delete");
-            scope.Start();
+            using var scope0 = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Delete");
+            scope0.Start();
             try
             {
                 var response = await _managementLockRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Delete");
-            scope.Start();
+            using var scope0 = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Delete");
+            scope0.Start();
             try
             {
                 var response = _managementLockRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Update");
-            scope.Start();
+            using var scope0 = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Update");
+            scope0.Start();
             try
             {
                 var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Update");
-            scope.Start();
+            using var scope0 = _managementLockClientDiagnostics.CreateScope("ManagementLockResource.Update");
+            scope0.Start();
             try
             {
                 var response = _managementLockRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, cancellationToken);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

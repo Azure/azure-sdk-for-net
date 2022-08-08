@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("error");
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(UsingSdk))
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk");
-                writer.WriteBooleanValue(UsingSdk.Value);
+                writer.WriteBooleanValue(IsUsingSdk.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> runCommand = default;
             Optional<Uri> url = default;
             Optional<Uri> extraInfoUrl = default;
@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebJobData(id, name, type, systemData, kind.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
+            return new WebJobData(id, name, type, systemData.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value);
         }
     }
 }

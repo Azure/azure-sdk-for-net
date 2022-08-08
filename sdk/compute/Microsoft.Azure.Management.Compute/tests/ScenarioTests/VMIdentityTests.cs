@@ -43,9 +43,9 @@ namespace Compute.Tests
                     {
                         vm.Identity = new VirtualMachineIdentity();
                         vm.Identity.Type = ResourceIdentityType.SystemAssignedUserAssigned;
-                        vm.Identity.UserAssignedIdentities = new Dictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue>()
+                        vm.Identity.UserAssignedIdentities = new Dictionary<string, UserAssignedIdentitiesValue>()
                         {
-                            { identity, new VirtualMachineIdentityUserAssignedIdentitiesValue() }
+                            { identity, new UserAssignedIdentitiesValue() }
                         };
                     };
 

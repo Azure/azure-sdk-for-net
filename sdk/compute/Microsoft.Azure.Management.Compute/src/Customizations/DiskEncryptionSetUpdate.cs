@@ -33,5 +33,16 @@ namespace Microsoft.Azure.Management.Compute.Models
             Tags = tags;
             CustomInit();
         }
+
+        public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet), bool? rotationToLatestKeyVersionEnabled = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionSetIdentity identity = default(EncryptionSetIdentity))
+        {
+            EncryptionType = encryptionType;
+            ActiveKey = activeKey;
+            RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
+            Tags = tags;
+            Identity = identity;
+            CustomInit();
+        }
+
     }
 }

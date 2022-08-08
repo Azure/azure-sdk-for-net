@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator @operator)
+        /// <param name="cookiesOperator"> Describes operator to be matched. </param>
+        public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator cookiesOperator)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            CookiesOperator = cookiesOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of Cookies to be matched. </param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="cookiesOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal CookiesMatchCondition(CookiesMatchConditionType conditionType, string selector, CookiesOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        internal CookiesMatchCondition(CookiesMatchConditionType conditionType, string selector, CookiesOperator cookiesOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
             Selector = selector;
-            Operator = @operator;
+            CookiesOperator = cookiesOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Name of Cookies to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public CookiesOperator Operator { get; set; }
+        public CookiesOperator CookiesOperator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

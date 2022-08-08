@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
-        public VpnClientRootCertificate(string publicCertData)
+        public VpnClientRootCertificate(BinaryData publicCertData)
         {
             if (publicCertData == null)
             {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
-        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string publicCertData, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData publicCertData, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             PublicCertData = publicCertData;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The certificate public data. </summary>
-        public string PublicCertData { get; set; }
+        public BinaryData PublicCertData { get; set; }
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

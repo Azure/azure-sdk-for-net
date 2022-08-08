@@ -144,6 +144,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -177,6 +178,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
         public async Task UpdateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

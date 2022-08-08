@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -140,8 +141,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #region Snippet:ServiceBusDeadLetterMessage
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
-                // dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
-                await receiver.DeadLetterMessageAsync(receivedMessage);
+                // Dead-letter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+                // We can optionally pass a dead letter reason and dead letter description to further describe the reason for dead-lettering the message.
+                await receiver.DeadLetterMessageAsync(receivedMessage, "sample reason", "sample description");
 
                 // receive the dead lettered message with receiver scoped to the dead letter queue.
                 ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
@@ -149,8 +151,54 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     SubQueue = SubQueue.DeadLetter
                 });
                 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+
+                // The reason and the description that we specified when dead-lettering the message will be available in the received dead letter message.
+                string reason = dlqMessage.DeadLetterReason;
+                string description = dlqMessage.DeadLetterErrorDescription;
                 #endregion
+
                 Assert.IsNotNull(dlqMessage);
+                Assert.AreEqual("sample reason", reason);
+                Assert.AreEqual("sample description", description);
+            }
+        }
+
+        [Test]
+        public async Task RenewMessageLockAndComplete()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string queueName = scope.QueueName;
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using var client = new ServiceBusClient(connectionString);
+
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
+
+                // create a message that we can send
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+
+                // send the message
+                await sender.SendMessageAsync(message);
+
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+                #region Snippet:ServiceBusRenewMessageLockAndComplete
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+                // If we know that we are going to be processing the message for a long time, we can extend the lock for the message
+                // by the configured LockDuration (by default, 30 seconds).
+                await receiver.RenewMessageLockAsync(receivedMessage);
+
+                // simulate some processing of the message
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                // complete the message, thereby deleting it from the service
+                await receiver.CompleteMessageAsync(receivedMessage);
+                #endregion
+                Assert.IsNull(await CreateNoRetryClient().CreateReceiver(queueName).ReceiveMessageAsync());
             }
         }
     }

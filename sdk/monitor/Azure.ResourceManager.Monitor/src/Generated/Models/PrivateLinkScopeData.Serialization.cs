@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -17,36 +18,47 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("location");
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            writer.WritePropertyName("accessModeSettings");
+            writer.WriteObjectValue(AccessModeSettings);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static PrivateLinkScopeData DeserializePrivateLinkScopeData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            AccessModeSettings accessModeSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -77,6 +89,11 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -109,11 +126,16 @@ namespace Azure.ResourceManager.Monitor
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("accessModeSettings"))
+                        {
+                            accessModeSettings = AccessModeSettings.DeserializeAccessModeSettings(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new PrivateLinkScopeData(id, name, type, systemData, tags, location, provisioningState.Value, Optional.ToList(privateEndpointConnections));
+            return new PrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), accessModeSettings);
         }
     }
 }
