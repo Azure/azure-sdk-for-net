@@ -13,7 +13,7 @@ using Azure.Communication.Pipeline;
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
-    /// The Azure Communication Services Calling Server client.
+    /// The Azure Communication Services Call Automation client.
     /// </summary>
     public class CallAutomationClient
     {
@@ -53,6 +53,17 @@ namespace Azure.Communication.CallingServer
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallAutomationClientOptions())
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with custom PMA endpoint.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
+        : this(
+        pmaEndpoint,
+        options ?? new CallAutomationClientOptions(),
+        ConnectionString.Parse(connectionString))
         { }
         #endregion
 

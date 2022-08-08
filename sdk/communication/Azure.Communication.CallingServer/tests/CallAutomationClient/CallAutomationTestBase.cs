@@ -5,7 +5,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 namespace Azure.Communication.CallingServer
 {
-    public class CallingServerTestBase
+    public class CallAutomationTestBase
     {
         protected const string connectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
 
@@ -13,7 +13,7 @@ namespace Azure.Communication.CallingServer
                                                  "\"callConnectionId\": \"cad9df7b-f3ac-4c53-96f7-c76e7437b3c1\"" +
                                                  "}";
 
-        internal CallAutomationClient CreateMockCallingServerClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
+        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -37,22 +37,22 @@ namespace Azure.Communication.CallingServer
                 }
             }
 
-            var callingServerClientOptions = new CallAutomationClientOptions
+            var callAutomationClientOptions = new CallAutomationClientOptions
             {
                 Transport = new MockTransport(mockResponse)
             };
 
-            return new CallAutomationClient(connectionString, callingServerClientOptions);
+            return new CallAutomationClient(connectionString, callAutomationClientOptions);
         }
 
-        internal CallAutomationClient CreateMockCallingServerClient(params MockResponse[] mockResponses)
+        internal CallAutomationClient CreateMockCallAutomationClient(params MockResponse[] mockResponses)
         {
-            var callingServerClientOptions = new CallAutomationClientOptions
+            var callAutomationClientOptions = new CallAutomationClientOptions
             {
                 Transport = new MockTransport(mockResponses)
             };
 
-            return new CallAutomationClient(connectionString, callingServerClientOptions);
+            return new CallAutomationClient(connectionString, callAutomationClientOptions);
         }
     }
 }
