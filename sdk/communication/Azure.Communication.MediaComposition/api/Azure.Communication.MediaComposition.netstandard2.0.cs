@@ -68,7 +68,30 @@ namespace Azure.Communication.MediaComposition
     {
         public CommunicationIdentifierModel() { }
         public Azure.Communication.MediaComposition.CommunicationUserIdentifierModel CommunicationUser { get { throw null; } set { } }
+        public Azure.Communication.MediaComposition.CommunicationIdentifierModelKind? Kind { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get { throw null; } set { } }
+        public Azure.Communication.MediaComposition.PhoneNumberIdentifierModel PhoneNumber { get { throw null; } set { } }
+        public string RawId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommunicationIdentifierModelKind : System.IEquatable<Azure.Communication.MediaComposition.CommunicationIdentifierModelKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommunicationIdentifierModelKind(string value) { throw null; }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind CommunicationUser { get { throw null; } }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind MicrosoftTeamsUser { get { throw null; } }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind PhoneNumber { get { throw null; } }
+        public static Azure.Communication.MediaComposition.CommunicationIdentifierModelKind Unknown { get { throw null; } }
+        public bool Equals(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.CommunicationIdentifierModelKind (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.MediaComposition.CommunicationIdentifierModelKind left, Azure.Communication.MediaComposition.CommunicationIdentifierModelKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CommunicationUserIdentifierModel
     {
@@ -261,6 +284,11 @@ namespace Azure.Communication.MediaComposition
         public bool? IsAnonymous { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
+    public partial class PhoneNumberIdentifierModel
+    {
+        public PhoneNumberIdentifierModel(string value) { }
+        public string Value { get { throw null; } set { } }
+    }
     public partial class PresentationLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
         public PresentationLayout(string presenterId, System.Collections.Generic.IEnumerable<string> audienceIds) { }
@@ -386,10 +414,6 @@ namespace Azure.Communication.MediaComposition
         public TeamsMeetingOutput(string teamsJoinUrl) { }
         public string TeamsJoinUrl { get { throw null; } set { } }
     }
-    public partial class ValueType
-    {
-        public ValueType() { }
-    }
 }
 namespace Azure.Communication.MediaComposition.Models
 {
@@ -398,7 +422,7 @@ namespace Azure.Communication.MediaComposition.Models
         public ImageInput(string uri) { }
         public string Uri { get { throw null; } set { } }
     }
-    public partial class InputPosition : Azure.Communication.MediaComposition.ValueType
+    public partial class InputPosition
     {
         public InputPosition(int x, int y) { }
         public int X { get { throw null; } set { } }
