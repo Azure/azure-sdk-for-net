@@ -71,12 +71,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private List<AmqpMessage> BatchMessages { get; } = new List<AmqpMessage>();
 
         /// <summary>
-        ///   The set of <see cref="ServiceBusMessage"/>'s that have been added to the batch.
-        /// </summary>
-        ///
-        private List<ServiceBusMessage> ServiceBusMessages { get; } = new List<ServiceBusMessage>();
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpMessageBatch"/> class.
         /// </summary>
         ///
@@ -139,7 +133,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _sizeBytes = size;
             BatchMessages.Add(amqpMessage);
-            ServiceBusMessages.Add(message);
 
             return true;
         }
@@ -156,7 +149,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 message.Dispose();
             }
             BatchMessages.Clear();
-            ServiceBusMessages.Clear();
             _sizeBytes = 0;
         }
 
