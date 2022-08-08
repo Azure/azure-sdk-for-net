@@ -602,181 +602,137 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        ///// <summary>
-        ///// Lists all record sets in a DNS zone.
-        ///// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets
-        ///// Operation Id: RecordSets_ListByDnsZone
-        ///// </summary>
-        ///// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        ///// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        ///// <returns> An async collection of <see cref="ARecordResource" /> that may take multiple service requests to iterate over. </returns>
-        //public virtual AsyncPageable<ARecordResource> GetRecordSetsAsync(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
-        //{
-        //    async Task<Page<ARecordResource>> FirstPageFunc(int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = await _recordSetsRestClient.ListByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    async Task<Page<ARecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = await _recordSetsRestClient.ListByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        //}
+        /// <summary>
+        /// Lists all record sets in a DNS zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets
+        /// Operation Id: RecordSets_ListByDnsZone
+        /// </summary>
+        /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordSetData> GetRecordSets(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+        {
+            Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
+                scope.Start();
+                try
+                {
+                    var response = _recordSetsRestClient.ListByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
+                scope.Start();
+                try
+                {
+                    var response = _recordSetsRestClient.ListByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
 
-        ///// <summary>
-        ///// Lists all record sets in a DNS zone.
-        ///// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/recordsets
-        ///// Operation Id: RecordSets_ListByDnsZone
-        ///// </summary>
-        ///// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        ///// <param name="recordsetnamesuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        ///// <returns> A collection of <see cref="ARecordResource" /> that may take multiple service requests to iterate over. </returns>
-        //public virtual Pageable<ARecordResource> GetRecordSets(int? top = null, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
-        //{
-        //    Page<ARecordResource> FirstPageFunc(int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = _recordSetsRestClient.ListByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    Page<ARecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = _recordSetsRestClient.ListByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordsetnamesuffix, cancellationToken: cancellationToken);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        //}
+        /// <summary>
+        /// Lists all record sets in a DNS zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/all
+        /// Operation Id: RecordSets_ListAllByDnsZone
+        /// </summary>
+        /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
+        /// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecordSetData> GetAllRecordSetsAsync(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<RecordSetData>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
+                scope.Start();
+                try
+                {
+                    var response = await _recordSetsRestClient.ListAllByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<RecordSetData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
+                scope.Start();
+                try
+                {
+                    var response = await _recordSetsRestClient.ListAllByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
 
-        ///// <summary>
-        ///// Lists all record sets in a DNS zone.
-        ///// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/all
-        ///// Operation Id: RecordSets_ListAllByDnsZone
-        ///// </summary>
-        ///// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        ///// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        ///// <returns> An async collection of <see cref="ARecordResource" /> that may take multiple service requests to iterate over. </returns>
-        //public virtual AsyncPageable<ARecordResource> GetAllRecordSetsAsync(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
-        //{
-        //    async Task<Page<ARecordResource>> FirstPageFunc(int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = await _recordSetsRestClient.ListAllByDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    async Task<Page<ARecordResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = await _recordSetsRestClient.ListAllByDnsZoneNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken).ConfigureAwait(false);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        //}
-
-        ///// <summary>
-        ///// Lists all record sets in a DNS zone.
-        ///// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/all
-        ///// Operation Id: RecordSets_ListAllByDnsZone
-        ///// </summary>
-        ///// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        ///// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
-        ///// <param name="cancellationToken"> The cancellation token to use. </param>
-        ///// <returns> A collection of <see cref="ARecordResource" /> that may take multiple service requests to iterate over. </returns>
-        //public virtual Pageable<ARecordResource> GetAllRecordSets(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
-        //{
-        //    Page<ARecordResource> FirstPageFunc(int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = _recordSetsRestClient.ListAllByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    Page<ARecordResource> NextPageFunc(string nextLink, int? pageSizeHint)
-        //    {
-        //        using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
-        //        scope.Start();
-        //        try
-        //        {
-        //            var response = _recordSetsRestClient.ListAllByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
-        //            return Page.FromValues(response.Value.Value.Select(value => new ARecordResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            scope.Failed(e);
-        //            throw;
-        //        }
-        //    }
-        //    return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        //}
+        /// <summary>
+        /// Lists all record sets in a DNS zone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/all
+        /// Operation Id: RecordSets_ListAllByDnsZone
+        /// </summary>
+        /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
+        /// <param name="recordSetNameSuffix"> The suffix label of the record set name that has to be used to filter the record set enumerations. If this parameter is specified, Enumeration will return only records that end with .&lt;recordSetNameSuffix&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RecordSetData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecordSetData> GetAllRecordSets(int? top = null, string recordSetNameSuffix = null, CancellationToken cancellationToken = default)
+        {
+            Page<RecordSetData> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
+                scope.Start();
+                try
+                {
+                    var response = _recordSetsRestClient.ListAllByDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<RecordSetData> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _recordSetsClientDiagnostics.CreateScope("DnsZoneResource.GetAllRecordSets");
+                scope.Start();
+                try
+                {
+                    var response = _recordSetsRestClient.ListAllByDnsZoneNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, recordSetNameSuffix, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
 
         /// <summary>
         /// Add a tag to the current resource.
