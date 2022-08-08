@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="participants"> Participants of the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantsResult"/> instance for mocking. </returns>
-        public static AddParticipantsResult AddParticipantsResult(IEnumerable<CallParticipant> participants, string operationContext)
+        public static AddParticipantsResult AddParticipantsResult(IEnumerable<CallParticipant> participants = default, string operationContext = default)
         {
             return new AddParticipantsResult(participants.ToList(), operationContext);
         }
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnection"> CallConnection Client. </param>
         /// <param name="callProperties"> Properties of the call. </param>
         /// <returns> A new <see cref="CallingServer.AnswerCallResult"/> instance for mocking. </returns>
-        public static AnswerCallResult AnswerCallResult(CallConnection callConnection, CallConnectionProperties callProperties)
+        public static AnswerCallResult AnswerCallResult(CallConnection callConnection = default, CallConnectionProperties callProperties = default)
         {
             return new AnswerCallResult(callConnection, callProperties);
         }
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="subject">The subject.</param>
         /// <param name="callbackEndpoint">The callback URI.</param>
         /// <returns> A new <see cref="CallingServer.CallConnectionProperties"/> instance for mocking. </returns>
-        public static CallConnectionProperties CallConnectionProperties(string callConnectionId, string serverCallId, CallSource callSource, IEnumerable<CommunicationIdentifier> targets, CallConnectionState callConnectionState, string subject, Uri callbackEndpoint)
+        public static CallConnectionProperties CallConnectionProperties(string callConnectionId = default, string serverCallId = default, CallSource callSource = default, IEnumerable<CommunicationIdentifier> targets = default, CallConnectionState callConnectionState = default, string subject = default, Uri callbackEndpoint = default)
         {
             return new CallConnectionProperties(callConnectionId, serverCallId, callSource, targets, callConnectionState, subject, callbackEndpoint);
         }
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
         /// <returns> A new <see cref="CallingServer.CallParticipant"/> instance for mocking. </returns>
-        public static CallParticipant CallParticipant(CommunicationIdentifier identifier, bool isMuted)
+        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default)
         {
             return new CallParticipant(identifier, isMuted);
         }
@@ -58,9 +58,71 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnection">The instance of callConnection.</param>
         /// <param name="callProperties">The properties of the call.</param>
         /// <returns> A new <see cref="CallingServer.CreateCallResult"/> instance for mocking. </returns>
-        public static CreateCallResult CreateCallResult(CallConnection callConnection, CallConnectionProperties callProperties)
+        public static CreateCallResult CreateCallResult(CallConnection callConnection = default, CallConnectionProperties callProperties = default)
         {
             return new CreateCallResult(callConnection, callProperties);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of add participant failed event.
+        /// </summary>
+        public static AddParticipantsFailed AddParticipantsFailed(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new AddParticipantsFailedInternal(operationContext, resultInformation, participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(), AcsEventType.AddParticipantsFailed, callConnectionId,  serverCallId, correlationId);
+
+            return new AddParticipantsFailed(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of add participant success event.
+        /// </summary>
+        public static AddParticipantsSucceeded AddParticipantsSucceeded(string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new AddParticipantsSucceededInternal(operationContext, resultInformation, participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(), AcsEventType.AddParticipantsSucceeded, callConnectionId, serverCallId, correlationId);
+
+            return new AddParticipantsSucceeded(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call Connected event.
+        /// </summary>
+        public static CallConnected CallConnected(string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new CallConnected(AcsEventType.CallConnected, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call Disconnected event.
+        /// </summary>
+        public static CallDisconnected CallDisconnected(string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new CallDisconnected(AcsEventType.CallDisconnected, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call Transfer Accepted event.
+        /// </summary>
+        public static CallTransferAccepted CallTransferAccepted(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new CallTransferAccepted(operationContext, resultInformation, AcsEventType.CallTransferAccepted, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Call CallTransfer Failed event.
+        /// </summary>
+        public static CallTransferFailed CallTransferFailed(string operationContext = default, ResultInformation resultInformation = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            return new CallTransferFailed(operationContext, resultInformation, AcsEventType.CallTransferFailed, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of Participants Updated event.
+        /// </summary>
+        public static ParticipantsUpdated ParticipantsUpdated(IEnumerable<CommunicationIdentifier> participants = default, string callConnectionId = default, string serverCallId = default, string correlationId = default)
+        {
+            var internalObject = new ParticipantsUpdatedInternal(participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList(), AcsEventType.ParticipantsUpdated, callConnectionId, serverCallId, correlationId);
+
+            return new ParticipantsUpdated(internalObject);
         }
     }
 }
