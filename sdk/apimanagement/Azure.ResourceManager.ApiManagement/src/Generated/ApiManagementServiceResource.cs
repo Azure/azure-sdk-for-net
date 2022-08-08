@@ -3591,7 +3591,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 else
                 {
-                    var current = HasData ? Data : (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ApiManagementServicePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -3637,7 +3637,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 else
                 {
-                    var current = HasData ? Data : Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ApiManagementServicePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -3682,7 +3682,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 else
                 {
-                    var current = HasData ? Data : (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ApiManagementServicePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -3723,7 +3723,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 else
                 {
-                    var current = HasData ? Data : Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ApiManagementServicePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
@@ -3763,7 +3763,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 else
                 {
-                    var current = HasData ? Data : (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ApiManagementServicePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -3807,7 +3807,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 else
                 {
-                    var current = HasData ? Data : Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ApiManagementServicePatch();
                     foreach (var tag in current.Tags)
                     {
