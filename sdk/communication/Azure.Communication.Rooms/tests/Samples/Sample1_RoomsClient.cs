@@ -109,6 +109,10 @@ namespace Azure.Communication.Rooms.Tests.samples
 
             Response addParticipantResponse = await roomsClient.AddParticipantsAsync(createdRoomId, toAddCommunicationUsers);
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_AddParticipants
+
+            #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetParticipants
+            Response<ParticipantsCollection> participantResponse = await roomsClient.GetParticipantsAsync(createdRoomId);
+            #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_GetParticipants
         }
 
         [Test]
