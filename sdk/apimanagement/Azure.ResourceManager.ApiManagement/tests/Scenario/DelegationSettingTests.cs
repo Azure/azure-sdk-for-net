@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await CreateApiServiceAsync();
             var delegationCollection = ApiServiceResource.GetApiManagementPortalDelegationSetting();
 
-            var intialPortalDelegationSettings = await delegationCollection.GetAsync();
+            //var intialPortalDelegationSettings = await delegationCollection.GetAsync();
 
             string delegationServer = Recording.GenerateAssetName("delegationServer");
             string urlParameter = new UriBuilder("https", delegationServer, 443).Uri.ToString();

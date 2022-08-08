@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class CertificateTests : ApiManagementManagementTestBase
     {
         public CertificateTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var cert = new X509Certificate2("./Resources/sdktest.cer");
             var content = new ApiManagementCertificateCreateOrUpdateContent()
             {
-                Data = Convert.ToBase64String(cert.Export(X509ContentType.Pfx))
+                Data = "sanitized"
             };
 
             var createResponse = (await certCollection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content)).Value;
