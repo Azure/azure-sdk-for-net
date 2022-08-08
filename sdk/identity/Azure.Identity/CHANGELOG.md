@@ -1,14 +1,9 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.6.1 (2022-08-08)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed `AZURE_REGIONAL_AUTHORITY_NAME` support in `ClientCertificateCredential` [#29112](https://github.com/Azure/azure-sdk-for-net/issues/29112)
 
 ## 1.6.0 (2022-04-05)
 
