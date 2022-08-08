@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionDelegationSettingProperties. </summary>
-        /// <param name="enableSubscriptionDelegation"> Enable or disable delegation for subscriptions. </param>
-        internal SubscriptionDelegationSettingProperties(bool? enableSubscriptionDelegation)
+        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
+        internal SubscriptionDelegationSettingProperties(bool? isSubscriptionDelegationEnabled)
         {
-            EnableSubscriptionDelegation = enableSubscriptionDelegation;
+            IsSubscriptionDelegationEnabled = isSubscriptionDelegationEnabled;
         }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
-        public bool? EnableSubscriptionDelegation { get; set; }
+        public bool? IsSubscriptionDelegationEnabled { get; set; }
     }
 }
