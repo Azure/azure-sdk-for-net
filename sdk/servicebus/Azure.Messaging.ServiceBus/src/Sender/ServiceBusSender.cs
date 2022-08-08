@@ -220,7 +220,16 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: readOnlyCollection.Count);
-            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName);
+
+            var diagnosticIdentifiers = new List<string>();
+
+            foreach (var message in messages)
+            {
+                var identifier = EntityScopeFactory.InstrumentMessage(message, EntityPath, FullyQualifiedNamespace);
+                diagnosticIdentifiers.Add(identifier);
+            }
+
+            using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers, DiagnosticProperty.SendActivityName);
             scope.Start();
 
             try
@@ -240,19 +249,18 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(IEnumerable<string> diagnosticIdentifiers, string activityName)
         {
-            foreach (ServiceBusMessage message in messages)
-            {
-                _scopeFactory.InstrumentMessage(message);
-            }
-
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
                 activityName,
                 DiagnosticScope.ActivityKind.Client);
 
-            scope.SetMessageData(messages);
+            foreach (var identifier in diagnosticIdentifiers)
+            {
+                scope.AddLink(identifier, null);
+            }
+
             return scope;
         }
 
@@ -342,7 +350,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsReadOnly<ServiceBusMessage>(),
+                messageBatch.GetMessageDiagnosticIdentifiers(),
                 DiagnosticProperty.SendActivityName);
             scope.Start();
 
@@ -448,8 +456,16 @@ namespace Azure.Messaging.ServiceBus
                 readOnlyCollection.Count,
                 scheduledEnqueueTime.ToString(CultureInfo.InvariantCulture));
 
+            var diagnosticIdentifiers = new List<string>();
+
+            foreach (var message in messages)
+            {
+                var identifier = EntityScopeFactory.InstrumentMessage(message, EntityPath, FullyQualifiedNamespace);
+                diagnosticIdentifiers.Add(identifier);
+            }
+
             using DiagnosticScope scope = CreateDiagnosticScope(
-                readOnlyCollection,
+                diagnosticIdentifiers,
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 

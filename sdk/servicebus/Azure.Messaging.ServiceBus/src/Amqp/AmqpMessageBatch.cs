@@ -116,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
                 // message which will be used to populate properties on the batch envelope.
-                var reserveOverheadMessage = MessageConverter.BuildAmqpBatchFromMessages(Array.Empty<AmqpMessage>(), message, forceBatch: true);
+                var reserveOverheadMessage = MessageConverter.BuildAmqpBatchFromMessages(Array.Empty<AmqpMessage>(), forceBatch: true);
                 _sizeBytes += reserveOverheadMessage.SerializedMessageSize;
                 reserveOverheadMessage.Dispose();
             }
@@ -171,18 +171,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public override IReadOnlyCollection<T> AsReadOnly<T>()
         {
-            if (typeof(T) == typeof(AmqpMessage))
-            {
-                return (IReadOnlyCollection<T>)BatchMessages;
-            }
-            else if (typeof(T) == typeof(ServiceBusMessage))
-            {
-                return (IReadOnlyCollection<T>)ServiceBusMessages;
-            }
-            else
+            if (typeof(T) != typeof(AmqpMessage))
             {
                 throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
+            return (IReadOnlyCollection<T>)BatchMessages;
         }
 
         /// <summary>

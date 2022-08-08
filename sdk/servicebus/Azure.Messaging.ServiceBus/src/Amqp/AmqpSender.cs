@@ -212,11 +212,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, messageBatch) = value;
-                    var messageBatchEnumerator = messageBatch.AsReadOnly<ServiceBusMessage>().GetEnumerator();
-                    messageBatchEnumerator.MoveNext();
                     await sender.SendBatchInternalAsync(
                         messageBatch.AsReadOnly<AmqpMessage>(),
-                        messageBatchEnumerator.Current,
                         timeout,
                         token).ConfigureAwait(false);
                 },
@@ -231,16 +228,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="messages"></param>
         /// <param name="timeout"></param>
-        /// <param name="firstMessage"></param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
             IReadOnlyCollection<AmqpMessage> messages,
-            ServiceBusMessage firstMessage,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            using (AmqpMessage batchMessage = MessageConverter.BuildAmqpBatchFromMessages(messages, firstMessage, false))
+            using (AmqpMessage batchMessage = MessageConverter.BuildAmqpBatchFromMessages(messages, false))
             {
                 await SendBatchInternalAsync(batchMessage, timeout, cancellationToken).ConfigureAwait(false);
             }

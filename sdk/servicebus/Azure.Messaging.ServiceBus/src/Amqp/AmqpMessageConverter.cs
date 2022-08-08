@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             Argument.AssertNotNull(source, nameof(source));
             var batchMessages = new List<AmqpMessage>(1) { SBMessageToAmqpMessage(source) };
-            return BuildAmqpBatchFromMessages(batchMessages, source, forceBatch);
+            return BuildAmqpBatchFromMessages(batchMessages, forceBatch);
         }
 
         public virtual AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch = false)
@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
             }
 
-            return BuildAmqpBatchFromMessages(batchMessages, firstMessage, forceBatch);
+            return BuildAmqpBatchFromMessages(batchMessages, forceBatch);
         }
 
         /// <summary>
@@ -82,14 +82,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="source">The set of messages to use as the body of the batch message.</param>
-        /// <param name="firstMessage">The first message being sent in the batch.</param>
         /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        public virtual AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, ServiceBusMessage firstMessage, bool forceBatch)
+        public virtual AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, bool forceBatch)
         {
-            return BuildAmqpBatchFromMessages(source.ToList<AmqpMessage>(), firstMessage, forceBatch);
+            return BuildAmqpBatchFromMessages(source.ToList<AmqpMessage>(), forceBatch);
         }
 
         /// <summary>
@@ -97,17 +96,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="batchMessages">The set of messages to use as the body of the batch message.</param>
-        /// <param name="firstMessage">The first message being sent in the batch.</param>
         /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
             List<AmqpMessage> batchMessages,
-            ServiceBusMessage firstMessage,
             bool forceBatch)
         {
             AmqpMessage batchEnvelope;
+            var firstMessage = batchMessages[0];
 
             if (batchMessages.Count == 1 && !forceBatch)
             {
@@ -130,25 +128,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
             }
 
-            if (firstMessage?.MessageId != null)
+            if (firstMessage?.Properties.MessageId != null)
             {
-                batchEnvelope.Properties.MessageId = firstMessage.MessageId;
+                batchEnvelope.Properties.MessageId = firstMessage.Properties.MessageId;
             }
-            if (firstMessage?.SessionId != null)
+            if (firstMessage?.Properties.GroupId != null)
             {
-                batchEnvelope.Properties.GroupId = firstMessage.SessionId;
+                batchEnvelope.Properties.GroupId = firstMessage.Properties.GroupId;
             }
 
-            if (firstMessage?.PartitionKey != null)
+            if (firstMessage?.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName] != null)
             {
                 batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName] =
-                    firstMessage.PartitionKey;
+                    firstMessage.MessageAnnotations.Map[AmqpMessageConstants.PartitionKeyName];
             }
 
-            if (firstMessage?.TransactionPartitionKey != null)
+            if (firstMessage?.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName] != null)
             {
                 batchEnvelope.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName] =
-                    firstMessage.TransactionPartitionKey;
+                    firstMessage.MessageAnnotations.Map[AmqpMessageConstants.ViaPartitionKeyName];
             }
 
             batchEnvelope.Batchable = true;

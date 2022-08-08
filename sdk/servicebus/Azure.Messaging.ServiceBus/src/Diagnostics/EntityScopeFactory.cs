@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Core.Pipeline;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -17,10 +18,14 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>The namespace used for the Service Bus diagnostic scope.</summary>
         public const string DiagnosticNamespace = "Azure.Messaging.ServiceBus";
 
+        /// <summary> The path to the entity used for the Service Bus instance.</summary>
+        public readonly string EntityPath;
+
+        /// <summary> The fully qualified Service Bus namespace this scope is associated with./// </summary>
+        public readonly string FullyQualifiedNamespace;
+
         /// <summary>The namespace used for the Azure Resource Manager provider namespace.</summary>
         private const string _resourceProviderNamespace = "Microsoft.ServiceBus";
-        private readonly string _entityPath;
-        private readonly string _fullyQualifiedNamespace;
 
         /// <summary>
         ///   The client diagnostics instance responsible for managing scope.
@@ -32,8 +37,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             string entityPath,
             string fullyQualifiedNamespace)
         {
-            _entityPath = entityPath;
-            _fullyQualifiedNamespace = fullyQualifiedNamespace;
+            EntityPath = entityPath;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
         }
 
         /// <summary>
@@ -88,26 +93,49 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             scope.AddAttribute(
                 DiagnosticProperty.ServiceContextAttribute,
                 DiagnosticProperty.ServiceBusServiceContext);
-            scope.AddAttribute(DiagnosticProperty.EntityAttribute, _entityPath);
-            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, _fullyQualifiedNamespace);
+            scope.AddAttribute(DiagnosticProperty.EntityAttribute, EntityPath);
+            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
             return scope;
         }
 
-        public void InstrumentMessage(ServiceBusMessage message)
+        private static DiagnosticScope CreateScope(
+            string activityName,
+            DiagnosticScope.ActivityKind kind,
+            string entityPath,
+            string fullyQualifiedNamespace)
+        {
+            DiagnosticScope scope = _scopeFactory.CreateScope(activityName, kind);
+            scope.AddAttribute(
+                DiagnosticProperty.ServiceContextAttribute,
+                DiagnosticProperty.ServiceBusServiceContext);
+            scope.AddAttribute(DiagnosticProperty.EntityAttribute, entityPath);
+            scope.AddAttribute(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace);
+            return scope;
+        }
+
+        public static string InstrumentMessage(ServiceBusMessage message, string entityPath, string fullyQualifiedNamespace)
         {
             if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
                 using DiagnosticScope messageScope = CreateScope(
                     DiagnosticProperty.MessageActivityName,
-                    DiagnosticScope.ActivityKind.Producer);
+                    DiagnosticScope.ActivityKind.Producer,
+                    entityPath,
+                    fullyQualifiedNamespace);
                 messageScope.Start();
 
                 Activity activity = Activity.Current;
                 if (activity != null)
                 {
                     message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
+                    return activity.Id;
                 }
             }
+            else if (TryExtractDiagnosticId(message.ApplicationProperties, out var identifier))
+            {
+                return identifier;
+            }
+            return null;
         }
     }
 }
