@@ -9,7 +9,7 @@ This package contains a C# SDK for the Rooms Service of Azure Communication Serv
 Install the Azure Communication Rooms client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Rooms --version 1.0.1-alpha.1
+dotnet add package Azure.Communication.Rooms
 ``` 
 
 ### Prerequisites
