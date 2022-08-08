@@ -16,16 +16,6 @@ namespace Azure.Storage
         /// <summary>
         /// Altnernate between primary and secondary endpoints, attempting secondary first.
         /// </summary>
-        SecondaryThenPrimary = 1,
-
-        /// <summary>
-        /// Only target the primary endpoint.
-        /// </summary>
-        PrimaryOnly = 2,
-
-        /// <summary>
-        /// Only target the secondary endpoint.
-        /// </summary>
-        SecondaryOnly = 3
+        SecondaryThenPrimary = 1
     }
 }

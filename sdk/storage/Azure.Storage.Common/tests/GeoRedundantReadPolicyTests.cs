@@ -96,35 +96,6 @@ namespace Azure.Storage.Tests
                 && (string)val == expectedAltKey);
         }
 
-        [TestCase(GeoRedundantReadMode.PrimaryOnly)]
-        [TestCase(GeoRedundantReadMode.SecondaryOnly)]
-        public void OnSendingRequest_Static(GeoRedundantReadMode mode)
-        {
-            var message = new HttpMessage(
-                CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier()
-                {
-                    SecondaryStorageUri = MockSecondaryUri
-                });
-
-            var policy = new GeoRedundantReadPolicy(MockSecondaryUri, mode);
-
-            string expectedHost = mode switch
-            {
-                GeoRedundantReadMode.PrimaryOnly => MockPrimaryUri.Host,
-                GeoRedundantReadMode.SecondaryOnly => MockSecondaryUri.Host,
-                _ => throw new InvalidOperationException()
-            };
-
-            foreach (var _ in Enumerable.Range(0, 10))
-            {
-                policy.OnSendingRequest(message);
-
-                Assert.AreEqual(expectedHost, message.Request.Uri.Host);
-                Assert.IsFalse(message.TryGetProperty(Constants.GeoRedundantRead.AlternateHostKey, out object _));
-            }
-        }
-
         [Test]
         public void OnSendingRequest_404onSecondary_ShouldSetNotFoundFlag_ShouldUsePrimary()
         {

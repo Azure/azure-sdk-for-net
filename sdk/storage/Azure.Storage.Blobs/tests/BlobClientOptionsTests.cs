@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Tests
             var options = new BlobClientOptions
             {
                 GeoRedundantSecondaryUri = secondaryUri,
-                GeoRedundantReadMode = GeoRedundantReadMode.SecondaryOnly,
+                GeoRedundantReadMode = GeoRedundantReadMode.SecondaryThenPrimary,
                 Transport = new MockTransport(new MockResponse(200))
             };
             // policy to observe change in pipeline (observe changed to secondary host)

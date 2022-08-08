@@ -36,27 +36,6 @@ namespace Azure.Storage
                 return;
             }
 
-            switch (_mode)
-            {
-                case GeoRedundantReadMode.PrimaryThenSecondary:
-                case GeoRedundantReadMode.SecondaryThenPrimary:
-                    Alternate(message);
-                    break;
-                case GeoRedundantReadMode.PrimaryOnly:
-                case GeoRedundantReadMode.SecondaryOnly:
-                    Single(message);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Unexpected mode {Enum.GetName(typeof(GeoRedundantReadMode), _mode)}");
-            }
-        }
-
-        private void Alternate(HttpMessage message)
-        {
-            InvalidOperationException BadModeError() => new(
-                $"Unexpected mode {Enum.GetName(typeof(GeoRedundantReadMode), _mode)} when alternating between primary and secondary endpoints."
-            );
-
             // Look up what the alternate host is set to in the message properties. For the initial request, this will
             // not be set.
             string alternateHost =
@@ -120,23 +99,7 @@ namespace Azure.Storage
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, lastTriedHost);
         }
 
-        private void Single(HttpMessage message)
-        {
-            InvalidOperationException BadModeError() => new(
-                $"Unexpected mode {Enum.GetName(typeof(GeoRedundantReadMode), _mode)} when targeting a single endpoint."
-            );
-
-            switch (_mode)
-            {
-                case GeoRedundantReadMode.PrimaryOnly:
-                    // no alterations
-                    break;
-                case GeoRedundantReadMode.SecondaryOnly:
-                    message.Request.Uri.Host = _secondaryStorageHost;
-                    break;
-                default:
-                    throw BadModeError();
-            }
-        }
+        private InvalidOperationException BadModeError() => new(
+                $"Unexpected mode {Enum.GetName(typeof(GeoRedundantReadMode), _mode)} when alternating between primary and secondary endpoints.");
     }
 }
