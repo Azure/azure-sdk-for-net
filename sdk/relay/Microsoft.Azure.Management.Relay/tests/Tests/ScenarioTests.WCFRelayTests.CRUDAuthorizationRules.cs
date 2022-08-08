@@ -227,7 +227,7 @@ namespace Relay.Tests.ScenarioTests
 
                 regenerateKeysSecondaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
                 Assert.NotNull(regenerateKeysSecondaryResponse);
-                if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
                 {
                     Assert.Equal(regenerateKeysPrimaryResponse.PrimaryKey, regenerateKeysSecondaryResponse.PrimaryKey);
                     Assert.Equal(keyObject.Key, regenerateKeysSecondaryResponse.SecondaryKey);
