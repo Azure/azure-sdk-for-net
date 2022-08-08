@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> fileName = default;
             Optional<string> displayName = default;
             Optional<string> languageCode = default;
-            Optional<Visibility> playerVisibility = default;
+            Optional<PlayerVisibility> playerVisibility = default;
             Optional<HlsSettings> hlsSettings = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    playerVisibility = new Visibility(property.Value.GetString());
+                    playerVisibility = new PlayerVisibility(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hlsSettings"))

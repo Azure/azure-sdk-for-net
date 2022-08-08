@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the disk encryption set resource settings. </summary>
-    public partial class DiskEncryptionSetResourceSettings : ResourceSettings
+    public partial class DiskEncryptionSetResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of DiskEncryptionSetResourceSettings. </summary>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>

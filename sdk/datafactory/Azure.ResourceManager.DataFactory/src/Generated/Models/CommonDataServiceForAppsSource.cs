@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Common Data Service for Apps source. </summary>
-    public partial class CommonDataServiceForAppsSource : CopySource
+    public partial class CommonDataServiceForAppsSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of CommonDataServiceForAppsSource. </summary>
         public CommonDataServiceForAppsSource()

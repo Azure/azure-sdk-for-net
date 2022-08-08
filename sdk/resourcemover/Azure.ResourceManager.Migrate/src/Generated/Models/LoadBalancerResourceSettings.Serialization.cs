@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> sku = default;
-            Optional<IList<LBFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
-            Optional<IList<LBBackendAddressPoolResourceSettings>> backendAddressPools = default;
+            Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
+            Optional<IList<LoadBalancerBackendAddressPoolResourceSettings>> backendAddressPools = default;
             Optional<string> zones = default;
             string resourceType = default;
             string targetResourceName = default;
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LBFrontendIPConfigurationResourceSettings> array = new List<LBFrontendIPConfigurationResourceSettings>();
+                    List<LoadBalancerFrontendIPConfigurationResourceSettings> array = new List<LoadBalancerFrontendIPConfigurationResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LBFrontendIPConfigurationResourceSettings.DeserializeLBFrontendIPConfigurationResourceSettings(item));
+                        array.Add(LoadBalancerFrontendIPConfigurationResourceSettings.DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(item));
                     }
                     frontendIPConfigurations = array;
                     continue;
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Migrate.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LBBackendAddressPoolResourceSettings> array = new List<LBBackendAddressPoolResourceSettings>();
+                    List<LoadBalancerBackendAddressPoolResourceSettings> array = new List<LoadBalancerBackendAddressPoolResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LBBackendAddressPoolResourceSettings.DeserializeLBBackendAddressPoolResourceSettings(item));
+                        array.Add(LoadBalancerBackendAddressPoolResourceSettings.DeserializeLoadBalancerBackendAddressPoolResourceSettings(item));
                     }
                     backendAddressPools = array;
                     continue;

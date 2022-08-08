@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static DetectorListResult DeserializeDetectorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DetectorResponseData>> value = default;
+            Optional<IReadOnlyList<BatchAccountDetectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Batch.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DetectorResponseData> array = new List<DetectorResponseData>();
+                    List<BatchAccountDetectorData> array = new List<BatchAccountDetectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorResponseData.DeserializeDetectorResponseData(item));
+                        array.Add(BatchAccountDetectorData.DeserializeBatchAccountDetectorData(item));
                     }
                     value = array;
                     continue;

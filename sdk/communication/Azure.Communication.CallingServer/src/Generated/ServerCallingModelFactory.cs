@@ -10,74 +10,87 @@ namespace Azure.Communication.CallingServer
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ServerCallingModelFactory
     {
-        /// <summary> Initializes a new instance of TransferCallResponse. </summary>
-        /// <param name="operationId"> The operation id. </param>
-        /// <param name="status"> The status of the operation. </param>
+        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultDetails"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.TransferCallResponse"/> instance for mocking. </returns>
-        public static TransferCallResponse TransferCallResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        /// <returns> A new <see cref="CallingServer.TransferCallToParticipantResult"/> instance for mocking. </returns>
+        public static TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null)
         {
-            return new TransferCallResponse(operationId, status, operationContext, resultDetails);
+            return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of CallingOperationResultDetailsDto. </summary>
-        /// <param name="code"> The result code associated with the operation. </param>
-        /// <param name="subcode"> The subcode that further classifies the result. </param>
-        /// <param name="message"> The message is a detail explanation of subcode. </param>
-        /// <returns> A new <see cref="CallingServer.CallingOperationResultDetailsDto"/> instance for mocking. </returns>
-        public static CallingOperationResultDetailsDto CallingOperationResultDetailsDto(int code = default, int subcode = default, string message = null)
-        {
-            return new CallingOperationResultDetailsDto(code, subcode, message);
-        }
-
-        /// <summary> Initializes a new instance of PlayResponse. </summary>
-        /// <param name="operationId"> The operation id. </param>
-        /// <param name="status"> The status of the operation. </param>
+        /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultDetails"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.PlayResponse"/> instance for mocking. </returns>
-        public static PlayResponse PlayResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        /// <returns> A new <see cref="CallingServer.RemoveParticipantsResult"/> instance for mocking. </returns>
+        public static RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null)
         {
-            return new PlayResponse(operationId, status, operationContext, resultDetails);
+            return new RemoveParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsResponse. </summary>
-        /// <param name="operationId"> The operation id. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultDetails"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.AddParticipantsResponse"/> instance for mocking. </returns>
-        public static AddParticipantsResponse AddParticipantsResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        /// <summary> Initializes a new instance of RecordingStatusResult. </summary>
+        /// <param name="recordingId"></param>
+        /// <param name="recordingStatus"></param>
+        /// <returns> A new <see cref="CallingServer.RecordingStatusResult"/> instance for mocking. </returns>
+        public static RecordingStatusResult RecordingStatusResult(string recordingId = null, RecordingStatus? recordingStatus = null)
         {
-            return new AddParticipantsResponse(operationId, status, operationContext, resultDetails);
+            return new RecordingStatusResult(recordingId, recordingStatus);
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantsResponse. </summary>
-        /// <param name="operationId"> The operation id. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <param name="resultDetails"> The result info for the operation. </param>
-        /// <returns> A new <see cref="CallingServer.RemoveParticipantsResponse"/> instance for mocking. </returns>
-        public static RemoveParticipantsResponse RemoveParticipantsResponse(string operationId = null, CallingOperationStatusDto status = default, string operationContext = null, CallingOperationResultDetailsDto resultDetails = null)
+        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <param name="code"></param>
+        /// <param name="subCode"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="CallingServer.ResultInformation"/> instance for mocking. </returns>
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
         {
-            return new RemoveParticipantsResponse(operationId, status, operationContext, resultDetails);
+            return new ResultInformation(code, subCode, message);
         }
 
-        /// <summary> Initializes a new instance of StartCallRecordingResponse. </summary>
-        /// <param name="recordingId"> The recording id of the started recording. </param>
-        /// <returns> A new <see cref="CallingServer.StartCallRecordingResponse"/> instance for mocking. </returns>
-        public static StartCallRecordingResponse StartCallRecordingResponse(string recordingId = null)
+        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <param name="eventType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallingServer.CallConnected"/> instance for mocking. </returns>
+        public static CallConnected CallConnected(AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new StartCallRecordingResponse(recordingId);
+            return new CallConnected(eventType, callConnectionId, serverCallId, correlationId);
         }
 
-        /// <summary> Initializes a new instance of GetCallRecordingStateResponse. </summary>
-        /// <param name="recordingState"></param>
-        /// <returns> A new <see cref="CallingServer.GetCallRecordingStateResponse"/> instance for mocking. </returns>
-        public static GetCallRecordingStateResponse GetCallRecordingStateResponse(RecordingState? recordingState = null)
+        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        /// <param name="eventType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallingServer.CallDisconnected"/> instance for mocking. </returns>
+        public static CallDisconnected CallDisconnected(AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new GetCallRecordingStateResponse(recordingState);
+            return new CallDisconnected(eventType, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <param name="operationContext"> Operation context. </param>
+        /// <param name="resultInfo"></param>
+        /// <param name="eventType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallingServer.CallTransferAccepted"/> instance for mocking. </returns>
+        public static CallTransferAccepted CallTransferAccepted(string operationContext = null, ResultInformation resultInfo = null, AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new CallTransferAccepted(operationContext, resultInfo, eventType, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <param name="operationContext"> Operation context. </param>
+        /// <param name="resultInfo"></param>
+        /// <param name="eventType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallingServer.CallTransferFailed"/> instance for mocking. </returns>
+        public static CallTransferFailed CallTransferFailed(string operationContext = null, ResultInformation resultInfo = null, AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new CallTransferFailed(operationContext, resultInfo, eventType, callConnectionId, serverCallId, correlationId);
         }
     }
 }

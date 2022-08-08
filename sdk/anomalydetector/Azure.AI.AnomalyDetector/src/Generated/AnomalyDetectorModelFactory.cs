@@ -87,9 +87,19 @@ namespace Azure.AI.AnomalyDetector.Models
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The message explaining the error reported by the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
         public static ErrorResponse ErrorResponse(string code = null, string message = null)
         {
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             return new ErrorResponse(code, message);
         }
 

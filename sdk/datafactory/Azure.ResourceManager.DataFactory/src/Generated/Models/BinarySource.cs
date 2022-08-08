@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Binary source. </summary>
-    public partial class BinarySource : CopySource
+    public partial class BinarySource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of BinarySource. </summary>
         public BinarySource()

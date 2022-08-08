@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
         /// Operation Id: ManagedInstanceAdministrators_Get
         /// </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
+        /// <param name="administratorName"> The SqlAdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetManagedInstanceAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetManagedInstanceAdministratorAsync(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
         }
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
         /// Operation Id: ManagedInstanceAdministrators_Get
         /// </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
+        /// <param name="administratorName"> The SqlAdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceAdministrators().Get(administratorName, cancellationToken);
         }
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedServerSecurityAlertPolicyResource>> GetManagedServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedServerSecurityAlertPolicyResource>> GetManagedServerSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ManagedServerSecurityAlertPolicyResource> GetManagedServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedServerSecurityAlertPolicyResource> GetManagedServerSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetManagedServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
@@ -640,6 +640,109 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<EndpointCertificateResource> GetEndpointCertificate(string endpointType, CancellationToken cancellationToken = default)
         {
             return GetEndpointCertificates().Get(endpointType, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedServerDnsAliasResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedServerDnsAliasResources and their operations over a ManagedServerDnsAliasResource. </returns>
+        public virtual ManagedServerDnsAliasCollection GetManagedServerDnsAliases()
+        {
+            return GetCachedClient(Client => new ManagedServerDnsAliasCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ManagedServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedServerDnsAliasResource>> GetManagedServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ManagedServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedServerDnsAliasResource> GetManagedServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedServerDnsAliases().Get(dnsAliasName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceDtcResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceDtcResources and their operations over a ManagedInstanceDtcResource. </returns>
+        public virtual ManagedInstanceDtcCollection GetManagedInstanceDtcs()
+        {
+            return GetCachedClient(Client => new ManagedInstanceDtcCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets managed instance DTC settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}
+        /// Operation Id: ManagedInstanceDtcs_Get
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceDtcResource>> GetManagedInstanceDtcAsync(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceDtcs().GetAsync(dtcName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets managed instance DTC settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}
+        /// Operation Id: ManagedInstanceDtcs_Get
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceDtcResource> GetManagedInstanceDtc(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceDtcs().Get(dtcName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceAdvancedThreatProtectionResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceAdvancedThreatProtectionResources and their operations over a ManagedInstanceAdvancedThreatProtectionResource. </returns>
+        public virtual ManagedInstanceAdvancedThreatProtectionCollection GetManagedInstanceAdvancedThreatProtections()
+        {
+            return GetCachedClient(Client => new ManagedInstanceAdvancedThreatProtectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a managed instance&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceAdvancedThreatProtectionResource>> GetManagedInstanceAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a managed instance&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceAdvancedThreatProtectionResource> GetManagedInstanceAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
         /// <summary>

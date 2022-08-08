@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApplicationInsights))
+            if (Optional.IsDefined(IsApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights");
-                writer.WriteBooleanValue(ApplicationInsights.Value);
+                writer.WriteBooleanValue(IsApplicationInsights.Value);
             }
             if (Optional.IsDefined(IsPreview))
             {

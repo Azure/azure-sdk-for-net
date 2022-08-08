@@ -111,7 +111,8 @@
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
-        "Wadl"
+        "Wadl",
+        "Invokable"
       ]
     },
     {
@@ -284,6 +285,12 @@
       ]
     },
     {
+      "filename": "**/sdk/iothub/**/*.cs",
+      "words": [
+        "fqdns"
+      ]
+    },
+    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "Edifact",
@@ -422,7 +429,8 @@
         "Nvarchar",
         "Stdev",
         "Unrestorable",
-        "Vcores"
+        "Vcores",
+        "Dtcs"
       ]
     },
     {

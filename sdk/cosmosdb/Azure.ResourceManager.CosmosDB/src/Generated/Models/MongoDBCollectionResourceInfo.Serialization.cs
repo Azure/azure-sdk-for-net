@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             string id = default;
             Optional<IDictionary<string, string>> shardKey = default;
-            Optional<IList<MongoIndex>> indexes = default;
+            Optional<IList<MongoDBIndex>> indexes = default;
             Optional<int> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MongoIndex> array = new List<MongoIndex>();
+                    List<MongoDBIndex> array = new List<MongoDBIndex>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoIndex.DeserializeMongoIndex(item));
+                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item));
                     }
                     indexes = array;
                     continue;

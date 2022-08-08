@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The status of the database. </summary>
-        public DatabaseStatus? Status { get; }
+        public SqlDatabaseStatus? Status { get; }
         /// <summary> The ID of the database. </summary>
         public Guid? DatabaseId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
@@ -70,6 +70,8 @@ namespace Azure.ResourceManager.Sql.Models
         public AzureLocation? DefaultSecondaryLocation { get; }
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         public ResourceIdentifier FailoverGroupId { get; }
+        /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
+        public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary> Specifies the time that the database was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
@@ -94,16 +96,16 @@ namespace Azure.ResourceManager.Sql.Models
         public DatabaseReadScale? ReadScale { get; set; }
         /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         public int? HighAvailabilityReplicaCount { get; set; }
-        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
+        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
         public SqlSku CurrentSku { get; }
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>
-        public BackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
         /// <summary> The storage account type to be used to store backups for this database. </summary>
-        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
         public double? MinCapacity { get; set; }
         /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>

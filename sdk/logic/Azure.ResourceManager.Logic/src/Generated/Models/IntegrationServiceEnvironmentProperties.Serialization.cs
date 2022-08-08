@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element)
         {
-            Optional<WorkflowProvisioningState> provisioningState = default;
-            Optional<WorkflowState> state = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicWorkflowState> state = default;
             Optional<string> integrationServiceEnvironmentId = default;
             Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<NetworkConfiguration> networkConfiguration = default;
+            Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
             Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new WorkflowProvisioningState(property.Value.GetString());
+                    provisioningState = new LogicWorkflowProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new WorkflowState(property.Value.GetString());
+                    state = new LogicWorkflowState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("integrationServiceEnvironmentId"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value);
+                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionConfiguration"))

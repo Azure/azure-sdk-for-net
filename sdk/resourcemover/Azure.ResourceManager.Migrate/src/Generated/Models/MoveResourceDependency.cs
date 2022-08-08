@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Migrate.Models
 {
     /// <summary> Defines the dependency of the move resource. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <param name="manualResolution"> Defines the properties for manual resolution. </param>
         /// <param name="automaticResolution"> Defines the properties for automatic resolution. </param>
         /// <param name="isOptional"> Gets or sets a value indicating whether the dependency is optional. </param>
-        internal MoveResourceDependency(string id, string resolutionStatus, ResolutionType? resolutionType, DependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, string isOptional)
+        internal MoveResourceDependency(ResourceIdentifier id, string resolutionStatus, MoveResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ManualResolutionProperties manualResolution, AutomaticResolutionProperties automaticResolution, bool? isOptional)
         {
             Id = id;
             ResolutionStatus = resolutionStatus;
@@ -35,17 +37,17 @@ namespace Azure.ResourceManager.Migrate.Models
         }
 
         /// <summary> Gets the source ARM ID of the dependent resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Gets the dependency resolution status. </summary>
         public string ResolutionStatus { get; }
         /// <summary> Defines the resolution type. </summary>
-        public ResolutionType? ResolutionType { get; }
+        public MoveResourceResolutionType? ResolutionType { get; }
         /// <summary> Defines the dependency type. </summary>
-        public DependencyType? DependencyType { get; }
+        public MoverDependencyType? DependencyType { get; }
         /// <summary> Defines the properties for manual resolution. </summary>
         internal ManualResolutionProperties ManualResolution { get; }
         /// <summary> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </summary>
-        public string ManualResolutionTargetId
+        public ResourceIdentifier ManualResolutionTargetId
         {
             get => ManualResolution?.TargetId;
         }
@@ -56,12 +58,12 @@ namespace Azure.ResourceManager.Migrate.Models
         /// Gets the MoveResource ARM ID of
         /// the dependent resource if the resolution type is Automatic.
         /// </summary>
-        public string AutomaticResolutionMoveResourceId
+        public ResourceIdentifier AutomaticResolutionMoveResourceId
         {
             get => AutomaticResolution?.MoveResourceId;
         }
 
         /// <summary> Gets or sets a value indicating whether the dependency is optional. </summary>
-        public string IsOptional { get; }
+        public bool? IsOptional { get; }
     }
 }

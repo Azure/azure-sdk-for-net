@@ -158,8 +158,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     Console.WriteLine($"  Description: {hotel.Description}");
                 }
                 #endregion Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Query
-
+#if !SNIPPET
                 Assert.IsTrue(found, "No luxury hotels were found in index");
+#endif
             }
             finally
             {

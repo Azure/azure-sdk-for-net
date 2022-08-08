@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         public CustomLocationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            ClusterExtensionIds = new ChangeTrackingList<string>();
+            ClusterExtensionIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Identity for the resource. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
-        public CustomLocationPropertiesAuthentication Authentication { get; set; }
+        public CustomLocationAuthentication Authentication { get; set; }
         /// <summary> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </summary>
-        public IList<string> ClusterExtensionIds { get; }
+        public IList<ResourceIdentifier> ClusterExtensionIds { get; }
         /// <summary> Display name for the Custom Locations location. </summary>
         public string DisplayName { get; set; }
         /// <summary> Connected Cluster or AKS Cluster. The Custom Locations RP will perform a checkAccess API for listAdminCredentials permissions. </summary>
-        public string HostResourceId { get; set; }
+        public ResourceIdentifier HostResourceId { get; set; }
         /// <summary> Type of host the Custom Locations is referencing (Kubernetes, etc...). </summary>
-        public HostType? HostType { get; set; }
+        public CustomLocationHostType? HostType { get; set; }
         /// <summary> Kubernetes namespace that will be created on the specified cluster. </summary>
         public string Namespace { get; set; }
         /// <summary> Provisioning State for the Custom Location. </summary>

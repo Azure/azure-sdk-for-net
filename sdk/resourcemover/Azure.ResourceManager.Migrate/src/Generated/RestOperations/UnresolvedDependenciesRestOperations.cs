@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Migrate
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, DependencyLevel? dependencyLevel, string orderby, string filter)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UnresolvedDependencyCollection>> GetAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, DependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverUnresolvedDependencyList>> GetAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        UnresolvedDependencyCollection value = default;
+                        MoverUnresolvedDependencyList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnresolvedDependencyCollection.DeserializeUnresolvedDependencyCollection(document.RootElement);
+                        value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UnresolvedDependencyCollection> Get(string subscriptionId, string resourceGroupName, string moveCollectionName, DependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<MoverUnresolvedDependencyList> Get(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        UnresolvedDependencyCollection value = default;
+                        MoverUnresolvedDependencyList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnresolvedDependencyCollection.DeserializeUnresolvedDependencyCollection(document.RootElement);
+                        value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, DependencyLevel? dependencyLevel, string orderby, string filter)
+        internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UnresolvedDependencyCollection>> GetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, DependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MoverUnresolvedDependencyList>> GetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        UnresolvedDependencyCollection value = default;
+                        MoverUnresolvedDependencyList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UnresolvedDependencyCollection.DeserializeUnresolvedDependencyCollection(document.RootElement);
+                        value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UnresolvedDependencyCollection> GetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, DependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<MoverUnresolvedDependencyList> GetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        UnresolvedDependencyCollection value = default;
+                        MoverUnresolvedDependencyList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UnresolvedDependencyCollection.DeserializeUnresolvedDependencyCollection(document.RootElement);
+                        value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

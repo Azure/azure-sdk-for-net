@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListCertificatesResult. </summary>
         internal ListCertificatesResult()
         {
-            Value = new ChangeTrackingList<CertificateData>();
+            Value = new ChangeTrackingList<BatchAccountCertificateData>();
         }
 
         /// <summary> Initializes a new instance of ListCertificatesResult. </summary>
         /// <param name="value"> The collection of returned certificates. </param>
         /// <param name="nextLink"> The continuation token. </param>
-        internal ListCertificatesResult(IReadOnlyList<CertificateData> value, string nextLink)
+        internal ListCertificatesResult(IReadOnlyList<BatchAccountCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The collection of returned certificates. </summary>
-        public IReadOnlyList<CertificateData> Value { get; }
+        public IReadOnlyList<BatchAccountCertificateData> Value { get; }
         /// <summary> The continuation token. </summary>
         public string NextLink { get; }
     }

@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
         /// <param name="communicationUser"> A user that got created with an Azure Communication Services resource. </param>
-        /// <param name="microsoftTeamsUser"> &quot;A Microsoft Teams user. </param>
+        /// <param name="microsoftTeamsUser"> A Microsoft Teams user. </param>
         internal CommunicationIdentifierModel(CommunicationUserIdentifierModel communicationUser, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
             CommunicationUser = communicationUser;
@@ -26,7 +26,7 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel CommunicationUser { get; set; }
-        /// <summary> &quot;A Microsoft Teams user. </summary>
+        /// <summary> A Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; set; }
     }
 }

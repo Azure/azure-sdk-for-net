@@ -61,13 +61,12 @@ namespace Azure.Core.Pipeline
                 return null;
             }
 
+            string clientName = ns;
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
-            if (indexOfDot == -1)
+            if (indexOfDot != -1)
             {
-                return null;
+                clientName += "." + name.Substring(0, indexOfDot);
             }
-
-            string clientName = ns + "." + name.Substring(0, indexOfDot);
 
             return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
         }

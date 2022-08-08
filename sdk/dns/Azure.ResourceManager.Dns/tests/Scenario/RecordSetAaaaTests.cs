@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "aaaa";
             var recordSetAaaaResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new AaaaRecordSetData() { });
             Assert.IsNotNull(recordSetAaaaResource);
+            Assert.IsNotNull(recordSetAaaaResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetAaaaResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetAaaaResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/AAAA", recordSetAaaaResource.Value.Data.ResourceType.Type);
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(name, recordSetAaaaResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetAaaaResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/AAAA", recordSetAaaaResource.Value.Data.ResourceType.Type);
+            Assert.AreEqual(300, recordSetAaaaResource.Value.Data.TtlInSeconds);
         }
 
         [Test]

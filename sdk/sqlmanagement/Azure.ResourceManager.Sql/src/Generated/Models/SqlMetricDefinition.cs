@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
         internal SqlMetricDefinition()
         {
-            MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
+            MetricAvailabilities = new ChangeTrackingList<SqlMetricAvailability>();
         }
 
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceUri"> The resource uri of the database. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="metricAvailabilities"> The list of database metric availabilities for the metric. </param>
-        internal SqlMetricDefinition(SqlMetricName name, PrimaryAggregationType? primaryAggregationType, Uri resourceUri, SqlMetricDefinitionUnitType? unit, IReadOnlyList<MetricAvailability> metricAvailabilities)
+        internal SqlMetricDefinition(SqlMetricName name, SqlMetricPrimaryAggregationType? primaryAggregationType, Uri resourceUri, SqlMetricDefinitionUnitType? unit, IReadOnlyList<SqlMetricAvailability> metricAvailabilities)
         {
             Name = name;
             PrimaryAggregationType = primaryAggregationType;
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name information for the metric. </summary>
         public SqlMetricName Name { get; }
         /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
-        public PrimaryAggregationType? PrimaryAggregationType { get; }
+        public SqlMetricPrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The resource uri of the database. </summary>
         public Uri ResourceUri { get; }
         /// <summary> The unit of the metric. </summary>
         public SqlMetricDefinitionUnitType? Unit { get; }
         /// <summary> The list of database metric availabilities for the metric. </summary>
-        public IReadOnlyList<MetricAvailability> MetricAvailabilities { get; }
+        public IReadOnlyList<SqlMetricAvailability> MetricAvailabilities { get; }
     }
 }

@@ -58,14 +58,14 @@ namespace Azure.Search.Documents.Tests.Samples
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
-            string indexName = resources.IndexName;
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_Client
             // Get the service endpoint and API key from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
-#if SNIPPET
             string indexName = "hotels";
+#if !SNIPPET
+            indexName = resources.IndexName;
 #endif
 
             // Create a client
@@ -92,11 +92,6 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
-#if SNIPPET
-            SearchResults<SearchDocument> response = client.Search<SearchDocument>("luxury");
-#else
-            response = client.Search<SearchDocument>("luxury");
-#endif
             foreach (SearchResult<SearchDocument> result in response.GetResults())
             {
                 dynamic doc = result.Document;
@@ -171,7 +166,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
         #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticType
 
-            [Test]
+        [Test]
         [SyncOnly]
         public async Task QueryStatic()
         {
@@ -188,12 +183,8 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_StaticQuery
 
             #region Snippet:Azure_Search_Tests_Samples_Readme_StaticQueryAsync
-#if SNIPPET
-            SearchResults<Hotel> response = await client.SearchAsync<Hotel>("luxury");
-#else
-            response = await client.SearchAsync<Hotel>("luxury");
-#endif
-            await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+            SearchResults<Hotel> searchResponse = await client.SearchAsync<Hotel>("luxury");
+            await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
             {
                 Hotel doc = result.Document;
                 Console.WriteLine($"{doc.Id}: {doc.Name}");

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity ORC source. </summary>
-    public partial class OrcSource : CopySource
+    public partial class OrcSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of OrcSource. </summary>
         public OrcSource()

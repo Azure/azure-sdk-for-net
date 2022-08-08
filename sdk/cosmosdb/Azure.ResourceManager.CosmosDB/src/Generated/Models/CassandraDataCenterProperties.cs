@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="sku"> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </param>
         /// <param name="diskSku"> Disk SKU used for data centers. Default value is P30. </param>
         /// <param name="diskCapacity"> Number of disk used for data centers. Default value is 4. </param>
-        /// <param name="availabilityZone"> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
-        internal CassandraDataCenterProperties(ManagedCassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? availabilityZone)
+        /// <param name="doesSupportAvailabilityZone"> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Sku = sku;
             DiskSku = diskSku;
             DiskCapacity = diskCapacity;
-            AvailabilityZone = availabilityZone;
+            DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
         }
 
         /// <summary> The status of the resource at the time the operation was called. </summary>
-        public ManagedCassandraProvisioningState? ProvisioningState { get; set; }
+        public CassandraProvisioningState? ProvisioningState { get; set; }
         /// <summary> The region this data center should be created in. </summary>
         public AzureLocation? DataCenterLocation { get; set; }
         /// <summary> Resource id of a subnet the nodes in this data center should have their network interfaces connected to. The subnet must be in the same region specified in &apos;dataCenterLocation&apos; and must be able to route to the subnet specified in the cluster&apos;s &apos;delegatedManagementSubnetId&apos; property. This resource id will be of the form &apos;/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;&apos;. </summary>
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Number of disk used for data centers. Default value is 4. </summary>
         public int? DiskCapacity { get; set; }
         /// <summary> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
-        public bool? AvailabilityZone { get; set; }
+        public bool? DoesSupportAvailabilityZone { get; set; }
     }
 }

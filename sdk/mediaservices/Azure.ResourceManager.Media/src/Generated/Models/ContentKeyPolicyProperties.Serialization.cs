@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> description = default;
-            IReadOnlyList<ContentKeyPolicyOption> options = default;
+            IReadOnlyList<ContentKeyPolicyPreference> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyId"))
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("options"))
                 {
-                    List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
+                    List<ContentKeyPolicyPreference> array = new List<ContentKeyPolicyPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                        array.Add(ContentKeyPolicyPreference.DeserializeContentKeyPolicyPreference(item));
                     }
                     options = array;
                     continue;

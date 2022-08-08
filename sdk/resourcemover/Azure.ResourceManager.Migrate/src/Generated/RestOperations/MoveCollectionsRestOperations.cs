@@ -53,13 +53,10 @@ namespace Azure.ResourceManager.Migrate
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (data != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(data);
-                request.Content = content;
-            }
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -70,13 +67,14 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
         /// <param name="data"> The MoveCollection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoveCollectionData>> CreateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MoveCollectionData>> CreateAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, moveCollectionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,13 +99,14 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
         /// <param name="data"> The MoveCollection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoveCollectionData> Create(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data = null, CancellationToken cancellationToken = default)
+        public Response<MoveCollectionData> Create(string subscriptionId, string resourceGroupName, string moveCollectionName, MoveCollectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(moveCollectionName, nameof(moveCollectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, moveCollectionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreatePrepareRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, PrepareContent content)
+        internal HttpMessage CreatePrepareRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverPrepareContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -398,11 +397,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The PrepareContent to use. </param>
+        /// <param name="content"> The MoverPrepareContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PrepareAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, PrepareContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> PrepareAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -424,11 +423,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The PrepareContent to use. </param>
+        /// <param name="content"> The MoverPrepareContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Prepare(string subscriptionId, string resourceGroupName, string moveCollectionName, PrepareContent content = null, CancellationToken cancellationToken = default)
+        public Response Prepare(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreateInitiateMoveRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, ResourceMoveContent content)
+        internal HttpMessage CreateInitiateMoveRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -478,11 +477,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The ResourceMoveContent to use. </param>
+        /// <param name="content"> The MoverResourceMoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> InitiateMoveAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, ResourceMoveContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> InitiateMoveAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -504,11 +503,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The ResourceMoveContent to use. </param>
+        /// <param name="content"> The MoverResourceMoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response InitiateMove(string subscriptionId, string resourceGroupName, string moveCollectionName, ResourceMoveContent content = null, CancellationToken cancellationToken = default)
+        public Response InitiateMove(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -526,7 +525,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreateCommitRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, CommitContent content)
+        internal HttpMessage CreateCommitRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverCommitContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -558,11 +557,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The CommitContent to use. </param>
+        /// <param name="content"> The MoverCommitContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CommitAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, CommitContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CommitAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -584,11 +583,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The CommitContent to use. </param>
+        /// <param name="content"> The MoverCommitContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Commit(string subscriptionId, string resourceGroupName, string moveCollectionName, CommitContent content = null, CancellationToken cancellationToken = default)
+        public Response Commit(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -606,7 +605,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreateDiscardRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, DiscardContent content)
+        internal HttpMessage CreateDiscardRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDiscardContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -638,11 +637,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The DiscardContent to use. </param>
+        /// <param name="content"> The MoverDiscardContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DiscardAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, DiscardContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DiscardAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -664,11 +663,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moveCollectionName"> The Move Collection Name. </param>
-        /// <param name="content"> The DiscardContent to use. </param>
+        /// <param name="content"> The MoverDiscardContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Discard(string subscriptionId, string resourceGroupName, string moveCollectionName, DiscardContent content = null, CancellationToken cancellationToken = default)
+        public Response Discard(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -757,7 +756,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreateBulkRemoveRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, BulkRemoveContent content)
+        internal HttpMessage CreateBulkRemoveRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverBulkRemoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -789,11 +788,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="moveCollectionName"> The String to use. </param>
-        /// <param name="content"> The BulkRemoveContent to use. </param>
+        /// <param name="content"> The MoverBulkRemoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BulkRemoveAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, BulkRemoveContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> BulkRemoveAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -815,11 +814,11 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The String to use. </param>
         /// <param name="moveCollectionName"> The String to use. </param>
-        /// <param name="content"> The BulkRemoveContent to use. </param>
+        /// <param name="content"> The MoverBulkRemoveContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BulkRemove(string subscriptionId, string resourceGroupName, string moveCollectionName, BulkRemoveContent content = null, CancellationToken cancellationToken = default)
+        public Response BulkRemove(string subscriptionId, string resourceGroupName, string moveCollectionName, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -977,7 +976,7 @@ namespace Azure.ResourceManager.Migrate
             }
         }
 
-        internal HttpMessage CreateListRequiredForRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, string sourceId)
+        internal HttpMessage CreateListRequiredForRequest(string subscriptionId, string resourceGroupName, string moveCollectionName, ResourceIdentifier sourceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1007,7 +1006,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="sourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequiredForResourcesCollection>> ListRequiredForAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, string sourceId, CancellationToken cancellationToken = default)
+        public async Task<Response<RequiredForResourcesList>> ListRequiredForAsync(string subscriptionId, string resourceGroupName, string moveCollectionName, ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1020,9 +1019,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        RequiredForResourcesCollection value = default;
+                        RequiredForResourcesList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RequiredForResourcesCollection.DeserializeRequiredForResourcesCollection(document.RootElement);
+                        value = RequiredForResourcesList.DeserializeRequiredForResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1038,7 +1037,7 @@ namespace Azure.ResourceManager.Migrate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="moveCollectionName"/> or <paramref name="sourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moveCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequiredForResourcesCollection> ListRequiredFor(string subscriptionId, string resourceGroupName, string moveCollectionName, string sourceId, CancellationToken cancellationToken = default)
+        public Response<RequiredForResourcesList> ListRequiredFor(string subscriptionId, string resourceGroupName, string moveCollectionName, ResourceIdentifier sourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1051,9 +1050,9 @@ namespace Azure.ResourceManager.Migrate
             {
                 case 200:
                     {
-                        RequiredForResourcesCollection value = default;
+                        RequiredForResourcesList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RequiredForResourcesCollection.DeserializeRequiredForResourcesCollection(document.RootElement);
+                        value = RequiredForResourcesList.DeserializeRequiredForResourcesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

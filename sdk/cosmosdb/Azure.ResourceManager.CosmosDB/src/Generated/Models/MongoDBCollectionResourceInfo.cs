@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             CollectionName = collectionName;
             ShardKey = new ChangeTrackingDictionary<string, string>();
-            Indexes = new ChangeTrackingList<MongoIndex>();
+            Indexes = new ChangeTrackingList<MongoDBIndex>();
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionResourceInfo. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoIndex> indexes, int? analyticalStorageTtl)
+        internal MongoDBCollectionResourceInfo(string collectionName, IDictionary<string, string> shardKey, IList<MongoDBIndex> indexes, int? analyticalStorageTtl)
         {
             CollectionName = collectionName;
             ShardKey = shardKey;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A key-value pair of shard keys to be applied for the request. </summary>
         public IDictionary<string, string> ShardKey { get; }
         /// <summary> List of index keys. </summary>
-        public IList<MongoIndex> Indexes { get; }
+        public IList<MongoDBIndex> Indexes { get; }
         /// <summary> Analytical TTL. </summary>
         public int? AnalyticalStorageTtl { get; set; }
     }
