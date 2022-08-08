@@ -82,7 +82,8 @@ namespace Compute.Tests
                                 CertificateUrl = winRMCertificateUrl,
                             }
                         }
-                }
+                },
+                EnableVMAgentPlatformUpdates = true
             };
             osProfile.Secrets = new List<VaultSecretGroup>
                 {
@@ -112,6 +113,7 @@ namespace Compute.Tests
 
             Assert.True(osProfile.WindowsConfiguration.ProvisionVMAgent != null && osProfile.WindowsConfiguration.ProvisionVMAgent.Value);
             Assert.True(osProfile.WindowsConfiguration.EnableAutomaticUpdates != null && !osProfile.WindowsConfiguration.EnableAutomaticUpdates.Value);
+            Assert.True(osProfile.WindowsConfiguration.EnableVMAgentPlatformUpdates != null && !osProfile.WindowsConfiguration.EnableVMAgentPlatformUpdates.Value);
 
             // TimeZone
             Assert.Equal(PacificStandardTime, osProfile.WindowsConfiguration.TimeZone);
@@ -219,7 +221,8 @@ namespace Compute.Tests
                                     KeyData = DefaultSshPublicKey,
                                 }
                             }
-                        }
+                        },
+                        EnableVMAgentPlatformUpdates = true
                     };
                 };
 
@@ -239,6 +242,7 @@ namespace Compute.Tests
                     Assert.Equal(1, publicKeys.Count);
                     Assert.Equal(sshPath, publicKeys[0].Path);
                     Assert.Equal(DefaultSshPublicKey, publicKeys[0].KeyData);
+                    Assert.True(osProfile.LinuxConfiguration.EnableVMAgentPlatformUpdates);
                 };
 
                 TestVMWithOSProfile(
