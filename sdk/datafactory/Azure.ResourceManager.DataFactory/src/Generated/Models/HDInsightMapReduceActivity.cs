@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new ArgumentNullException(nameof(jarFilePath));
             }
 
-            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            StorageLinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             ClassName = className;
             JarFilePath = jarFilePath;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
-        internal HDInsightMapReduceActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData className, BinaryData jarFilePath, LinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightMapReduceActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, BinaryData className, BinaryData jarFilePath, FactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        public IList<LinkedServiceReference> StorageLinkedServices { get; }
+        public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. </summary>
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
-        public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> Class name. Type: string (or Expression with resultType string). </summary>
         public BinaryData ClassName { get; set; }
         /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
         public BinaryData JarFilePath { get; set; }
         /// <summary> Jar linked service reference. </summary>
-        public LinkedServiceReference JarLinkedService { get; set; }
+        public FactoryLinkedServiceReference JarLinkedService { get; set; }
         /// <summary> Jar libs. </summary>
         public IList<BinaryData> JarLibs { get; }
         /// <summary> Allows user to specify defines for the MapReduce job request. </summary>

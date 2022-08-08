@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delimited text dataset. </summary>
-    public partial class DelimitedTextDataset : Dataset
+    public partial class DelimitedTextDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public DelimitedTextDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public DelimitedTextDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="location">
+        /// <param name="dataLocation">
         /// The location of the delimited text storage.
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            Location = location;
+            DataLocation = dataLocation;
             ColumnDelimiter = columnDelimiter;
             RowDelimiter = rowDelimiter;
             EncodingName = encodingName;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
         /// </summary>
-        public DatasetLocation Location { get; set; }
+        public DatasetLocation DataLocation { get; set; }
         /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
         public BinaryData ColumnDelimiter { get; set; }
         /// <summary> The row delimiter. Type: string (or Expression with resultType string). </summary>

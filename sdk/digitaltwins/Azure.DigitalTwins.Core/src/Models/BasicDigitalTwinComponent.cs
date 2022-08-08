@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -16,10 +17,17 @@ namespace Azure.DigitalTwins.Core
     /// </para>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
+    [JsonConverter(typeof(BasicDigitalTwinComponentJsonConverter))]
     public class BasicDigitalTwinComponent
     {
         /// <summary>
-        /// The metadata property, required on a component to identify as one.
+        /// The date and time the component was last updated.
+        /// </summary>
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
+        public DateTimeOffset? LastUpdatedOn { get; internal set; }
+
+        /// <summary>
+        /// The component metadata.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
 #pragma warning disable CA2227 // Collection properties should be readonly

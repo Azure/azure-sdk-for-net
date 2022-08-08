@@ -1,14 +1,22 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.6.1 (2022-08-08)
 
 ### Bugs Fixed
+- Fixed `AZURE_REGIONAL_AUTHORITY_NAME` support in `ClientCertificateCredential` [#29112](https://github.com/Azure/azure-sdk-for-net/issues/29112)
+- Fixed regression in `SharedTokenCacheCredential` default behavior [#28029](https://github.com/Azure/azure-sdk-for-net/issues/28029)
+- Fixed legacy PowerShell discovery failures [#28030](https://github.com/Azure/azure-sdk-for-net/issues/28030) (A community contribution, courtesy of _[nerddtvg](https://github.com/nerddtvg)_)
 
 ### Other Changes
+- Documentation improvements to `TokenCacheRefreshArgs` and `EnvironmentCredential` (Community contributions, courtesy of _[pmaytak](https://github.com/pmaytak)_ and _[goenning](https://github.com/goenning)_)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- _[nerddtvg](https://github.com/nerddtvg)_
+- _[pmaytak](https://github.com/pmaytak)_
+- _[goenning](https://github.com/goenning)_
 
 ## 1.6.0 (2022-04-05)
 
@@ -28,7 +36,7 @@
 ### Features Added
 - `EnvironmentCredential` now supports certificate subject name / issuer based authentication with `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN` environment variable (A community contribution, courtesy of _[trevorlacey-msft](https://github.com/trevorlacey-msft))_.
 - `ManagedIdentityCredential` now supports accepting a `ResourceIdentifier` argument to specify a User Assigned Managed Identity by resource Id rather than client Id. `DefaultAzureCredential` also supports this via the `ManagedIdentityResourceId` property of `DefaultAzureCredentialOptions`.
-- Added `ClientAssertionCredential` for authenticating service principals with a presigned client assetion.
+- Added `ClientAssertionCredential` for authenticating service principals with a presigned client assertion.
 
 ### Bugs Fixed
 - Fixed `AuthenticationFailedException` from `AzurePowerSheellCredential` when not logged in on non-windows platforms [#23498](https://github.com/Azure/azure-sdk-for-net/issues/23498)
@@ -63,7 +71,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 ### Features Added
 
-- `DefaultAzureCredentialOptions` now has a `InteractiveBrowserClientId` property which allows passing a ClientId value to the InteractiveBrowserCredential` when constructing a `DefaultAzureCredential`.
+- `DefaultAzureCredentialOptions` now has a `InteractiveBrowserClientId` property which allows passing a ClientId value to the `InteractiveBrowserCredential` when constructing a `DefaultAzureCredential`.
 - Implement `OnBehalfOfCredential` which enables authentication to Azure Active Directory using an On-Behalf-Of flow.
 - Added support to `ManagedIdentityCredential` for Azure hosts using federated token exchange for managed identity.
 

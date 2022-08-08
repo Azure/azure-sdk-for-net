@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> description = default;
             Optional<string> documentation = default;
             Optional<string> version = default;
-            Optional<Uri> serverUrl = default;
+            Optional<Uri> serverUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"))
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serverUrl = null;
+                        serverUri = null;
                         continue;
                     }
-                    serverUrl = new Uri(property.Value.GetString());
+                    serverUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new GatewayApiMetadataProperties(title.Value, description.Value, documentation.Value, version.Value, serverUrl.Value);
+            return new GatewayApiMetadataProperties(title.Value, description.Value, documentation.Value, version.Value, serverUri.Value);
         }
     }
 }

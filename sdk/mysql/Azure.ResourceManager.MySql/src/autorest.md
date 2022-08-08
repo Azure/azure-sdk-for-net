@@ -26,35 +26,142 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'sessionId': 'uuid'
+  'PrincipalId': 'uuid'
+  '*ServerId': 'arm-id'
+  '*SubnetId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  'ResourceType': 'resource-type'
+  '*IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
+  Five6: FivePointSix
+  Five7: FivePointSeven
+  Eight0: EightPointZero
 
-list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations/{configurationName}
+prepend-rp-prefix:
+  - Advisor
+  - Configuration
+  - Database
+  - FirewallRule
+  - QueryStatistic
+  - QueryText
+  - RecommendationAction
+  - Server
+  - ServerKey
+  - ServerSecurityAlertPolicy
+  - ServerVersion
+  - VirtualNetworkRule
+  - WaitStatistic
+  - AdministratorType
+  - AdvisorResultList
+  - ConfigurationListContent
+  - CreateMode
+  - DatabaseListResult
+  - FirewallRuleListResult
+  - LogFile
+  - LogFileListResult
+  - MinimalTlsVersionEnum
+  - GeoRedundantBackup
+  - InfrastructureEncryption
+  - NameAvailabilityRequest
+  - PerformanceTierListResult
+  - PerformanceTierServiceLevelObjectives
+  - PrivateEndpointProvisioningState
+  - PrivateLinkServiceConnectionStateStatus
+  - PublicNetworkAccessEnum
+  - QueryPerformanceInsightResetDataResult
+  - QueryPerformanceInsightResetDataResultState
+  - RecommendedActionSessionsOperationStatus
+  - StorageProfile
+  - ServerPropertiesForCreate
+  - ServerPropertiesForDefaultCreate
+  - ServerPropertiesForRestore
+  - ServerPropertiesForGeoRestore
+  - ServerPropertiesForReplica
+  - SecurityAlertPolicyName
+  - ServerKeyListResult
+  - ServerKeyType
+  - ServerListResult
+  - ServerPrivateEndpointConnection
+  - ServerPrivateEndpointConnectionProperties
+  - ServerPrivateLinkServiceConnectionStateProperty
+  - ServerSecurityAlertPolicyListResult
+  - ServerSecurityAlertPolicyState
+  - ServerState
+  - ServerUpgradeParameters
+  - SslEnforcementEnum
+  - StorageAutogrow
+  - TopQueryStatisticsInput
+  - VirtualNetworkRuleListResult
+  - VirtualNetworkRuleState
+  - WaitStatisticsInput
+rename-mapping:
+  ServerAdministratorResource: MySqlServerAdministrator
+  ServerAdministratorResource.properties.login: LoginAccountName
+  ServerAdministratorResource.properties.sid: SecureId
+  ServerAdministratorResourceListResult: MySqlServerAdministratorListResult
+  AdvisorsResultList: MySqlAdvisorListResult
+  QueryTextsResultList: MySqlQueryTextListResult
+  TopQueryStatisticsResultList: MySqlTopQueryStatisticsListResult
+  RecommendationActionsResultList: MySqlRecommendationActionListResult
+  WaitStatisticsResultList: MySqlWaitStatisticsListResult
+  PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
+  RecoverableServerResource: MySqlRecoverableServerResourceData
+  RecoverableServerResource.properties.vCore: VCores
+  ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
+  NameAvailability.nameAvailable: IsNameAvailable
+  StorageProfile.storageMB: StorageInMB
+  WaitStatistic.properties.totalTimeInMs: TotalTimeInMinutes
+  PerformanceTierProperties.minStorageMB: MinStorageInMB
+  PerformanceTierProperties.maxStorageMB: MaxStorageInMB
+  PerformanceTierProperties.minLargeStorageMB: MinLargeStorageInMB
+  PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
+  PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
+  PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  PerformanceTierServiceLevelObjectives.vCore: VCores
+  NameAvailability: MySqlNameAvailabilityResult
+  PerformanceTierProperties: MySqlPerformanceTier
+  ConfigurationListResult: MySqlConfigurationList
+  LogFile.properties.type: LogFileType
+
+override-operation-name:
+  ServerParameters_ListUpdateConfigurations: UpdateConfigurations
+#   LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
+#   LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
+  MySqlServers_Start: Start
+  MySqlServers_Stop: Stop
+  MySqlServers_Upgrade: Upgrade
+  CheckNameAvailability_Execute: CheckMySqlNameAvailability
 
 directive:
+  # These 2 operations read like some LRO related operations. Remove them first.
+  - remove-operation: LocationBasedRecommendedActionSessionsResult_List
+  - remove-operation: LocationBasedRecommendedActionSessionsOperationStatus_Get
   - rename-operation:
       from: Servers_Start
       to: MySqlServers_Start
@@ -64,6 +171,11 @@ directive:
   - rename-operation:
       from: Servers_Upgrade
       to: MySqlServers_Upgrade
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
+      $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
@@ -77,29 +189,101 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'PrincipalId': 'uuid'
+  '*SubnetId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  '*UserAssignedIdentityId': 'arm-id'
+  'ResourceType': 'resource-type'
+  '*IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  Etag: ETag
+  Etag: ETag|etag
 
+rename-mapping:
+  Configuration: MySqlFlexibleServerConfiguration
+  Database: MySqlFlexibleServerDatabase
+  FirewallRule: MySqlFlexibleServerFirewallRule
+  ServerBackup: MySqlFlexibleServerBackup
+  Server: MySqlFlexibleServer
+  ServerVersion: MySqlFlexibleServerVersion
+  EnableStatusEnum: MySqlFlexibleServerEnableStatusEnum
+  ReplicationRole: MySqlFlexibleServerReplicationRole
+  DataEncryption: MySqlFlexibleServerDataEncryption
+  MaintenanceWindow: MySqlFlexibleServerMaintenanceWindow
+  Backup: MySqlFlexibleServerBackupProperties
+  Storage: MySqlFlexibleServerStorage
+  Sku: MySqlFlexibleServerSku
+  Network: MySqlFlexibleServerNetwork
+  HighAvailability: MySqlFlexibleServerHighAvailability
+  HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode
+  HighAvailabilityState: MySqlFlexibleServerHighAvailabilityState
+  ServerProperties: MySqlFlexibleServerProperties
+  ServerPropertiesForUpdate: MySqlFlexibleServerPropertiesForUpdate
+  ServerForUpdate: MySqlFlexibleServerForUpdate
+  ServerListResult: MySqlFlexibleServerListResult
+  ServerRestartParameter: MySqlFlexibleServerRestartParameter
+  ServerState: MySqlFlexibleServerState
+  ServerBackupListResult: MySqlFlexibleServerBackupListResult
+  FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
+  FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
+  DatabaseListResult: MySqlFlexibleServerDatabaseListResult
+  ConfigurationSource: MySqlFlexibleServerConfigurationSource
+  ConfigurationListResult: MySqlFlexibleServerConfigurationListResult
+  ConfigurationForBatchUpdate: MySqlFlexibleServerConfigurationForBatchUpdate
+  ConfigurationListForBatchUpdate: MySqlFlexibleServerConfigurationListForBatchUpdate
+  VirtualNetworkSubnetUsageParameter: MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
+  DelegatedSubnetUsage: MySqlFlexibleServerDelegatedSubnetUsage
+  VirtualNetworkSubnetUsageResult: MySqlFlexibleServerVirtualNetworkSubnetUsageResult
+  SkuCapability: MySqlFlexibleServerSkuCapability
+  ServerVersionCapability: MySqlFlexibleServerServerVersionCapability
+  StorageEditionCapability: MySqlFlexibleServerStorageEditionCapability
+  ServerEditionCapability: MySqlFlexibleServerEditionCapability
+  CapabilityProperties: MySqlFlexibleServerCapabilityProperties
+  CapabilitiesListResult: MySqlFlexibleServerCapabilitiesListResult
+  GetPrivateDnsZoneSuffixResponse: MySqlFlexibleServerPrivateDnsZoneSuffixResponse
+  NameAvailabilityRequest: MySqlFlexibleServerNameAvailabilityRequest
+  NameAvailability: MySqlFlexibleServerNameAvailabilityResult
+  CreateMode: MySqlFlexibleServerCreateMode
+  DataEncryptionType: MySqlFlexibleServerDataEncryptionType
+  SkuTier: MySqlFlexibleServerSkuTier
+  IsReadOnly: MySqlFlexibleServerConfigReadOnlyState
+  IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
+  IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
+  NameAvailability.nameAvailable: IsNameAvailable
+  Storage.storageSizeGB: StorageSizeInGB
+  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+override-operation-name:
+  CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
+  Configurations_BatchUpdate: UpdateConfigurations
+
+directive:
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.Identity['x-ms-client-flatten'] = false;
+      $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
+      delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
 ```

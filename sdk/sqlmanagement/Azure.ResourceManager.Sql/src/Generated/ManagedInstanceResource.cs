@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
         private readonly ClientDiagnostics _managedInstanceTdeCertificatesClientDiagnostics;
         private readonly ManagedInstanceTdeCertificatesRestOperations _managedInstanceTdeCertificatesRestClient;
-        private readonly ClientDiagnostics _serverTrustGroupClientDiagnostics;
-        private readonly ServerTrustGroupsRestOperations _serverTrustGroupRestClient;
+        private readonly ClientDiagnostics _sqlServerTrustGroupServerTrustGroupsClientDiagnostics;
+        private readonly ServerTrustGroupsRestOperations _sqlServerTrustGroupServerTrustGroupsRestClient;
         private readonly ManagedInstanceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceResource"/> class for mocking. </summary>
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.Sql
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseApiVersion);
             _managedInstanceTdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _managedInstanceTdeCertificatesRestClient = new ManagedInstanceTdeCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _serverTrustGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServerTrustGroupResource.ResourceType, out string serverTrustGroupApiVersion);
-            _serverTrustGroupRestClient = new ServerTrustGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverTrustGroupApiVersion);
+            _sqlServerTrustGroupServerTrustGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerTrustGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlServerTrustGroupResource.ResourceType, out string sqlServerTrustGroupServerTrustGroupsApiVersion);
+            _sqlServerTrustGroupServerTrustGroupsRestClient = new ServerTrustGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerTrustGroupServerTrustGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
         /// Operation Id: ManagedInstanceAdministrators_Get
         /// </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
+        /// <param name="administratorName"> The SqlAdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetManagedInstanceAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetManagedInstanceAdministratorAsync(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return await GetManagedInstanceAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
         }
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
         /// Operation Id: ManagedInstanceAdministrators_Get
         /// </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
+        /// <param name="administratorName"> The SqlAdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceAdministrators().Get(administratorName, cancellationToken);
         }
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedServerSecurityAlertPolicyResource>> GetManagedServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedServerSecurityAlertPolicyResource>> GetManagedServerSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ManagedServerSecurityAlertPolicyResource> GetManagedServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedServerSecurityAlertPolicyResource> GetManagedServerSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetManagedServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
@@ -568,11 +568,11 @@ namespace Azure.ResourceManager.Sql
             return GetDistributedAvailabilityGroups().Get(distributedAvailabilityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerTrustCertificateResources in the ManagedInstance. </summary>
-        /// <returns> An object representing collection of ServerTrustCertificateResources and their operations over a ServerTrustCertificateResource. </returns>
-        public virtual ServerTrustCertificateCollection GetServerTrustCertificates()
+        /// <summary> Gets a collection of ManagedInstanceServerTrustCertificateResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceServerTrustCertificateResources and their operations over a ManagedInstanceServerTrustCertificateResource. </returns>
+        public virtual ManagedInstanceServerTrustCertificateCollection GetManagedInstanceServerTrustCertificates()
         {
-            return GetCachedClient(Client => new ServerTrustCertificateCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedInstanceServerTrustCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerTrustCertificateResource>> GetServerTrustCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceServerTrustCertificateResource>> GetManagedInstanceServerTrustCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetServerTrustCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedInstanceServerTrustCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServerTrustCertificateResource> GetServerTrustCertificate(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceServerTrustCertificateResource> GetManagedInstanceServerTrustCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetServerTrustCertificates().Get(certificateName, cancellationToken);
+            return GetManagedInstanceServerTrustCertificates().Get(certificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EndpointCertificateResources in the ManagedInstance. </summary>
@@ -640,6 +640,109 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<EndpointCertificateResource> GetEndpointCertificate(string endpointType, CancellationToken cancellationToken = default)
         {
             return GetEndpointCertificates().Get(endpointType, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedServerDnsAliasResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedServerDnsAliasResources and their operations over a ManagedServerDnsAliasResource. </returns>
+        public virtual ManagedServerDnsAliasCollection GetManagedServerDnsAliases()
+        {
+            return GetCachedClient(Client => new ManagedServerDnsAliasCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ManagedServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedServerDnsAliasResource>> GetManagedServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ManagedServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedServerDnsAliasResource> GetManagedServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedServerDnsAliases().Get(dnsAliasName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceDtcResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceDtcResources and their operations over a ManagedInstanceDtcResource. </returns>
+        public virtual ManagedInstanceDtcCollection GetManagedInstanceDtcs()
+        {
+            return GetCachedClient(Client => new ManagedInstanceDtcCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets managed instance DTC settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}
+        /// Operation Id: ManagedInstanceDtcs_Get
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceDtcResource>> GetManagedInstanceDtcAsync(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceDtcs().GetAsync(dtcName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets managed instance DTC settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/dtc/{dtcName}
+        /// Operation Id: ManagedInstanceDtcs_Get
+        /// </summary>
+        /// <param name="dtcName"> The name of the managed instance DTC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceDtcResource> GetManagedInstanceDtc(DtcName dtcName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceDtcs().Get(dtcName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedInstanceAdvancedThreatProtectionResources in the ManagedInstance. </summary>
+        /// <returns> An object representing collection of ManagedInstanceAdvancedThreatProtectionResources and their operations over a ManagedInstanceAdvancedThreatProtectionResource. </returns>
+        public virtual ManagedInstanceAdvancedThreatProtectionCollection GetManagedInstanceAdvancedThreatProtections()
+        {
+            return GetCachedClient(Client => new ManagedInstanceAdvancedThreatProtectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a managed instance&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedInstanceAdvancedThreatProtectionResource>> GetManagedInstanceAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedInstanceAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a managed instance&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedInstanceAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedInstanceAdvancedThreatProtectionResource> GetManagedInstanceAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedInstanceAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
         /// <summary>
@@ -954,17 +1057,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerTrustGroups_ListByInstance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerTrustGroupResource> GetServerTrustGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerTrustGroupResource> GetSqlServerTrustGroupsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlServerTrustGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -972,14 +1075,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlServerTrustGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = await _serverTrustGroupRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -996,17 +1099,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerTrustGroups_ListByInstance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerTrustGroupResource> GetServerTrustGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerTrustGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerTrustGroupResource> GetSqlServerTrustGroups(CancellationToken cancellationToken = default)
         {
-            Page<ServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
+            Page<SqlServerTrustGroupResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1014,14 +1117,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlServerTrustGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _serverTrustGroupClientDiagnostics.CreateScope("ManagedInstanceResource.GetServerTrustGroups");
+                using var scope = _sqlServerTrustGroupServerTrustGroupsClientDiagnostics.CreateScope("ManagedInstanceResource.GetSqlServerTrustGroups");
                 scope.Start();
                 try
                 {
-                    var response = _serverTrustGroupRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sqlServerTrustGroupServerTrustGroupsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerTrustGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1046,7 +1149,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1095,7 +1198,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="observationMetric"> Metric to be used for ranking top queries. Default is &apos;cpu&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, MetricType? observationMetric = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TopQueries> GetTopQueries(int? numberOfQueries = null, string databases = null, string startTime = null, string endTime = null, QueryTimeGrainType? interval = null, AggregationFunctionType? aggregationFunction = null, SqlMetricType? observationMetric = null, CancellationToken cancellationToken = default)
         {
             Page<TopQueries> FirstPageFunc(int? pageSizeHint)
             {

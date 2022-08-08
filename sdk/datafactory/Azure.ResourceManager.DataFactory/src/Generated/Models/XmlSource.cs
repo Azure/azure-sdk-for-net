@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Xml source. </summary>
-    public partial class XmlSource : CopySource
+    public partial class XmlSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of XmlSource. </summary>
         public XmlSource()

@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.WebPubSub
         public string ExternalIP { get { throw null; } }
         public string HostName { get { throw null; } }
         public string HostNamePrefix { get { throw null; } }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsAadAuthDisabled { get { throw null; } set { } }
         public bool? IsClientCertEnabled { get { throw null; } set { } }
-        public bool? IsDisableAadAuth { get { throw null; } set { } }
-        public bool? IsDisableLocalAuth { get { throw null; } set { } }
+        public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration LiveTraceConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls NetworkAcls { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkResource> GetWebPubSubSharedPrivateLink(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkResource>> GetWebPubSubSharedPrivateLinkAsync(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkCollection GetWebPubSubSharedPrivateLinks() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys> RegenerateKey(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>> RegenerateKeyAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.RegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys> RegenerateKey(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>> RegenerateKeyAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -231,71 +231,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string Size { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier? Tier { get { throw null; } set { } }
     }
-    public partial class EventHandler
-    {
-        public EventHandler(string urlTemplate) { }
-        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings Auth { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SystemEvents { get { throw null; } }
-        public string UrlTemplate { get { throw null; } set { } }
-        public string UserEventPattern { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.KeyType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeyType(string value) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.Models.KeyType Primary { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.KeyType Salt { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.KeyType Secondary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WebPubSub.Models.KeyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.KeyType left, Azure.ResourceManager.WebPubSub.Models.KeyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WebPubSub.Models.KeyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.KeyType left, Azure.ResourceManager.WebPubSub.Models.KeyType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class LiveTraceCategory
     {
         public LiveTraceCategory() { }
-        public string Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     public partial class LiveTraceConfiguration
     {
         public LiveTraceConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory> Categories { get { throw null; } }
-        public string Enabled { get { throw null; } set { } }
-    }
-    public partial class ManagedIdentity
-    {
-        public ManagedIdentity() { }
-        public Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType? IdentityType { get { throw null; } set { } }
-        public string PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedIdentityType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType left, Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType left, Azure.ResourceManager.WebPubSub.Models.ManagedIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
+        public bool? IsEnabled { get { throw null; } set { } }
     }
     public partial class PrivateEndpointAcl : Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls
     {
@@ -307,11 +253,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public PublicNetworkAcls() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Allow { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Deny { get { throw null; } }
-    }
-    public partial class RegenerateKeyContent
-    {
-        public RegenerateKeyContent() { }
-        public Azure.ResourceManager.WebPubSub.Models.KeyType? KeyType { get { throw null; } set { } }
     }
     public partial class ResourceLogCategory
     {
@@ -371,11 +312,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType left, Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class WebPubSubEventHandler
+    {
+        public WebPubSubEventHandler(string urlTemplate) { }
+        public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings Auth { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SystemEvents { get { throw null; } }
+        public string UrlTemplate { get { throw null; } set { } }
+        public string UserEventPattern { get { throw null; } set { } }
+    }
     public partial class WebPubSubHubProperties
     {
         public WebPubSubHubProperties() { }
         public string AnonymousConnectPolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.EventHandler> EventHandlers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler> EventHandlers { get { throw null; } }
     }
     public partial class WebPubSubKeys
     {
@@ -384,6 +333,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebPubSubKeyType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebPubSubKeyType(string value) { throw null; }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType Primary { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType Salt { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class WebPubSubNameAvailability
     {
@@ -465,6 +433,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState left, Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class WebPubSubRegenerateKeyContent
+    {
+        public WebPubSubRegenerateKeyContent() { }
+        public Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType? KeyType { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebPubSubRequestType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType>
     {
@@ -472,7 +445,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private readonly int _dummyPrimitive;
         public WebPubSubRequestType(string value) { throw null; }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType ClientConnection { get { throw null; } }
-        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType Restapi { get { throw null; } }
+        public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType RestApi { get { throw null; } }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType ServerConnection { get { throw null; } }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType Trace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType other) { throw null; }

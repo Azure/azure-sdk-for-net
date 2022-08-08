@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -54,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
             Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<string>> publicIPAddresses = default;
-            Optional<IReadOnlyList<string>> privateIPAddresses = default;
-            Optional<string> publicIpAddressId = default;
+            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<Uri> gatewayRegionalUrl = default;
+            Optional<Uri> gatewayRegionalUri = default;
             Optional<bool> disableGateway = default;
             Optional<PlatformVersion> platformVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(IPAddress.Parse(item.GetString()));
                     }
                     publicIPAddresses = array;
                     continue;
@@ -110,17 +111,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(IPAddress.Parse(item.GetString()));
                     }
                     privateIPAddresses = array;
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressId"))
                 {
-                    publicIpAddressId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkConfiguration"))
@@ -137,10 +143,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        gatewayRegionalUrl = null;
+                        gatewayRegionalUri = null;
                         continue;
                     }
-                    gatewayRegionalUrl = new Uri(property.Value.GetString());
+                    gatewayRegionalUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("disableGateway"))
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIpAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUrl.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
+            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
         }
     }
 }

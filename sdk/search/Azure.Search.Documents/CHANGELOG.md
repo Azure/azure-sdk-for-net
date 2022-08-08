@@ -1,5 +1,21 @@
 # Release History
 
+## 11.4.0-beta.10 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 11.4.0-beta.9 (2022-08-08)
+
+### Features Added
+- Added support for [Lexical normalizers](https://docs.microsoft.com/azure/search/search-normalizers#normalizers) in `SimpleField` and `SearchableField`.
+- Added multi-cloud support via `SearchClientOptions.Audience` to allow users to select the Azure cloud where the resource is located ([#30306](https://github.com/Azure/azure-sdk-for-net/issues/30306)).
+
 ## 11.4.0-beta.8 (2022-07-07)
 
 ### Bugs Fixed

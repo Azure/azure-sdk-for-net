@@ -1,6 +1,22 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0 (2022-07-28)
+
+### Key Bug Fixes
+
+- The `Azure.Core` dependency was updated to `1.25.0`.
+- The `System.IdentityModel.Tokens.Jwt` dependency was updated to `6.5.0`.
+- The `System.Text.Json` dependency was updated to `4.7.2`.
 
 ## 1.0.1 (2021-05-25)
 

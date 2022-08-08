@@ -664,6 +664,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(5, typeof(NullReferenceException))]
         public async Task FindBlobsByTagAsync()
         {
             // Arrange

@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("shareQuota");
                 writer.WriteNumberValue(ShareQuota.Value);
             }
-            if (Optional.IsDefined(EnabledProtocols))
+            if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols");
-                writer.WriteStringValue(EnabledProtocols.Value.ToString());
+                writer.WriteStringValue(EnabledProtocol.Value.ToString());
             }
             if (Optional.IsDefined(RootSquash))
             {
@@ -77,20 +77,20 @@ namespace Azure.ResourceManager.Storage
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<int> shareQuota = default;
-            Optional<EnabledProtocol> enabledProtocols = default;
+            Optional<FileShareEnabledProtocol> enabledProtocols = default;
             Optional<RootSquashType> rootSquash = default;
             Optional<string> version = default;
             Optional<bool> deleted = default;
             Optional<DateTimeOffset> deletedTime = default;
             Optional<int> remainingRetentionDays = default;
-            Optional<ShareAccessTier> accessTier = default;
+            Optional<FileShareAccessTier> accessTier = default;
             Optional<DateTimeOffset> accessTierChangeTime = default;
             Optional<string> accessTierStatus = default;
             Optional<long> shareUsageBytes = default;
-            Optional<LeaseStatus> leaseStatus = default;
-            Optional<LeaseState> leaseState = default;
-            Optional<LeaseDuration> leaseDuration = default;
-            Optional<IList<SignedIdentifier>> signedIdentifiers = default;
+            Optional<StorageLeaseStatus> leaseStatus = default;
+            Optional<StorageLeaseState> leaseState = default;
+            Optional<StorageLeaseDurationType> leaseDuration = default;
+            Optional<IList<StorageSignedIdentifier>> signedIdentifiers = default;
             Optional<DateTimeOffset> snapshotTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enabledProtocols = new EnabledProtocol(property0.Value.GetString());
+                            enabledProtocols = new FileShareEnabledProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("rootSquash"))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessTier = new ShareAccessTier(property0.Value.GetString());
+                            accessTier = new FileShareAccessTier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("accessTierChangeTime"))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseStatus = new LeaseStatus(property0.Value.GetString());
+                            leaseStatus = new StorageLeaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseState"))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseState = new LeaseState(property0.Value.GetString());
+                            leaseState = new StorageLeaseState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("leaseDuration"))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseDuration = new LeaseDuration(property0.Value.GetString());
+                            leaseDuration = new StorageLeaseDurationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("signedIdentifiers"))
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SignedIdentifier> array = new List<SignedIdentifier>();
+                            List<StorageSignedIdentifier> array = new List<StorageSignedIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignedIdentifier.DeserializeSignedIdentifier(item));
+                                array.Add(StorageSignedIdentifier.DeserializeStorageSignedIdentifier(item));
                             }
                             signedIdentifiers = array;
                             continue;

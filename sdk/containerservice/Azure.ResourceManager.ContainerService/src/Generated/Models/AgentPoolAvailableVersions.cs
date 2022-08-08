@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
         internal AgentPoolAvailableVersions()
         {
-            AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem>();
+            AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersion>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="agentPoolVersions"> List of versions available for agent pool. </param>
-        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> agentPoolVersions) : base(id, name, resourceType, systemData)
+        internal AgentPoolAvailableVersions(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions) : base(id, name, resourceType, systemData)
         {
             AgentPoolVersions = agentPoolVersions;
         }
 
         /// <summary> List of versions available for agent pool. </summary>
-        public IReadOnlyList<AgentPoolAvailableVersionsPropertiesAgentPoolVersionsItem> AgentPoolVersions { get; }
+        public IReadOnlyList<AgentPoolAvailableVersion> AgentPoolVersions { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             string kubernetesVersion = default;
             Optional<string> name = default;
-            OSType osType = default;
+            ContainerServiceOSType osType = default;
             Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("osType"))
                 {
-                    osType = new OSType(property.Value.GetString());
+                    osType = new ContainerServiceOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("upgrades"))

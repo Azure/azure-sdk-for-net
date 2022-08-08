@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("vmSize");
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(OSDiskSizeGB))
+            if (Optional.IsDefined(OSDiskSizeInGB))
             {
                 writer.WritePropertyName("osDiskSizeGB");
-                writer.WriteNumberValue(OSDiskSizeGB.Value);
+                writer.WriteNumberValue(OSDiskSizeInGB.Value);
             }
             if (Optional.IsDefined(OSDiskType))
             {
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("osType");
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(OSSKU))
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU");
-                writer.WriteStringValue(OSSKU.Value.ToString());
+                writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (Optional.IsDefined(MaxCount))
             {
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableEncryptionAtHost");
                 writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
             }
-            if (Optional.IsDefined(EnableUltraSSD))
+            if (Optional.IsDefined(EnableUltraSsd))
             {
                 writer.WritePropertyName("enableUltraSSD");
-                writer.WriteBooleanValue(EnableUltraSSD.Value);
+                writer.WriteBooleanValue(EnableUltraSsd.Value);
             }
             if (Optional.IsDefined(EnableFips))
             {
@@ -234,14 +234,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> count = default;
             Optional<string> vmSize = default;
             Optional<int> osDiskSizeGB = default;
-            Optional<OSDiskType> osDiskType = default;
+            Optional<ContainerServiceOSDiskType> osDiskType = default;
             Optional<KubeletDiskType> kubeletDiskType = default;
             Optional<WorkloadRuntime> workloadRuntime = default;
-            Optional<string> vnetSubnetID = default;
-            Optional<string> podSubnetID = default;
+            Optional<ResourceIdentifier> vnetSubnetId = default;
+            Optional<ResourceIdentifier> podSubnetId = default;
             Optional<int> maxPods = default;
-            Optional<OSType> osType = default;
-            Optional<Ossku> osSKU = default;
+            Optional<ContainerServiceOSType> osType = default;
+            Optional<ContainerServiceOSSku> osSku = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
             Optional<bool> enableAutoScaling = default;
@@ -253,24 +253,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> nodeImageVersion = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             Optional<string> provisioningState = default;
-            Optional<PowerState> powerState = default;
+            Optional<ContainerServicePowerState> powerState = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<bool> enableNodePublicIP = default;
-            Optional<string> nodePublicIPPrefixID = default;
+            Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
             Optional<ScaleSetPriority> scaleSetPriority = default;
             Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
             Optional<float> spotMaxPrice = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> nodeLabels = default;
             Optional<IList<string>> nodeTaints = default;
-            Optional<string> proximityPlacementGroupID = default;
+            Optional<ResourceIdentifier> proximityPlacementGroupId = default;
             Optional<KubeletConfig> kubeletConfig = default;
             Optional<LinuxOSConfig> linuxOSConfig = default;
             Optional<bool> enableEncryptionAtHost = default;
-            Optional<bool> enableUltraSSD = default;
+            Optional<bool> enableUltraSsd = default;
             Optional<bool> enableFIPS = default;
-            Optional<GPUInstanceProfile> gpuInstanceProfile = default;
-            Optional<CreationData> creationData = default;
+            Optional<GpuInstanceProfile> gpuInstanceProfile = default;
+            Optional<ContainerServiceCreationData> creationData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osDiskType = new OSDiskType(property.Value.GetString());
+                    osDiskType = new ContainerServiceOSDiskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kubeletDiskType"))
@@ -335,12 +335,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("vnetSubnetID"))
                 {
-                    vnetSubnetID = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("podSubnetID"))
                 {
-                    podSubnetID = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    podSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxPods"))
@@ -360,7 +370,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new ContainerServiceOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSKU"))
@@ -370,7 +380,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osSKU = new Ossku(property.Value.GetString());
+                    osSku = new ContainerServiceOSSku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxCount"))
@@ -470,7 +480,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    powerState = PowerState.DeserializePowerState(property.Value);
+                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"))
@@ -500,7 +510,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("nodePublicIPPrefixID"))
                 {
-                    nodePublicIPPrefixID = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    nodePublicIPPrefixId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scaleSetPriority"))
@@ -580,7 +595,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("proximityPlacementGroupID"))
                 {
-                    proximityPlacementGroupID = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    proximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kubeletConfig"))
@@ -620,7 +640,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enableUltraSSD = property.Value.GetBoolean();
+                    enableUltraSsd = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("enableFIPS"))
@@ -640,7 +660,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gpuInstanceProfile = new GPUInstanceProfile(property.Value.GetString());
+                    gpuInstanceProfile = new GpuInstanceProfile(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creationData"))
@@ -650,11 +670,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    creationData = CreationData.DeserializeCreationData(property.Value);
+                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value);
                     continue;
                 }
             }
-            return new ManagedClusterAgentPoolProfile(Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetID.Value, podSubnetID.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSKU), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixID.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupID.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSSD), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, name);
+            return new ManagedClusterAgentPoolProfile(Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, name);
         }
     }
 }

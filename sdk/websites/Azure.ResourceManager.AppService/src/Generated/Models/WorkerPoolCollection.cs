@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WorkerPoolCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkerPoolCollection(IEnumerable<WorkerPoolResourceData> value)
+        internal WorkerPoolCollection(IEnumerable<WorkerPoolData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WorkerPoolCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal WorkerPoolCollection(IReadOnlyList<WorkerPoolResourceData> value, string nextLink)
+        internal WorkerPoolCollection(IReadOnlyList<WorkerPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<WorkerPoolResourceData> Value { get; }
+        public IReadOnlyList<WorkerPoolData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

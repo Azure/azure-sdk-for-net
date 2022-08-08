@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RegistryStatistics>> GetStatsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubRegistryStatistics>> GetStatsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -533,9 +533,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        RegistryStatistics value = default;
+                        IotHubRegistryStatistics value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
+                        value = IotHubRegistryStatistics.DeserializeIotHubRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RegistryStatistics> GetStats(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<IotHubRegistryStatistics> GetStats(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -562,9 +562,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        RegistryStatistics value = default;
+                        IotHubRegistryStatistics value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RegistryStatistics.DeserializeRegistryStatistics(document.RootElement);
+                        value = IotHubRegistryStatistics.DeserializeIotHubRegistryStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobResponseListResult>> ListJobsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubJobInfoListResult>> ListJobsAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1048,9 +1048,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponseListResult value = default;
+                        IotHubJobInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobResponseListResult.DeserializeJobResponseListResult(document.RootElement);
+                        value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobResponseListResult> ListJobs(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<IotHubJobInfoListResult> ListJobs(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1077,9 +1077,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponseListResult value = default;
+                        IotHubJobInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobResponseListResult.DeserializeJobResponseListResult(document.RootElement);
+                        value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobResponse>> GetJobAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobId, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubJobInfo>> GetJobAsync(string subscriptionId, string resourceGroupName, string resourceName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1130,9 +1130,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponse value = default;
+                        IotHubJobInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobResponse.DeserializeJobResponse(document.RootElement);
+                        value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobResponse> GetJob(string subscriptionId, string resourceGroupName, string resourceName, string jobId, CancellationToken cancellationToken = default)
+        public Response<IotHubJobInfo> GetJob(string subscriptionId, string resourceGroupName, string resourceName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1161,9 +1161,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponse value = default;
+                        IotHubJobInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobResponse.DeserializeJobResponse(document.RootElement);
+                        value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EndpointHealthDataListResult>> GetEndpointHealthAsync(string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubEndpointHealthInfoListResult>> GetEndpointHealthAsync(string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1290,9 +1290,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        EndpointHealthDataListResult value = default;
+                        IotHubEndpointHealthInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointHealthDataListResult.DeserializeEndpointHealthDataListResult(document.RootElement);
+                        value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EndpointHealthDataListResult> GetEndpointHealth(string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
+        public Response<IotHubEndpointHealthInfoListResult> GetEndpointHealth(string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1319,9 +1319,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        EndpointHealthDataListResult value = default;
+                        IotHubEndpointHealthInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointHealthDataListResult.DeserializeEndpointHealthDataListResult(document.RootElement);
+                        value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, OperationInputs operationInputs)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, IotHubNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.IotHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(operationInputs);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1352,24 +1352,24 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Check if an IoT hub name is available. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationInputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IotHubNameAvailabilityInfo>> CheckNameAvailabilityAsync(string subscriptionId, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubNameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, operationInputs);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IotHubNameAvailabilityInfo value = default;
+                        IotHubNameAvailabilityResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IotHubNameAvailabilityInfo.DeserializeIotHubNameAvailabilityInfo(document.RootElement);
+                        value = IotHubNameAvailabilityResponse.DeserializeIotHubNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1379,24 +1379,24 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Check if an IoT hub name is available. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="operationInputs"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationInputs"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IotHubNameAvailabilityInfo> CheckNameAvailability(string subscriptionId, OperationInputs operationInputs, CancellationToken cancellationToken = default)
+        public Response<IotHubNameAvailabilityResponse> CheckNameAvailability(string subscriptionId, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(operationInputs, nameof(operationInputs));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, operationInputs);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        IotHubNameAvailabilityInfo value = default;
+                        IotHubNameAvailabilityResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IotHubNameAvailabilityInfo.DeserializeIotHubNameAvailabilityInfo(document.RootElement);
+                        value = IotHubNameAvailabilityResponse.DeserializeIotHubNameAvailabilityResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1404,7 +1404,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        internal HttpMessage CreateTestAllRoutesRequest(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content)
+        internal HttpMessage CreateTestAllRoutesRequest(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IotHubTestAllRoutesResult>> TestAllRoutesAsync(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubTestAllRoutesResult>> TestAllRoutesAsync(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="iotHubName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IotHubTestAllRoutesResult> TestAllRoutes(string subscriptionId, string resourceGroupName, string iotHubName, TestAllRoutesContent content, CancellationToken cancellationToken = default)
+        public Response<IotHubTestAllRoutesResult> TestAllRoutes(string subscriptionId, string resourceGroupName, string iotHubName, IotHubTestAllRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1775,7 +1775,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobResponse>> ExportDevicesAsync(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubJobInfo>> ExportDevicesAsync(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1788,9 +1788,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponse value = default;
+                        IotHubJobInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobResponse.DeserializeJobResponse(document.RootElement);
+                        value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1806,7 +1806,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobResponse> ExportDevices(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content, CancellationToken cancellationToken = default)
+        public Response<IotHubJobInfo> ExportDevices(string subscriptionId, string resourceGroupName, string resourceName, ExportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1819,9 +1819,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponse value = default;
+                        IotHubJobInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobResponse.DeserializeJobResponse(document.RootElement);
+                        value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1829,7 +1829,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        internal HttpMessage CreateImportDevicesRequest(string subscriptionId, string resourceGroupName, string resourceName, ImportDevicesContent content)
+        internal HttpMessage CreateImportDevicesRequest(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobResponse>> ImportDevicesAsync(string subscriptionId, string resourceGroupName, string resourceName, ImportDevicesContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubJobInfo>> ImportDevicesAsync(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1875,9 +1875,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponse value = default;
+                        IotHubJobInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobResponse.DeserializeJobResponse(document.RootElement);
+                        value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1893,7 +1893,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobResponse> ImportDevices(string subscriptionId, string resourceGroupName, string resourceName, ImportDevicesContent content, CancellationToken cancellationToken = default)
+        public Response<IotHubJobInfo> ImportDevices(string subscriptionId, string resourceGroupName, string resourceName, IotHubImportDevicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1906,9 +1906,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponse value = default;
+                        IotHubJobInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobResponse.DeserializeJobResponse(document.RootElement);
+                        value = IotHubJobInfo.DeserializeIotHubJobInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2234,7 +2234,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobResponseListResult>> ListJobsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubJobInfoListResult>> ListJobsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2247,9 +2247,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponseListResult value = default;
+                        IotHubJobInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobResponseListResult.DeserializeJobResponseListResult(document.RootElement);
+                        value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2265,7 +2265,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobResponseListResult> ListJobsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<IotHubJobInfoListResult> ListJobsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2278,9 +2278,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        JobResponseListResult value = default;
+                        IotHubJobInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobResponseListResult.DeserializeJobResponseListResult(document.RootElement);
+                        value = IotHubJobInfoListResult.DeserializeIotHubJobInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2386,7 +2386,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EndpointHealthDataListResult>> GetEndpointHealthNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotHubEndpointHealthInfoListResult>> GetEndpointHealthNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2399,9 +2399,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        EndpointHealthDataListResult value = default;
+                        IotHubEndpointHealthInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EndpointHealthDataListResult.DeserializeEndpointHealthDataListResult(document.RootElement);
+                        value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2417,7 +2417,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EndpointHealthDataListResult> GetEndpointHealthNextPage(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
+        public Response<IotHubEndpointHealthInfoListResult> GetEndpointHealthNextPage(string nextLink, string subscriptionId, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2430,9 +2430,9 @@ namespace Azure.ResourceManager.IotHub
             {
                 case 200:
                     {
-                        EndpointHealthDataListResult value = default;
+                        IotHubEndpointHealthInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EndpointHealthDataListResult.DeserializeEndpointHealthDataListResult(document.RootElement);
+                        value = IotHubEndpointHealthInfoListResult.DeserializeIotHubEndpointHealthInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

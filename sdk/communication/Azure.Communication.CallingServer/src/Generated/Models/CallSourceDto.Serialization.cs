@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -23,6 +24,31 @@ namespace Azure.Communication.CallingServer
             writer.WritePropertyName("identifier");
             writer.WriteObjectValue(Identifier);
             writer.WriteEndObject();
+        }
+
+        internal static CallSourceDto DeserializeCallSourceDto(JsonElement element)
+        {
+            Optional<PhoneNumberIdentifierModel> callerId = default;
+            CommunicationIdentifierModel identifier = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("callerId"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    callerId = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identifier"))
+                {
+                    identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+            }
+            return new CallSourceDto(callerId.Value, identifier);
         }
     }
 }

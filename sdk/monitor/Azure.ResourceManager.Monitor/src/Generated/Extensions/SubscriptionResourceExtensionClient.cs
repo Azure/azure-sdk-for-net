@@ -231,16 +231,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: ActionGroups_PostTestNotifications
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestNotificationResponse>> PostTestNotificationsActionGroupAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PostTestNotificationsActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = await ActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, notificationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<TestNotificationResponse>(new TestNotificationResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await ActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,16 +258,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: ActionGroups_PostTestNotifications
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestNotificationResponse> PostTestNotificationsActionGroup(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PostTestNotificationsActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = ActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, notificationRequest, cancellationToken);
-                var operation = new MonitorArmOperation<TestNotificationResponse>(new TestNotificationResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var response = ActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, content, cancellationToken);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TestNotificationDetailsResponse>> GetActionGroupTestNotificationsAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActionGroupTestNotifications");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TestNotificationDetailsResponse> GetActionGroupTestNotifications(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActionGroupTestNotifications");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -662,8 +662,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await ActivityLogAlertRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -685,12 +685,27 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<ActivityLogAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ActivityLogAlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogAlerts");
+                scope.Start();
+                try
+                {
+                    var response = await ActivityLogAlertRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -704,7 +719,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = ActivityLogAlertRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -712,7 +727,22 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<ActivityLogAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ActivityLogAlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogAlerts");
+                scope.Start();
+                try
+                {
+                    var response = ActivityLogAlertRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

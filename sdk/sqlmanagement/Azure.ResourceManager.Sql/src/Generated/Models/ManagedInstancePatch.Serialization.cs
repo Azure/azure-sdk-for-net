@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("dnsZonePartner");
                 writer.WriteStringValue(DnsZonePartner);
             }
-            if (Optional.IsDefined(PublicDataEndpointEnabled))
+            if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
                 writer.WritePropertyName("publicDataEndpointEnabled");
-                writer.WriteBooleanValue(PublicDataEndpointEnabled.Value);
+                writer.WriteBooleanValue(IsPublicDataEndpointEnabled.Value);
             }
             if (Optional.IsDefined(SourceManagedInstanceId))
             {
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("requestedBackupStorageRedundancy");
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {

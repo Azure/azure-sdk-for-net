@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
         internal IotHubTestAllRoutesResult()
         {
-            Routes = new ChangeTrackingList<MatchedRoute>();
+            Routes = new ChangeTrackingList<IotHubMatchedRoute>();
         }
 
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
         /// <param name="routes"> JSON-serialized array of matched routes. </param>
-        internal IotHubTestAllRoutesResult(IReadOnlyList<MatchedRoute> routes)
+        internal IotHubTestAllRoutesResult(IReadOnlyList<IotHubMatchedRoute> routes)
         {
             Routes = routes;
         }
 
         /// <summary> JSON-serialized array of matched routes. </summary>
-        public IReadOnlyList<MatchedRoute> Routes { get; }
+        public IReadOnlyList<IotHubMatchedRoute> Routes { get; }
     }
 }

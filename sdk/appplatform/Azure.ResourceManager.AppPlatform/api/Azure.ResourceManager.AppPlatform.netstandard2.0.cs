@@ -1038,6 +1038,54 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
     }
+    public partial class AppPlatformResourceSkuCapabilities
+    {
+        internal AppPlatformResourceSkuCapabilities() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppPlatformResourceSkuRestrictionsReasonCode : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppPlatformResourceSkuRestrictionsReasonCode(string value) { throw null; }
+        public static Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
+        public static Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode QuotaId { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppPlatformResourceSkuRestrictionsType : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppPlatformResourceSkuRestrictionsType(string value) { throw null; }
+        public static Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType Location { get { throw null; } }
+        public static Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType Zone { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType left, Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType left, Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AppPlatformResourceSkuZoneDetails
+    {
+        internal AppPlatformResourceSkuZoneDetails() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuCapabilities> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
+    }
     public partial class AppPlatformSku
     {
         public AppPlatformSku() { }
@@ -1826,17 +1874,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string Cpu { get { throw null; } set { } }
         public string Memory { get { throw null; } set { } }
     }
-    public partial class ResourceSkuCapabilities
-    {
-        internal ResourceSkuCapabilities() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
     public partial class ResourceSkuLocationInfo
     {
         internal ResourceSkuLocationInfo() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.ResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     public partial class ResourceSkuRestrictionInfo
@@ -1848,52 +1890,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     public partial class ResourceSkuRestrictions
     {
         internal ResourceSkuRestrictions() { }
-        public Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
+        public Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType? RestrictionsType { get { throw null; } }
+        public Azure.ResourceManager.AppPlatform.Models.AppPlatformResourceSkuRestrictionsType? RestrictionsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceSkuRestrictionsReasonCode : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceSkuRestrictionsReasonCode(string value) { throw null; }
-        public static Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get { throw null; } }
-        public static Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode QuotaId { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode left, Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsReasonCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceSkuRestrictionsType : System.IEquatable<Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceSkuRestrictionsType(string value) { throw null; }
-        public static Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType Location { get { throw null; } }
-        public static Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType Zone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType left, Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType left, Azure.ResourceManager.AppPlatform.Models.ResourceSkuRestrictionsType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ResourceSkuZoneDetails
-    {
-        internal ResourceSkuZoneDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
     }
     public partial class ResourceUploadResult
     {

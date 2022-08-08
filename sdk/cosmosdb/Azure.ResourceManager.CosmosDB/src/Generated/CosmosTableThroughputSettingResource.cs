@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// A Class representing a CosmosTableThroughputSetting along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosTableThroughputSettingResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCosmosTableThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosTableResource" /> using the GetCosmosTableThroughputSetting method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBTableResource" /> using the GetCosmosTableThroughputSetting method.
     /// </summary>
     public partial class CosmosTableThroughputSettingResource : ArmResource
     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         private readonly ClientDiagnostics _cosmosTableThroughputSettingTableResourcesClientDiagnostics;
         private readonly TableResourcesRestOperations _cosmosTableThroughputSettingTableResourcesRestClient;
-        private readonly ThroughputSettingsData _data;
+        private readonly ThroughputSettingData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CosmosTableThroughputSettingResource"/> class for mocking. </summary>
         protected CosmosTableThroughputSettingResource()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of the <see cref = "CosmosTableThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosTableThroughputSettingResource(ArmClient client, ThroughputSettingsData data) : this(client, data.Id)
+        internal CosmosTableThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ThroughputSettingsData Data
+        public virtual ThroughputSettingData Data
         {
             get
             {

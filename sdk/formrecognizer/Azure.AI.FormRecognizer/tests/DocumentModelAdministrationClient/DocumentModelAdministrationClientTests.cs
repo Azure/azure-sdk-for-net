@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             try
             {
-                await client.GetAccountPropertiesAsync();
+                await client.GetResourceDetailsAsync();
             }
             catch (AggregateException ex)
             {
@@ -98,14 +98,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartBuildModelArgumentValidation()
+        public void BuildModelArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<UriFormatException>(() => client.StartBuildModelAsync(new Uri(string.Empty), DocumentBuildMode.Template));
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartBuildModelAsync((Uri)null, DocumentBuildMode.Template));
-            Assert.Throws<UriFormatException>(() => client.StartBuildModel(new Uri(string.Empty), DocumentBuildMode.Template));
-            Assert.Throws<ArgumentNullException>(() => client.StartBuildModel((Uri)null, DocumentBuildMode.Template));
+            Assert.ThrowsAsync<UriFormatException>(() => client.BuildModelAsync(WaitUntil.Started, new Uri(string.Empty), DocumentBuildMode.Template));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.BuildModelAsync(WaitUntil.Started, (Uri)null, DocumentBuildMode.Template));
+            Assert.Throws<UriFormatException>(() => client.BuildModel(WaitUntil.Started, new Uri(string.Empty), DocumentBuildMode.Template));
+            Assert.Throws<ArgumentNullException>(() => client.BuildModel(WaitUntil.Started, (Uri)null, DocumentBuildMode.Template));
         }
 
         [Test]
@@ -127,22 +127,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public void StartCopyModelArgumentValidation()
+        public void CopyModelToArgumentValidation()
         {
-            var copyAuth = new CopyAuthorization("<resourceId>", "<region>", "<modelId>", "<modelLocation>", "<accesstoken>", default);
+            var fakeUri = new Uri("https://fake.uri");
+            var copyAuth = new CopyAuthorization("<resourceId>", "<region>", "<modelId>", fakeUri, "<accesstoken>", default);
 
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartCopyModelToAsync(null, copyAuth));
-            Assert.ThrowsAsync<ArgumentException>(() => client.StartCopyModelToAsync(string.Empty, copyAuth));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.CopyModelToAsync(WaitUntil.Started, null, copyAuth));
+            Assert.ThrowsAsync<ArgumentException>(() => client.CopyModelToAsync(WaitUntil.Started, string.Empty, copyAuth));
         }
 
         [Test]
-        public void StartCreateComposedModelArgumentValidation()
+        public void ComposeModelArgumentValidation()
         {
             var client = CreateInstrumentedClient();
 
-            Assert.ThrowsAsync<ArgumentNullException>(() => client.StartComposeModelAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.ComposeModelAsync(WaitUntil.Started, null));
         }
 
         [Test]

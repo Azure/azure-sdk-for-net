@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeout"> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="retry"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="retryIntervalInSeconds"> Interval between each retry attempt (in seconds). The default is 30 sec. </param>
-        /// <param name="secureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
-        /// <param name="secureOutput"> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </param>
+        /// <param name="enableSecureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
+        /// <param name="enableSecureOutput"> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityPolicy(BinaryData timeout, BinaryData retry, int? retryIntervalInSeconds, bool? secureInput, bool? secureOutput, IDictionary<string, BinaryData> additionalProperties)
+        internal ActivityPolicy(BinaryData timeout, BinaryData retry, int? retryIntervalInSeconds, bool? enableSecureInput, bool? enableSecureOutput, IDictionary<string, BinaryData> additionalProperties)
         {
             Timeout = timeout;
             Retry = retry;
             RetryIntervalInSeconds = retryIntervalInSeconds;
-            SecureInput = secureInput;
-            SecureOutput = secureOutput;
+            EnableSecureInput = enableSecureInput;
+            EnableSecureOutput = enableSecureOutput;
             AdditionalProperties = additionalProperties;
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Interval between each retry attempt (in seconds). The default is 30 sec. </summary>
         public int? RetryIntervalInSeconds { get; set; }
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
-        public bool? SecureInput { get; set; }
+        public bool? EnableSecureInput { get; set; }
         /// <summary> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </summary>
-        public bool? SecureOutput { get; set; }
+        public bool? EnableSecureOutput { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

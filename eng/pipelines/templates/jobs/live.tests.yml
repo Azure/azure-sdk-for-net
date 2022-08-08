@@ -32,6 +32,9 @@ parameters:
 - name: TestSetupSteps
   type: stepList
   default: []
+- name: DeployTestResources
+  type: boolean
+  default: true
 - name: CloudConfig
   type: object
   default: {}
@@ -99,13 +102,14 @@ jobs:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
 
-      - template: /eng/common/TestResources/deploy-test-resources.yml
-        parameters:
-          ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
-            Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
-          ArmTemplateParameters: $(ArmTemplateParameters)
+      - ${{ if parameters.DeployTestResources }}:
+        - template: /eng/common/TestResources/deploy-test-resources.yml
+          parameters:
+            ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+              Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
+            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            SubscriptionConfiguration: $(SubscriptionConfiguration)
+            ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -119,8 +123,8 @@ jobs:
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually"
-          --logger "trx"
+          --filter 'TestCategory!=Manually & ($(AdditionalTestFilters))'
+          --logger 'trx'
           --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
@@ -138,10 +142,11 @@ jobs:
           ${{ each var in parameters.EnvVars }}:
             ${{ var.key }}: ${{ var.value }}
 
-      - template: /eng/common/TestResources/remove-test-resources.yml
-        parameters:
-          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
+      - ${{ if parameters.DeployTestResources }}:
+        - template: /eng/common/TestResources/remove-test-resources.yml
+          parameters:
+            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+            SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()

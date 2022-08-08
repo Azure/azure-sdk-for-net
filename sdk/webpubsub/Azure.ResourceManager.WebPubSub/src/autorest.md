@@ -28,7 +28,7 @@ rename-rules:
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -39,16 +39,21 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   ACL: Acl
   ACLs: Acls
 
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
   - rename-model:
       from: PrivateLinkResource
@@ -101,9 +106,15 @@ directive:
   - rename-model:
       from: NetworkACL
       to:  PublicNetworkAcls
+  - rename-model:
+      from: EventHandler
+      to:  WebPubSubEventHandler
   - from: webpubsub.json
     where: $.definitions.ScaleType
     transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
+  - from: webpubsub.json
+    where: $.definitions.KeyType
+    transform: $['x-ms-enum'].name = 'WebPubSubKeyType'
 
   # Change type to ResourceIdentifier
   - from: webpubsub.json
@@ -116,14 +127,14 @@ directive:
     where: $.definitions.SignalRServiceUsage.properties.id
     transform: $['x-ms-format'] = 'arm-id'
 
-  # Rename some class names of  boolean types
+  # Rename some class names of boolean types
   - from: webpubsub.json
     where: $.definitions.WebPubSubTlsSettings.properties.clientCertEnabled
     transform: $["x-ms-client-name"] = 'isClientCertEnabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableAadAuth
-    transform: $["x-ms-client-name"] = 'isDisableAadAuth'
+    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
-    transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
+    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
 ```

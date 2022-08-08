@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of ResourceSku. </summary>
         /// <param name="name"> Name of the Sku. </param>
-        internal ResourceSku(SkuType? name)
+        internal ResourceSku(ApiManagementServiceSkuType? name)
         {
             Name = name;
         }
 
         /// <summary> Name of the Sku. </summary>
-        public SkuType? Name { get; }
+        public ApiManagementServiceSkuType? Name { get; }
     }
 }
