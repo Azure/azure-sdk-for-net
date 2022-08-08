@@ -24,8 +24,6 @@ namespace Azure.Storage
     {
         PrimaryThenSecondary = 0,
         SecondaryThenPrimary = 1,
-        PrimaryOnly = 2,
-        SecondaryOnly = 3,
     }
     public enum StorageChecksumAlgorithm
     {
