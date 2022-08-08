@@ -1,343 +1,313 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://dev-test-resource.int.communication.azure.net/mediaCompositions/2x2Grid?api-version=2022-07-16-preview1",
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/2x2Grid?api-version=2022-07-16-preview1",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "1027",
+        "Content-Length": "1073",
         "Content-Type": "application/json",
-        "traceparent": "00-e0825e802b4cd34aa2e6f90b3925847e-12791ca79f32c54f-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220622.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "a0b85c9724078cccf8d1f29015fda2f3",
+        "traceparent": "00-0b34f8f648b69d44a876a377b6a40dd1-bd5aa3cfffcdb147-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "078eb89a17139bf580717893ab346041",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 22 Jun 2022 21:54:04 GMT",
+        "x-ms-date": "Fri, 05 Aug 2022 18:25:18 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "id": "2x2Grid",
         "layout": {
+          "rows": 2,
+          "columns": 2,
+          "inputIds": [
+            [
+              "jill",
+              "jack"
+            ],
+            [
+              "jane",
+              "jerry"
+            ]
+          ],
+          "kind": "grid",
           "resolution": {
             "width": 1920,
             "height": 1080
-          },
-          "grid": {
-            "rows": 2,
-            "columns": 2,
-            "inputIds": [
-              [
-                "jill",
-                "jack"
-              ],
-              [
-                "jane",
-                "jerry"
-              ]
-            ]
           }
         },
         "inputs": {
           "jill": {
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
+              }
+            },
+            "call": "teamsMeeting",
+            "kind": "participant",
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jack": {
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
+              }
+            },
+            "call": "teamsMeeting",
+            "kind": "participant",
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jane": {
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "2dd69470-dc25-49cf-b5c3-f562f08bf3b2"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "2dd69470-dc25-49cf-b5c3-f562f08bf3b2"
+              }
+            },
+            "call": "teamsMeeting",
+            "kind": "participant",
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jerry": {
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "30e29fde-ac1c-448f-bb34-0f3448d5a677"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "30e29fde-ac1c-448f-bb34-0f3448d5a677"
+              }
+            },
+            "call": "teamsMeeting",
+            "kind": "participant",
+            "placeholderImageUri": "https://imageendpoint"
           },
           "teamsMeeting": {
-            "teamsMeeting": {
-              "teamsJoinUrl": "https://teamsJoinUrl"
-            }
+            "teamsJoinUrl": "https://teamsJoinUrl",
+            "kind": "teamsMeeting"
           }
         },
         "outputs": {
           "acsGroupCall": {
-            "groupCall": {
-              "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193"
-            }
+            "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
+            "kind": "groupCall"
           }
         },
-        "streamState": "notStarted"
+        "streamState": {
+          "status": "notStarted"
+        }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
-        "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Jun 2022 21:54:04 GMT",
+        "Date": "Fri, 05 Aug 2022 18:25:19 GMT",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20220622T215404Z-1bg6fa1het14p22xyk86nb7gq800000001m000000001c3b3",
+        "X-Azure-Ref": "0j2DtYgAAAAC2GoeCWKzrSLtsrRxt1fYoWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "id": "2x2Grid",
         "layout": {
+          "rows": 2,
+          "columns": 2,
+          "inputIds": [
+            [
+              "jill",
+              "jack"
+            ],
+            [
+              "jane",
+              "jerry"
+            ]
+          ],
           "kind": "grid",
           "resolution": {
             "width": 1920,
             "height": 1080
           },
-          "grid": {
-            "rows": 2,
-            "columns": 2,
-            "inputIds": [
-              [
-                "jill",
-                "jack"
-              ],
-              [
-                "jane",
-                "jerry"
-              ]
-            ]
-          }
+          "placeholderImageUri": null
         },
         "inputs": {
           "jill": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jack": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jane": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "2dd69470-dc25-49cf-b5c3-f562f08bf3b2"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "2dd69470-dc25-49cf-b5c3-f562f08bf3b2"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jerry": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "30e29fde-ac1c-448f-bb34-0f3448d5a677"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "30e29fde-ac1c-448f-bb34-0f3448d5a677"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "teamsMeeting": {
-            "kind": "teamsMeeting",
-            "teamsMeeting": {
-              "teamsJoinUrl": "https://teamsJoinUrl"
-            }
+            "teamsJoinUrl": "https://teamsJoinUrl",
+            "kind": "teamsMeeting"
           }
         },
         "outputs": {
           "acsGroupCall": {
-            "kind": "groupCall",
-            "groupCall": {
-              "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193"
-            }
+            "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
+            "kind": "groupCall"
           }
         },
-        "streamState": "notStarted"
+        "streamState": {
+          "status": "notStarted"
+        }
       }
     },
     {
-      "RequestUri": "https://dev-test-resource.int.communication.azure.net/mediaCompositions/2x2Grid?api-version=2022-07-16-preview1",
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/2x2Grid?api-version=2022-07-16-preview1",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c63ae8b4ddc9604ba49ea4422be2b3e9-10db25bd81411044-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220622.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "3ff64d33a34bc11311ea31422c53722a",
+        "traceparent": "00-3779c1875d24584487bfdc432abfeb7c-d63b60d3f3c72e4c-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a28acf6b5709be42c05599429d15bb3e",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 22 Jun 2022 21:54:04 GMT",
+        "x-ms-date": "Fri, 05 Aug 2022 18:25:18 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
-        "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 22 Jun 2022 21:54:04 GMT",
+        "Date": "Fri, 05 Aug 2022 18:25:19 GMT",
         "Transfer-Encoding": "chunked",
-        "x-azure-ref": "20220622T215404Z-1bg6fa1het14p22xyk86nb7gq800000001m000000001c3c9",
+        "X-Azure-Ref": "0j2DtYgAAAABovrJDT4UHR7jDxeq0cq1IWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "id": "2x2Grid",
         "layout": {
+          "rows": 2,
+          "columns": 2,
+          "inputIds": [
+            [
+              "jill",
+              "jack"
+            ],
+            [
+              "jane",
+              "jerry"
+            ]
+          ],
           "kind": "grid",
           "resolution": {
             "width": 1920,
             "height": 1080
           },
-          "grid": {
-            "rows": 2,
-            "columns": 2,
-            "inputIds": [
-              [
-                "jill",
-                "jack"
-              ],
-              [
-                "jane",
-                "jerry"
-              ]
-            ]
-          }
+          "placeholderImageUri": null
         },
         "inputs": {
           "jill": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jack": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jane": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "2dd69470-dc25-49cf-b5c3-f562f08bf3b2"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "2dd69470-dc25-49cf-b5c3-f562f08bf3b2"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "jerry": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "30e29fde-ac1c-448f-bb34-0f3448d5a677"
+              }
+            },
+            "call": "teamsMeeting",
             "kind": "participant",
-            "participant": {
-              "id": {
-                "microsoftTeamsUser": {
-                  "userId": "30e29fde-ac1c-448f-bb34-0f3448d5a677"
-                }
-              },
-              "placeholderImageUri": "https://imageendpoint",
-              "call": "teamsMeeting"
-            }
+            "placeholderImageUri": "https://imageendpoint"
           },
           "teamsMeeting": {
-            "kind": "teamsMeeting",
-            "teamsMeeting": {
-              "teamsJoinUrl": "https://teamsJoinUrl"
-            }
+            "teamsJoinUrl": "https://teamsJoinUrl",
+            "kind": "teamsMeeting"
           }
         },
         "outputs": {
           "acsGroupCall": {
-            "kind": "groupCall",
-            "groupCall": {
-              "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193"
-            }
+            "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193",
+            "kind": "groupCall"
           }
         },
-        "streamState": "notStarted"
+        "streamState": {
+          "status": "notStarted"
+        }
       }
     },
     {
-      "RequestUri": "https://dev-test-resource.int.communication.azure.net/mediaCompositions/2x2Grid?api-version=2022-07-16-preview1",
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/2x2Grid?api-version=2022-07-16-preview1",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-74f9da997cfd144abd1d827cbe8cefc4-6c254892953ea64d-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220622.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "61e2a7675c137e702829039b9fb029aa",
+        "traceparent": "00-03c4a56d91d76646ab5878c8c70d11f4-9775f14e7200d447-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "411832b4a22ba72d35243eeed393b1bd",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 22 Jun 2022 21:54:04 GMT",
+        "x-ms-date": "Fri, 05 Aug 2022 18:25:18 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
-        "Connection": "keep-alive",
-        "Date": "Wed, 22 Jun 2022 21:54:05 GMT",
-        "x-azure-ref": "20220622T215405Z-1bg6fa1het14p22xyk86nb7gq800000001m000000001c3d1",
+        "Date": "Fri, 05 Aug 2022 18:25:19 GMT",
+        "X-Azure-Ref": "0j2DtYgAAAAAtsW2DaT1YQK37B7tYszSVWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://dev-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "2060142082"
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1494371200"
   }
 }

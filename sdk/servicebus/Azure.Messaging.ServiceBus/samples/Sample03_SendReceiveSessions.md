@@ -51,6 +51,24 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 Console.WriteLine(receivedMessage.SessionId);
 ```
 
+### Settling session messages
+
+Settling session messages works in much the same way as settling non-session messages. The main difference is that the `ServiceBusSessionReceiver` type is used to settle the messages as opposed to the `ServiceBusReceiver` type. Additionally, session messages are not locked at the message level, but rather at the session level. Similar to how you can extend the message lock for an individual non-session messages, you can extend the session lock for a session which will prevent other consumers from receiving any messages from the session.
+
+```C# Snippet:ServiceBusRenewSessionLockAndComplete
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+// If we know that we are going to be processing the session for a long time, we can extend the lock for the session
+// by the configured LockDuration (by default, 30 seconds).
+await receiver.RenewSessionLockAsync();
+
+// simulate some processing of the message
+await Task.Delay(TimeSpan.FromSeconds(10));
+
+// complete the message, thereby deleting it from the service
+await receiver.CompleteMessageAsync(receivedMessage);
+```
+
 ## Source
 
 To see the full example source, see:

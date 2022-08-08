@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Hive Server linked service. </summary>
-    public partial class HiveLinkedService : LinkedService
+    public partial class HiveLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of HiveLinkedService. </summary>
         /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="username"> The user name that you use to access Hive Server. </param>
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the Username field
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="httpPath"> The partial URL corresponding to the Hive server. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowHostNameCNMismatch"> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </param>
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal HiveLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, HiveServerType? serverType, HiveThriftTransportProtocol? thriftTransportProtocol, HiveAuthenticationType authenticationType, BinaryData serviceDiscoveryMode, BinaryData zooKeeperNameSpace, BinaryData useNativeQuery, BinaryData username, SecretBase password, BinaryData httpPath, BinaryData enableSsl, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData allowHostNameCNMismatch, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HiveLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, HiveServerType? serverType, HiveThriftTransportProtocol? thriftTransportProtocol, HiveAuthenticationType authenticationType, BinaryData serviceDiscoveryMode, BinaryData zooKeeperNameSpace, BinaryData useNativeQuery, BinaryData username, FactorySecretBaseDefinition password, BinaryData httpPath, BinaryData enableSsl, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData allowHostNameCNMismatch, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name that you provided in the Username field
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary> The partial URL corresponding to the Hive server. </summary>
         public BinaryData HttpPath { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>

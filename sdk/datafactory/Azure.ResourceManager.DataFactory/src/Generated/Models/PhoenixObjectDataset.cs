@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Phoenix server dataset. </summary>
-    public partial class PhoenixObjectDataset : Dataset
+    public partial class PhoenixObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of PhoenixObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public PhoenixObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public PhoenixObjectDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
         /// <param name="table"> The table name of the Phoenix. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Phoenix. Type: string (or Expression with resultType string). </param>
-        internal PhoenixObjectDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table, BinaryData schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal PhoenixObjectDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table, BinaryData schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;

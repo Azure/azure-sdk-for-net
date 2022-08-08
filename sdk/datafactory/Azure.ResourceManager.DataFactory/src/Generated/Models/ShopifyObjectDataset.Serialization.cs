@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<BinaryData> structure = default;
             Optional<BinaryData> schema = default;
-            LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            FactoryLinkedServiceReference linkedServiceName = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<BinaryData> tableName = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"))
                 {
-                    linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;

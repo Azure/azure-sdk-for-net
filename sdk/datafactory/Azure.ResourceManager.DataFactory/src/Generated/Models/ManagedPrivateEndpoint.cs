@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ManagedPrivateEndpoint(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, string privateLinkResourceId, string provisioningState, IDictionary<string, BinaryData> additionalProperties)
+        internal ManagedPrivateEndpoint(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, ResourceIdentifier privateLinkResourceId, string provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
             ConnectionState = connectionState;
             Fqdns = fqdns;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Denotes whether the managed private endpoint is reserved. </summary>
         public bool? IsReserved { get; }
         /// <summary> The ARM resource ID of the resource to which the managed private endpoint is created. </summary>
-        public string PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The managed private endpoint provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> Additional Properties. </summary>

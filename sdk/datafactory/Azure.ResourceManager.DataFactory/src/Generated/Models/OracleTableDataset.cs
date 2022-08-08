@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The on-premises Oracle database dataset. </summary>
-    public partial class OracleTableDataset : Dataset
+    public partial class OracleTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of OracleTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public OracleTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public OracleTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the on-premises Oracle database. Type: string (or Expression with resultType string). </param>
-        internal OracleTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal OracleTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData schemaTypePropertiesSchema, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;

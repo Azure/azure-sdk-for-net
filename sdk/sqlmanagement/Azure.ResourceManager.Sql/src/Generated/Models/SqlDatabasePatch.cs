@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
         public DatabaseReadScale? ReadScale { get; set; }
         /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         public int? HighAvailabilityReplicaCount { get; set; }
-        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
+        /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo, Named and Standby. </summary>
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
         public SqlSku CurrentSku { get; }

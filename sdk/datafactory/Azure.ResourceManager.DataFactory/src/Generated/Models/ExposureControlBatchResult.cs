@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ExposureControlBatchResult
     {
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResponses"> List of exposure control feature values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResponses"/> is null. </exception>
-        internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResponses)
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResults"/> is null. </exception>
+        internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults)
         {
-            if (exposureControlResponses == null)
+            if (exposureControlResults == null)
             {
-                throw new ArgumentNullException(nameof(exposureControlResponses));
+                throw new ArgumentNullException(nameof(exposureControlResults));
             }
 
-            ExposureControlResponses = exposureControlResponses.ToList();
+            ExposureControlResults = exposureControlResults.ToList();
         }
 
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResponses"> List of exposure control feature values. </param>
-        internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResponses)
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
+        internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResults)
         {
-            ExposureControlResponses = exposureControlResponses;
+            ExposureControlResults = exposureControlResults;
         }
 
         /// <summary> List of exposure control feature values. </summary>
-        public IReadOnlyList<ExposureControlResult> ExposureControlResponses { get; }
+        public IReadOnlyList<ExposureControlResult> ExposureControlResults { get; }
     }
 }

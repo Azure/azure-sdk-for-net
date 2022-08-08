@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingEndpoints_Skus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArmStreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmStreamingEndpointSkuInfo> GetSupportedSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StreamingEndpointSkuInfo> GetSupportedSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArmStreamingEndpointSkuInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StreamingEndpointSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.GetSupportedSkus");
                 scope.Start();
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingEndpoints_Skus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArmStreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmStreamingEndpointSkuInfo> GetSupportedSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StreamingEndpointSkuInfo> GetSupportedSkus(CancellationToken cancellationToken = default)
         {
-            Page<ArmStreamingEndpointSkuInfo> FirstPageFunc(int? pageSizeHint)
+            Page<StreamingEndpointSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.GetSupportedSkus");
                 scope.Start();

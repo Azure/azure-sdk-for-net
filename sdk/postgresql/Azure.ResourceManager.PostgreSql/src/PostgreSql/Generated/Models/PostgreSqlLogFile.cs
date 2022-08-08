@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <param name="sizeInKB"> Size of the log file. </param>
         /// <param name="createdOn"> Creation timestamp of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
-        /// <param name="typePropertiesType"> Type of the log file. </param>
+        /// <param name="logFileType"> Type of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        internal PostgreSqlLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string typePropertiesType, Uri uri) : base(id, name, resourceType, systemData)
+        internal PostgreSqlLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string logFileType, Uri uri) : base(id, name, resourceType, systemData)
         {
             SizeInKB = sizeInKB;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
-            TypePropertiesType = typePropertiesType;
+            LogFileType = logFileType;
             Uri = uri;
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Last modified timestamp of the log file. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Type of the log file. </summary>
-        public string TypePropertiesType { get; set; }
+        public string LogFileType { get; set; }
         /// <summary> The url to download the log file from. </summary>
         public Uri Uri { get; set; }
     }

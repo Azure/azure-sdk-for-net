@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added `AnalyzeActionsOperation.Cancel` and `CancelAsync` to cancel a batch of actions.
+- Added `AnalyzeActionsResult.AnalyzeHealthcareEntitiesResults` to get healthcare entities from a batch of actions.
+- Added `TextAnalyticsActions.AnalyzeHealthcareEntitiesActions` to analyze healthcare entities in a batch of actions.
+
 ### Breaking Changes
 
 - Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `ClassifyDocumentResult`.

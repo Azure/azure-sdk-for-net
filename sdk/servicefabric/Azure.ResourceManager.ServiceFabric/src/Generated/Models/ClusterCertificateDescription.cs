@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the certificate details.
-    /// Serialized Name: CertificateDescription
-    /// </summary>
+    /// <summary> Describes the certificate details. </summary>
     public partial class ClusterCertificateDescription
     {
         /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
-        /// <param name="thumbprint">
-        /// Thumbprint of the primary certificate.
-        /// Serialized Name: CertificateDescription.thumbprint
-        /// </param>
+        /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> is null. </exception>
         public ClusterCertificateDescription(BinaryData thumbprint)
         {
@@ -32,18 +26,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterCertificateDescription. </summary>
-        /// <param name="thumbprint">
-        /// Thumbprint of the primary certificate.
-        /// Serialized Name: CertificateDescription.thumbprint
-        /// </param>
-        /// <param name="thumbprintSecondary">
-        /// Thumbprint of the secondary certificate.
-        /// Serialized Name: CertificateDescription.thumbprintSecondary
-        /// </param>
-        /// <param name="x509StoreName">
-        /// The local certificate store location.
-        /// Serialized Name: CertificateDescription.x509StoreName
-        /// </param>
+        /// <param name="thumbprint"> Thumbprint of the primary certificate. </param>
+        /// <param name="thumbprintSecondary"> Thumbprint of the secondary certificate. </param>
+        /// <param name="x509StoreName"> The local certificate store location. </param>
         internal ClusterCertificateDescription(BinaryData thumbprint, string thumbprintSecondary, ClusterCertificateStoreName? x509StoreName)
         {
             Thumbprint = thumbprint;
@@ -51,20 +36,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             X509StoreName = x509StoreName;
         }
 
-        /// <summary>
-        /// Thumbprint of the primary certificate.
-        /// Serialized Name: CertificateDescription.thumbprint
-        /// </summary>
+        /// <summary> Thumbprint of the primary certificate. </summary>
         public BinaryData Thumbprint { get; set; }
-        /// <summary>
-        /// Thumbprint of the secondary certificate.
-        /// Serialized Name: CertificateDescription.thumbprintSecondary
-        /// </summary>
+        /// <summary> Thumbprint of the secondary certificate. </summary>
         public string ThumbprintSecondary { get; set; }
-        /// <summary>
-        /// The local certificate store location.
-        /// Serialized Name: CertificateDescription.x509StoreName
-        /// </summary>
+        /// <summary> The local certificate store location. </summary>
         public ClusterCertificateStoreName? X509StoreName { get; set; }
     }
 }

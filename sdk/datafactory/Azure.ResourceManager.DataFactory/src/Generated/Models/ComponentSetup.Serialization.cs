@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             string type = default;
             string componentName = default;
-            Optional<SecretBase> licenseKey = default;
+            Optional<FactorySecretBaseDefinition> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            licenseKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            licenseKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

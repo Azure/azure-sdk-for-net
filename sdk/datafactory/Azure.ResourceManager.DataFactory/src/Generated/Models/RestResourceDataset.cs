@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A Rest service dataset. </summary>
-    public partial class RestResourceDataset : Dataset
+    public partial class RestResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of RestResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public RestResourceDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public RestResourceDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             if (linkedServiceName == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
         /// <param name="paginationRules"> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </param>
-        internal RestResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal RestResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUri = relativeUri;
             RequestMethod = requestMethod;

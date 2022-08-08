@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "38",
         "Content-Type": "application/json",
-        "traceparent": "00-1d6690a439eeb346b0a0183b9bd4dca6-16f65e6181c31f40-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220712.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "a8325b26882b9422428426b31002aa8a",
+        "traceparent": "00-d3d5d9f98d5bc346ac5f87c3addd38b9-38bedbd9a631904c-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "270be07a776ff04b64dcdee11b9a3be9",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 13 Jul 2022 04:31:14 GMT",
+        "x-ms-date": "Fri, 05 Aug 2022 18:25:06 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,21 +22,21 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 13 Jul 2022 04:31:13 GMT",
+        "Date": "Fri, 05 Aug 2022 18:25:07 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0kkrOYgAAAAA\u002BmJTFhT1hSqqcsMF22FaGWVZSMzExMDAwMTE2MDUzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0g2DtYgAAAADzbPoJ9FB0R78ztBrQYxxcWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-1d6690a439eeb346b0a0183b9bd4dca6-16f120fc91273bbe-00"
+        "traceId": "00-d3d5d9f98d5bc346ac5f87c3addd38b9-3428c4538af8dd30-00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1226221141"
+    "RandomSeed": "419032303"
   }
 }

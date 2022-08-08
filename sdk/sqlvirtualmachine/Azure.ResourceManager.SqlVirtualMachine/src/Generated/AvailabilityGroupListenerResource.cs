@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// A Class representing an AvailabilityGroupListener along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvailabilityGroupListenerResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAvailabilityGroupListenerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlVirtualMachineGroupResource" /> using the GetAvailabilityGroupListener method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlVmGroupResource" /> using the GetAvailabilityGroupListener method.
     /// </summary>
     public partial class AvailabilityGroupListenerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailabilityGroupListenerResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVirtualMachineGroupName, string availabilityGroupListenerName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVmGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _availabilityGroupListenerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _availabilityGroupListenerRestClient.GetAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _availabilityGroupListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _availabilityGroupListenerRestClient.Get(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value), response.GetRawResponse());
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _availabilityGroupListenerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation(_availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _availabilityGroupListenerRestClient.DeleteAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlVirtualMachineArmOperation(_availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _availabilityGroupListenerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation(_availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _availabilityGroupListenerRestClient.Delete(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SqlVirtualMachineArmOperation(_availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateDeleteRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _availabilityGroupListenerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(new AvailabilityGroupListenerOperationSource(Client), _availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _availabilityGroupListenerRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(new AvailabilityGroupListenerOperationSource(Client), _availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _availabilityGroupListenerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(new AvailabilityGroupListenerOperationSource(Client), _availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _availabilityGroupListenerRestClient.CreateOrUpdate(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(new AvailabilityGroupListenerOperationSource(Client), _availabilityGroupListenerClientDiagnostics, Pipeline, _availabilityGroupListenerRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -321,9 +321,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of CreateRunResponse. </summary>
         /// <param name="runId"> Identifier of a run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <returns> A new <see cref="Models.CreateRunResponse"/> instance for mocking. </returns>
         public static CreateRunResponse CreateRunResponse(string runId = null)
         {
+            if (runId == null)
+            {
+                throw new ArgumentNullException(nameof(runId));
+            }
+
             return new CreateRunResponse(runId);
         }
 

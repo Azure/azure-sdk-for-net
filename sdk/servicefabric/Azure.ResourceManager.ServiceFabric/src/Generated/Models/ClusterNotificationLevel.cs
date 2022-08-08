@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// The level of notification.
-    /// Serialized Name: NotificationLevel
-    /// </summary>
+    /// <summary> The level of notification. </summary>
     public readonly partial struct ClusterNotificationLevel : IEquatable<ClusterNotificationLevel>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         private const string CriticalValue = "Critical";
         private const string AllValue = "All";
 
-        /// <summary>
-        /// Receive only critical notifications.
-        /// Serialized Name: NotificationLevel.Critical
-        /// </summary>
+        /// <summary> Receive only critical notifications. </summary>
         public static ClusterNotificationLevel Critical { get; } = new ClusterNotificationLevel(CriticalValue);
-        /// <summary>
-        /// Receive all notifications.
-        /// Serialized Name: NotificationLevel.All
-        /// </summary>
+        /// <summary> Receive all notifications. </summary>
         public static ClusterNotificationLevel All { get; } = new ClusterNotificationLevel(AllValue);
         /// <summary> Determines if two <see cref="ClusterNotificationLevel"/> values are the same. </summary>
         public static bool operator ==(ClusterNotificationLevel left, ClusterNotificationLevel right) => left.Equals(right);

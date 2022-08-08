@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId");
-                writer.WriteStringValue(GroupId);
+                writer.WriteStringValue(GroupId.Value);
             }
             if (Optional.IsDefined(GroupName))
             {
@@ -71,9 +72,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> tokenUserDisplayName = default;
             Optional<string> dataset = default;
             Optional<string> table = default;
-            Optional<string> groupId = default;
+            Optional<Guid> groupId = default;
             Optional<string> groupName = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -117,7 +118,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         }
                         if (property0.NameEquals("groupId"))
                         {
-                            groupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            groupId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("groupName"))
@@ -132,14 +138,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PowerBIOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, groupId.Value, groupName.Value, Optional.ToNullable(authenticationMode));
+            return new PowerBIOutputDataSource(type, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, Optional.ToNullable(groupId), groupName.Value, Optional.ToNullable(authenticationMode));
         }
     }
 }

@@ -11,21 +11,12 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the notification target properties.
-    /// Serialized Name: NotificationTarget
-    /// </summary>
+    /// <summary> Describes the notification target properties. </summary>
     public partial class ClusterNotificationTarget
     {
         /// <summary> Initializes a new instance of ClusterNotificationTarget. </summary>
-        /// <param name="notificationChannel">
-        /// The notification channel indicates the type of receivers subscribed to the notification, either user or subscription.
-        /// Serialized Name: NotificationTarget.notificationChannel
-        /// </param>
-        /// <param name="receivers">
-        /// List of targets that subscribe to the notification.
-        /// Serialized Name: NotificationTarget.receivers
-        /// </param>
+        /// <param name="notificationChannel"> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </param>
+        /// <param name="receivers"> List of targets that subscribe to the notification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivers"/> is null. </exception>
         public ClusterNotificationTarget(ClusterNotificationChannel notificationChannel, IEnumerable<string> receivers)
         {
@@ -39,29 +30,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of ClusterNotificationTarget. </summary>
-        /// <param name="notificationChannel">
-        /// The notification channel indicates the type of receivers subscribed to the notification, either user or subscription.
-        /// Serialized Name: NotificationTarget.notificationChannel
-        /// </param>
-        /// <param name="receivers">
-        /// List of targets that subscribe to the notification.
-        /// Serialized Name: NotificationTarget.receivers
-        /// </param>
+        /// <param name="notificationChannel"> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </param>
+        /// <param name="receivers"> List of targets that subscribe to the notification. </param>
         internal ClusterNotificationTarget(ClusterNotificationChannel notificationChannel, IList<string> receivers)
         {
             NotificationChannel = notificationChannel;
             Receivers = receivers;
         }
 
-        /// <summary>
-        /// The notification channel indicates the type of receivers subscribed to the notification, either user or subscription.
-        /// Serialized Name: NotificationTarget.notificationChannel
-        /// </summary>
+        /// <summary> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </summary>
         public ClusterNotificationChannel NotificationChannel { get; set; }
-        /// <summary>
-        /// List of targets that subscribe to the notification.
-        /// Serialized Name: NotificationTarget.receivers
-        /// </summary>
+        /// <summary> List of targets that subscribe to the notification. </summary>
         public IList<string> Receivers { get; }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,6 +33,11 @@ namespace Azure.Messaging.ServiceBus
         public string SessionId => _sessionReceiver.SessionId;
 
         /// <summary>
+        /// The identifier of the <see cref="ServiceBusSessionProcessor"/>.
+        /// </summary>
+        public string Identifier { get; }
+
+        /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the current session is locked until.
         /// </summary>
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
@@ -54,6 +60,7 @@ namespace Azure.Messaging.ServiceBus
         /// for the args.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
         /// </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ProcessSessionEventArgs(
             ServiceBusSessionReceiver receiver,
             CancellationToken cancellationToken) : this(manager: null, cancellationToken)
@@ -61,6 +68,24 @@ namespace Azure.Messaging.ServiceBus
             _sessionReceiver = receiver;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessSessionEventArgs"/> class.
+        /// </summary>
+        ///
+        /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
+        /// for the args.</param>
+        /// <param name="identifier">The identifier of the processor.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.
+        /// </param>
+        public ProcessSessionEventArgs(
+            ServiceBusSessionReceiver receiver,
+            string identifier,
+            CancellationToken cancellationToken) : this(receiver, cancellationToken)
+        {
+            Identifier = identifier;
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal ProcessSessionEventArgs(
             SessionReceiverManager manager,
             CancellationToken cancellationToken)
@@ -70,6 +95,14 @@ namespace Azure.Messaging.ServiceBus
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
             CancellationToken = cancellationToken;
+        }
+
+        internal ProcessSessionEventArgs(
+            SessionReceiverManager manager,
+            string identifier,
+            CancellationToken cancellationToken) : this(manager, cancellationToken)
+        {
+            Identifier = identifier;
         }
 
         /// <summary>
