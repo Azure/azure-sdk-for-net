@@ -1,9 +1,12 @@
 namespace Azure.Template.Models
 {
-    public partial class InputModel
+    public partial class BaseClass
     {
-        public InputModel(string requiredString, int requiredInt) { }
-        public int RequiredInt { get { throw null; } }
-        public string RequiredString { get { throw null; } }
+        public BaseClass(string baseClassProperty) { }
+        public string BaseClassProperty { get { throw null; } set { } }
+    }
+    public partial class BaseClassWithDiscriminator : Azure.Template.Models.BaseClass
+    {
+        public BaseClassWithDiscriminator(string baseClassProperty) : base (default(string)) { }
     }
 }

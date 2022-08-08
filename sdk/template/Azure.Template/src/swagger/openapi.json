@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "ModelCollectionPropertiesClient",
+    "title": "InheritanceClient",
     "version": "1.0.0",
-    "description": "Illustrates input, output, and round-trip models that have properties that are collections of models.",
+    "description": "Illustrates input, output, and round-trip polymorphic models.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -22,66 +22,24 @@
   ],
   "tags": [],
   "paths": {
-    "/models": {
-      "post": {
-        "operationId": "ModelCollectionProperties_SendCollectionModel",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Http response with status code"
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      },
-      "get": {
-        "operationId": "ModelCollectionProperties_GetCollectionModel",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
-            }
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      },
+    "/operation": {
       "put": {
-        "operationId": "ModelCollectionProperties_SetCollectionModel",
+        "operationId": "BasicPolymorphicModels_SetValue",
         "parameters": [
           {
             "name": "input",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
+              "$ref": "#/definitions/BaseClass"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Simple model with model collection properties",
+            "description": "Example base type.",
             "schema": {
-              "$ref": "#/definitions/ModelCollectionModel"
+              "$ref": "#/definitions/BaseClass"
             }
           },
           "default": {
@@ -156,50 +114,36 @@
         "code"
       ]
     },
-    "ModelCollectionModel": {
+    "BaseClass": {
       "type": "object",
       "properties": {
-        "requiredModelCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimpleModel"
-          },
-          "x-ms-identifiers": [],
-          "x-cadl-name": "SimpleModel[]",
-          "description": "Required collection of models."
-        },
-        "optionalModelCollection": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SimpleModel"
-          },
-          "x-ms-identifiers": [],
-          "x-cadl-name": "SimpleModel[]",
-          "description": "Optional collection of models."
+        "baseClassProperty": {
+          "type": "string",
+          "description": "An example property."
         }
       },
-      "description": "Simple model with model collection properties",
+      "description": "Example base type.",
       "required": [
-        "requiredModelCollection"
+        "baseClassProperty"
       ]
     },
-    "SimpleModel": {
+    "BaseClassWithDiscriminator": {
       "type": "object",
       "properties": {
-        "requiredString": {
+        "discriminatorProperty": {
           "type": "string",
-          "description": "Required string."
-        },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Required int."
+          "description": "Example discriminator property."
         }
       },
-      "description": "Simple model that will appear in a collection.",
+      "description": "Example base class that has a discriminator property.",
+      "discriminator": "discriminatorProperty",
       "required": [
-        "requiredString",
-        "requiredInt"
+        "discriminatorProperty"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseClass"
+        }
       ]
     }
   },
