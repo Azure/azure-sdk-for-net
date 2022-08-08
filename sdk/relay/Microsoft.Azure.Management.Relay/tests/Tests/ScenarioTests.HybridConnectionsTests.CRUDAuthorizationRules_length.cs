@@ -168,7 +168,13 @@ namespace Relay.Tests.ScenarioTests
                 //Primary Key
                 var regenerateKeysPrimaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, KeyType.PrimaryKey);
                 Assert.NotNull(regenerateKeysPrimaryResponse);
-                Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var beforeKey = listKeysResponse.PrimaryKey;
+                    var afterKey = regenerateKeysPrimaryResponse.PrimaryKey;
+                    Assert.NotEqual(afterKey, beforeKey);
+                }
                 Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
 
                 regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
@@ -176,35 +182,61 @@ namespace Relay.Tests.ScenarioTests
                 //Secondary Key
                 var regenerateKeysSecondaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, KeyType.SecondaryKey);
                 Assert.NotNull(regenerateKeysSecondaryResponse);
-                Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var beforeKey = listKeysResponse.SecondaryKey;
+                    var afterKey = regenerateKeysSecondaryResponse.SecondaryKey;
+                    Assert.NotEqual(afterKey, beforeKey);
+                }
                 Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);
 
                 /// Regenrate Key using provided Key value
-                    // PrimaryKey
-                    RegenerateAccessKeyParameters keyObject = new RegenerateAccessKeyParameters()
-                    {
-                        Key = RelayManagementHelper.GenerateRandomKey(),
-                        KeyType = KeyType.PrimaryKey
-                    };
+                // PrimaryKey
+                RegenerateAccessKeyParameters keyObject = new RegenerateAccessKeyParameters()
+                {
+                    Key = RelayManagementHelper.GenerateRandomKey(),
+                    KeyType = KeyType.PrimaryKey
+                };
 
-                    regenerateKeysPrimaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
-                    Assert.NotNull(regenerateKeysPrimaryResponse);
+                regenerateKeysPrimaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
+                Assert.NotNull(regenerateKeysPrimaryResponse);
+                regenerateKeysPrimaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
+                Assert.NotNull(regenerateKeysPrimaryResponse);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
                     Assert.Equal(keyObject.Key, regenerateKeysPrimaryResponse.PrimaryKey);
                     Assert.Equal(regenerateKeysSecondaryResponse.SecondaryKey, regenerateKeysPrimaryResponse.SecondaryKey);
+                }
+                else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    Assert.Equal("Sanitized", regenerateKeysPrimaryResponse.PrimaryKey);
+                    Assert.Equal("Sanitized", regenerateKeysPrimaryResponse.SecondaryKey);
+                }
 
 
-                    //SecondaryKey 
+                //SecondaryKey 
 
-                    keyObject = new RegenerateAccessKeyParameters()
-                    {
-                        Key = RelayManagementHelper.GenerateRandomKey(),
-                        KeyType = KeyType.SecondaryKey
-                    };
+                keyObject = new RegenerateAccessKeyParameters()
+                {
+                    Key = RelayManagementHelper.GenerateRandomKey(),
+                    KeyType = KeyType.SecondaryKey
+                };
 
-                    regenerateKeysSecondaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
-                    Assert.NotNull(regenerateKeysSecondaryResponse);
+                regenerateKeysSecondaryResponse = RelayManagementClient.HybridConnections.RegenerateKeys(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName, keyObject.KeyType, keyObject.Key);
+                Assert.NotNull(regenerateKeysSecondaryResponse);
+                Assert.NotNull(regenerateKeysSecondaryResponse);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
                     Assert.Equal(regenerateKeysPrimaryResponse.PrimaryKey, regenerateKeysSecondaryResponse.PrimaryKey);
                     Assert.Equal(keyObject.Key, regenerateKeysSecondaryResponse.SecondaryKey);
+                }
+                else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    Assert.Equal("Sanitized", regenerateKeysSecondaryResponse.PrimaryKey);
+                    Assert.Equal("Sanitized", regenerateKeysSecondaryResponse.SecondaryKey);
+                }
 
                 // Delete HybridConnections authorizationRule
                 RelayManagementClient.HybridConnections.DeleteAuthorizationRule(resourceGroup, namespaceName, hybridConnectionsName, authorizationRuleName);
