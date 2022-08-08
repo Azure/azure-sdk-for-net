@@ -27,6 +27,7 @@ parameters:
 extends:
   template: /eng/common/pipelines/templates/jobs/perf.yml
   parameters:
+    ToolsRepoCommitish: 'refs/pull/3874/merge'
     Variables:
     - template: /eng/pipelines/templates/variables/globals.yml
     Language: Net
