@@ -4820,7 +4820,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProgressHandler,
                 options?.Conditions,
                 options?.TransferValidationOptions,
-                transferOptions: default,
+                options?.TransferOptions ?? default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -4861,7 +4861,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProgressHandler,
                 options?.Conditions,
                 options?.TransferValidationOptions,
-                transferOptions: default,
+                options?.TransferOptions ?? default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);

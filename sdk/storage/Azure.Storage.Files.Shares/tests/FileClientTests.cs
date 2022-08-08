@@ -2945,6 +2945,25 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertSequenceEqual(expectedData, actualData);
         }
 
+        [Test]
+        public void UploadAsync_ThrowOnConcurrency()
+        {
+            byte[] data = new byte[Constants.KB];
+            // test doesn't hit wire, don't record random
+            new Random().NextBytes(data);
+
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(
+                async () => await new ShareFileClient(new Uri("https://www.example.com"))
+                    .UploadAsync(new MemoryStream(data), new ShareFileUploadOptions
+                    {
+                        TransferOptions = new StorageTransferOptions
+                        {
+                            MaximumConcurrency = 2
+                        }
+                    })
+            );
+        }
+
         public async Task ClearRangeAsync()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
