@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TestFramework
             ApiVersion = apiVersion;
         }
 
-        protected void SetTagResourceUsage(ArmClient client, bool useTagResource)
+        protected void SetTagResourceUsage(ArmClient client, bool? useTagResource)
         {
             var target = client.GetType().GetField("__target", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(client);
             target.GetType().GetField("_canUseTagResource", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(target, useTagResource);
