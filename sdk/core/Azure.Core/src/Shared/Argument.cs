@@ -191,7 +191,7 @@ namespace Azure.Core
         {
             if (!Enum.IsDefined(enumType, value))
             {
-                throw new ArgumentException($"Value not defined in enum {enumType.FullName}.", name);
+                throw new ArgumentException($"Value not defined for {enumType.FullName}.", name);
             }
         }
 
