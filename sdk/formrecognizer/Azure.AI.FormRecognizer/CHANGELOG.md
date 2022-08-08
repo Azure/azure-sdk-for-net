@@ -25,6 +25,8 @@
 - Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `ComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
+- Updated the return type of `StartCreateComposedModel` (now called `ComposeModel`) to a `ComposeModelOperation`.
+- Renamed class `CopyModelOperation` to `CopyModelToOperation`.
 - Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods (now called `AnalyzeDocument` and `AnalyzeDocumentFromUri`).
 - Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method (now called `BuildModel`).
 - `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.

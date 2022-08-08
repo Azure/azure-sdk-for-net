@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [RecordedTest]
-        public async Task CopyModelAsync()
+        public async Task CopyModelToAsync()
         {
             #region Snippet:FormRecognizerSampleCreateCopySourceClient
 #if SNIPPET
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             string modelId = model.ModelId;
 #endif
-            CopyModelOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
+            CopyModelToOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
             DocumentModelDetails newModel = newModelOperation.Value;
 
             Console.WriteLine($"Original model ID => {modelId}");

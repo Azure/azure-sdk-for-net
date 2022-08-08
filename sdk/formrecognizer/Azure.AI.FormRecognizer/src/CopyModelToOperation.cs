@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Tracks the status of a long-running operation for copying a custom model into a target Form Recognizer resource.
     /// </summary>
-    public class CopyModelOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
+    public class CopyModelToOperation : Operation<DocumentModelDetails>, IOperation<DocumentModelDetails>
     {
         private readonly OperationInternal<DocumentModelDetails> _operationInternal;
 
@@ -71,12 +71,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override bool HasValue => _operationInternal.HasValue;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class which
+        /// Initializes a new instance of the <see cref="CopyModelToOperation"/> class which
         /// tracks the status of the long-running operation for copying a custom model into a target Form Recognizer resource.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public CopyModelOperation(string operationId, DocumentModelAdministrationClient client)
+        public CopyModelToOperation(string operationId, DocumentModelAdministrationClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(client, nameof(client));
@@ -89,13 +89,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
+        /// Initializes a new instance of the <see cref="CopyModelToOperation"/> class.
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="postResponse">Response from the POSt request that initiated the operation.</param>
-        internal CopyModelOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
+        internal CopyModelToOperation(DocumentAnalysisRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, Response postResponse)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -105,10 +105,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class. This constructor
+        /// Initializes a new instance of the <see cref="CopyModelToOperation"/> class. This constructor
         /// is intended to be used for mocking only.
         /// </summary>
-        protected CopyModelOperation()
+        protected CopyModelToOperation()
         {
         }
 
@@ -117,7 +117,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <remarks>
         /// The last response returned from the server during the lifecycle of this instance.
-        /// An instance of <see cref="CopyModelOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+        /// An instance of <see cref="CopyModelToOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
         /// Responses from these requests can be accessed using GetRawResponse.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
