@@ -227,7 +227,7 @@ rename-mapping:
   StorageAccountInternetEndpoints.web: WebUri
   StorageAccountInternetEndpoints.dfs: DfsUri
 
-enable-lro-interim-state:
+enable-lro-interim-status:
   StorageAccounts_RestoreBlobRanges
 
 directive:

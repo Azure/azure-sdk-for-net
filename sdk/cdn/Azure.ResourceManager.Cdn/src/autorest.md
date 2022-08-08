@@ -91,7 +91,7 @@ rename-mapping:
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   
-enable-lro-interim-state:
+enable-lro-interim-status:
   CdnCustomDomains_Create
  
 directive:

@@ -640,7 +640,6 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("can pass locally, cost too much time on pipeline")]
         public async Task PITR()
         {
             //update storage account to v2
@@ -679,7 +678,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 });
             ArmOperation<BlobRestoreStatus> restoreOperation = await _storageAccount.RestoreBlobRangesAsync(WaitUntil.Started, restoreContent);
 
-            BlobRestoreStatus interimRestoreStatus = restoreOperation.Value;
+            BlobRestoreStatus interimRestoreStatus = await restoreOperation.GetCurrentStatusAsync();
             Assert.IsTrue(interimRestoreStatus.Status == BlobRestoreProgressStatus.InProgress);
             //wait for restore completion
             BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
