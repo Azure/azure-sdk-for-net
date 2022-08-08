@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [Test]
         [RecordedTest]
         [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
-        public async Task MxRecordE2E()
+        public async Task MXRecordE2E()
         {
             var collection = _dnsZone.GetMXRecords();
             string name = "mx";
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [Test]
         [RecordedTest]
         [Ignore("Castle.DynamicProxy.Generators.GeneratorException")]
-        public async Task NsRecordE2E()
+        public async Task NSRecordE2E()
         {
             string _recordSetName = "ns";
             var collection = _dnsZone.GetNSRecords();
