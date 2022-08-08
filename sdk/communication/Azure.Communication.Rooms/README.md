@@ -46,9 +46,16 @@ A `RequestFailedException` is thrown as a service response for any unsuccessful 
 ```C# Snippet:Azure_Communication_RoomsClient_Tests_Troubleshooting
 try
 {
-    RoomRequest request = new RoomRequest();
-    Response<RoomModel> createRoomResponse = await roomsClient.CreateRoomAsync(request);
-    RoomModel createRoomResult = createRoomResponse.Value;
+    CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+    var communicationUser1 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+    var communicationUser2 = communicationIdentityClient.CreateUserAsync().Result.Value.Id;
+    var validFrom = DateTime.UtcNow;
+    var validUntil = validFrom.AddDays(1);
+    List<RoomParticipant> createRoomParticipants = new List<RoomParticipant>();
+    RoomParticipant participant1 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser1), RoleType.Presenter);
+    RoomParticipant participant2 = new RoomParticipant(new CommunicationUserIdentifier(communicationUser2), RoleType.Attendee);
+    Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, RoomJoinPolicy.InviteOnly, createRoomParticipants);
+    CommunicationRoom createRoomResult = createRoomResponse.Value;
 }
 catch (RequestFailedException ex)
 {
