@@ -41,8 +41,8 @@ steps:
               Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/remotes/pull/*' https://github.com/$($repository.Name) ."
               git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/remotes/pull/*' https://github.com/$($repository.Name) .
 
-              Write-Host "Write-Host Get-Content .git/config"
-              Write-Host Get-Content .git/config
+              Write-Host "Get-Content .git/config"
+              Get-Content .git/config
 
               Write-Host "git show-ref"
               git show-ref
