@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateOrUpdate()
+        {
+            string connName = SessionRecording.GenerateAssetName("connection");
+            MediaPrivateEndpointConnectionData data = new MediaPrivateEndpointConnectionData();
+            var connection = await mediaPrivateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connName, data);
+            Assert.IsNotNull(connection);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var list = await mediaPrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
