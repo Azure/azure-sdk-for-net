@@ -38,8 +38,8 @@ steps:
             } else {
               Write-Host "Repository $($repository.Name) is being initialized."
 
-              Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/remotes/pull/*' https://github.com/$($repository.Name) ."
-              git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/remotes/pull/*' https://github.com/$($repository.Name) .
+              Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/pull/*' https://github.com/$($repository.Name) ."
+              git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/pull/*' https://github.com/$($repository.Name) .
 
               Write-Host "Get-Content .git/config"
               Get-Content .git/config
