@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#region Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 //@@ using Azure.Communication.Rooms
 #endregion Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System.Threading.Tasks;
