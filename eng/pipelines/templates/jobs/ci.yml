@@ -256,15 +256,16 @@ jobs:
           - "/*"
           - "!/sdk/*/**/SessionRecords"
         PreGenerationSteps: 
-        - template: /eng/pipelines/templates/steps/dependency.tests.yml
-          parameters:
-            TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-            # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-            ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-            ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-            ExcludeTargetTestProjects: true
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            MatrixConfigsFile: '$(${{ parameters.MatrixConfigs }}.Path)'
+        - ${{ each config in parameters.MatrixConfigs }}:
+          - template: /eng/pipelines/templates/steps/dependency.tests.yml
+            parameters:
+              TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+              # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+              ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+              ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+              ExcludeTargetTestProjects: true
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              MatrixConfigsFile: ${{ config.Path }}
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
