@@ -386,13 +386,12 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                ETag? eTag = requestOptions?.IfMatch;
-                if (requestOptions != null && requestOptions.IfMatch.HasValue)
+                if (requestOptions != null)
                 {
-                     eTag = requestOptions.IfMatch.Value == ETag.All? new ETag(requestOptions.IfMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfMatch.Value.ToString()}\"");
+                    requestOptions = ToUpdateOptions(requestOptions);
                 }
                 RequestContext context = CreateContext(cancellationToken);
-                using Response response = await DeleteKeyValueAsync(key, label, eTag, context).ConfigureAwait(false);
+                using Response response = await DeleteKeyValueAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -419,13 +418,12 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                ETag? eTag = requestOptions?.IfMatch;
-                if (requestOptions != null && requestOptions.IfMatch.HasValue)
+                if (requestOptions != null)
                 {
-                    eTag = requestOptions.IfMatch.Value == ETag.All ? new ETag(requestOptions.IfMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfMatch.Value.ToString()}\"");
+                    requestOptions = ToUpdateOptions(requestOptions);
                 }
                 RequestContext context = CreateContext(cancellationToken);
-                using Response response = DeleteKeyValue(key, label, eTag, context);
+                using Response response = DeleteKeyValue(key, label, requestOptions?.IfMatch, context);
 
                 return response.Status switch
                 {
@@ -551,14 +549,7 @@ namespace Azure.Data.AppConfiguration
                context.AddClassifier(304, isError: false);
                 if (conditions != null)
                 {
-                    if (conditions.IfMatch.HasValue)
-                    {
-                        conditions.IfMatch = conditions.IfMatch.Value == ETag.All ? new ETag(conditions.IfMatch.Value.ToString()) : new ETag($"\"{conditions.IfMatch.Value.ToString()}\"");
-                    }
-                    if (conditions.IfNoneMatch.HasValue)
-                    {
-                        conditions.IfNoneMatch = conditions.IfNoneMatch.Value == ETag.All ? new ETag(conditions.IfNoneMatch.Value.ToString()) : new ETag($"\"{conditions.IfNoneMatch.Value.ToString()}\"");
-                    }
+                    conditions = ToUpdateOptions(conditions);
                 }
                 var dateTime = acceptDateTime.HasValue? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture): null;
                 using Response response = await GetKeyValueAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
@@ -598,14 +589,7 @@ namespace Azure.Data.AppConfiguration
                 context.AddClassifier(304, isError: false);
                 if (conditions != null)
                 {
-                    if (conditions.IfMatch.HasValue)
-                    {
-                        conditions.IfMatch = conditions.IfMatch.Value == ETag.All ? new ETag(conditions.IfMatch.Value.ToString()) : new ETag($"\"{conditions.IfMatch.Value.ToString()}\"");
-                    }
-                    if (conditions.IfNoneMatch.HasValue)
-                    {
-                        conditions.IfNoneMatch = conditions.IfNoneMatch.Value == ETag.All ? new ETag(conditions.IfNoneMatch.Value.ToString()) : new ETag($"\"{conditions.IfNoneMatch.Value.ToString()}\"");
-                    }
+                    conditions = ToUpdateOptions(conditions);
                 }
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = GetKeyValue(key, label, dateTime, null, conditions, context);
@@ -622,6 +606,19 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static MatchConditions ToUpdateOptions(MatchConditions requestOptions)
+        {
+                if (requestOptions.IfMatch.HasValue)
+                {
+                requestOptions.IfMatch = requestOptions.IfMatch.Value == ETag.All ? new ETag(requestOptions.IfMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfMatch.Value.ToString()}\"");
+                }
+                if (requestOptions.IfNoneMatch.HasValue)
+                {
+                requestOptions.IfNoneMatch = requestOptions.IfNoneMatch.Value == ETag.All ? new ETag(requestOptions.IfNoneMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfNoneMatch.Value.ToString()}\"");
+                }
+            return requestOptions;
         }
 
         /// <summary>
@@ -972,6 +969,10 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
+                if (requestOptions != null)
+                {
+                    requestOptions = ToUpdateOptions(requestOptions);
+                }
                 using Response response = async ? await ToCreateAsyncResponse(key, label, requestOptions, isReadOnly, context).ConfigureAwait(false) : ToCreateResponse(key, label, requestOptions, isReadOnly, context);
 
                 return response.Status switch
