@@ -3,12 +3,12 @@
   <PropertyGroup>
     <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6236/autorest-3.0.6236.tgz</_AutoRestVersion>
     <_AutoRestCoreVersion>3.0.6306</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>D:\repo\autorest.csharp\artifacts\bin\AutoRest.CSharp\Debug\netcoreapp3.1</_AutoRestCSharpVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200811.1/autorest-csharp-v3-3.0.0-dev.20200811.1.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
     <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
     <!--
-      Allows passing additional AutoRest command line arguments, for example to run in interactive mode 
+      Allows passing additional AutoRest command line arguments, for example to run in interactive mode
       use the following command line (remove the space between minus minus): dotnet build /t:GenerateCode /p:AutoRestAdditionalParameters="- -interactive"
     -->
     <AutoRestAdditionalParameters></AutoRestAdditionalParameters>
