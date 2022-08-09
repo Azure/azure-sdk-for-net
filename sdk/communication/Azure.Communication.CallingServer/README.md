@@ -49,7 +49,7 @@ To make an outbound call, call the `CreateCall` or `CreateCallAsync` function fr
 CallSource callSource = new CallSource(
        new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
        );
-callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted recipient phone number
+callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted phone number that's associated to your Azure Communication Resource
 ```
 ```C#
 CreateCallResult createCallResult = await callAutomationClient.CreateCallAsync(
@@ -58,6 +58,60 @@ CreateCallResult createCallResult = await callAutomationClient.CreateCallAsync(
     callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl)
     );
 Console.WriteLine($"Call connection id: {createCallResult.CallProperties.CallConnectionId}");
+```
+
+### Handle Mid-Connection call back events
+Your app will receive mid-connection call back events via the callbackEndpoint you provided. You will need to write event handler controller to receive the events and direct your app flow based on your business logic.
+```C#
+    /// <summary>
+    /// Handle call back events.
+    /// </summary>>
+    [HttpPost]
+    [Route("/CallBackEvent")]
+    public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events)
+    {
+        try
+        {
+            if (events != null)
+            {
+                // Helper function to parse CloudEvent to a CallingServer event.
+                CallAutomationEventBase callBackEvent = EventParser.Parse(events.FirstOrDefault());
+            
+                switch (callBackEvent)
+                {
+                    case CallConnected ev:
+                        # logic to handle a CallConnected event
+                        break;
+                    case CallDisconnected ev:
+                        # logic to handle a CallDisConnected event
+                        break;
+                    case ParticipantsUpdated ev:
+                        # cast the event into a ParticipantUpdated event and do something with it. Eg. iterate through the participants
+                        ParticipantsUpdated updatedEvent = (ParticipantsUpdated)ev;
+                        break;
+                    case AddParticipantsSucceeded ev:
+                        # logic to handle an AddParticipantsSucceeded event
+                        break;
+                    case AddParticipantsFailed ev:
+                        # logic to handle an AddParticipantsFailed event
+                        break;
+                    case CallTransferAccepted ev:
+                        # logic to handle CallTransferAccepted event
+                        break;
+                    case CallTransferFailed ev:
+                        # logic to handle CallTransferFailed event
+                       break;
+                    default:
+                        break;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // handle exception
+        }
+        return Ok();
+    }
 ```
 
 ## Troubleshooting
