@@ -1,14 +1,11 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0 (2022-08-09)
 
 ### Other Changes
+
+- Consolidate `SystemAssignedServiceIdentity` into `ManagedServiceIdentity` and make `SystemAssignedServiceIdentity`, `SystemAssignedServiceIdentityType` obsolete and EditorBrowsableNever.
+- Added `ManagedIdentity` property in `PolicyAssignmentData` and obsolete its `Identity` property.
 
 ## 1.2.1 (2022-07-26)
 
