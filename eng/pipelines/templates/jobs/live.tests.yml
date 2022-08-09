@@ -123,8 +123,8 @@ jobs:
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)
-          --filter "TestCategory!=Manually & ($(AdditionalTestFilters))"
-          --logger "trx"
+          --filter 'TestCategory!=Manually & ($(AdditionalTestFilters))'
+          --logger 'trx'
           --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}

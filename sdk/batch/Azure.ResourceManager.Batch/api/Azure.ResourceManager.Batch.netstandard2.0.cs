@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
         public string PublicData { get { throw null; } }
-        public string Thumbprint { get { throw null; } set { } }
+        public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
     }
     public partial class BatchAccountCertificateResource : Azure.ResourceManager.ArmResource
@@ -306,8 +306,8 @@ namespace Azure.ResourceManager.Batch
     }
     public static partial class BatchExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> GetBatchAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Batch.BatchAccountCertificateResource GetBatchAccountCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Batch
         public static Azure.ResourceManager.Batch.BatchApplicationResource GetBatchApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchPrivateLinkResource GetBatchPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BatchPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -398,11 +398,6 @@ namespace Azure.ResourceManager.Batch
 }
 namespace Azure.ResourceManager.Batch.Models
 {
-    public enum AccountKeyType
-    {
-        Primary = 0,
-        Secondary = 1,
-    }
     public partial class BatchAccountAutoScaleSettings
     {
         public BatchAccountAutoScaleSettings(string formula) { }
@@ -424,11 +419,11 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchAccountCertificateCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public BatchAccountCertificateCreateOrUpdateContent() { }
-        public string Data { get { throw null; } set { } }
+        public object Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
-        public string Thumbprint { get { throw null; } set { } }
+        public System.BinaryData Thumbprint { get { throw null; } set { } }
         public string ThumbprintAlgorithm { get { throw null; } set { } }
     }
     public enum BatchAccountCertificateFormat
@@ -472,7 +467,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchAccountEncryptionConfiguration
     {
         public BatchAccountEncryptionConfiguration() { }
-        public string KeyIdentifier { get { throw null; } set { } }
+        public System.Uri KeyIdentifier { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchAccountKeySource? KeySource { get { throw null; } set { } }
     }
     public partial class BatchAccountEndpointDependency
@@ -501,6 +496,11 @@ namespace Azure.ResourceManager.Batch.Models
     {
         MicrosoftBatch = 0,
         MicrosoftKeyVault = 1,
+    }
+    public enum BatchAccountKeyType
+    {
+        Primary = 0,
+        Secondary = 1,
     }
     public partial class BatchAccountOutboundEnvironmentEndpoint
     {
@@ -580,8 +580,8 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchAccountRegenerateKeyContent
     {
-        public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.AccountKeyType keyName) { }
-        public Azure.ResourceManager.Batch.Models.AccountKeyType KeyName { get { throw null; } }
+        public BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.BatchAccountKeyType keyType) { }
+        public Azure.ResourceManager.Batch.Models.BatchAccountKeyType KeyType { get { throw null; } }
     }
     public partial class BatchApplicationPackageActivateContent
     {
@@ -729,10 +729,10 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchFileShareConfiguration
     {
-        public BatchFileShareConfiguration(string accountName, System.Uri azureFileUri, string accountKey, string relativeMountPath) { }
+        public BatchFileShareConfiguration(string accountName, System.Uri fileUri, string accountKey, string relativeMountPath) { }
         public string AccountKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
-        public System.Uri AzureFileUri { get { throw null; } set { } }
+        public System.Uri FileUri { get { throw null; } set { } }
         public string MountOptions { get { throw null; } set { } }
         public string RelativeMountPath { get { throw null; } set { } }
     }
@@ -810,9 +810,9 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchMountConfiguration
     {
         public BatchMountConfiguration() { }
-        public Azure.ResourceManager.Batch.Models.BatchBlobFileSystemConfiguration AzureBlobFileSystemConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration AzureFileShareConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchBlobFileSystemConfiguration BlobFileSystemConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchCifsMountConfiguration CifsMountConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration FileShareConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchNfsMountConfiguration NfsMountConfiguration { get { throw null; } set { } }
     }
     public partial class BatchNameAvailabilityContent
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.DynamicVNetAssignmentScope? DynamicVNetAssignmentScope { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchInboundNatPool> EndpointInboundNatPools { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class BatchNetworkProfile
     {
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchPublicIPAddressConfiguration
     {
         public BatchPublicIPAddressConfiguration() { }
-        public System.Collections.Generic.IList<string> IPAddressIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> IPAddressIds { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType? Provision { get { throw null; } set { } }
     }
     public enum BatchPublicNetworkAccess
@@ -966,13 +966,13 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchResourceFile
     {
         public BatchResourceFile() { }
-        public string AutoStorageContainerName { get { throw null; } set { } }
+        public string AutoBlobContainerName { get { throw null; } set { } }
+        public System.Uri BlobContainerUri { get { throw null; } set { } }
         public string BlobPrefix { get { throw null; } set { } }
         public string FileMode { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
         public System.Uri HttpUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
-        public System.Uri StorageContainerUri { get { throw null; } set { } }
     }
     public partial class BatchSkuCapability
     {

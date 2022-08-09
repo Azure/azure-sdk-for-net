@@ -73,6 +73,7 @@ rename-mapping:
   PasswordCredential: ArcPasswordCredential
   UploadCertificateRequest: HciClusterCertificateContent
   RawCertificateData: HciClusterRawCertificate
+  PerNodeState: PerNodeArcState
 
 directive:
   - from: swagger-document

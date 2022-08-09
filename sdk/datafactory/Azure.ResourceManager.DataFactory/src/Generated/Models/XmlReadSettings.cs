@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="compressionProperties">
         /// Compression settings.
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
+        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </param>
         /// <param name="validationMode"> Indicates what validation method is used when reading the xml files. Allowed values: &apos;none&apos;, &apos;xsd&apos;, or &apos;dtd&apos;. Type: string (or Expression with resultType string). </param>
         /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Compression settings.
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
+        /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
         /// <summary> Indicates what validation method is used when reading the xml files. Allowed values: &apos;none&apos;, &apos;xsd&apos;, or &apos;dtd&apos;. Type: string (or Expression with resultType string). </summary>

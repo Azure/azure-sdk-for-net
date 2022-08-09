@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             Optional<ReferenceInputDataSource> datasource = default;
             string type = default;
-            Optional<DataSerialization> serialization = default;
+            Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
             Optional<ETag> etag = default;
             Optional<StreamingCompression> compression = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serialization = DataSerialization.DeserializeDataSerialization(property.Value);
+                    serialization = StreamAnalyticsDataSerialization.DeserializeStreamAnalyticsDataSerialization(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diagnostics"))

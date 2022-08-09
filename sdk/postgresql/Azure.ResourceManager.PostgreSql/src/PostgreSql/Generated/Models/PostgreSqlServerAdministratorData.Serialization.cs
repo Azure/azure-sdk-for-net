@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("administratorType");
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Optional.IsDefined(Login))
+            if (Optional.IsDefined(LoginAccountName))
             {
                 writer.WritePropertyName("login");
-                writer.WriteStringValue(Login);
+                writer.WriteStringValue(LoginAccountName);
             }
-            if (Optional.IsDefined(Sid))
+            if (Optional.IsDefined(SecureId))
             {
                 writer.WritePropertyName("sid");
-                writer.WriteStringValue(Sid.Value);
+                writer.WriteStringValue(SecureId.Value);
             }
             if (Optional.IsDefined(TenantId))
             {

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The key vault key. </summary>
@@ -18,23 +20,23 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKey. </summary>
         /// <param name="keyId"> The key id. </param>
         /// <param name="isEnabled"> Whether the key is enabled or not. </param>
-        /// <param name="createdOnInTicks"> When the key was created. </param>
-        /// <param name="updatedOnInTicks"> When the key was updated. </param>
-        internal IntegrationAccountKeyVaultKey(string keyId, bool? isEnabled, long? createdOnInTicks, long? updatedOnInTicks)
+        /// <param name="createdOn"> When the key was created. </param>
+        /// <param name="updatedOn"> When the key was updated. </param>
+        internal IntegrationAccountKeyVaultKey(Uri keyId, bool? isEnabled, long? createdOn, long? updatedOn)
         {
             KeyId = keyId;
             IsEnabled = isEnabled;
-            CreatedOnInTicks = createdOnInTicks;
-            UpdatedOnInTicks = updatedOnInTicks;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
         }
 
         /// <summary> The key id. </summary>
-        public string KeyId { get; }
+        public Uri KeyId { get; }
         /// <summary> Whether the key is enabled or not. </summary>
         public bool? IsEnabled { get; }
         /// <summary> When the key was created. </summary>
-        public long? CreatedOnInTicks { get; }
+        public long? CreatedOn { get; }
         /// <summary> When the key was updated. </summary>
-        public long? UpdatedOnInTicks { get; }
+        public long? UpdatedOn { get; }
     }
 }
