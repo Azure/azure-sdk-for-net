@@ -104,9 +104,13 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.5.10" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.1.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Desktop" Version="4.39.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.46.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.23.0" />
+    <!-- 
+      TODO: This package needs to be released as GA and arch-board approved before taking a dependency in any stable SDK library. 
+      Currently, it is referencd by Azure.Identity.BrokeredAuthentication which is still in beta
+    -->
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.46.0-preview" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
