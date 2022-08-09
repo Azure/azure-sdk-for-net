@@ -146,7 +146,7 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallRecording, RecordingStatusResult>?[]
                 {
-                   callRecording => callRecording.StartRecording(_callLocator, _callBackUri)
+                   callRecording => callRecording.StartRecording(new StartRecordingOptions(_callLocator) { RecordingStateCallbackEndpoint = _callBackUri })
                 },
                 new Func<CallRecording, RecordingStatusResult>?[]
                 {
@@ -161,7 +161,7 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallRecording, Task<Response<RecordingStatusResult>>>?[]
                 {
-                   callRecording => callRecording.StartRecordingAsync(_callLocator, _callBackUri)
+                   callRecording => callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator) { RecordingStateCallbackEndpoint = _callBackUri })
                 },
                 new Func<CallRecording, Task<Response<RecordingStatusResult>>>?[]
                 {
@@ -176,27 +176,38 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.StartRecording(_callLocator, _callBackUri)
+                    callRecording => () =>
+                        callRecording.StartRecording(
+                            new StartRecordingOptions(_callLocator)
+                            {
+                                RecordingStateCallbackEndpoint = _callBackUri
+                            })
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.StartRecording(_callLocator, _callBackUri, new StartRecordingOptions(){RecordingContent = RecordingContent.AudioVideo, RecordingChannel = RecordingChannel.Mixed, RecordingFormat = RecordingFormat.Mp4 })
+                    callRecording => () => callRecording.StartRecording(new StartRecordingOptions(_callLocator)
+                    {
+                        RecordingContent = RecordingContent.AudioVideo,
+                        RecordingChannel = RecordingChannel.Mixed,
+                        RecordingFormat = RecordingFormat.Mp4,
+                        ChannelAffinity = new List<ChannelAffinity> { new() { Channel = 0, Participant = new CommunicationUserIdentifier("test") }}
+                    })
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.StopRecording(RecordingId)
+                    callRecording => () => callRecording.StopRecording(RecordingId)
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.PauseRecording(RecordingId)
+                    callRecording => () => callRecording.PauseRecording(RecordingId)
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.ResumeRecording(RecordingId)
+                    callRecording => () => callRecording.ResumeRecording(RecordingId)
                 },
                 new Func<CallRecording, TestDelegate>?[]
                 {
-                   callRecording => () => callRecording.GetRecordingState(RecordingId)
+                    callRecording => () => callRecording.GetRecordingState(RecordingId)
                 },
             };
         }
@@ -207,11 +218,21 @@ namespace Azure.Communication.CallingServer
             {
                 new Func<CallRecording, AsyncTestDelegate>?[]
                 {
-                   callRecording => async () => await callRecording.StartRecordingAsync(_callLocator, _callBackUri).ConfigureAwait(false),
+                   callRecording => async () => await callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator)
+                   {
+                       RecordingStateCallbackEndpoint = _callBackUri
+                   }).ConfigureAwait(false),
                 },
                 new Func<CallRecording, AsyncTestDelegate>?[]
                 {
-                   callRecording => async () => await callRecording.StartRecordingAsync(_callLocator, _callBackUri).ConfigureAwait(false),
+                   callRecording => async () => await callRecording.StartRecordingAsync(new StartRecordingOptions(_callLocator)
+                   {
+                       RecordingStateCallbackEndpoint = _callBackUri,
+                       RecordingContent = RecordingContent.AudioVideo,
+                       RecordingChannel = RecordingChannel.Mixed,
+                       RecordingFormat = RecordingFormat.Mp4,
+                       ChannelAffinity = new List<ChannelAffinity> { new() { Channel = 0, Participant = new CommunicationUserIdentifier("test") }}
+                   }).ConfigureAwait(false),
                 },
                 new Func<CallRecording, AsyncTestDelegate>?[]
                 {
