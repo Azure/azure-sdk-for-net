@@ -2,7 +2,7 @@
 
 This package contains a C# SDK for Azure Communication Services for JobRouter.
 
-[Source code][source] | [Package (NuGet)][https://www.nuget.org] | [Product documentation][product_docs]
+[Source code][source] | [Package (NuGet)][nuget_link] | [Product documentation][product_docs]
 
 
 ## Getting started
@@ -288,3 +288,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [deserialize_event_grid_event_data]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid#receiving-and-deserializing-events
 [event_grid_event_handlers]: https://docs.microsoft.com/azure/event-grid/event-handlers
 [webhook_event_grid_event_delivery]: https://docs.microsoft.com/azure/event-grid/webhook-event-delivery
+[nuget_link]: https://www.nuget.org
