@@ -22,6 +22,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'privateIPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -147,6 +148,9 @@ rename-mapping:
   DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
+  ConnectivityEndpoint.location: EndpointLocation
+  ApplicationGetEndpoint.location: EndpointLocation
+  ApplicationGetHttpsEndpoint.location: EndpointLocation
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
