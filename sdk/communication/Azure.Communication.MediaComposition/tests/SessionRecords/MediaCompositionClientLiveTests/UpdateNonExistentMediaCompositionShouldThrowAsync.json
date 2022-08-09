@@ -7,12 +7,12 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "38",
-        "Content-Type": "application/json",
-        "traceparent": "00-80bfd033781c90498ba9eb6feeece116-a0ff003eb00ab24c-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220804.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "d79057821f1ad45ef9bfbbc914cbc33e",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-6cb8cd0696a8e84aaef64101d2bfeb25-523c09faa99a7c4a-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0cc4a2db069c19d5d52b717996947c94",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 05 Aug 2022 18:25:12 GMT",
+        "x-ms-date": "Mon, 08 Aug 2022 21:05:46 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,21 +22,21 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Aug 2022 18:25:13 GMT",
+        "Date": "Mon, 08 Aug 2022 21:05:45 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0iWDtYgAAAAAdl4tUEntOQLiA4PVB1j1nWVZSMzExMDAwMTE2MDE5AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0qnrxYgAAAABlSDzkdhtGSq7T/Xim4wjwWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-80bfd033781c90498ba9eb6feeece116-34ddf0f281c1687a-00"
+        "traceId": "00-6cb8cd0696a8e84aaef64101d2bfeb25-5e59571bf9dc3016-00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1648809134"
+    "RandomSeed": "1290294645"
   }
 }

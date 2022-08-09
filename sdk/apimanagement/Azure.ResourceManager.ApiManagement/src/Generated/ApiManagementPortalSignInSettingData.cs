@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="enableRedirect"> Redirect Anonymous users to the Sign-In page. </param>
-        internal ApiManagementPortalSignInSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? enableRedirect) : base(id, name, resourceType, systemData)
+        /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
+        internal ApiManagementPortalSignInSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isRedirectEnabled) : base(id, name, resourceType, systemData)
         {
-            EnableRedirect = enableRedirect;
+            IsRedirectEnabled = isRedirectEnabled;
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
-        public bool? EnableRedirect { get; set; }
+        public bool? IsRedirectEnabled { get; set; }
     }
 }

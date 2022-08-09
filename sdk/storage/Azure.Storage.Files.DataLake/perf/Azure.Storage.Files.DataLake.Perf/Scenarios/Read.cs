@@ -29,10 +29,8 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         {
             FileClient.ReadTo(
                 Stream.Null,
-                new Models.DataLakeFileReadToOptions
-                {
-                    TransferOptions = Options.StorageTransferOptions
-                },
+                conditions: default,
+                transferOptions: Options.StorageTransferOptions,
                 cancellationToken);
         }
 
@@ -44,10 +42,8 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         {
             await FileClient.ReadToAsync(
                 Stream.Null,
-                new Models.DataLakeFileReadToOptions
-                {
-                    TransferOptions = Options.StorageTransferOptions
-                },
+                conditions: default,
+                transferOptions: Options.StorageTransferOptions,
                 cancellationToken);
         }
     }

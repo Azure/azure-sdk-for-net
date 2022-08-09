@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public partial class ContainerGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstance> containers, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType osType) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstance> Containers { get { throw null; } }
+        public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceOperatingSystemType osType) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> Containers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupDnsConfiguration DnsConfig { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupEncryptionProperties EncryptionProperties { get { throw null; } set { } }
@@ -378,9 +378,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class ContainerInstance
+    public partial class ContainerInstanceAzureFileVolume
     {
-        public ContainerInstance(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources) { }
+        public ContainerInstanceAzureFileVolume(string shareName, string storageAccountName) { }
+        public bool? IsReadOnly { get { throw null; } set { } }
+        public string ShareName { get { throw null; } set { } }
+        public string StorageAccountKey { get { throw null; } set { } }
+        public string StorageAccountName { get { throw null; } set { } }
+    }
+    public partial class ContainerInstanceContainer
+    {
+        public ContainerInstanceContainer(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources) { }
         public System.Collections.Generic.IList<string> Command { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string Image { get { throw null; } set { } }
@@ -391,14 +399,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public Azure.ResourceManager.ContainerInstance.Models.ContainerProbe ReadinessProbe { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements Resources { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerVolumeMount> VolumeMounts { get { throw null; } }
-    }
-    public partial class ContainerInstanceAzureFileVolume
-    {
-        public ContainerInstanceAzureFileVolume(string shareName, string storageAccountName) { }
-        public bool? IsReadOnly { get { throw null; } set { } }
-        public string ShareName { get { throw null; } set { } }
-        public string StorageAccountKey { get { throw null; } set { } }
-        public string StorageAccountName { get { throw null; } set { } }
     }
     public partial class ContainerInstanceGitRepoVolume
     {

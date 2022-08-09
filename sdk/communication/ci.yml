@@ -24,8 +24,11 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: communication
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Communication.JobRouter
+      safeName: AzureCommunicationJobRouter
     - name: Azure.Communication.CallingServer
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
