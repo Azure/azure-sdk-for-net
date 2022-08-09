@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WritePropertyName("accountName");
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("azureFileUrl");
-            writer.WriteStringValue(AzureFileUri.AbsoluteUri);
+            writer.WriteStringValue(FileUri.AbsoluteUri);
             writer.WritePropertyName("accountKey");
             writer.WriteStringValue(AccountKey);
             writer.WritePropertyName("relativeMountPath");

@@ -14,19 +14,19 @@ namespace Azure.ResourceManager.Batch.Models
     {
         /// <summary> Initializes a new instance of BatchFileShareConfiguration. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
-        /// <param name="azureFileUri"> This is of the form &apos;https://{account}.file.core.windows.net/&apos;. </param>
+        /// <param name="fileUri"> This is of the form &apos;https://{account}.file.core.windows.net/&apos;. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="azureFileUri"/>, <paramref name="accountKey"/> or <paramref name="relativeMountPath"/> is null. </exception>
-        public BatchFileShareConfiguration(string accountName, Uri azureFileUri, string accountKey, string relativeMountPath)
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="fileUri"/>, <paramref name="accountKey"/> or <paramref name="relativeMountPath"/> is null. </exception>
+        public BatchFileShareConfiguration(string accountName, Uri fileUri, string accountKey, string relativeMountPath)
         {
             if (accountName == null)
             {
                 throw new ArgumentNullException(nameof(accountName));
             }
-            if (azureFileUri == null)
+            if (fileUri == null)
             {
-                throw new ArgumentNullException(nameof(azureFileUri));
+                throw new ArgumentNullException(nameof(fileUri));
             }
             if (accountKey == null)
             {
@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             AccountName = accountName;
-            AzureFileUri = azureFileUri;
+            FileUri = fileUri;
             AccountKey = accountKey;
             RelativeMountPath = relativeMountPath;
         }
 
         /// <summary> Initializes a new instance of BatchFileShareConfiguration. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
-        /// <param name="azureFileUri"> This is of the form &apos;https://{account}.file.core.windows.net/&apos;. </param>
+        /// <param name="fileUri"> This is of the form &apos;https://{account}.file.core.windows.net/&apos;. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> These are &apos;net use&apos; options in Windows and &apos;mount&apos; options in Linux. </param>
-        internal BatchFileShareConfiguration(string accountName, Uri azureFileUri, string accountKey, string relativeMountPath, string mountOptions)
+        internal BatchFileShareConfiguration(string accountName, Uri fileUri, string accountKey, string relativeMountPath, string mountOptions)
         {
             AccountName = accountName;
-            AzureFileUri = azureFileUri;
+            FileUri = fileUri;
             AccountKey = accountKey;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The Azure Storage account name. </summary>
         public string AccountName { get; set; }
         /// <summary> This is of the form &apos;https://{account}.file.core.windows.net/&apos;. </summary>
-        public Uri AzureFileUri { get; set; }
+        public Uri FileUri { get; set; }
         /// <summary> The Azure Storage account key. </summary>
         public string AccountKey { get; set; }
         /// <summary> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>

@@ -122,6 +122,8 @@ rename-mapping:
   BackendContract.properties.resourceId: ResourceUri|uri
   BackendUpdateParameters.properties.resourceId: ResourceUri|uri
   RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
+  RequestReportRecordContract.method: -|request-method
+  RequestReportRecordContract.ipAddress: -|ip-address
   ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   SubscriptionsDelegationSettingsProperties: SubscriptionDelegationSettingProperties
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties

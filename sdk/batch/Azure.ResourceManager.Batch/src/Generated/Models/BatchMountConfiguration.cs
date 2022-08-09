@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of BatchMountConfiguration. </summary>
-        /// <param name="azureBlobFileSystemConfiguration"> This property is mutually exclusive with all other properties. </param>
+        /// <param name="blobFileSystemConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="nfsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
         /// <param name="cifsMountConfiguration"> This property is mutually exclusive with all other properties. </param>
-        /// <param name="azureFileShareConfiguration"> This property is mutually exclusive with all other properties. </param>
-        internal BatchMountConfiguration(BatchBlobFileSystemConfiguration azureBlobFileSystemConfiguration, BatchNfsMountConfiguration nfsMountConfiguration, BatchCifsMountConfiguration cifsMountConfiguration, BatchFileShareConfiguration azureFileShareConfiguration)
+        /// <param name="fileShareConfiguration"> This property is mutually exclusive with all other properties. </param>
+        internal BatchMountConfiguration(BatchBlobFileSystemConfiguration blobFileSystemConfiguration, BatchNfsMountConfiguration nfsMountConfiguration, BatchCifsMountConfiguration cifsMountConfiguration, BatchFileShareConfiguration fileShareConfiguration)
         {
-            AzureBlobFileSystemConfiguration = azureBlobFileSystemConfiguration;
+            BlobFileSystemConfiguration = blobFileSystemConfiguration;
             NfsMountConfiguration = nfsMountConfiguration;
             CifsMountConfiguration = cifsMountConfiguration;
-            AzureFileShareConfiguration = azureFileShareConfiguration;
+            FileShareConfiguration = fileShareConfiguration;
         }
 
         /// <summary> This property is mutually exclusive with all other properties. </summary>
-        public BatchBlobFileSystemConfiguration AzureBlobFileSystemConfiguration { get; set; }
+        public BatchBlobFileSystemConfiguration BlobFileSystemConfiguration { get; set; }
         /// <summary> This property is mutually exclusive with all other properties. </summary>
         public BatchNfsMountConfiguration NfsMountConfiguration { get; set; }
         /// <summary> This property is mutually exclusive with all other properties. </summary>
         public BatchCifsMountConfiguration CifsMountConfiguration { get; set; }
         /// <summary> This property is mutually exclusive with all other properties. </summary>
-        public BatchFileShareConfiguration AzureFileShareConfiguration { get; set; }
+        public BatchFileShareConfiguration FileShareConfiguration { get; set; }
     }
 }
