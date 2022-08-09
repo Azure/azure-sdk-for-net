@@ -247,12 +247,7 @@ jobs:
       parameters:
         GenerateJobName: generate_target_dependencies_test_matrix 
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-        MatrixConfigs: 
-          - Name: NET_ci_test_base
-            # The path here should refer to dependency.tests.yml parameter ProjectFilesOutputFolder 
-            Path: $(Build.ArtifactStagingDirectory)/platform-matrix.json
-            Selection: sparse
-            GenerateVMJobs: true
+        MatrixConfigs: ${{ parameters.MatrixConfigs }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace: ${{ parameters.MatrixReplace }}
         CloudConfig:
@@ -269,6 +264,7 @@ jobs:
             ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
             ExcludeTargetTestProjects: true
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            MatrixConfigsFile: ${{ parameters.MatrixConfigs.Path }}
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}

@@ -14,7 +14,7 @@ parameters:
 - name: ProjectListOverrideFilePropertyName
   type: string
   default: ''
-- name: MatrixConfigs
+- name: MatrixConfigsFile
   type: string
   default: './eng/pipelines/templates/stages/platform-matrix.json'
 - name: ExcludeTargetTestProjects
@@ -41,7 +41,7 @@ steps:
         -ProjectListFilePath ${{ parameters.OutputProjectFilePath }}
         -ProjectFilesOutputFolder ${{ parameters.ProjectFilesOutputFolder }}
         -NumOfTestProjectsPerJob ${{ parameters.NumOfTestProjectsPerJob }}
-        -MatrixConfigsFile ${{parameters.MatrixConfigs}}
+        -MatrixConfigsFile ${{parameters.MatrixConfigsFile}}
         -ProjectFileConfigName ${{parameters.ProjectListOverrideFilePropertyName}}
         -ExcludeTargetTestProjects: $${{parameters.ExcludeTargetTestProjects}}
         -ServiceDirectory ${{parameters.ServiceDirectory}}
