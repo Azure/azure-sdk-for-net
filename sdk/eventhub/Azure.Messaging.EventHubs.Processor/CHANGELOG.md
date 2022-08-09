@@ -1,6 +1,6 @@
 # Release History
 
-## 5.8.0-beta.1 (Unreleased)
+## 5.7.2 (2022-08-09)
 
 ### Acknowledgments
 
