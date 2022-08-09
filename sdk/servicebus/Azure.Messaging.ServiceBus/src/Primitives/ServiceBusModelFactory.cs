@@ -416,9 +416,9 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         public static ServiceBusMessageBatch ServiceBusMessageBatch(long batchSizeBytes,
-                                                    IList<ServiceBusMessage> batchMessageStore,
-                                                    CreateMessageBatchOptions batchOptions = default,
-                                                    Func<ServiceBusMessage, bool> tryAddCallback = default)
+                                                                    IList<ServiceBusMessage> batchMessageStore,
+                                                                    CreateMessageBatchOptions batchOptions = default,
+                                                                    Func<ServiceBusMessage, bool> tryAddCallback = default)
         {
             tryAddCallback ??= _ => true;
             batchOptions ??= new CreateMessageBatchOptions();

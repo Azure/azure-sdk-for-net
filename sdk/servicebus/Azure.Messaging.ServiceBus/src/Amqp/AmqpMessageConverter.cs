@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
@@ -55,30 +54,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public virtual AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch)
         {
-            AmqpMessage firstAmqpMessage = null;
-            ServiceBusMessage firstMessage = null;
-
             var batchMessages = new List<AmqpMessage>(source.Count);
             foreach (ServiceBusMessage sbMessage in source)
             {
-                if (firstAmqpMessage == null)
-                {
-                    firstAmqpMessage = SBMessageToAmqpMessage(sbMessage);
-                    firstMessage = sbMessage;
-                    batchMessages.Add(firstAmqpMessage);
-                }
-                else
-                {
-                    batchMessages.Add(SBMessageToAmqpMessage(sbMessage));
-                }
+                 batchMessages.Add(SBMessageToAmqpMessage(sbMessage));
             }
-
             return BuildAmqpBatchFromMessages(batchMessages, forceBatch);
         }
 
         /// <summary>
-        ///   Builds a batch of <see cref="AmqpMessage" /> from a set of <see cref="ServiceBusMessage" />
-        ///   optionally propagating the custom properties.
+        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
         /// </summary>
         ///
         /// <param name="source">The set of messages to use as the body of the batch message.</param>
@@ -86,41 +71,31 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        public virtual AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, bool forceBatch)
-        {
-            return BuildAmqpBatchFromMessages(source.ToList<AmqpMessage>(), forceBatch);
-        }
-
-        /// <summary>
-        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="AmqpMessage" />.
-        /// </summary>
-        ///
-        /// <param name="batchMessages">The set of messages to use as the body of the batch message.</param>
-        /// <param name="forceBatch">Set to true to force creating as a batch even when only one message.</param>
-        ///
-        /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
-        ///
-        private static AmqpMessage BuildAmqpBatchFromMessages(
-            List<AmqpMessage> batchMessages,
+        public virtual AmqpMessage BuildAmqpBatchFromMessages(
+            IReadOnlyCollection<AmqpMessage> source,
             bool forceBatch)
         {
             AmqpMessage batchEnvelope;
             AmqpMessage firstMessage = null;
-            if (batchMessages.Count > 0)
+
+            var batchMessages = source.GetEnumerator();
+            batchMessages.MoveNext();
+
+            if (source.Count > 0)
             {
-                firstMessage = batchMessages[0];
+                firstMessage = batchMessages.Current;
             }
 
-            if (batchMessages.Count == 1 && !forceBatch)
+            if (source.Count == 1 && !forceBatch)
             {
-                batchEnvelope = batchMessages[0].Clone();
+                batchEnvelope = batchMessages.Current.Clone();
             }
             else
             {
-                var data = new Data[batchMessages.Count];
+                var data = new Data[source.Count];
                 var messageNum = 0;
 
-                foreach (var message in batchMessages)
+                foreach (var message in source)
                 {
                     message.Batchable = true;
                     using var messageStream = message.ToStream();

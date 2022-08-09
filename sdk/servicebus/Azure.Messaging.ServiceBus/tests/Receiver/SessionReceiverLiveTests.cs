@@ -30,14 +30,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt, sessionId, sessionId)
-                    .AsReadOnly<AmqpMessage>();
+                List<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCt, sessionId, sessionId);
 
                 await sender.SendMessagesAsync(batch);
-                Dictionary<string, AmqpMessage> sentMessageIdToMsg = new Dictionary<string, AmqpMessage>();
-                foreach (AmqpMessage message in sentMessages)
+                Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
+                foreach (ServiceBusMessage message in sentMessages)
                 {
-                    sentMessageIdToMsg.Add(message.Properties.MessageId.ToString(), message);
+                    sentMessageIdToMsg.Add(message.MessageId, message);
                 }
 
                 var receiver = await client.AcceptSessionAsync(
@@ -56,8 +55,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
 
                     sentMessageIdToMsg.Remove(peekedMessage.MessageId);
-                    //Assert.AreEqual(sentMsg.Body.ToString(), peekedText); TODO
-                    Assert.AreEqual(sentMsg.Properties.GroupId.ToString(), peekedMessage.SessionId);
+                    Assert.AreEqual(sentMsg.Body.ToString(), peekedText);
+                    Assert.AreEqual(sentMsg.SessionId, peekedMessage.SessionId);
                     Assert.IsTrue(peekedMessage.SequenceNumber >= sequenceNumber);
                     ct++;
                 }

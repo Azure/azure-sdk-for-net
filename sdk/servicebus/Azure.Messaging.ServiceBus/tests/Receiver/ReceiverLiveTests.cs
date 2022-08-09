@@ -501,7 +501,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                List<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -516,7 +516,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers.Add(item.SequenceNumber);
                         await receiver.DeferMessageAsync(item);
                     }
@@ -529,8 +529,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(messageList.Count, deferredMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].Properties.MessageId.ToString(), deferredMessages[i].MessageId);
-                    //Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray()); TODO!!!!!!!!
+                    Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
                     Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
 
@@ -556,7 +556,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                List<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -571,7 +571,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers[idx++] = item.SequenceNumber;
                         await receiver.DeferMessageAsync(item);
                     }
@@ -584,8 +584,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(messageList.Count, deferredMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].Properties.MessageId.ToString(), deferredMessages[i].MessageId);
-                    //Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray()); TODO!!!!!
+                    Assert.AreEqual(messageList[i].MessageId.ToString(), deferredMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
                     Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
 
@@ -605,7 +605,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
+                List<ServiceBusMessage> messages = ServiceBusTestUtilities.AddAndReturnMessages(batch, messageCount);
 
                 await sender.SendMessagesAsync(batch);
 
@@ -620,7 +620,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
                         sequenceNumbers[idx++] = item.SequenceNumber;
                         await receiver.DeferMessageAsync(item);
                     }
@@ -641,8 +641,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(messageList.Count, deferredMessages.Count);
                 for (int i = 0; i < messageList.Count; i++)
                 {
-                    Assert.AreEqual(messageList[i].Properties.MessageId.ToString(), deferredMessages[i].MessageId);
-                    //Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray()); TODO
+                    Assert.AreEqual(messageList[i].MessageId, deferredMessages[i].MessageId);
+                    Assert.AreEqual(messageList[i].Body.ToArray(), deferredMessages[i].Body.ToArray());
                     Assert.AreEqual(ServiceBusMessageState.Deferred, deferredMessages[i].State);
                 }
 
