@@ -77,7 +77,7 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
         protected CommunicationIdentityClient CreateInstrumentedCommunicationIdentityClient()
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.LiveTestStaticConnectionString,
+                     TestEnvironment.LiveTestStaticConnectionString,
                     InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
 
         protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
