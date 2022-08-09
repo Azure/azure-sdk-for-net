@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
@@ -135,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<ServiceBusMessage>();
+                IEnumerable<AmqpMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<AmqpMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -153,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     maxMessages: messageCt))
                     {
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
+                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), peekedMessage.MessageId);
                         ct++;
                     }
                 }

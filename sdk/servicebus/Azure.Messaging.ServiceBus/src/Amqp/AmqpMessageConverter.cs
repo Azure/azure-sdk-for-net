@@ -92,14 +92,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else
             {
-                var data = new Data[source.Count];
+                var data = new List<Data>(source.Count);
                 var messageNum = 0;
 
                 foreach (var message in source)
                 {
                     message.Batchable = true;
                     using var messageStream = message.ToStream();
-                    data[messageNum] = new Data { Value = ReadStreamToArraySegment(messageStream) };
+                    data.Add(new Data { Value = ReadStreamToArraySegment(messageStream) });
 
                     ++messageNum;
                 }

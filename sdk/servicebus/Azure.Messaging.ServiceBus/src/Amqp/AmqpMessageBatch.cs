@@ -104,26 +104,37 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(message, nameof(message));
             Argument.AssertNotDisposed(_disposed, nameof(ServiceBusMessageBatch));
 
-            AmqpMessage amqpMessage = null;
+            var amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
+            long size = 0;
 
             if (BatchMessages.Count == 0)
             {
                 // Initialize the size by reserving space for the batch envelope taking into account the properties from the first
                 // message which will be used to populate properties on the batch envelope.
-                var reserveOverheadMessage = MessageConverter.BuildAmqpBatchFromMessages(Array.Empty<AmqpMessage>(), forceBatch: true);
-                _sizeBytes += reserveOverheadMessage.SerializedMessageSize;
+
+                var messageList = new List<AmqpMessage>();
+                messageList.Add(amqpMessage);
+                var reserveOverheadMessage = MessageConverter.BuildAmqpBatchFromMessages(messageList.AsReadOnly(), forceBatch: true);
+
+                size = _sizeBytes
+                    + reserveOverheadMessage.SerializedMessageSize
+                    + (amqpMessage.SerializedMessageSize <= MaximumBytesSmallMessage
+                        ? OverheadBytesSmallMessage
+                        : OverheadBytesLargeMessage);
+
                 reserveOverheadMessage.Dispose();
             }
-            amqpMessage = MessageConverter.SBMessageToAmqpMessage(message);
+            else
+            {
+                // Calculate the size for the message, based on the AMQP message size and accounting for a
+                // bit of reserved overhead size.
 
-            // Calculate the size for the message, based on the AMQP message size and accounting for a
-            // bit of reserved overhead size.
-
-            var size = _sizeBytes
-                + amqpMessage.SerializedMessageSize
-                + (amqpMessage.SerializedMessageSize <= MaximumBytesSmallMessage
-                    ? OverheadBytesSmallMessage
-                    : OverheadBytesLargeMessage);
+                size = _sizeBytes
+                    + amqpMessage.SerializedMessageSize
+                    + (amqpMessage.SerializedMessageSize <= MaximumBytesSmallMessage
+                        ? OverheadBytesSmallMessage
+                        : OverheadBytesLargeMessage);
+            }
 
             if (size > MaxSizeInBytes)
             {
