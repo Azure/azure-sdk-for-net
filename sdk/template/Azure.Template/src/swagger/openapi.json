@@ -3,7 +3,7 @@
   "info": {
     "title": "InheritanceClient",
     "version": "1.0.0",
-    "description": "Illustrates input, output, and round-trip polymorphic models.",
+    "description": "Illustrates round-trip polymorphic models.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -22,7 +22,7 @@
   ],
   "tags": [],
   "paths": {
-    "/operation": {
+    "/model": {
       "put": {
         "operationId": "BasicPolymorphicModels_SetValue",
         "parameters": [
@@ -40,6 +40,35 @@
             "description": "Example base type.",
             "schema": {
               "$ref": "#/definitions/BaseClass"
+            }
+          },
+          "default": {
+            "description": "A response containing error details.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/property": {
+      "put": {
+        "operationId": "BasicPolymorphicModels_SetValueWithPolymorphicProperty",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ModelWithPolymorphicProperty"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Illustrates case where a basic model has polymorphic properties.",
+            "schema": {
+              "$ref": "#/definitions/ModelWithPolymorphicProperty"
             }
           },
           "default": {
@@ -146,6 +175,40 @@
         }
       ]
     },
+    "DerivedFromBaseClassA": {
+      "type": "object",
+      "properties": {
+        "derivedClassAProperty": {
+          "type": "string",
+          "description": "An example property on a derived type"
+        }
+      },
+      "required": [
+        "derivedClassAProperty"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseClass"
+        }
+      ]
+    },
+    "DerivedFromBaseClassB": {
+      "type": "object",
+      "properties": {
+        "derivedClassBProperty": {
+          "type": "string",
+          "description": "An example property on a derived type"
+        }
+      },
+      "required": [
+        "derivedClassBProperty"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseClass"
+        }
+      ]
+    },
     "DerivedFromBaseClassWithDiscriminatorA": {
       "type": "object",
       "properties": {},
@@ -165,6 +228,19 @@
         }
       ],
       "x-ms-discriminator-value": "B"
+    },
+    "ModelWithPolymorphicProperty": {
+      "type": "object",
+      "properties": {
+        "polymorphicProperty": {
+          "$ref": "#/definitions/BaseClassWithDiscriminator",
+          "description": "Example polymorphic type property."
+        }
+      },
+      "description": "Illustrates case where a basic model has polymorphic properties.",
+      "required": [
+        "polymorphicProperty"
+      ]
     }
   },
   "parameters": {}

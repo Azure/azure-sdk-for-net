@@ -43,7 +43,7 @@ namespace Azure.Template
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/operation", false);
+            uri.AppendPath("/model", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -98,6 +98,75 @@ namespace Azure.Template
                         BaseClass value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = BaseClass.DeserializeBaseClass(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSetValueWithPolymorphicPropertyRequest(ModelWithPolymorphicProperty input)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/property", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(input);
+            request.Content = content;
+            return message;
+        }
+
+        /// <param name="input"> The ModelWithPolymorphicProperty to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public async Task<Response<ModelWithPolymorphicProperty>> SetValueWithPolymorphicPropertyAsync(ModelWithPolymorphicProperty input, CancellationToken cancellationToken = default)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            using var message = CreateSetValueWithPolymorphicPropertyRequest(input);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ModelWithPolymorphicProperty value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ModelWithPolymorphicProperty.DeserializeModelWithPolymorphicProperty(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <param name="input"> The ModelWithPolymorphicProperty to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public Response<ModelWithPolymorphicProperty> SetValueWithPolymorphicProperty(ModelWithPolymorphicProperty input, CancellationToken cancellationToken = default)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            using var message = CreateSetValueWithPolymorphicPropertyRequest(input);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ModelWithPolymorphicProperty value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ModelWithPolymorphicProperty.DeserializeModelWithPolymorphicProperty(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
