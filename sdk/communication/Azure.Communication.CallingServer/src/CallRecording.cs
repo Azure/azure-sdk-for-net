@@ -53,19 +53,21 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual Response<RecordingStatusResult> StartRecording(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options?.CallLocator))
+                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
-                    RecordingStateCallbackUri = options?.RecordingStateCallbackEndpoint?.AbsoluteUri,
-                    RecordingChannelType = options?.RecordingChannel,
-                    RecordingContentType = options?.RecordingContent,
-                    RecordingFormatType = options?.RecordingFormat
+                    RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
+                    RecordingChannelType = options.RecordingChannel,
+                    RecordingContentType = options.RecordingContent,
+                    RecordingFormatType = options.RecordingFormat
                 };
 
-                if (options?.ChannelAffinity != null)
+                if (options.ChannelAffinity != null)
                 {
                     foreach (var c in options.ChannelAffinity)
                     {
@@ -93,19 +95,21 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken">The cancellation token.</param>
         public virtual async Task<Response<RecordingStatusResult>> StartRecordingAsync(StartRecordingOptions options, CancellationToken cancellationToken = default)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallRecording)}.{nameof(StartRecording)}");
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options?.CallLocator))
+                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
-                    RecordingStateCallbackUri = options?.RecordingStateCallbackEndpoint?.AbsoluteUri,
-                    RecordingChannelType = options?.RecordingChannel,
-                    RecordingContentType = options?.RecordingContent,
-                    RecordingFormatType = options?.RecordingFormat
+                    RecordingStateCallbackUri = options.RecordingStateCallbackEndpoint?.AbsoluteUri,
+                    RecordingChannelType = options.RecordingChannel,
+                    RecordingContentType = options.RecordingContent,
+                    RecordingFormatType = options.RecordingFormat
                 };
 
-                if (options?.ChannelAffinity != null)
+                if (options.ChannelAffinity != null)
                 {
                     foreach (var c in options.ChannelAffinity)
                     {

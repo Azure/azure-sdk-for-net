@@ -9,7 +9,7 @@ namespace Azure.Communication.CallingServer
     public class ChannelAffinity
     {
         /// <summary> Channel number to which bitstream from a particular participant will be written. </summary>
-        public int? Channel { get; set; }
+        public int Channel { get; set; }
 
         /// <summary>
         /// The identifier for the participant whose bitstream will be written to the channel.

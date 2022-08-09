@@ -240,7 +240,7 @@ namespace Azure.Communication.CallingServer
     public partial class ChannelAffinity
     {
         public ChannelAffinity() { }
-        public int? Channel { get { throw null; } set { } }
+        public int Channel { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
     }
     public partial class CollectTones
