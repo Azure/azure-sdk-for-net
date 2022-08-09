@@ -79,12 +79,14 @@ jobs:
       - pwsh: | 
           if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '') {
             Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]$(${{ parameters.ProjectListOverrideFilePropertyName }})"
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml"
           }
           else 
           {
             Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]"
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
           }
-        displayName: Set variable for the project list file 
+        displayName: Set variable for the project list file and coverage directory
       - pwsh: >-
           dotnet test eng/service.proj
           --filter '(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))'
@@ -96,7 +98,7 @@ jobs:
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+          /p:CollectCoverage=$(CollectCoverage)
           /p:EnableSourceLink=false /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
           $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
@@ -113,7 +115,7 @@ jobs:
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
-          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          reports: $(CodeCoverageFilePattern)
           targetdir: $(Build.ArtifactStagingDirectory)\coverage
           reporttypes: Cobertura
           filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
