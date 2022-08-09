@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
         protected static Uri DefaultWebhookServiceUri = new Uri("http://www.microsoft.com");
 
+        protected static string DefaultWebhookScope = "hello-world";
+
         protected ContainerRegistryManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -58,9 +60,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             return lro.Value;
         }
 
-        protected async Task<ContainerRegistryResource> CreateContainerRegistryAsync(ResourceGroupResource resourceGroup, string registryName)
+        protected async Task<ContainerRegistryResource> CreateContainerRegistryAsync(ResourceGroupResource resourceGroup, string registryName, AzureLocation? location = null)
         {
-            var registryData = new ContainerRegistryData(resourceGroup.Data.Location, new ContainerRegistrySku(ContainerRegistrySkuName.Premium))
+            var registryData = new ContainerRegistryData(location == null ? resourceGroup.Data.Location : location.Value, new ContainerRegistrySku(ContainerRegistrySkuName.Premium))
             {
                 Tags =
                 {

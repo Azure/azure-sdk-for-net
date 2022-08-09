@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncodedTaskRunRequest : IUtf8JsonSerializable
+    public partial class ContainerRegistryEncodedTaskRunContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryEncodedTaskRunRequest DeserializeContainerRegistryEncodedTaskRunRequest(JsonElement element)
+        internal static ContainerRegistryEncodedTaskRunContent DeserializeContainerRegistryEncodedTaskRunContent(JsonElement element)
         {
             string encodedTaskContent = default;
             Optional<string> encodedValuesContent = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPlatformProperties platform = default;
             Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
             Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryRunCredentials> credentials = default;
+            Optional<ContainerRegistryCredentials> credentials = default;
             string type = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> agentPoolName = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credentials = ContainerRegistryRunCredentials.DeserializeContainerRegistryRunCredentials(property.Value);
+                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryEncodedTaskRunRequest(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            return new ContainerRegistryEncodedTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
         }
     }
 }

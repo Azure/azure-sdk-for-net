@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryRunCredentials : IUtf8JsonSerializable
+    public partial class ContainerRegistryCredentials : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryRunCredentials DeserializeContainerRegistryRunCredentials(JsonElement element)
+        internal static ContainerRegistryCredentials DeserializeContainerRegistryCredentials(JsonElement element)
         {
             Optional<SourceRegistryCredentials> sourceRegistry = default;
             Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryRunCredentials(sourceRegistry.Value, Optional.ToDictionary(customRegistries));
+            return new ContainerRegistryCredentials(sourceRegistry.Value, Optional.ToDictionary(customRegistries));
         }
     }
 }
