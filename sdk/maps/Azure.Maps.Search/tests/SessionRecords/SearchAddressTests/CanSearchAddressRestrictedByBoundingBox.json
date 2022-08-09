@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f25bc14e75ebddb301e9d815391b074d-660448ef4eca6a2b-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-83bcd10586d279e81ba18e1c3001d6a1-becdc119a41ec377-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "5a287b05e8ab3713b1c2f98eea0ba73d",
+        "x-ms-client-request-id": "26da6d0549a4e750ae39263ada0ce79e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "766",
+        "Content-Length": "765",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 09:29:07 GMT",
+        "Date": "Tue, 09 Aug 2022 19:59:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 7F7C01B909204B2EA2F9E26451B210B0 Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:29:08Z"
+        "X-MSEdge-Ref": "Ref A: F6FCBB90E3A6481582B26AABC34BAD15 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:52Z"
       },
       "ResponseBody": {
         "summary": {
@@ -38,8 +38,8 @@
         "results": [
           {
             "type": "Street",
-            "id": "NZ/STR/p0/159958",
-            "score": 2.0553629398,
+            "id": "NZ/STR/p0/63660",
+            "score": 2.0553193092,
             "matchConfidence": {
               "score": 0.8924786087880523
             },
@@ -57,17 +57,17 @@
               "localName": "Closeburn"
             },
             "position": {
-              "lat": -44.99791,
-              "lon": 168.57396
+              "lat": -44.99444,
+              "lon": 168.57535
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.99757,
-                "lon": 168.57261
+                "lat": -44.99355,
+                "lon": 168.57394
               },
               "btmRightPoint": {
-                "lat": -44.99862,
-                "lon": 168.57492
+                "lat": -44.99558,
+                "lon": 168.57587
               }
             }
           }
@@ -79,6 +79,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "2120365646"
+    "RandomSeed": "1244596975"
   }
 }

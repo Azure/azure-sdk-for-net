@@ -4,8 +4,9 @@
 #nullable disable
 
 using Azure.Core.GeoJson;
+using Azure.Maps.Search.Models;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> Options. </summary>
     public class ReverseSearchBaseOptions

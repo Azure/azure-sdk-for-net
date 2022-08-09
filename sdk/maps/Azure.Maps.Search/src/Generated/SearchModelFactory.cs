@@ -140,7 +140,7 @@ namespace Azure.Maps.Search.Models
             return new OperatingHours(mode, timeRanges?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AddressDetails. </summary>
+        /// <summary> Initializes a new instance of MapsAddress. </summary>
         /// <param name="buildingNumber"> The building number on the street. DEPRECATED, use streetNumber instead. </param>
         /// <param name="street"> The street name. DEPRECATED, use streetName instead. </param>
         /// <param name="crossStreet"> The name of the street being crossed. </param>
@@ -157,17 +157,17 @@ namespace Azure.Maps.Search.Models
         /// <param name="extendedPostalCode"> Extended postal code (availability is dependent on the region). </param>
         /// <param name="countryCode"> Country (Note: This is a two-letter code, not a country name.). </param>
         /// <param name="country"> Country name. </param>
-        /// <param name="countryCodeISO3"> ISO alpha-3 country code. </param>
+        /// <param name="countryCodeIso3"> ISO alpha-3 country code. </param>
         /// <param name="freeformAddress"> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </param>
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
         /// <param name="boundingBox"> The bounding box of the location. </param>
-        /// <returns> A new <see cref="Models.AddressDetails"/> instance for mocking. </returns>
-        public static AddressDetails AddressDetails(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, BoundingBoxCompassNotation boundingBox = null)
+        /// <returns> A new <see cref="Models.MapsAddress"/> instance for mocking. </returns>
+        public static MapsAddress MapsAddress(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeIso3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, BoundingBoxCompassNotation boundingBox = null)
         {
             routeNumbers ??= new List<string>();
 
-            return new AddressDetails(buildingNumber, street, crossStreet, streetNumber, routeNumbers?.ToList(), streetName, streetNameAndNumber, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCode, countryCode, country, countryCodeISO3, freeformAddress, countrySubdivisionName, localName, boundingBox);
+            return new MapsAddress(buildingNumber, street, crossStreet, streetNumber, routeNumbers?.ToList(), streetName, streetNameAndNumber, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCode, countryCode, country, countryCodeIso3, freeformAddress, countrySubdivisionName, localName, boundingBox);
         }
 
         /// <summary> Initializes a new instance of BoundingBoxCompassNotation. </summary>
@@ -233,7 +233,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <returns> A new <see cref="Models.ReverseSearchAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(AddressDetails address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MatchType? matchType = null)
+        public static ReverseSearchAddressResultItem ReverseSearchAddressResultItem(MapsAddress address = null, string position = null, IEnumerable<RoadUseType> roadUse = null, MatchType? matchType = null)
         {
             roadUse ??= new List<RoadUseType>();
 
@@ -244,7 +244,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
         /// <returns> A new <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/> instance for mocking. </returns>
-        public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(AddressDetails address = null, string position = null)
+        public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(MapsAddress address = null, string position = null)
         {
             return new ReverseSearchCrossStreetAddressResultItem(address, position);
         }

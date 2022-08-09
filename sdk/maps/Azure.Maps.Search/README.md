@@ -41,15 +41,22 @@ SearchClient client = new SearchClient(credential);
 
 #### Azure AD Authentication
 
-In order to interact with the Azure Blobs Storage service, you'll need to create an instance of the BlobServiceClient class. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+In order to interact with the Azure Maps service, you'll need to create an instance of the MapsSearchClient class. The Azure Identity library makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
 
 To use AAD authentication, set `TENANT_ID`, `CLIENT_ID`, and `CLIENT_SECRET` to environment variable and call `DefaultAzureCredential()` method to get credential. `CLIENT_ID` and `CLIENT_SECRET` are the service principal ID and secret that can access Azure Maps account.
-s
+
 We also need **Azure Maps Client ID** which can get from Azure Maps page > Authentication tab > "Client ID" in Azure Active Directory Authentication section.
+
+```C# Snippet:InstantiateSearchClientViaAAD
+// Create a MapsSearchClient that will authenticate through Active Directory
+var credential = new DefaultAzureCredential();
+var clientId = "<My Map Account Client Id>";
+MapsSearchClient client = new MapsSearchClient(credential, clientId);
+```
 
 ## Key concepts
 
-`SearchClient` is designed for:
+`MapsSearchClient` is designed for:
 
 * Communicate with Azure Maps endpoint to query addresses or points of locations
 * Communicate with Azure Maps endpoint to request the geometry data such as a city or country outline for a set of entities
@@ -78,13 +85,106 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 Before calling search APIs, instantiate a `SearchClient` first. Below use AAD to create the client instance:
 
+
+```C# Snippet:GetPolygons
+// Get Client
+var endpoint = TestEnvironment.Endpoint;
+var clientId = TestEnvironment.MapAccountClientId;
+var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+// Get Addresses
+var searchResult = await client.SearchAddressAsync("Seattle");
+// Extract geometry ids from addresses
+var geometry0Id = searchResult.Value.Results.First().DataSources.Geometry.Id;
+var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
+// Get polygons from geometry ids
+var polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
+```
+
+```C# Snippet:FuzzySearch
+// Get Client
+var endpoint = TestEnvironment.Endpoint;
+var clientId = TestEnvironment.MapAccountClientId;
+var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+    Coordinates = new GeoPosition(121.56, 25.04),
+    Language = "en"
+});
+```
+
+```C# Snippet:ReverseSearchCrossStreetAddress
+// Get Client
+var endpoint = TestEnvironment.Endpoint;
+var clientId = TestEnvironment.MapAccountClientId;
+var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
+    coordinates = new GeoPosition(121.0, 24.0),
+    Language = "en"
+});
+```
+
+```C# Snippet:SearchStructuredAddress
+// Get Client
+var endpoint = TestEnvironment.Endpoint;
+var clientId = TestEnvironment.MapAccountClientId;
+var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var address = new StructuredAddress {
+    CountryCode = "US",
+    StreetNumber = "15127",
+    StreetName = "NE 24th Street",
+    Municipality = "Redmond",
+    CountrySubdivision = "WA",
+    PostalCode = "98052"
+};
+var searchResult = await client.SearchStructuredAddressAsync(address);
+```
+
+```C# Snippet:SearchInsideGeometry
+// Get Client
+var endpoint = TestEnvironment.Endpoint;
+var clientId = TestEnvironment.MapAccountClientId;
+var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+var sfPolygon = new GeoPolygon(new[]
+{
+    new GeoPosition(-122.43576049804686, 37.752415234354402),
+    new GeoPosition(-122.4330139160, 37.706604725423119),
+    new GeoPosition(-122.36434936523438, 37.712059855877314),
+    new GeoPosition(-122.43576049804686, 37.7524152343544)
+});
+
+var taipeiPolygon = new GeoPolygon(new[]
+{
+    new GeoPosition(121.56, 25.04),
+    new GeoPosition(121.565, 25.04),
+    new GeoPosition(121.565, 25.045),
+    new GeoPosition(121.56, 25.045),
+    new GeoPosition(121.56, 25.04)
+});
+
+var searchResponse = await client.SearchInsideGeometryAsync("coffee", new GeoCollection(new[] { sfPolygon, taipeiPolygon }), new SearchInsideGeometryOptions {
+    Language = "en"
+});
+```
+
+```C# Snippet:SearchAddress
+// Get Client
+var endpoint = TestEnvironment.Endpoint;
+var clientId = TestEnvironment.MapAccountClientId;
+
+var client = new MapsSearchClient(endpoint, new DefaultAzureCredential(), clientId);
+SearchAddressResult searchResponse = client.SearchAddress("Seattle");
+
+var primaryResult = searchResponse.Results.First();
+Console.WriteLine("Country: " + primaryResult.Address.CountryCodeIso3);
+Console.WriteLine("State: " + primaryResult.Address.CountrySubdivision);
+```
+
 ## Troubleshooting
 
 ### General
 
 When you interact with the Azure Maps Services, errors returned by the Language service correspond to the same HTTP status codes returned for REST API requests.
 
-For example, if you ...., a error is returned, indicating "Bad Request".400
+For example, if you try to search with invalid coordinates, a error is returned, indicating "Bad Request".400
 
 ## Next steps
 

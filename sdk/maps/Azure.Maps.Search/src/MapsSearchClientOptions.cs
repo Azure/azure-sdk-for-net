@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Maps.Search
 {
     /// <summary> Client options for SearchClient. </summary>
-    public partial class SearchClientOptions : ClientOptions
+    public partial class MapsSearchClientOptions : ClientOptions
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
@@ -25,7 +25,7 @@ namespace Azure.Maps.Search
         internal string Version { get; }
 
         /// <summary> Initializes new instance of SearchClientOptions. </summary>
-        public SearchClientOptions(ServiceVersion version = LatestVersion)
+        public MapsSearchClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

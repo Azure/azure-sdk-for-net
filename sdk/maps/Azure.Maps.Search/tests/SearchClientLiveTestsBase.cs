@@ -16,13 +16,13 @@ namespace Azure.Maps.Search.Tests
         {
         }
 
-        protected SearchClient CreateClient()
+        protected MapsSearchClient CreateClient()
         {
-            return InstrumentClient(new SearchClient(
+            return InstrumentClient(new MapsSearchClient(
                 endpoint: TestEnvironment.Endpoint,
                 credential: TestEnvironment.Credential,
                 clientId: TestEnvironment.MapAccountClientId,
-                options: InstrumentClientOptions(new SearchClientOptions())
+                options: InstrumentClientOptions(new MapsSearchClientOptions())
             ));
         }
     }

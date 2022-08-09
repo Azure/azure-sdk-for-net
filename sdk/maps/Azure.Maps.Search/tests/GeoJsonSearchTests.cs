@@ -29,7 +29,7 @@ namespace Azure.Maps.Search.Tests
             var geometry1Id = searchResult.Value.Results[1].DataSources.Geometry.Id;
 
             // Seattle municipality geometry
-            var polygonResponse = await client.ListPolygonsAsync(new[] { geometry0Id, geometry1Id });
+            var polygonResponse = await client.GetPolygonsAsync(new[] { geometry0Id, geometry1Id });
             Assert.IsInstanceOf(typeof(GeoJsonMultiPolygon), polygonResponse.Value.Polygons.First().GeometryData.Features.First().Geometry);
             Assert.IsInstanceOf(typeof(GeoJsonPolygon), polygonResponse.Value.Polygons[1].GeometryData.Features.First().Geometry);
 
@@ -49,11 +49,11 @@ namespace Azure.Maps.Search.Tests
         }
 
         [RecordedTest]
-        public void InvalidListPolygonsTest()
+        public void InvalidGetPolygonsTest()
         {
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
-                   async () => await client.ListPolygonsAsync(new string[] {}));
+                   async () => await client.GetPolygonsAsync(new string[] {}));
             Assert.AreEqual(400, ex.Status);
         }
 

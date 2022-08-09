@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Time spent resolving the query, in milliseconds. </summary>
         public int? QueryTime => Summary.QueryTime;
         /// <summary> Number of results in the response. </summary>
-        public int? NumResults => Summary.NumResults;
+        public int? NumResults => Summary.ResultCount;
         /// <summary> Maximum number of responses that will be returned. </summary>
         public int? Top => Summary.Top;
         /// <summary> The starting offset of the returned Results within the full Result set. </summary>

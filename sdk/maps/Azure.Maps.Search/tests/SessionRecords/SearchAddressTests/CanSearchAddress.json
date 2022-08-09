@@ -6,24 +6,24 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5babdcbb7069504dc1870441be000179-35907da11a69c476-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-d7a44a94f1f29259175021abb5637bd7-3ac7cb92c6a022e7-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "cf1cb3454f4c2b885fa0f532c634e138",
+        "x-ms-client-request-id": "35d971144e88e33855df0cbd0aa05831",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "6931",
+        "Content-Length": "6647",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 09:29:06 GMT",
+        "Date": "Tue, 09 Aug 2022 19:59:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 253058CF36EF43E8858C6756A36FACA2 Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:29:07Z"
+        "X-MSEdge-Ref": "Ref A: 4D908DF9E94C4BDF965C4820AF380589 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:51Z"
       },
       "ResponseBody": {
         "summary": {
@@ -32,14 +32,14 @@
           "queryTime": 7,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 267,
+          "totalResults": 270,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "US/GEO/p0/18857",
-            "score": 2.582862854,
+            "id": "US/GEO/p0/81267",
+            "score": 2.5829555988,
             "entityType": "Municipality",
             "matchConfidence": {
               "score": 1
@@ -86,7 +86,7 @@
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/84795",
+            "id": "MX/GEO/p0/76614",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
@@ -94,12 +94,12 @@
             },
             "address": {
               "municipalitySubdivision": "Seattle",
-              "municipality": "Guadalajara",
+              "municipality": "Zapopan",
               "countrySubdivision": "Jalisco",
               "countryCode": "MX",
               "country": "M\u00E9xico",
               "countryCodeISO3": "MEX",
-              "freeformAddress": "Seattle, Guadalajara, Jalisco"
+              "freeformAddress": "Seattle, Zapopan, Jalisco"
             },
             "position": {
               "lat": 20.71994,
@@ -107,46 +107,93 @@
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 20.72301,
-                "lon": -103.37591
+                "lat": 20.72179,
+                "lon": -103.37451
               },
               "btmRightPoint": {
-                "lat": 20.71684,
-                "lon": -103.36898
+                "lat": 20.71809,
+                "lon": -103.36918
               }
             },
             "boundingBox": {
               "topLeftPoint": {
-                "lat": 20.72301,
-                "lon": -103.37591
+                "lat": 20.72179,
+                "lon": -103.37451
               },
               "btmRightPoint": {
-                "lat": 20.71684,
-                "lon": -103.36898
+                "lat": 20.71809,
+                "lon": -103.36918
               }
             },
             "dataSources": {
               "geometry": {
-                "id": "00004d30-3300-3c00-0000-00002672312a"
+                "id": "00005858-5800-1200-0000-00007d2ba4b6"
               }
             }
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/84679",
+            "id": "MX/GEO/p0/113574",
             "score": 2.1554658413,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
-              "score": 0.8767891176845938
+              "score": 0.8917960066252077
             },
             "address": {
-              "municipalitySubdivision": "Ecol\u00F3gica Seattle",
-              "municipality": "Guadalajara",
+              "municipalitySubdivision": "Condominio Seattle",
+              "municipality": "Zapopan",
               "countrySubdivision": "Jalisco",
               "countryCode": "MX",
               "country": "M\u00E9xico",
               "countryCodeISO3": "MEX",
-              "freeformAddress": "Ecol\u00F3gica Seattle, Guadalajara, Jalisco"
+              "freeformAddress": "Condominio Seattle, Zapopan, Jalisco"
+            },
+            "position": {
+              "lat": 20.72218,
+              "lon": -103.36971
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 20.72276,
+                "lon": -103.37041
+              },
+              "btmRightPoint": {
+                "lat": 20.72161,
+                "lon": -103.36898
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": 20.72276,
+                "lon": -103.37041
+              },
+              "btmRightPoint": {
+                "lat": 20.72161,
+                "lon": -103.36898
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "b2905ab3-f207-4a66-bb14-67a3900f16d2"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "MX/GEO/p0/5123",
+            "score": 2.1345388889,
+            "entityType": "MunicipalitySubdivision",
+            "matchConfidence": {
+              "score": 0.8594277682297847
+            },
+            "address": {
+              "municipalitySubdivision": "Ecol\u00F3gica El Seattle",
+              "municipality": "Zapopan",
+              "countrySubdivision": "Jalisco",
+              "countryCode": "MX",
+              "country": "M\u00E9xico",
+              "countryCodeISO3": "MEX",
+              "freeformAddress": "Ecol\u00F3gica El Seattle, Zapopan, Jalisco"
             },
             "position": {
               "lat": 20.71985,
@@ -154,46 +201,46 @@
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 20.72235,
+                "lat": 20.7222,
                 "lon": -103.3809
               },
               "btmRightPoint": {
-                "lat": 20.7172,
-                "lon": -103.37555
+                "lat": 20.71853,
+                "lon": -103.37426
               }
             },
             "boundingBox": {
               "topLeftPoint": {
-                "lat": 20.72235,
+                "lat": 20.7222,
                 "lon": -103.3809
               },
               "btmRightPoint": {
-                "lat": 20.7172,
-                "lon": -103.37555
+                "lat": 20.71853,
+                "lon": -103.37426
               }
             },
             "dataSources": {
               "geometry": {
-                "id": "00004d30-3300-3c00-0000-000026723144"
+                "id": "00005858-5800-1200-0000-00007d2b9469"
               }
             }
           },
           {
             "type": "Geography",
-            "id": "MX/GEO/p0/84521",
+            "id": "MX/GEO/p0/77268",
             "score": 2.1345388889,
             "entityType": "MunicipalitySubdivision",
             "matchConfidence": {
-              "score": 0.873358959585691
+              "score": 0.8707720027957109
             },
             "address": {
               "municipalitySubdivision": "Jardines Seattle Unidad",
-              "municipality": "Guadalajara",
+              "municipality": "Zapopan",
               "countrySubdivision": "Jalisco",
               "countryCode": "MX",
               "country": "M\u00E9xico",
               "countryCodeISO3": "MEX",
-              "freeformAddress": "Jardines Seattle Unidad, Guadalajara, Jalisco"
+              "freeformAddress": "Jardines Seattle Unidad, Zapopan, Jalisco"
             },
             "position": {
               "lat": 20.72466,
@@ -221,13 +268,13 @@
             },
             "dataSources": {
               "geometry": {
-                "id": "00004d30-3300-3c00-0000-0000267230e4"
+                "id": "00005858-5800-1200-0000-00007d2b9fc4"
               }
             }
           },
           {
             "type": "Street",
-            "id": "MX/STR/p0/1818740",
+            "id": "MX/STR/p0/1711133",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
@@ -260,183 +307,137 @@
           },
           {
             "type": "Street",
-            "id": "US/STR/p0/675550",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "Seattle Avenue",
-              "municipalitySubdivision": "Polaris",
-              "municipality": "Columbus",
-              "countrySecondarySubdivision": "Delaware",
-              "countrySubdivision": "OH",
-              "countrySubdivisionName": "Ohio",
-              "postalCode": "43240",
-              "extendedPostalCode": "43240-1506, 43240-1507, 43240-1508, 43240-1597",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Avenue, Columbus, OH 43240",
-              "localName": "Columbus"
-            },
-            "position": {
-              "lat": 40.1371,
-              "lon": -82.98759
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 40.13876,
-                "lon": -82.98771
-              },
-              "btmRightPoint": {
-                "lat": 40.13558,
-                "lon": -82.98746
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p0/2789464",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "Seattle Drive",
-              "municipality": "El Cajon",
-              "countrySecondarySubdivision": "San Diego",
-              "countrySubdivision": "CA",
-              "countrySubdivisionName": "California",
-              "postalCode": "92020",
-              "extendedPostalCode": "92020-1773, 92020-1774",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Drive, El Cajon, CA 92020",
-              "localName": "El Cajon"
-            },
-            "position": {
-              "lat": 32.80774,
-              "lon": -117.00052
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 32.80819,
-                "lon": -117.00143
-              },
-              "btmRightPoint": {
-                "lat": 32.80666,
-                "lon": -117.00007
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p1/1472223",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "Seattle Drive",
-              "municipality": "Port Ludlow",
-              "countrySecondarySubdivision": "Jefferson",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
-              "postalCode": "98365",
-              "extendedPostalCode": "98365-8256, 98365-8281, 98365-8282",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Drive, Port Ludlow, WA 98365",
-              "localName": "Port Ludlow"
-            },
-            "position": {
-              "lat": 47.83538,
-              "lon": -122.69371
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 47.83859,
-                "lon": -122.69375
-              },
-              "btmRightPoint": {
-                "lat": 47.83071,
-                "lon": -122.69168
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p1/1483758",
-            "score": 2.1169600487,
-            "matchConfidence": {
-              "score": 1
-            },
-            "address": {
-              "streetName": "East Seattle Avenue",
-              "municipality": "Moxee",
-              "countrySecondarySubdivision": "Yakima",
-              "countrySubdivision": "WA",
-              "countrySubdivisionName": "Washington",
-              "postalCode": "98936",
-              "extendedPostalCode": "98936-1341, 98936-9036, 98936-9637, 98936-9639, 98936-9640",
-              "countryCode": "US",
-              "country": "United States",
-              "countryCodeISO3": "USA",
-              "freeformAddress": "East Seattle Avenue, Moxee, WA 98936",
-              "localName": "Moxee"
-            },
-            "position": {
-              "lat": 46.55285,
-              "lon": -120.38185
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": 46.55428,
-                "lon": -120.38552
-              },
-              "btmRightPoint": {
-                "lat": 46.54967,
-                "lon": -120.38036
-              }
-            }
-          },
-          {
-            "type": "Street",
-            "id": "US/STR/p1/2680453",
+            "id": "US/STR/p0/1482526",
             "score": 2.1169600487,
             "matchConfidence": {
               "score": 1
             },
             "address": {
               "streetName": "Seattle Street",
-              "municipalitySubdivision": "West End",
-              "municipality": "New Orleans",
-              "countrySecondarySubdivision": "Orleans",
-              "countrySubdivision": "LA",
-              "countrySubdivisionName": "Louisiana",
-              "postalCode": "70124",
-              "extendedPostalCode": "70124-1431, 70124-1432, 70124-1433, 70124-1434",
+              "municipality": "Birmingham",
+              "countrySecondarySubdivision": "Jefferson",
+              "countrySubdivision": "AL",
+              "countrySubdivisionName": "Alabama",
+              "postalCode": "35224",
+              "extendedPostalCode": "35224-1825, 35224-1826, 35224-1827, 35224-1832, 35224-1833, 35224-1856, 35224-1857, 35224-1858, 35224-1859, 35224-1889",
               "countryCode": "US",
               "country": "United States",
               "countryCodeISO3": "USA",
-              "freeformAddress": "Seattle Street, New Orleans, LA 70124",
-              "localName": "New Orleans"
+              "freeformAddress": "Seattle Street, Birmingham, AL 35224",
+              "localName": "Birmingham"
             },
             "position": {
-              "lat": 30.01277,
-              "lon": -90.11963
+              "lat": 33.50087,
+              "lon": -86.93371
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": 30.01279,
-                "lon": -90.1209
+                "lat": 33.50256,
+                "lon": -86.93373
               },
               "btmRightPoint": {
-                "lat": 30.01269,
-                "lon": -90.11809
+                "lat": 33.49928,
+                "lon": -86.9337
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/2148477",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Street",
+              "municipality": "Okanogan",
+              "countrySecondarySubdivision": "Okanogan",
+              "countrySubdivision": "WA",
+              "countrySubdivisionName": "Washington",
+              "postalCode": "98840",
+              "extendedPostalCode": "98840-9508, 98840-9749",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Street, Okanogan, WA 98840",
+              "localName": "Okanogan"
+            },
+            "position": {
+              "lat": 48.3601,
+              "lon": -119.58941
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 48.36118,
+                "lon": -119.59161
+              },
+              "btmRightPoint": {
+                "lat": 48.35945,
+                "lon": -119.58635
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/3169046",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Road",
+              "countrySecondarySubdivision": "Cass",
+              "countrySubdivision": "IA",
+              "countrySubdivisionName": "Iowa",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Road, Cass, IA"
+            },
+            "position": {
+              "lat": 41.2439,
+              "lon": -94.8053
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 41.25298,
+                "lon": -94.81763
+              },
+              "btmRightPoint": {
+                "lat": 41.23499,
+                "lon": -94.7937
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/3169052",
+            "score": 2.1169600487,
+            "matchConfidence": {
+              "score": 1
+            },
+            "address": {
+              "streetName": "Seattle Road",
+              "countrySecondarySubdivision": "Cass",
+              "countrySubdivision": "IA",
+              "countrySubdivisionName": "Iowa",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Seattle Road, Cass, IA"
+            },
+            "position": {
+              "lat": 41.24421,
+              "lon": -94.73124
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 41.25318,
+                "lon": -94.74124
+              },
+              "btmRightPoint": {
+                "lat": 41.23519,
+                "lon": -94.71732
               }
             }
           }
@@ -448,6 +449,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1168934146"
+    "RandomSeed": "1891751722"
   }
 }

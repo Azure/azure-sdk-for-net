@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> Options. </summary>
     public class SearchAddressBaseOptions: SearchBaseOptions

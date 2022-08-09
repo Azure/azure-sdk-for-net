@@ -111,7 +111,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchSummary(query.Value, Optional.ToNullable(queryType), Optional.ToNullable(queryTime), Optional.ToNullable(numResults), Optional.ToNullable(limit), Optional.ToNullable(offset), Optional.ToNullable(totalResults), Optional.ToNullable(fuzzyLevel), geoBias.Value);
+            return new SearchSummary(query.Value, Optional.ToNullable(queryType), Optional.ToNullable(queryTime), numResults, Optional.ToNullable(limit), Optional.ToNullable(offset), Optional.ToNullable(totalResults), Optional.ToNullable(fuzzyLevel), geoBias.Value);
         }
     }
 }

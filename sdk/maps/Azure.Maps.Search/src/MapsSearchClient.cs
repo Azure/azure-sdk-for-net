@@ -20,100 +20,143 @@ using Azure.Core.GeoJson;
 namespace Azure.Maps.Search
 {
     /// <summary> The Search service client. </summary>
-    public partial class SearchClient
+    public partial class MapsSearchClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         private readonly HttpPipeline _pipeline;
+
+        /// <summary> The RestClient is used to access Route REST client. </summary>
         internal SearchRestClient RestClient { get; }
 
-        /// <summary> Initializes a new instance of SearchClient for mocking. </summary>
-        protected SearchClient()
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics _clientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        protected MapsSearchClient()
         {
             _clientDiagnostics = null;
             _pipeline = null;
             RestClient = null;
         }
 
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchClient"/>
-        /// class for the specified service instance.
-        /// </summary>
-        /// <param name="credential">A <see cref="AzureKeyCredential"/> used to
-        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
-        /// <param name="endpoint"> server parameter. </param>
-        public SearchClient(AzureKeyCredential credential, Uri endpoint)
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
+        public MapsSearchClient(AzureKeyCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            var options = new SearchClientOptions();
-            endpoint ??= new Uri("https://atlas.microsoft.com");
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
         /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public SearchClient(AzureKeyCredential credential, Uri endpoint = null, SearchClientOptions options = null)
+        public MapsSearchClient(AzureKeyCredential credential, MapsSearchClientOptions options)
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            endpoint ??= new Uri("https://atlas.microsoft.com");
-            options ??= new SearchClientOptions();
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            options ??= new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchClient"/>
-        /// class for the specified service instance.
-        /// </summary>
-        /// <param name="credential">A <see cref="TokenCredential"/> used to
-        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
-        public SearchClient(TokenCredential credential, Uri endpoint, string clientId)
-            : this(credential, endpoint, clientId, new SearchClientOptions())
+        public MapsSearchClient(Uri endpoint, AzureKeyCredential credential)
         {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            var options = new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Search Service. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public SearchClient(TokenCredential credential, Uri endpoint = null, string clientId = null, SearchClientOptions options = null)
+        public MapsSearchClient(Uri endpoint, AzureKeyCredential credential, MapsSearchClientOptions options)
         {
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-            endpoint ??= new Uri("https://atlas.microsoft.com");
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new SearchClientOptions();
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            options ??= new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        public MapsSearchClient(TokenCredential credential, string clientId)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsSearchClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://atlas.microsoft.com/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
             RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
-        /// <summary> Initializes a new instance of SearchClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        internal SearchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, SearchClientOptions.ServiceVersion apiVersion = SearchClientOptions.LatestVersion)
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsSearchClient(TokenCredential credential, string clientId, MapsSearchClientOptions options)
         {
-            var options = new SearchClientOptions(apiVersion);
-            RestClient = new SearchRestClient(clientDiagnostics, pipeline, endpoint, clientId, options.Version);
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            options ??= new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        public MapsSearchClient(Uri endpoint, TokenCredential credential, string clientId)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            var options = new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsSearchClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Search Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsSearchClient(Uri endpoint, TokenCredential credential, string clientId, MapsSearchClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            endpoint ??= new Uri("https://atlas.microsoft.com");
+            options ??= new MapsSearchClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            RestClient = new SearchRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
         /// <summary>
@@ -129,9 +172,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="geometryIds"> Comma separated list of geometry UUIDs, previously retrieved from an Online Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolygonResult>> ListPolygonsAsync(IEnumerable<string> geometryIds, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolygonResult>> GetPolygonsAsync(IEnumerable<string> geometryIds, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ListPolygons");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygons");
             scope.Start();
             try
             {
@@ -157,9 +200,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="geometryIds"> Comma separated list of geometry UUIDs, previously retrieved from an Online Search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolygonResult> ListPolygons(IEnumerable<string> geometryIds, CancellationToken cancellationToken = default)
+        public virtual Response<PolygonResult> GetPolygons(IEnumerable<string> geometryIds, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ListPolygons");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPolygons");
             scope.Start();
             try
             {
@@ -185,7 +228,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(String query, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzySearch");
             scope.Start();
             try
             {
@@ -211,7 +254,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> FuzzySearch(String query, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzySearch");
             scope.Start();
             try
             {
@@ -240,7 +283,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, bool IsTypeAhead, OperatingHoursRange OperatingHours, GeoBoundingBox BoundingBox, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
@@ -269,7 +312,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, bool IsTypeAhead, OperatingHoursRange OperatingHours, GeoBoundingBox BoundingBox, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
@@ -294,7 +337,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchNearbyPointOfInterest");
             scope.Start();
             try
             {
@@ -319,7 +362,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchNearbyPointOfInterest");
             scope.Start();
             try
             {
@@ -344,7 +387,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
@@ -369,7 +412,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
@@ -398,7 +441,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PointOfInterestCategoryTreeResult>> GetPointOfInterestCategoryTreeAsync(string language = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.GetPointOfInterestCategoryTree");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPointOfInterestCategoryTree");
             scope.Start();
             try
             {
@@ -427,7 +470,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PointOfInterestCategoryTreeResult> GetPointOfInterestCategoryTree(string language = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.GetPointOfInterestCategoryTree");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetPointOfInterestCategoryTree");
             scope.Start();
             try
             {
@@ -453,7 +496,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(String query, SearchAddressOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddress");
             scope.Start();
             try
             {
@@ -479,7 +522,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchAddress(String query, SearchAddressOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddress");
             scope.Start();
             try
             {
@@ -504,7 +547,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddress");
             scope.Start();
             try
             {
@@ -529,7 +572,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddress");
             scope.Start();
             try
             {
@@ -555,7 +598,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
             try
             {
@@ -581,7 +624,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
             try
             {
@@ -607,7 +650,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchStructuredAddressAsync(StructuredAddress address, SearchStructuredAddressOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchStructuredAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchStructuredAddress");
             scope.Start();
             try
             {
@@ -633,7 +676,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchStructuredAddress(StructuredAddress address, SearchStructuredAddressOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchStructuredAddress");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchStructuredAddress");
             scope.Start();
             try
             {
@@ -657,7 +700,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(String query, GeoObject geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
@@ -681,7 +724,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(String query, GeoCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
@@ -705,7 +748,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchInsideGeometry(String query, GeoObject geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
@@ -729,7 +772,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchInsideGeometry(String query, GeoCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
@@ -755,7 +798,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(String query, int maxDetourTime, GeoLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestAlongRoute");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchPointOfInterestAlongRoute");
             scope.Start();
             try
             {
@@ -781,7 +824,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, GeoLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestAlongRoute");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchPointOfInterestAlongRoute");
             scope.Start();
             try
             {
@@ -948,9 +991,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressBatchResult>> FuzzySearchBatchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressBatchResult>> FuzzyBatchSearchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzyBatchSearch");
             scope.Start();
             try
             {
@@ -1117,9 +1160,9 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressBatchResult> FuzzySearchBatch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressBatchResult> FuzzyBatchSearch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearchBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.FuzzyBatchSearch");
             scope.Start();
             try
             {
@@ -1280,7 +1323,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchAddressBatchResult>> SearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddressBatch");
             scope.Start();
             try
             {
@@ -1441,7 +1484,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchAddressBatchResult> SearchAddressBatch(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.SearchAddressBatch");
             scope.Start();
             try
             {
@@ -1604,7 +1647,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddressBatch");
             scope.Start();
             try
             {
@@ -1767,7 +1810,7 @@ namespace Azure.Maps.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.ReverseSearchAddressBatch");
             scope.Start();
             try
             {
@@ -1935,14 +1978,14 @@ namespace Azure.Maps.Search
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual async Task<FuzzySearchBatchOperation> StartFuzzySearchBatchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<FuzzySearchBatchOperation> StartFuzzyBatchSearchAsync(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.StartFuzzySearchBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartFuzzyBatchSearch");
             scope.Start();
             try
             {
@@ -2112,14 +2155,14 @@ namespace Azure.Maps.Search
         /// <param name="queries"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
-        public virtual FuzzySearchBatchOperation StartFuzzySearchBatch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
+        public virtual FuzzySearchBatchOperation StartFuzzyBatchSearch(IEnumerable<FuzzySearchQuery> queries, CancellationToken cancellationToken = default)
         {
             if (queries == null)
             {
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.StartFuzzySearchBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartFuzzyBatchSearch");
             scope.Start();
             try
             {
@@ -2288,7 +2331,7 @@ namespace Azure.Maps.Search
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.StartSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartSearchAddressBatch");
             scope.Start();
             try
             {
@@ -2457,7 +2500,7 @@ namespace Azure.Maps.Search
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.StartSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartSearchAddressBatch");
             scope.Start();
             try
             {
@@ -2628,7 +2671,7 @@ namespace Azure.Maps.Search
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.StartReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartReverseSearchAddressBatch");
             scope.Start();
             try
             {
@@ -2799,7 +2842,7 @@ namespace Azure.Maps.Search
                 throw new ArgumentNullException(nameof(queries));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.StartReverseSearchAddressBatch");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.StartReverseSearchAddressBatch");
             scope.Start();
             try
             {

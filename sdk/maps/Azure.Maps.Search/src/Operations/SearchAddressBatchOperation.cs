@@ -174,7 +174,7 @@ namespace Azure.Maps.Search
         /// <param name="followUpUrl">Follow up URL of the request.</param>
         /// The client used to check for completion.
         /// </param>
-        internal SearchAddressBatchOperation(SearchClient client, Uri followUpUrl)
+        internal SearchAddressBatchOperation(MapsSearchClient client, Uri followUpUrl)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(followUpUrl, nameof(followUpUrl));
@@ -198,7 +198,7 @@ namespace Azure.Maps.Search
             _cancellationToken = default;
         }
 
-        private readonly SearchClient _client;
+        private readonly MapsSearchClient _client;
 
         private readonly CancellationToken _cancellationToken;
 

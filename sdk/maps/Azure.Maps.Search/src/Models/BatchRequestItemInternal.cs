@@ -11,7 +11,7 @@ namespace Azure.Maps.Search.Models
     [CodeGenModel("BatchRequestItem")]
     internal partial class BatchRequestItemInternal
     {
-        internal BatchRequestItemInternal(SearchClient client, IQueryRepresentable item)
+        internal BatchRequestItemInternal(MapsSearchClient client, IQueryRepresentable item)
         {
             Query = item.Query(client);
         }

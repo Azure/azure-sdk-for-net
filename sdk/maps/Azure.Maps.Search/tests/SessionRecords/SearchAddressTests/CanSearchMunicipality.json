@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-acbc24da7772bc5ce6ca964cabbf32a1-98fafa5a677626b4-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-6707ea861b6163f7b6e3656b123d6603-95e3b68c61020150-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "6338ab7fb9b93f39ea1a32b15c5c2810",
+        "x-ms-client-request-id": "e114c4cc5fbf4a23b046e197667ee150",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4420",
+        "Content-Length": "4419",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 09:29:08 GMT",
+        "Date": "Tue, 09 Aug 2022 19:59:53 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: DB7532F42AE9454DB8252B67E34B0DCC Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:29:08Z"
+        "X-MSEdge-Ref": "Ref A: 406EF55121B64FB0AAC2528F7E1D0FA1 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:53Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "redmond",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 8,
           "numResults": 6,
           "offset": 0,
           "totalResults": 6,
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "US/GEO/p0/17912",
+            "id": "US/GEO/p0/81585",
             "score": 2.4457623959,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -86,7 +86,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/71099",
+            "id": "US/GEO/p0/20807",
             "score": 2.4162247181,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -134,7 +134,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/110948",
+            "id": "US/GEO/p0/22553",
             "score": 2.3835597038,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -182,7 +182,7 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/108409",
+            "id": "US/GEO/p0/64321",
             "score": 2.3822901249,
             "entityType": "Municipality",
             "matchConfidence": {
@@ -230,8 +230,8 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/6288",
-            "score": 2.3822283745,
+            "id": "AU/GEO/p0/3937",
+            "score": 2.3821973801,
             "entityType": "Municipality",
             "matchConfidence": {
               "score": 1
@@ -277,11 +277,11 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/8364",
+            "id": "AU/GEO/p0/13234",
             "score": 2.3586585522,
             "entityType": "Municipality",
             "matchConfidence": {
-              "score": 0.9183343763463012
+              "score": 0.9183469351716372
             },
             "address": {
               "municipality": "Redmond West",
@@ -330,6 +330,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1479424150"
+    "RandomSeed": "2025531065"
   }
 }

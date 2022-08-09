@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d2d1bc6cfae22af80d019d4d9e41e057-08f64885f1029d6d-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-bd192cf728c1f9d0b74b4e85c6cdf494-8e8cc1cf4b5bda0f-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "aad2f4ac439562de45522607ef26a81f",
+        "x-ms-client-request-id": "c1f11d62d8a8ed3b02760be64c0776ca",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,13 +17,13 @@
       "ResponseHeaders": {
         "Content-Length": "834",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 21 Jul 2022 09:29:08 GMT",
+        "Date": "Tue, 09 Aug 2022 19:59:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: BA912B06B97E40CA86374B4E217AE116 Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:29:09Z"
+        "X-MSEdge-Ref": "Ref A: B7EBF6FEBBC34507807F74E94A19EBAC Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:54Z"
       },
       "ResponseBody": {
         "summary": {
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1579",
+            "id": "NZ/GEO/p0/3487",
             "score": 2.382011652,
             "entityType": "Municipality",
             "address": {
@@ -89,6 +89,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "596410025"
+    "RandomSeed": "1757490506"
   }
 }

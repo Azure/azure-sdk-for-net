@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
         internal SearchAddressResultItem()
         {
-            EntryPoints = new ChangeTrackingList<EntryPoint>();
+            EntryPoints = new ChangeTrackingList<FacilityEntryPoint>();
         }
 
         /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTime"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, AddressDetails address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<EntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
+        internal SearchAddressResultItem(SearchAddressResultType? type, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntityType? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, DataSource dataSources, MatchType? matchType, int? detourTime)
         {
             Type = type;
             Id = id;
@@ -90,9 +90,9 @@ namespace Azure.Maps.Search.Models
         /// <summary> Details of the returned POI including information such as the name, phone, url address, and classifications. </summary>
         public PointOfInterest PointOfInterest { get; }
         /// <summary> The address of the result. </summary>
-        public AddressDetails Address { get; }
+        public MapsAddress Address { get; }
         /// <summary> Array of EntryPoints. Those describe the types of entrances available at the location. The type can be &quot;main&quot; for main entrances such as a front door, or a lobby, and &quot;minor&quot;, for side and back doors. </summary>
-        public IReadOnlyList<EntryPoint> EntryPoints { get; }
+        public IReadOnlyList<FacilityEntryPoint> EntryPoints { get; }
         /// <summary> Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included. </summary>
         public AddressRanges AddressRanges { get; }
         /// <summary> Optional section. Reference geometry id for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </summary>

@@ -5,8 +5,9 @@
 
 using System.Collections.Generic;
 using Azure.Core.GeoJson;
+using Azure.Maps.Search.Models;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> Options. </summary>
     public class FuzzySearchOptions: SearchPointOfInterestOptions
@@ -64,7 +65,7 @@ namespace Azure.Maps.Search.Models
         /// </summary>
         public int? MaxFuzzyLevel { get; set; }
         /// <summary> A comma separated list of indexes which should be utilized for the search. Item order does not matter. Available indexes are: Addr = Address range interpolation, Geo = Geographies, PAD = Point Addresses, POI = Points of interest, Str = Streets, Xstr = Cross Streets (intersections). </summary>
-        public IEnumerable<SearchIndexes> IndexFilter { get; set; }
+        public IList<SearchIndexes> IndexFilter { get; }
 
         /// <summary>
         /// Indexes for which extended postal codes should be included in the results.

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class EntryPoint
+    public partial class FacilityEntryPoint
     {
-        internal static EntryPoint DeserializeEntryPoint(JsonElement element)
+        internal static FacilityEntryPoint DeserializeFacilityEntryPoint(JsonElement element)
         {
             Optional<EntryPointType> type = default;
             Optional<LatLongPairAbbreviated> position = default;
@@ -39,7 +39,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new EntryPoint(Optional.ToNullable(type), position.Value);
+            return new FacilityEntryPoint(Optional.ToNullable(type), position.Value);
         }
     }
 }

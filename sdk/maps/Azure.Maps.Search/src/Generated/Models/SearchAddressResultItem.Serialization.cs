@@ -22,10 +22,10 @@ namespace Azure.Maps.Search.Models
             Optional<string> info = default;
             Optional<GeographicEntityType> entityType = default;
             Optional<PointOfInterest> poi = default;
-            Optional<AddressDetails> address = default;
+            Optional<MapsAddress> address = default;
             Optional<LatLongPairAbbreviated> position = default;
             Optional<BoundingBox> viewport = default;
-            Optional<IReadOnlyList<EntryPoint>> entryPoints = default;
+            Optional<IReadOnlyList<FacilityEntryPoint>> entryPoints = default;
             Optional<AddressRanges> addressRanges = default;
             Optional<DataSource> dataSources = default;
             Optional<MatchType> matchType = default;
@@ -99,7 +99,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    address = AddressDetails.DeserializeAddressDetails(property.Value);
+                    address = MapsAddress.DeserializeMapsAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("position"))
@@ -129,10 +129,10 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EntryPoint> array = new List<EntryPoint>();
+                    List<FacilityEntryPoint> array = new List<FacilityEntryPoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntryPoint.DeserializeEntryPoint(item));
+                        array.Add(FacilityEntryPoint.DeserializeFacilityEntryPoint(item));
                     }
                     entryPoints = array;
                     continue;

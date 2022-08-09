@@ -174,7 +174,7 @@ namespace Azure.Maps.Search
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="FormatException"> <paramref name="id"/> format error. </exception>
         /// </summary>
-        public GetSearchAddressBatchOperation(SearchClient client, string id) :
+        public GetSearchAddressBatchOperation(MapsSearchClient client, string id) :
             this(client, id, null)
         {
         }
@@ -195,7 +195,7 @@ namespace Azure.Maps.Search
         /// notifications that the operation should be cancelled.
         /// </param>
         internal GetSearchAddressBatchOperation(
-            SearchClient client,
+            MapsSearchClient client,
             string id,
             Response initialResponse,
             CancellationToken cancellationToken = default)
@@ -210,7 +210,7 @@ namespace Azure.Maps.Search
             _cancellationToken = cancellationToken;
         }
 
-        private readonly SearchClient _client;
+        private readonly MapsSearchClient _client;
 
         private readonly CancellationToken _cancellationToken;
 

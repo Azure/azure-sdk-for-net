@@ -51,7 +51,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanBatchSearchFuzzy()
         {
             var client = CreateClient();
-            var fuzzySearchBatchResp = await client.FuzzySearchBatchAsync(new[] {
+            var fuzzySearchBatchResp = await client.FuzzyBatchSearchAsync(new[] {
                 new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) })
             });
@@ -65,7 +65,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanPollFuzzySearchBatch()
         {
             var client = CreateClient();
-            var operation = await client.StartFuzzySearchBatchAsync(new[] {
+            var operation = await client.StartFuzzyBatchSearchAsync(new[] {
                 new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) }),
             });

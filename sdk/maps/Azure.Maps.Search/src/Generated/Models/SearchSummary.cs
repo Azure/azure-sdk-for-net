@@ -19,18 +19,18 @@ namespace Azure.Maps.Search.Models
         /// <param name="query"> The query parameter that was used to produce these search results. </param>
         /// <param name="queryType"> The type of query being returned: NEARBY or NON_NEAR. </param>
         /// <param name="queryTime"> Time spent resolving the query, in milliseconds. </param>
-        /// <param name="numResults"> Number of results in the response. </param>
+        /// <param name="resultCount"> Number of results in the response. </param>
         /// <param name="top"> Maximum number of responses that will be returned. </param>
         /// <param name="skip"> The starting offset of the returned Results within the full Result set. </param>
         /// <param name="totalResults"> The total number of Results found. </param>
         /// <param name="fuzzyLevel"> The maximum fuzzy level required to provide Results. </param>
         /// <param name="geoBiasInternal"> Indication when the internal search engine has applied a geospatial bias to improve the ranking of results.  In  some methods, this can be affected by setting the lat and lon parameters where available.  In other cases it is  purely internal. </param>
-        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int? numResults, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal)
+        internal SearchSummary(string query, QueryType? queryType, int? queryTime, int resultCount, int? top, int? skip, int? totalResults, int? fuzzyLevel, LatLongPairAbbreviated geoBiasInternal)
         {
             Query = query;
             QueryType = queryType;
             QueryTime = queryTime;
-            NumResults = numResults;
+            ResultCount = resultCount;
             Top = top;
             Skip = skip;
             TotalResults = totalResults;
@@ -44,8 +44,6 @@ namespace Azure.Maps.Search.Models
         public QueryType? QueryType { get; }
         /// <summary> Time spent resolving the query, in milliseconds. </summary>
         public int? QueryTime { get; }
-        /// <summary> Number of results in the response. </summary>
-        public int? NumResults { get; }
         /// <summary> Maximum number of responses that will be returned. </summary>
         public int? Top { get; }
         /// <summary> The starting offset of the returned Results within the full Result set. </summary>

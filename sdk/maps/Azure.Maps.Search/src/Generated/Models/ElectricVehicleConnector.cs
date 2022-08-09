@@ -23,15 +23,15 @@ namespace Azure.Maps.Search.Models
         }
 
         private const string StandardHouseholdCountrySpecificValue = "StandardHouseholdCountrySpecific";
-        private const string IEC62196Type1Value = "IEC62196Type1";
-        private const string IEC62196Type1CCSValue = "IEC62196Type1CCS";
-        private const string IEC62196Type2CableAttachedValue = "IEC62196Type2CableAttached";
-        private const string IEC62196Type2OutletValue = "IEC62196Type2Outlet";
-        private const string IEC62196Type2CCSValue = "IEC62196Type2CCS";
-        private const string IEC62196Type3Value = "IEC62196Type3";
+        private const string Iec62196Type1Value = "IEC62196Type1";
+        private const string Iec62196Type1CCSValue = "IEC62196Type1CCS";
+        private const string Iec62196Type2CableAttachedValue = "IEC62196Type2CableAttached";
+        private const string Iec62196Type2OutletValue = "IEC62196Type2Outlet";
+        private const string Iec62196Type2CCSValue = "IEC62196Type2CCS";
+        private const string Iec62196Type3Value = "IEC62196Type3";
         private const string ChademoValue = "Chademo";
-        private const string IEC60309AC1PhaseBlueValue = "IEC60309AC1PhaseBlue";
-        private const string IEC60309DCWhiteValue = "IEC60309DCWhite";
+        private const string Iec60309AC1PhaseBlueValue = "IEC60309AC1PhaseBlue";
+        private const string Iec60309DCWhiteValue = "IEC60309DCWhite";
         private const string TeslaValue = "Tesla";
 
         /// <summary>
@@ -40,24 +40,8 @@ namespace Azure.Maps.Search.Models
         /// See also: [Plug &amp; socket types - World Standards](https://www.worldstandards.eu/electricity/plugs-and-sockets)
         /// </summary>
         public static ElectricVehicleConnector StandardHouseholdCountrySpecific { get; } = new ElectricVehicleConnector(StandardHouseholdCountrySpecificValue);
-        /// <summary> Type 1 connector as defined in the IEC 62196-2 standard. Also called Yazaki after the original manufacturer or SAE J1772 after the standard that first published it. Mostly used in combination with 120V single phase or up to 240V single phase infrastructure. </summary>
-        public static ElectricVehicleConnector IEC62196Type1 { get; } = new ElectricVehicleConnector(IEC62196Type1Value);
-        /// <summary> Type 1 based combo connector as defined in the IEC 62196-3 standard. The connector is based on the Type 1 connector – as defined in the IEC 62196-2 standard – with two additional direct current (DC) contacts to allow DC fast charging. </summary>
-        public static ElectricVehicleConnector IEC62196Type1CCS { get; } = new ElectricVehicleConnector(IEC62196Type1CCSValue);
-        /// <summary> Type 2 connector as defined in the IEC 62196-2 standard. Provided as a cable and plug attached to the charging point. </summary>
-        public static ElectricVehicleConnector IEC62196Type2CableAttached { get; } = new ElectricVehicleConnector(IEC62196Type2CableAttachedValue);
-        /// <summary> Type 2 connector as defined in the IEC 62196-2 standard. Provided as a socket set into the charging point. </summary>
-        public static ElectricVehicleConnector IEC62196Type2Outlet { get; } = new ElectricVehicleConnector(IEC62196Type2OutletValue);
-        /// <summary> Type 2 based combo connector as defined in the IEC 62196-3 standard. The connector is based on the Type 2 connector – as defined in the IEC 62196-2 standard – with two additional direct current (DC) contacts to allow DC fast charging. </summary>
-        public static ElectricVehicleConnector IEC62196Type2CCS { get; } = new ElectricVehicleConnector(IEC62196Type2CCSValue);
-        /// <summary> Type 3 connector as defined in the IEC 62196-2 standard. Also called Scame after the original manufacturer. Mostly used in combination with up to 240V single phase or up to 420V three phase infrastructure. </summary>
-        public static ElectricVehicleConnector IEC62196Type3 { get; } = new ElectricVehicleConnector(IEC62196Type3Value);
         /// <summary> CHAdeMO connector named after an association formed by the Tokyo Electric Power Company and industrial partners. Because of this is is also known as the TEPCO&apos;s connector. It supports fast DC charging. </summary>
         public static ElectricVehicleConnector Chademo { get; } = new ElectricVehicleConnector(ChademoValue);
-        /// <summary> Industrial Blue connector is a connector defined in the IEC 60309 standard. It is sometime referred to as by some combination of the standard, the color and the fact that is a single phase connector. The connector usually has the &quot;P+N+E, 6h&quot; configuration. </summary>
-        public static ElectricVehicleConnector IEC60309AC1PhaseBlue { get; } = new ElectricVehicleConnector(IEC60309AC1PhaseBlueValue);
-        /// <summary> Industrial White connector is a DC connector defined in the IEC 60309 standard. </summary>
-        public static ElectricVehicleConnector IEC60309DCWhite { get; } = new ElectricVehicleConnector(IEC60309DCWhiteValue);
         /// <summary> The Tesla connector is the regionally specific Tesla Supercharger connector. I.e. it refers to either Tesla&apos;s proprietary connector, sometimes referred to as Tesla Port mostly limited to North America or the modified Type 2 (DC over Type 2) in Europe. </summary>
         public static ElectricVehicleConnector Tesla { get; } = new ElectricVehicleConnector(TeslaValue);
         /// <summary> Determines if two <see cref="ElectricVehicleConnector"/> values are the same. </summary>

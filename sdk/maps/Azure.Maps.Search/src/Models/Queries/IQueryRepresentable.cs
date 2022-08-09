@@ -9,6 +9,6 @@ namespace Azure.Maps.Search.Models
     public interface IQueryRepresentable
     {
         /// <summary> The query string will be passed verbatim to the search API for processing. </summary>
-        string Query(SearchClient client);
+        string Query(MapsSearchClient client);
     }
 }

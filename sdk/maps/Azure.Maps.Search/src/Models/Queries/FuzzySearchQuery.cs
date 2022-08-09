@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> The query string will be passed verbatim to the search API for processing. </summary>
-        public string Query(SearchClient client)
+        public string Query(MapsSearchClient client)
         {
             return "?" + client.RestClient.CreateFuzzySearchRequest(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours).Request.Uri.Query;
         }

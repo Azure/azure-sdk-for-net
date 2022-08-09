@@ -9,7 +9,8 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The entry point for the POI being returned. </summary>
-    public partial class EntryPoint
+    [CodeGenModel("EntryPoint")]
+    public partial class FacilityEntryPoint
     {
         /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
         [CodeGenMember("Position")]
@@ -19,5 +20,9 @@ namespace Azure.Maps.Search.Models
         public GeoPosition Position {
             get { return new GeoPosition((double) PositionInternal.Lon, (double) PositionInternal.Lat); }
         }
+
+        /// <summary> The type of entry point. Value can be either _main_ or _minor_. </summary>
+        [CodeGenMember("Type")]
+        public EntryPointType? EntryPointType { get; }
     }
 }

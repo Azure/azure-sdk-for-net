@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> The list of queries to process. </summary>
         internal IList<BatchRequestItem<T>> BatchItems { get; }
 
-        internal BatchRequestInternal internalRepresentation(SearchClient client) => new BatchRequestInternal(this.BatchItems.Select(item => new BatchRequestItemInternal(client, item.Query)));
+        internal BatchRequestInternal internalRepresentation(MapsSearchClient client) => new BatchRequestInternal(this.BatchItems.Select(item => new BatchRequestItemInternal(client, item.Query)));
 
         internal static BatchRequest<T> withQueries(IEnumerable<T> queries)
         {

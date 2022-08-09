@@ -3,7 +3,9 @@
 
 #nullable disable
 
-namespace Azure.Maps.Search.Models
+using Azure.Maps.Search.Models;
+
+namespace Azure.Maps.Search
 {
     /// <summary> Options. </summary>
     public class SearchBaseOptions

@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The address of the result. </summary>
-    public partial class AddressDetails
+    public partial class MapsAddress
     {
-        /// <summary> Initializes a new instance of AddressDetails. </summary>
-        internal AddressDetails()
+        /// <summary> Initializes a new instance of MapsAddress. </summary>
+        internal MapsAddress()
         {
             RouteNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AddressDetails. </summary>
+        /// <summary> Initializes a new instance of MapsAddress. </summary>
         /// <param name="buildingNumber"> The building number on the street. DEPRECATED, use streetNumber instead. </param>
         /// <param name="street"> The street name. DEPRECATED, use streetName instead. </param>
         /// <param name="crossStreet"> The name of the street being crossed. </param>
@@ -36,12 +36,12 @@ namespace Azure.Maps.Search.Models
         /// <param name="extendedPostalCode"> Extended postal code (availability is dependent on the region). </param>
         /// <param name="countryCode"> Country (Note: This is a two-letter code, not a country name.). </param>
         /// <param name="country"> Country name. </param>
-        /// <param name="countryCodeISO3"> ISO alpha-3 country code. </param>
+        /// <param name="countryCodeIso3"> ISO alpha-3 country code. </param>
         /// <param name="freeformAddress"> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </param>
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
         /// <param name="boundingBox"> The bounding box of the location. </param>
-        internal AddressDetails(string buildingNumber, string street, string crossStreet, string streetNumber, IReadOnlyList<string> routeNumbers, string streetName, string streetNameAndNumber, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, string extendedPostalCode, string countryCode, string country, string countryCodeISO3, string freeformAddress, string countrySubdivisionName, string localName, BoundingBoxCompassNotation boundingBox)
+        internal MapsAddress(string buildingNumber, string street, string crossStreet, string streetNumber, IReadOnlyList<string> routeNumbers, string streetName, string streetNameAndNumber, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, string extendedPostalCode, string countryCode, string country, string countryCodeIso3, string freeformAddress, string countrySubdivisionName, string localName, BoundingBoxCompassNotation boundingBox)
         {
             BuildingNumber = buildingNumber;
             Street = street;
@@ -59,7 +59,7 @@ namespace Azure.Maps.Search.Models
             ExtendedPostalCode = extendedPostalCode;
             CountryCode = countryCode;
             Country = country;
-            CountryCodeISO3 = countryCodeISO3;
+            CountryCodeIso3 = countryCodeIso3;
             FreeformAddress = freeformAddress;
             CountrySubdivisionName = countrySubdivisionName;
             LocalName = localName;
@@ -98,8 +98,6 @@ namespace Azure.Maps.Search.Models
         public string CountryCode { get; }
         /// <summary> Country name. </summary>
         public string Country { get; }
-        /// <summary> ISO alpha-3 country code. </summary>
-        public string CountryCodeISO3 { get; }
         /// <summary> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </summary>
         public string FreeformAddress { get; }
         /// <summary> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </summary>

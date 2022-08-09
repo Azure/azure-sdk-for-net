@@ -11,7 +11,10 @@ namespace Azure.Maps.Search.Models
 {
     /// <summary> The address of the result. </summary>
     [CodeGenModel("Address")]
-    public partial class AddressDetails
+    public partial class MapsAddress
     {
+         /// <summary> ISO alpha-3 country code. </summary>
+        [CodeGenMember("CountryCodeISO3")]
+        public string CountryCodeIso3 { get; }
     }
 }
