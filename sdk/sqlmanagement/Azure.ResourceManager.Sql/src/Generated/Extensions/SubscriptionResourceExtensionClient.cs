@@ -649,11 +649,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<LongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -694,11 +694,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<LongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByLocation");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -740,11 +740,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<LongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
@@ -786,11 +786,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<LongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsByServer");
+                using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
@@ -832,11 +832,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceLongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
@@ -878,11 +878,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceLongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
@@ -923,11 +923,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<ManagedInstanceLongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -968,11 +968,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Sql
             }
             Page<ManagedInstanceLongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
+                using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {

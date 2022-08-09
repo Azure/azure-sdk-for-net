@@ -471,9 +471,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -506,11 +506,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByServerAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByServer(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -569,11 +569,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -587,9 +587,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -603,9 +603,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1014,9 +1014,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1030,9 +1030,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1049,11 +1049,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1070,11 +1070,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1091,11 +1091,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1112,11 +1112,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1130,9 +1130,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -1146,9 +1146,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         #region RecoverableDatabaseResource
