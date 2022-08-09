@@ -78,12 +78,10 @@ namespace Azure.Data.AppConfiguration
             _value = value;
         }
 
-        internal static RequestContent CreateContent(ConfigurationSetting setting)
+        internal static RequestContent ToRequestContent(ConfigurationSetting setting)
         {
             ReadOnlyMemory<byte> serializedSetting = ConfigurationServiceSerializer.SerializeRequestBody(setting);
-            RequestContent content = RequestContent.Create(serializedSetting);
-
-            return content;
+            return RequestContent.Create(serializedSetting);
         }
 
         /// <summary>

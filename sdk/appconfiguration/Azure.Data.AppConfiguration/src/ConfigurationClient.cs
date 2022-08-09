@@ -47,10 +47,9 @@ namespace Azure.Data.AppConfiguration
                 throw new ArgumentNullException(nameof(options));
 
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
-
+            _apiVersion = options.Version;
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
-            _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options);
         }
@@ -138,7 +137,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                using RequestContent content = ConfigurationSetting.CreateContent(setting);
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
@@ -164,12 +163,12 @@ namespace Azure.Data.AppConfiguration
 
         private static RequestContext CreateContext(CancellationToken cancellationToken)
         {
-            RequestContext context = new RequestContext()
+            return new RequestContext()
             {
                 CancellationToken = cancellationToken,
             };
-            return context;
         }
+
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
         /// </summary>
@@ -185,7 +184,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                using RequestContent content = ConfigurationSetting.CreateContent(setting);
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
                 MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
@@ -206,29 +205,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateAddRequest(ConfigurationSetting setting)
-        {
-            Argument.AssertNotNull(setting, nameof(setting));
-            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
-
-            request.Method = RequestMethod.Put;
-
-            BuildUriForKvRoute(request.Uri, setting);
-
-            MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
-            ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            return request;
         }
 
         /// <summary>
@@ -278,9 +254,12 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateSetRequest(setting, onlyIfUnchanged);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                RequestContext context = CreateContext(cancellationToken);
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag($"\"{setting.ETag.ToString()}\"") } : null;
 
+                using Response response = await PutKeyValueAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
@@ -316,8 +295,12 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateSetRequest(setting, onlyIfUnchanged);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateContext(cancellationToken);
+                using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag($"\"{setting.ETag.ToString()}\"") } : null;
+
+                using Response response = PutKeyValue(setting.Key, content, contentType, setting.Label, requestOptions, context);
 
                 return response.Status switch
                 {
@@ -333,28 +316,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateSetRequest(ConfigurationSetting setting, bool onlyIfChanged)
-        {
-            Argument.AssertNotNull(setting, nameof(setting));
-            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
-
-            request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.Uri, setting);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-            if (onlyIfChanged)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, new MatchConditions { IfMatch = setting.ETag });
-            }
-
-            request.Content = RequestContent.Create(content);
-            return request;
         }
 
         /// <summary>
@@ -483,20 +444,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateDeleteRequest(string key, string label, MatchConditions requestOptions)
-        {
-            Request request = _pipeline.CreateRequest();
-            request.Method = RequestMethod.Delete;
-            BuildUriForKvRoute(request.Uri, key, label);
-
-            if (requestOptions != null)
-            {
-                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
-            }
-
-            return request;
-        }
-
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
@@ -600,8 +547,21 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateGetRequest(key, label, acceptDateTime, conditions);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+               RequestContext context = CreateContext(cancellationToken);
+               context.AddClassifier(304, isError: false);
+                if (conditions != null)
+                {
+                    if (conditions.IfMatch.HasValue)
+                    {
+                        conditions.IfMatch = conditions.IfMatch.Value == ETag.All ? new ETag(conditions.IfMatch.Value.ToString()) : new ETag($"\"{conditions.IfMatch.Value.ToString()}\"");
+                    }
+                    if (conditions.IfNoneMatch.HasValue)
+                    {
+                        conditions.IfNoneMatch = conditions.IfNoneMatch.Value == ETag.All ? new ETag(conditions.IfNoneMatch.Value.ToString()) : new ETag($"\"{conditions.IfNoneMatch.Value.ToString()}\"");
+                    }
+                }
+                var dateTime = acceptDateTime.HasValue? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture): null;
+                using Response response = await GetKeyValueAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -634,8 +594,21 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateGetRequest(key, label, acceptDateTime, conditions);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateContext(cancellationToken);
+                context.AddClassifier(304, isError: false);
+                if (conditions != null)
+                {
+                    if (conditions.IfMatch.HasValue)
+                    {
+                        conditions.IfMatch = conditions.IfMatch.Value == ETag.All ? new ETag(conditions.IfMatch.Value.ToString()) : new ETag($"\"{conditions.IfMatch.Value.ToString()}\"");
+                    }
+                    if (conditions.IfNoneMatch.HasValue)
+                    {
+                        conditions.IfNoneMatch = conditions.IfNoneMatch.Value == ETag.All ? new ETag(conditions.IfNoneMatch.Value.ToString()) : new ETag($"\"{conditions.IfNoneMatch.Value.ToString()}\"");
+                    }
+                }
+                var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
+                using Response response = GetKeyValue(key, label, dateTime, null, conditions, context);
 
                 return response.Status switch
                 {
