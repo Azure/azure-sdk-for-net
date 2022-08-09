@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("userRegistration");
                 writer.WriteObjectValue(IsUserRegistration);
             }
-            if (Optional.IsDefined(EnableRedirect))
+            if (Optional.IsDefined(IsRedirectEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(EnableRedirect.Value);
+                writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
             if (Optional.IsDefined(TermsOfService))
             {

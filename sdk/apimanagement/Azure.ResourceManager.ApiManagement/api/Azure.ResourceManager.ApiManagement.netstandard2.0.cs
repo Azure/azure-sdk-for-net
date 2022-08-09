@@ -1111,8 +1111,8 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalDelegationSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalDelegationSettingData() { }
-        public bool? EnableSubscriptionDelegation { get { throw null; } set { } }
-        public bool? EnableUserRegistrationDelegation { get { throw null; } set { } }
+        public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
+        public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
     }
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignInSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalSignInSettingData() { }
-        public bool? EnableRedirect { get { throw null; } set { } }
+        public bool? IsRedirectEnabled { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalSignInSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPortalSignUpSettingData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementPortalSignUpSettingData() { }
-        public bool? EnableSignUpDeveloperPortal { get { throw null; } set { } }
+        public bool? IsSignUpDeveloperPortalEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
     }
     public partial class ApiManagementPortalSignUpSettingResource : Azure.ResourceManager.ArmResource
@@ -2175,9 +2175,9 @@ namespace Azure.ResourceManager.ApiManagement
         public DiagnosticContractData() { }
         public Azure.ResourceManager.ApiManagement.Models.AlwaysLog? AlwaysLog { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
-        public bool? EnableLogClientIP { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HttpCorrelationProtocol? HttpCorrelationProtocol { get { throw null; } set { } }
+        public bool? IsLogClientIPEnabled { get { throw null; } set { } }
         public string LoggerId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.OperationNameFormat? OperationNameFormat { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.SamplingSettings Sampling { get { throw null; } set { } }
@@ -3665,12 +3665,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string CertificatePassword { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateSource? CertificateSource { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.CertificateStatus? CertificateStatus { get { throw null; } set { } }
-        public bool? EnableClientCertificateNegotiation { get { throw null; } set { } }
-        public bool? EnableDefaultSslBinding { get { throw null; } set { } }
         public string EncodedCertificate { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.HostnameType HostnameType { get { throw null; } set { } }
         public string IdentityClientId { get { throw null; } set { } }
+        public bool? IsClientCertificateNegotiationEnabled { get { throw null; } set { } }
+        public bool? IsDefaultSslBindingEnabled { get { throw null; } set { } }
         public System.Uri KeyVaultSecretUri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4108,9 +4108,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class PortalSettingsContractData : Azure.ResourceManager.Models.ResourceData
     {
         public PortalSettingsContractData() { }
-        public bool? EnableRedirect { get { throw null; } set { } }
-        public bool? EnableSubscriptionDelegation { get { throw null; } set { } }
-        public bool? EnableUserRegistrationDelegation { get { throw null; } set { } }
+        public bool? IsRedirectEnabled { get { throw null; } set { } }
+        public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
+        public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
@@ -4275,8 +4275,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public double? ApiTime { get { throw null; } }
         public string BackendResponseCode { get { throw null; } }
         public string Cache { get { throw null; } }
-        public string IPAddress { get { throw null; } }
-        public string Method { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public Azure.Core.RequestMethod? Method { get { throw null; } }
         public string OperationId { get { throw null; } }
         public string ProductId { get { throw null; } }
         public string RequestId { get { throw null; } }

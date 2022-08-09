@@ -84,7 +84,7 @@ rename-mapping:
   KeyVaultReference: IntegrationAccountKeyVaultNameReference
   KeyVaultKeyCollection: IntegrationAccountKeyVaultKeyList
   KeyVaultKey: IntegrationAccountKeyVaultKey
-  KeyVaultKey.kid: KeyId
+  KeyVaultKey.kid: KeyId|uri
   KeyVaultKey.attributes.enabled: IsEnabled
   KeyVaultKey.attributes.created: CreatedOn
   KeyVaultKey.attributes.updated: UpdatedOn
