@@ -93,7 +93,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
-            _identifier = identifier;
             _messageConverter = messageConverter;
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
