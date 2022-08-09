@@ -67,7 +67,7 @@ namespace Azure.Identity
 
         private async Task<AppTokenProviderResult> AppTokenProviderImpl(AppTokenProviderParameters parameters)
         {
-            TokenRequestContext requestContext = new TokenRequestContext(parameters.Scopes.ToArray(), claims: parameters.Claims, tenantId: parameters.TenantId);
+            TokenRequestContext requestContext = new TokenRequestContext(parameters.Scopes.ToArray(), claims: parameters.Claims);
 
             AccessToken token = await AuthenticateCoreAsync(true, requestContext, parameters.CancellationToken).ConfigureAwait(false);
 
