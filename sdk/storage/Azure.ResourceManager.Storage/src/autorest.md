@@ -228,7 +228,8 @@ rename-mapping:
   StorageAccountInternetEndpoints.dfs: DfsUri
 
 enable-lro-interim-status:
-  StorageAccounts_RestoreBlobRanges
+- StorageAccounts_RestoreBlobRanges
+- StorageAccounts_Create
 
 directive:
   - from: swagger-document

@@ -45,9 +45,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<ProfileResource> CreateCdnProfile(ResourceGroupResource rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateProfileData(skuName);
-            var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Started, profileName, input);
-            Assert.ThrowsAsync<NotImplementedException>(async () => _ = await lro.GetCurrentStatusAsync());
-            await lro.WaitForCompletionAsync(default).ConfigureAwait(false);
+            var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, input);
             return lro.Value;
         }
 
@@ -128,13 +126,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         protected async Task<CdnCustomDomainResource> CreateCdnCustomDomain(CdnEndpointResource endpoint, string customDomainName, string hostName)
         {
             CdnCustomDomainCreateOrUpdateContent input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
-            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Started, customDomainName, input);
-            Assert.False(lro.HasCompleted);
-            var interimValue = await lro.GetCurrentStatusAsync();
-            Assert.AreEqual(interimValue.Data.ResourceState, CustomDomainResourceState.Creating);
-            await lro.WaitForCompletionAsync().ConfigureAwait(false);
-            Assert.True(lro.HasValue);
-            Assert.True(lro.HasCompleted);
+            var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, input);
             return lro.Value;
         }
 

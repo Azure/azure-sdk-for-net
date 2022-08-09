@@ -90,9 +90,6 @@ rename-mapping:
   CacheLevel: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
-  
-enable-lro-interim-status:
-  CdnCustomDomains_Create
  
 directive:
   - from: swagger-document
