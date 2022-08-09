@@ -105,7 +105,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             bool forceBatch)
         {
             AmqpMessage batchEnvelope;
-            var firstMessage = batchMessages[0];
+            AmqpMessage firstMessage = null;
+            if (batchMessages.Count > 0)
+            {
+                firstMessage = batchMessages[0];
+            }
 
             if (batchMessages.Count == 1 && !forceBatch)
             {

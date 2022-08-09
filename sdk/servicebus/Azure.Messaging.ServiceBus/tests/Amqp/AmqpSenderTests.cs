@@ -88,7 +88,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 .Protected()
                 .Setup<Task>("SendBatchInternalAsync",
                     ItExpr.IsAny<IReadOnlyCollection<AmqpMessage>>(),
-                    ItExpr.IsAny<ServiceBusMessage>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.CompletedTask);
