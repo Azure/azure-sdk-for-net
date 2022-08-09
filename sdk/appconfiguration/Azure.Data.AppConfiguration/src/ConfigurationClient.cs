@@ -971,10 +971,8 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                using Request request = CreateSetReadOnlyRequest(key, label, requestOptions, isReadOnly);
-                Response response = async
-                    ? await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
-                    : _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateContext(cancellationToken);
+                using Response response = async ? await ToCreateAsyncResponse(key, label, requestOptions, isReadOnly, context).ConfigureAwait(false) : ToCreateResponse(key, label, requestOptions, isReadOnly, context);
 
                 return response.Status switch
                 {
@@ -991,6 +989,18 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private async Task<Response> ToCreateAsyncResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
+        {
+            Response response = isReadOnly ? await PutLockAsync(key, label, requestOptions, context).ConfigureAwait(false) : await DeleteLockAsync(key, label, requestOptions, context).ConfigureAwait(false);
+            return response;
+        }
+
+        private Response ToCreateResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
+        {
+            Response response = isReadOnly ? PutLock(key, label, requestOptions, context) : DeleteLock(key, label, requestOptions, context);
+            return response;
         }
 
         private Request CreateSetReadOnlyRequest(string key, string label,  MatchConditions requestOptions, bool isReadOnly)
