@@ -174,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 
             mockMessage
                 .Setup(message => message.SerializedMessageSize)
-                .Returns(0);
+                .Returns(40);
 
             for (var index = 0; index < messages.Length; ++index)
             {
@@ -526,7 +526,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             public override AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage source) => BuildAmqpMessageFromSBMessageHandler(source);
             public override AmqpMessage BuildAmqpBatchFromMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
             public override AmqpMessage BuildAmqpBatchFromMessages(IReadOnlyCollection<AmqpMessage> source, bool forceBatch) => BuildBatchFromAmqpMessagesHandler(source);
-            public override AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, Boolean forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
+            public override AmqpMessage BatchSBMessagesAsAmqpMessage(IReadOnlyCollection<ServiceBusMessage> source, bool forceBatch) => BuildBatchFromSBMessagesHandler(source, forceBatch);
             public override AmqpMessage BatchSBMessagesAsAmqpMessage(ServiceBusMessage source, bool forceBatch = false) => BuildAmqpMessageFromSBMessageHandler(source);
         }
     }
