@@ -52,7 +52,7 @@ rename-mapping:
   DataPartitionAddOrRemoveRequest: DataPartitionAddOrRemoveContent
   CheckNameAvailabilityRequest: EnergyServiceNameAvailabilityContent
   CheckNameAvailabilityReason: EnergyServiceNameUnavailableReason
-  CheckNameAvailabilityResponse: EnergyServiceNameAvailabilityResponse
+  CheckNameAvailabilityResponse: EnergyServiceNameAvailabilityResult
   DataPartitionProperties: DataPartition
   DataPartitionNames: DataPartitionName
 ```
