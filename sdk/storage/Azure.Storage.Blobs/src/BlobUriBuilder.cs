@@ -37,15 +37,15 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Whether to preserve trailing slashes on blob names when constructing a URI with this instance.
         /// </summary>
-        public bool PreserveTrailingSlash { get; }
+        public bool PreserveOuterSlashes { get; }
 
         /// <summary>
-        /// Default value for <see cref="PreserveTrailingSlash"/> to construct an instance
+        /// Default value for <see cref="PreserveOuterSlashes"/> to construct an instance
         /// of <see cref="BlobUriBuilder"/> with when unspecified. This is also the value
         /// used by <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar
         /// methods. Defaults to false.
         /// </summary>
-        public static bool PreserveTrailingSlashDefault { get; set; }
+        public static bool PreserveOuterSlashesDefault { get; set; }
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -113,10 +113,10 @@ namespace Azure.Storage.Blobs
             set
             {
                 ResetUri();
-                // initializing blob name via uri in constructor strips the trailling slash
+                // initializing blob name via uri in constructor (when not preserving) strips the trailling slash
                 // stripping on property set ensures a consistent experience in reading this value
-                _blobName = !PreserveTrailingSlash && value != null && value.EndsWith("/", StringComparison.InvariantCulture)
-                    ? value.Substring(0, value.Length - 1)
+                _blobName = !PreserveOuterSlashes && value != null
+                    ? StripOuterSlashes(value)
                     : value;
             }
         }
@@ -184,7 +184,7 @@ namespace Azure.Storage.Blobs
         /// <param name="uri">
         /// The <see cref="System.Uri"/> to a storage resource.
         /// </param>
-        public BlobUriBuilder(Uri uri) : this(uri, PreserveTrailingSlashDefault)
+        public BlobUriBuilder(Uri uri) : this(uri, PreserveOuterSlashesDefault)
         {
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Storage.Blobs
         public BlobUriBuilder(Uri uri, bool preserveTrailingSlash)
         {
             uri = uri ?? throw new ArgumentNullException(nameof(uri));
-            PreserveTrailingSlash = preserveTrailingSlash;
+            PreserveOuterSlashes = preserveTrailingSlash;
 
             Scheme = uri.Scheme;
             Host = uri.Host;
@@ -254,7 +254,7 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath(PreserveTrailingSlash);   // The blob name is after the container slash
+                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath(PreserveOuterSlashes);   // The blob name is after the container slash
                 }
             }
 
@@ -342,7 +342,7 @@ namespace Azure.Storage.Blobs
                 path.Append('/').Append(BlobContainerName);
                 if (BlobName != null && BlobName.Length > 0)
                 {
-                    path.Append('/').Append(BlobName.EscapePath(PreserveTrailingSlash));
+                    path.Append('/').Append(BlobName.EscapePath(PreserveOuterSlashes));
                 }
             }
 
@@ -377,6 +377,19 @@ namespace Azure.Storage.Blobs
                 Path = path.ToString(),
                 Query = query.Length > 0 ? "?" + query.ToString() : null
             };
+        }
+
+        private static string StripOuterSlashes(string value)
+        {
+            if (value.EndsWith("/", StringComparison.InvariantCulture))
+            {
+                value = value.Substring(0, value.Length - 1);
+            }
+            if (value.StartsWith("/", StringComparison.InvariantCulture))
+            {
+                value = value.Substring(1);
+            }
+            return value;
         }
     }
 }

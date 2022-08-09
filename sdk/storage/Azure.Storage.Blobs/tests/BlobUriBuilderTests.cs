@@ -4,8 +4,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -108,18 +111,16 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [Combinatorial]
-        public void BlobUriBuilder_TrailingSlash_ConstructorTest(
+        public void BlobUriBuilder_OuterSlashes_ConstructorTest(
             [Values(true, false)] bool preservesSlash,
             [Values(true, false)] bool hasSlash
         )
         {
             // Arrange
-            string blobName = hasSlash ? "blob/" : "blob";
-            var uriString = "https://account.blob.core.windows.net/container/" + blobName;
-            var originalUri = new UriBuilder(uriString);
-            var noSlashUri = new UriBuilder(hasSlash
-                ? uriString.Substring(0, uriString.Length - 1)
-                : uriString);
+            string blobName = hasSlash ? "/blob/" : "blob";
+            var containerUriString = "https://account.blob.core.windows.net/container/";
+            var originalUri = new UriBuilder(containerUriString + blobName);
+            var noSlashUri = new UriBuilder(containerUriString + "blob");
 
             // Act
             var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveTrailingSlash: preservesSlash);
@@ -154,13 +155,13 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [Combinatorial]
-        public void BlobUriBuilder_TrailingSlash_PropertyTest(
+        public void BlobUriBuilder_OuterSlashes_PropertyTest(
             [Values(true, false)] bool preservesSlash,
             [Values(true, false)] bool hasSlash
         )
         {
             // Arrange
-            string blobName = hasSlash ? "blob/" : "blob";
+            string blobName = hasSlash ? "/blob/" : "blob";
             var containerUriString = "https://account.blob.core.windows.net/container/";
             var originalUri = new UriBuilder(containerUriString + blobName);
             var noSlashUri = new UriBuilder(containerUriString + "blob");
@@ -197,6 +198,41 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.AreEqual(noSlashUri, newUri);
             }
+        }
+
+        [RecordedTest]
+        public async Task ClientTargetsWithAppropriateSlash()
+        {
+            // blob name starts and ends with slash, not a path separator
+            const string blobName = "/myblob/";
+
+            // Arrange
+            var assertPolicy = new AssertMessageContentsPolicy(checkRequest: req =>
+                Assert.AreEqual(blobName, req.Uri.Path.Substring(req.Uri.Path.IndexOf('/') + 1)));
+
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(
+                assertPolicy,
+                Core.HttpPipelinePosition.BeforeTransport);
+
+            await using DisposingContainer container = await BlobsClientBuilder.GetTestContainerAsync(
+                BlobsClientBuilder.GetServiceClient_SharedKey(options));
+            BlobUriBuilder.PreserveOuterSlashesDefault = true;
+
+            BlobClient blob = container.Container.GetBlobClient(blobName);
+
+            // Act
+            try
+            {
+                assertPolicy.CheckRequest = true;
+                await blob.UploadAsync(BinaryData.FromString("Hello world!"));
+            }
+            finally
+            {
+                assertPolicy.CheckRequest = false;
+            }
+
+            // assertion in pipeline
         }
 
         [RecordedTest]
