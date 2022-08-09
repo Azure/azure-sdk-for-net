@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -19,10 +20,8 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
         internal ParticipantsCollection(IEnumerable<RoomParticipant> participants)
         {
-            if (participants == null)
-            {
-                throw new ArgumentNullException(nameof(participants));
-            }
+
+            Argument.AssertNotNull(participants, nameof(participants));
 
             Participants = participants.ToList();
         }
