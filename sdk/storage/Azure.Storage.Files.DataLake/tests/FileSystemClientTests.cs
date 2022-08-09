@@ -12,6 +12,7 @@ using Azure.Identity;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -983,6 +984,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetPathsAsync_NonHns()
         {
             await using DisposingFileSystem test = await GetNewFileSystem(hnsEnabled: false);

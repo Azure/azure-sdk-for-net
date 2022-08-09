@@ -28,6 +28,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}: LogicWorkflowRunActionScopeRepetition
 
 rename-mapping:
+  AS2EnvelopeSettings.autogenerateFileName: AutoGenerateFileName
+  SwaggerCustomDynamicTreeParameter.required: IsRequired
+  SwaggerXml.attribute: IsAttribute
+  SwaggerXml.wrapped: IsWrapped
   AgreementContent: IntegrationAccountAgreementContent
   AssemblyDefinition: IntegrationAccountAssemblyDefinition
   AssemblyProperties: IntegrationAccountAssemblyProperties
@@ -80,10 +84,10 @@ rename-mapping:
   KeyVaultReference: IntegrationAccountKeyVaultNameReference
   KeyVaultKeyCollection: IntegrationAccountKeyVaultKeyList
   KeyVaultKey: IntegrationAccountKeyVaultKey
-  KeyVaultKey.kid: KeyId
+  KeyVaultKey.kid: KeyId|uri
   KeyVaultKey.attributes.enabled: IsEnabled
-  KeyVaultKey.attributes.created: CreatedOnInTicks
-  KeyVaultKey.attributes.updated: UpdatedOnInTicks
+  KeyVaultKey.attributes.created: CreatedOn
+  KeyVaultKey.attributes.updated: UpdatedOn
   KeyVaultKeyReference: IntegrationAccountKeyVaultKeyReference
   KeyVaultKeyReference.keyVault.id: ResourceId
   KeyVaultKeyReference.keyVault.name: ResourceName
@@ -147,6 +151,7 @@ rename-mapping:
   WorkflowTriggerHistory: LogicWorkflowTriggerHistory
   WorkflowTriggerHistory.properties.fired: IsFired
   WorkflowTriggerHistoryListResult: LogicWorkflowTriggerHistoryListResult
+  WorkflowTriggerCallbackUrl.method: -|request-method
   WorkflowTriggerCallbackUrl: LogicWorkflowTriggerCallbackUri
   WorkflowReference: LogicWorkflowReference
   WorkflowRunActionListResult: LogicWorkflowRunActionListResult

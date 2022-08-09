@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationAccountKeyVaultKey DeserializeIntegrationAccountKeyVaultKey(JsonElement element)
         {
-            Optional<string> kid = default;
+            Optional<Uri> kid = default;
             Optional<bool> enabled = default;
             Optional<long> created = default;
             Optional<long> updated = default;
@@ -22,7 +23,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("kid"))
                 {
-                    kid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        kid = null;
+                        continue;
+                    }
+                    kid = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attributes"))

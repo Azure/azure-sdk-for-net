@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobFunctionData DeserializeStreamingJobFunctionData(JsonElement element)
         {
-            Optional<FunctionProperties> properties = default;
-            Optional<string> id = default;
+            Optional<StreamingJobFunctionProperties> properties = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -44,12 +44,17 @@ namespace Azure.ResourceManager.StreamAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = FunctionProperties.DeserializeFunctionProperties(property.Value);
+                    properties = StreamingJobFunctionProperties.DeserializeStreamingJobFunctionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -59,11 +64,16 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new StreamingJobFunctionData(id.Value, name.Value, type.Value, properties.Value);
+            return new StreamingJobFunctionData(id.Value, name.Value, Optional.ToNullable(type), properties.Value);
         }
     }
 }

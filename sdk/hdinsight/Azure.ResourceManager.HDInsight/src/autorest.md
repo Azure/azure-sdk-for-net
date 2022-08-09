@@ -16,15 +16,13 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug:
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'privateIPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -85,6 +83,8 @@ rename-mapping:
   ValidationErrorInfo: HDInsightClusterValidationErrorInfo
   AaddsResourceDetails.initialSyncComplete: IsInitialSyncComplete
   AaddsResourceDetails.ldapsEnabled: IsLdapsEnabled
+  AaddsResourceDetails.resourceId: -|arm-id
+  AaddsResourceDetails.subnetId: -|arm-id
   AsyncOperationResult: HDInsightAsyncOperationResult
   AsyncOperationState: HDInsightAsyncOperationState
   ApplicationProperties: HDInsightApplicationProperties
@@ -145,6 +145,12 @@ rename-mapping:
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
   RuntimeScriptActionDetail.startTime: -|datetime
   RuntimeScriptActionDetail.endTime: -|datetime
+  DaysOfWeek: HDInsightDayOfWeek
+  DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
+  DirectoryType: AuthenticationDirectoryType
+  ConnectivityEndpoint.location: EndpointLocation
+  ApplicationGetEndpoint.location: EndpointLocation
+  ApplicationGetHttpsEndpoint.location: EndpointLocation
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2

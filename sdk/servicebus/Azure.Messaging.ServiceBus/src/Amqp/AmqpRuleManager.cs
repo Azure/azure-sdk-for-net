@@ -19,20 +19,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>
-        /// The path of the Service Bus subscription to which the rule manager is bound.
-        /// </summary>
-        ///
-        private readonly string _subscriptionPath;
-
-        /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         private readonly ServiceBusRetryPolicy _retryPolicy;
-
-        /// <summary>
-        /// The identifier for the rule manager.
-        /// </summary>
-        private readonly string _identifier;
 
         /// <summary>
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
@@ -102,23 +91,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
 
-            _subscriptionPath = subscriptionPath;
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _identifier = identifier;
             _messageConverter = messageConverter;
-
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
-                    _subscriptionPath,
-                    _identifier,
+                    subscriptionPath,
+                    identifier,
                     timeout,
                     CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
         }
 
         /// <summary>

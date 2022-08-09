@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary>
     /// Describes an input data source that contains reference data.
     /// Please note <see cref="ReferenceInputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureSqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
+    /// The available derived classes include <see cref="SqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
     /// </summary>
     public partial class ReferenceInputDataSource
     {

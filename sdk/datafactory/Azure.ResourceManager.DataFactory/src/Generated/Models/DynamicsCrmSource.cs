@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Dynamics CRM source. </summary>
-    public partial class DynamicsCrmSource : CopySource
+    public partial class DynamicsCrmSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of DynamicsCrmSource. </summary>
         public DynamicsCrmSource()

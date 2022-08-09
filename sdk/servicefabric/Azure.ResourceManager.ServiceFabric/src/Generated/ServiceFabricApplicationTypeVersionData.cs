@@ -30,22 +30,10 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The current deployment or provisioning state, which only appears in the response
-        /// Serialized Name: ApplicationTypeVersionResource.properties.provisioningState
-        /// </param>
-        /// <param name="appPackageUri">
-        /// The URL to the application package
-        /// Serialized Name: ApplicationTypeVersionResource.properties.appPackageUrl
-        /// </param>
-        /// <param name="defaultParameterList">
-        /// List of application type parameters that can be overridden when creating or updating the application.
-        /// Serialized Name: ApplicationTypeVersionResource.properties.defaultParameterList
-        /// </param>
-        /// <param name="etag">
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="appPackageUri"> The URL to the application package. </param>
+        /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
+        /// <param name="etag"> Azure resource etag. </param>
         internal ServiceFabricApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
@@ -54,25 +42,13 @@ namespace Azure.ResourceManager.ServiceFabric
             ETag = etag;
         }
 
-        /// <summary>
-        /// The current deployment or provisioning state, which only appears in the response
-        /// Serialized Name: ApplicationTypeVersionResource.properties.provisioningState
-        /// </summary>
+        /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The URL to the application package
-        /// Serialized Name: ApplicationTypeVersionResource.properties.appPackageUrl
-        /// </summary>
+        /// <summary> The URL to the application package. </summary>
         public Uri AppPackageUri { get; set; }
-        /// <summary>
-        /// List of application type parameters that can be overridden when creating or updating the application.
-        /// Serialized Name: ApplicationTypeVersionResource.properties.defaultParameterList
-        /// </summary>
+        /// <summary> List of application type parameters that can be overridden when creating or updating the application. </summary>
         public IReadOnlyDictionary<string, string> DefaultParameterList { get; }
-        /// <summary>
-        /// Azure resource etag.
-        /// Serialized Name: ProxyResource.etag
-        /// </summary>
+        /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }
     }
 }

@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -66,6 +64,12 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.MultiLabelClassifyActionResult(default, default)
             };
 
+            var analyzeHealthcareEntitiesActionResults = new List<AnalyzeHealthcareEntitiesActionResult>()
+            {
+                TextAnalyticsModelFactory.AnalyzeHealthcareEntitiesActionResult(default, default, default),
+                TextAnalyticsModelFactory.AnalyzeHealthcareEntitiesActionResult(default, default, default),
+            };
+
             var actionsResult = TextAnalyticsModelFactory.AnalyzeActionsResult(
                 extractKeyPhrasesActionResults,
                 recognizeEntitiesActionResults,
@@ -87,7 +91,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 analyzeSentimentActionResults,
                 recognizeCustomEntitiesActionResults,
                 singleLabelClassifyActionResults,
-                multiLabelClassifyActionResults);
+                multiLabelClassifyActionResults,
+                analyzeHealthcareEntitiesActionResults);
 
             CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
             CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
@@ -97,6 +102,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(recognizeCustomEntitiesActionResults, actionsResult.RecognizeCustomEntitiesResults);
             CollectionAssert.AreEquivalent(singleLabelClassifyActionResults, actionsResult.SingleLabelClassifyResults);
             CollectionAssert.AreEquivalent(multiLabelClassifyActionResults, actionsResult.MultiLabelClassifyResults);
+            CollectionAssert.AreEquivalent(analyzeHealthcareEntitiesActionResults, actionsResult.AnalyzeHealthcareEntitiesResults);
         }
         #endregion Action Result Models
     }

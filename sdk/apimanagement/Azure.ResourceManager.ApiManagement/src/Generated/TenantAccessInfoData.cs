@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="accessInfoType"> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
-        /// <param name="isEnabled"> Determines whether direct access is enabled. </param>
-        internal TenantAccessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessInfoType, string principalId, bool? isEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        internal TenantAccessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessInfoType, string principalId, bool? isDirectAccessEnabled) : base(id, name, resourceType, systemData)
         {
             AccessInfoType = accessInfoType;
             PrincipalId = principalId;
-            IsEnabled = isEnabled;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
         }
 
         /// <summary> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </summary>
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Principal (User) Identifier. </summary>
         public string PrincipalId { get; set; }
         /// <summary> Determines whether direct access is enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsDirectAccessEnabled { get; set; }
     }
 }

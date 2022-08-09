@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// The password for Basic authentication.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public WebBasicAuthentication(BinaryData uri, BinaryData username, SecretBase password) : base(uri)
+        public WebBasicAuthentication(BinaryData uri, BinaryData username, FactorySecretBaseDefinition password) : base(uri)
         {
             if (uri == null)
             {
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// The password for Basic authentication.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal WebBasicAuthentication(BinaryData uri, WebAuthenticationType authenticationType, BinaryData username, SecretBase password) : base(uri, authenticationType)
+        internal WebBasicAuthentication(BinaryData uri, WebAuthenticationType authenticationType, BinaryData username, FactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
             Username = username;
             Password = password;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password for Basic authentication.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
     }
 }

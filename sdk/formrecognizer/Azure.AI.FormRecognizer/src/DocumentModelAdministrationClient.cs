@@ -118,7 +118,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="trainingFilesUri">
+        /// <param name="blobContainerUri">
         /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
         /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
         /// configured.
@@ -153,9 +153,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation BuildModel(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
 
             options ??= new BuildModelOptions();
 
@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var source = new AzureBlobContentSource(trainingFilesUri.AbsoluteUri);
+                var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
                 if (!string.IsNullOrEmpty(options.Prefix))
                 {
                     source.Prefix = options.Prefix;
@@ -206,7 +206,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="trainingFilesUri">
+        /// <param name="blobContainerUri">
         /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
         /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
         /// configured.
@@ -241,9 +241,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri trainingFilesUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> BuildModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, BuildModelOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingFilesUri, nameof(trainingFilesUri));
+            Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             options ??= new BuildModelOptions();
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildModel)}");
@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                var source = new AzureBlobContentSource(trainingFilesUri.AbsoluteUri);
+                var source = new AzureBlobContentSource(blobContainerUri.AbsoluteUri);
                 if (!string.IsNullOrEmpty(options.Prefix))
                 {
                     source.Prefix = options.Prefix;
@@ -305,8 +305,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<DocumentModelDetails> response = ServiceClient.GetModel(modelId, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                Response<DocumentModel> response = ServiceClient.GetModel(modelId, cancellationToken);
+                DocumentModelDetails modelDetails = new DocumentModelDetails(response.Value);
+
+                return Response.FromValue(modelDetails, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -331,8 +333,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             try
             {
-                Response<DocumentModelDetails> response = await ServiceClient.GetModelAsync(modelId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                Response<DocumentModel> response = await ServiceClient.GetModelAsync(modelId, cancellationToken).ConfigureAwait(false);
+                var modelDetails = new DocumentModelDetails(response.Value);
+
+                return Response.FromValue(modelDetails, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -528,7 +532,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelDetails"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelOperationDetails"/> containing
         /// information about the requested model.</returns>
         public virtual Response<DocumentModelOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
@@ -540,7 +544,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = ServiceClient.GetOperation(operationId, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                var operationDetails = new DocumentModelOperationDetails(response.Value);
+
+                return Response.FromValue(operationDetails, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -554,7 +560,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         /// <param name="operationId">The operation ID.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelDetails"/> containing
+        /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelOperationDetails"/> containing
         /// information about the requested model.</returns>
         public virtual async Task<Response<DocumentModelOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
@@ -566,7 +572,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = await ServiceClient.GetOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                var operationDetails = new DocumentModelOperationDetails(response.Value);
+
+                return Response.FromValue(operationDetails, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -677,9 +685,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
+        /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual CopyModelOperation CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual CopyModelToOperation CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
@@ -690,7 +698,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = ServiceClient.CopyDocumentModelTo(modelId, target, cancellationToken);
-                var operation = new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new CopyModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -717,9 +725,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="modelId">Model identifier of the model to copy to the target Form Recognizer resource.</param>
         /// <param name="target">A <see cref="CopyAuthorization"/> with the copy authorization to the target Form Recognizer resource.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
+        /// <returns>A <see cref="CopyModelToOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelToOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual async Task<CopyModelOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyModelToOperation> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
@@ -730,7 +738,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = await ServiceClient.CopyDocumentModelToAsync(modelId, target, cancellationToken).ConfigureAwait(false);
-                var operation = new CopyModelOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new CopyModelToOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -848,10 +856,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual BuildModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual ComposeModelOperation ComposeModel(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -875,7 +883,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = ServiceClient.ComposeDocumentModel(composeRequest, cancellationToken);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -907,10 +915,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// <para>A <see cref="ComposeModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the built model.</para>
         /// </returns>
-        public virtual async Task<BuildModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ComposeModelOperation> ComposeModelAsync(WaitUntil waitUntil, IEnumerable<string> componentModelIds, string modelId = default, string description = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
@@ -934,7 +942,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
 
                 var response = await ServiceClient.ComposeDocumentModelAsync(composeRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new BuildModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+                var operation = new ComposeModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
 
                 if (waitUntil == WaitUntil.Completed)
                 {
