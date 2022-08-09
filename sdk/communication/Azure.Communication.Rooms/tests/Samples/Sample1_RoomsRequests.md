@@ -9,9 +9,6 @@ To get started you'll need a Communication Service Resource.  See [README] for p
 Rooms clients can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal. Alternatively, Rooms clients can also be authenticated using a valid token credential.
 
 ```C# Snippet:Azure_Communication_Rooms_Tests_UsingStatements
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication.Rooms
 ```
 
