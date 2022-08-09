@@ -4,7 +4,7 @@ This sample demonstrates how to interact with the underlying AMQP message that `
 
 ## Message Body
 
-The most common scenario where you may need to peek into the underlying AMQP message is in interop scenarios where you are receiving a message that has a non-standard body. The [AMQP spec](http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format) allows three types of message body: a series of data sections, a value section, or a series of sequence sections. When using the `ServiceBusMessage.Body` property, you are implicitly using a single `data` section for the message body. If you are consuming from a queue or subscription in which the producer is either using a different client, or this client but setting the message body as a value or sequence, you would need to do the following:
+The most common scenario where you may need to peek into the underlying AMQP message is in interop scenarios where you are receiving a message that has a non-standard body. The [AMQP spec](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format) allows three types of message body: a series of data sections, a value section, or a series of sequence sections. When using the `ServiceBusMessage.Body` property, you are implicitly using a single `data` section for the message body. If you are consuming from a queue or subscription in which the producer is either using a different client, or this client but setting the message body as a value or sequence, you would need to do the following:
 
 ```C# Snippet:ServiceBusInspectMessageBody
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
