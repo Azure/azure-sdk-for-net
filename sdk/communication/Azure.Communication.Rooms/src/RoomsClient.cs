@@ -96,7 +96,7 @@ namespace Azure.Communication.Rooms
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RoomsClient"/> class.
+        /// Initializes a new instance of the <see cref="RoomsClient"/> class for mock.
         /// </summary>
         protected RoomsClient()
         {
