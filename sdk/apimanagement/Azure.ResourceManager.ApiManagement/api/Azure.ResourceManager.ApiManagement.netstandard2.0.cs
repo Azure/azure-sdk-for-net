@@ -4275,8 +4275,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public double? ApiTime { get { throw null; } }
         public string BackendResponseCode { get { throw null; } }
         public string Cache { get { throw null; } }
-        public string IPAddress { get { throw null; } }
-        public string Method { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
+        public Azure.Core.RequestMethod? Method { get { throw null; } }
         public string OperationId { get { throw null; } }
         public string ProductId { get { throw null; } }
         public string RequestId { get { throw null; } }
