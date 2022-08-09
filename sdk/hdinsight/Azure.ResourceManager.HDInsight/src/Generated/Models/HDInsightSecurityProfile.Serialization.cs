@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element)
         {
-            Optional<DirectoryType> directoryType = default;
+            Optional<AuthenticationDirectoryType> directoryType = default;
             Optional<string> domain = default;
             Optional<string> organizationalUnitDN = default;
             Optional<IList<string>> ldapsUrls = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    directoryType = new DirectoryType(property.Value.GetString());
+                    directoryType = new AuthenticationDirectoryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("domain"))

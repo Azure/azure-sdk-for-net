@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary>
-    /// Parameters supplied to the patch NotificationHub operation.
-    /// Serialized Name: NotificationHubPatchParameters
-    /// </summary>
+    /// <summary> Parameters supplied to the patch NotificationHub operation. </summary>
     public partial class NotificationHubPatch : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NotificationHubPatch. </summary>
@@ -32,46 +29,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="notificationHubName">
-        /// The NotificationHub name.
-        /// Serialized Name: NotificationHubPatchParameters.properties.name
-        /// </param>
-        /// <param name="registrationTtl">
-        /// The RegistrationTtl of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.registrationTtl
-        /// </param>
-        /// <param name="authorizationRules">
-        /// The AuthorizationRules of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.authorizationRules
-        /// </param>
-        /// <param name="apnsCredential">
-        /// The ApnsCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.apnsCredential
-        /// </param>
-        /// <param name="wnsCredential">
-        /// The WnsCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.wnsCredential
-        /// </param>
-        /// <param name="gcmCredential">
-        /// The GcmCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.gcmCredential
-        /// </param>
-        /// <param name="mpnsCredential">
-        /// The MpnsCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.mpnsCredential
-        /// </param>
-        /// <param name="admCredential">
-        /// The AdmCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.admCredential
-        /// </param>
-        /// <param name="baiduCredential">
-        /// The BaiduCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.baiduCredential
-        /// </param>
-        /// <param name="sku">
-        /// The sku of the created namespace
-        /// Serialized Name: Resource.sku
-        /// </param>
+        /// <param name="notificationHubName"> The NotificationHub name. </param>
+        /// <param name="registrationTtl"> The RegistrationTtl of the created NotificationHub. </param>
+        /// <param name="authorizationRules"> The AuthorizationRules of the created NotificationHub. </param>
+        /// <param name="apnsCredential"> The ApnsCredential of the created NotificationHub. </param>
+        /// <param name="wnsCredential"> The WnsCredential of the created NotificationHub. </param>
+        /// <param name="gcmCredential"> The GcmCredential of the created NotificationHub. </param>
+        /// <param name="mpnsCredential"> The MpnsCredential of the created NotificationHub. </param>
+        /// <param name="admCredential"> The AdmCredential of the created NotificationHub. </param>
+        /// <param name="baiduCredential"> The BaiduCredential of the created NotificationHub. </param>
+        /// <param name="sku"> The sku of the created namespace. </param>
         internal NotificationHubPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, NotificationHubSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             NotificationHubName = notificationHubName;
@@ -86,55 +53,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Sku = sku;
         }
 
-        /// <summary>
-        /// The NotificationHub name.
-        /// Serialized Name: NotificationHubPatchParameters.properties.name
-        /// </summary>
+        /// <summary> The NotificationHub name. </summary>
         public string NotificationHubName { get; set; }
-        /// <summary>
-        /// The RegistrationTtl of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.registrationTtl
-        /// </summary>
+        /// <summary> The RegistrationTtl of the created NotificationHub. </summary>
         public TimeSpan? RegistrationTtl { get; set; }
-        /// <summary>
-        /// The AuthorizationRules of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.authorizationRules
-        /// </summary>
+        /// <summary> The AuthorizationRules of the created NotificationHub. </summary>
         public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
-        /// <summary>
-        /// The ApnsCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.apnsCredential
-        /// </summary>
+        /// <summary> The ApnsCredential of the created NotificationHub. </summary>
         public NotificationHubApnsCredential ApnsCredential { get; set; }
-        /// <summary>
-        /// The WnsCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.wnsCredential
-        /// </summary>
+        /// <summary> The WnsCredential of the created NotificationHub. </summary>
         public NotificationHubWnsCredential WnsCredential { get; set; }
-        /// <summary>
-        /// The GcmCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.gcmCredential
-        /// </summary>
+        /// <summary> The GcmCredential of the created NotificationHub. </summary>
         public NotificationHubGcmCredential GcmCredential { get; set; }
-        /// <summary>
-        /// The MpnsCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.mpnsCredential
-        /// </summary>
+        /// <summary> The MpnsCredential of the created NotificationHub. </summary>
         public NotificationHubMpnsCredential MpnsCredential { get; set; }
-        /// <summary>
-        /// The AdmCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.admCredential
-        /// </summary>
+        /// <summary> The AdmCredential of the created NotificationHub. </summary>
         public NotificationHubAdmCredential AdmCredential { get; set; }
-        /// <summary>
-        /// The BaiduCredential of the created NotificationHub
-        /// Serialized Name: NotificationHubPatchParameters.properties.baiduCredential
-        /// </summary>
+        /// <summary> The BaiduCredential of the created NotificationHub. </summary>
         public NotificationHubBaiduCredential BaiduCredential { get; set; }
-        /// <summary>
-        /// The sku of the created namespace
-        /// Serialized Name: Resource.sku
-        /// </summary>
+        /// <summary> The sku of the created namespace. </summary>
         public NotificationHubSku Sku { get; set; }
     }
 }

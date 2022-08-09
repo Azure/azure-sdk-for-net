@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<float> success = default;
-            Optional<float> failure = default;
+            Optional<int> success = default;
+            Optional<int> failure = default;
             Optional<BinaryData> results = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            success = property0.Value.GetSingle();
+                            success = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("failure"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            failure = property0.Value.GetSingle();
+                            failure = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("results"))

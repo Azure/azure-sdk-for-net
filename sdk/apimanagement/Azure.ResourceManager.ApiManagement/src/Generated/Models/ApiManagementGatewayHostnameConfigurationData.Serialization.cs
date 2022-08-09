@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("certificateId");
                 writer.WriteStringValue(CertificateId);
             }
-            if (Optional.IsDefined(NegotiateClientCertificate))
+            if (Optional.IsDefined(IsClientCertificateRequired))
             {
                 writer.WritePropertyName("negotiateClientCertificate");
-                writer.WriteBooleanValue(NegotiateClientCertificate.Value);
+                writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
             if (Optional.IsDefined(IsTls1_0Enabled))
             {

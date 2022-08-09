@@ -1,6 +1,6 @@
 # Release History
 
-## 4.0.0-beta.5 (Unreleased)
+## 4.0.0-beta.5 (2022-08-09)
 
 ### Features Added
 - Added `Length` property to `BoundingPolygon`.
@@ -11,8 +11,9 @@
 - Updated all long-running operation client methods to a new pattern. This affects `StartAnalyzeDocument`, `StartAnalyzeDocumentFromUri`, `StartBuildModel`, `StartCopyModelTo`, and `StartCreateComposedModel` methods. Changes are:
   - Removed the "Start" prefix. For example, `StartAnalyzeDocument` was renamed to `AnalyzeDocument`.
   - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
-- Renamed `DocumentModel` to `DocumentModelDetails`.
-- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
+- Updated `DocumentModelInfo` and `DocumentModel`:
+  - Renamed them to `DocumentModelSummary` and `DocumentModelDetails`, respectively.
+  - Removed the inheritance between them.
 - Updated `ModelOperationInfo` and `ModelOperation`:
   - Renamed them to `DocumentModelOperationSummary` and `DocumentModelOperationDetails`, respectively.
   - Removed the inheritance between them.
@@ -24,16 +25,14 @@
 - Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `ComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
-- Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
-- Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method.
+- Updated the return type of `StartCreateComposedModel` (now called `ComposeModel`) to a `ComposeModelOperation`.
+- Renamed class `CopyModelOperation` to `CopyModelToOperation`.
+- Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods (now called `AnalyzeDocument` and `AnalyzeDocumentFromUri`).
+- Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method (now called `BuildModel`).
 - `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
 - In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
 - Updated `CopyAuthorization.TargetModelLocation` to be a `Uri` instead of `string`.
 - Removed method `DocumentAnalysisModelFactory.CopyAuthorization`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 4.0.0-beta.4 (2022-06-08)
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Minutes = new ChangeTrackingList<int>();
             Hours = new ChangeTrackingList<int>();
-            WeekDays = new ChangeTrackingList<DaysOfWeek>();
+            WeekDays = new ChangeTrackingList<FactoryDayOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
             MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> additionalProperties)
+        internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<FactoryDayOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> additionalProperties)
         {
             Minutes = minutes;
             Hours = hours;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The hours. </summary>
         public IList<int> Hours { get; }
         /// <summary> The days of the week. </summary>
-        public IList<DaysOfWeek> WeekDays { get; }
+        public IList<FactoryDayOfWeek> WeekDays { get; }
         /// <summary> The month days. </summary>
         public IList<int> MonthDays { get; }
         /// <summary> The monthly occurrences. </summary>

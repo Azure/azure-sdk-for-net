@@ -890,7 +890,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <remarks> Gets detailed model information. </remarks>
-        public async Task<Response<DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public async Task<Response<DocumentModel>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -903,9 +903,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        DocumentModelDetails value = default;
+                        DocumentModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentModelDetails.DeserializeDocumentModelDetails(document.RootElement);
+                        value = DocumentModel.DeserializeDocumentModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -918,7 +918,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <remarks> Gets detailed model information. </remarks>
-        public Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
+        public Response<DocumentModel> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -931,9 +931,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 case 200:
                     {
-                        DocumentModelDetails value = default;
+                        DocumentModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentModelDetails.DeserializeDocumentModelDetails(document.RootElement);
+                        value = DocumentModel.DeserializeDocumentModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

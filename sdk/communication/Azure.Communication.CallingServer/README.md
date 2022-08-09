@@ -1,12 +1,12 @@
-# Azure Communication CallingServer client library for .NET
+# Azure Communication CallAutomation client library for .NET
 
-This package contains a C# SDK for Azure Communication Services for Calling.
+This package contains a C# SDK for Azure Communication Call Automation.
 
 [Source code][source] |[Product documentation][product_docs]
 ## Getting started
 
 ### Install the package
-Install the Azure Communication CallingServer client library for .NET with [NuGet][nuget]:
+Install the Azure Communication CallAutomation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Azure.Communication.CallingServer --prerelease
@@ -18,7 +18,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`CallingServerClient` provides the functionality to answer incoming call or initialize an outbound call.
+`CallAutomationClient` provides the functionality to answer incoming call or initialize an outbound call.
 
 ### Using statements
 ```C#
@@ -28,23 +28,23 @@ using Azure.Communication.CallingServer;
 ```
 
 ### Authenticate the client
-Calling server client can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
+Call Automation client can be authenticated using the connection string acquired from an Azure Communication Resource in the [Azure Portal][azure_portal].
 
 ```C#
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
-CallingServerClient callingServerClient = new CallingServerClient(connectionString);
+CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString);
 ```
 
 Or alternatively using a valid Active Directory token.
 ```C#
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 TokenCredential tokenCredential = new DefaultAzureCredential();
-var client = new CallingServerClient(endpoint, tokenCredential);
+var client = new CallAutomationClient(endpoint, tokenCredential);
 ```
 
 ## Examples
 ### Make a call to a phone number recipient
-To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallingServerClient`.
+To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallAutomationClient`.
 ```C#
 CallSource callSource = new CallSource(
        new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
@@ -52,7 +52,7 @@ CallSource callSource = new CallSource(
 callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted phone number that's associated to your Azure Communication Resource
 ```
 ```C#
-CreateCallResult createCallResult = await callingServerClient.CreateCallAsync(
+CreateCallResult createCallResult = await callAutomationClient.CreateCallAsync(
     source: callSource,
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
     callbackEndpoint: new Uri(TestEnvironment.AppCallbackUrl)
@@ -61,7 +61,7 @@ Console.WriteLine($"Call connection id: {createCallResult.CallProperties.CallCon
 ```
 
 ### Handle Mid-Connection call back events
-Your app will receive mid-connection call back events via the AppCallbackUrl you provided. You will need to write event handler controller to receive the events and direct your app flow based on your business logic.
+Your app will receive mid-connection call back events via the callbackEndpoint you provided. You will need to write event handler controller to receive the events and direct your app flow based on your business logic.
 ```C#
     /// <summary>
     /// Handle call back events.
@@ -75,7 +75,7 @@ Your app will receive mid-connection call back events via the AppCallbackUrl you
             if (events != null)
             {
                 // Helper function to parse CloudEvent to a CallingServer event.
-                CallingServerEventBase callBackEvent = EventParser.Parse(events.FirstOrDefault());
+                CallAutomationEventBase callBackEvent = EventParser.Parse(events.FirstOrDefault());
             
                 switch (callBackEvent)
                 {

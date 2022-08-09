@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
             Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventRequestMessage"))
@@ -41,11 +42,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEvent(id.Value, eventRequestMessage.Value, eventResponseMessage.Value);
+            return new ContainerRegistryWebhookEvent(Optional.ToNullable(id), eventRequestMessage.Value, eventResponseMessage.Value);
         }
     }
 }
