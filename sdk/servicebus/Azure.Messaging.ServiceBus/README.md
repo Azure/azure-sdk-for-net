@@ -152,6 +152,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 * [Dead letter a message](#dead-letter-a-message)
 * [Using the processor](#using-the-processor)
 * [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
+* [Working with sessions](#working-with-sessions)
 * [More samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/README.md)
 
 ### Send and receive a message
