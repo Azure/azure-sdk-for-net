@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("timeToLive");
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (Optional.IsDefined(Cleanup))
+            if (Optional.IsDefined(ShouldCleanupAfterTtl))
             {
                 writer.WritePropertyName("cleanup");
-                writer.WriteBooleanValue(Cleanup.Value);
+                writer.WriteBooleanValue(ShouldCleanupAfterTtl.Value);
             }
             foreach (var item in AdditionalProperties)
             {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the private remote resource. </param>
-        internal StreamAnalyticsPrivateLinkServiceConnection(string privateLinkServiceId, IList<string> groupIds, string requestMessage, StreamAnalyticsPrivateLinkConnectionState privateLinkServiceConnectionState)
+        internal StreamAnalyticsPrivateLinkServiceConnection(ResourceIdentifier privateLinkServiceId, IList<string> groupIds, string requestMessage, StreamAnalyticsPrivateLinkConnectionState privateLinkServiceConnectionState)
         {
             PrivateLinkServiceId = privateLinkServiceId;
             GroupIds = groupIds;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> The resource id of the private link service. Required on PUT (CreateOrUpdate) requests. </summary>
-        public string PrivateLinkServiceId { get; set; }
+        public ResourceIdentifier PrivateLinkServiceId { get; set; }
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. Required on PUT (CreateOrUpdate) requests. </summary>
         public IList<string> GroupIds { get; }
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>

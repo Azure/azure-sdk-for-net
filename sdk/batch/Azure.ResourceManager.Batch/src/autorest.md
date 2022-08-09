@@ -23,6 +23,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'ifMatch': 'etag'
+  'locationName': 'azure-location'
 
 rename-rules:
   CPU: Cpu
@@ -162,6 +163,7 @@ rename-mapping:
   IPAddressProvisioningType: BatchIPAddressProvisioningType
   IPRuleAction: BatchIPRuleAction
   NetworkConfiguration: BatchNetworkConfiguration
+  NetworkConfiguration.subnetId: -|arm-id
   NetworkSecurityGroupRule: BatchNetworkSecurityGroupRule
   NetworkSecurityGroupRuleAccess: BatchNetworkSecurityGroupRuleAccess
   NodePlacementPolicyType: BatchNodePlacementPolicyType
@@ -176,7 +178,7 @@ rename-mapping:
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
   - from: swagger-document
-    where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.item
+    where: $.definitions.PublicIPAddressConfiguration.properties.ipAddressIds.items
     transform: $["x-ms-format"] = "arm-id"
 # resume the setter on tags of BatchAccountData
   - from: swagger-document

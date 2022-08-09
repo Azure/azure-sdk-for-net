@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </param>
         /// <param name="runResult"> The result of this task run. </param>
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
-        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryManagedIdentity identity, AzureLocation? location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryRunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryTaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryRunContent runRequest, ContainerRegistryRunData runResult, string forceUpdateTag) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Identity for the resource. </summary>
-        public ContainerRegistryManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> The provisioning state of this task run. </summary>

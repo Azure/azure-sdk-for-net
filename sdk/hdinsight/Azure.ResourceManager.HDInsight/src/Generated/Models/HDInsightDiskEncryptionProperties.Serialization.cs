@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("msiResourceId");
                 writer.WriteStringValue(MsiResourceId);
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("encryptionAtHost");
-                writer.WriteBooleanValue(EncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
             writer.WriteEndObject();
         }
