@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.EnergyServices.Models
 {
     /// <summary> The check availability result. </summary>
-    public partial class EnergyServiceNameAvailabilityResponse
+    public partial class EnergyServiceNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of EnergyServiceNameAvailabilityResponse. </summary>
-        internal EnergyServiceNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of EnergyServiceNameAvailabilityResult. </summary>
+        internal EnergyServiceNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of EnergyServiceNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of EnergyServiceNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal EnergyServiceNameAvailabilityResponse(bool? nameAvailable, EnergyServiceNameUnavailableReason? reason, string message)
+        internal EnergyServiceNameAvailabilityResult(bool? nameAvailable, EnergyServiceNameUnavailableReason? reason, string message)
         {
             NameAvailable = nameAvailable;
             Reason = reason;

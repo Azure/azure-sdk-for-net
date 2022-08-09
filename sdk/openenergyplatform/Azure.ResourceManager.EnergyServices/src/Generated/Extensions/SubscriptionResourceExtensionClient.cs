@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EnergyServiceNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EnergyServiceNameAvailabilityResponse> CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();

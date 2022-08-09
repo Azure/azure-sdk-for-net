@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<EnergyServiceNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <param name="content"> NameAvailabilityRequest object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<EnergyServiceNameAvailabilityResponse> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

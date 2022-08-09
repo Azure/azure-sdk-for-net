@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
-    public partial class EnergyServiceNameAvailabilityResponse
+    public partial class EnergyServiceNameAvailabilityResult
     {
-        internal static EnergyServiceNameAvailabilityResponse DeserializeEnergyServiceNameAvailabilityResponse(JsonElement element)
+        internal static EnergyServiceNameAvailabilityResult DeserializeEnergyServiceNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<EnergyServiceNameUnavailableReason> reason = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     continue;
                 }
             }
-            return new EnergyServiceNameAvailabilityResponse(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new EnergyServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }

@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.EnergyServices
     }
     public static partial class EnergyServicesExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResponse> CheckNameAvailabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetEnergyServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EnergyServices.EnergyServiceResource GetEnergyServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.EnergyServices.Models
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
     }
-    public partial class EnergyServiceNameAvailabilityResponse
+    public partial class EnergyServiceNameAvailabilityResult
     {
-        internal EnergyServiceNameAvailabilityResponse() { }
+        internal EnergyServiceNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason? Reason { get { throw null; } }
