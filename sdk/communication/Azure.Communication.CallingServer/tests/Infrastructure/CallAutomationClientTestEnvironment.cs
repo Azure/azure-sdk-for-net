@@ -7,7 +7,7 @@ using Azure.Communication.Tests;
 
 namespace Azure.Communication.CallingServer.Tests.Infrastructure
 {
-    internal class CallingServerClientTestEnvironment : CommunicationTestEnvironment
+    public class CallAutomationClientTestEnvironment : CommunicationTestEnvironment
     {
         public const string ResourceId = "COMMUNICATION_LIVETEST_STATIC_RESOURCE_IDENTIFIER";
 

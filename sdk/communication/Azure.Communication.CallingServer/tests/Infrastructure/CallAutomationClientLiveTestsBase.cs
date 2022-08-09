@@ -9,11 +9,11 @@ using Azure.Core.TestFramework.Models;
 
 namespace Azure.Communication.CallingServer.Tests.Infrastructure
 {
-    internal class CallingServerClientLiveTestsBase : RecordedTestBase<CallingServerClientTestEnvironment>
+    public class CallAutomationClientLiveTestsBase : RecordedTestBase<CallAutomationClientTestEnvironment>
     {
         private const string URIDomainRegEx = @"https://([^/?]+)";
 
-        public CallingServerClientLiveTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public CallAutomationClientLiveTestsBase(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
@@ -36,15 +36,16 @@ namespace Azure.Communication.CallingServer.Tests.Infrastructure
             //var connectionString = "endpoint=https://acs-recording-common-e2e.communication.azure.com/;accesskey=bSHJgxhB3/I52CmZkwf3u2ojPNVwEuEyba7SeWbfrKFmYgd7C2eujSD/ArlSBcQzo/dp5ZX7OS2LZ86hIt5UQg==";
 
             CallAutomationClient callingServerClient;
-            //if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
-            //{
-            //    callingServerClient = new CallingServer.CallingServerClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
-            //}
-            //else
-            //{
-            //    callingServerClient = new CallingServer.CallingServerClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
-            //}
-            callingServerClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
+            {
+                callingServerClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            }
+            else
+            {
+                callingServerClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+            }
+            //callingServerClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+
             return InstrumentClient(callingServerClient);
         }
 

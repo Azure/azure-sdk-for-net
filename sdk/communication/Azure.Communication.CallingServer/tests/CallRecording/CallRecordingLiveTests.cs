@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    internal class CallRecordingLiveTests : CallingServerClientLiveTestsBase
+    public class CallRecordingLiveTests : CallAutomationClientLiveTestsBase
     {
         public CallRecordingLiveTests(bool isAsync) : base(isAsync)
         { }
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallingServer
             finally
             {
                 var callConnection = client.GetCallConnection(callConnectionId);
-                await callConnection.HangupAsync(true).ConfigureAwait(false);
+                await callConnection.HangUpAsync(true).ConfigureAwait(false);
             }
         }
     }
