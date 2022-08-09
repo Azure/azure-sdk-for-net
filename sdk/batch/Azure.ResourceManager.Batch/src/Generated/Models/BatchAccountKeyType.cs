@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The type of account key to regenerate. </summary>
-    public enum AccountKeyType
+    public enum BatchAccountKeyType
     {
         /// <summary> The primary account key. </summary>
         Primary,

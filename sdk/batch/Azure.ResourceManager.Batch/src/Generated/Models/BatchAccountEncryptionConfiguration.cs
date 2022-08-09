@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
         ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
         ///  The KeyVault has soft-delete and purge protection enabled
         /// </summary>
-        public string KeyIdentifier
+        public Uri KeyIdentifier
         {
             get => KeyVaultProperties is null ? default : KeyVaultProperties.KeyIdentifier;
             set
