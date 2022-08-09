@@ -11,8 +11,18 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class CommunicationError
+    public partial class CommunicationError : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("code");
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("message");
+            writer.WriteStringValue(Message);
+            writer.WriteEndObject();
+        }
+
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {
             string code = default;

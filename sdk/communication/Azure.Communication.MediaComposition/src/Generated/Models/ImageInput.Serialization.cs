@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -17,12 +18,21 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri");
             writer.WriteStringValue(Uri);
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(PlaceholderImageUri))
+            {
+                writer.WritePropertyName("placeholderImageUri");
+                writer.WriteStringValue(PlaceholderImageUri);
+            }
             writer.WriteEndObject();
         }
 
         internal static ImageInput DeserializeImageInput(JsonElement element)
         {
             string uri = default;
+            MediaInputType kind = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
@@ -30,8 +40,18 @@ namespace Azure.Communication.MediaComposition.Models
                     uri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new MediaInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("placeholderImageUri"))
+                {
+                    placeholderImageUri = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ImageInput(uri);
+            return new ImageInput(kind, placeholderImageUri.Value, uri);
         }
     }
 }

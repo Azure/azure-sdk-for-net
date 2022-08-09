@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry. </param>
-        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ContainerRegistryManagedIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The SKU of the container registry. </summary>
         public ContainerRegistrySku Sku { get; set; }
         /// <summary> The identity of the container registry. </summary>
-        public ContainerRegistryManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The URL that can be used to log into the container registry. </summary>
         public string LoginServer { get; }
         /// <summary> The creation date of the container registry in ISO8601 format. </summary>

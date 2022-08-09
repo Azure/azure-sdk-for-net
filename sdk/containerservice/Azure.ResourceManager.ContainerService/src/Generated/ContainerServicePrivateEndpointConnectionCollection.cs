@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A class representing a collection of <see cref="ContainerServicePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ContainerServicePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ManagedClusterResource" />.
-    /// To get a <see cref="ContainerServicePrivateEndpointConnectionCollection" /> instance call the GetContainerServicePrivateEndpointConnections method from an instance of <see cref="ManagedClusterResource" />.
+    /// Each <see cref="ContainerServicePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ContainerServiceManagedClusterResource" />.
+    /// To get a <see cref="ContainerServicePrivateEndpointConnectionCollection" /> instance call the GetContainerServicePrivateEndpointConnections method from an instance of <see cref="ContainerServiceManagedClusterResource" />.
     /// </summary>
     public partial class ContainerServicePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ContainerServicePrivateEndpointConnectionResource>, IAsyncEnumerable<ContainerServicePrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedClusterResource.ResourceType), nameof(id));
+            if (id.ResourceType != ContainerServiceManagedClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceManagedClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>
