@@ -264,7 +264,7 @@ jobs:
             ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
             ExcludeTargetTestProjects: true
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            MatrixConfigsFile: ${{ parameters.MatrixConfigs.Path }}
+            MatrixConfigsFile: '$(${{ parameters.MatrixConfigs }}.Path)'
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
