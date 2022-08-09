@@ -6,35 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
-        "Content-Length": "190",
+        "Content-Length": "146",
         "Content-Type": "application/json",
-        "traceparent": "00-598bab0f625d624f877105a983e72d91-d3d64f45bc137841-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "traceparent": "00-249451113b4e4e6191c9cf446c9044d4-3f90bcaef8905a6e-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "bedc85c8635657003df73c80cf5f9d78",
+        "x-ms-client-request-id": "157748e60e31d7c429ad08dacbac48b1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "batchItems": [
           {
-            "query": "??api-version=1.0\u0026query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en"
+            "query": "?query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en"
           },
           {
-            "query": "??api-version=1.0\u0026query=pizza\u0026lat=25.04\u0026lon=121.56"
+            "query": "?query=pizza\u0026lat=25.04\u0026lon=121.56"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Aug 2022 20:47:02 GMT",
+        "Date": "Tue, 09 Aug 2022 21:51:30 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E82DCA2A50F64F8EAB13D99A4DC18F1E Ref B: PAOEDGE0507 Ref C: 2022-08-09T20:47:02Z"
+        "X-MSEdge-Ref": "Ref A: 2B35BA1292404032A8EA0952C215CBC3 Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:30Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -785,7 +784,7 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 8,
+                "queryTime": 10,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 377567,
@@ -820,11 +819,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -890,11 +889,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -967,11 +966,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1037,11 +1036,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1109,11 +1108,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1181,11 +1180,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1257,11 +1256,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1329,11 +1328,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1400,11 +1399,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1471,11 +1470,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1532,6 +1531,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "739296925"
+    "RandomSeed": "399549503"
   }
 }

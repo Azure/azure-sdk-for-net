@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Initializes a new instance of BatchRequestItem. </summary>{
-    internal partial class BatchRequestItem<T> where T: IQueryRepresentable
+    internal partial class BatchRequestItem<T>
     {
         /// <summary> Initializes a new instance of BatchRequestItem. </summary>
         internal BatchRequestItem(T query)

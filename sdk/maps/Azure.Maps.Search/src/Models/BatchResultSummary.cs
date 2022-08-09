@@ -7,8 +7,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    [CodeGenModel("SearchAddressBatchItem")]
-    internal partial class SearchAddressBatchItem
+    /// <summary> Summary of the results for the batch request. </summary>
+    [CodeGenModel("BatchResultSummary")]
+    internal partial class BatchResultSummary
     {
     }
 }

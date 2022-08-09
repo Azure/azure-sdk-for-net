@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "258",
+        "Content-Length": "104",
         "Content-Type": "application/json",
-        "traceparent": "00-9ad492bce3d0962356d8ff690f3dbad8-4aa316d701161587-00",
+        "traceparent": "00-c8256336c08055c6f9fbf53ac8d94d91-2c92015c92419088-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "0d270b5f33071be52093b91ba117362d",
+        "x-ms-client-request-id": "bec04c647cd0fe55afd3b5ac3a789c33",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "batchItems": [
           {
-            "query": "?https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0\u0026query=24%2C121\u0026language=en"
+            "query": "?query=24%2C121\u0026language=en"
           },
           {
-            "query": "?https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0\u0026query=47.606038%2C-122.333345"
+            "query": "?query=47.606038%2C-122.333345"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Aug 2022 19:59:44 GMT",
+        "Date": "Tue, 09 Aug 2022 21:51:45 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: D34D18E3B78448E0A6CB489D31AB8A07 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:44Z"
+        "X-MSEdge-Ref": "Ref A: B264B05E458C43BCBCDCF1EF10727BA1 Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:45Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -41,7 +41,7 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 6,
+                "queryTime": 7,
                 "numResults": 1
               },
               "addresses": [
@@ -125,6 +125,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1028263490"
+    "RandomSeed": "1326963687"
   }
 }

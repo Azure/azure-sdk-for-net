@@ -7,8 +7,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    [CodeGenModel("SearchAddressBatchItem")]
-    internal partial class SearchAddressBatchItem
+    /// <summary> The error detail. </summary>
+    [CodeGenModel("ErrorDetail")]
+    internal partial class ErrorDetail
     {
     }
 }

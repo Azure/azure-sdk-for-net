@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ErrorDetail
+    internal partial class ErrorDetail
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {

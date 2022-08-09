@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Summary of the results for the batch request. </summary>
-    public partial class BatchResultSummary
+    internal partial class BatchResultSummary
     {
         /// <summary> Initializes a new instance of BatchResultSummary. </summary>
         internal BatchResultSummary()

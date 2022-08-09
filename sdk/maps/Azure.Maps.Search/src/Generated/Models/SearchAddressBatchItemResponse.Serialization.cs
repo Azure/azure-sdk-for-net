@@ -27,7 +27,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = Models.ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
                 if (property.NameEquals("summary"))

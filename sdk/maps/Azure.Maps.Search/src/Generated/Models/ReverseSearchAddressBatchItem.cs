@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> An item returned from Search Address Reverse Batch service call. </summary>
-    public partial class ReverseSearchAddressBatchItem : BatchResultItem
+    internal partial class ReverseSearchAddressBatchItem : BatchResultItem
     {
         /// <summary> Initializes a new instance of ReverseSearchAddressBatchItem. </summary>
         internal ReverseSearchAddressBatchItem()
@@ -22,5 +22,8 @@ namespace Azure.Maps.Search.Models
         {
             Response = response;
         }
+
+        /// <summary> The result of the query. SearchAddressReverseResponse if the query completed successfully, ErrorResponse otherwise. </summary>
+        public ReverseSearchAddressBatchItemResponse Response { get; }
     }
 }

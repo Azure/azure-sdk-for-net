@@ -3,28 +3,29 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core.GeoJson;
+using System;
+using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Initializes a new instance of FuzzySearchBatchQuery. </summary>{
-    public partial class FuzzySearchQuery: IQueryRepresentable
+    public partial class FuzzySearchQuery
     {
-        private string query;
-        private FuzzySearchOptions options;
+        /// <summary> The query string user wants to search. </summary>
+        public string Query { get; }
+
+        /// <summary> Fuzzy search options </summary>
+        public FuzzySearchOptions FuzzySearchOptions { get; }
 
         /// <summary> Initializes a new instance of FuzzySearchBatchQuery. </summary>
+        /// <param name="query"> The query string user wants to search. </param>
+        /// <param name="options"> Fuzzy search options. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public FuzzySearchQuery(string query, FuzzySearchOptions options = null)
         {
-            this.query = query;
-            this.options = options;
-        }
-
-        /// <summary> The query string will be passed verbatim to the search API for processing. </summary>
-        public string Query(MapsSearchClient client)
-        {
-            return "?" + client.RestClient.CreateFuzzySearchRequest(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours).Request.Uri.Query;
+            Argument.AssertNotNull(query, nameof(query));
+            this.Query = query;
+            this.FuzzySearchOptions = options;
         }
     }
 }

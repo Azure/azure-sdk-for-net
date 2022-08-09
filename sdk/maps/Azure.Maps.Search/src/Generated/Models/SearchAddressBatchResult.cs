@@ -18,16 +18,5 @@ namespace Azure.Maps.Search.Models
         {
             BatchItems = new ChangeTrackingList<SearchAddressBatchItem>();
         }
-
-        /// <summary> Initializes a new instance of SearchAddressBatchResult. </summary>
-        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
-        /// <param name="batchItems"> Array containing the batch results. </param>
-        internal SearchAddressBatchResult(BatchResultSummary batchSummary, IReadOnlyList<SearchAddressBatchItem> batchItems) : base(batchSummary)
-        {
-            BatchItems = batchItems;
-        }
-
-        /// <summary> Array containing the batch results. </summary>
-        public IReadOnlyList<SearchAddressBatchItem> BatchItems { get; }
     }
 }

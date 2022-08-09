@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> An item returned from Search Address Batch service call. </summary>
-    public partial class SearchAddressBatchItem : BatchResultItem
+    internal partial class SearchAddressBatchItem : BatchResultItem
     {
         /// <summary> Initializes a new instance of SearchAddressBatchItem. </summary>
         internal SearchAddressBatchItem()
@@ -22,5 +22,8 @@ namespace Azure.Maps.Search.Models
         {
             Response = response;
         }
+
+        /// <summary> The result of the query. SearchAddressResponse if the query completed successfully, ErrorResponse otherwise. </summary>
+        public SearchAddressBatchItemResponse Response { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var fuzzySearchResponse = await client.FuzzySearchAsync("Milford", new FuzzySearchOptions { CountryFilter = new[] { "NZ" } });
-            Assert.AreEqual("Milford", fuzzySearchResponse.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("Milford", fuzzySearchResponse.Value.Results[0].Address.Municipality);
             Assert.AreEqual("Milford Sound", fuzzySearchResponse.Value.Results[1].Address.Municipality);
         }
 
@@ -34,8 +34,8 @@ namespace Azure.Maps.Search.Tests
                 Coordinates = new GeoPosition(121.56, 25.04),
                 Language = "en"
             });
-            Assert.AreEqual("CAFE_PUB", fuzzySearchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("Taipei City", fuzzySearchResponse.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("CAFE_PUB", fuzzySearchResponse.Value.Results[0].PointOfInterest.Classifications.First().Code);
+            Assert.AreEqual("Taipei City", fuzzySearchResponse.Value.Results[0].Address.Municipality);
         }
 
         [RecordedTest]
@@ -55,10 +55,10 @@ namespace Azure.Maps.Search.Tests
                 new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
                 new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) })
             });
-            Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().Address.Municipality);
-            Assert.AreEqual("RESTAURANT", fuzzySearchBatchResp.Value.BatchItems[1].Results.First().PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.BatchItems[1].Results.First().Address.Municipality);
+            Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.Results[0].Results[0].PointOfInterest.Classifications[0].Code);
+            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.Results[0].Results[0].Address.Municipality);
+            Assert.AreEqual("RESTAURANT", fuzzySearchBatchResp.Value.Results[1].Results[0].PointOfInterest.Classifications[0].Code);
+            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.Results[1].Results[0].Address.Municipality);
         }
 
         [RecordedTest]
@@ -72,10 +72,10 @@ namespace Azure.Maps.Search.Tests
 
             var fuzzySearchBatchResp = operation.WaitForCompletion();
 
-            Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().Address.Municipality);
-            Assert.AreEqual("RESTAURANT", fuzzySearchBatchResp.Value.BatchItems[1].Results.First().PointOfInterest.Classifications.First().Code);
-            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.BatchItems[1].Results.First().Address.Municipality);
+            Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.Results[0].Results[0].PointOfInterest.Classifications[0].Code);
+            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.Results[0].Results[0].Address.Municipality);
+            Assert.AreEqual("RESTAURANT", fuzzySearchBatchResp.Value.Results[1].Results[0].PointOfInterest.Classifications[0].Code);
+            Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.Results[1].Results[0].Address.Municipality);
         }
     }
 }

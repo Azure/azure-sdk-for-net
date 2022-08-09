@@ -16,17 +16,5 @@ namespace Azure.Maps.Search.Models
         internal SearchAddressBatchItemResponse()
         {
         }
-
-        /// <summary> Initializes a new instance of SearchAddressBatchItemResponse. </summary>
-        /// <param name="summary"> Summary object for a Search API response. </param>
-        /// <param name="results"> A list of Search API results. </param>
-        /// <param name="error"> The error object. </param>
-        internal SearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<SearchAddressResultItem> results, ErrorDetail error) : base(summary, results)
-        {
-            Error = error;
-        }
-
-        /// <summary> The error object. </summary>
-        public ErrorDetail Error { get; }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> An item returned from Batch API. Extend with &apos;response&apos; property. </summary>
-    public partial class BatchResultItem
+    internal partial class BatchResultItem
     {
         /// <summary> Initializes a new instance of BatchResultItem. </summary>
         internal BatchResultItem()

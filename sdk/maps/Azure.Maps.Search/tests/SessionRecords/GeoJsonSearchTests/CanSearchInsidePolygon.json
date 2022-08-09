@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "204",
         "Content-Type": "application/json",
-        "traceparent": "00-f1c0af675c47810d2def0ce188b949a1-84597b1eaa570cc2-00",
+        "traceparent": "00-d904cc20dee818559e37ff3595a3042c-77d8c7dfdc10a8b3-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "dfe30d4fd12bff941a7682b1e7eb35f8",
+        "x-ms-client-request-id": "cd6e8ab7b7e4682c6413ef8fc07d0355",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -43,7 +43,7 @@
       "ResponseHeaders": {
         "Content-Length": "10799",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 09 Aug 2022 19:59:37 GMT",
+        "Date": "Tue, 09 Aug 2022 21:51:39 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": [
           "Accept-Encoding",
@@ -52,7 +52,7 @@
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 80FCEFDBC2C745D4B0D01C513D2EC1C5 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:37Z"
+        "X-MSEdge-Ref": "Ref A: 4BC1E8485C6F40B98085B15B019E4E4C Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:39Z"
       },
       "ResponseBody": {
         "summary": {
@@ -89,11 +89,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "microbrewery/beer garden"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "microbrewery/beer garden"
                     }
                   ]
                 }
@@ -749,11 +749,11 @@
                   "names": [
                     {
                       "nameLocale": "en-US",
-                      "name": "pub"
+                      "name": "caf\u00E9/pub"
                     },
                     {
                       "nameLocale": "en-US",
-                      "name": "caf\u00E9/pub"
+                      "name": "pub"
                     }
                   ]
                 }
@@ -807,6 +807,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "2022739153"
+    "RandomSeed": "1731024277"
   }
 }

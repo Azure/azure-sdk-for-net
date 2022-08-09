@@ -32,38 +32,6 @@ namespace Azure.Maps.Search.Models
             return new PolygonObject(providerId, geometryData);
         }
 
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ErrorDetail error = null)
-        {
-            return new ErrorResponse(error);
-        }
-
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="target"> The error target. </param>
-        /// <param name="details"> The error details. </param>
-        /// <param name="additionalInfo"> The error additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
-        public static ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, IEnumerable<ErrorDetail> details = null, IEnumerable<ErrorAdditionalInfo> additionalInfo = null)
-        {
-            details ??= new List<ErrorDetail>();
-            additionalInfo ??= new List<ErrorAdditionalInfo>();
-
-            return new ErrorDetail(code, message, target, details?.ToList(), additionalInfo?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        /// <param name="type"> The additional info type. </param>
-        /// <param name="info"> The additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
-        public static ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null)
-        {
-            return new ErrorAdditionalInfo(type, info);
-        }
-
         /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
         /// <param name="lat"> Latitude property. </param>
         /// <param name="lon"> Longitude property. </param>
@@ -247,69 +215,6 @@ namespace Azure.Maps.Search.Models
         public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(MapsAddress address = null, string position = null)
         {
             return new ReverseSearchCrossStreetAddressResultItem(address, position);
-        }
-
-        /// <summary> Initializes a new instance of SearchAddressBatchResult. </summary>
-        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
-        /// <param name="batchItems"> Array containing the batch results. </param>
-        /// <returns> A new <see cref="Models.SearchAddressBatchResult"/> instance for mocking. </returns>
-        public static SearchAddressBatchResult SearchAddressBatchResult(BatchResultSummary batchSummary = null, IEnumerable<SearchAddressBatchItem> batchItems = null)
-        {
-            batchItems ??= new List<SearchAddressBatchItem>();
-
-            return new SearchAddressBatchResult(batchSummary, batchItems?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of SearchAddressBatchItemResponse. </summary>
-        /// <param name="summary"> Summary object for a Search API response. </param>
-        /// <param name="results"> A list of Search API results. </param>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.SearchAddressBatchItemResponse"/> instance for mocking. </returns>
-        public static SearchAddressBatchItemResponse SearchAddressBatchItemResponse(SearchSummary summary = null, IEnumerable<SearchAddressResultItem> results = null, ErrorDetail error = null)
-        {
-            results ??= new List<SearchAddressResultItem>();
-
-            return new SearchAddressBatchItemResponse(summary, results?.ToList(), error);
-        }
-
-        /// <summary> Initializes a new instance of BatchResultItem. </summary>
-        /// <param name="statusCode"> HTTP request status code. </param>
-        /// <returns> A new <see cref="Models.BatchResultItem"/> instance for mocking. </returns>
-        public static BatchResultItem BatchResultItem(int? statusCode = null)
-        {
-            return new BatchResultItem(statusCode);
-        }
-
-        /// <summary> Initializes a new instance of BatchResultSummary. </summary>
-        /// <param name="successfulRequests"> Number of successful requests in the batch. </param>
-        /// <param name="totalRequests"> Total number of requests in the batch. </param>
-        /// <returns> A new <see cref="Models.BatchResultSummary"/> instance for mocking. </returns>
-        public static BatchResultSummary BatchResultSummary(int? successfulRequests = null, int? totalRequests = null)
-        {
-            return new BatchResultSummary(successfulRequests, totalRequests);
-        }
-
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
-        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
-        /// <param name="batchItems"> Array containing the batch results. </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressBatchResult"/> instance for mocking. </returns>
-        public static ReverseSearchAddressBatchResult ReverseSearchAddressBatchResult(BatchResultSummary batchSummary = null, IEnumerable<ReverseSearchAddressBatchItem> batchItems = null)
-        {
-            batchItems ??= new List<ReverseSearchAddressBatchItem>();
-
-            return new ReverseSearchAddressBatchResult(batchSummary, batchItems?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItemResponse. </summary>
-        /// <param name="summary"> Summary object for a Search Address Reverse response. </param>
-        /// <param name="addresses"> Addresses array. </param>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressBatchItemResponse"/> instance for mocking. </returns>
-        public static ReverseSearchAddressBatchItemResponse ReverseSearchAddressBatchItemResponse(SearchSummary summary = null, IEnumerable<ReverseSearchAddressResultItem> addresses = null, ErrorDetail error = null)
-        {
-            addresses ??= new List<ReverseSearchAddressResultItem>();
-
-            return new ReverseSearchAddressBatchItemResponse(summary, addresses?.ToList(), error);
         }
     }
 }

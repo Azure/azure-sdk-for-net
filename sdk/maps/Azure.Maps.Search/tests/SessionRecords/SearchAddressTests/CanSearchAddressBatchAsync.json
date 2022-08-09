@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "240",
+        "Content-Length": "102",
         "Content-Type": "application/json",
-        "traceparent": "00-c1f20cac3e9fbaf4832eb5b9a8ff31f5-986febdfc182e372-00",
+        "traceparent": "00-7af8779f7aa84d4270cc623460fffb12-48e4bfd192d32d06-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "eb747d2cffeb0b590e4bbb08691944b7",
+        "x-ms-client-request-id": "eed915b0d2027c662c4a00a10314253b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "batchItems": [
           {
-            "query": "?https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Microsoft%20Campus"
+            "query": "?query=Microsoft%20Campus"
           },
           {
-            "query": "?https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Millenium\u0026countrySet=US"
+            "query": "?query=Millenium\u0026countrySet=US"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Aug 2022 19:59:56 GMT",
+        "Date": "Tue, 09 Aug 2022 21:51:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 9748FCD355894F11A5EF57FE76C84C2D Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:56Z"
+        "X-MSEdge-Ref": "Ref A: 69357D1B484047B0A7AAC73F98DCBEF9 Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:54Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,7 +43,7 @@
               "summary": {
                 "query": "microsoft campus",
                 "queryType": "NON_NEAR",
-                "queryTime": 3,
+                "queryTime": 4,
                 "numResults": 1,
                 "offset": 0,
                 "totalResults": 1,
@@ -93,7 +93,7 @@
               "summary": {
                 "query": "millenium",
                 "queryType": "NON_NEAR",
-                "queryTime": 4,
+                "queryTime": 6,
                 "numResults": 2,
                 "offset": 0,
                 "totalResults": 2,
@@ -187,6 +187,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "925812743"
+    "RandomSeed": "1478761741"
   }
 }

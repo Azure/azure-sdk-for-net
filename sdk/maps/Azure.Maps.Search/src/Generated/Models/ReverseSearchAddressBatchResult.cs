@@ -18,16 +18,5 @@ namespace Azure.Maps.Search.Models
         {
             BatchItems = new ChangeTrackingList<ReverseSearchAddressBatchItem>();
         }
-
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
-        /// <param name="batchSummary"> Summary of the results for the batch request. </param>
-        /// <param name="batchItems"> Array containing the batch results. </param>
-        internal ReverseSearchAddressBatchResult(BatchResultSummary batchSummary, IReadOnlyList<ReverseSearchAddressBatchItem> batchItems) : base(batchSummary)
-        {
-            BatchItems = batchItems;
-        }
-
-        /// <summary> Array containing the batch results. </summary>
-        public IReadOnlyList<ReverseSearchAddressBatchItem> BatchItems { get; }
     }
 }

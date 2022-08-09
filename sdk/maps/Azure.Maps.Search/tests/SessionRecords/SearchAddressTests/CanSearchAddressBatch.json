@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "240",
+        "Content-Length": "102",
         "Content-Type": "application/json",
-        "traceparent": "00-86aa2a0232acf1b4abb476c12b88c5b0-85f9373a6191f616-00",
+        "traceparent": "00-e985af0999720f907603a368ca3fd9e2-38679e68a3d49ed4-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "462475779d8fdabf0bbcea690fad0c15",
+        "x-ms-client-request-id": "e5e515ba3a8b98aa55a3d36313dafd89",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "batchItems": [
           {
-            "query": "?https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Microsoft%20Campus"
+            "query": "?query=Microsoft%20Campus"
           },
           {
-            "query": "?https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Millenium\u0026countrySet=US"
+            "query": "?query=Millenium\u0026countrySet=US"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Aug 2022 19:59:51 GMT",
+        "Date": "Tue, 09 Aug 2022 21:51:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 75C131C1CF21469286CADAE20B631423 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:51Z"
+        "X-MSEdge-Ref": "Ref A: D264572DD5B842D5A68D0C0E4C57A2AE Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:50Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -187,6 +187,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "803335438"
+    "RandomSeed": "1581444860"
   }
 }

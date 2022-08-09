@@ -6,34 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "190",
+        "Content-Length": "146",
         "Content-Type": "application/json",
-        "traceparent": "00-ba8539e44c77c0435a8b01349ae4a205-7f422769401453a1-00",
+        "traceparent": "00-1ab86442e4959a9c26a569785665d10e-ace22555d343ba98-00",
         "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220809.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "112440435e31eb0cc72142bb81a88555",
+        "x-ms-client-request-id": "5e1845c3ccdd83ba3e7d915f43398cc6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "batchItems": [
           {
-            "query": "??api-version=1.0\u0026query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en"
+            "query": "?query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en"
           },
           {
-            "query": "??api-version=1.0\u0026query=pizza\u0026lat=25.04\u0026lon=121.56"
+            "query": "?query=pizza\u0026lat=25.04\u0026lon=121.56"
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 09 Aug 2022 19:59:32 GMT",
+        "Date": "Tue, 09 Aug 2022 21:51:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 4D95AFED46404B42835F35EB1A68EB14 Ref B: PAOEDGE0515 Ref C: 2022-08-09T19:59:33Z"
+        "X-MSEdge-Ref": "Ref A: 1323AEC4FDA046C7810930E8B9C213CB Ref B: PAOEDGE0615 Ref C: 2022-08-09T21:51:35Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -43,7 +43,7 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 16,
+                "queryTime": 9,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 1802725,
@@ -784,7 +784,7 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 9,
+                "queryTime": 10,
                 "numResults": 10,
                 "offset": 0,
                 "totalResults": 377567,
@@ -1531,6 +1531,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1062581847"
+    "RandomSeed": "979578025"
   }
 }

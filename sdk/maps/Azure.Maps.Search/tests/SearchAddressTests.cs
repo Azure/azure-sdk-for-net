@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var searchResult = await client.SearchAddressAsync("Seattle");
-            Assert.AreEqual("Washington", searchResult.Value.Results.First().Address.CountrySubdivisionName);
+            Assert.AreEqual("Washington", searchResult.Value.Results[0].Address.CountrySubdivisionName);
         }
 
         [RecordedTest]
@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Tests
             var searchResult = await client.SearchAddressAsync("Redmond", new SearchAddressOptions {
                 EntityType = GeographicEntityType.Municipality
             });
-            Assert.AreEqual("Redmond, WA", searchResult.Value.Results.First().Address.FreeformAddress);
+            Assert.AreEqual("Redmond, WA", searchResult.Value.Results[0].Address.FreeformAddress);
         }
 
         [RecordedTest]
@@ -42,12 +42,12 @@ namespace Azure.Maps.Search.Tests
                 Coordinates = new GeoPosition(121.56, 25.04),
                 Language = "en"
             });
-            Assert.AreEqual("Xinyi District", searchResult.Value.Results.First().Address.MunicipalitySubdivision);
+            Assert.AreEqual("Xinyi District", searchResult.Value.Results[0].Address.MunicipalitySubdivision);
 
             searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
                 Coordinates = new GeoPosition(-122.0910, 47.6773)
             });
-            Assert.AreEqual("Redmond", searchResult.Value.Results.First().Address.Municipality);
+            Assert.AreEqual("Redmond", searchResult.Value.Results[0].Address.Municipality);
         }
 
         [RecordedTest]
@@ -57,12 +57,12 @@ namespace Azure.Maps.Search.Tests
             var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
                 CountryFilter = new[]{ "FJI" }
             });
-            Assert.AreEqual("Fiji", searchResult.Value.Results.First().Address.Country);
+            Assert.AreEqual("Fiji", searchResult.Value.Results[0].Address.Country);
 
             searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
                 CountryFilter = new[]{ "NZ" }
             });
-            Assert.AreEqual("New Zealand", searchResult.Value.Results.First().Address.Country);
+            Assert.AreEqual("New Zealand", searchResult.Value.Results[0].Address.Country);
         }
 
         [RecordedTest]
@@ -73,7 +73,7 @@ namespace Azure.Maps.Search.Tests
                 BoundingBox = new GeoBoundingBox(-191.4481, -45.0128, -191.4148, -44.990)
             });
 
-            Assert.AreEqual("Moke Lake Road", searchResult.Value.Results.First().Address.StreetName);
+            Assert.AreEqual("Moke Lake Road", searchResult.Value.Results[0].Address.StreetName);
         }
 
         [RecordedTest]
@@ -89,7 +89,7 @@ namespace Azure.Maps.Search.Tests
                 PostalCode = "98052"
             };
             var searchResult = await client.SearchStructuredAddressAsync(address);
-            Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results.First().Address.FreeformAddress);
+            Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results[0].Address.FreeformAddress);
         }
 
                 [RecordedTest]
@@ -111,7 +111,7 @@ namespace Azure.Maps.Search.Tests
                 Municipality = "Closeburn"
             };
             var searchResult = await client.SearchStructuredAddressAsync(address);
-            Assert.AreEqual("South Island", searchResult.Value.Results.First().Address.CountrySubdivision);
+            Assert.AreEqual("South Island", searchResult.Value.Results[0].Address.CountrySubdivision);
         }
 
         [RecordedTest]
@@ -123,8 +123,8 @@ namespace Azure.Maps.Search.Tests
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
 
-            Assert.AreEqual("Redmond", searchResult.Value.BatchItems.First().Results.First().Address.Municipality);
-            Assert.AreEqual("Tucson", searchResult.Value.BatchItems[1].Results.First().Address.Municipality);
+            Assert.AreEqual("Redmond", searchResult.Value.Results[0].Results[0].Address.Municipality);
+            Assert.AreEqual("Tucson", searchResult.Value.Results[1].Results[0].Address.Municipality);
         }
 
         [RecordedTest]
@@ -137,8 +137,8 @@ namespace Azure.Maps.Search.Tests
             });
 
             var searchResult = operation.WaitForCompletion();
-            Assert.AreEqual("Redmond", searchResult.Value.BatchItems.First().Results.First().Address.Municipality);
-            Assert.AreEqual("Tucson", searchResult.Value.BatchItems[1].Results.First().Address.Municipality);
+            Assert.AreEqual("Redmond", searchResult.Value.Results[0].Results[0].Address.Municipality);
+            Assert.AreEqual("Tucson", searchResult.Value.Results[1].Results[0].Address.Municipality);
         }
     }
 }

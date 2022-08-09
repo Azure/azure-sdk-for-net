@@ -64,8 +64,8 @@ namespace Azure.Maps.Search.Tests
                 new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
                 new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(-122.333345, 47.606038) }),
             });
-            Assert.AreEqual("Nantou County", reverseResult.Value.BatchItems.First().Addresses.First().Address.Municipality);
-            Assert.AreEqual("Seattle", reverseResult.Value.BatchItems[1].Addresses.First().Address.Municipality);
+            Assert.AreEqual("Nantou County", reverseResult.Value.Results[0].Addresses[0].Address.Municipality);
+            Assert.AreEqual("Seattle", reverseResult.Value.Results[1].Addresses[0].Address.Municipality);
         }
 
         [RecordedTest]
@@ -78,8 +78,8 @@ namespace Azure.Maps.Search.Tests
             });
 
             var reverseResult = operation.WaitForCompletion();
-            Assert.AreEqual("Nantou County", reverseResult.Value.BatchItems.First().Addresses.First().Address.Municipality);
-            Assert.AreEqual("Seattle", reverseResult.Value.BatchItems[1].Addresses.First().Address.Municipality);
+            Assert.AreEqual("Nantou County", reverseResult.Value.Results[0].Addresses[0].Address.Municipality);
+            Assert.AreEqual("Seattle", reverseResult.Value.Results[1].Addresses[0].Address.Municipality);
         }
     }
 }

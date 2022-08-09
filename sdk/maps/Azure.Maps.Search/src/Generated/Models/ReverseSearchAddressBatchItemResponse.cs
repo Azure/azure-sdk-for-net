@@ -16,17 +16,5 @@ namespace Azure.Maps.Search.Models
         internal ReverseSearchAddressBatchItemResponse()
         {
         }
-
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchItemResponse. </summary>
-        /// <param name="summary"> Summary object for a Search Address Reverse response. </param>
-        /// <param name="addresses"> Addresses array. </param>
-        /// <param name="error"> The error object. </param>
-        internal ReverseSearchAddressBatchItemResponse(SearchSummary summary, IReadOnlyList<ReverseSearchAddressResultItem> addresses, ErrorDetail error) : base(summary, addresses)
-        {
-            Error = error;
-        }
-
-        /// <summary> The error object. </summary>
-        public ErrorDetail Error { get; }
     }
 }

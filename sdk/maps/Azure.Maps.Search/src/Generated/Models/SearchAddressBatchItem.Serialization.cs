@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class SearchAddressBatchItem
+    internal partial class SearchAddressBatchItem
     {
         internal static SearchAddressBatchItem DeserializeSearchAddressBatchItem(JsonElement element)
         {

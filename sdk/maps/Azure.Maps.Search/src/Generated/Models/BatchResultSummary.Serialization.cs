@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class BatchResultSummary
+    internal partial class BatchResultSummary
     {
         internal static BatchResultSummary DeserializeBatchResultSummary(JsonElement element)
         {

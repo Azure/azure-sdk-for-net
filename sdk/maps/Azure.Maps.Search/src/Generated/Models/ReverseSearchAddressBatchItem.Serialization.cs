@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchAddressBatchItem
+    internal partial class ReverseSearchAddressBatchItem
     {
         internal static ReverseSearchAddressBatchItem DeserializeReverseSearchAddressBatchItem(JsonElement element)
         {
