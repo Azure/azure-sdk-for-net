@@ -30,7 +30,7 @@ namespace Azure.Communication.Rooms.Tests
             RoomsClient client = new RoomsClient(connectionString, CreateRoomsClientOptionsWithCorrelationVectorLogs(version));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClient
-            //@@var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
+            //@@var connectionString = Environment.GetEnvironmentVariable("connection_string") // Find your Communication Services resource in the Azure portal
             //@@RoomsClient client = new RoomsClient(connectionString);
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomsClient
 
