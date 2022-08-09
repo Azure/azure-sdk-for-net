@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition.Models
         internal CommunicationIdentifierModel ServiceId { get; set; }
 
         /// <summary> The CommunicationIdentifier that identifies the participant.</summary>
-        public CommunicationIdentifier Id => CommunicationIdentifierSerializer.Deserialize(ServiceId);
+        public CommunicationIdentifier Id { get; private set; }
 
         internal ParticipantInput(CommunicationIdentifierModel serviceId, string call)
         {
@@ -30,6 +30,7 @@ namespace Azure.Communication.MediaComposition.Models
             ServiceId = serviceId;
             Call = call;
             Kind = MediaInputType.Participant;
+            Id = CommunicationIdentifierSerializer.Deserialize(serviceId);
         }
 
         /// <summary> Initializes a new instance of ParticipantInput. </summary>
