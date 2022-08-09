@@ -535,7 +535,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // footer
 
-            if (amqpMessage.Footer != null)
+            if ((sections & SectionFlag.Footer) != 0)
             {
                 foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.Footer.Map)
                 {
