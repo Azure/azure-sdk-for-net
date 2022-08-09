@@ -51,7 +51,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public string StorageDirectory { get; set; }
 
         public bool DisableOfflineStorage { get; set; }
-
-        internal int PeriodicReaderExportIntervalInMilliseconds { get; set; } = 60000;
     }
 }

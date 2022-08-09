@@ -21,14 +21,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Configure for attach statsbeat which has collection
             // schedule of 24 hrs == 86400000 milliseconds.
+            var exporterOptions = new AzureMonitorExporterOptions();
+            exporterOptions.DisableOfflineStorage = true;
+            exporterOptions.ConnectionString = StatsBeat_ConnectionString;
+
             Sdk.CreateMeterProviderBuilder()
             .AddMeter("AttachStatsBeatMeter")
-            .AddAzureMonitorMetricExporter(o =>
-            {
-                o.ConnectionString = StatsBeat_ConnectionString;
-                o.DisableOfflineStorage = true;
-                o.PeriodicReaderExportIntervalInMilliseconds = AttachStatsBeatInterval;
-            })
+            .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsBeatInterval)
+            { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
             .Build();
         }
 
