@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             exporterOptions.ConnectionString = StatsBeat_ConnectionString;
 
             Sdk.CreateMeterProviderBuilder()
-            .AddMeter("AttachStatsBeatMeter")
+                .AddMeter("AttachStatsBeatMeter")
             .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), AttachStatsBeatInterval)
             { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
             .Build();
