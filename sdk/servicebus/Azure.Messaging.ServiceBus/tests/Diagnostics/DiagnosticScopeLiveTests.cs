@@ -158,12 +158,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
                 // send a batch
                 var batch = await sender.CreateMessageBatchAsync();
+                var messages = new List<ServiceBusMessage>();
                 for (int i = 0; i < numMessages; i++)
                 {
-                    batch.TryAddMessage(ServiceBusTestUtilities.GetMessage(sessionId));
+                    var currentMessage = ServiceBusTestUtilities.GetMessage(sessionId);
+                    messages.Add(currentMessage);
+                    batch.TryAddMessage(currentMessage);
                 }
                 await sender.SendMessagesAsync(batch);
-                //AssertSendActivities(useSessions, sender, batch.AsReadOnly<AmqpMessage>()); TODO
+                AssertSendActivities(useSessions, sender, messages);
             };
         }
 
