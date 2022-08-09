@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerInstance : IUtf8JsonSerializable
+    public partial class ContainerInstanceContainer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerInstance DeserializeContainerInstance(JsonElement element)
+        internal static ContainerInstanceContainer DeserializeContainerInstanceContainer(JsonElement element)
         {
             string name = default;
             string image = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstance(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value);
+            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value);
         }
     }
 }
