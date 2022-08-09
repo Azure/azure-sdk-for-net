@@ -21,7 +21,6 @@ namespace Azure.AI.FormRecognizer.Tests
     [ClientTestFixture(
     FormRecognizerClientOptions.ServiceVersion.V2_0,
     FormRecognizerClientOptions.ServiceVersion.V2_1)]
-    [IgnoreServiceError(200, "3014", Message = "Generic error during training.", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28913")]
     public class RecognizeCustomFormsLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeCustomFormsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
