@@ -504,7 +504,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // delivery annotations
 
-            if (amqpMessage.DeliveryAnnotations != null)
+            if ((sections & SectionFlag.DeliveryAnnotations) != 0)
             {
                 foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
                 {
