@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -27,7 +28,11 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint");
-                writer.WriteStringValue(Thumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Format))
             {
@@ -37,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data");
-                writer.WriteStringValue(Data);
+                writer.WriteObjectValue(Data);
             }
             if (Optional.IsDefined(Password))
             {
@@ -56,9 +61,9 @@ namespace Azure.ResourceManager.Batch.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> thumbprintAlgorithm = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<BatchAccountCertificateFormat> format = default;
-            Optional<string> data = default;
+            Optional<object> data = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -113,7 +118,12 @@ namespace Azure.ResourceManager.Batch.Models
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"))
@@ -128,7 +138,12 @@ namespace Azure.ResourceManager.Batch.Models
                         }
                         if (property0.NameEquals("data"))
                         {
-                            data = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            data = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("password"))

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            IList<Models.ContainerInstance> containers = default;
+            IList<ContainerInstanceContainer> containers = default;
             Optional<IList<ContainerGroupImageRegistryCredential>> imageRegistryCredentials = default;
             Optional<ContainerGroupRestartPolicy> restartPolicy = default;
             Optional<ContainerGroupIPAddress> ipAddress = default;
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("containers"))
                         {
-                            List<Models.ContainerInstance> array = new List<Models.ContainerInstance>();
+                            List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ContainerInstance.DeserializeContainerInstance(item));
+                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
                             }
                             containers = array;
                             continue;

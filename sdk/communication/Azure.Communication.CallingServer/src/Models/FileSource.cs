@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     public class FileSource : PlaySource
     {
         /// <summary> The Uri of the file. </summary>
-        public Uri FileUri { get; set; }
+        public Uri FileUri { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="FileSource"/>.

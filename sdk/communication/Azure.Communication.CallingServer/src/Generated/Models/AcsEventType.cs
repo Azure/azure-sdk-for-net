@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The AcsEventType. </summary>
-    public readonly partial struct AcsEventType : IEquatable<AcsEventType>
+    internal readonly partial struct AcsEventType : IEquatable<AcsEventType>
     {
         private readonly string _value;
 
