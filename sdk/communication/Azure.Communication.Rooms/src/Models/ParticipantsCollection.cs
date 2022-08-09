@@ -39,14 +39,7 @@ namespace Azure.Communication.Rooms
 
         internal IReadOnlyList<RoomParticipant> RoomParticipantsInternalToRoomParticipants(IEnumerable<RoomParticipantInternal> roomParticipantsInternal)
         {
-            List<RoomParticipant> roomParticipants = new List<RoomParticipant>();
-            foreach (RoomParticipantInternal eachRoomParticipantInternal in roomParticipantsInternal)
-            {
-                RoomParticipant roomParticipant = new RoomParticipant(eachRoomParticipantInternal);
-                roomParticipants.Add(roomParticipant);
-            }
-
-            return roomParticipants;
+            return roomParticipantsInternal.Select(p => new RoomParticipant(p)).ToList();
         }
 
         /// <summary> Initializes a new instance of ParticipantsCollection. </summary>
