@@ -11,7 +11,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The participants updated event.
     /// </summary>
-    public class ParticipantsUpdated : CallingServerEventBase
+    public class ParticipantsUpdated : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
         internal ParticipantsUpdated()
@@ -32,12 +32,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> List of current participants in the call. </summary>
         public IReadOnlyList<CommunicationIdentifier> Participants { get; }
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
+
         /// <summary>
         /// Deserialize <see cref="ParticipantsUpdated"/> event.
         /// </summary>
