@@ -11,6 +11,7 @@ using System.Transactions;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
@@ -48,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<ServiceBusMessage>();
+                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount).AsReadOnly<AmqpMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
@@ -76,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                        Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
                         Assert.AreEqual(item.DeliveryCount, 1);
                         lockTokens.Add(item.LockToken);
                     }
@@ -109,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 foreach (var item in await receiver.PeekMessagesAsync(messageCount))
                 {
                     messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
+                    Assert.AreEqual(messageEnum.Current.Properties.MessageId.ToString(), item.MessageId);
                 }
 
                 _listener.SingleEventById(ServiceBusEventSource.CreateManagementLinkStartEvent, e => e.Payload.Contains(receiver.Identifier));
@@ -163,7 +164,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchStartEvent, e => e.Payload.Contains(sender.Identifier));
                 _listener.SingleEventById(ServiceBusEventSource.CreateMessageBatchCompleteEvent, e => e.Payload.Contains(sender.Identifier));
 
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<ServiceBusMessage>();
+                IEnumerable<AmqpMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<AmqpMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 _listener.SingleEventById(ServiceBusEventSource.CreateSendLinkStartEvent, e => e.Payload.Contains(sender.Identifier));
