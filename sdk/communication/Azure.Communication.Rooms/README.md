@@ -2,6 +2,24 @@
 
 This package contains a C# SDK for the Rooms Service of Azure Communication Services.
 
+Rooms overview
+    Azure Communication Services (ACS) Rooms is a set of APIs, used by Contoso server applications to create a server-managed conversation space with fixed set of lifetime and participants, pre-defining rules from server-tier both who and when can communicate (like scheduled meeting creation).
+
+With the Public Preview release of ACS Rooms, Contoso will be able to:
+    create a meeting space with known time coordinates (start/end time),
+    join voice/video calls within that meeting space using the ACS web calling SDK or native mobile calling SDKs,
+    add participants to a room,
+    assign pre-defined roles to room participants,
+    set rooms call join policies (e.g., open or closed room), and
+    consume Event Grid notifications for calling events.
+    The server-side functionalities can be accessed via a refreshed API and a full set of SDKs (.NET, Java, Python, JavaScript/TypeScript).
+
+The main scenarios where Rooms can best be used:
+    Virtual Visits (e.g., telemedicine, remote financial advisor, virtual classroom, etc...)
+    Virtual Events (e.g., live event, company all-hands, live concert, etc...)
+    Champion scenarios
+
+
 [Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 ## Getting started
 
