@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0 (2022-08-09)
 
 ### Other Changes
+
+- Added `ExpireOn` property in `ScriptStatus` model to replace `ExpirationOn` property and made `ExpirationOn` EditorBrowsableNever.
 
 ## 1.2.0 (2022-07-11)
 
@@ -24,7 +20,7 @@
 - Add Update methods in resource classes.
 
 ## 1.0.0 (2022-04-07)
-This is the first stable release of the Azure Resources management library. 
+This is the first stable release of the Azure Resources management library.
 
 ### Breaking Changes
 
