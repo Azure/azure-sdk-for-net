@@ -535,6 +535,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // footer
 
+            if (amqpMessage.Footer != null)
+            {
+                foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.Footer.Map)
+                {
+                    if (TryGetNetObjectFromAmqpObject(kvp.Value, MappingType.ApplicationProperty, out var netObject))
+                    {
+                        annotatedMessage.Footer[kvp.Key.ToString()] = netObject;
+                    }
+                }
+            }
+
+            // lock token
+
             if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {
                 Span<byte> guidBytes = stackalloc byte[GuidSizeInBytes];

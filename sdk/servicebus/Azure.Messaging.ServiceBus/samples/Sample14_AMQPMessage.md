@@ -53,6 +53,9 @@ AmqpAnnotatedMessage amqpMessage = message.GetRawAmqpMessage();
 amqpMessage.Header.Durable = true;
 amqpMessage.Header.Priority = 1;
 
+// set some custom properties in the footer
+amqpMessage.Footer["custom-footer-property"] = "custom-footer-value";
+
 // set some custom properties in the message annotations
 amqpMessage.MessageAnnotations["custom-message-annotation"] = "custom-message-annotation-value";
 
@@ -72,6 +75,7 @@ AmqpMessageHeader header = receivedAmqpMessage.Header;
 
 bool? durable = header.Durable;
 byte? priority = header.Priority;
+string customFooterValue = (string)receivedAmqpMessage.Footer["custom-footer-property"];
 string customMessageAnnotation = (string)receivedAmqpMessage.MessageAnnotations["custom-message-annotation"];
 string customDeliveryAnnotation = (string)receivedAmqpMessage.DeliveryAnnotations["custom-delivery-annotation"];
 ```

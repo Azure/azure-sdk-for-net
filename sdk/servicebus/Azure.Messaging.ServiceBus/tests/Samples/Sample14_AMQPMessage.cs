@@ -86,6 +86,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 amqpMessage.Header.Durable = true;
                 amqpMessage.Header.Priority = 1;
 
+                // set some custom properties in the footer
+                amqpMessage.Footer["custom-footer-property"] = "custom-footer-value";
+
                 // set some custom properties in the message annotations
                 amqpMessage.MessageAnnotations["custom-message-annotation"] = "custom-message-annotation-value";
 
@@ -103,12 +106,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 bool? durable = header.Durable;
                 byte? priority = header.Priority;
+                string customFooterValue = (string)receivedAmqpMessage.Footer["custom-footer-property"];
                 string customMessageAnnotation = (string)receivedAmqpMessage.MessageAnnotations["custom-message-annotation"];
                 string customDeliveryAnnotation = (string)receivedAmqpMessage.DeliveryAnnotations["custom-delivery-annotation"];
                 #endregion
 
                 Assert.IsTrue(durable);
                 Assert.AreEqual(1, priority);
+                Assert.AreEqual("custom-footer-value", customFooterValue);
                 Assert.AreEqual("custom-message-annotation-value", customMessageAnnotation);
                 Assert.AreEqual("custom-delivery-annotation-value", customDeliveryAnnotation);
             }
