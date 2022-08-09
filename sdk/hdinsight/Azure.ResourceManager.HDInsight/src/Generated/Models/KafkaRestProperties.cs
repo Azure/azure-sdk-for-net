@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The kafka rest proxy configuration which contains AAD security group information.
-    /// Serialized Name: KafkaRestProperties
-    /// </summary>
+    /// <summary> The kafka rest proxy configuration which contains AAD security group information. </summary>
     public partial class KafkaRestProperties
     {
         /// <summary> Initializes a new instance of KafkaRestProperties. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of KafkaRestProperties. </summary>
-        /// <param name="clientGroupInfo">
-        /// The information of AAD security group.
-        /// Serialized Name: KafkaRestProperties.clientGroupInfo
-        /// </param>
-        /// <param name="configurationOverride">
-        /// The configurations that need to be overriden.
-        /// Serialized Name: KafkaRestProperties.configurationOverride
-        /// </param>
+        /// <param name="clientGroupInfo"> The information of AAD security group. </param>
+        /// <param name="configurationOverride"> The configurations that need to be overriden. </param>
         internal KafkaRestProperties(ClientGroupInfo clientGroupInfo, IDictionary<string, string> configurationOverride)
         {
             ClientGroupInfo = clientGroupInfo;
             ConfigurationOverride = configurationOverride;
         }
 
-        /// <summary>
-        /// The information of AAD security group.
-        /// Serialized Name: KafkaRestProperties.clientGroupInfo
-        /// </summary>
+        /// <summary> The information of AAD security group. </summary>
         public ClientGroupInfo ClientGroupInfo { get; set; }
-        /// <summary>
-        /// The configurations that need to be overriden.
-        /// Serialized Name: KafkaRestProperties.configurationOverride
-        /// </summary>
+        /// <summary> The configurations that need to be overriden. </summary>
         public IDictionary<string, string> ConfigurationOverride { get; }
     }
 }

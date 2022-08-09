@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Authentication method used for calling the endpoint. </param>
         /// <param name="reportStatusOnCallBack"> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal WebHookActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, WebHookActivityMethod method, BinaryData uri, string timeout, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, BinaryData reportStatusOnCallBack) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal WebHookActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, WebHookActivityMethod method, BinaryData uri, string timeout, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, BinaryData reportStatusOnCallBack) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Method = method;
             Uri = uri;

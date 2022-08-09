@@ -934,9 +934,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets a collection of ApiManagementPrivateLinkResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiManagementPrivateLinkResources and their operations over a ApiManagementPrivateLinkResource. </returns>
-        public virtual ApiManagementPrivateLinkCollection GetApiManagementPrivateLinks()
+        public virtual ApiManagementPrivateLinkResourceCollection GetApiManagementPrivateLinkResources()
         {
-            return GetCachedClient(Client => new ApiManagementPrivateLinkCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementPrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -949,9 +949,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPrivateLinkResource>> GetApiManagementPrivateLinkResourceAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementPrivateLinks().GetAsync(privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementPrivateLinkResources().GetAsync(privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -964,9 +964,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="privateLinkSubResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementPrivateLinkResource> GetApiManagementPrivateLink(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPrivateLinkResource> GetApiManagementPrivateLinkResource(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementPrivateLinks().Get(privateLinkSubResourceName, cancellationToken);
+            return GetApiManagementPrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementProductResources in the ApiManagementService. </summary>
@@ -1858,12 +1858,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="locationName"> Location in which the API Management service is deployed. This is one of the Azure Regions like West US, East US, South Central US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByLocation");
             scope.Start();
             try
@@ -1885,12 +1881,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="locationName"> Location in which the API Management service is deployed. This is one of the Azure Regions like West US, East US, South Central US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByLocation");
             scope.Start();
             try

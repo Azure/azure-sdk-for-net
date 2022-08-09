@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The configuration that services will be excluded when creating cluster.
-    /// Serialized Name: ExcludedServicesConfig
-    /// </summary>
+    /// <summary> The configuration that services will be excluded when creating cluster. </summary>
     public partial class ExcludedServicesConfig
     {
         /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
-        /// <param name="excludedServicesConfigId">
-        /// The config id of excluded services.
-        /// Serialized Name: ExcludedServicesConfig.excludedServicesConfigId
-        /// </param>
-        /// <param name="excludedServicesList">
-        /// The list of excluded services.
-        /// Serialized Name: ExcludedServicesConfig.excludedServicesList
-        /// </param>
+        /// <param name="excludedServicesConfigId"> The config id of excluded services. </param>
+        /// <param name="excludedServicesList"> The list of excluded services. </param>
         internal ExcludedServicesConfig(string excludedServicesConfigId, string excludedServicesList)
         {
             ExcludedServicesConfigId = excludedServicesConfigId;
             ExcludedServicesList = excludedServicesList;
         }
 
-        /// <summary>
-        /// The config id of excluded services.
-        /// Serialized Name: ExcludedServicesConfig.excludedServicesConfigId
-        /// </summary>
+        /// <summary> The config id of excluded services. </summary>
         public string ExcludedServicesConfigId { get; set; }
-        /// <summary>
-        /// The list of excluded services.
-        /// Serialized Name: ExcludedServicesConfig.excludedServicesList
-        /// </summary>
+        /// <summary> The list of excluded services. </summary>
         public string ExcludedServicesList { get; set; }
     }
 }

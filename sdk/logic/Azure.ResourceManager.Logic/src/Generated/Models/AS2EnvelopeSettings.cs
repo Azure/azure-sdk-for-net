@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="transmitFileNameInMimeHeader"> The value indicating whether to transmit file name in mime header. </param>
         /// <param name="fileNameTemplate"> The template for file name. </param>
         /// <param name="suspendMessageOnFileNameGenerationError"> The value indicating whether to suspend message on file name generation error. </param>
-        /// <param name="autogenerateFileName"> The value indicating whether to auto generate file name. </param>
+        /// <param name="autoGenerateFileName"> The value indicating whether to auto generate file name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileNameTemplate"/> is null. </exception>
-        public AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName)
+        public AS2EnvelopeSettings(ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autoGenerateFileName)
         {
             if (fileNameTemplate == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Models
             TransmitFileNameInMimeHeader = transmitFileNameInMimeHeader;
             FileNameTemplate = fileNameTemplate;
             SuspendMessageOnFileNameGenerationError = suspendMessageOnFileNameGenerationError;
-            AutogenerateFileName = autogenerateFileName;
+            AutoGenerateFileName = autoGenerateFileName;
         }
 
         /// <summary> The message content type. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The value indicating whether to suspend message on file name generation error. </summary>
         public bool SuspendMessageOnFileNameGenerationError { get; set; }
         /// <summary> The value indicating whether to auto generate file name. </summary>
-        public bool AutogenerateFileName { get; set; }
+        public bool AutoGenerateFileName { get; set; }
     }
 }

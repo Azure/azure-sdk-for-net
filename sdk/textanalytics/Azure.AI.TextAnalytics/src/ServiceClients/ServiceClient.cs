@@ -123,6 +123,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         public abstract Response<HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default);
 
+        public abstract Task CancelAnalyzeActionsJobAsync(string jobId, CancellationToken cancellationToken = default);
+        public abstract void CancelAnalyzeActionsJob(string jobId, CancellationToken cancellationToken = default);
         #endregion
     }
 }

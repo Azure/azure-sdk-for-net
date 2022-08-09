@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity source for OData source. </summary>
-    public partial class ODataSource : CopySource
+    public partial class ODataSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of ODataSource. </summary>
         public ODataSource()

@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
-            string resourceLocation = default;
+            Uri resourceLocation = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("resourceLocation"))
                 {
-                    resourceLocation = property.Value.GetString();
+                    resourceLocation = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))

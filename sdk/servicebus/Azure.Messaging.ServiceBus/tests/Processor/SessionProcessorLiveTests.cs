@@ -153,6 +153,110 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Assert.AreEqual(processor.EntityPath, args.EntityPath);
                     Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    Assert.AreEqual(processor.Identifier, args.Identifier);
+                    Interlocked.Increment(ref sessionCloseEventCt);
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    completionSources[setIndex].SetResult(true);
+                    sessions.TryRemove(args.SessionId, out byte[] state);
+                    BinaryData getState = await args.GetSessionStateAsync();
+                    Assert.AreEqual(state, getState.ToArray());
+                }
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.Identifier, args.Identifier);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    var message = args.Message;
+                    if (!autoComplete)
+                    {
+                        await args.CompleteMessageAsync(message);
+                    }
+                    Interlocked.Increment(ref messageCt);
+                    Assert.AreEqual(message.SessionId, args.SessionId);
+                    Assert.IsNotNull(args.SessionLockedUntil);
+                }
+
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                var start = DateTime.UtcNow;
+                await processor.StopProcessingAsync();
+                var stop = DateTime.UtcNow;
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+
+                // there is only one message for each session, and one
+                // thread for each session, so the total messages processed
+                // should equal the number of threads
+                Assert.AreEqual(numThreads, messageCt);
+
+                // we should have received messages from each of the sessions
+                Assert.AreEqual(0, sessions.Count);
+
+                Assert.AreEqual(numThreads, sessionOpenEventCt);
+                Assert.AreEqual(sessionOpenEventCt, sessionCloseEventCt);
+            }
+        }
+
+        [Test]
+        [TestCase(1, true)]
+        [TestCase(5, true)]
+        [TestCase(10, false)]
+        [TestCase(20, false)]
+        public async Task CanProcessWithCustomIdentifier(int numThreads, bool autoComplete)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = CreateClient(60);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, byte[]> sessions = new ConcurrentDictionary<string, byte[]>();
+                for (int i = 0; i < numThreads; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, null);
+                }
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = numThreads,
+                    AutoCompleteMessages = autoComplete,
+                    Identifier = "MySessionProcessor"
+                };
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                int messageCt = 0;
+                int sessionOpenEventCt = 0;
+                int sessionCloseEventCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+                processor.SessionInitializingAsync += SessionInitHandler;
+                processor.SessionClosingAsync += SessionCloseHandler;
+
+                await processor.StartProcessingAsync();
+
+                async Task SessionInitHandler(ProcessSessionEventArgs args)
+                {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    Interlocked.Increment(ref sessionOpenEventCt);
+                    byte[] state = ServiceBusTestUtilities.GetRandomBuffer(100);
+                    await args.SetSessionStateAsync(new BinaryData(state));
+                    sessions[args.SessionId] = state;
+                }
+
+                async Task SessionCloseHandler(ProcessSessionEventArgs args)
+                {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionCloseEventCt);
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].SetResult(true);
@@ -1870,7 +1974,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateNoRetryClient();
+                await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
 

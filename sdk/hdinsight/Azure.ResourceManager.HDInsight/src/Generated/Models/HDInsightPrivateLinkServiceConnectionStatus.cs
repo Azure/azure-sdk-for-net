@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The concrete private link service connection.
-    /// Serialized Name: PrivateLinkServiceConnectionStatus
-    /// </summary>
+    /// <summary> The concrete private link service connection. </summary>
     public readonly partial struct HDInsightPrivateLinkServiceConnectionStatus : IEquatable<HDInsightPrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string PendingValue = "Pending";
         private const string RemovedValue = "Removed";
 
-        /// <summary>
-        /// Approved
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Approved { get; } = new HDInsightPrivateLinkServiceConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Rejected { get; } = new HDInsightPrivateLinkServiceConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Pending { get; } = new HDInsightPrivateLinkServiceConnectionStatus(PendingValue);
-        /// <summary>
-        /// Removed
-        /// Serialized Name: PrivateLinkServiceConnectionStatus.Removed
-        /// </summary>
+        /// <summary> Removed. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Removed { get; } = new HDInsightPrivateLinkServiceConnectionStatus(RemovedValue);
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(HDInsightPrivateLinkServiceConnectionStatus left, HDInsightPrivateLinkServiceConnectionStatus right) => left.Equals(right);

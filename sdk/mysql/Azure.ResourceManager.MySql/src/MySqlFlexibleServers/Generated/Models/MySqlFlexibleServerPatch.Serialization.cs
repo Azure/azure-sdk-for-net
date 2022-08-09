@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {

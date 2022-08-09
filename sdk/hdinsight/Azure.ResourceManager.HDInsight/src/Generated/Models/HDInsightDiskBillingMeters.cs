@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The disk billing meters.
-    /// Serialized Name: DiskBillingMeters
-    /// </summary>
+    /// <summary> The disk billing meters. </summary>
     public partial class HDInsightDiskBillingMeters
     {
         /// <summary> Initializes a new instance of HDInsightDiskBillingMeters. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightDiskBillingMeters. </summary>
-        /// <param name="diskRpMeter">
-        /// The managed disk meter guid.
-        /// Serialized Name: DiskBillingMeters.diskRpMeter
-        /// </param>
-        /// <param name="sku">
-        /// The managed disk billing sku, P30 or S30.
-        /// Serialized Name: DiskBillingMeters.sku
-        /// </param>
-        /// <param name="tier">
-        /// The managed disk billing tier, Standard or Premium.
-        /// Serialized Name: DiskBillingMeters.tier
-        /// </param>
+        /// <param name="diskRpMeter"> The managed disk meter guid. </param>
+        /// <param name="sku"> The managed disk billing sku, P30 or S30. </param>
+        /// <param name="tier"> The managed disk billing tier, Standard or Premium. </param>
         internal HDInsightDiskBillingMeters(string diskRpMeter, string sku, HDInsightTier? tier)
         {
             DiskRpMeter = diskRpMeter;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             Tier = tier;
         }
 
-        /// <summary>
-        /// The managed disk meter guid.
-        /// Serialized Name: DiskBillingMeters.diskRpMeter
-        /// </summary>
+        /// <summary> The managed disk meter guid. </summary>
         public string DiskRpMeter { get; }
-        /// <summary>
-        /// The managed disk billing sku, P30 or S30.
-        /// Serialized Name: DiskBillingMeters.sku
-        /// </summary>
+        /// <summary> The managed disk billing sku, P30 or S30. </summary>
         public string Sku { get; }
-        /// <summary>
-        /// The managed disk billing tier, Standard or Premium.
-        /// Serialized Name: DiskBillingMeters.tier
-        /// </summary>
+        /// <summary> The managed disk billing tier, Standard or Premium. </summary>
         public HDInsightTier? Tier { get; }
     }
 }

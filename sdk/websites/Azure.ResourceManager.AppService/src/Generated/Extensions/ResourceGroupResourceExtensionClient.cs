@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.AppService
             return GetCachedClient(Client => new AppServicePlanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CertificateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public virtual CertificateCollection GetCertificates()
+        /// <summary> Gets a collection of AppCertificateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
+        public virtual AppCertificateCollection GetAppCertificates()
         {
-            return GetCachedClient(Client => new CertificateCollection(Client, Id));
+            return GetCachedClient(Client => new AppCertificateCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroupAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebSiteResourceHealthMetadataResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataByResourceGroup");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteResourceHealthMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WebSiteResourceHealthMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataByResourceGroup");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = await ResourceHealthMetadataRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -152,17 +152,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroup(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(CancellationToken cancellationToken = default)
         {
-            Page<SiteResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
+            Page<WebSiteResourceHealthMetadataResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataByResourceGroup");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,14 +170,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteResourceHealthMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WebSiteResourceHealthMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataByResourceGroup");
+                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadata");
                 scope.Start();
                 try
                 {
                     var response = ResourceHealthMetadataRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new WebSiteResourceHealthMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -189,59 +189,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// Operation Id: Move
-        /// </summary>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> MoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Move");
-            scope.Start();
-            try
-            {
-                var response = await DefaultRestClient.MoveAsync(Id.SubscriptionId, Id.ResourceGroupName, moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Move resources between resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
-        /// Operation Id: Move
-        /// </summary>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Move(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Move");
-            scope.Start();
-            try
-            {
-                var response = DefaultRestClient.Move(Id.SubscriptionId, Id.ResourceGroupName, moveResourceEnvelope, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Description for Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceValidateResult>> ValidateAsync(AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
             scope.Start();
@@ -264,59 +218,13 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateResponse> Validate(ValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceValidateResult> Validate(AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
             scope.Start();
             try
             {
                 var response = DefaultRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Validate whether a resource can be moved.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// Operation Id: ValidateMove
-        /// </summary>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ValidateMoveAsync(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateMove");
-            scope.Start();
-            try
-            {
-                var response = await DefaultRestClient.ValidateMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Validate whether a resource can be moved.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
-        /// Operation Id: ValidateMove
-        /// </summary>
-        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ValidateMove(CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
-        {
-            using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateMove");
-            scope.Start();
-            try
-            {
-                var response = DefaultRestClient.ValidateMove(Id.SubscriptionId, Id.ResourceGroupName, moveResourceEnvelope, cancellationToken);
                 return response;
             }
             catch (Exception e)

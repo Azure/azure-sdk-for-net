@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("permissions");
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime");
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WriteEndObject();
         }

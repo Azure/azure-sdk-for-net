@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private CancellationTokenRegistration _batchReceiveRegistration;
         private Task _batchLoop;
         private Lazy<string> _details;
+        private Lazy<EntityScopeFactory> _scopeFactory;
 
         public ServiceBusListener(
             string functionId,
@@ -102,6 +104,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     _batchReceiver,
                     loggerFactory,
                     clientFactory));
+
+            _scopeFactory = new Lazy<EntityScopeFactory>(
+                () => new EntityScopeFactory(_batchReceiver.Value.EntityPath, _batchReceiver.Value.FullyQualifiedNamespace));
 
             if (concurrencyManager.Enabled)
             {
@@ -412,7 +417,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             receiveActions,
                             _client.Value);
 
+                        using DiagnosticScope scope = _scopeFactory.Value.CreateScope(
+                            _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
+                            DiagnosticScope.ActivityKind.Consumer);
+                        scope.SetMessageData(messagesArray);
+
+                        scope.Start();
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
+                        if (result.Exception != null)
+                        {
+                            scope.Failed(result.Exception);
+                        }
                         receiveActions.EndExecutionScope();
 
                         var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);

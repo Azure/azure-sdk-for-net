@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class CallRecordingTests : CallingServerTestBase
+    public class CallRecordingTests : CallAutomationTestBase
     {
         private const string RecordingId = "sampleRecordingId";
         private const string ServerCallId = "sampleServerCallId";
@@ -80,7 +80,7 @@ namespace Azure.Communication.CallingServer
 
         private CallRecording getMockCallRecording(int statusCode, string? responseContent = null)
         {
-            CallingServerClient serverCallRestClient = CreateMockCallingServerClient(statusCode, responseContent: responseContent);
+            CallAutomationClient serverCallRestClient = CreateMockCallAutomationClient(statusCode, responseContent: responseContent);
             return serverCallRestClient.GetCallRecording();
         }
 

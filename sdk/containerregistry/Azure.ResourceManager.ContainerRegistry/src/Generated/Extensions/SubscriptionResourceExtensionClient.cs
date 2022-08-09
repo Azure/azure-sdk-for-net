@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         private ClientDiagnostics _registriesClientDiagnostics;
         private RegistriesRestOperations _registriesRestClient;
-        private ClientDiagnostics _registryClientDiagnostics;
-        private RegistriesRestOperations _registryRestClient;
+        private ClientDiagnostics _containerRegistryRegistriesClientDiagnostics;
+        private RegistriesRestOperations _containerRegistryRegistriesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private RegistriesRestOperations RegistriesRestClient => _registriesRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics RegistryClientDiagnostics => _registryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", RegistryResource.ResourceType.Namespace, Diagnostics);
-        private RegistriesRestOperations RegistryRestClient => _registryRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RegistryResource.ResourceType));
+        private ClientDiagnostics ContainerRegistryRegistriesClientDiagnostics => _containerRegistryRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryResource.ResourceType.Namespace, Diagnostics);
+        private RegistriesRestOperations ContainerRegistryRegistriesRestClient => _containerRegistryRegistriesRestClient ??= new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerRegistryResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </summary>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegistryNameStatus>> CheckNameAvailabilityRegistryAsync(RegistryNameCheckContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityRegistry");
+            using var scope = RegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckContainerRegistryNameAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </summary>
         /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegistryNameStatus> CheckNameAvailabilityRegistry(RegistryNameCheckContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityRegistry");
+            using var scope = RegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckContainerRegistryNameAvailability");
             scope.Start();
             try
             {
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Operation Id: Registries_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RegistryResource> GetRegistriesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerRegistryResource> GetContainerRegistriesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RegistryResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ContainerRegistryResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = RegistryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegistries");
+                using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerRegistries");
                 scope.Start();
                 try
                 {
-                    var response = await RegistryRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ContainerRegistryRegistriesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                     throw;
                 }
             }
-            async Task<Page<RegistryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ContainerRegistryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = RegistryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegistries");
+                using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerRegistries");
                 scope.Start();
                 try
                 {
-                    var response = await RegistryRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ContainerRegistryRegistriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Operation Id: Registries_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RegistryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RegistryResource> GetRegistries(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerRegistryResource> GetContainerRegistries(CancellationToken cancellationToken = default)
         {
-            Page<RegistryResource> FirstPageFunc(int? pageSizeHint)
+            Page<ContainerRegistryResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = RegistryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegistries");
+                using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerRegistries");
                 scope.Start();
                 try
                 {
-                    var response = RegistryRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ContainerRegistryRegistriesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                     throw;
                 }
             }
-            Page<RegistryResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ContainerRegistryResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = RegistryClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegistries");
+                using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerRegistries");
                 scope.Start();
                 try
                 {
-                    var response = RegistryRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ContainerRegistryRegistriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ContainerRegistryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
