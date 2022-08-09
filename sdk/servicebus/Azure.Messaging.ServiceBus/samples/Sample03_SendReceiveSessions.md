@@ -1,4 +1,4 @@
-## Sending and Receiving Session Messages
+# Sending and Receiving Session Messages
 
 This sample demonstrates how to send and receive session messages from a session-enabled Service Bus queue.
 

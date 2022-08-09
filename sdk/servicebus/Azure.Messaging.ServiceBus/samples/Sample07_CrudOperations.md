@@ -1,4 +1,4 @@
-## CRUD operations
+# CRUD operations
 
 This sample demonstrates how to use the management client to manage entities within a namespace.
 

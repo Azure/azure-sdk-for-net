@@ -1,4 +1,4 @@
-## Claim check pattern
+# Claim check pattern
 
 This sample demonstrates the use of the [claim check pattern](https://docs.microsoft.com/azure/architecture/patterns/claim-check) which enables you to work with arbitrarily large message bodies. For standard namespaces, a message can be at most 256 KB. For Premium namespaces, the limit is 100 MB. If these limits don't work for your application you can leverage Azure Storage Blobs to implement this pattern.
 

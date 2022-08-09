@@ -1,4 +1,4 @@
-## Using the Processor
+# Using the Processor
 
 This sample demonstrates how to use the processor. The processor offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
 

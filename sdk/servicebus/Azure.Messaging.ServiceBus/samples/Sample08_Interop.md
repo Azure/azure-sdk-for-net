@@ -1,4 +1,4 @@
-## Interop with `WindowsAzure.ServiceBus`
+# Interop with `WindowsAzure.ServiceBus`
 
 This sample demonstrates how to interoperate with messages that are sent or received using the `WindowsAzure.ServiceBus` library. The `WindowsAzure.ServiceBus` library uses the `DataContractSerializer` to serialize the `BrokeredMessage` body. Because of this, when attempting to interoperate with this library, there a few additional steps that are needed.
 

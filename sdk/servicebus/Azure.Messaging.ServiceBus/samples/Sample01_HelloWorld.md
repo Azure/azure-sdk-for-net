@@ -1,6 +1,6 @@
 # Sending and Receiving Messages
 
-This sample demonstrates how to send and receive messages from a Service Bus queue.
+This sample demonstrates how to send and receive messages from a Service Bus queue. Once a message is received, you will typically want to settle it. Message settlement is covered in detail in the [Settling Messages samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample02_MessageSettlement.md).
 
 ### Send and receive a message using queues
 
@@ -140,7 +140,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 
 ## Peeking a message
 
-It's also possible to simply peek a message. Peeking a message does not require the message to be locked.
+It's also possible to simply peek a message. Peeking a message does not require the message to be locked. Because the message is not locked to a specific receiver, the message will not be able to be settled.
 
 ```C# Snippet:ServiceBusPeek
 ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();

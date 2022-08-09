@@ -1,4 +1,4 @@
-## Extensibility
+# Extensibility
 
 This sample demonstrates how the key Service Bus types can be extended to provide custom functionality. As an example, we will demonstrate how messages can be intercepted and enriched before sending and after receiving. This mimics the functionality enabled by the `RegisterPlugin` method on client types in `Microsoft.Azure.ServiceBus`.
 

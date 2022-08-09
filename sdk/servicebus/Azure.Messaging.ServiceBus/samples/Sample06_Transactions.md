@@ -1,4 +1,4 @@
-## Working with transactions
+# Working with transactions
 
 This sample demonstrates how to use [transactions](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions) with Service Bus. Transactions allow you to group operations together so that either all of them complete or none of them do. If any part of the transaction fails, the service will rollback the parts that succeeded on your behalf. You also can use familiar .NET semantics to complete or rollback the transaction using [TransactionScope](https://docs.microsoft.com/dotnet/api/system.transactions.transactionscope?view=netcore-3.1).
 
