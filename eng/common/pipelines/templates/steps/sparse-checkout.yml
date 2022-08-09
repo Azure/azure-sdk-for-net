@@ -41,12 +41,6 @@ steps:
               Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/pull/*' https://github.com/$($repository.Name) ."
               git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+refs/pull/*:refs/pull/*' https://github.com/$($repository.Name) .
 
-              Write-Host "Get-Content .git/config"
-              Get-Content .git/config
-
-              Write-Host "git show-ref"
-              git show-ref
-
               Write-Host "git sparse-checkout init"
               git sparse-checkout init
 
