@@ -7,6 +7,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.Rooms.Models
 {
+    // The CommunicationIdentifierSerializer is a clone of Shared/CommunicationIdentifireSerializer.cs file.
+    // Right now Rooms do not support Phone number and Team's User Identifier.
+    // Once Rooms support all identifiers as defined by Shared/CommunicationIdentifireSerializer.cs we will refer to the Shard class.
     internal class CommunicationIdentifierSerializer
     {
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
