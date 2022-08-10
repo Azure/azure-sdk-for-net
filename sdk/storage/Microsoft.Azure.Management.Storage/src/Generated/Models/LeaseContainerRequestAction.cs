@@ -12,13 +12,14 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DirectoryServiceOptions.
+    /// Defines values for LeaseContainerRequestAction.
     /// </summary>
-    public static class DirectoryServiceOptions
+    public static class LeaseContainerRequestAction
     {
-        public const string None = "None";
-        public const string AADDS = "AADDS";
-        public const string AD = "AD";
-        public const string AADKERB = "AADKERB";
+        public const string Acquire = "Acquire";
+        public const string Renew = "Renew";
+        public const string Change = "Change";
+        public const string Release = "Release";
+        public const string Break = "Break";
     }
 }

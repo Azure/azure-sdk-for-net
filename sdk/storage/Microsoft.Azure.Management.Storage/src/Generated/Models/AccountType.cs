@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DirectoryServiceOptions.
+    /// Defines values for AccountType.
     /// </summary>
-    public static class DirectoryServiceOptions
+    public static class AccountType
     {
-        public const string None = "None";
-        public const string AADDS = "AADDS";
-        public const string AD = "AD";
-        public const string AADKERB = "AADKERB";
+        public const string User = "User";
+        public const string Computer = "Computer";
     }
 }

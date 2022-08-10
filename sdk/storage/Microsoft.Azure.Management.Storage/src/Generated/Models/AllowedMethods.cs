@@ -12,13 +12,17 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DirectoryServiceOptions.
+    /// Defines values for AllowedMethods.
     /// </summary>
-    public static class DirectoryServiceOptions
+    public static class AllowedMethods
     {
-        public const string None = "None";
-        public const string AADDS = "AADDS";
-        public const string AD = "AD";
-        public const string AADKERB = "AADKERB";
+        public const string DELETE = "DELETE";
+        public const string GET = "GET";
+        public const string HEAD = "HEAD";
+        public const string MERGE = "MERGE";
+        public const string POST = "POST";
+        public const string OPTIONS = "OPTIONS";
+        public const string PUT = "PUT";
+        public const string PATCH = "PATCH";
     }
 }
