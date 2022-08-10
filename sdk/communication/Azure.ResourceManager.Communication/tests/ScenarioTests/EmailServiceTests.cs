@@ -56,9 +56,12 @@ namespace Azure.ResourceManager.Communication.Tests
             }
         }
 
-        [Test]
-        public async Task AddTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddTag(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             var collection = _resourceGroup.GetEmailServiceResources();
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
@@ -69,9 +72,12 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(tagValue.Value, "testvalue");
         }
 
-        [Test]
-        public async Task RemoveTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             var collection = _resourceGroup.GetEmailServiceResources();
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
@@ -86,9 +92,12 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(tag.Count == 0);
         }
 
-        [Test]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string emailServiceName = Recording.GenerateAssetName("email-service-");
             var collection = _resourceGroup.GetEmailServiceResources();
             var email = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
