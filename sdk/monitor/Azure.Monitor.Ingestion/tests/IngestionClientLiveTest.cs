@@ -140,21 +140,6 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(204, response.Status);
-
-            LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
-            var batch = new LogsBatchQuery();
-
-            string query = TestEnvironment.TableName + " | count;";
-            string countQueryId = batch.AddWorkspaceQuery(
-                TestEnvironment.Ingestion_WorkspaceId,
-                query,
-                new QueryTimeRange(TimeSpan.FromDays(1)));
-
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
-
-            // Check the Azure.Monitor.Query Response
-            Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
-            Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
         }
 
         [Test]
@@ -206,21 +191,6 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(204, response.Status);
-
-            LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
-            var batch = new LogsBatchQuery();
-
-            string query = TestEnvironment.TableName + " | count;";
-            string countQueryId = batch.AddWorkspaceQuery(
-                TestEnvironment.Ingestion_WorkspaceId,
-                query,
-                new QueryTimeRange(TimeSpan.FromDays(1)));
-
-            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
-
-            // Check the Azure.Monitor.Query Response
-            Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
-            Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
         }
     }
 }
