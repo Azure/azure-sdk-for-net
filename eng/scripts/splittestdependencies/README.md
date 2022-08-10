@@ -15,7 +15,7 @@ Here is the workflow for better understanding:
 We currently have this support in public PR validation pipeline and internal release pipeline.
 We have enabled the core pipeline.
 
-To enable the split on your service, you can add the line below in `ci.yml` under service repo. E.g. [ci.yml](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/ci.yml)
+To enable the split on your service, you can add the line below in `ci.yml` under service folder. E.g. [ci.yml](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/ci.yml)
 ```
 TestDependsOnDependency: ${service-name}
 ```
@@ -30,4 +30,4 @@ Here is the comparison:
 
 ## Future work
 1. Onboard to live test pipeline
-1. Leverage the work on any time consuming job.
+1. Leverage the work on other time consuming job.
