@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
