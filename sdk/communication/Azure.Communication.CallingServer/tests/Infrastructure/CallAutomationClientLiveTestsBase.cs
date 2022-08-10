@@ -24,7 +24,7 @@ namespace Azure.Communication.CallingServer
         }
 
         public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode == RecordedTestMode.Live && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClient" />
