@@ -99,7 +99,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
                 RequestContent.Create(
                     new { contents = "Hello world!" }));
 
-            var content = postOperation.GetRawResponse().Content.ToString();
+            string content = postOperation.GetRawResponse().Content.ToString();
 #if SNIPPET
             string transactionId = postOperation.Id;
 #else
