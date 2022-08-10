@@ -20,11 +20,11 @@
       "Release"
     ],
     "OverrideFiles": {
+      "DependencyGroup1.txt": {
+        "OverrideFiles": "1.txt"
+      },
       "DependencyGroup2.txt": {
         "OverrideFiles": "2.txt"
-      },
-      "DependencyGroup3.txt": {
-        "OverrideFiles": "3.txt"
       }
     }
   },
@@ -44,7 +44,7 @@
         }
       },
       "OverrideFiles": {
-        "OverrideFiles": "1.txt"
+        "OverrideFiles": "3.txt"
       }
     }
   ]

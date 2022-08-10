@@ -2,6 +2,16 @@ Import-Module Pester
 
 BeforeAll {
     . $PSScriptRoot/../generate-dependency-functions.ps1
+    function Backup-File($targetPath, $backupFolder) {
+        $fileName = (Split-Path $targetPath -leaf)
+        $backupFile = "$backupFolder/temp-$fileName"
+        $null = New-Item $backupFile -ItemType "file" -Force
+        $null = Copy-Item $targetPath -Destination $backupFile
+    }
+    function Reset-File($targetPath, $backupFolder) {
+        $fileName = (Split-Path $targetPath -leaf)
+        $null = Copy-Item "$backupFolder/temp-$fileName" -Destination $targetPath
+    }
 }
 
 AfterAll {
@@ -62,13 +72,15 @@ Describe "Write-Project-Files-To-Matrix" -Tag "UnitTest" {
         @{ TestFolderName = "$PSScriptRoot/testFolder1"; ProjectFiles = "1.txt", "2.txt"; MatrixJsonPath = "$PSScriptRoot/inputs/platform-matrix1.json"; expectOutput="$PSScriptRoot/expectOutputs/expect-matrix1.json" }
         @{ TestFolderName = "$PSScriptRoot/testFolder2"; ProjectFiles = "1.txt", "2.txt", "3.txt"; MatrixJsonPath = "$PSScriptRoot/inputs/platform-matrix1.json"; expectOutput="$PSScriptRoot/expectOutputs/expect-matrix2.json" }
     ) {
+        Backup-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
         Write-Project-Files-To-Matrix -ProjectFiles $ProjectFiles -MatrixJsonPath $MatrixJsonPath -MatrixOutputFolder $TestFolderName -ProjectFileConfigName "OverrideFiles"
-        Get-Content "$TestFolderName\platform-matrix.json" | Should -Be (Get-Content $expectOutput)
+        Get-Content "$TestFolderName\platform-matrix1.json" | Should -Be (Get-Content $expectOutput)
+        Reset-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
     }
-    #Failed cases
+    # Failed cases
     It "More include agents than project files" -TestCases @(
         @{ MatrixJsonPath = "$PSScriptRoot/inputs/platform_2_include_agents.json"; ProjectFiles = "1.txt", "2.txt"; }
-        # @{ MatrixJsonPath = "$PSScriptRoot/inputs/platform_2_include_agents.json"; ProjectFiles = "1.txt"; }
+        @{ MatrixJsonPath = "$PSScriptRoot/inputs/platform_2_include_agents.json"; ProjectFiles = "1.txt"; }
     ) {
         { Write-Project-Files-To-Matrix -ProjectFiles $ProjectFiles -MatrixJsonPath $MatrixJsonPath -MatrixOutputFolder "$PSScriptRoot/testFolder3" -ProjectFileConfigName "OverrideFiles"} 
             | Should -Throw -ExceptionType ([System.Management.Automation.RuntimeException])
@@ -81,12 +93,14 @@ Describe "Generate-Dependency-Test-References" -Tag "IntegrationTest" {
         @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; TestFolderName = "$PSScriptRoot/testFolder4"; MatrixInputJsonFile = "$PSScriptRoot/inputs/sync-platform-matrix.json"; NumOfTestProjectsPerJob = 20; ExpectMatrixPropertyLength = 8}
         @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; TestFolderName = "$PSScriptRoot/testFolder5"; MatrixInputJsonFile = "$PSScriptRoot/inputs/sync-platform-matrix.json"; NumOfTestProjectsPerJob = 89; ExpectMatrixPropertyLength = 1}
     ) {
+        Backup-File -targetPath $MatrixInputJsonFile -backupFolder $TestFolderName
         & "$PSScriptRoot/../Generate-Dependency-Test-References.ps1" -ProjectListFilePath $projectFile -NumOfTestProjectsPerJob $NumOfTestProjectsPerJob `
             -ExcludeTargetTestProjects $true -ServiceDirectory "core" -ProjectFilesOutputFolder $TestFolderName `
             -MatrixConfigsFile $MatrixInputJsonFile -ProjectFileConfigName "ProjectListOverrideFile"
-        $outputFileJson = Get-Content "$TestFolderName/platform-matrix.json" | ConvertFrom-Json
+        $outputFileJson = Get-Content "$TestFolderName/sync-platform-matrix.json" | ConvertFrom-Json
         ($outputFileJson.matrix.OverrideFiles.PSObject.Properties | Measure-Object).Count | Should -Be $ExpectMatrixPropertyLength
         ($outputFileJson.include.OverrideFiles.PSObject.Properties | Measure-Object).Count | Should -Be 1
+        Reset-File -targetPath $MatrixInputJsonFile -backupFolder $TestFolderName
     }
     # Failed cases
     It "Validate on invalid parameters" -TestCases @(

@@ -43,33 +43,7 @@
     "BuildConfiguration": [
       "Debug",
       "Release"
-    ],
-    "OverrideFiles": {
-      "DependencyGroup0": {
-        "ProjectListOverrideFile": "Project_0.props"
-      },
-      "DependencyGroup1": {
-        "ProjectListOverrideFile": "Project_1.props"
-      },
-      "DependencyGroup2": {
-        "ProjectListOverrideFile": "Project_2.props"
-      },
-      "DependencyGroup3": {
-        "ProjectListOverrideFile": "Project_3.props"
-      },
-      "DependencyGroup4": {
-        "ProjectListOverrideFile": "Project_4.props"
-      },
-      "DependencyGroup5": {
-        "ProjectListOverrideFile": "Project_5.props"
-      },
-      "DependencyGroup6": {
-        "ProjectListOverrideFile": "Project_6.props"
-      },
-      "DependencyGroup7": {
-        "ProjectListOverrideFile": "Project_7.props"
-      }
-    }
+    ]
   },
   "include": [
     {
@@ -85,9 +59,6 @@
           "SupportsRecording": true,
           "CollectCoverage": true
         }
-      },
-      "OverrideFiles": {
-        "ProjectListOverrideFile": "Project_8.props"
       }
     }
   ]

@@ -18,12 +18,7 @@
     "BuildConfiguration": [
       "Debug",
       "Release"
-    ],
-    "OverrideFiles": {
-      "DependencyGroup1.txt": {
-        "OverrideFiles": "1.txt"
-      }
-    }
+    ]
   },
   "include": [
     {
@@ -39,9 +34,6 @@
           "SupportsRecording": true,
           "CollectCoverage": true
         }
-      },
-      "OverrideFiles": {
-        "OverrideFiles": "2.txt"
       }
     }
   ]
