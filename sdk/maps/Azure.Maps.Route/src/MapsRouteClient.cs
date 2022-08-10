@@ -117,7 +117,7 @@ namespace Azure.Maps.Route
                     options.Query,
                     JsonFormat.Json,
                     options?.WaitForResults,
-                    options?.ComputeTravelTime,
+                    options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
                     options?.DepartAt,
@@ -164,7 +164,7 @@ namespace Azure.Maps.Route
                     options.Query,
                     JsonFormat.Json,
                     options?.WaitForResults,
-                    options?.ComputeTravelTime,
+                    options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
                     options?.DepartAt,
@@ -210,7 +210,7 @@ namespace Azure.Maps.Route
                     options.Query,
                     JsonFormat.Json,
                     options?.WaitForResults,
-                    options?.ComputeTravelTime,
+                    options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
                     options?.DepartAt,
@@ -257,7 +257,7 @@ namespace Azure.Maps.Route
                     options.Query,
                     JsonFormat.Json,
                     options?.WaitForResults,
-                    options?.ComputeTravelTime,
+                    options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
                     options?.DepartAt,
@@ -320,7 +320,7 @@ namespace Azure.Maps.Route
                         options?.Language,
                         options?.ComputeBestWaypointOrder,
                         options?.RouteRepresentationForBestOrder,
-                        options?.ComputeTravelTime,
+                        options?.TravelTimeType,
                         options?.VehicleHeading,
                         options?.Report,
                         options?.SectionFilter,
@@ -368,7 +368,7 @@ namespace Azure.Maps.Route
                         options?.Language,
                         options?.ComputeBestWaypointOrder,
                         options?.RouteRepresentationForBestOrder,
-                        options?.ComputeTravelTime,
+                        options?.TravelTimeType,
                         options?.VehicleHeading,
                         options?.Report,
                         options?.SectionFilter,
@@ -447,7 +447,7 @@ namespace Azure.Maps.Route
                         options?.Language,
                         options?.ComputeBestWaypointOrder,
                         options?.RouteRepresentationForBestOrder,
-                        options?.ComputeTravelTime,
+                        options?.TravelTimeType,
                         options?.VehicleHeading,
                         options?.Report,
                         options?.SectionFilter,
@@ -495,7 +495,7 @@ namespace Azure.Maps.Route
                         options?.Language,
                         options?.ComputeBestWaypointOrder,
                         options?.RouteRepresentationForBestOrder,
-                        options?.ComputeTravelTime,
+                        options?.TravelTimeType,
                         options?.VehicleHeading,
                         options?.Report,
                         options?.SectionFilter,
@@ -730,7 +730,7 @@ namespace Azure.Maps.Route
                     options.Query,
                     JsonFormat.Json,
                     options?.WaitForResults,
-                    options?.ComputeTravelTime,
+                    options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
                     options?.DepartAt,
@@ -781,7 +781,7 @@ namespace Azure.Maps.Route
                     options.Query,
                     JsonFormat.Json,
                     options?.WaitForResults,
-                    options?.ComputeTravelTime,
+                    options?.TravelTimeType,
                     options?.SectionFilter,
                     options?.ArriveAt,
                     options?.DepartAt,
@@ -883,9 +883,9 @@ namespace Azure.Maps.Route
                 var options = query.RouteDirectionOptions;
                 var uri = new RawRequestUriBuilder();
                 uri.AppendQuery("query", stringRoutePoints, false);
-                if (options?.ComputeTravelTime != null)
+                if (options?.TravelTimeType != null)
                 {
-                    uri.AppendQuery("computeTravelTimeFor", options.ComputeTravelTime.Value.ToString(), true);
+                    uri.AppendQuery("TravelTimeTypeFor", options.TravelTimeType.Value.ToString(), true);
                 }
                 if (options?.SectionFilter != null)
                 {

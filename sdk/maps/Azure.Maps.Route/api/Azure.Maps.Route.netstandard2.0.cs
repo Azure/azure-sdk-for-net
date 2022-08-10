@@ -58,24 +58,6 @@ namespace Azure.Maps.Route.Models
         public int? TotalRequests { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeTravelTime : System.IEquatable<Azure.Maps.Route.Models.ComputeTravelTime>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeTravelTime(string value) { throw null; }
-        public static Azure.Maps.Route.Models.ComputeTravelTime All { get { throw null; } }
-        public static Azure.Maps.Route.Models.ComputeTravelTime None { get { throw null; } }
-        public bool Equals(Azure.Maps.Route.Models.ComputeTravelTime other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Maps.Route.Models.ComputeTravelTime left, Azure.Maps.Route.Models.ComputeTravelTime right) { throw null; }
-        public static implicit operator Azure.Maps.Route.Models.ComputeTravelTime (string value) { throw null; }
-        public static bool operator !=(Azure.Maps.Route.Models.ComputeTravelTime left, Azure.Maps.Route.Models.ComputeTravelTime right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DelayMagnitude : System.IEquatable<Azure.Maps.Route.Models.DelayMagnitude>
     {
         private readonly object _dummy;
@@ -407,7 +389,6 @@ namespace Azure.Maps.Route.Models
         public double? AuxiliaryPowerInLitersPerHour { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Route.Models.RouteAvoidType> Avoid { get { throw null; } }
         public bool? ComputeBestWaypointOrder { get { throw null; } set { } }
-        public Azure.Maps.Route.Models.ComputeTravelTime? ComputeTravelTime { get { throw null; } set { } }
         public string ConstantSpeedConsumptionInKwHPerHundredKm { get { throw null; } set { } }
         public string ConstantSpeedConsumptionInLitersPerHundredKm { get { throw null; } set { } }
         public double? CurrentChargeInKwH { get { throw null; } set { } }
@@ -430,6 +411,7 @@ namespace Azure.Maps.Route.Models
         public Azure.Maps.Route.Models.RouteType? RouteType { get { throw null; } set { } }
         public Azure.Maps.Route.Models.SectionType? SectionFilter { get { throw null; } set { } }
         public Azure.Maps.Route.Models.TravelMode? TravelMode { get { throw null; } set { } }
+        public Azure.Maps.Route.Models.TravelTimeType? TravelTimeType { get { throw null; } set { } }
         public double? UphillEfficiency { get { throw null; } set { } }
         public bool? UseTrafficData { get { throw null; } set { } }
         public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
@@ -564,13 +546,13 @@ namespace Azure.Maps.Route.Models
         public RouteMatrixOptions(Azure.Maps.Route.Models.RouteMatrixQuery query) { }
         public System.DateTimeOffset? ArriveAt { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Maps.Route.Models.RouteAvoidType> Avoid { get { throw null; } }
-        public Azure.Maps.Route.Models.ComputeTravelTime? ComputeTravelTime { get { throw null; } set { } }
         public System.DateTimeOffset? DepartAt { get { throw null; } set { } }
         public Azure.Maps.Route.Models.InclineLevel? InclineLevel { get { throw null; } set { } }
         public Azure.Maps.Route.Models.RouteMatrixQuery Query { get { throw null; } }
         public Azure.Maps.Route.Models.RouteType? RouteType { get { throw null; } set { } }
         public Azure.Maps.Route.Models.SectionType? SectionFilter { get { throw null; } set { } }
         public Azure.Maps.Route.Models.TravelMode? TravelMode { get { throw null; } set { } }
+        public Azure.Maps.Route.Models.TravelTimeType? TravelTimeType { get { throw null; } set { } }
         public bool? UseTrafficData { get { throw null; } set { } }
         public int? VehicleAxleWeightInKilograms { get { throw null; } set { } }
         public double? VehicleHeightInMeters { get { throw null; } set { } }
@@ -832,6 +814,24 @@ namespace Azure.Maps.Route.Models
         public static bool operator ==(Azure.Maps.Route.Models.TravelMode left, Azure.Maps.Route.Models.TravelMode right) { throw null; }
         public static implicit operator Azure.Maps.Route.Models.TravelMode (string value) { throw null; }
         public static bool operator !=(Azure.Maps.Route.Models.TravelMode left, Azure.Maps.Route.Models.TravelMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TravelTimeType : System.IEquatable<Azure.Maps.Route.Models.TravelTimeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TravelTimeType(string value) { throw null; }
+        public static Azure.Maps.Route.Models.TravelTimeType All { get { throw null; } }
+        public static Azure.Maps.Route.Models.TravelTimeType None { get { throw null; } }
+        public bool Equals(Azure.Maps.Route.Models.TravelTimeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Maps.Route.Models.TravelTimeType left, Azure.Maps.Route.Models.TravelTimeType right) { throw null; }
+        public static implicit operator Azure.Maps.Route.Models.TravelTimeType (string value) { throw null; }
+        public static bool operator !=(Azure.Maps.Route.Models.TravelTimeType left, Azure.Maps.Route.Models.TravelTimeType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

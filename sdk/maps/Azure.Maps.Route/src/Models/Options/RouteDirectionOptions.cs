@@ -68,7 +68,7 @@ namespace Azure.Maps.Route.Models
         public RouteRepresentationForBestOrder? RouteRepresentationForBestOrder { get; set; }
 
         /// <summary> Specifies whether to return additional travel times using different types of traffic information (none, historic, live) as well as the default best-estimate travel time. </summary>
-        public ComputeTravelTime? ComputeTravelTime { get; set; }
+        public TravelTimeType? TravelTimeType { get; set; }
 
         /// <summary> The directional heading of the vehicle in degrees starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359. </summary>
         public int? VehicleHeading { get; set; }

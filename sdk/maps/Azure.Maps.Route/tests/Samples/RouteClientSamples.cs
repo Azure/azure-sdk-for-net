@@ -359,7 +359,7 @@ namespace Azure.Maps.Route.Tests
             // Instantiate route matrix options
             var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
             {
-                ComputeTravelTime = ComputeTravelTime.All,
+                TravelTimeType = TravelTimeType.All,
             };
 
             // Invoke an async route matrix request

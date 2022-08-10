@@ -68,7 +68,7 @@ var routeMatrixQuery = new RouteMatrixQuery
 // Instantiate route matrix options
 var routeMatrixOptions = new RouteMatrixOptions(routeMatrixQuery)
 {
-    ComputeTravelTime = ComputeTravelTime.All,
+    TravelTimeType = TravelTimeType.All,
 };
 
 // Invoke an async route matrix request
