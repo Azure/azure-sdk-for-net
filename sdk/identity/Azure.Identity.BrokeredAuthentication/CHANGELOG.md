@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.3 (2022-08-09)
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added required constructor parameter `parentWindowHandle` to `InteractiveBrowserCredentialBrokerOptions`, to require setting the parent window for the authentication broker.
 
 ## 1.0.0-beta.2 (2022-04-05)
 
