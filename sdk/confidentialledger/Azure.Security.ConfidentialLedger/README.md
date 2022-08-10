@@ -126,30 +126,28 @@ Response postResponse = ledgerClient.PostLedgerEntry(
 waitUntil: WaitUntil.Completed,
     RequestContent.Create(
         new { contents = "Hello world!" }));
+
+var content = postOperation.GetRawResponse().Content.ToString();
 string transactionId = postOperation.Id;
-string collectionId = "collection:0";
+string collectionId = "subledger:0";
 
-// Provide both the transactionId and collectionId.
-Response getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-
-// Try until the entry is available.
+// Try fetching the ledger entry until it is "loaded".
+Response getByCollectionResponse = default;
+JsonElement rootElement = default;
 bool loaded = false;
-JsonElement element = default;
-string contents = null;
+
 while (!loaded)
 {
-    loaded = JsonDocument.Parse(getByCollectionResponse.Content)
-        .RootElement
-        .TryGetProperty("entry", out element);
-    if (loaded)
-    {
-        contents = element.GetProperty("contents").GetString();
-    }
-    else
-    {
-        getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
-    }
+    // Provide both the transactionId and collectionId.
+    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+    rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
+    loaded = rootElement.GetProperty("state").GetString() != "Loading";
 }
+
+string contents = rootElement
+    .GetProperty("entry")
+    .GetProperty("contents")
+    .GetString();
 
 Console.WriteLine(contents); // "Hello world!"
 
@@ -200,7 +198,7 @@ Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
 
 // Try until the entry is available.
 loaded = false;
-element = default;
+JsonElement element = default;
 contents = null;
 while (!loaded)
 {
