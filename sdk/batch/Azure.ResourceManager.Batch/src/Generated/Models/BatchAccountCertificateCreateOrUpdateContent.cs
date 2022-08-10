@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprint, BatchAccountCertificateFormat? format, string data, string password, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, object data, string password, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;
@@ -43,11 +44,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> This must match the first portion of the certificate name. Currently required to be &apos;SHA1&apos;. </summary>
         public string ThumbprintAlgorithm { get; set; }
         /// <summary> This must match the thumbprint from the name. </summary>
-        public string Thumbprint { get; set; }
+        public BinaryData Thumbprint { get; set; }
         /// <summary> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </summary>
         public BatchAccountCertificateFormat? Format { get; set; }
         /// <summary> The maximum size is 10KB. </summary>
-        public string Data { get; set; }
+        public object Data { get; set; }
         /// <summary> This must not be specified if the certificate format is Cer. </summary>
         public string Password { get; set; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>

@@ -119,6 +119,8 @@ namespace Azure.AI.Language.Conversations
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/analyze-conversation
         /// 
         /// Request Body:
         /// 
@@ -267,6 +269,8 @@ namespace Azure.AI.Language.Conversations
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/analyze-conversation
         /// 
         /// Request Body:
         /// 
@@ -388,6 +392,8 @@ namespace Azure.AI.Language.Conversations
         /// Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task.
         /// 
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ob-status
         /// 
         /// Response Body:
         /// 
@@ -492,6 +498,8 @@ namespace Azure.AI.Language.Conversations
         /// Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task.
         /// 
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ob-status
         /// 
         /// Response Body:
         /// 
@@ -662,6 +670,8 @@ namespace Azure.AI.Language.Conversations
         /// Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed.
         /// 
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ubmit-job
         /// 
         /// Request Body:
         /// 
@@ -858,6 +868,8 @@ namespace Azure.AI.Language.Conversations
         /// Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed.
         /// 
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversation-analysis-runtime/ubmit-job
         /// 
         /// Request Body:
         /// 

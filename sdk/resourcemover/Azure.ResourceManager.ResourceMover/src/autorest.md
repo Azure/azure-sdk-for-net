@@ -39,7 +39,7 @@ rename-mapping:
   PrepareRequest.validateOnly: IsValidateOnly
   ResourceMoveRequest.validateOnly: IsValidateOnly
   UnresolvedDependency.id: -|arm-id
-  #ResourceSettings.resourceType: -|resource-type, TODO as this is the discriminator, so codegen failed here is change its type to ResourceType
+  #ResourceSettings.resourceType: -|resource-type, One value is here https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2021-08-01/resourcemovercollection.json#L2418 is not a valid ResourceType, so can't change this property's format to ResourceType
   VirtualMachineResourceSettings.targetAvailabilitySetId: -|arm-id
   AffectedMoveResource: MoverAffectedMoveResourceInfo
   AvailabilitySetResourceSettings: MoverAvailabilitySetResourceSettings
