@@ -1,15 +1,9 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (2022-08-09)
 
 ### Features Added
-
 - `ManagedIdentityCredential` will now internally cache tokens, so applications can call `GetToken` and `GetTokenAsync` directly without needing to cache to avoid throttleling.
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.6.1 (2022-08-08)
 
