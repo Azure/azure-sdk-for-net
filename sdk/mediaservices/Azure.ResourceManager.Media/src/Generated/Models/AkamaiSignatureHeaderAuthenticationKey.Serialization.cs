@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("base64Key");
                 writer.WriteStringValue(Base64Key);
             }
-            if (Optional.IsDefined(Expiration))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration");
-                writer.WriteStringValue(Expiration.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WriteEndObject();
         }

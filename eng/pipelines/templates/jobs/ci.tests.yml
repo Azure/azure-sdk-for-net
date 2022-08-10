@@ -63,9 +63,11 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
-      - script: >-
-          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
-          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+      - pwsh: >-
+          dotnet test eng/service.proj
+          --filter '(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))'
+          --framework $(TestTargetFramework)
+          --logger 'trx;LogFileName=$(TestTargetFramework).trx' --logger:'console;verbosity=normal'
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}

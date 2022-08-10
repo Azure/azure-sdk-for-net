@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricTrigger"> the trigger that results in a scaling action. </param>
         /// <param name="scaleAction"> the parameters for the scaling action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricTrigger"/> or <paramref name="scaleAction"/> is null. </exception>
-        public ScaleRule(MetricTrigger metricTrigger, ScaleAction scaleAction)
+        public ScaleRule(MetricTrigger metricTrigger, MonitorScaleAction scaleAction)
         {
             if (metricTrigger == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the trigger that results in a scaling action. </summary>
         public MetricTrigger MetricTrigger { get; set; }
         /// <summary> the parameters for the scaling action. </summary>
-        public ScaleAction ScaleAction { get; set; }
+        public MonitorScaleAction ScaleAction { get; set; }
     }
 }

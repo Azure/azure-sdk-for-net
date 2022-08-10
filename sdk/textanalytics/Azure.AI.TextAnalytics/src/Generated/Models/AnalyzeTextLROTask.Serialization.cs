@@ -36,7 +36,6 @@ namespace Azure.AI.TextAnalytics.Models
                     case "CustomSingleLabelClassification": return CustomSingleLabelClassificationLROTask.DeserializeCustomSingleLabelClassificationLROTask(element);
                     case "EntityLinking": return EntityLinkingLROTask.DeserializeEntityLinkingLROTask(element);
                     case "EntityRecognition": return EntitiesLROTask.DeserializeEntitiesLROTask(element);
-                    case "ExtractiveSummarization": return ExtractiveSummarizationLROTask.DeserializeExtractiveSummarizationLROTask(element);
                     case "Healthcare": return HealthcareLROTask.DeserializeHealthcareLROTask(element);
                     case "KeyPhraseExtraction": return KeyPhraseLROTask.DeserializeKeyPhraseLROTask(element);
                     case "PiiEntityRecognition": return PiiLROTask.DeserializePiiLROTask(element);

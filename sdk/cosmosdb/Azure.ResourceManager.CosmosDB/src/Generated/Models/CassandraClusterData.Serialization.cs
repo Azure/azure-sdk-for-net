@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB
         internal static CassandraClusterData DeserializeCassandraClusterData(JsonElement element)
         {
             Optional<CassandraClusterProperties> properties = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))

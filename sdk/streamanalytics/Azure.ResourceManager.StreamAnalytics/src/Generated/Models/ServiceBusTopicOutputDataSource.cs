@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a Service Bus Topic output data source. </summary>
-    public partial class ServiceBusTopicOutputDataSource : OutputDataSource
+    public partial class ServiceBusTopicOutputDataSource : StreamingJobOutputDataSource
     {
         /// <summary> Initializes a new instance of ServiceBusTopicOutputDataSource. </summary>
         public ServiceBusTopicOutputDataSource()
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="topicName"> The name of the Service Bus Topic. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="propertyColumns"> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </param>
         /// <param name="systemPropertyColumns"> The system properties associated with the Service Bus Topic Output. The following system properties are supported: ReplyToSessionId, ContentType, To, Subject, CorrelationId, TimeToLive, PartitionKey, SessionId, ScheduledEnqueueTime, MessageId, ReplyTo, Label, ScheduledEnqueueTimeUtc. </param>
-        internal ServiceBusTopicOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, AuthenticationMode? authenticationMode, string topicName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType)
+        internal ServiceBusTopicOutputDataSource(string outputDataSourceType, string serviceBusNamespace, string sharedAccessPolicyName, string sharedAccessPolicyKey, StreamAnalyticsAuthenticationMode? authenticationMode, string topicName, IList<string> propertyColumns, IDictionary<string, string> systemPropertyColumns) : base(outputDataSourceType)
         {
             ServiceBusNamespace = serviceBusNamespace;
             SharedAccessPolicyName = sharedAccessPolicyName;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The shared access policy key for the specified shared access policy. Required on PUT (CreateOrReplace) requests. </summary>
         public string SharedAccessPolicyKey { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The name of the Service Bus Topic. Required on PUT (CreateOrReplace) requests. </summary>
         public string TopicName { get; set; }
         /// <summary> A string array of the names of output columns to be attached to Service Bus messages as custom properties. </summary>

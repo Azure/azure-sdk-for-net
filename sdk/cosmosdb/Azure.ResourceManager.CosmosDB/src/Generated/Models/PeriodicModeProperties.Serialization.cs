@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<int> backupIntervalInMinutes = default;
             Optional<int> backupRetentionIntervalInHours = default;
-            Optional<BackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupIntervalInMinutes"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backupStorageRedundancy = new BackupStorageRedundancy(property.Value.GetString());
+                    backupStorageRedundancy = new CosmosDBBackupStorageRedundancy(property.Value.GetString());
                     continue;
                 }
             }

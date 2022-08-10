@@ -52,9 +52,15 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of ConversationTasksState. </summary>
         /// <param name="tasks"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         /// <returns> A new <see cref="Conversations.ConversationTasksState"/> instance for mocking. </returns>
         public static ConversationTasksState ConversationTasksState(ConversationTasksStateTasks tasks = null)
         {
+            if (tasks == null)
+            {
+                throw new ArgumentNullException(nameof(tasks));
+            }
+
             return new ConversationTasksState(tasks);
         }
 
@@ -146,9 +152,15 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of ConversationIntent. </summary>
         /// <param name="category"> A predicted class. </param>
         /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
         /// <returns> A new <see cref="Conversations.ConversationIntent"/> instance for mocking. </returns>
         public static ConversationIntent ConversationIntent(string category = null, float confidence = default)
         {
+            if (category == null)
+            {
+                throw new ArgumentNullException(nameof(category));
+            }
+
             return new ConversationIntent(category, confidence);
         }
 

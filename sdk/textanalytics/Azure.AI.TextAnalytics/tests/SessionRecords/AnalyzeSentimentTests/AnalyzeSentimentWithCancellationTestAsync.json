@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "170",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-0d3c5836fed39845a814bbec6710355d-0e9a12fc5892f04f-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220504.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "427c79df83ac56f85226cfa3a2e217aa",
+        "traceparent": "00-a5369ce83015da9c8c6f67f67bcb862b-06eb367c7d8fe8ef-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e475858d0269bdac31a1db993c739c56",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,14 +30,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "7a0b7062-e6c7-4df1-a39b-2e816abdffeb",
+        "apim-request-id": "ef2cec97-47dc-46c6-9a20-67b713470491",
         "Content-Length": "379",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Wed, 04 May 2022 23:17:59 GMT",
+        "Date": "Thu, 21 Jul 2022 23:23:10 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
         "kind": "SentimentAnalysisResults",
@@ -68,13 +68,13 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2021-10-01"
+          "modelVersion": "2022-06-01"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "581331790",
+    "RandomSeed": "1458414480",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

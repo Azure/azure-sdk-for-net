@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NotificationHubs
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of NamespaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NamespaceResources and their operations over a NamespaceResource. </returns>
-        public virtual NamespaceResourceCollection GetNamespaceResources()
+        /// <summary> Gets a collection of NotificationHubNamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NotificationHubNamespaceResources and their operations over a NotificationHubNamespaceResource. </returns>
+        public virtual NotificationHubNamespaceCollection GetNotificationHubNamespaces()
         {
-            return GetCachedClient(Client => new NamespaceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new NotificationHubNamespaceCollection(Client, Id));
         }
     }
 }

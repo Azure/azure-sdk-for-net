@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ChangeDirectoryResult DeserializeChangeDirectoryResult(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<string> name = default;
             Optional<bool> isSucceeded = default;
             Optional<string> error = default;
@@ -22,7 +23,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -46,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ChangeDirectoryResult(id.Value, name.Value, Optional.ToNullable(isSucceeded), error.Value);
+            return new ChangeDirectoryResult(Optional.ToNullable(id), name.Value, Optional.ToNullable(isSucceeded), error.Value);
         }
     }
 }

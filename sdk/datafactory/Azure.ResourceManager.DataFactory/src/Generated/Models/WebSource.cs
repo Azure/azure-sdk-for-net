@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity source for web page table. </summary>
-    public partial class WebSource : CopySource
+    public partial class WebSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of WebSource. </summary>
         public WebSource()

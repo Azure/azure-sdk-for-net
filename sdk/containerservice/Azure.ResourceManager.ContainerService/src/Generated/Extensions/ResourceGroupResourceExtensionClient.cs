@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.ContainerService
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ManagedClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedClusterResources and their operations over a ManagedClusterResource. </returns>
-        public virtual ManagedClusterCollection GetManagedClusters()
+        /// <summary> Gets a collection of ContainerServiceManagedClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
+        public virtual ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters()
         {
-            return GetCachedClient(Client => new ManagedClusterCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerServiceManagedClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public virtual SnapshotCollection GetSnapshots()
+        /// <summary> Gets a collection of AgentPoolSnapshotResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
+        public virtual AgentPoolSnapshotCollection GetAgentPoolSnapshots()
         {
-            return GetCachedClient(Client => new SnapshotCollection(Client, Id));
+            return GetCachedClient(Client => new AgentPoolSnapshotCollection(Client, Id));
         }
     }
 }

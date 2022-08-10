@@ -1622,16 +1622,12 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            UploadTransferValidationOptions validationOptions = options?.TransferValidationOptions ?? ClientConfiguration.TransferValidation.Upload;
+
             long? expectedContentLength = null;
             if (UsingClientSideEncryption)
             {
                 options ??= new BlobUploadOptions();
-
-                // TODO #27253
-                //if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                //{
-                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                //}
 
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
@@ -1646,8 +1642,7 @@ namespace Azure.Storage.Blobs
 
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                // TODO #27253
-                // options?.TransactionalHashingOptions,
+                validationOptions,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -1692,28 +1687,6 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            // TODO Upload from file will get it's own implementation in the future that opens more
-            //      than one stream at once. This is incompatible with .NET's CryptoStream. We will
-            //      need to uncomment the below code and revert to upload from stream if client-side
-            //      encryption is enabled.
-            //if (ClientSideEncryption != default)
-            //{
-            //    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            //    {
-            //        return await StagedUploadAsync(
-            //            stream,
-            //            blobHttpHeaders,
-            //            metadata,
-            //            conditions,
-            //            progressHandler,
-            //            accessTier,
-            //            transferOptions: transferOptions,
-            //            async: async,
-            //            cancellationToken: cancellationToken)
-            //            .ConfigureAwait(false);
-            //    }
-            //}
-
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadInternal(
@@ -1802,11 +1775,6 @@ namespace Azure.Storage.Blobs
         {
             if (UsingClientSideEncryption)
             {
-                // TODO #27253
-                //if (UsingClientSideEncryption && options.TransactionalHashingOptions != default)
-                //{
-                //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
-                //}
                 IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
                 return await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptionOpenWriteInternal(
@@ -1841,10 +1809,9 @@ namespace Azure.Storage.Blobs
 
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
-            // TODO #27253
-            //UploadTransactionalHashingOptions validationOptions,
+            UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => BlockBlobClient.GetPartitionedUploader(transferOptions, /*validationOptions,*/ arrayPool, operationName);
+            => BlockBlobClient.GetPartitionedUploader(transferOptions, validationOptions, arrayPool, operationName);
     }
 }

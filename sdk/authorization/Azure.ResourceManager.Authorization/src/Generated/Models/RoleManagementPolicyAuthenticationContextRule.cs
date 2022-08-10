@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The role management policy authentication context rule. </summary>
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="isEnabled"> The value indicating if rule is enabled. </param>
         /// <param name="claimValue"> The claim value. </param>
-        internal RoleManagementPolicyAuthenticationContextRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isEnabled, string claimValue) : base(id, ruleType, target)
+        internal RoleManagementPolicyAuthenticationContextRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isEnabled, string claimValue) : base(id, ruleType, target)
         {
             IsEnabled = isEnabled;
             ClaimValue = claimValue;

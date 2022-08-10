@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RemotePrivateEndpointConnectionWrapper DeserializeRemotePrivateEndpointConnectionWrapper(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<ApiManagementPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
@@ -61,7 +61,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -71,7 +76,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -127,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RemotePrivateEndpointConnectionWrapper(id.Value, name.Value, type.Value, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, Optional.ToList(groupIds));
+            return new RemotePrivateEndpointConnectionWrapper(id.Value, name.Value, Optional.ToNullable(type), privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, Optional.ToList(groupIds));
         }
     }
 }

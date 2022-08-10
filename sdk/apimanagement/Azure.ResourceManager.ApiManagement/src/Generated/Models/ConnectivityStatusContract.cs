@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ConnectivityStatusContract. </summary>
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
-        /// <param name="lastUpdated">
+        /// <param name="lastUpdatedOn">
         /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
-        /// <param name="lastStatusChange">
+        /// <param name="lastStatusChangedOn">
         /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
         /// <param name="resourceType"> Resource Type. </param>
         /// <param name="isOptional"> Whether this is optional. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
-        internal ConnectivityStatusContract(string name, ConnectivityStatusType status, DateTimeOffset lastUpdated, DateTimeOffset lastStatusChange, string resourceType, bool isOptional)
+        internal ConnectivityStatusContract(string name, ConnectivityStatusType status, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional)
         {
             if (name == null)
             {
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Name = name;
             Status = status;
-            LastUpdated = lastUpdated;
-            LastStatusChange = lastStatusChange;
+            LastUpdatedOn = lastUpdatedOn;
+            LastStatusChangedOn = lastStatusChangedOn;
             ResourceType = resourceType;
             IsOptional = isOptional;
         }
@@ -49,23 +49,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The hostname of the resource which the service depends on. This can be the database, storage or any other azure resource on which the service depends upon. </param>
         /// <param name="status"> Resource Connectivity Status Type identifier. </param>
         /// <param name="error"> Error details of the connectivity to the resource. </param>
-        /// <param name="lastUpdated">
+        /// <param name="lastUpdatedOn">
         /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
-        /// <param name="lastStatusChange">
+        /// <param name="lastStatusChangedOn">
         /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
         /// <param name="resourceType"> Resource Type. </param>
         /// <param name="isOptional"> Whether this is optional. </param>
-        internal ConnectivityStatusContract(string name, ConnectivityStatusType status, string error, DateTimeOffset lastUpdated, DateTimeOffset lastStatusChange, string resourceType, bool isOptional)
+        internal ConnectivityStatusContract(string name, ConnectivityStatusType status, string error, DateTimeOffset lastUpdatedOn, DateTimeOffset lastStatusChangedOn, string resourceType, bool isOptional)
         {
             Name = name;
             Status = status;
             Error = error;
-            LastUpdated = lastUpdated;
-            LastStatusChange = lastStatusChange;
+            LastUpdatedOn = lastUpdatedOn;
+            LastStatusChangedOn = lastStatusChangedOn;
             ResourceType = resourceType;
             IsOptional = isOptional;
         }
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// The date when the resource connectivity status was last updated. This status should be updated every 15 minutes. If this status has not been updated, then it means that the service has lost network connectivity to the resource, from inside the Virtual Network.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset LastUpdated { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary>
         /// The date when the resource connectivity status last Changed from success to failure or vice-versa. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset LastStatusChange { get; }
+        public DateTimeOffset LastStatusChangedOn { get; }
         /// <summary> Resource Type. </summary>
         public string ResourceType { get; }
         /// <summary> Whether this is optional. </summary>

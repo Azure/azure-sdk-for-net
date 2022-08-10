@@ -51,6 +51,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     end1 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     end2 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     guid = "<guid>",
+        ///     homeId = "<homeId>",
+        ///     label = "<label>",
+        ///     provenanceType = 123.45f,
+        ///     status = "ACTIVE",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     version = 123.45f,
+        ///     attributes = new {
+        ///         key = new {},
+        ///     },
+        ///     typeName = "<typeName>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        /// };
+        /// 
+        /// Response response = await client.CreateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("label").ToString());
+        /// Console.WriteLine(result.GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -58,9 +186,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -77,6 +202,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -84,9 +212,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -103,6 +228,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -131,6 +259,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Create and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Create(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Create with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     end1 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     end2 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     guid = "<guid>",
+        ///     homeId = "<homeId>",
+        ///     label = "<label>",
+        ///     provenanceType = 123.45f,
+        ///     status = "ACTIVE",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     version = 123.45f,
+        ///     attributes = new {
+        ///         key = new {},
+        ///     },
+        ///     typeName = "<typeName>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        /// };
+        /// 
+        /// Response response = client.Create(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("label").ToString());
+        /// Console.WriteLine(result.GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -138,9 +394,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -157,6 +410,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -164,9 +420,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -183,6 +436,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -211,6 +467,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     end1 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     end2 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     guid = "<guid>",
+        ///     homeId = "<homeId>",
+        ///     label = "<label>",
+        ///     provenanceType = 123.45f,
+        ///     status = "ACTIVE",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     version = 123.45f,
+        ///     attributes = new {
+        ///         key = new {},
+        ///     },
+        ///     typeName = "<typeName>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        /// };
+        /// 
+        /// Response response = await client.UpdateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("label").ToString());
+        /// Console.WriteLine(result.GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -218,9 +602,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -237,6 +618,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -244,9 +628,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -263,6 +644,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -291,6 +675,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Update and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Update(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Update with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// var data = new {
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     end1 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     end2 = new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     guid = "<guid>",
+        ///     homeId = "<homeId>",
+        ///     label = "<label>",
+        ///     provenanceType = 123.45f,
+        ///     status = "ACTIVE",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     version = 123.45f,
+        ///     attributes = new {
+        ///         key = new {},
+        ///     },
+        ///     typeName = "<typeName>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        /// };
+        /// 
+        /// Response response = client.Update(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("label").ToString());
+        /// Console.WriteLine(result.GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -298,9 +810,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -317,6 +826,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -324,9 +836,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasRelationship</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   createTime: number, # Optional. The created time of the record.
         ///   createdBy: string, # Optional. The user who created the record.
         ///   end1: {
@@ -343,6 +852,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   updateTime: number, # Optional. The update time of the record.
         ///   updatedBy: string, # Optional. The user who updated the record.
         ///   version: number, # Optional. The version of the relationship.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -373,6 +885,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetPurviewRelationshipAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// Response response = await client.GetPurviewRelationshipAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetPurviewRelationshipAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meaningNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("label").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -382,9 +967,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <code>{
         ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The referred entity header.
         ///   relationship: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     createTime: number, # Optional. The created time of the record.
         ///     createdBy: string, # Optional. The user who created the record.
         ///     end1: {
@@ -401,6 +983,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///     updateTime: number, # Optional. The update time of the record.
         ///     updatedBy: string, # Optional. The user who updated the record.
         ///     version: number, # Optional. The version of the relationship.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. Atlas relationship instance.
         /// }
         /// </code>
@@ -432,6 +1017,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetPurviewRelationship with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// Response response = client.GetPurviewRelationship("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetPurviewRelationship with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// Response response = client.GetPurviewRelationship("<guid>", true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classificationNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meaningNames")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end1").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("end2").GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("label").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationship").GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -441,9 +1099,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <code>{
         ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;, # Optional. The referred entity header.
         ///   relationship: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     createTime: number, # Optional. The created time of the record.
         ///     createdBy: string, # Optional. The user who created the record.
         ///     end1: {
@@ -460,6 +1115,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///     updateTime: number, # Optional. The update time of the record.
         ///     updatedBy: string, # Optional. The user who updated the record.
         ///     version: number, # Optional. The version of the relationship.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. Atlas relationship instance.
         /// }
         /// </code>
@@ -490,6 +1148,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// Response response = await client.DeleteAsync("<guid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -515,6 +1184,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
+        /// 
+        /// Response response = client.Delete("<guid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response Delete(string guid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));

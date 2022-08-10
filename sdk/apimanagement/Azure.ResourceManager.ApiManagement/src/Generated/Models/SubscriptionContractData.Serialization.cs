@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("startDate");
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate");
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate");
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationOn))
+            if (Optional.IsDefined(NotifiesOn))
             {
                 writer.WritePropertyName("notificationDate");
-                writer.WriteStringValue(NotificationOn.Value, "O");
+                writer.WriteStringValue(NotifiesOn.Value, "O");
             }
             if (Optional.IsDefined(PrimaryKey))
             {

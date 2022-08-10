@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementServiceSkuProperties. </summary>
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
-        public ApiManagementServiceSkuProperties(SkuType name, int capacity)
+        public ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity)
         {
             Name = name;
             Capacity = capacity;
         }
 
         /// <summary> Name of the Sku. </summary>
-        public SkuType Name { get; set; }
+        public ApiManagementServiceSkuType Name { get; set; }
         /// <summary> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </summary>
         public int Capacity { get; set; }
     }

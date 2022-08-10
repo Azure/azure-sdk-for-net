@@ -23,6 +23,14 @@ namespace Azure.Messaging.ServiceBus
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusProcessor" /> is safe to cache and use for the lifetime of an application
+    /// or until the <see cref="ServiceBusClient" /> that it was created by is disposed. Caching the processor
+    /// is recommended when the application is processing messages regularly.  The sender is responsible for
+    /// ensuring efficient network, CPU, and memory use. Calling <see cref="DisposeAsync" /> on the
+    /// associated <see cref="ServiceBusClient" /> as the application is shutting down will ensure that
+    /// network resources and other unmanaged objects used by the processor are properly cleaned up.
+    /// </remarks>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class ServiceBusProcessor : IAsyncDisposable
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
@@ -68,10 +76,9 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath { get; }
 
         /// <summary>
-        /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
+        /// Gets the ID used to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
-        /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
@@ -238,7 +245,7 @@ namespace Azure.Messaging.ServiceBus
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
             EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
-            Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+            Identifier = string.IsNullOrEmpty(Options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : Options.Identifier;
 
             ReceiveMode = Options.ReceiveMode;
             PrefetchCount = Options.PrefetchCount;
@@ -890,6 +897,7 @@ namespace Azure.Messaging.ServiceBus
                                     ServiceBusErrorSource.Receive,
                                     FullyQualifiedNamespace,
                                     EntityPath,
+                                    Identifier,
                                     cancellationToken))
                             .ConfigureAwait(false);
                     }

@@ -23,7 +23,7 @@ string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
 StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
 {
     Tags =

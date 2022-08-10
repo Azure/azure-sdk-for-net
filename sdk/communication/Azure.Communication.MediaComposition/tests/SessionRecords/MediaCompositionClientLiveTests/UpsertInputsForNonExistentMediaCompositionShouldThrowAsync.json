@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/nonexistentMediaCompositionId?api-version=2022-07-16-preview1",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "226",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-8cf0d1610852724faaf58024b2342c6b-c19179d5904f624c-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "da72d1cf400cdab4a8237ada1f31a46c",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 08 Aug 2022 21:05:46 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "nonexistentMediaCompositionId",
+        "inputs": {
+          "james": {
+            "id": {
+              "microsoftTeamsUser": {
+                "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b70p"
+              }
+            },
+            "call": "teamsMeeting",
+            "kind": "participant",
+            "placeholderImageUri": "https://imageendpoint"
+          }
+        }
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-07-16-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 08 Aug 2022 21:05:45 GMT",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0qnrxYgAAAACoBdHvHeDFTpnb\u002BRtjc4yZWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+        "title": "Not Found",
+        "status": 404,
+        "traceId": "00-8cf0d1610852724faaf58024b2342c6b-f8edc66861d71e0e-00"
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "1522178928"
+  }
+}

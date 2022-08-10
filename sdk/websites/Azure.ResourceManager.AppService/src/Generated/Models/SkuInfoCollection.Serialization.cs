@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SkuInfoCollection DeserializeSkuInfoCollection(JsonElement element)
         {
-            IReadOnlyList<SkuInfo> value = default;
+            IReadOnlyList<AppServicePoolSkuInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SkuInfo> array = new List<SkuInfo>();
+                    List<AppServicePoolSkuInfo> array = new List<AppServicePoolSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuInfo.DeserializeSkuInfo(item));
+                        array.Add(AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo(item));
                     }
                     value = array;
                     continue;

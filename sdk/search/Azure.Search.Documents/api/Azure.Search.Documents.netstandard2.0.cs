@@ -22,6 +22,25 @@ namespace Azure.Search.Documents
         public IndexDocumentsOptions() { }
         public bool ThrowOnAnyError { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SearchAudience : System.IEquatable<Azure.Search.Documents.SearchAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SearchAudience(string value) { throw null; }
+        public static Azure.Search.Documents.SearchAudience AzureChina { get { throw null; } }
+        public static Azure.Search.Documents.SearchAudience AzureGovernment { get { throw null; } }
+        public static Azure.Search.Documents.SearchAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.SearchAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
+        public static implicit operator Azure.Search.Documents.SearchAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.SearchAudience left, Azure.Search.Documents.SearchAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SearchClient
     {
         protected SearchClient() { }
@@ -58,6 +77,7 @@ namespace Azure.Search.Documents
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
         public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2021_04_30_Preview) { }
+        public Azure.Search.Documents.SearchAudience? Audience { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -2954,7 +2974,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount CognitiveServicesAccount(string oDataType, string description) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataChangeDetectionPolicy DataChangeDetectionPolicy(string oDataType) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.DataDeletionDetectionPolicy DataDeletionDetectionPolicy(string oDataType) { throw null; }
-        public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties) { throw null; }
+        public static Azure.Search.Documents.Models.FacetResult FacetResult(long? count = default(long?), System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
         public static Azure.Search.Documents.Models.IndexDocumentsResult IndexDocumentsResult(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.IndexingResult> results) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerChangeTrackingState IndexerChangeTrackingState(string allDocumentsInitialState, string allDocumentsFinalState, string resetDocumentsInitialState, string resetDocumentsFinalState) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.IndexerExecutionResult IndexerExecutionResult(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus status = Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure, Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail? statusDetail = default(Azure.Search.Documents.Indexes.Models.IndexerExecutionStatusDetail?), Azure.Search.Documents.Indexes.Models.IndexerState currentState = null, string errorMessage = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerError> errors = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.SearchIndexerWarning> warnings = null, int itemCount = 0, int failedItemCount = 0, string initialTrackingState = null, string finalTrackingState = null) { throw null; }

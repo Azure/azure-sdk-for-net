@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="minimumSize"> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </param>
         /// <param name="childItems"> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataset"> Validation activity dataset reference. </param>
-        internal ValidationActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData timeout, BinaryData sleep, BinaryData minimumSize, BinaryData childItems, DatasetReference dataset) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ValidationActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData timeout, BinaryData sleep, BinaryData minimumSize, BinaryData childItems, DatasetReference dataset) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Timeout = timeout;
             Sleep = sleep;

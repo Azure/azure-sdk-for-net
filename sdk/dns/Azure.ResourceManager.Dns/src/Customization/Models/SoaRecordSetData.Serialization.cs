@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TTL))
+            if (Optional.IsDefined(TtlInSeconds))
             {
                 writer.WritePropertyName("TTL");
-                writer.WriteNumberValue(TTL.Value);
+                writer.WriteNumberValue(TtlInSeconds.Value);
             }
             if (Optional.IsDefined(TargetResource))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<SoaRecord> soaRecord = default;
+            Optional<DnsSoaRecord> soaRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            soaRecord = SoaRecord.DeserializeSoaRecord(property0.Value);
+                            soaRecord = DnsSoaRecord.DeserializeDnsSoaRecord(property0.Value);
                             continue;
                         }
                     }

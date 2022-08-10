@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Media
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> mediaServiceId = default;
-            Optional<IList<StorageAccount>> storageAccounts = default;
-            Optional<StorageAuthentication?> storageAuthentication = default;
+            Optional<IList<MediaServiceStorageAccount>> storageAccounts = default;
+            Optional<MediaStorageAuthentication?> storageAuthentication = default;
             Optional<AccountEncryption> encryption = default;
-            Optional<KeyDelivery> keyDelivery = default;
-            Optional<PublicNetworkAccess?> publicNetworkAccess = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<MediaKeyDelivery> keyDelivery = default;
+            Optional<MediaPublicNetworkAccessStatus?> publicNetworkAccess = default;
+            Optional<MediaProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<MediaPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<StorageAccount> array = new List<StorageAccount>();
+                            List<MediaServiceStorageAccount> array = new List<MediaServiceStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccount.DeserializeStorageAccount(item));
+                                array.Add(MediaServiceStorageAccount.DeserializeMediaServiceStorageAccount(item));
                             }
                             storageAccounts = array;
                             continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Media
                                 storageAuthentication = null;
                                 continue;
                             }
-                            storageAuthentication = new StorageAuthentication(property0.Value.GetString());
+                            storageAuthentication = new MediaStorageAuthentication(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyDelivery = KeyDelivery.DeserializeKeyDelivery(property0.Value);
+                            keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Media
                                 publicNetworkAccess = null;
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new MediaPublicNetworkAccessStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MediaProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

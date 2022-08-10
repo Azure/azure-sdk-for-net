@@ -6,12 +6,12 @@ using Azure.Core;
 
 namespace Azure.Security.ConfidentialLedger
 {
-    /// <summary> Client options for ConfidentialLedgerClient. </summary>
-    public partial class ConfidentialLedgerClientOptions
+    public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
         /// <summary>
-        /// The default polling interval for client methods that return an <see cref="Operation"/> when waitForCompletion is <c>true</c>.
+        /// The Identity Service URL. If not provided, the default endpoint "https://identity.confidential-ledger.core.azure.com" will be used.
         /// </summary>
-        public TimeSpan OperationPollingInterval { get; set; } = ConstantDelayStrategy.DefaultPollingInterval;
+        /// <value></value>
+        public Uri CertificateEndpoint { get; set; }
     }
 }

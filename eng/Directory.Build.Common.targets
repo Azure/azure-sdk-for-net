@@ -32,10 +32,10 @@
       <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
-    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. " />
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="ChangeLog verification failed for [$(ChangeLogPath)]." />
   </Target>
 
   <!--Run Aggregate Updates to Source -->
@@ -221,6 +221,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->

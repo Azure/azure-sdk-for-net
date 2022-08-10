@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity AmazonRdsForOracle source. </summary>
-    public partial class AmazonRdsForOracleSource : CopySource
+    public partial class AmazonRdsForOracleSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AmazonRdsForOracleSource. </summary>
         public AmazonRdsForOracleSource()

@@ -10,7 +10,7 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>22.0.0</Version>
+		<Version>23.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[

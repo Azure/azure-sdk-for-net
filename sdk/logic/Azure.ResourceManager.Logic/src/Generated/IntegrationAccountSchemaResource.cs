@@ -253,18 +253,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/schemas/{schemaName}/listContentCallbackUrl
         /// Operation Id: IntegrationAccountSchemas_ListContentCallbackUrl
         /// </summary>
-        /// <param name="listContentCallbackUrl"> The GetCallbackUrlParameters to use. </param>
+        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listContentCallbackUrl"/> is null. </exception>
-        public virtual async Task<Response<WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listContentCallbackUrl, nameof(listContentCallbackUrl));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaResource.GetContentCallbackUrl");
             scope.Start();
             try
             {
-                var response = await _integrationAccountSchemaRestClient.ListContentCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listContentCallbackUrl, cancellationToken).ConfigureAwait(false);
+                var response = await _integrationAccountSchemaRestClient.ListContentCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/schemas/{schemaName}/listContentCallbackUrl
         /// Operation Id: IntegrationAccountSchemas_ListContentCallbackUrl
         /// </summary>
-        /// <param name="listContentCallbackUrl"> The GetCallbackUrlParameters to use. </param>
+        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listContentCallbackUrl"/> is null. </exception>
-        public virtual Response<WorkflowTriggerCallbackUri> GetContentCallbackUrl(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual Response<LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listContentCallbackUrl, nameof(listContentCallbackUrl));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountSchemaClientDiagnostics.CreateScope("IntegrationAccountSchemaResource.GetContentCallbackUrl");
             scope.Start();
             try
             {
-                var response = _integrationAccountSchemaRestClient.ListContentCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listContentCallbackUrl, cancellationToken);
+                var response = _integrationAccountSchemaRestClient.ListContentCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
                 return response;
             }
             catch (Exception e)

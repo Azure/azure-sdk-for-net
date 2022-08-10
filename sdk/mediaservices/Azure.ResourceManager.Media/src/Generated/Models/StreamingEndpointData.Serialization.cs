@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScaleUnits))
+            if (Optional.IsDefined(ScaleUnitsNumber))
             {
                 writer.WritePropertyName("scaleUnits");
-                writer.WriteNumberValue(ScaleUnits.Value);
+                writer.WriteNumberValue(ScaleUnitsNumber.Value);
             }
             if (Optional.IsDefined(AvailabilitySetName))
             {
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CdnEnabled))
+            if (Optional.IsDefined(IsCdnEnabled))
             {
                 writer.WritePropertyName("cdnEnabled");
-                writer.WriteBooleanValue(CdnEnabled.Value);
+                writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
             if (Optional.IsDefined(CdnProvider))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingEndpointData DeserializeStreamingEndpointData(JsonElement element)
         {
-            Optional<ArmStreamingEndpointCurrentSku> sku = default;
+            Optional<StreamingEndpointCurrentSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ArmStreamingEndpointCurrentSku.DeserializeArmStreamingEndpointCurrentSku(property.Value);
+                    sku = StreamingEndpointCurrentSku.DeserializeStreamingEndpointCurrentSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="location"> The location. </param>
         public MediaServiceData(AzureLocation location) : base(location)
         {
-            StorageAccounts = new ChangeTrackingList<StorageAccount>();
+            StorageAccounts = new ChangeTrackingList<MediaServiceStorageAccount>();
             PrivateEndpointConnections = new ChangeTrackingList<MediaPrivateEndpointConnectionData>();
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
         /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
-        internal MediaServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServiceId, IList<StorageAccount> storageAccounts, StorageAuthentication? storageAuthentication, AccountEncryption encryption, KeyDelivery keyDelivery, PublicNetworkAccess? publicNetworkAccess, ProvisioningState? provisioningState, IReadOnlyList<MediaPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal MediaServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServiceId, IList<MediaServiceStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaPublicNetworkAccessStatus? publicNetworkAccess, MediaProvisioningState? provisioningState, IReadOnlyList<MediaPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MediaServiceId = mediaServiceId;
@@ -58,29 +58,29 @@ namespace Azure.ResourceManager.Media
         /// <summary> The Media Services account ID. </summary>
         public Guid? MediaServiceId { get; }
         /// <summary> The storage accounts for this resource. </summary>
-        public IList<StorageAccount> StorageAccounts { get; }
+        public IList<MediaServiceStorageAccount> StorageAccounts { get; }
         /// <summary> Gets or sets the storage authentication. </summary>
-        public StorageAuthentication? StorageAuthentication { get; set; }
+        public MediaStorageAuthentication? StorageAuthentication { get; set; }
         /// <summary> The account encryption properties. </summary>
         public AccountEncryption Encryption { get; set; }
         /// <summary> The Key Delivery properties for Media Services account. </summary>
-        internal KeyDelivery KeyDelivery { get; set; }
+        internal MediaKeyDelivery KeyDelivery { get; set; }
         /// <summary> The access control properties for Key Delivery. </summary>
-        public AccessControl KeyDeliveryAccessControl
+        public MediaAccessControl KeyDeliveryAccessControl
         {
             get => KeyDelivery is null ? default : KeyDelivery.AccessControl;
             set
             {
                 if (KeyDelivery is null)
-                    KeyDelivery = new KeyDelivery();
+                    KeyDelivery = new MediaKeyDelivery();
                 KeyDelivery.AccessControl = value;
             }
         }
 
         /// <summary> Whether or not public network access is allowed for resources under the Media Services account. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MediaPublicNetworkAccessStatus? PublicNetworkAccess { get; set; }
         /// <summary> Provisioning state of the Media Services account. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MediaProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
         public IReadOnlyList<MediaPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
