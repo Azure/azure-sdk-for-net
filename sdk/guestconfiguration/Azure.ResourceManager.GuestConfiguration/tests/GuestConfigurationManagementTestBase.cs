@@ -53,10 +53,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
             return lro.Value;
         }
 
-        protected async Task<GuestConfigurationAssignmentCollection> GetGuestConfigurationAssignmentCollectionAsync(string resourceGroupName, string vmName)
+        protected async Task<GuestConfigurationAssignmentCollection> GetGuestConfigurationAssignmentCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetGuestConfigurationAssignments(vmName);
+            return rg.GetGuestConfigurationAssignments();
+        }
+
+        protected async Task<GuestConfigurationHcrpAssignmentCollection> GetGuestConfigurationAssignmentHcrpCollectionAsync(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetGuestConfigurationHcrpAssignments();
+        }
+        protected async Task<GuestConfigurationVmssAssignmentCollection> GetGuestConfigurationVmssAssignmentCollection(string resourceGroupName)
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            return rg.GetGuestConfigurationVmssAssignments();
         }
         public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
