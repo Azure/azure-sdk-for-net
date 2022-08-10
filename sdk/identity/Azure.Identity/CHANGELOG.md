@@ -1,14 +1,27 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (2022-08-09)
 
 ### Features Added
+- `ManagedIdentityCredential` will now internally cache tokens, so applications can call `GetToken` and `GetTokenAsync` directly without needing to cache to avoid throttleling.
 
-### Breaking Changes
+## 1.6.1 (2022-08-08)
 
 ### Bugs Fixed
+- Fixed `AZURE_REGIONAL_AUTHORITY_NAME` support in `ClientCertificateCredential` [#29112](https://github.com/Azure/azure-sdk-for-net/issues/29112)
+- Fixed regression in `SharedTokenCacheCredential` default behavior [#28029](https://github.com/Azure/azure-sdk-for-net/issues/28029)
+- Fixed legacy PowerShell discovery failures [#28030](https://github.com/Azure/azure-sdk-for-net/issues/28030) (A community contribution, courtesy of _[nerddtvg](https://github.com/nerddtvg)_)
 
 ### Other Changes
+- Documentation improvements to `TokenCacheRefreshArgs` and `EnvironmentCredential` (Community contributions, courtesy of _[pmaytak](https://github.com/pmaytak)_ and _[goenning](https://github.com/goenning)_)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- _[nerddtvg](https://github.com/nerddtvg)_
+- _[pmaytak](https://github.com/pmaytak)_
+- _[goenning](https://github.com/goenning)_
 
 ## 1.6.0 (2022-04-05)
 

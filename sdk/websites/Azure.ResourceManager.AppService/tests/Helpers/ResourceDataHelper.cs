@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new AppServicePlanData(location)
             {
-                //Location = "AZURE_LOCATION",
-                Sku = new SkuDescription
+                Sku = new AppServiceSkuDescription
                 {
-                Name = "S1",
-                Tier = "STANDARD",
-                Capacity =  1
+                    Name = "S1",
+                    Tier = "STANDARD",
+                    Capacity =  1
                 },
                 IsPerSiteScaling = false,
                 IsXenon = false
@@ -108,14 +107,14 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         {
             var data = new WebSiteData(location)
             {
-                Reserved = false,
+                IsReserved = false,
                 IsXenon = false,
                 IsHyperV = false,
                 SiteConfig = new SiteConfigProperties
                 {
                     NetFrameworkVersion = "v4.6",
                     IsLocalMySqlEnabled = false,
-                    IsHttp2Enabled = true
+                    IsHttp20Enabled = true
                 },
                 ScmSiteAlsoStopped = false,
             };
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region StaticSiteARMResourceData(StaticSiteRestOperation)
-        public static void AssertStaticSiteARMResourceData(StaticSiteARMData ssrd1, StaticSiteARMData ssrd2)
+        public static void AssertStaticSiteARMResourceData(StaticSiteData ssrd1, StaticSiteData ssrd2)
         {
             AssertTrackedResource(ssrd1, ssrd2);
             Assert.AreEqual(ssrd1.Branch, ssrd2.Branch);
@@ -228,11 +227,11 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
             Assert.AreEqual(ssrd1.Kind, ssrd2.Kind);
         }
 
-        public static StaticSiteARMData GetBasicStaticSiteARMResourceData(AzureLocation location)
+        public static StaticSiteData GetBasicStaticSiteARMResourceData(AzureLocation location)
         {
-            var data = new StaticSiteARMData(location)
+            var data = new StaticSiteData(location)
             {
-                Sku = new SkuDescription()
+                Sku = new AppServiceSkuDescription()
                 {
                     Name = "Free",
                     //Tier = "Basic"
@@ -242,9 +241,9 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                 RepositoryToken = "xxx",
                 BuildProperties = new StaticSiteBuildProperties()
                 {
-                    AppAzureLocation = "app",
-                    ApiAzureLocation = "api",
-                    AppArtifactAzureLocation = "build"
+                    AppLocation = "app",
+                    ApiLocation = "api",
+                    AppArtifactLocation = "build"
                 }
             };
             return data;
@@ -252,15 +251,15 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
         #endregion
 
         #region Certificate
-        public static void AssertCertificate(CertificateData certificate1, CertificateData certificate2)
+        public static void AssertCertificate(AppCertificateData certificate1, AppCertificateData certificate2)
         {
             AssertTrackedResource(certificate1, certificate2);
             Assert.AreEqual(certificate1.CanonicalName, certificate2.CanonicalName);
         }
 
-        public static CertificateData GetBasicCertificateData(AzureLocation location)
+        public static AppCertificateData GetBasicCertificateData(AzureLocation location)
         {
-            var data = new CertificateData(location)
+            var data = new AppCertificateData(location)
             {
                 Location = location,
                 HostNames =

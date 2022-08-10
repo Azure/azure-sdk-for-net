@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.MySql
     {
         public static Azure.Response<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult> CheckMySqlNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier> GetLocationBasedPerformanceTiers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier> GetLocationBasedPerformanceTiers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlAdvisorResource GetMySqlAdvisorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlConfigurationResource GetMySqlConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlDatabaseResource GetMySqlDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -131,10 +131,6 @@ namespace Azure.ResourceManager.MySql
         public static Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyResource GetMySqlServerSecurityAlertPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleResource GetMySqlVirtualNetworkRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlWaitStatisticResource GetMySqlWaitStatisticResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MySql.MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MySql.MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResultsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.MySql.Models.MySqlRecommendedActionSessionsOperationStatus> GetRecommendedActionSessionsOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.Models.MySqlRecommendedActionSessionsOperationStatus>> GetRecommendedActionSessionsOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MySqlFirewallRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.MySqlFirewallRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlFirewallRuleResource>, System.Collections.IEnumerable
     {
@@ -334,8 +330,8 @@ namespace Azure.ResourceManager.MySql
     {
         public MySqlServerAdministratorData() { }
         public Azure.ResourceManager.MySql.Models.MySqlAdministratorType? AdministratorType { get { throw null; } set { } }
-        public string Login { get { throw null; } set { } }
-        public System.Guid? Sid { get { throw null; } set { } }
+        public string LoginAccountName { get { throw null; } set { } }
+        public System.Guid? SecureId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class MySqlServerAdministratorResource : Azure.ResourceManager.ArmResource
@@ -376,7 +372,7 @@ namespace Azure.ResourceManager.MySql
         public string ByokEnforcement { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MasterServerId { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
@@ -497,8 +493,8 @@ namespace Azure.ResourceManager.MySql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.MySqlServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.MySqlServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationListResult> UpdateConfigurations(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationListContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationListResult>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationListContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationList> UpdateConfigurations(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationList value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationList>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationList value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -614,14 +610,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public static partial class FlexibleServersExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteCheckVirtualNetworkSubnetUsage(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> GetMySqlFlexibleServer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> GetMySqlFlexibleServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource GetMySqlFlexibleServerBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -729,12 +725,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption DataEncryption { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability HighAvailability { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork Network { get { throw null; } set { } }
         public int? ReplicaCapacity { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole? ReplicationRole { get { throw null; } set { } }
-        public System.DateTimeOffset? RestorePointInOn { get { throw null; } set { } }
+        public System.DateTimeOffset? RestorePointInTime { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku Sku { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceServerResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState? State { get { throw null; } }
@@ -819,8 +815,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListResult> BatchUpdateConfiguration(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListResult>> BatchUpdateConfigurationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -852,35 +846,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListResult> UpdateConfigurations(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListResult>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class Identity
-    {
-        public Identity() { }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType left, Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType left, Azure.ResourceManager.MySql.FlexibleServers.Models.ManagedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MySqlFlexibleServerBackupProperties
     {
         public MySqlFlexibleServerBackupProperties() { }
@@ -1133,7 +1104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties Backup { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption DataEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability HighAvailability { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.Identity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole? ReplicationRole { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku Sku { get { throw null; } set { } }
@@ -1255,8 +1226,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlFlexibleServerVersion(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Eight021 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Five7 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Ver5_7 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion Ver8_0_21 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1281,23 +1252,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 namespace Azure.ResourceManager.MySql.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IdentityType : System.IEquatable<Azure.ResourceManager.MySql.Models.IdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.Models.IdentityType SystemAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MySql.Models.IdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MySql.Models.IdentityType left, Azure.ResourceManager.MySql.Models.IdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MySql.Models.IdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MySql.Models.IdentityType left, Azure.ResourceManager.MySql.Models.IdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlAdministratorType : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlAdministratorType>
     {
         private readonly object _dummy;
@@ -1314,15 +1268,10 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlAdministratorType left, Azure.ResourceManager.MySql.Models.MySqlAdministratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlConfigurationListContent
+    public partial class MySqlConfigurationList
     {
-        public MySqlConfigurationListContent() { }
+        public MySqlConfigurationList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MySql.MySqlConfigurationData> Value { get { throw null; } }
-    }
-    public partial class MySqlConfigurationListResult
-    {
-        internal MySqlConfigurationListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.MySqlConfigurationData> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlGeoRedundantBackup : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup>
@@ -1365,8 +1314,8 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlLogFile() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public string LogFileType { get { throw null; } set { } }
         public long? SizeInKB { get { throw null; } set { } }
-        public string TypePropertiesType { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1375,9 +1324,9 @@ namespace Azure.ResourceManager.MySql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlMinimalTlsVersionEnum(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLS10 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLS11 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLS12 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum Tls1_2 { get { throw null; } }
         public static Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum TLSEnforcementDisabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1424,7 +1373,7 @@ namespace Azure.ResourceManager.MySql.Models
         public int? MaxStorageInMB { get { throw null; } }
         public int? MinBackupRetentionDays { get { throw null; } }
         public int? MinStorageInMB { get { throw null; } }
-        public int? VCore { get { throw null; } }
+        public int? VCores { get { throw null; } }
     }
     public partial class MySqlPrivateEndpointConnectionPatch
     {
@@ -1544,13 +1493,6 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState left, Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlRecommendedActionSessionsOperationStatus
-    {
-        internal MySqlRecommendedActionSessionsOperationStatus() { }
-        public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
     public partial class MySqlRecoverableServerResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public MySqlRecoverableServerResourceData() { }
@@ -1558,7 +1500,7 @@ namespace Azure.ResourceManager.MySql.Models
         public string HardwareGeneration { get { throw null; } }
         public System.DateTimeOffset? LastAvailableBackupOn { get { throw null; } }
         public string ServiceLevelObjective { get { throw null; } }
-        public int? VCore { get { throw null; } }
+        public int? VCores { get { throw null; } }
         public string Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1581,7 +1523,7 @@ namespace Azure.ResourceManager.MySql.Models
     public partial class MySqlServerCreateOrUpdateContent
     {
         public MySqlServerCreateOrUpdateContent(Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate properties, Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.MySql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate Properties { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlSku Sku { get { throw null; } set { } }
@@ -1608,7 +1550,7 @@ namespace Azure.ResourceManager.MySql.Models
     {
         public MySqlServerPatch() { }
         public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.Models.ResourceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? MinimalTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? PublicNetworkAccess { get { throw null; } set { } }
         public string ReplicationRole { get { throw null; } set { } }
@@ -1666,8 +1608,8 @@ namespace Azure.ResourceManager.MySql.Models
     }
     public partial class MySqlServerPropertiesForRestore : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate
     {
-        public MySqlServerPropertiesForRestore(Azure.Core.ResourceIdentifier sourceServerId, System.DateTimeOffset restorePointInOn) { }
-        public System.DateTimeOffset RestorePointInOn { get { throw null; } }
+        public MySqlServerPropertiesForRestore(Azure.Core.ResourceIdentifier sourceServerId, System.DateTimeOffset restorePointInTime) { }
+        public System.DateTimeOffset RestorePointInTime { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceServerId { get { throw null; } }
     }
     public enum MySqlServerSecurityAlertPolicyState
@@ -1706,9 +1648,9 @@ namespace Azure.ResourceManager.MySql.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlServerVersion(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Eight0 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Five6 { get { throw null; } }
-        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Five7 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver5_6 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver5_7 { get { throw null; } }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerVersion Ver8_0 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MySql.Models.MySqlServerVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1815,12 +1757,5 @@ namespace Azure.ResourceManager.MySql.Models
         public string AggregationWindow { get { throw null; } }
         public System.DateTimeOffset ObservationEndOn { get { throw null; } }
         public System.DateTimeOffset ObservationStartOn { get { throw null; } }
-    }
-    public partial class ResourceIdentity
-    {
-        public ResourceIdentity() { }
-        public Azure.ResourceManager.MySql.Models.IdentityType? IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
     }
 }

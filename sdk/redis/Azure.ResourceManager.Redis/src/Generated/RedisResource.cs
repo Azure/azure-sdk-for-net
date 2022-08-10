@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RedisPatchScheduleResource>> GetRedisPatchScheduleAsync(DefaultName defaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisPatchScheduleResource>> GetRedisPatchScheduleAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             return await GetRedisPatchSchedules().GetAsync(defaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<RedisPatchScheduleResource> GetRedisPatchSchedule(DefaultName defaultName, CancellationToken cancellationToken = default)
+        public virtual Response<RedisPatchScheduleResource> GetRedisPatchSchedule(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
             return GetRedisPatchSchedules().Get(defaultName, cancellationToken);
         }
@@ -396,10 +396,10 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UpgradeNotification> GetUpgradeNotificationsAsync(double history, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RedisUpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RedisUpgradeNotification> GetUpgradeNotificationsAsync(double history, CancellationToken cancellationToken = default)
         {
-            async Task<Page<UpgradeNotification>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RedisUpgradeNotification>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
                 scope.Start();
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Redis
                     throw;
                 }
             }
-            async Task<Page<UpgradeNotification>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RedisUpgradeNotification>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
                 scope.Start();
@@ -439,10 +439,10 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UpgradeNotification> GetUpgradeNotifications(double history, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RedisUpgradeNotification" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RedisUpgradeNotification> GetUpgradeNotifications(double history, CancellationToken cancellationToken = default)
         {
-            Page<UpgradeNotification> FirstPageFunc(int? pageSizeHint)
+            Page<RedisUpgradeNotification> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
                 scope.Start();
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Redis
                     throw;
                 }
             }
-            Page<UpgradeNotification> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RedisUpgradeNotification> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _redisClientDiagnostics.CreateScope("RedisResource.GetUpgradeNotifications");
                 scope.Start();
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="content"> Specifies which Redis node(s) to reboot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RedisForceRebootResponse>> ForceRebootAsync(RedisRebootContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisForceRebootResult>> ForceRebootAsync(RedisRebootContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="content"> Specifies which Redis node(s) to reboot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RedisForceRebootResponse> ForceReboot(RedisRebootContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RedisForceRebootResult> ForceReboot(RedisRebootContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="content"> Parameters for Redis import operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ImportDataAsync(WaitUntil waitUntil, ImportRDBContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ImportDataAsync(WaitUntil waitUntil, ImportRdbContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="content"> Parameters for Redis import operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ImportData(WaitUntil waitUntil, ImportRDBContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ImportData(WaitUntil waitUntil, ImportRdbContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="content"> Parameters for Redis export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ExportDataAsync(WaitUntil waitUntil, ExportRDBContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ExportDataAsync(WaitUntil waitUntil, ExportRdbContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="content"> Parameters for Redis export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ExportData(WaitUntil waitUntil, ExportRDBContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ExportData(WaitUntil waitUntil, ExportRdbContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

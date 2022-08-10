@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/sample-Share/assets/fabrikam-blob-asset?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "361",
+        "Content-Type": "application/json",
+        "traceparent": "00-6d7bec3612a41bc9904d9c5e9a30e38a-3768a9eb182ba648-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e81846ddf30ae03a4d3b14055965a671",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "blobAccount",
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage",
+          "receiverAssetName": "receiver-visible-asset-name",
+          "paths": [
+            {
+              "containerName": "fabrikamcontainer",
+              "senderPath": "folder/sample.txt",
+              "receiverPath": "from-fabrikam"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pv9c4b5498-3f57-47cb-b97a-96b4f6649119?api-version=2021-09-01-preview",
+        "Content-Length": "537",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 02 Aug 2022 22:22:04 GMT",
+        "Location": "/sentShares/sample-Share/assets/fabrikam-blob-asset/fabrikam-blob-asset",
+        "Operation-Location": "https://ads-dev-eastus-pv.purview.azure.com/share/operationResults/ads-dev-eastus-pv9c4b5498-3f57-47cb-b97a-96b4f6649119?api-version=2021-09-01-preview",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "8d9adf60-7e9d-4aad-bd9f-85489bee886e"
+      },
+      "ResponseBody": {
+        "properties": {
+          "storageAccountResourceId": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/yaman-rg/providers/Microsoft.Storage/storageAccounts/yamanstorage",
+          "receiverAssetName": "receiver-visible-asset-name",
+          "paths": [
+            {
+              "containerName": "fabrikamcontainer",
+              "senderPath": "folder/sample.txt",
+              "receiverPath": "from-fabrikam"
+            }
+          ],
+          "location": "southafricanorth",
+          "provisioningState": "Creating"
+        },
+        "kind": "BlobAccount",
+        "id": "/sentShares/sample-Share/assets/fabrikam-blob-asset",
+        "name": "fabrikam-blob-asset",
+        "type": "sentShares/assets"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "843138041"
+  }
+}

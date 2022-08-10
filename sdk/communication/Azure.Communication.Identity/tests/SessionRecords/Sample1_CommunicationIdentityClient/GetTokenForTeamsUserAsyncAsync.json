@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "62",
         "Content-Type": "application/json",
-        "traceparent": "00-262d6691157194c0f3f97b7f9dadb251-454abffb2670d18f-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "73c362c6e80108ac758aef35c6b9aa93",
+        "traceparent": "00-a81b453c89a9186505ac8139182e3868-97d454ab73cde6ab-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220804.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1a995e0d7a10c92bdd785c3ee461d457",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Fri, 20 May 2022 08:59:05 GMT",
+        "x-ms-date": "Thu, 04 Aug 2022 06:50:39 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,23 +25,23 @@
         "api-supported-versions": "2021-10-31-preview, 2022-06-01",
         "Content-Length": "69",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 20 May 2022 08:59:05 GMT",
-        "MS-CV": "8KjIoUJw/kOMG0LnlqruaQ.0",
+        "Date": "Thu, 04 Aug 2022 06:50:40 GMT",
+        "MS-CV": "It\u002BHr/RC9ka8vWSJC6M4/A.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0WViHYgAAAAAA9oGeXhmLQ61kMdfaMEnnTFRTRURHRTEyMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0P2zrYgAAAAA0q0pakXIUQKU3Qi\u002BofwpnTE9OMjFFREdFMTgwNQBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "73c362c6e80108ac758aef35c6b9aa93",
-        "X-Processing-Time": "247ms"
+        "x-ms-client-request-id": "1a995e0d7a10c92bdd785c3ee461d457",
+        "X-Processing-Time": "447ms"
       },
       "ResponseBody": {
         "token": "Sanitized",
-        "expiresOn": "2022-05-20T10:00:25.5340464\u002B00:00"
+        "expiresOn": "2022-08-04T07:53:14.2931938\u002B00:00"
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "182984230"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "874132556"
   }
 }

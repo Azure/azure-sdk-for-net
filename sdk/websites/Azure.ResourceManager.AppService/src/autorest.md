@@ -17,7 +17,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -43,30 +42,34 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: BasicPublishingCredentialsPolicyFtp
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: SiteConfigConnectionString
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: SiteContinuousWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: SiteHybridConnection
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: SitePremierAddon
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: SitePrivateAccess
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default: SiteResourceHealthMetadata
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: SiteSlotConfigAppSetting
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: SiteSlotConfigConnectionString
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: SiteSlotContinuousWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: SiteSlotPremierAddOn
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: SiteSlotPrivateAccess
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default: SiteSlotResourceHealthMetadata
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}: SiteSlotTriggeredWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}: SiteSlotTriggeredWebJobHistory
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: SiteSlotWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: SiteSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: SiteTriggeredwebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: SiteTriggeredWebJobHistory
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: SiteWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: SiteSlotSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnection
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: SiteExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: WebSiteWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: WebSiteFtpPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteConfigConnectionString
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: WebSiteContinuousWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: WebSiteHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: WebSitePremierAddon
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: WebSitePrivateAccess
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default: WebSiteResourceHealthMetadata
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}: WebSiteSlotTriggeredWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}: WebSiteSlotTriggeredWebJobHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: WebSiteSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: WebSiteExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}: WebSiteSlot
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: WebSiteSlotWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp: WebSiteSlotFtpPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: WebSiteSlotConfigAppSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteSlotConfigConnectionString
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: WebSiteSlotContinuousWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: WebSiteSlotPremierAddOn
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: WebSiteSlotPrivateAccess
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default: WebSiteSlotResourceHealthMetadata
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: WebSiteTriggeredwebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: WebSiteTriggeredWebJobHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}: WebSiteSlotPublicCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: WebSiteSlotSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: WebSiteSlotHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId}: WebSiteSlotExtension
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
@@ -89,6 +92,22 @@ override-operation-name:
   CheckNameAvailability: CheckAppServiceNameAvailability
   AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
   AppServicePlans_GetHybridConnection: GetHybridConnectionRelays
+  StaticSites_CreateOrUpdateStaticSiteBuildAppSettings: CreateOrUpdateAppSettings
+  StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings: CreateOrUpdateFunctionAppSettings
+  StaticSites_ListStaticSiteBuildFunctions: GetFunctions
+  StaticSites_CreateZipDeploymentForStaticSiteBuild: CreateZipDeployment
+  StaticSites_ListStaticSiteBuildFunctionAppSettings: GetFunctionAppSettings
+  AppServiceCertificateOrders_ValidatePurchaseInformation: ValidateAppServiceCertificateOrderPurchaseInformation
+  Recommendations_ResetAllFilters: ResetAllRecommendationFilters
+  StaticSites_PreviewWorkflow: PreviewStaticSiteWorkflow
+  Provider_GetWebAppStacksForLocation: GetWebAppStacksByLocation
+  GetSubscriptionDeploymentLocations: GetAppServiceDeploymentLocations
+  Domains_ListRecommendations: GetAppServiceDomainRecommendations
+  Domains_CheckAvailability: CheckAppServiceDomainRegistrationAvailability
+  Recommendations_DisableRecommendationForSubscription: DisableAppServiceRecommendation
+  ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadata
+  WebApps_ListSnapshotsSlot: GetSlotSnapshots
+  WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -99,6 +118,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'serverFarmId': 'arm-id'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -125,15 +145,31 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Ipssl: IPSsl|ipSsl
+  WWW: Www
+  Ms: MS
 
 rename-mapping:
+# site and site related
   Site: WebSite
+  Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
+  Site.properties.clientCertEnabled: IsClientCertEnabled
+  Site.properties.enabled: IsEnabled
+  Site.properties.hostNamesDisabled: IsHostNameDisabled
+  Site.properties.httpsOnly: IsHttpsOnly
+  Site.properties.hyperV: IsHyperV
+  Site.properties.reserved: IsReserved
+  Site.properties.suspendedTill: SuspendOn
+  Site.properties.storageAccountRequired: IsStorageAccountRequired
+  Site.properties.serverFarmId: AppServicePlanId
+  SiteAvailabilityState: WebSiteAvailabilityState
+  Certificate: AppCertificate
   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
   AppServiceCertificatePatchResource: AppServiceCertificatePatch
   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
   AppserviceGithubToken: AppServiceGithubToken
   AppServicePlanPatchResource: AppServicePlanPatchContent
-  Contact: ContactInformation 
+  Contact: ContactInformation
   Login: LoginInformation
   MSDeploy: MsDeploy
   MSDeployLog: MsDeployLog
@@ -147,7 +183,7 @@ rename-mapping:
 # rename property
   ValidateResourceTypes.Site: WebSite
   CheckNameResourceTypes.Site: WebSite
-  ApiKVReference.properties.identityType: AppServiceIdentity
+  ApiKVReference.properties.identityType: Identity
   AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
   AppServiceCertificateOrder.properties.expirationTime: ExpireOn
   AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
@@ -155,8 +191,6 @@ rename-mapping:
   Domain.properties.privacy: AppServiceHasPrivacy
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.autoRenew: IsAutoRenew
-  AppServiceEnvironment.properties.ipsslAddressCount: IPSslAddressCount
-  AppServiceEnvironment.properties.suspended: IsSuspended
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpiredOn
   AppServicePlan.properties.hyperV: IsHyperV
@@ -170,19 +204,19 @@ rename-mapping:
   BackupItem.properties.scheduled: IsScheduled
   Certificate.properties.expirationDate: ExpireOn
   Certificate.properties.valid: IsValid
-  ContinuousWebJob.properties.using_sdk: IsUseingSdk
+  ContinuousWebJob.properties.using_sdk: IsUsingSdk
   Deployment.properties.active: IsActive
   KubeEnvironment.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
   MigrateMySqlStatus.properties.localMySqlEnabled: IsLocalMySqlEnabled
   MSDeployStatus.properties.complete: IsComplete
   PrivateAccess.properties.enabled: IsEnabled
-  ResourceHealthMetadata.properties.signalAvailability: HasSignalAvailability
+  ResourceHealthMetadata.properties.signalAvailability: IsSignalAvailable
   SiteConfig.properties.acrUseManagedIdentityCreds: HasAcrUseManagedIdentityCreds
   SiteConfig.properties.alwaysOn: IsAlwaysOn
   SiteConfig.properties.autoHealEnabled: IsAutoHealEnabled
-  SiteConfig.properties.detailedErrorLoggingEnabled: IsDetailedErrorLogginEnabled
-  SiteConfig.properties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitorEnabled
-  SiteConfig.properties.http20Enabled: IsHttpLoggingEnabled
+  SiteConfig.properties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
+  SiteConfig.properties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitoringEnabled
+  SiteConfig.properties.http20Enabled: IsHttp20Enabled
   SiteConfig.properties.localMySqlEnabled: IsLocalMySqlEnabled
   SiteConfig.properties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
   SiteConfig.properties.requestTracingEnabled: IsRequestTracingEnabled
@@ -195,23 +229,15 @@ rename-mapping:
   TriggeredWebJob.properties.using_sdk: IsUsingSdk
   VnetInfoResource.properties.resyncRequired: IsResyncRequired
   WebJob.properties.using_sdk: IsUsingSdk
-  Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
-  Site.properties.clientCertEnabled: IsClientCertEnabled
-  Site.properties.enabled: IsEnabled
-  Site.properties.hostNamesDisabled: IsHostNamesDisabled
-  Site.properties.httpsOnly: IsHttpsOnly
-  Site.properties.hyperV: IsHyperV
-  Site.properties.storageAccountRequired: IsStorageAccountRequired
   CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints: IsIncludeDisasterRecoveryEndpoints
   AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
-  AppServiceCertificateOrderPatchResource.properties.nextAutoRenewalTimeStamp: NextAutoRenewalTimeStampOn
   DomainPatchResource.properties.autoRenew: IsAutoRenew
   DomainPatchResource.properties.privacy: HasPrivacy
   DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
-  AppServiceEnvironmentAutoGenerated.hasLinuxWorkers: IsHasLinuxWorkers
-  AppServiceEnvironmentAutoGenerated.ipsslAddressCount: IPSslAddressCount
-  AppServiceEnvironmentAutoGenerated.suspended: IsSuspended
-  AppServiceEnvironmentAutoGenerated.zoneRedundant: IsZoneRedundant
+  AppServiceEnvironmentResource.properties.suspended: IsSuspended
+  AppServiceEnvironmentResource.properties.zoneRedundant: IsZoneRedundant
+  AppServiceEnvironmentPatchResource.properties.suspended: IsSuspended
+  AppServiceEnvironmentPatchResource.properties.zoneRedundant: IsZoneRedundant
   AppServicePlanPatchResource.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlanPatchResource.properties.hyperV: IsHyperV
   AppServicePlanPatchResource.properties.perSiteScaling: IsPerSiteScaling
@@ -223,141 +249,120 @@ rename-mapping:
   AzureBlobStorageHttpLogsConfig.enabled: IsEnabled
   AzureStaticWebApps.enabled: IsEnabled
   BackupRequest.properties.storageAccountUrl: IsEnabled
-  BackupSchedule.keepAtLeastOneBackup: IsKeepAtLeastOneBackup
-  CertificateDetails.notAfter: NoAfterOn
-  CertificateDetails.notBefore: NoBeforeOn
-  CertificateEmail.properties.timeStamp: TimeStampOn
   CertificatePatchResource.properties.valid: IsValid
-  CloningInfo.cloneCustomHostNames: IsCloneCustomHostNames
-  CloningInfo.cloneSourceControl: IsCloneSourceControl
-  CloningInfo.configureLoadBalancing: IsConfigureLoadBalancing
-  CloningInfo.overwrite: IsOverwrite
-  ContainerInfo.currentTimeStamp: CurrentTimeStampOn
-  ContainerInfo.previousTimeStamp: PreviousTimeStampOn
-  CorsSettings.supportCredentials: IsSupportCredentials
-  CsmSlotEntity.preserveVnet: IsPreserveVnet
+  CorsSettings.supportCredentials: IsCredentialsSupported
   CustomOpenIdConnectProvider.enabled: IsEnabled
-  DeletedAppRestoreRequest.properties.recoverConfiguration: IsRecoverConfiguration
-  DeletedAppRestoreRequest.properties.useDRSecondary: IsUseDRSecondary
-  DiagnosticDetectorResponse.properties.issueDetected: IsIssueDetected
-  DiagnosticMetricSample.timestamp: TimestampOn
   Dimension.toBeExportedForShoebox: IsToBeExportedForShoebox
   DomainAvailabilityCheckResult.available: IsAvailable
   Facebook.enabled: IsEnabled
   FileSystemHttpLogsConfig.enabled: IsEnabled
   FunctionAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
   GitHub.enabled: IsEnabled
-  GitHubActionConfiguration.generateWorkflowFile: IsGenerateWorkflowFile
-  GlobalValidation.requireAuthentication: IsGlobalValidation
+  GlobalValidation.requireAuthentication: IsAuthenticationRequired
   Google.enabled: IsEnabled
   HostNameSslState.toUpdate: IsToUpdate
-  HttpSettings.requireHttps: IsRequireHttps
+  HttpSettings.requireHttps: IsHttpsRequired
   KubeEnvironmentPatchResource.properties.internalLoadBalancerEnabled: IsInternalLoadBalancerEnabled
   LegacyMicrosoftAccount.enabled: IsEnabled
-  Login.preserveUrlFragmentsForLogins: IsPreserveUrlFragmentsForLogins
-  MetricSpecification.enableRegionalMdmAccount: IsEnableRegionalMdmAccount
-  MetricSpecification.fillGapWithZero: IsFillGapWithZero
-  MetricSpecification.supportsInstanceLevelAggregation: IsSupportsInstanceLevelAggregation
+  MetricSpecification.enableRegionalMdmAccount: IsRegionalMdmAccountEnabled
+  MetricSpecification.supportsInstanceLevelAggregation: IsInstanceLevelAggregationSupported
   MSDeploy.properties.appOffline: IsAppOffline
-  MSDeploy.properties.skipAppData: IsSkipAppData
-  Nonce.validateNonce: IsValiddateNonce
-  PerfMonSample.time: MeasuredCounterTime
   PremierAddOnOffer.properties.promoCodeRequired: IsPromoCodeRequired
   ResourceNameAvailability.nameAvailable: IsNameAvailable
-  RestoreRequest.properties.adjustConnectionStrings: IsAdjustConnectionStrings
-  RestoreRequest.properties.ignoreConflictingHostNames: IsIgnoreConflictingHostNames
-  RestoreRequest.properties.ignoreDatabases: IsIgnoreDatabases
-  RestoreRequest.properties.overwrite: IsOverwrite
   SiteAuthSettings.properties.enabled: IsEnabled
   SiteAuthSettings.properties.tokenStoreEnabled: IsTokenStoreEnabled
-  SiteConfigProperties.acrUseManagedIdentityCreds: IsAcrUseManagedIdentityCreds
   SiteConfigProperties.alwaysOn: IsAlwaysOn
-  SiteConfigProperties.autoHealEnabled: AutoHealEnabled
+  SiteConfigProperties.autoHealEnabled: IsAutoHealEnabled
   SiteConfigProperties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitoringEnabled
   SiteConfigProperties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
   SiteConfigProperties.httpLoggingEnabled: IsHttpLoggingEnabled
-  SiteConfigProperties.http20Enabled: IsHttp2Enabled
+  SiteConfigProperties.http20Enabled: IsHttp20Enabled
   SiteConfigProperties.localMySqlEnabled: IsLocalMySqlEnabled
   SiteConfigProperties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
   SiteConfigProperties.requestTracingEnabled: IsRequestTracingEnabled
-  SiteConfigProperties.scmIpSecurityRestrictionsUseMain: IsScmIPSecurityRestrictionsUseMain
-  SiteConfigProperties.use32BitWorkerProcess: IsUse32BitWorkerProcess
   SiteConfigProperties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
   SiteConfigProperties.webSocketsEnabled: IsWebSocketsEnabled
-  SiteConfigPropertiesDictionary.use32BitWorkerProcess: IsUse32BitWorkerProcess
   SiteConfigurationSnapshotInfo.properties.time: SnapshotTakenTime
   SitePatchResource.properties.clientAffinityEnabled: IsClientAffinityEnabled
   SitePatchResource.properties.clientCertEnabled: IsClientCertEnabled
   SitePatchResource.properties.enabled: IsEnabled
-  SitePatchResource.properties.hostNamesDisabled: IsHostNamesDisabled
-  SitePatchResource.properties.httpsOnly: IsHttpOnly
+  SitePatchResource.properties.hostNamesDisabled: IsHostNameDisabled
+  SitePatchResource.properties.httpsOnly: IsHttpsOnly
   SitePatchResource.properties.hyperV: IsHyperV
-  SitePatchResource.properties.lastModifiedTimeUtc: LastModifiedTimeOn
+  SitePatchResource.properties.lastModifiedTimeUtc: LastModifiedOn
   SitePatchResource.properties.scmSiteAlsoStopped: IsScmSiteAlsoStopped
   SitePatchResource.properties.storageAccountRequired: IsStorageAccountRequired
-  SitePatchResource.properties.suspendedTill: SuspendTillOn
+  SitePatchResource.properties.suspendedTill: SuspendOn
   SiteSealRequest.lightTheme: IsLightTheme
-  SkuDescription.locations: AzureLocations
-  SnapshotRestoreRequest.properties.ignoreConflictingHostNames: IsIgnoreConflictingHostNames
-  SnapshotRestoreRequest.properties.overwrite: EnabledOverwrite
-  SnapshotRestoreRequest.properties.recoverConfiguration: IsRecoverConfiguration
   StackMajorVersion.applicationInsights: IsApplicationInsights
-  StampCapacity.excludeFromCapacityAllocation: IsExcludeFromCapacityAllocation
-  StaticSitePatchResource.properties.allowConfigFileUpdates: IsAllowConfigFileUpdates
-  StaticSiteBuildProperties.appLocation: AppAzureLocation
-  StaticSiteBuildProperties.apiLocation: ApiAzureLocation
-  StaticSiteBuildProperties.appArtifactLocation: AppArtifactAzureLocation
-  StaticSiteBuildProperties.outputLocation: OutputAzureLocation
-  StaticSiteBuildProperties.skipGithubActionWorkflowGeneration: IsSkipGithubActionWorkflowGeneration
-  StaticSiteResetPropertiesARMResource.properties.shouldUpdateRepository: IsShouldUpdateRepository
-  StorageMigrationOptions.properties.blockWriteAccessToSite: IsBlockWriteAccessToSite
   TokenStore.enabled: IsEnabled
   TopLevelDomainAgreementOption.forTransfer: IsForTransfer
-  TopLevelDomainAgreementOption.includePrivacy: IsIncludePrivacy
   Twitter.enabled: IsEnabled
-  ValidateRequest.properties.needLinuxWorkers: IsNeedLinuxWorkers
   VirtualApplication.preloadEnabled: IsPreloadEnabled
   VirtualIPMapping.inUse: IsInUse
   VnetInfo.resyncRequired: IsResyncRequired
   VnetValidationFailureDetails.properties.failed: IsFailed
   WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
-#rename resource
-  AppServiceCertificate: AppServiceCertificateInfo
-  AppServiceCertificateResource: AppServicCertificate
-  StaticSiteARMResource: StaticSiteARM
-  StaticSiteBuildARMResource: StaticSiteBuildARM
-  StaticSiteCustomDomainOverviewARMResource: StaticSiteCustomDomainOverviewARM
-  StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionAppARM
+# rename resource
+  AppServiceCertificate: AppServiceCertificateProperties
+  AppServiceCertificateResource: AppServiceCertificate
+  StaticSiteARMResource: StaticSite
+  StaticSiteBuildARMResource: StaticSiteBuild
+  StaticSiteCustomDomainOverviewARMResource: StaticSiteCustomDomainOverview
+  StaticSiteUserProvidedFunctionAppARMResource: StaticSiteUserProvidedFunctionApp
+  StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
+  StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
 # same name in model
 #   VnetInfoResource: VnetInfo
   WorkerPoolResource: WorkerPool
   CsmPublishingProfileOptions: CsmPublishingProfile
   StaticSiteTemplateOptions: StaticSiteTemplate
-  PrivateLinkResource: AppServicePrivateLink
+  PrivateLinkResource: AppServicePrivateLinkResourceData
   PrivateLinkResourceProperties: AppServicePrivateLinkResourceProperties
   AzureStoragePropertyDictionaryResource: AzureStoragePropertyDictionary
   ContainerThrottlingData: ContainerThrottlingInfo
-  DeletedAppRestoreRequest: DeletedAppRestoreRequestInfo
+  DeletedAppRestoreRequest: DeletedAppRestoreContent
   DiagnosticData: DiagnosticInfo
   DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
-  MsDeployLogEntry: MSDeployLogEntry
   PerfMonResponse: PerfMonResponseInfo
   PrivateLinkConnectionApprovalRequestResource: PrivateLinkConnectionApprovalRequestInfo
   RestoreRequest: RestoreRequestInfo
   SitePatchResource: SitePatchInfo
-  StaticSiteResetPropertiesARMResource: StaticSiteResetPropertiesARM
-  StaticSiteUserARMResource: StaticSiteUserARM
-  StaticSiteUserInvitationRequestResource: StaticSiteUserInvitationRequestInfo
-  StaticSiteUserInvitationResponseResource: StaticSiteUserInvitationResponseInfo
-  StaticSiteZipDeploymentARMResource: StaticSiteZipDeploymentARM
-  StorageMigrationResponse: StorageMigrationResponseInfo
+  StaticSiteResetPropertiesARMResource: StaticSiteResetContent
+  StaticSiteUserARMResource: StaticSiteUser
+  StaticSiteUserInvitationRequestResource: StaticSiteUserInvitationContent
+  StaticSiteUserInvitationResponseResource: StaticSiteUserInvitationResult
+  StaticSiteZipDeploymentARMResource: StaticSiteZipDeployment
+  StorageMigrationResponse: StorageMigrationResult
   Status: AppServiceStatusInfo
+  AppServiceEnvironmentResource: AppServiceEnvironment
+  AppServiceEnvironment: AppServiceEnvironmentProperties
+  StringDictionary: AppServiceConfigurationDictionary
+  StaticSiteFunctionOverviewARMResource: StaticSiteFunctionOverview
+  ValidateRequest: AppServiceValidateContent
+  ValidateResponse: AppServiceValidateResult
+  SkuInfo: AppServicePoolSkuInfo
+  SkuInfos: AppServiceSkuResult
+  NameIdentifier: AppServiceDomainNameIdentifier
+  SkuCapacity: AppServiceSkuCapacity
+  SkuDescription: AppServiceSkuDescription
+  Snapshot: AppSnapshot
+  AnalysisDefinition: WebSiteAnalysisDefinition
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 directive:
-  - rename-model:
-      from: AppServiceEnvironmentResource
-      to: AppServiceEnvironment
-
+# operation removal - should be temporary
+# pageable lro
+  - remove-operation: AppServiceEnvironments_ChangeVnet
+  - remove-operation: AppServiceEnvironments_Resume
+  - remove-operation: AppServiceEnvironments_Suspend
+# these operations are apparently not operations in Microsoft.Web RP. Instead, their paths look like operations on resource groups
+  - remove-operation: ValidateMove
+  - remove-operation: Move
+# this operation is a LRO operation
+  - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
   - from: Certificates.json
     where: $.definitions.Certificate.properties.properties.properties.serverFarmId
@@ -441,12 +446,22 @@ directive:
   - from: WebApps.json
     where: $.definitions.SnapshotRecoverySource.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: StaticSites.json
-    where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
-    transform: $["x-ms-format"] = "arm-id"
+#   - from: StaticSites.json
+#     where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
+#     transform: $["x-ms-format"] = "arm-id"
   - from: StaticSites.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
+# StaticSiteUserProvidedFunctionAppARMResource and StaticSiteUserProvidedFunctionApp are two models with exactly same properties but different names. Here we manually replace the references so that these two models are combined
+  - from: StaticSites.json
+    where: $.definitions.StaticSite.properties.userProvidedFunctionApps.items
+    transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
+  - from: StaticSites.json
+    where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
+    transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
+#   - from: StaticSites.json
+#     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource
+#     transform: $["x-ms-client-name"] = "StaticSiteUserProvidedFunctionApp"
   - from: ResourceProvider.json
     where: $.definitions.VnetParameters.properties.properties.properties.subnetResourceId
     transform: $["x-ms-format"] = "arm-id"
@@ -479,11 +494,6 @@ directive:
             "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
-
-# pageable lro
-  - remove-operation: AppServiceEnvironments_ChangeVnet
-  - remove-operation: AppServiceEnvironments_Resume
-  - remove-operation: AppServiceEnvironments_Suspend
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
   - from: swagger-document

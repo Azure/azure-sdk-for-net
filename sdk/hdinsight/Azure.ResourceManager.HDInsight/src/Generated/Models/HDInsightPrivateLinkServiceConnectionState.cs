@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> The concrete private link service connection. </param>
-        public HDInsightPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status)
+        public HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="status"> The concrete private link service connection. </param>
         /// <param name="description"> The optional description of the status. </param>
         /// <param name="actionsRequired"> Whether there is further actions. </param>
-        internal HDInsightPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
+        internal HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The concrete private link service connection. </summary>
-        public PrivateLinkServiceConnectionStatus Status { get; set; }
+        public HDInsightPrivateLinkServiceConnectionStatus Status { get; set; }
         /// <summary> The optional description of the status. </summary>
         public string Description { get; set; }
         /// <summary> Whether there is further actions. </summary>

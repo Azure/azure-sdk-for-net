@@ -13,6 +13,16 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class StorageError
     {
+        internal static StorageError DeserializeStorageError(XElement element)
+        {
+            StorageErrorError error = default;
+            if (element.Element("error") is XElement errorElement)
+            {
+                error = StorageErrorError.DeserializeStorageErrorError(errorElement);
+            }
+            return new StorageError(error);
+        }
+
         internal static StorageError DeserializeStorageError(JsonElement element)
         {
             Optional<StorageErrorError> error = default;
@@ -30,16 +40,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 }
             }
             return new StorageError(error.Value);
-        }
-
-        internal static StorageError DeserializeStorageError(XElement element)
-        {
-            StorageErrorError error = default;
-            if (element.Element("error") is XElement errorElement)
-            {
-                error = StorageErrorError.DeserializeStorageErrorError(errorElement);
-            }
-            return new StorageError(error);
         }
     }
 }

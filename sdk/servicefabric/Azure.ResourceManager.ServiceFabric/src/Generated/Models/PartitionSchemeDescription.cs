@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        internal PartitionSchemeDescription(PartitionScheme partitionScheme)
+        internal PartitionSchemeDescription(ApplicationPartitionScheme partitionScheme)
         {
             PartitionScheme = partitionScheme;
         }
 
         /// <summary> Specifies how the service is partitioned. </summary>
-        internal PartitionScheme PartitionScheme { get; set; }
+        internal ApplicationPartitionScheme PartitionScheme { get; set; }
     }
 }

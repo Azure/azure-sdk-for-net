@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("dedicatedHostCount");
                 writer.WriteNumberValue(DedicatedHostCount.Value);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
             Optional<LoadBalancingMode> internalLoadBalancingMode = default;
             Optional<string> multiSize = default;
             Optional<int> multiRoleCount = default;
-            Optional<int> ipsslAddressCount = default;
+            Optional<int> ipSslAddressCount = default;
             Optional<string> dnsSuffix = default;
             Optional<int> maximumNumberOfMachines = default;
             Optional<int> frontEndScaleFactor = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipsslAddressCount = property0.Value.GetInt32();
+                            ipSslAddressCount = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("dnsSuffix"))
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipsslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIPRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), kind.Value);
+            return new AppServiceEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork.Value, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipSslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIPRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), kind.Value);
         }
     }
 }

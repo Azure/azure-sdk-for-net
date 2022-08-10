@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientCertExclusionPaths");
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (Optional.IsDefined(IsHostNamesDisabled))
+            if (Optional.IsDefined(IsHostNameDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled");
-                writer.WriteBooleanValue(IsHostNamesDisabled.Value);
+                writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
             if (Optional.IsDefined(CustomDomainVerificationId))
             {
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("cloningInfo");
                 writer.WriteObjectValue(CloningInfo);
             }
-            if (Optional.IsDefined(IsHttpOnly))
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly");
-                writer.WriteBooleanValue(IsHttpOnly.Value);
+                writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsDefined(RedundancyMode))
             {
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<UsageState> usageState = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> enabledHostNames = default;
-            Optional<SiteAvailabilityState> availabilityState = default;
+            Optional<WebSiteAvailabilityState> availabilityState = default;
             Optional<IList<HostNameSslState>> hostNameSslStates = default;
-            Optional<string> serverFarmId = default;
+            Optional<ResourceIdentifier> serverFarmId = default;
             Optional<bool> reserved = default;
             Optional<bool> isXenon = default;
             Optional<bool> hyperV = default;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityState = property0.Value.GetString().ToSiteAvailabilityState();
+                            availabilityState = property0.Value.GetString().ToWebSiteAvailabilityState();
                             continue;
                         }
                         if (property0.NameEquals("hostNameSslStates"))
@@ -341,7 +341,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("serverFarmId"))
                         {
-                            serverFarmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("reserved"))

@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
-        /// <param name="reserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appServicePlanId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
+        /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNamesDisabled">
+        /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
         /// <param name="containerSize"> Size of the function container. </param>
         /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
-        /// <param name="suspendedTill"> App suspended till in case memory-time quota is exceeded. </param>
+        /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
         /// This only applies to Functions container.
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ExtendedLocation = extendedLocation;
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.AppService
             EnabledHostNames = enabledHostNames;
             AvailabilityState = availabilityState;
             HostNameSslStates = hostNameSslStates;
-            ServerFarmId = serverFarmId;
-            Reserved = reserved;
+            AppServicePlanId = appServicePlanId;
+            IsReserved = isReserved;
             IsXenon = isXenon;
             IsHyperV = isHyperV;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.AppService
             IsClientCertEnabled = isClientCertEnabled;
             ClientCertMode = clientCertMode;
             ClientCertExclusionPaths = clientCertExclusionPaths;
-            IsHostNamesDisabled = isHostNamesDisabled;
+            IsHostNameDisabled = isHostNameDisabled;
             CustomDomainVerificationId = customDomainVerificationId;
             OutboundIPAddresses = outboundIPAddresses;
             PossibleOutboundIPAddresses = possibleOutboundIPAddresses;
             ContainerSize = containerSize;
             DailyMemoryTimeQuota = dailyMemoryTimeQuota;
-            SuspendedTill = suspendedTill;
+            SuspendOn = suspendOn;
             MaxNumberOfWorkers = maxNumberOfWorkers;
             CloningInfo = cloningInfo;
             ResourceGroup = resourceGroup;
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         public IReadOnlyList<string> EnabledHostNames { get; }
         /// <summary> Management information availability state for the app. </summary>
-        public SiteAvailabilityState? AvailabilityState { get; }
+        public WebSiteAvailabilityState? AvailabilityState { get; }
         /// <summary> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </summary>
         public IList<HostNameSslState> HostNameSslStates { get; }
         /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
-        public string ServerFarmId { get; set; }
+        public string AppServicePlanId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Reserved { get; set; }
+        public bool? IsReserved { get; set; }
         /// <summary> Obsolete: Hyper-V sandbox. </summary>
         public bool? IsXenon { get; set; }
         /// <summary> Hyper-V sandbox. </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </summary>
-        public bool? IsHostNamesDisabled { get; set; }
+        public bool? IsHostNameDisabled { get; set; }
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         public string CustomDomainVerificationId { get; set; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>
         public int? DailyMemoryTimeQuota { get; set; }
         /// <summary> App suspended till in case memory-time quota is exceeded. </summary>
-        public DateTimeOffset? SuspendedTill { get; }
+        public DateTimeOffset? SuspendOn { get; }
         /// <summary>
         /// Maximum number of workers.
         /// This only applies to Functions container.

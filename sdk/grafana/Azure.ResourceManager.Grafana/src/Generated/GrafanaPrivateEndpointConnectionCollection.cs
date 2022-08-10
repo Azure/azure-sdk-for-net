@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="data"> The GrafanaPrivateEndpointConnection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<ArmOperation<GrafanaPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GrafanaPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("GrafanaPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="data"> The GrafanaPrivateEndpointConnection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual ArmOperation<GrafanaPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GrafanaPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("GrafanaPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();

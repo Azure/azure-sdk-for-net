@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes all the settings to be used when analyzing a video in order to detect (and optionally redact) all the faces present. </summary>
-    public partial class FaceDetectorPreset : Preset
+    public partial class FaceDetectorPreset : MediaPreset
     {
         /// <summary> Initializes a new instance of FaceDetectorPreset. </summary>
         public FaceDetectorPreset()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="mode"> This mode provides the ability to choose between the following settings: 1) Analyze - For detection only.This mode generates a metadata JSON file marking appearances of faces throughout the video.Where possible, appearances of the same person are assigned the same ID. 2) Combined - Additionally redacts(blurs) detected faces. 3) Redact - This enables a 2-pass process, allowing for selective redaction of a subset of detected faces.It takes in the metadata file from a prior analyze pass, along with the source video, and a user-selected subset of IDs that require redaction. </param>
         /// <param name="blurType"> Blur type. </param>
         /// <param name="experimentalOptions"> Dictionary containing key value pairs for parameters not exposed in the preset itself. </param>
-        internal FaceDetectorPreset(string odataType, AnalysisResolution? resolution, FaceRedactorMode? mode, BlurType? blurType, IDictionary<string, string> experimentalOptions) : base(odataType)
+        internal FaceDetectorPreset(string odataType, AnalysisResolution? resolution, FaceRedactorMode? mode, FaceDetectorBlurType? blurType, IDictionary<string, string> experimentalOptions) : base(odataType)
         {
             Resolution = resolution;
             Mode = mode;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> This mode provides the ability to choose between the following settings: 1) Analyze - For detection only.This mode generates a metadata JSON file marking appearances of faces throughout the video.Where possible, appearances of the same person are assigned the same ID. 2) Combined - Additionally redacts(blurs) detected faces. 3) Redact - This enables a 2-pass process, allowing for selective redaction of a subset of detected faces.It takes in the metadata file from a prior analyze pass, along with the source video, and a user-selected subset of IDs that require redaction. </summary>
         public FaceRedactorMode? Mode { get; set; }
         /// <summary> Blur type. </summary>
-        public BlurType? BlurType { get; set; }
+        public FaceDetectorBlurType? BlurType { get; set; }
         /// <summary> Dictionary containing key value pairs for parameters not exposed in the preset itself. </summary>
         public IDictionary<string, string> ExperimentalOptions { get; }
     }

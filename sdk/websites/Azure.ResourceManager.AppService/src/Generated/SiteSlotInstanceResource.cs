@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// A Class representing a SiteSlotInstance along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotInstanceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotInstance method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotInstance method.
     /// </summary>
     public partial class SiteSlotInstanceResource : ArmResource
     {

@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerInfo. </summary>
-        /// <param name="currentTimeStampOn"></param>
-        /// <param name="previousTimeStampOn"></param>
+        /// <param name="currentTimeStamp"></param>
+        /// <param name="previousTimeStamp"></param>
         /// <param name="currentCpuStats"></param>
         /// <param name="previousCpuStats"></param>
         /// <param name="memoryStats"></param>
         /// <param name="name"></param>
         /// <param name="id"></param>
         /// <param name="eth0"></param>
-        internal ContainerInfo(DateTimeOffset? currentTimeStampOn, DateTimeOffset? previousTimeStampOn, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0)
+        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0)
         {
-            CurrentTimeStampOn = currentTimeStampOn;
-            PreviousTimeStampOn = previousTimeStampOn;
+            CurrentTimeStamp = currentTimeStamp;
+            PreviousTimeStamp = previousTimeStamp;
             CurrentCpuStats = currentCpuStats;
             PreviousCpuStats = previousCpuStats;
             MemoryStats = memoryStats;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
             Eth0 = eth0;
         }
 
-        /// <summary> Gets or sets the current time stamp on. </summary>
-        public DateTimeOffset? CurrentTimeStampOn { get; set; }
-        /// <summary> Gets or sets the previous time stamp on. </summary>
-        public DateTimeOffset? PreviousTimeStampOn { get; set; }
+        /// <summary> Gets or sets the current time stamp. </summary>
+        public DateTimeOffset? CurrentTimeStamp { get; set; }
+        /// <summary> Gets or sets the previous time stamp. </summary>
+        public DateTimeOffset? PreviousTimeStamp { get; set; }
         /// <summary> Gets or sets the current cpu stats. </summary>
         public ContainerCpuStatistics CurrentCpuStats { get; set; }
         /// <summary> Gets or sets the previous cpu stats. </summary>

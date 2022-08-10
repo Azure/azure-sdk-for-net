@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
         internal NotificationHubListResult()
         {
-            Value = new ChangeTrackingList<NotificationHubResourceData>();
+            Value = new ChangeTrackingList<NotificationHubData>();
         }
 
         /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
         /// <param name="value"> Result of the List NotificationHub operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </param>
-        internal NotificationHubListResult(IReadOnlyList<NotificationHubResourceData> value, string nextLink)
+        internal NotificationHubListResult(IReadOnlyList<NotificationHubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List NotificationHub operation. </summary>
-        public IReadOnlyList<NotificationHubResourceData> Value { get; }
+        public IReadOnlyList<NotificationHubData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </summary>
         public string NextLink { get; }
     }

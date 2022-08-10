@@ -125,6 +125,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task PeekMessagesWithACustomIdentifier()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var messageCt = 10;
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt).AsReadOnly<ServiceBusMessage>();
+
+                await sender.SendMessagesAsync(batch);
+
+                var options = new ServiceBusReceiverOptions
+                {
+                    Identifier = "MyServiceBusReceiver"
+                };
+                await using var receiver = client.CreateReceiver(scope.QueueName, options);
+                var messageEnum = sentMessages.GetEnumerator();
+
+                var ct = 0;
+                while (ct < messageCt)
+                {
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekMessagesAsync(
+                    maxMessages: messageCt))
+                    {
+                        messageEnum.MoveNext();
+                        Assert.AreEqual(messageEnum.Current.MessageId, peekedMessage.MessageId);
+                        ct++;
+                    }
+                }
+                Assert.AreEqual(messageCt, ct);
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesWhenQueueEmpty()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

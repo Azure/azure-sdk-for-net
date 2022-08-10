@@ -28,31 +28,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="displayDescription"></param>
         /// <param name="unit"></param>
         /// <param name="aggregationType"></param>
-        /// <param name="isSupportsInstanceLevelAggregation"></param>
-        /// <param name="isEnableRegionalMdmAccount"></param>
+        /// <param name="isInstanceLevelAggregationSupported"></param>
+        /// <param name="isRegionalMdmAccountEnabled"></param>
         /// <param name="sourceMdmAccount"></param>
         /// <param name="sourceMdmNamespace"></param>
         /// <param name="metricFilterPattern"></param>
-        /// <param name="isFillGapWithZero"></param>
+        /// <param name="fillGapWithZero"></param>
         /// <param name="isInternal"></param>
         /// <param name="dimensions"></param>
         /// <param name="category"></param>
         /// <param name="availabilities"></param>
         /// <param name="supportedTimeGrainTypes"></param>
         /// <param name="supportedAggregationTypes"></param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isSupportsInstanceLevelAggregation, bool? isEnableRegionalMdmAccount, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? isFillGapWithZero, bool? isInternal, IReadOnlyList<Dimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes)
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<Dimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes)
         {
             Name = name;
             DisplayName = displayName;
             DisplayDescription = displayDescription;
             Unit = unit;
             AggregationType = aggregationType;
-            IsSupportsInstanceLevelAggregation = isSupportsInstanceLevelAggregation;
-            IsEnableRegionalMdmAccount = isEnableRegionalMdmAccount;
+            IsInstanceLevelAggregationSupported = isInstanceLevelAggregationSupported;
+            IsRegionalMdmAccountEnabled = isRegionalMdmAccountEnabled;
             SourceMdmAccount = sourceMdmAccount;
             SourceMdmNamespace = sourceMdmNamespace;
             MetricFilterPattern = metricFilterPattern;
-            IsFillGapWithZero = isFillGapWithZero;
+            FillGapWithZero = fillGapWithZero;
             IsInternal = isInternal;
             Dimensions = dimensions;
             Category = category;
@@ -71,18 +71,18 @@ namespace Azure.ResourceManager.AppService.Models
         public string Unit { get; }
         /// <summary> Gets the aggregation type. </summary>
         public string AggregationType { get; }
-        /// <summary> Gets the is supports instance level aggregation. </summary>
-        public bool? IsSupportsInstanceLevelAggregation { get; }
-        /// <summary> Gets the is enable regional mdm account. </summary>
-        public bool? IsEnableRegionalMdmAccount { get; }
+        /// <summary> Gets the is instance level aggregation supported. </summary>
+        public bool? IsInstanceLevelAggregationSupported { get; }
+        /// <summary> Gets the is regional mdm account enabled. </summary>
+        public bool? IsRegionalMdmAccountEnabled { get; }
         /// <summary> Gets the source mdm account. </summary>
         public string SourceMdmAccount { get; }
         /// <summary> Gets the source mdm namespace. </summary>
         public string SourceMdmNamespace { get; }
         /// <summary> Gets the metric filter pattern. </summary>
         public string MetricFilterPattern { get; }
-        /// <summary> Gets the is fill gap with zero. </summary>
-        public bool? IsFillGapWithZero { get; }
+        /// <summary> Gets the fill gap with zero. </summary>
+        public bool? FillGapWithZero { get; }
         /// <summary> Gets the is internal. </summary>
         public bool? IsInternal { get; }
         /// <summary> Gets the dimensions. </summary>

@@ -9,18 +9,17 @@ namespace Azure.Storage
     public class DownloadTransferValidationOptions
     {
         /// <summary>
-        /// Checksum algorithm to use. If left unset (<see cref="ValidationAlgorithm.Auto"/>),
-        /// the library will pick for you.
+        /// Checksum algorithm to use.
         /// </summary>
-        public ValidationAlgorithm Algorithm { get; set; }
+        public StorageChecksumAlgorithm ChecksumAlgorithm { get; set; } = StorageChecksumAlgorithm.None;
 
         /// <summary>
-        /// Defaults to true. False can only be specified on specific operations.
+        /// Defaults to true. False can only be specified on specific operations and not at the client level.
         /// Indicates whether the SDK should validate the content
         /// body against the content hash before returning contents to the caller.
         /// If set to false, caller is responsible for extracting the hash out
         /// of the <see cref="Response{T}"/> and validating the hash themselves.
         /// </summary>
-        public bool Validate { get; set; } = true;
+        public bool AutoValidateChecksum { get; set; } = true;
     }
 }

@@ -839,43 +839,6 @@ namespace Azure.ResourceManager.Sql
             return GetOutboundFirewallRules().Get(outboundRuleFqdn, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlDatabaseResources in the SqlServer. </summary>
-        /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
-        public virtual SqlDatabaseCollection GetSqlDatabases()
-        {
-            return GetCachedClient(Client => new SqlDatabaseCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// Operation Id: Databases_Get
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return await GetSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
-        /// Operation Id: Databases_Get
-        /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
-        {
-            return GetSqlDatabases().Get(databaseName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of RestorableDroppedDatabaseResources in the SqlServer. </summary>
         /// <returns> An object representing collection of RestorableDroppedDatabaseResources and their operations over a RestorableDroppedDatabaseResource. </returns>
         public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
@@ -1084,6 +1047,76 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ExtendedServerBlobAuditingPolicyResource> GetExtendedServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             return GetExtendedServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServerAdvancedThreatProtectionResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of ServerAdvancedThreatProtectionResources and their operations over a ServerAdvancedThreatProtectionResource. </returns>
+        public virtual ServerAdvancedThreatProtectionCollection GetServerAdvancedThreatProtections()
+        {
+            return GetCachedClient(Client => new ServerAdvancedThreatProtectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a server&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ServerAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServerAdvancedThreatProtectionResource>> GetServerAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a server&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ServerAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ServerAdvancedThreatProtectionResource> GetServerAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetServerAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlDatabaseResources in the SqlServer. </summary>
+        /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
+        public virtual SqlDatabaseCollection GetSqlDatabases()
+        {
+            return GetCachedClient(Client => new SqlDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlDatabases().Get(databaseName, cancellationToken);
         }
 
         /// <summary>

@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("logsDirectorySizeLimit");
                 }
             }
-            if (Optional.IsDefined(IsDetailedErrorLogginEnabled))
+            if (Optional.IsDefined(IsDetailedErrorLoggingEnabled))
             {
-                if (IsDetailedErrorLogginEnabled != null)
+                if (IsDetailedErrorLoggingEnabled != null)
                 {
                     writer.WritePropertyName("detailedErrorLoggingEnabled");
-                    writer.WriteBooleanValue(IsDetailedErrorLogginEnabled.Value);
+                    writer.WriteBooleanValue(IsDetailedErrorLoggingEnabled.Value);
                 }
                 else
                 {
@@ -709,12 +709,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("scmIpSecurityRestrictionsUseMain");
                 }
             }
-            if (Optional.IsDefined(IsHttpLoggingEnabled))
+            if (Optional.IsDefined(IsHttp20Enabled))
             {
-                if (IsHttpLoggingEnabled != null)
+                if (IsHttp20Enabled != null)
                 {
                     writer.WritePropertyName("http20Enabled");
-                    writer.WriteBooleanValue(IsHttpLoggingEnabled.Value);
+                    writer.WriteBooleanValue(IsHttp20Enabled.Value);
                 }
                 else
                 {
@@ -793,12 +793,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("healthCheckPath");
                 }
             }
-            if (Optional.IsDefined(IsFunctionsRuntimeScaleMonitorEnabled))
+            if (Optional.IsDefined(IsFunctionsRuntimeScaleMonitoringEnabled))
             {
-                if (IsFunctionsRuntimeScaleMonitorEnabled != null)
+                if (IsFunctionsRuntimeScaleMonitoringEnabled != null)
                 {
                     writer.WritePropertyName("functionsRuntimeScaleMonitoringEnabled");
-                    writer.WriteBooleanValue(IsFunctionsRuntimeScaleMonitorEnabled.Value);
+                    writer.WriteBooleanValue(IsFunctionsRuntimeScaleMonitoringEnabled.Value);
                 }
                 else
                 {

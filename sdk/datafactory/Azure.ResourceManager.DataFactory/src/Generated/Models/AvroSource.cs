@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Avro source. </summary>
-    public partial class AvroSource : CopySource
+    public partial class AvroSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AvroSource. </summary>
         public AvroSource()

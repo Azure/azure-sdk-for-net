@@ -41,6 +41,8 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
+  'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'ApiVersionSetId': 'arm-id'
@@ -99,11 +101,36 @@ prepend-rp-prefix:
 - ResourceSkuCapacityScaleType
 
 rename-mapping:
+  GatewayHostnameConfigurationContract.properties.negotiateClientCertificate: IsClientCertificateRequired
+  SubscriptionsDelegationSettingsProperties.enabled: IsSubscriptionDelegationEnabled
+  RegistrationDelegationSettingsProperties.enabled: IsUserRegistrationDelegationEnabled
+  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
+  BackendTlsProperties.validateCertificateChain: ShouldValidateCertificateChain
+  BackendTlsProperties.validateCertificateName: ShouldValidateCertificateName
+  HostnameConfiguration.defaultSslBinding: IsDefaultSslBindingEnabled
+  HostnameConfiguration.negotiateClientCertificate: IsClientCertificateNegotiationEnabled
+  PortalSettingsContract.properties.enabled: IsRedirectEnabled
+  TermsOfServiceProperties.enabled: IsDisplayEnabled
+  TermsOfServiceProperties.consentRequired: IsConsentRequired
+  AccessInformationCreateParameters.properties.enabled: IsDirectAccessEnabled
+  TenantConfigurationSyncStateContract.properties.isExport: IsExported
+  AccessInformationSecretsContract.enabled: IsDirectAccessEnabled
+  AccessInformationUpdateParameters.properties.enabled: IsDirectAccessEnabled
+  PortalSigninSettings.properties.enabled: IsRedirectEnabled
+  PortalSignupSettings.properties.enabled: IsSignUpDeveloperPortalEnabled
+  AccessInformationContract.properties.enabled: IsDirectAccessEnabled
+  BackendContract.properties.resourceId: ResourceUri|uri
+  BackendUpdateParameters.properties.resourceId: ResourceUri|uri
+  RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
+  RequestReportRecordContract.method: -|request-method
+  RequestReportRecordContract.ipAddress: -|ip-address
+  ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
+  SubscriptionsDelegationSettingsProperties: SubscriptionDelegationSettingProperties
+  RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
   OpenidConnectProviderContract: ApiManagementOpenIdConnectProvider
   OpenidConnectProviderUpdateContract: OpenIdConnectProviderUpdateContract
   VirtualNetworkConfiguration.vnetid: VnetId
   AccessInformationContract: TenantAccessInfo
-  AccessInformationContract.properties.enabled: IsEnabled
   AccessInformationContract.properties.id: AccessInfoType
   AccessIdName: AccessName
   AccessIdName.access: TenantAccess
@@ -120,7 +147,9 @@ rename-mapping:
   OperationResultContract: GitOperationResultContractData
   ConfigurationIdName: ConfigurationName
   SaveConfigurationParameter: ConfigurationSaveContent
+  SaveConfigurationParameter.properties.force: ForceUpdate
   DeployConfigurationParameters: ConfigurationDeployContent
+  DeployConfigurationParameters.properties.force: ForceDelete
   ApiVersionSetContract: ApiVersionSet
   AuthorizationServerContract:  ApiManagementAuthorizationServer
   BackendContract: ApiManagementBackend
@@ -146,14 +175,10 @@ rename-mapping:
   NotificationContract: ApiManagementNotification
   PolicyDescriptionContract: PolicyDescriptionContractData
   PortalDelegationSettings: ApiManagementPortalDelegationSettings
-  PortalDelegationSettings.properties.subscriptions: IsSubscriptions
-  PortalDelegationSettings.properties.userRegistration: IsUserRegistration
   PortalRevisionContract: ApiManagementPortalRevision
   PortalSettingsContract: PortalSettingsContractData
   PortalSigninSettings: ApiManagementPortalSignInSettings
-  PortalSigninSettings.properties.enabled: IsEnabled
   PortalSignupSettings: ApiManagementPortalSignUpSettings
-  PortalSignupSettings.properties.enabled: IsEnabled
   ProductContract: ApiManagementProduct
   TenantSettingsContract: ApiManagementTenantSettings
   ConnectivityCheckResponse: ConnectivityCheckResult
@@ -228,6 +253,10 @@ rename-mapping:
   PolicyExportFormat.rawxml: RawXml
   ResourceSkuResult: AvailableApiManagementServiceSkuResult
   SkuType: ApiManagementServiceSkuType
+  PrivateLinkResource: ApiManagementPrivateLinkResource
+  HostnameConfiguration.keyVaultId: keyVaultSecretUri
+  ParameterContract.required: IsRequired
+  SchemaType: ApiSchemaType
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
@@ -269,12 +298,25 @@ directive:
               }
           }
         }
+      $.IssueCommentContractProperties.properties.userId['x-ms-format'] = 'arm-id';
+      $.AuthorizationServerContractBaseProperties.properties.supportState['x-ms-client-name'] = 'DoesSupportState';
+      $.DeletedServiceContractProperties.properties.serviceId['x-ms-format'] = 'arm-id';
+      $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
+      $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
+      $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
+  - from: apimskus.json
+    where: $.definitions
+    transform: >
+      $.ApiManagementSku.properties.locations.items['x-ms-format'] = 'azure-location';
   - from: apimdeployment.json
     where: $.definitions
     transform: >
       $.Operation['x-ms-client-name'] = 'RestApiOperation';
       $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
       $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
+      $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.ApiManagementServiceBaseProperties.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
+      $.AdditionalLocation.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
   - from: apimanagement.json
     where: $.parameters
     transform: >

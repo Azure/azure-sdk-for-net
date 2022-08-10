@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             Optional<LiveEventEncodingType> encodingType = default;
             Optional<string> presetName = default;
-            Optional<StretchMode> stretchMode = default;
+            Optional<InputVideoStretchMode> stretchMode = default;
             Optional<TimeSpan> keyFrameInterval = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyFrameInterval"))

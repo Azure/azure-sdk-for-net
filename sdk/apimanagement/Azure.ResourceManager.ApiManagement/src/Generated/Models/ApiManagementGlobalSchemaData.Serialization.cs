@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SchemaType> schemaType = default;
+            Optional<ApiSchemaType> schemaType = default;
             Optional<string> description = default;
             Optional<BinaryData> value = default;
             Optional<BinaryData> document = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            schemaType = new SchemaType(property0.Value.GetString());
+                            schemaType = new ApiSchemaType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"))
