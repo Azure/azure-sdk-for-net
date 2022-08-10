@@ -1,10 +1,10 @@
 # Interact with the AMQP message
 
-This sample demonstrates how to interact with the underlying AMQP message that `ServiceBusMessage` and `ServiceBusReceivedMessage` types rely on.
+This sample demonstrates how to interact with the underlying AMQP message used by the `ServiceBusMessage` and `ServiceBusReceivedMessage` types.
 
-## Message Body
+## Message body
 
-The most common scenario where you may need to inspect the underlying AMQP message is in interop scenarios where you are receiving a message that has a non-standard body. The [AMQP spec](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format) allows three types of message body: a series of data sections, a value section, or a series of sequence sections. When using the `ServiceBusMessage.Body` property, you are implicitly using a single `data` section for the message body. If you are consuming from a queue or subscription in which the producer is either using a different client, or this client but setting the message body as a value or sequence, you would need to do the following:
+The most common scenario where you may need to inspect the underlying AMQP message is in interop scenarios where you are receiving a message that has a non-standard body. The [AMQP specification](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format) allows three types of message body: a series of data sections, a value section, or a series of sequence sections. When using the `ServiceBusMessage.Body` property, you are implicitly using a single `data` section as the message body. If you are consuming from a queue or subscription in which the producer is sending messages with a non-standard body, you would need to the following:
 
 ```C# Snippet:ServiceBusInspectMessageBody
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
@@ -38,7 +38,7 @@ message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue(42);
 await sender.SendMessageAsync(message);
 ```
 
-## Setting Miscellaneous Properties
+## Setting miscellaneous properties
 
 You can also set various properties on the AMQP message that are not exposed on the `ServiceBusMessage` type. These values are not granted special meaning by the Service Bus broker and therefore do not impact the Service Bus service behavior. However, since these are standard AMQP properties, they could impact the behavior of other message brokers that may receive these messages.
 

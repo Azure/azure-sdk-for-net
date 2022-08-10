@@ -140,7 +140,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 
 ## Peeking a message
 
-It's also possible to simply peek a message. Peeking a message does not require the message to be locked. Because the message is not locked to a specific receiver, the message will not be able to be settled.
+It's also possible to simply peek a message. Peeking a message does not require the message to be locked. Because the message is not locked to a specific receiver, the message will not be able to be settled. It's also possible that another receiver could lock the message and settle it while you are looking at the peeked message.
 
 ```C# Snippet:ServiceBusPeek
 ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();
@@ -166,7 +166,7 @@ Cancelling the scheduled message will delete it from the service.
 await sender.CancelScheduledMessageAsync(seq);
 ```
 
-### Setting Time To Live
+### Setting time to live
 
 Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.  
 

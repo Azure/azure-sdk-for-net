@@ -2,7 +2,7 @@
 
 This sample demonstrates how to use the session processor. The session processor offers automatic completion of processed session messages, automatic session lock renewal, and concurrent execution of user specified event handlers.
 
-### Processing messages from a session-enabled queue
+## Processing messages from a session-enabled queue
 
 Processing session messages is performed with a `ServiceBusSessionProcessor`. This type derives from `ServiceBusProcessor` and exposes session-related functionality.
 
