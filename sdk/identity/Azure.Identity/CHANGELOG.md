@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- `ManagedIdentityCredential` will now internally cache tokens, so applications can call `GetToken` and `GetTokenAsync` directly without needing to cache to avoid throttleling.
 ### Breaking Changes
 
 ### Bugs Fixed
