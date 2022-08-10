@@ -31,7 +31,7 @@ namespace Azure.Communication.CallingServer
             bool wasConnected = false;
             try
             {
-                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CommunicationIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
                 CreateCallResult response = await client.CreateCallAsync(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallProperties.CallConnectionId);
@@ -82,7 +82,7 @@ namespace Azure.Communication.CallingServer
 
             try
             {
-                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+                CommunicationIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var source = new CallSource(user) {
                     CallerId = new PhoneNumberIdentifier(TestEnvironment.SourcePhoneNumber)
                 };
