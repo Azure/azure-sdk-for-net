@@ -1565,10 +1565,10 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class IntegrationAccountKeyVaultKey
     {
         internal IntegrationAccountKeyVaultKey() { }
-        public long? CreatedOn { get { throw null; } }
+        public long? CreatedOnUnixTimestamp { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
         public System.Uri KeyId { get { throw null; } }
-        public long? UpdatedOn { get { throw null; } }
+        public long? UpdatedOnUnixTimestamp { get { throw null; } }
     }
     public partial class IntegrationAccountKeyVaultKeyReference
     {
