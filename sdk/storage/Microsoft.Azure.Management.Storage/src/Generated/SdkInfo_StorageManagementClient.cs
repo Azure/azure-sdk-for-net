@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Storage
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/storage/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp.output-folder=D:\\code\\srpsdk\\sdk\\storage\\Microsoft.Azure.Management.Storage\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "dfeece13b12b569278b31dd6f2767c2fef2b478d";
+      public static readonly String GithubCommidId = "c34f3432002f53b5a8b0a0da5a975974007be152";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

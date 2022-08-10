@@ -10,16 +10,104 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Linq;
 
     /// <summary>
-    /// Defines values for LeaseContainerRequest.
+    /// Lease Container request schema.
     /// </summary>
-    public static class LeaseContainerRequest
+    public partial class LeaseContainerRequest
     {
-        public const string Acquire = "Acquire";
-        public const string Renew = "Renew";
-        public const string Change = "Change";
-        public const string Release = "Release";
-        public const string Break = "Break";
+        /// <summary>
+        /// Initializes a new instance of the LeaseContainerRequest class.
+        /// </summary>
+        public LeaseContainerRequest()
+        {
+            CustomInit();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the LeaseContainerRequest class.
+        /// </summary>
+        /// <param name="action">Specifies the lease action. Can be one of the
+        /// available actions. Possible values include: 'Acquire', 'Renew',
+        /// 'Change', 'Release', 'Break'</param>
+        /// <param name="leaseId">Identifies the lease. Can be specified in any
+        /// valid GUID string format.</param>
+        /// <param name="breakPeriod">Optional. For a break action, proposed
+        /// duration the lease should continue before it is broken, in seconds,
+        /// between 0 and 60.</param>
+        /// <param name="leaseDuration">Required for acquire. Specifies the
+        /// duration of the lease, in seconds, or negative one (-1) for a lease
+        /// that never expires.</param>
+        /// <param name="proposedLeaseId">Optional for acquire, required for
+        /// change. Proposed lease ID, in a GUID string format.</param>
+        public LeaseContainerRequest(string action, string leaseId = default(string), int? breakPeriod = default(int?), int? leaseDuration = default(int?), string proposedLeaseId = default(string))
+        {
+            Action = action;
+            LeaseId = leaseId;
+            BreakPeriod = breakPeriod;
+            LeaseDuration = leaseDuration;
+            ProposedLeaseId = proposedLeaseId;
+            CustomInit();
+        }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets specifies the lease action. Can be one of the
+        /// available actions. Possible values include: 'Acquire', 'Renew',
+        /// 'Change', 'Release', 'Break'
+        /// </summary>
+        [JsonProperty(PropertyName = "action")]
+        public string Action { get; set; }
+
+        /// <summary>
+        /// Gets or sets identifies the lease. Can be specified in any valid
+        /// GUID string format.
+        /// </summary>
+        [JsonProperty(PropertyName = "leaseId")]
+        public string LeaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. For a break action, proposed duration the
+        /// lease should continue before it is broken, in seconds, between 0
+        /// and 60.
+        /// </summary>
+        [JsonProperty(PropertyName = "breakPeriod")]
+        public int? BreakPeriod { get; set; }
+
+        /// <summary>
+        /// Gets or sets required for acquire. Specifies the duration of the
+        /// lease, in seconds, or negative one (-1) for a lease that never
+        /// expires.
+        /// </summary>
+        [JsonProperty(PropertyName = "leaseDuration")]
+        public int? LeaseDuration { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional for acquire, required for change. Proposed
+        /// lease ID, in a GUID string format.
+        /// </summary>
+        [JsonProperty(PropertyName = "proposedLeaseId")]
+        public string ProposedLeaseId { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Action == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Action");
+            }
+        }
     }
 }

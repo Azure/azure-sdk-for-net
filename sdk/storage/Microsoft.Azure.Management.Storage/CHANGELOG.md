@@ -6,7 +6,6 @@
 
 **Breaking changes**
 
-- StorageManagementClient.BlobContainers.Lease() input parameter 'parameters' type changed from LeaseContainerRequest to LeaseContainerRequest1.
 - new ActiveDirectoryProperties() parameter change: "domainGuid" moved from the 3rd to the 2nd parameter; "netBiosDomainName", "forestName", "domainSid", "azureStorageSid" changed from required to optional.
 - new Encryption() parameter change: "keySource" changed from required to optional, and moved from the 1st to the 2nd parameter; "services" moved from the 2nd to the 1st parameter.
 
