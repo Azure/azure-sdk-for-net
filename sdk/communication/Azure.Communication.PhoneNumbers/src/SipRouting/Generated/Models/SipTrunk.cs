@@ -11,7 +11,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     public partial class SipTrunk
     {
 
+        /// <summary> Initializes a new instance of SipTrunk. </summary>
+        /// <param name="sipSignalingPort"> Gets or sets SIP signaling port of the trunk. </param>
+        /// <param name="enabled"> Enabled flag. </param>
+        internal SipTrunk(int sipSignalingPort, bool? enabled)
+        {
+            SipSignalingPort = sipSignalingPort;
+            Enabled = enabled;
+        }
+
         /// <summary> Gets or sets SIP signaling port of the trunk. </summary>
         public int SipSignalingPort { get; set; }
+        /// <summary> Enabled flag. </summary>
+        public bool? Enabled { get; set; }
     }
 }

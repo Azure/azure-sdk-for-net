@@ -19,13 +19,13 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         }
 
         /// <summary> Initializes a new instance of SipDomain. </summary>
-        /// <param name="type"> Domain type. </param>
-        internal SipDomain(DomainType? type)
+        /// <param name="enabled"> Enabled flag. </param>
+        internal SipDomain(bool? enabled)
         {
-            Type = type;
+            Enabled = enabled;
         }
 
-        /// <summary> Domain type. </summary>
-        public DomainType? Type { get; set; }
+        /// <summary> Enabled flag. </summary>
+        public bool? Enabled { get; set; }
     }
 }

@@ -15,31 +15,31 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("enabled");
+                writer.WriteBooleanValue(Enabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static SipDomain DeserializeSipDomain(JsonElement element)
         {
-            Optional<DomainType> type = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("enabled"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new DomainType(property.Value.GetString());
+                    enabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new SipDomain(Optional.ToNullable(type));
+            return new SipDomain(Optional.ToNullable(enabled));
         }
     }
 }

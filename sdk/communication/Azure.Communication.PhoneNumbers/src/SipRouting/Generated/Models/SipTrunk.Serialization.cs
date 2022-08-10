@@ -17,12 +17,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             writer.WriteStartObject();
             writer.WritePropertyName("sipSignalingPort");
             writer.WriteNumberValue(SipSignalingPort);
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WritePropertyName("enabled");
+                writer.WriteBooleanValue(Enabled.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static SipTrunk DeserializeSipTrunk(JsonElement element)
         {
             int sipSignalingPort = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sipSignalingPort"))
@@ -30,8 +36,18 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     sipSignalingPort = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("enabled"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enabled = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new SipTrunk(sipSignalingPort);
+            return new SipTrunk(sipSignalingPort, Optional.ToNullable(enabled));
         }
     }
 }

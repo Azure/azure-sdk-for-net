@@ -1,6 +1,6 @@
 # Azure.Communication.PhoneNumbers.SipRouting
 
-Run `ddotnet msbuild /t:GenerateCode /p:AutoRestInput=.\SipRouting\autorest_siprouting.md /p:UseDefaultNamespaceAndOutputFolder=false /p:AutoRestAdditionalParameters="--project-folder={PATH_TO_SDK_DIRECTORY}\sdk\communication\Azure.Communication.PhoneNumbers\src"` from the project root folder to generate code.
+Run `dotnet msbuild /t:GenerateCode /p:AutoRestInput=.\SipRouting\autorest_siprouting.md /p:UseDefaultNamespaceAndOutputFolder=false /p:AutoRestAdditionalParameters="--project-folder=C:\Projects\Azure\azure-sdk-for-net\sdk\communication\Azure.Communication.PhoneNumbers\src"` from the project root folder to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
@@ -24,7 +24,7 @@ generation1-convenience-client: true
 ``` yaml
 directive:
   from: swagger-document
-  where: $.paths.*[?(@.operationId == "SipRouting_Patch")].parameters..[?(@.description == "Sip configuration patch object.",")]
+  where: $.paths.*[?(@.operationId == "SipRouting_Patch")].parameters..[?(@.description == "Sip configuration patch object.")]
   transform: >
     $.schema = {"$ref": "#/definitions/SipConfiguration"}
 ```
