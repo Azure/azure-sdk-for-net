@@ -28,6 +28,7 @@ namespace Azure.Core
             _content = Create(_stream);
             JsonWriter = new Utf8JsonWriter(_gzip);
             content.WriteTo(_gzip, default);
+            Flush();
         }
 
         public GZipUtf8JsonRequestContent()
@@ -40,8 +41,7 @@ namespace Azure.Core
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            _gzip.Flush();
-            await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
+            await FlushAsync().ConfigureAwait(false);
             await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
@@ -57,28 +57,34 @@ namespace Azure.Core
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             JsonWriter.Reset(_gzip);
 #else
-            _gzip.Flush();
-            JsonWriter.Flush();
+            Flush();
             _content.WriteTo(stream, cancellation);
 #endif
         }
 
         public override bool TryComputeLength(out long length)
         {
-            length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
+            Flush();
+            length = _stream.Length;
             return true;
         }
 
         public override void Dispose()
         {
-            //WORKS:
-            //JsonWriter.Dispose();
-            //_content.Dispose();
-
             JsonWriter.Dispose();
             _content.Dispose();
-            _stream.Dispose();
-            _gzip.Dispose();
+        }
+
+        private void Flush()
+        {
+            JsonWriter.Flush();
+            _gzip.Flush();
+        }
+
+        private async Task FlushAsync()
+        {
+            await JsonWriter.FlushAsync().ConfigureAwait(false);
+            await _gzip.FlushAsync().ConfigureAwait(false);
         }
     }
 }

@@ -77,11 +77,15 @@ namespace Azure.Monitor.Ingestion
                 BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
 
                 var memory = entry.ToMemory();
-                if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
+                if (memory.Length > _singleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
+                {
+                    yield return BinaryData.FromStream(entry.ToStream());
+                }
+                else if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                     stream.Position = 0; // set Position to 0 to return everything from beginning of stream
-                    yield return (BinaryData.FromStream(stream));
+                    yield return BinaryData.FromStream(stream);
                     stream = new MemoryStream(_singleUploadThreshold); // reset stream
                 }
                 else
@@ -92,7 +96,7 @@ namespace Azure.Monitor.Ingestion
                         // reached end of logEntries and we haven't returned yet
                         WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                         stream.Position = 0;
-                        yield return (BinaryData.FromStream(stream));
+                        yield return BinaryData.FromStream(stream);
                     }
                     else
                     {
@@ -143,7 +147,7 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                foreach (var partition in Batching(logEntries))
+                foreach (BinaryData partition in Batching(logEntries))
                 {
                     //TODO: catch errors and correlate with Batching.start
                     return Upload(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken });
@@ -195,9 +199,7 @@ namespace Azure.Monitor.Ingestion
                 foreach (var partition in Batching(logEntries))
                 {
                     //TODO: catch errors and correlate with Batching.start
-                    string contentEncoding = null;
-                    //contentEncoding = "gzip";
-                    return await UploadAsync(ruleId, streamName, partition, contentEncoding, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                    return await UploadAsync(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
                 }
             }
             catch (Exception e)

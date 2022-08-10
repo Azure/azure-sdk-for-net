@@ -19,6 +19,6 @@ namespace Azure.Monitor.Ingestion.Tests
 
         public string TableName => GetRecordedVariable("LOGS_TABLE_NAME");
 
-        public ClientSecretCredential ClientSecretCredential => new ClientSecretCredential(TenantId, ClientId, ClientSecret);
+        public ClientSecretCredential ClientSecretCredential => new ClientSecretCredential(GetRecordedVariable("AZURE_TENANT_ID"), GetRecordedVariable("AZURE_CLIENT_ID"), GetRecordedVariable("AZURE_CLIENT_SECRET"));
     }
 }

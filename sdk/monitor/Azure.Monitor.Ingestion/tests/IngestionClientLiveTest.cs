@@ -20,7 +20,8 @@ namespace Azure.Monitor.Ingestion.Tests
 {
     public class IngestionClientLiveTest : RecordedTestBase<IngestionClientTestEnvironment>
     {
-        public IngestionClientLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        private const int Mb = 1024 * 1024;
+        public IngestionClientLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -35,12 +36,7 @@ namespace Azure.Monitor.Ingestion.Tests
         public void NullInput()
         {
             LogsIngestionClient client = CreateClient();
-
-            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(Stream.Null)).ConfigureAwait(false));
-
-            Assert.AreEqual(null, exception.ErrorCode);
-            Assert.AreEqual(500, exception.Status);
-            StringAssert.StartsWith("Service request failed.", exception.Message);
+            Assert.Throws<ArgumentNullException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, null));
         }
 
         [Test]
@@ -48,13 +44,10 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             LogsIngestionClient client = CreateClient();
 
-            var data = BinaryData.FromString("").ToStream();
+            var entries = new List<IEnumerable>();
 
-            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false));
-
-            Assert.AreEqual(null, exception.ErrorCode);
-            Assert.AreEqual(500, exception.Status);
-            StringAssert.StartsWith("Service request failed.", exception.Message);
+            var exception = Assert.Throws<ArgumentException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries));
+            StringAssert.StartsWith("Value cannot be an empty collection.", exception.Message);
         }
 
         [Test]
@@ -63,14 +56,32 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient();
 
             Stream stream = null;
-            var exception = Assert.Throws<RequestFailedException>(async () => await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)).ConfigureAwait(false));
-
-            Assert.AreEqual("BadArgumentError", exception.ErrorCode);
-            StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
+            var exception = Assert.Throws<NullReferenceException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)));
         }
 
         [Test]
-        public void ValidateBatchingOneChunk()
+        public async Task UploadOneLogGreaterThan1Mb()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            var entries = new List<IEnumerable>();
+            entries.Add(new Object[] {
+                new {
+                    Time = "2021",
+                    Computer = "Computer" + new string('*', Mb * 5),
+                    AdditionalContext = 1
+                }
+            });
+
+            // Make the request
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+
+            // Check the response
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public void ValidateBatchingOneChunkNoGzip()
         {
             var entries = new List<IEnumerable>();
             for (int i = 0; i < 10; i++)
@@ -94,7 +105,7 @@ namespace Azure.Monitor.Ingestion.Tests
         }
 
         [Test]
-        public void ValidateBatchingMultiChunk()
+        public void ValidateBatchingMultiChunkNoGzip()
         {
             var entries = new List<IEnumerable>();
             for (int i = 0; i < 10000; i++)
@@ -117,47 +128,8 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.Greater(1, count);
         }
 
-        //[Test]
-        //public async Task ValidInputFromArrayAsJsonWithSingleBatch()
-        //{
-        //    LogsIngestionClient client = CreateClient();
-
-        //    var entries = new List<IEnumerable>();
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        entries.Add(new Object[] {
-        //            new {
-        //                Time = "2021",
-        //                Computer = "Computer" + i.ToString(),
-        //                AdditionalContext = i
-        //            }
-        //        });
-        //    }
-
-        //    // Make the request
-        //    Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
-
-        //    // Check the response
-        //    Assert.AreEqual(204, response.Status);
-
-        //    LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
-        //    var batch = new LogsBatchQuery();
-
-        //    string query = TestEnvironment.TableName + " | count;";
-        //    string countQueryId = batch.AddWorkspaceQuery(
-        //        TestEnvironment.Ingestion_WorkspaceId,
-        //        query,
-        //        new QueryTimeRange(TimeSpan.FromDays(1)));
-
-        //    Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
-
-        //    // Check the Azure.Monitor.Query Response
-        //    Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
-        //    Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
-        //}
-
         [Test]
-        public async Task ValidInputFromArrayAsJsonWithSingleBatch()
+        public async Task ValidInputFromArrayAsJsonWithSingleBatchWithGzip()
         {
             LogsIngestionClient client = CreateClient();
 
@@ -168,37 +140,64 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = DateTime.Now,
+                        Time = now,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
                 });
             }
 
-            // Make the request
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+           // Make the request
+           Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
 
             // Check the response
             Assert.AreEqual(204, response.Status);
 
-            //LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
-            //var batch = new LogsBatchQuery();
+            LogsQueryClient logsQueryClient = new(TestEnvironment.ClientSecretCredential);
+            var batch = new LogsBatchQuery();
 
-            //string query = TestEnvironment.TableName + " | count;";
-            //string countQueryId = batch.AddWorkspaceQuery(
-            //    TestEnvironment.Ingestion_WorkspaceId,
-            //    query,
-            //    new QueryTimeRange(TimeSpan.FromDays(1)));
+            string query = TestEnvironment.TableName + " | count;";
+            string countQueryId = batch.AddWorkspaceQuery(
+                TestEnvironment.Ingestion_WorkspaceId,
+                query,
+                new QueryTimeRange(TimeSpan.FromDays(1)));
 
-            //Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
+            Response<LogsBatchQueryResultCollection> responseLogsQuery = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
-            //// Check the Azure.Monitor.Query Response
-            //Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
-            //Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
+            // Check the Azure.Monitor.Query Response
+            Assert.AreEqual(200, responseLogsQuery.GetRawResponse().Status);
+            Assert.IsTrue(responseLogsQuery.Value.GetResult<int>(countQueryId).Single() >= 2);
         }
 
         [Test]
-        public async Task ValidInputFromArrayAsJsonWithMultiBatch()
+        public void ValidInputFromObjectAsJsonNoBatching()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            BinaryData data = BinaryData.FromObjectAsJson(
+                // Use an anonymous type to create the payload
+                new[] {
+                    new
+                    {
+                        Time = DateTime.Now,
+                        Computer = "Computer1",
+                        AdditionalContext = 2,
+                    },
+                    new
+                    {
+                        Time = DateTime.Now,
+                        Computer = "Computer2",
+                        AdditionalContext = 3
+                    },
+                });
+
+            Response response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data), "gzip"); //takes StreamName not tablename
+            // Check the response
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
         {
             LogsIngestionClient client = CreateClient();
 
