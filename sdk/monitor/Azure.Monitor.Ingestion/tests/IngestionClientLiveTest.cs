@@ -94,38 +94,26 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<BinaryData> x = LogsIngestionClient.Batching(entries);
-            int count = 0;
-            foreach (var entry in x)
-            {
-                Console.WriteLine(entry);
-                count++;
-            }
-            Assert.AreEqual(1, count);
+            IEnumerable<BinaryData> x = LogsIngestionClient.Batch(entries);
+            Assert.AreEqual(1, x.Count());
         }
 
         [Test]
         public void ValidateBatchingMultiChunkNoGzip()
         {
             var entries = new List<IEnumerable>();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 20000; i++)
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = "2021",
+                        Time = i + "2021",
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
                 });
             }
-            IEnumerable<BinaryData> x = LogsIngestionClient.Batching(entries);
-            int count = 0;
-            foreach (var entry in x)
-            {
-                Console.WriteLine(entry);
-                count++;
-            }
-            Assert.Greater(1, count);
+            IEnumerable<BinaryData> x = LogsIngestionClient.Batch(entries);
+            Assert.Greater(x.Count(), 1);
         }
 
         [Test]

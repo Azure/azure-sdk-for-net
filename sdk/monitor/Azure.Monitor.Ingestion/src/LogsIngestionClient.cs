@@ -27,7 +27,7 @@ namespace Azure.Monitor.Ingestion
 
         // The size we use to determine whether to upload as a single PUT BLOB
         // request or stage as multiple blocks.
-        private const int _singleUploadThreshold = 1000000; // 1 Mb in byte format
+        private const int SingleUploadThreshold = 1000000; // 1 Mb in byte format
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
         {
@@ -61,15 +61,15 @@ namespace Azure.Monitor.Ingestion
         }
 
         /// <summary>
-        /// Hidden method for batching data
+        /// Hidden method for batching data - serializing into arrays of JSON no more than SingleUploadThreshold each
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="logEntries"></param>
         /// <returns></returns>
-        internal static IEnumerable<BinaryData> Batching<T>(IEnumerable<T> logEntries)
+        internal static IEnumerable<BinaryData> Batch<T>(IEnumerable<T> logEntries)
         {
             //TODO: use Array pool instead
-            MemoryStream stream = new MemoryStream(_singleUploadThreshold);
+            MemoryStream stream = new MemoryStream(SingleUploadThreshold);
             WriteMemory(stream, BinaryData.FromString("[").ToMemory());
             int entryCount = 0;
             foreach (var log in logEntries)
@@ -77,16 +77,16 @@ namespace Azure.Monitor.Ingestion
                 BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
 
                 var memory = entry.ToMemory();
-                if (memory.Length > _singleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
+                if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
                 {
                     yield return BinaryData.FromStream(entry.ToStream());
                 }
-                else if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
+                else if ((stream.Length + memory.Length + 1) >= SingleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
                     stream.Position = 0; // set Position to 0 to return everything from beginning of stream
                     yield return BinaryData.FromStream(stream);
-                    stream = new MemoryStream(_singleUploadThreshold); // reset stream
+                    stream = new MemoryStream(SingleUploadThreshold); // reset stream
                 }
                 else
                 {
@@ -147,9 +147,9 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                foreach (BinaryData partition in Batching(logEntries))
+                foreach (BinaryData partition in Batch(logEntries))
                 {
-                    //TODO: catch errors and correlate with Batching.start
+                    //TODO: catch errors and correlate with Batch.start
                     return Upload(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken });
                 }
             }
@@ -196,9 +196,9 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                foreach (var partition in Batching(logEntries))
+                foreach (var partition in Batch(logEntries))
                 {
-                    //TODO: catch errors and correlate with Batching.start
+                    //TODO: catch errors and correlate with Batch.start
                     return await UploadAsync(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
                 }
             }
