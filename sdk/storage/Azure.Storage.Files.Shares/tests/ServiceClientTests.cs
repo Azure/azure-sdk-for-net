@@ -137,6 +137,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
+        [Category("NonVirtualized")]
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
             // Arrange
@@ -207,6 +208,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_02_12)]
         public async Task ListSharesSegmentAsync_Premium()
         {

@@ -18,7 +18,7 @@
     ],
     "TestFilterConfig": {
         "ExcludeNonVirtualized": {
-            "AdditionalTestFilters": "FullyQualifiedName!~WebJobs"
+            "AdditionalTestFilters": "FullyQualifiedName!~WebJobs|TestCategory!=NonVirtualized"
         }
       }
   }
