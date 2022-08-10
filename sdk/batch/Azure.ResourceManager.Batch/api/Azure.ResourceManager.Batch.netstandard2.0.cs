@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchAccountCertificateCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public BatchAccountCertificateCreateOrUpdateContent() { }
-        public object Data { get { throw null; } set { } }
+        public System.BinaryData Data { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? Format { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }

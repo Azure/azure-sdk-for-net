@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKey. </summary>
         /// <param name="keyId"> The key id. </param>
         /// <param name="isEnabled"> Whether the key is enabled or not. </param>
-        /// <param name="createdOn"> When the key was created. </param>
-        /// <param name="updatedOn"> When the key was updated. </param>
-        internal IntegrationAccountKeyVaultKey(Uri keyId, bool? isEnabled, long? createdOn, long? updatedOn)
+        /// <param name="createdOnUnixTimestamp"> When the key was created. </param>
+        /// <param name="updatedOnUnixTimestamp"> When the key was updated. </param>
+        internal IntegrationAccountKeyVaultKey(Uri keyId, bool? isEnabled, long? createdOnUnixTimestamp, long? updatedOnUnixTimestamp)
         {
             KeyId = keyId;
             IsEnabled = isEnabled;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            CreatedOnUnixTimestamp = createdOnUnixTimestamp;
+            UpdatedOnUnixTimestamp = updatedOnUnixTimestamp;
         }
 
         /// <summary> The key id. </summary>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Whether the key is enabled or not. </summary>
         public bool? IsEnabled { get; }
         /// <summary> When the key was created. </summary>
-        public long? CreatedOn { get; }
+        public long? CreatedOnUnixTimestamp { get; }
         /// <summary> When the key was updated. </summary>
-        public long? UpdatedOn { get; }
+        public long? UpdatedOnUnixTimestamp { get; }
     }
 }

@@ -175,7 +175,7 @@ rename-mapping:
   UserIdentity: BatchUserIdentity
   ImageReference: BatchImageReference
   ImageReference.id: -|arm-id
-  CertificateCreateOrUpdateParameters.properties.data: -|object
+  CertificateCreateOrUpdateParameters.properties.data: -|any
   KeyVaultProperties.keyIdentifier: -|uri
   AzureFileShareConfiguration.azureFileUrl: FileUrl
   MountConfiguration.azureBlobFileSystemConfiguration: BlobFileSystemConfiguration
