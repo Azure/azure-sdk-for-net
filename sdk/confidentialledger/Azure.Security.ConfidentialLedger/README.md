@@ -127,7 +127,7 @@ waitUntil: WaitUntil.Completed,
     RequestContent.Create(
         new { contents = "Hello world!" }));
 
-var content = postOperation.GetRawResponse().Content.ToString();
+string content = postOperation.GetRawResponse().Content.ToString();
 string transactionId = postOperation.Id;
 string collectionId = "subledger:0";
 
