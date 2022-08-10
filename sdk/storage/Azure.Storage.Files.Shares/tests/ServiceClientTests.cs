@@ -88,22 +88,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
-        public async Task GetPropertiesAsync_OAuth()
-        {
-            // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
-
-            // Act
-            Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
-
-            // Assert
-            Assert.IsNotNull(properties);
-            var accountName = new ShareUriBuilder(service.Uri).AccountName;
-            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
-        }
-
-        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -121,40 +105,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
         [RecordedTest]
         [NonParallelizable]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
-        {
-            // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
-            Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
-            _ = properties.Value.Cors.ToArray();
-            properties.Value.Cors.Clear();
-            properties.Value.Cors.Add(
-                new ShareCorsRule
-                {
-                    MaxAgeInSeconds = 1000,
-                    AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
-                    AllowedMethods = "PUT,GET",
-                    AllowedOrigins = "*",
-                    ExposedHeaders = "x-ms-meta-*"
-                });
-
-            // Act
-            await service.SetPropertiesAsync(properties: properties);
-
-            // Assert
-            properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.Value.Cors.Count());
-            Assert.IsTrue(properties.Value.Cors[0].MaxAgeInSeconds == 1000);
-        }
-
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
-        [RecordedTest]
-        [NonParallelizable]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
-        public async Task SetPropertiesAsync_OAuth()
         {
             // Arrange
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
@@ -234,30 +188,6 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             // Arrange
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
-
-            // Ensure at least one share
-            await using DisposingShare test = await GetTestShareAsync(service);
-            ShareClient share = test.Share;
-
-            var shares = new List<ShareItem>();
-            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
-            {
-                shares.AddRange(page.Values);
-            }
-
-            // Assert
-            Assert.AreNotEqual(0, shares.Count);
-            Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
-            Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
-            Assert.IsTrue(shares.All(c => c.Properties.Metadata == null));
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
-        public async Task ListSharesSegmentAsync_OAuth()
-        {
-            // Arrange
-            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
 
             // Ensure at least one share
             await using DisposingShare test = await GetTestShareAsync(service);
