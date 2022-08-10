@@ -37,6 +37,12 @@
       $(NoWarn);
       AZC0006;
       AZC0007;
+	  
+	  <!-- 
+	  Mitigation for the following issue, until the solution is publicly released.
+	  https://github.com/dotnet/sdk/issues/24747#issuecomment-1126298533 -->
+	  NU1504;
+      NU1505;
 
       <!--
         Netstandard2.1 warnings that netstandard2.0 cannot adhere to.
