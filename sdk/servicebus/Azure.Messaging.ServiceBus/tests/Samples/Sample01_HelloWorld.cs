@@ -295,7 +295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Authenticate with a connection string/>.
+        /// Authenticate with a connection string.
         /// </summary>
         public void AuthenticateWithConnectionString()
         {
@@ -307,7 +307,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         /// <summary>
-        /// Connect to the service using a custom endpoint address/>.
+        /// Connect to the service using a custom endpoint address.
         /// </summary>
         public void ConnectUsingCustomEndpoint()
         {
