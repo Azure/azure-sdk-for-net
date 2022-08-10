@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [ "microsoft.graph.authenticationEvent.TokenIssuanceStart" ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "time": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "@odata.type": {
+          "type": "string",
+          "enum": [ "microsoft.graph.onTokenIssuanceStartCalloutData" ]
+        },
+        "eventListenerId": {
+          "type": "string"
+        },
+        "customExtensionId": {
+          "type": "string"
+        },
+        "authenticationContext": { "$ref": "#/definitions/authenticationContext" }
+      },
+      "required": [
+        "@odata.type",
+        "eventListenerId",
+        "customExtensionId",
+        "authenticationContext"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "source",
+    "time",
+    "data"
+  ],
+
+  "definitions": {
+
+    "authenticationContext": {
+      "type": "object",
+      "properties": {
+        "correlationId": {
+          "type": "string"
+        },
+        "client": { "$ref": "#/definitions/clientContext" },
+        "authProtocol": { "$ref": "#/definitions/authProtocolContext" },
+        "clientServicePrincipal": { "$ref": "#/definitions/principalContext" },
+        "resourceServicePrincipal": { "$ref": "#/definitions/principalContext" },
+        "user": { "$ref": "#/definitions/userPrincipalContext" }
+      },
+      "required": [
+        "correlationId",
+        "client",
+        "authProtocol",
+        "clientServicePrincipal",
+        "resourceServicePrincipal",
+        "user"
+      ]
+    },
+
+    "clientContext": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "locale": {
+          "type": "string"
+        },
+        "market": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ip"
+      ]
+    },
+
+    "authProtocolContext": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "tenantId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "tenantId"
+      ]
+    },
+
+    "principalContext": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "appId": {
+          "type": "string"
+        },
+        "appDisplayName": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "appId",
+        "appDisplayName",
+        "displayName"
+      ]
+    },
+
+    "userPrincipalContext": {
+      "type": "object",
+      "properties": {
+        "ageGroup": {
+          "type": [ "string", "null" ]
+        },
+        "companyName": {
+          "type": [ "string", "null" ]
+        },
+        "country": {
+          "type": [ "string", "null" ]
+        },
+        "createdDateTime": {
+          "type": [ "string", "null" ]
+        },
+        "creationType": {
+          "type": [ "string", "null" ]
+        },
+        "department": {
+          "type": [ "string", "null" ]
+        },
+        "displayName": {
+          "type": [ "string", "null" ]
+        },
+        "givenName": {
+          "type": [ "string", "null" ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "lastPasswordChangeDateTime": {
+          "type": [ "string", "null" ]
+        },
+        "mail": {
+          "type": [ "string", "null" ]
+        },
+        "onPremisesSamAccountName": {
+          "type": [ "string", "null" ]
+        },
+        "onPremisesSecurityIdentifier": {
+          "type": [ "string", "null" ]
+        },
+        "onPremiseUserPrincipalName": {
+          "type": [ "string", "null" ]
+        },
+        "preferredDataLocation": {
+          "type": [ "string", "null" ]
+        },
+        "preferredLanguage": {
+          "type": [ "string", "null" ]
+        },
+        "surname": {
+          "type": [ "string", "null" ]
+        },
+        "userPrincipalName": {
+          "type": "string"
+        },
+        "userType": {
+          "type": [ "string", "null" ]
+        }
+      },
+      "required": [
+        "id",
+        "userPrincipalName"
+      ]
+    }
+  }
+}

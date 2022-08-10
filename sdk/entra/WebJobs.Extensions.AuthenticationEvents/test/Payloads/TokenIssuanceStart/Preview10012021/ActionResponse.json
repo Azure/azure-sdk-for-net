@@ -1,0 +1,18 @@
+{
+  "actions": [
+    {
+      "type": "ProvideClaimsForToken",
+      "claims": [
+        {
+          "DateOfBirth": "01/01/2000"
+        },
+        {
+          "CustomRoles": [
+            "Writer",
+            "Editor"
+          ]
+        }
+      ]
+    }
+  ]
+}

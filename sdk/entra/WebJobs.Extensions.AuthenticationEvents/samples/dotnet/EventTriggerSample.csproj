@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<AzureFunctionsVersion>v3</AzureFunctionsVersion>
+		<Configurations>Debug;Release;TriggerRelease</Configurations>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
+		<PackageReference Include="Microsoft.Azure.WebJobs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\WebJobs.Extensions.CustomAuthenticationExtension\Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="host.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="local.settings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
+</Project>

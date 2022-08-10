@@ -1,0 +1,20 @@
+{
+  "type": "onTokenIssuanceStartCustomExtension",
+  "apiSchemaVersion": "10-01-2021-preview",
+  "actions": [
+    {
+      "type": "ProvideClaimsForToken",
+      "claims": [
+        {
+          "DateOfBirth" : "01/01/2000"
+        },
+        {
+          "CustomRoles": [
+            "Writer",
+            "Editor"
+          ]
+        }
+      ]
+    }
+  ]
+}
