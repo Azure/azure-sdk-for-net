@@ -3,26 +3,41 @@
 
 using System;
 using System.Net;
+using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
     public class Sample13_AdvancedConfiguration : ServiceBusLiveTestBase
     {
+        [Test]
         public void ConfigureProxy()
         {
             #region Snippet:ServiceBusConfigureTransport
-            var client = new ServiceBusClient("<connection-string>", new ServiceBusClientOptions
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#else
+            string connectionString = TestEnvironment.ServiceBusConnectionString;
+#endif
+            var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
-                WebProxy = new WebProxy("<proxy-address>")
+                WebProxy = new WebProxy("https://myproxyserver:80")
             });
             #endregion
+
+            Assert.AreEqual(ServiceBusTransportType.AmqpWebSockets, client.TransportType);
         }
 
+        [Test]
         public void ConfigureRetryOptions()
         {
             #region Snippet:ServiceBusConfigureRetryOptions
-            var client = new ServiceBusClient("<connection-string>", new ServiceBusClientOptions
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#else
+            string connectionString = TestEnvironment.ServiceBusConnectionString;
+#endif
+            var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
             {
                 RetryOptions = new ServiceBusRetryOptions
                 {
@@ -34,26 +49,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #endregion
         }
 
+        [Test]
         public void ConfigurePrefetchReceiver()
         {
             #region Snippet:ServiceBusConfigurePrefetchReceiver
-            var client = new ServiceBusClient("<connection-string>");
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#else
+            string connectionString = TestEnvironment.ServiceBusConnectionString;
+#endif
+            var client = new ServiceBusClient(connectionString);
             ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceBusReceiverOptions
             {
                 PrefetchCount = 10
             });
             #endregion
+
+            Assert.AreEqual(10, receiver.PrefetchCount);
         }
 
+        [Test]
         public void ConfigurePrefetchProcessor()
         {
             #region Snippet:ServiceBusConfigurePrefetchProcessor
-            var client = new ServiceBusClient("<connection-string>");
+#if SNIPPET
+            string connectionString = "<connection_string>";
+#else
+            string connectionString = TestEnvironment.ServiceBusConnectionString;
+#endif
+            var client = new ServiceBusClient(connectionString);
             ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new ServiceBusProcessorOptions
             {
                 PrefetchCount = 10
             });
             #endregion
+
+            Assert.AreEqual(10, processor.PrefetchCount);
         }
     }
 }

@@ -9,10 +9,11 @@ By default, the Service Bus client library communicates with the service using t
 In the example shown below, the transport is configured to use web sockets and a proxy is specified. You can also use websockets without specifying a proxy, but the proxy should only be used when using websockets.
 
 ```C# Snippet:ServiceBusConfigureTransport
-var client = new ServiceBusClient("<connection-string>", new ServiceBusClientOptions
+string connectionString = "<connection_string>";
+var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
 {
     TransportType = ServiceBusTransportType.AmqpWebSockets,
-    WebProxy = new WebProxy("<proxy-address>")
+    WebProxy = new WebProxy("https://myproxyserver:80")
 });
 ```
 
@@ -38,7 +39,8 @@ ServiceBusClient client = new ServiceBusClient(connectionString, options);
 The retry options are used to configure the retry policy for all operations when communicating with the service. The default values are shown below, but they can be customized to fit your scenario.
 
 ```C# Snippet:ServiceBusConfigureRetryOptions
-var client = new ServiceBusClient("<connection-string>", new ServiceBusClientOptions
+string connectionString = "<connection_string>";
+var client = new ServiceBusClient(connectionString, new ServiceBusClientOptions
 {
     RetryOptions = new ServiceBusRetryOptions
     {
@@ -54,7 +56,8 @@ var client = new ServiceBusClient("<connection-string>", new ServiceBusClientOpt
 The [prefetch feature](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet) allows the receiver and processor to request messages in the background before an actual receive operation is initiated. This can potentially increase the throughput of your application, but it comes with several large drawbacks that are outlined in this [document](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet#why-is-prefetch-not-the-default-option). If you determine that prefetch makes sense for your application, here is how you would enable it:
 
 ```C# Snippet:ServiceBusConfigurePrefetchReceiver
-var client = new ServiceBusClient("<connection-string>");
+string connectionString = "<connection_string>";
+var client = new ServiceBusClient(connectionString);
 ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceBusReceiverOptions
 {
     PrefetchCount = 10
@@ -64,7 +67,8 @@ ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceB
 And when using the processor:
 
 ```C# Snippet:ServiceBusConfigurePrefetchProcessor
-var client = new ServiceBusClient("<connection-string>");
+string connectionString = "<connection_string>";
+var client = new ServiceBusClient(connectionString);
 ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new ServiceBusProcessorOptions
 {
     PrefetchCount = 10
