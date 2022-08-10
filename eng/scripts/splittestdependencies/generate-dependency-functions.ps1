@@ -57,7 +57,7 @@ function Write-Test-Dependency-Group-To-Files($ProjectGroups, $MatrixOutputFolde
 # Add new property in the platform-matrix json and assign the values of the project file paths.
 function Write-Project-Files-To-Matrix($ProjectFiles, $MatrixJsonPath, $MatrixOutputFolder, $ProjectFileConfigName) {
   if (!(Test-Path $MatrixOutputFolder)) {
-    $null = New-Item -Path $MatrixOutputFolder -ItemType "directory" -Force
+    New-Item -Path $MatrixOutputFolder -ItemType "directory" -Force > $null
   }
   $platformJson = Get-Content $MatrixJsonPath | ConvertFrom-Json
   $overrideFiles = New-Object PSObject
@@ -81,5 +81,6 @@ function Write-Project-Files-To-Matrix($ProjectFiles, $MatrixJsonPath, $MatrixOu
     Throw "Need at least one project file for test matrix. Please adjust the NumberOfTestsPerJob for better split."
   }
   $platformJson.matrix | Add-Member -Name "OverrideFiles" -value $overrideFiles -MemberType NoteProperty
-  $platformJson | ConvertTo-Json -Depth 100 | Out-File "$MatrixOutputFolder/platform-matrix.json"
+  $platformJson | ConvertTo-Json -Depth 100 | Out-File $MatrixJsonPath 
+  Copy-Item $MatrixJsonPath -Destination $MatrixOutputFolder
 }

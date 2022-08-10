@@ -99,7 +99,8 @@ jobs:
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage)
-          /p:EnableSourceLink=false /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
+          /p:EnableSourceLink=false 
+          /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
           $(AdditionalTestArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
