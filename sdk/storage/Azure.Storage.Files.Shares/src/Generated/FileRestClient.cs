@@ -22,7 +22,6 @@ namespace Azure.Storage.Files.Shares
         private readonly HttpPipeline _pipeline;
         private readonly string _url;
         private readonly string _version;
-        private readonly ShareFileRequestIntent? _fileRequestIntent;
         private readonly string _fileRangeWriteFromUrl;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -33,16 +32,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/>, <paramref name="version"/> or <paramref name="fileRangeWriteFromUrl"/> is null. </exception>
-        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08", ShareFileRequestIntent? fileRequestIntent = null, string fileRangeWriteFromUrl = "update")
+        public FileRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08", string fileRangeWriteFromUrl = "update")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            _fileRequestIntent = fileRequestIntent;
             _fileRangeWriteFromUrl = fileRangeWriteFromUrl ?? throw new ArgumentNullException(nameof(fileRangeWriteFromUrl));
         }
 
@@ -106,17 +103,13 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
             }
-            if (leaseAccessConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             if (fileChangeTime != null)
             {
                 request.Headers.Add("x-ms-file-change-time", fileChangeTime);
+            }
+            if (leaseAccessConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -214,10 +207,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -291,10 +280,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -353,10 +338,6 @@ namespace Azure.Storage.Files.Shares
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -457,17 +438,13 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
             }
-            if (leaseAccessConditions?.LeaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             if (fileChangeTime != null)
             {
                 request.Headers.Add("x-ms-file-change-time", fileChangeTime);
+            }
+            if (leaseAccessConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -559,10 +536,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -628,10 +601,6 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -690,10 +659,6 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-lease-action", "release");
             request.Headers.Add("x-ms-lease-id", leaseId);
             request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -766,10 +731,6 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -843,10 +804,6 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -906,10 +863,6 @@ namespace Azure.Storage.Files.Shares
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
             }
             if (fileLastWrittenMode != null)
             {
@@ -1140,10 +1093,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1252,6 +1201,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-last-write-time", copyFileSmbInfo.FileLastWriteTime);
             }
+            if (copyFileSmbInfo?.FileChangeTime != null)
+            {
+                request.Headers.Add("x-ms-file-change-time", copyFileSmbInfo.FileChangeTime);
+            }
             if (copyFileSmbInfo?.SetArchiveAttribute != null)
             {
                 request.Headers.Add("x-ms-file-copy-set-archive", copyFileSmbInfo.SetArchiveAttribute.Value);
@@ -1259,14 +1212,6 @@ namespace Azure.Storage.Files.Shares
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
-            }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
-            if (copyFileSmbInfo?.FileChangeTime != null)
-            {
-                request.Headers.Add("x-ms-file-change-time", copyFileSmbInfo.FileChangeTime);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1350,10 +1295,6 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1434,10 +1375,6 @@ namespace Azure.Storage.Files.Shares
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1521,10 +1458,6 @@ namespace Azure.Storage.Files.Shares
             request.Uri = uri;
             request.Headers.Add("x-ms-handle-id", handleId);
             request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToSerialString());
-            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }

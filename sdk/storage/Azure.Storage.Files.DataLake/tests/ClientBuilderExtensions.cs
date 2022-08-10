@@ -30,7 +30,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 (uri, clientOptions) => new DataLakeServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new DataLakeServiceClient(uri, sharedKeyCredential, clientOptions),
                 (uri, tokenCredential, clientOptions) => new DataLakeServiceClient(uri, tokenCredential, clientOptions),
-                default,
                 (uri, azureSasCredential, clientOptions) => new DataLakeServiceClient(uri, azureSasCredential, clientOptions),
                 () => new DataLakeClientOptions(serviceVersion));
 
