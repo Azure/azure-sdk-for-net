@@ -6,10 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -25,11 +22,10 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// Each <see cref="GuestConfigurationAssignmentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
     /// To get a <see cref="GuestConfigurationAssignmentCollection" /> instance call the GetGuestConfigurationAssignments method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class GuestConfigurationAssignmentCollection : ArmCollection, IEnumerable<GuestConfigurationAssignmentResource>, IAsyncEnumerable<GuestConfigurationAssignmentResource>
+    public partial class GuestConfigurationAssignmentCollection : ArmCollection
     {
         private readonly ClientDiagnostics _guestConfigurationAssignmentClientDiagnostics;
         private readonly GuestConfigurationAssignmentsRestOperations _guestConfigurationAssignmentRestClient;
-        private readonly string _vmName;
 
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationAssignmentCollection"/> class for mocking. </summary>
         protected GuestConfigurationAssignmentCollection()
@@ -39,12 +35,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal GuestConfigurationAssignmentCollection(ArmClient client, ResourceIdentifier id, string vmName) : base(client, id)
+        internal GuestConfigurationAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vmName = vmName;
             _guestConfigurationAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GuestConfigurationAssignmentResource.ResourceType, out string guestConfigurationAssignmentApiVersion);
             _guestConfigurationAssignmentRestClient = new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationAssignmentApiVersion);
@@ -65,13 +57,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Operation Id: GuestConfigurationAssignments_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> Name of the guest configuration assignment. </param>
         /// <param name="data"> Parameters supplied to the create or update guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GuestConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GuestConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -79,7 +73,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmName, guestConfigurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationAssignmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, guestConfigurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new GuestConfigurationArmOperation<GuestConfigurationAssignmentResource>(Response.FromValue(new GuestConfigurationAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -98,13 +92,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Operation Id: GuestConfigurationAssignments_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> Name of the guest configuration assignment. </param>
         /// <param name="data"> Parameters supplied to the create or update guest configuration assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GuestConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/>, <paramref name="guestConfigurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GuestConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, string guestConfigurationAssignmentName, GuestConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -112,7 +108,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _vmName, guestConfigurationAssignmentName, data, cancellationToken);
+                var response = _guestConfigurationAssignmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmName, guestConfigurationAssignmentName, data, cancellationToken);
                 var operation = new GuestConfigurationArmOperation<GuestConfigurationAssignmentResource>(Response.FromValue(new GuestConfigurationAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -130,19 +126,21 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}
         /// Operation Id: GuestConfigurationAssignments_Get
         /// </summary>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<GuestConfigurationAssignmentResource>> GetAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        public virtual async Task<Response<GuestConfigurationAssignmentResource>> GetAsync(string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -159,19 +157,21 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}
         /// Operation Id: GuestConfigurationAssignments_Get
         /// </summary>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        public virtual Response<GuestConfigurationAssignmentResource> Get(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        public virtual Response<GuestConfigurationAssignmentResource> Get(string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vmName, guestConfigurationAssignmentName, cancellationToken);
+                var response = _guestConfigurationAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GuestConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
@@ -184,77 +184,25 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// List all guest configuration assignments for a virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignments_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<GuestConfigurationAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _guestConfigurationAssignmentRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignments_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<GuestConfigurationAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _guestConfigurationAssignmentRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _vmName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GuestConfigurationAssignmentResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}
         /// Operation Id: GuestConfigurationAssignments_Get
         /// </summary>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vmName, guestConfigurationAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,19 +217,21 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}
         /// Operation Id: GuestConfigurationAssignments_Get
         /// </summary>
+        /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
-        public virtual Response<bool> Exists(string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        public virtual Response<bool> Exists(string vmName, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
 
             using var scope = _guestConfigurationAssignmentClientDiagnostics.CreateScope("GuestConfigurationAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vmName, guestConfigurationAssignmentName, cancellationToken: cancellationToken);
+                var response = _guestConfigurationAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, guestConfigurationAssignmentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -289,21 +239,6 @@ namespace Azure.ResourceManager.GuestConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<GuestConfigurationAssignmentResource> IEnumerable<GuestConfigurationAssignmentResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<GuestConfigurationAssignmentResource> IAsyncEnumerable<GuestConfigurationAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
