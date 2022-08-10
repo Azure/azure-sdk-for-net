@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FluidRelay
     public partial class FluidRelayContainerData : Azure.ResourceManager.Models.ResourceData
     {
         public FluidRelayContainerData() { }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Guid? FrsContainerId { get { throw null; } }
         public System.Guid? FrsTenantId { get { throw null; } }
         public System.DateTimeOffset? LastAccessOn { get { throw null; } }
