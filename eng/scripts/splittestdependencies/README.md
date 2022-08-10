@@ -11,8 +11,17 @@ Previously, it is not necessary to run everything under `sdk`, because we defini
 Here is the workflow for better understanding:
 ![Workflow](assets/test-split-workflow.png)
 
-## Performance
+## Enable/Disable the split work
+We currently have this support in public PR validation pipeline and internal release pipeline.
+We have enabled the core pipeline.
 
+To enable the split on your service, you can add the line below in `ci.yml` under service repo. E.g. [ci.yml](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/ci.yml)
+```
+TestDependsOnDependency: ${service-name}
+```
+To disable, just remove the above line, and we will run the tests on target service only.
+
+## Performance
 Here is the comparison:
 |     | Old | New |
 | --- | --- | --- |
