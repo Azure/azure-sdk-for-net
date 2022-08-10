@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "70",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-ffb5421e9ec6e34baa20037a73813c7d-2e70f045cd75a44d-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "99d87bdbd8fe7b87b094240aaee44681",
+        "traceparent": "00-bf7d32869b0fa443983d971c4d4b79f4-8130e7370bb3c94a-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220810.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4170045a794b21ad7fe7d4d5b8a9898d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 08 Aug 2022 21:05:44 GMT",
+        "x-ms-date": "Wed, 10 Aug 2022 22:58:23 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -25,21 +25,21 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 08 Aug 2022 21:05:43 GMT",
+        "Date": "Wed, 10 Aug 2022 22:58:23 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0p3rxYgAAAABUcethWHQdSJo\u002BZN3rd\u002Bg5WVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0Dzj0YgAAAAAzmzkomVzFSYb5gzbEr44hWVZSMzExMDAwMTE2MDM3AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": {
         "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
         "title": "Not Found",
         "status": 404,
-        "traceId": "00-ffb5421e9ec6e34baa20037a73813c7d-b9758f5db6e2b5d0-00"
+        "traceId": "00-bf7d32869b0fa443983d971c4d4b79f4-3c6986f8600d504c-00"
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "9318691"
+    "RandomSeed": "206591059"
   }
 }

@@ -9,11 +9,11 @@
         "Connection": "keep-alive",
         "Content-Length": "321",
         "Content-Type": "application/json",
-        "traceparent": "00-51798201b221224db450febf48621d96-0958dbcdb58a684b-00",
-        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220808.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "49362a59e7bc66503cd21ebd609ccbc3",
+        "traceparent": "00-7e72d9de2305814387fad53a02f927d5-760c0957df6e2147-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220810.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1a44eac1cd4af0e68d7b94dc92ec276d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 08 Aug 2022 21:05:31 GMT",
+        "x-ms-date": "Wed, 10 Aug 2022 22:58:08 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -49,9 +49,9 @@
       "ResponseHeaders": {
         "api-supported-versions": "2022-07-16-preview1",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 08 Aug 2022 21:05:33 GMT",
+        "Date": "Wed, 10 Aug 2022 22:58:12 GMT",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0m3rxYgAAAADD3fgSvfV5Q5lauvujjoUZWVZSMzExMDAwMTE2MDIzAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Azure-Ref": "0ATj0YgAAAAB7ybQD\u002BOX2Q4iAD1wZg\u002BKTWVZSMzExMDAwMTE2MDM3AGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
         "X-Cache": "CONFIG_NOCACHE"
       },
       "ResponseBody": "\u0022Input with id: InvalidInputId not defined in inputs. If using a selector, check if your syntax is correct.\u0022"
@@ -59,6 +59,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "901114507"
+    "RandomSeed": "281179487"
   }
 }
