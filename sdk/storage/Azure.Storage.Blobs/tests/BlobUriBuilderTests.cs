@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "blob");
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveTrailingSlash: preservesSlash);
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameOuterSlashes: preservesSlash);
             Uri newUri = blobUriBuilder.ToUri();
 
             // Assert
@@ -167,7 +167,7 @@ namespace Azure.Storage.Blobs.Test
             var noSlashUri = new UriBuilder(containerUriString + "blob");
 
             // Act
-            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveTrailingSlash: preservesSlash)
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameOuterSlashes: preservesSlash)
             {
                 BlobName = blobName
             };
@@ -211,13 +211,13 @@ namespace Azure.Storage.Blobs.Test
                 Assert.AreEqual(blobName, req.Uri.Path.Substring(req.Uri.Path.IndexOf('/') + 1)));
 
             BlobClientOptions options = GetOptions();
+            options.PreserveBlobNameOuterSlashes = true;
             options.AddPolicy(
                 assertPolicy,
                 Core.HttpPipelinePosition.BeforeTransport);
 
             await using DisposingContainer container = await BlobsClientBuilder.GetTestContainerAsync(
                 BlobsClientBuilder.GetServiceClient_SharedKey(options));
-            BlobUriBuilder.PreserveOuterSlashesDefault = true;
 
             BlobClient blob = container.Container.GetBlobClient(blobName);
 

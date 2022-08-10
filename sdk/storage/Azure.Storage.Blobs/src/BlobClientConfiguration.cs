@@ -20,6 +20,8 @@ namespace Azure.Storage.Blobs
 
         public string EncryptionScope { get; internal set; }
 
+        public bool PreserveBlobNameOuterSlashes { get; internal set; }
+
         public BlobClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
@@ -27,13 +29,15 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
-            string encryptionScope)
+            string encryptionScope,
+            bool preserveBlobNameOuterSlashes)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
+            PreserveBlobNameOuterSlashes = preserveBlobNameOuterSlashes;
         }
 
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
@@ -44,6 +48,7 @@ namespace Azure.Storage.Blobs
                 version: originalClientConfiguration.Version,
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
                 transferValidation: originalClientConfiguration.TransferValidation,
-                encryptionScope: originalClientConfiguration.EncryptionScope);
+                encryptionScope: originalClientConfiguration.EncryptionScope,
+                preserveBlobNameOuterSlashes: originalClientConfiguration.PreserveBlobNameOuterSlashes);
     }
 }

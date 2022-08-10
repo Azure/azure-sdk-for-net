@@ -37,15 +37,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Whether to preserve trailing slashes on blob names when constructing a URI with this instance.
         /// </summary>
-        public bool PreserveOuterSlashes { get; }
-
-        /// <summary>
-        /// Default value for <see cref="PreserveOuterSlashes"/> to construct an instance
-        /// of <see cref="BlobUriBuilder"/> with when unspecified. This is also the value
-        /// used by <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar
-        /// methods. Defaults to false.
-        /// </summary>
-        public static bool PreserveOuterSlashesDefault { get; set; }
+        public bool PreserveBlobNameOuterSlashes { get; }
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.
@@ -115,7 +107,7 @@ namespace Azure.Storage.Blobs
                 ResetUri();
                 // initializing blob name via uri in constructor (when not preserving) strips the trailling slash
                 // stripping on property set ensures a consistent experience in reading this value
-                _blobName = !PreserveOuterSlashes && value != null
+                _blobName = !PreserveBlobNameOuterSlashes && value != null
                     ? StripOuterSlashes(value)
                     : value;
             }
@@ -184,7 +176,7 @@ namespace Azure.Storage.Blobs
         /// <param name="uri">
         /// The <see cref="System.Uri"/> to a storage resource.
         /// </param>
-        public BlobUriBuilder(Uri uri) : this(uri, PreserveOuterSlashesDefault)
+        public BlobUriBuilder(Uri uri) : this(uri, false)
         {
         }
 
@@ -195,13 +187,13 @@ namespace Azure.Storage.Blobs
         /// <param name="uri">
         /// The <see cref="System.Uri"/> to a storage resource.
         /// </param>
-        /// <param name="preserveTrailingSlash">
+        /// <param name="preserveBlobNameOuterSlashes">
         /// Whether to preserve a trailing slash at the end of a blob name.
         /// </param>
-        public BlobUriBuilder(Uri uri, bool preserveTrailingSlash)
+        public BlobUriBuilder(Uri uri, bool preserveBlobNameOuterSlashes)
         {
             uri = uri ?? throw new ArgumentNullException(nameof(uri));
-            PreserveOuterSlashes = preserveTrailingSlash;
+            PreserveBlobNameOuterSlashes = preserveBlobNameOuterSlashes;
 
             Scheme = uri.Scheme;
             Host = uri.Host;
@@ -254,7 +246,7 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     BlobContainerName = path.Substring(startIndex, containerEndIndex - startIndex); // The container name is the part between the slashes
-                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath(PreserveOuterSlashes);   // The blob name is after the container slash
+                    BlobName = path.Substring(containerEndIndex + 1).UnescapePath(PreserveBlobNameOuterSlashes);   // The blob name is after the container slash
                 }
             }
 
@@ -342,7 +334,7 @@ namespace Azure.Storage.Blobs
                 path.Append('/').Append(BlobContainerName);
                 if (BlobName != null && BlobName.Length > 0)
                 {
-                    path.Append('/').Append(BlobName.EscapePath(PreserveOuterSlashes));
+                    path.Append('/').Append(BlobName.EscapePath(PreserveBlobNameOuterSlashes));
                 }
             }
 
