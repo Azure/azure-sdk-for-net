@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("end_time");
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Active))
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active");
-                writer.WriteBooleanValue(Active.Value);
+                writer.WriteBooleanValue(IsActive.Value);
             }
             if (Optional.IsDefined(Details))
             {

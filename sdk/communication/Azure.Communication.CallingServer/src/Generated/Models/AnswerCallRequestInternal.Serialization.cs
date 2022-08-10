@@ -22,6 +22,11 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("callbackUri");
                 writer.WriteStringValue(CallbackUri);
             }
+            if (Optional.IsDefined(MediaStreamingConfiguration))
+            {
+                writer.WritePropertyName("mediaStreamingConfiguration");
+                writer.WriteObjectValue(MediaStreamingConfiguration);
+            }
             writer.WriteEndObject();
         }
     }

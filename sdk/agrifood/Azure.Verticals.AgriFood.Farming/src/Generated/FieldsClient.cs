@@ -74,7 +74,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetFieldAsync("<farmerId>", "<fieldId>");
@@ -151,7 +151,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetField with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetField("<farmerId>", "<fieldId>");
@@ -229,7 +229,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -242,14 +242,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmId = "<FieldFarmId>",
-        ///     status = "<FieldStatus>",
-        ///     name = "<FieldName>",
-        ///     description = "<FieldDescription>",
+        ///     farmId = "<farmId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -352,7 +352,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -365,14 +365,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmId = "<FieldFarmId>",
-        ///     status = "<FieldStatus>",
-        ///     name = "<FieldName>",
-        ///     description = "<FieldDescription>",
+        ///     farmId = "<farmId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -474,7 +474,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<fieldId>");
@@ -512,7 +512,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<farmerId>", "<fieldId>");
@@ -549,7 +549,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
@@ -629,7 +629,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
@@ -726,7 +726,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldsByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetFieldsByFarmerIdAsync("<farmerId>"))
@@ -738,7 +738,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldsByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -837,7 +837,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldsByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetFieldsByFarmerId("<farmerId>"))
@@ -849,7 +849,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldsByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -945,7 +945,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetFieldsAsync())
@@ -957,7 +957,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFieldsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1051,7 +1051,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFields and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetFields())
@@ -1063,7 +1063,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetFields with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetFields(new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1146,7 +1146,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<fieldId>");
@@ -1232,7 +1232,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<fieldId>");

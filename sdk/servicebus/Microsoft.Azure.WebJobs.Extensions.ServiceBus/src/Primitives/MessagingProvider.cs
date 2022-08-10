@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
 
-            return _messageSenderCache.GetOrAdd(entityPath, client.CreateSender(entityPath));
+            return _messageSenderCache.GetOrAdd(GenerateCacheKey(client.FullyQualifiedNamespace, entityPath), client.CreateSender(entityPath));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(options, nameof(options));
 
-            return _messageReceiverCache.GetOrAdd(entityPath, (_) => client.CreateReceiver(entityPath, options));
+            return _messageReceiverCache.GetOrAdd(GenerateCacheKey(client.FullyQualifiedNamespace, entityPath), (_) => client.CreateReceiver(entityPath, options));
         }
 
         /// <summary>
@@ -208,7 +208,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 processor = client.CreateSessionProcessor(entityPath, options);
             }
             processor.ProcessErrorAsync += Options.ExceptionReceivedHandler;
+            processor.SessionInitializingAsync += Options.SessionInitializingHandler;
+            processor.SessionClosingAsync += Options.SessionClosingHandler;
             return processor;
+        }
+
+        private static string GenerateCacheKey(string fullyQualifiedNamespace, string entityPath)
+        {
+            return $"{fullyQualifiedNamespace}/{entityPath}";
         }
     }
 }

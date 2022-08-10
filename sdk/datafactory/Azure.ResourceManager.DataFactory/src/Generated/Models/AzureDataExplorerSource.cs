@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Azure Data Explorer (Kusto) source. </summary>
-    public partial class AzureDataExplorerSource : CopySource
+    public partial class AzureDataExplorerSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureDataExplorerSource. </summary>
         /// <param name="query"> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </param>

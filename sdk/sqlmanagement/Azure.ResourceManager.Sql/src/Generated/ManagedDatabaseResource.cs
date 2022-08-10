@@ -342,6 +342,39 @@ namespace Azure.ResourceManager.Sql
             return GetManagedInstanceLongTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ManagedDatabaseAdvancedThreatProtectionResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseAdvancedThreatProtectionResources and their operations over a ManagedDatabaseAdvancedThreatProtectionResource. </returns>
+        public virtual ManagedDatabaseAdvancedThreatProtectionCollection GetManagedDatabaseAdvancedThreatProtections()
+        {
+            return GetCachedClient(Client => new ManagedDatabaseAdvancedThreatProtectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedDatabaseAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDatabaseAdvancedThreatProtectionResource>> GetManagedDatabaseAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDatabaseAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedDatabaseAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDatabaseAdvancedThreatProtectionResource> GetManagedDatabaseAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
+        }
+
         /// <summary>
         /// Gets a managed database.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}

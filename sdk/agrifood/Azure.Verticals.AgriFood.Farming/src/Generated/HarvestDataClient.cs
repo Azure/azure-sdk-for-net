@@ -74,7 +74,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetHarvestDataAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetHarvestDataAsync("<farmerId>", "<harvestDataId>");
@@ -208,7 +208,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetHarvestData with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetHarvestData("<farmerId>", "<harvestDataId>");
@@ -343,7 +343,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -356,76 +356,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     totalYield = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgYield = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalWetMass = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgWetMass = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgMoisture = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgSpeed = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     harvestProductDetails = new[] {
         ///         new {
-        ///             productName = "<HarvestProductDetailProductName>",
+        ///             productName = "<productName>",
         ///             area = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalYield = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgYield = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgMoisture = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalWetMass = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgWetMass = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<HarvestDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<HarvestDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<HarvestDataOperationBoundaryId>",
-        ///     status = "<HarvestDataStatus>",
-        ///     name = "<HarvestDataName>",
-        ///     description = "<HarvestDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -611,7 +611,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -624,76 +624,76 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     totalYield = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgYield = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalWetMass = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgWetMass = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgMoisture = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgSpeed = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     harvestProductDetails = new[] {
         ///         new {
-        ///             productName = "<HarvestProductDetailProductName>",
+        ///             productName = "<productName>",
         ///             area = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalYield = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgYield = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgMoisture = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalWetMass = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgWetMass = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<HarvestDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<HarvestDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<HarvestDataOperationBoundaryId>",
-        ///     status = "<HarvestDataStatus>",
-        ///     name = "<HarvestDataName>",
-        ///     description = "<HarvestDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -878,7 +878,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<harvestDataId>");
@@ -916,7 +916,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<farmerId>", "<harvestDataId>");
@@ -992,7 +992,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestDataByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllHarvestDataByFarmerIdAsync("<farmerId>"))
@@ -1004,7 +1004,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestDataByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllHarvestDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1182,7 +1182,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestDataByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllHarvestDataByFarmerId("<farmerId>"))
@@ -1194,7 +1194,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestDataByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllHarvestDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1369,7 +1369,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestDataAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllHarvestDataAsync())
@@ -1381,7 +1381,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestDataAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllHarvestDataAsync(1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1554,7 +1554,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestData and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllHarvestData())
@@ -1566,7 +1566,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllHarvestData with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new HarvestDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllHarvestData(1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))

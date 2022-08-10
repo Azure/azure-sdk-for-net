@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualNetworkProfile DeserializeVirtualNetworkProfile(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<string> subnet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -45,7 +45,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnet"))
@@ -54,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VirtualNetworkProfile(id, name.Value, type.Value, subnet.Value);
+            return new VirtualNetworkProfile(id, name.Value, Optional.ToNullable(type), subnet.Value);
         }
     }
 }

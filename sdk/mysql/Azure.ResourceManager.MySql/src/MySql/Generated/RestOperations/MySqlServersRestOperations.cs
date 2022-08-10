@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MySql
             }
         }
 
-        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string serverName, ServerUpgradeContent content)
+        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string serverName, MySqlServerUpgradeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string serverName, ServerUpgradeContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string serverName, MySqlServerUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Upgrade(string subscriptionId, string resourceGroupName, string serverName, ServerUpgradeContent content, CancellationToken cancellationToken = default)
+        public Response Upgrade(string subscriptionId, string resourceGroupName, string serverName, MySqlServerUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

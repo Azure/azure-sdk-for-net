@@ -23,7 +23,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload");
-                writer.WriteStringValue(Payload);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Payload);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Payload.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(PayloadUri))
             {
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static RawStreamInputDataSource DeserializeRawStreamInputDataSource(JsonElement element)
         {
             string type = default;
-            Optional<string> payload = default;
+            Optional<BinaryData> payload = default;
             Optional<Uri> payloadUri = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +61,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         if (property0.NameEquals("payload"))
                         {
-                            payload = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            payload = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("payloadUri"))

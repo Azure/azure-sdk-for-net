@@ -9,8 +9,6 @@ input-file:
  
 model-namespace: false
 generation1-convenience-client: true
-modelerfour:
-    seal-single-value-enum-by-default: true
 ```
 
 ## Customizations for Code Generator

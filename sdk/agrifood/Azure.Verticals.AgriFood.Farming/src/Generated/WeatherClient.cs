@@ -73,7 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
@@ -161,7 +161,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = client.GetDataIngestionJobDetails("<jobId>");
@@ -249,7 +249,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetDataDeleteJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>");
@@ -337,7 +337,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetDataDeleteJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// Response response = client.GetDataDeleteJobDetails("<jobId>");
@@ -435,7 +435,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetWeathersAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
@@ -455,7 +455,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -607,7 +607,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetWeathers with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
@@ -627,7 +627,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetWeathers with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -771,14 +771,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
@@ -797,21 +797,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
-        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
-        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
-        ///     name = "<WeatherDataIngestionJobName>",
-        ///     description = "<WeatherDataIngestionJobDescription>",
+        ///     extensionDataProviderAppId = "<extensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -934,14 +934,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
@@ -960,21 +960,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
-        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
-        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
-        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     boundaryId = "<boundaryId>",
+        ///     farmerId = "<farmerId>",
+        ///     extensionId = "<extensionId>",
+        ///     extensionApiName = "<extensionApiName>",
         ///     extensionApiInput = new {
         ///         key = new {},
         ///     },
-        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
-        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
-        ///     name = "<WeatherDataIngestionJobName>",
-        ///     description = "<WeatherDataIngestionJobDescription>",
+        ///     extensionDataProviderAppId = "<extensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1097,13 +1097,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataDeleteJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
         /// };
         /// 
         /// var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
@@ -1117,19 +1117,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataDeleteJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
-        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
-        ///     granularity = "<WeatherDataDeleteJobGranularity>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     name = "<WeatherDataDeleteJobName>",
-        ///     description = "<WeatherDataDeleteJobDescription>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     weatherDataType = "<weatherDataType>",
+        ///     granularity = "<granularity>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1252,13 +1252,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataDeleteJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
         /// };
         /// 
         /// var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
@@ -1272,19 +1272,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataDeleteJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new WeatherClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
-        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
-        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
-        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
-        ///     granularity = "<WeatherDataDeleteJobGranularity>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     name = "<WeatherDataDeleteJobName>",
-        ///     description = "<WeatherDataDeleteJobDescription>",
+        ///     extensionId = "<extensionId>",
+        ///     farmerId = "<farmerId>",
+        ///     boundaryId = "<boundaryId>",
+        ///     weatherDataType = "<weatherDataType>",
+        ///     granularity = "<granularity>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     endDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

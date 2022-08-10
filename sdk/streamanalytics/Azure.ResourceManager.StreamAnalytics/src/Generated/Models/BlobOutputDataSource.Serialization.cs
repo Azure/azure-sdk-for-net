@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         internal static BlobOutputDataSource DeserializeBlobOutputDataSource(JsonElement element)
         {
             string type = default;
-            Optional<IList<StorageAccount>> storageAccounts = default;
+            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<string> container = default;
             Optional<string> pathPattern = default;
             Optional<string> dateFormat = default;
             Optional<string> timeFormat = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> blobPathPrefix = default;
-            Optional<BlobWriteMode> blobWriteMode = default;
+            Optional<BlobOutputWriteMode> blobWriteMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<StorageAccount> array = new List<StorageAccount>();
+                            List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccount.DeserializeStorageAccount(item));
+                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item));
                             }
                             storageAccounts = array;
                             continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("blobPathPrefix"))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            blobWriteMode = new BlobWriteMode(property0.Value.GetString());
+                            blobWriteMode = new BlobOutputWriteMode(property0.Value.GetString());
                             continue;
                         }
                     }

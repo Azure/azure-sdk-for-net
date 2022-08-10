@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRuleAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = await client.GetResourceSetRuleAsync();
@@ -274,7 +274,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRule and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = client.GetResourceSetRule();
@@ -494,7 +494,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {};
@@ -507,51 +507,51 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {
         ///     advancedResourceSet = new {
-        ///         modifiedAt = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///         resourceSetProcessing = "<Default>",
+        ///         modifiedAt = "2022-05-10T18:57:31.2311892Z",
+        ///         resourceSetProcessing = "Default",
         ///     },
         ///     pathPatternConfig = new {
         ///         acceptedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         complexReplacers = new[] {
         ///             new {
-        ///                 createdBy = "<ComplexReplacerConfigCreatedBy>",
-        ///                 description = "<ComplexReplacerConfigDescription>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<ComplexReplacerConfigModifiedBy>",
-        ///                 name = "<ComplexReplacerConfigName>",
-        ///                 typeName = "<ComplexReplacerConfigTypeName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 typeName = "<typeName>",
         ///             }
         ///         },
-        ///         createdBy = "<PathPatternExtractorConfigCreatedBy>",
+        ///         createdBy = "<createdBy>",
         ///         enableDefaultPatterns = true,
-        ///         lastUpdatedTimestamp = 1234,
-        ///         modifiedBy = "<AzureDataCatalog>",
+        ///         lastUpdatedTimestamp = 1234L,
+        ///         modifiedBy = "<modifiedBy>",
         ///         normalizationRules = new[] {
         ///             new {
-        ///                 description = "<NormalizationRuleDescription>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 dynamicReplacement = true,
         ///                 entityTypes = new[] {
-        ///                     "<NormalizationRuleEntityTypesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 name = "<NormalizationRuleName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -563,17 +563,17 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<NormalizationRuleReplaceWith>",
-        ///                 version = 1234,
+        ///                 replaceWith = "<replaceWith>",
+        ///                 version = 123.45d,
         ///             }
         ///         },
         ///         regexReplacers = new[] {
         ///             new {
-        ///                 condition = "<RegexReplacerCondition>",
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 description = "<RegexReplacerDescription>",
+        ///                 condition = "<condition>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
         ///                 doNotReplaceRegex = new {
@@ -587,11 +587,11 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<RegexReplacerName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -603,37 +603,37 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<RegexReplacerReplaceWith>",
+        ///                 replaceWith = "<replaceWith>",
         ///             }
         ///         },
         ///         rejectedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         scopedRules = new[] {
         ///             new {
-        ///                 bindingUrl = "<ScopedRuleBindingUrl>",
+        ///                 bindingUrl = "<bindingUrl>",
         ///                 rules = new[] {
         ///                     new {
-        ///                         displayName = "<RuleDisplayName>",
+        ///                         displayName = "<displayName>",
         ///                         isResourceSet = true,
-        ///                         lastUpdatedTimestamp = 1234,
-        ///                         name = "<RuleName>",
-        ///                         qualifiedName = "<RuleQualifiedName>",
+        ///                         lastUpdatedTimestamp = 1234L,
+        ///                         name = "<name>",
+        ///                         qualifiedName = "<qualifiedName>",
         ///                     }
         ///                 },
-        ///                 storeType = "<ScopedRuleStoreType>",
+        ///                 storeType = "<storeType>",
         ///             }
         ///         },
-        ///         version = 0,
+        ///         version = 1234,
         ///     },
         /// };
         /// 
@@ -953,7 +953,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRule and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {};
@@ -966,51 +966,51 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRule with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {
         ///     advancedResourceSet = new {
-        ///         modifiedAt = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///         resourceSetProcessing = "<Default>",
+        ///         modifiedAt = "2022-05-10T18:57:31.2311892Z",
+        ///         resourceSetProcessing = "Default",
         ///     },
         ///     pathPatternConfig = new {
         ///         acceptedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         complexReplacers = new[] {
         ///             new {
-        ///                 createdBy = "<ComplexReplacerConfigCreatedBy>",
-        ///                 description = "<ComplexReplacerConfigDescription>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<ComplexReplacerConfigModifiedBy>",
-        ///                 name = "<ComplexReplacerConfigName>",
-        ///                 typeName = "<ComplexReplacerConfigTypeName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 typeName = "<typeName>",
         ///             }
         ///         },
-        ///         createdBy = "<PathPatternExtractorConfigCreatedBy>",
+        ///         createdBy = "<createdBy>",
         ///         enableDefaultPatterns = true,
-        ///         lastUpdatedTimestamp = 1234,
-        ///         modifiedBy = "<AzureDataCatalog>",
+        ///         lastUpdatedTimestamp = 1234L,
+        ///         modifiedBy = "<modifiedBy>",
         ///         normalizationRules = new[] {
         ///             new {
-        ///                 description = "<NormalizationRuleDescription>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 dynamicReplacement = true,
         ///                 entityTypes = new[] {
-        ///                     "<NormalizationRuleEntityTypesItem>"
+        ///                     "<String>"
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 name = "<NormalizationRuleName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -1022,17 +1022,17 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<NormalizationRuleReplaceWith>",
-        ///                 version = 1234,
+        ///                 replaceWith = "<replaceWith>",
+        ///                 version = 123.45d,
         ///             }
         ///         },
         ///         regexReplacers = new[] {
         ///             new {
-        ///                 condition = "<RegexReplacerCondition>",
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 description = "<RegexReplacerDescription>",
+        ///                 condition = "<condition>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
         ///                 disabled = true,
         ///                 disableRecursiveReplacerApplication = true,
         ///                 doNotReplaceRegex = new {
@@ -1046,11 +1046,11 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<RegexReplacerName>",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
         ///                 regex = new {
         ///                     maxDigits = 1234,
         ///                     maxLetters = 1234,
@@ -1062,37 +1062,37 @@ namespace Azure.Analytics.Purview.Account
         ///                     minLetters = 1234,
         ///                     minUnderscores = 1234,
         ///                     options = 1234,
-        ///                     regexStr = "<FastRegexStr>",
+        ///                     regexStr = "<regexStr>",
         ///                 },
-        ///                 replaceWith = "<RegexReplacerReplaceWith>",
+        ///                 replaceWith = "<replaceWith>",
         ///             }
         ///         },
         ///         rejectedPatterns = new[] {
         ///             new {
-        ///                 createdBy = "<AzureDataCatalog>",
-        ///                 filterType = "<Pattern>",
-        ///                 lastUpdatedTimestamp = 1234,
-        ///                 modifiedBy = "<AzureDataCatalog>",
-        ///                 name = "<FilterName>",
-        ///                 path = "<FilterPath>",
+        ///                 createdBy = "<createdBy>",
+        ///                 filterType = "Pattern",
+        ///                 lastUpdatedTimestamp = 1234L,
+        ///                 modifiedBy = "<modifiedBy>",
+        ///                 name = "<name>",
+        ///                 path = "<path>",
         ///             }
         ///         },
         ///         scopedRules = new[] {
         ///             new {
-        ///                 bindingUrl = "<ScopedRuleBindingUrl>",
+        ///                 bindingUrl = "<bindingUrl>",
         ///                 rules = new[] {
         ///                     new {
-        ///                         displayName = "<RuleDisplayName>",
+        ///                         displayName = "<displayName>",
         ///                         isResourceSet = true,
-        ///                         lastUpdatedTimestamp = 1234,
-        ///                         name = "<RuleName>",
-        ///                         qualifiedName = "<RuleQualifiedName>",
+        ///                         lastUpdatedTimestamp = 1234L,
+        ///                         name = "<name>",
+        ///                         qualifiedName = "<qualifiedName>",
         ///                     }
         ///                 },
-        ///                 storeType = "<ScopedRuleStoreType>",
+        ///                 storeType = "<storeType>",
         ///             }
         ///         },
-        ///         version = 0,
+        ///         version = 1234,
         ///     },
         /// };
         /// 
@@ -1410,7 +1410,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call DeleteResourceSetRuleAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = await client.DeleteResourceSetRuleAsync();
@@ -1441,7 +1441,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call DeleteResourceSetRule.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = client.DeleteResourceSetRule();

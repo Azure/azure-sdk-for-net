@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkStatusContractByLocation>>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<NetworkStatusContractWithLocation>>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkStatusContractByLocation> value = default;
+                        IReadOnlyList<NetworkStatusContractWithLocation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkStatusContractByLocation> array = new List<NetworkStatusContractByLocation>();
+                        List<NetworkStatusContractWithLocation> array = new List<NetworkStatusContractWithLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkStatusContractByLocation.DeserializeNetworkStatusContractByLocation(item));
+                            array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkStatusContractByLocation>> ListByService(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<NetworkStatusContractWithLocation>> ListByService(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkStatusContractByLocation> value = default;
+                        IReadOnlyList<NetworkStatusContractWithLocation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkStatusContractByLocation> array = new List<NetworkStatusContractByLocation>();
+                        List<NetworkStatusContractWithLocation> array = new List<NetworkStatusContractWithLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkStatusContractByLocation.DeserializeNetworkStatusContractByLocation(item));
+                            array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListByLocationRequest(string subscriptionId, string resourceGroupName, string serviceName, string locationName)
+        internal HttpMessage CreateListByLocationRequest(string subscriptionId, string resourceGroupName, string serviceName, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,14 +156,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="locationName"> Location in which the API Management service is deployed. This is one of the Azure Regions like West US, East US, South Central US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkStatusContract>> ListByLocationAsync(string subscriptionId, string resourceGroupName, string serviceName, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetworkStatusContract>> ListByLocationAsync(string subscriptionId, string resourceGroupName, string serviceName, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListByLocationRequest(subscriptionId, resourceGroupName, serviceName, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,14 +186,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="locationName"> Location in which the API Management service is deployed. This is one of the Azure Regions like West US, East US, South Central US. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkStatusContract> ListByLocation(string subscriptionId, string resourceGroupName, string serviceName, string locationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetworkStatusContract> ListByLocation(string subscriptionId, string resourceGroupName, string serviceName, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
             using var message = CreateListByLocationRequest(subscriptionId, resourceGroupName, serviceName, locationName);
             _pipeline.Send(message, cancellationToken);

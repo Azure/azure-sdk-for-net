@@ -10,19 +10,19 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
 {
-    [LiveOnly]
     public class ConfidentialLedgerClientLiveTests : RecordedTestBase<ConfidentialLedgerEnvironment>
     {
         private TokenCredential Credential;
-        private readonly ConfidentialLedgerClientOptions _options = new ConfidentialLedgerClientOptions();
         private ConfidentialLedgerClient Client;
         private ConfidentialLedgerCertificateClient IdentityClient;
         private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
+        private (X509Certificate2 Cert, string PEM) serviceCert;
 
         public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -31,22 +31,25 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             Credential = TestEnvironment.Credential;
             IdentityClient = new ConfidentialLedgerCertificateClient(
                     TestEnvironment.ConfidentialLedgerIdentityUrl,
-                    new());
+                   InstrumentClientOptions(new ConfidentialLedgerCertificateClientOptions()));
 
-            var serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, new(), IdentityClient);
+            serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, new(), IdentityClient);
+
+            if (Mode != RecordedTestMode.Playback)
+                await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, AllowAutoRedirect = true } });
 
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
                     credential: Credential,
                     clientCertificate: null,
-                    ledgerOptions: InstrumentClientOptions(_options),
-                    identityServiceCert: serviceCert));
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions()),
+                    identityServiceCert: serviceCert.Cert));
         }
 
         public async Task GetUser(string objId)
@@ -57,18 +60,19 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(objId));
         }
-
 #if NET6_0_OR_GREATER
+        [LiveOnly]
         [RecordedTest]
         public async Task AuthWithClientCert()
         {
+            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, Certificates = { new ProxyOptionsTransportCertificatesItem { PemValue = TestEnvironment.ClientPEM, PemKey = TestEnvironment.ClientPEMPk } } } });
             var _cert = X509Certificate2.CreateFromPem(TestEnvironment.ClientPEM, TestEnvironment.ClientPEMPk);
             _cert = new X509Certificate2(_cert.Export(X509ContentType.Pfx));
             var certClient = InstrumentClient(new ConfidentialLedgerClient(
                 TestEnvironment.ConfidentialLedgerUrl,
                 credential: null,
                 clientCertificate: _cert,
-                ledgerOptions: InstrumentClientOptions(_options)));
+                ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions())));
             var result = await certClient.GetConstitutionAsync(new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -210,6 +214,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task GetLedgerIdentity()
         {
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;

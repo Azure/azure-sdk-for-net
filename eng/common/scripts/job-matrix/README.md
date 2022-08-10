@@ -39,13 +39,13 @@ jobs:
     parameters:
       MatrixConfigs:
         - Name: base_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
+          Path: eng/common/scripts/job-matrix/samples/matrix.json
           Selection: all
           NonSparseParameters:
             - framework
           GenerateVMJobs: true
         - Name: sparse_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
+          Path: eng/common/scripts/job-matrix/samples/matrix.json
           Selection: sparse
           GenerateVMJobs: true
       JobTemplatePath: /eng/common/scripts/job-matrix/samples/matrix-job-sample.yml
@@ -102,7 +102,7 @@ Example:
   "operatingSystem": [
     "windows-2019",
     "ubuntu-18.04",
-    "macOS-10.15"
+    "macos-11"
   ],
   "framework": [
     "net461",
@@ -380,7 +380,7 @@ In the matrix job output that azure pipelines consumes, the format is a dictiona
 {
   "net461_macOS1015": {
     "framework": "net461",
-    "operatingSystem": "macOS-10.15"
+    "operatingSystem": "macos-11"
   },
   "net50_ubuntu1804": {
     "framework": "net50",
@@ -512,7 +512,7 @@ Given a matrix like below with `JavaTestVersion` marked as a non-sparse paramete
     "Agent": {
       "windows-2019": { "OSVmImage": "MMS2019", "Pool": "azsdk-pool-mms-win-2019-general" },
       "ubuntu-1804": { "OSVmImage": "MMSUbuntu18.04", "Pool": "azsdk-pool-mms-ubuntu-1804-general" },
-      "macOS-10.15": { "OSVmImage": "macOS-10.15", "Pool": "Azure Pipelines" }
+      "macos-11": { "OSVmImage": "macos-11", "Pool": "Azure Pipelines" }
     },
     "JavaTestVersion": [ "1.8", "1.11" ],
     "AZURE_TEST_HTTP_CLIENTS": "netty",

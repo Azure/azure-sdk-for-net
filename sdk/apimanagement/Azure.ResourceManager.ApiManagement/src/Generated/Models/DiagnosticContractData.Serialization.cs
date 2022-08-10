@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("backend");
                 writer.WriteObjectValue(Backend);
             }
-            if (Optional.IsDefined(LogClientIP))
+            if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp");
-                writer.WriteBooleanValue(LogClientIP.Value);
+                writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<PipelineDiagnosticSettings> backend = default;
             Optional<bool> logClientIP = default;
             Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
-            Optional<Verbosity> verbosity = default;
+            Optional<TraceVerbosityLevel> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            verbosity = new Verbosity(property0.Value.GetString());
+                            verbosity = new TraceVerbosityLevel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("operationNameFormat"))

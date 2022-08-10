@@ -74,7 +74,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetProjectDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectDetailsAsync("<projectName>");
@@ -140,7 +140,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetProjectDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjectDetails("<projectName>");
@@ -207,11 +207,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     language = "<Language>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
@@ -222,15 +222,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     description = "<CreateProjectOptionsDescription>",
-        ///     language = "<Language>",
+        ///     description = "<description>",
+        ///     language = "<language>",
         ///     multilingualResource = true,
         ///     settings = new {
-        ///         defaultAnswer = "<ProjectSettingsDefaultAnswer>",
+        ///         defaultAnswer = "<defaultAnswer>",
         ///     },
         /// };
         /// 
@@ -312,11 +312,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     language = "<Language>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
@@ -327,15 +327,15 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     description = "<CreateProjectOptionsDescription>",
-        ///     language = "<Language>",
+        ///     description = "<description>",
+        ///     language = "<language>",
         ///     multilingualResource = true,
         ///     settings = new {
-        ///         defaultAnswer = "<ProjectSettingsDefaultAnswer>",
+        ///         defaultAnswer = "<defaultAnswer>",
         ///     },
         /// };
         /// 
@@ -416,7 +416,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeleteStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeleteStatusAsync("<jobId>");
@@ -427,20 +427,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -450,27 +436,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -505,7 +475,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeleteStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeleteStatus("<jobId>");
@@ -516,20 +486,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -539,27 +495,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -595,32 +535,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetExportStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -630,27 +555,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -686,32 +595,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetExportStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetExportStatus("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -721,27 +615,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -777,7 +655,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetImportStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
@@ -788,20 +666,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -811,27 +675,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -868,7 +716,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetImportStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetImportStatus("<projectName>", "<jobId>");
@@ -879,20 +727,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -902,27 +736,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -960,7 +778,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeployStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
@@ -971,20 +789,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -994,27 +798,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1053,7 +841,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeployStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
@@ -1064,20 +852,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1087,27 +861,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1145,7 +903,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateSynonymsAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1156,18 +914,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateSynonymsAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     value = new[] {
         ///         new {
         ///             alterations = new[] {
-        ///                 "<WordAlterationsItem>"
+        ///                 "<String>"
         ///             },
         ///         }
         ///     },
-        ///     nextLink = "<SynonymAssetsNextLink>",
+        ///     nextLink = "<nextLink>",
         /// };
         /// 
         /// Response response = await client.UpdateSynonymsAsync("<projectName>", RequestContent.Create(data));
@@ -1222,7 +980,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateSynonyms with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1233,18 +991,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateSynonyms with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     value = new[] {
         ///         new {
         ///             alterations = new[] {
-        ///                 "<WordAlterationsItem>"
+        ///                 "<String>"
         ///             },
         ///         }
         ///     },
-        ///     nextLink = "<SynonymAssetsNextLink>",
+        ///     nextLink = "<nextLink>",
         /// };
         /// 
         /// Response response = client.UpdateSynonyms("<projectName>", RequestContent.Create(data));
@@ -1299,7 +1057,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetUpdateSourcesStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
@@ -1310,20 +1068,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1333,27 +1077,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1390,7 +1118,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetUpdateSourcesStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
@@ -1401,20 +1129,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1424,27 +1138,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1481,7 +1179,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetUpdateQnasStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
@@ -1492,20 +1190,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1515,27 +1199,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1572,7 +1240,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetUpdateQnasStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
@@ -1583,20 +1251,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1606,27 +1260,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1663,7 +1301,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call AddFeedbackAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1674,14 +1312,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call AddFeedbackAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     records = new[] {
         ///         new {
-        ///             userId = "<FeedbackRecordUserId>",
-        ///             userQuestion = "<FeedbackRecordUserQuestion>",
+        ///             userId = "<userId>",
+        ///             userQuestion = "<userQuestion>",
         ///             qnaId = 1234,
         ///         }
         ///     },
@@ -1740,7 +1378,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call AddFeedback with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1751,14 +1389,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call AddFeedback with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     records = new[] {
         ///         new {
-        ///             userId = "<FeedbackRecordUserId>",
-        ///             userQuestion = "<FeedbackRecordUserQuestion>",
+        ///             userId = "<userId>",
+        ///             userQuestion = "<userQuestion>",
         ///             qnaId = 1234,
         ///         }
         ///     },
@@ -1816,7 +1454,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetProjectsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetProjectsAsync())
@@ -1828,7 +1466,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetProjectsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetProjectsAsync(1234, 1234, 1234))
@@ -1899,7 +1537,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetProjects and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetProjects())
@@ -1911,7 +1549,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetProjects with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetProjects(1234, 1234, 1234))
@@ -1985,7 +1623,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
@@ -1997,7 +1635,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeploymentsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234))
@@ -2059,7 +1697,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeployments with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDeployments("<projectName>"))
@@ -2071,7 +1709,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetDeployments with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDeployments("<projectName>", 1234, 1234, 1234))
@@ -2133,7 +1771,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetSynonymsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSynonymsAsync("<projectName>"))
@@ -2145,7 +1783,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetSynonymsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234))
@@ -2205,7 +1843,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetSynonyms with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSynonyms("<projectName>"))
@@ -2217,7 +1855,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetSynonyms with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSynonyms("<projectName>", 1234, 1234, 1234))
@@ -2277,7 +1915,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetSourcesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSourcesAsync("<projectName>"))
@@ -2285,13 +1923,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
         ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetSourcesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSourcesAsync("<projectName>", 1234, 1234, 1234))
@@ -2302,7 +1939,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
         ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
         ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2318,7 +1954,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   sourceUri: string, # Required. URI location for the file or url.
         ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
         ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -2361,7 +1996,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetSources with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSources("<projectName>"))
@@ -2369,13 +2004,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
         ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
         ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
-        ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
         /// This sample shows how to call GetSources with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSources("<projectName>", 1234, 1234, 1234))
@@ -2386,7 +2020,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
         ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
         ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2402,7 +2035,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///   sourceUri: string, # Required. URI location for the file or url.
         ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
         ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -2446,7 +2078,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetQnasAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetQnasAsync("<projectName>"))
@@ -2458,7 +2090,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetQnasAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234))
@@ -2486,7 +2118,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
         ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
         ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2533,7 +2164,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     ], # Optional. List of prompts associated with the answer.
         ///   }, # Optional. Context of a QnA.
         ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -2577,7 +2207,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetQnas with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetQnas("<projectName>"))
@@ -2589,7 +2219,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call GetQnas with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234))
@@ -2617,7 +2247,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
         ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
         ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
-        ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2664,7 +2293,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     ], # Optional. List of prompts associated with the answer.
         ///   }, # Optional. Context of a QnA.
         ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         /// }
         /// </code>
         /// 
@@ -2705,7 +2333,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call DeleteProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
@@ -2717,20 +2345,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2740,27 +2354,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -2796,7 +2394,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call DeleteProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
@@ -2808,20 +2406,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2831,27 +2415,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -2889,50 +2457,33 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call ExportAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ExportAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2942,27 +2493,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -2999,50 +2534,33 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call Export with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = client.Export(WaitUntil.Completed, "<projectName>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Export with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3052,27 +2570,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -3110,7 +2612,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call ImportAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -3123,39 +2625,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ImportAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     metadata = new {
-        ///         description = "<CreateProjectOptionsDescription>",
-        ///         language = "<Language>",
+        ///         description = "<description>",
+        ///         language = "<language>",
         ///         multilingualResource = true,
         ///         settings = new {
-        ///             defaultAnswer = "<ProjectSettingsDefaultAnswer>",
+        ///             defaultAnswer = "<defaultAnswer>",
         ///         },
         ///     },
         ///     assets = new {
         ///         synonyms = new[] {
         ///             new {
         ///                 alterations = new[] {
-        ///                     "<WordAlterationsItem>"
+        ///                     "<String>"
         ///                 },
         ///             }
         ///         },
         ///         qnas = new[] {
         ///             new {
-        ///                 sourceDisplayName = "<SourceDisplayNameParameterSourceDisplayName>",
         ///                 id = 1234,
-        ///                 answer = "<QnaRecordAnswer>",
-        ///                 source = "<QnaRecordSource>",
+        ///                 answer = "<answer>",
+        ///                 source = "<source>",
         ///                 questions = new[] {
-        ///                     "<QnaRecordQuestionsItem>"
+        ///                     "<String>"
         ///                 },
         ///                 metadata = new {
         ///                     key = "<String>",
@@ -3168,49 +2668,47 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                             qnaId = 1234,
         ///                             qna = new {
         ///                                 id = 1234,
-        ///                                 answer = "<QnaRecordAnswer>",
-        ///                                 source = "<QnaRecordSource>",
+        ///                                 answer = "<answer>",
+        ///                                 source = "<source>",
         ///                                 questions = new[] {
-        ///                                     "<QnaRecordQuestionsItem>"
+        ///                                     "<String>"
         ///                                 },
         ///                                 metadata = new {
         ///                                     key = "<String>",
         ///                                 },
         ///                                 activeLearningSuggestions = new[] {
         ///                                     new {
-        ///                                         clusterHead = "<SuggestedQuestionsClusterHead>",
+        ///                                         clusterHead = "<clusterHead>",
         ///                                         suggestedQuestions = new[] {
         ///                                             new {
-        ///                                                 question = "<SuggestedQuestion>",
+        ///                                                 question = "<question>",
         ///                                                 userSuggestedCount = 1234,
         ///                                                 autoSuggestedCount = 1234,
         ///                                             }
         ///                                         },
         ///                                     }
         ///                                 },
-        ///                                 lastUpdatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         ///                             },
-        ///                             displayText = "<QnaPromptDisplayText>",
+        ///                             displayText = "<displayText>",
         ///                         }
         ///                     },
         ///                 },
         ///                 activeLearningSuggestions = new[] {
         ///                     new {
-        ///                         clusterHead = "<SuggestedQuestionsClusterHead>",
+        ///                         clusterHead = "<clusterHead>",
         ///                         suggestedQuestions = new[] {
         ///                             new {
-        ///                                 question = "<SuggestedQuestion>",
+        ///                                 question = "<question>",
         ///                                 userSuggestedCount = 1234,
         ///                                 autoSuggestedCount = 1234,
         ///                             }
         ///                         },
         ///                     }
         ///                 },
-        ///                 lastUpdatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         ///             }
         ///         },
         ///     },
-        ///     fileUri = "<ImportJobOptionsFileUri>",
+        ///     fileUri = "<fileUri>",
         /// };
         /// 
         /// var operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
@@ -3222,20 +2720,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3261,7 +2745,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     ], # Optional. Collection of synonyms.
         ///     qnas: [
         ///       {
-        ///         sourceDisplayName: string, # Optional. Friendly name of the Source.
         ///         id: number, # Optional. Unique ID for the QnA.
         ///         answer: string, # Optional. Answer text.
         ///         source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
@@ -3298,7 +2781,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///           ], # Optional. List of prompts associated with the answer.
         ///         }, # Optional. Context of a QnA.
         ///         activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///         lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         ///       }
         ///     ], # Optional. List of QnA records to import.
         ///   }, # Optional. All assets for this project.
@@ -3310,27 +2792,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3369,7 +2835,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call Import with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -3382,39 +2848,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Import with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     metadata = new {
-        ///         description = "<CreateProjectOptionsDescription>",
-        ///         language = "<Language>",
+        ///         description = "<description>",
+        ///         language = "<language>",
         ///         multilingualResource = true,
         ///         settings = new {
-        ///             defaultAnswer = "<ProjectSettingsDefaultAnswer>",
+        ///             defaultAnswer = "<defaultAnswer>",
         ///         },
         ///     },
         ///     assets = new {
         ///         synonyms = new[] {
         ///             new {
         ///                 alterations = new[] {
-        ///                     "<WordAlterationsItem>"
+        ///                     "<String>"
         ///                 },
         ///             }
         ///         },
         ///         qnas = new[] {
         ///             new {
-        ///                 sourceDisplayName = "<SourceDisplayNameParameterSourceDisplayName>",
         ///                 id = 1234,
-        ///                 answer = "<QnaRecordAnswer>",
-        ///                 source = "<QnaRecordSource>",
+        ///                 answer = "<answer>",
+        ///                 source = "<source>",
         ///                 questions = new[] {
-        ///                     "<QnaRecordQuestionsItem>"
+        ///                     "<String>"
         ///                 },
         ///                 metadata = new {
         ///                     key = "<String>",
@@ -3427,49 +2891,47 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                             qnaId = 1234,
         ///                             qna = new {
         ///                                 id = 1234,
-        ///                                 answer = "<QnaRecordAnswer>",
-        ///                                 source = "<QnaRecordSource>",
+        ///                                 answer = "<answer>",
+        ///                                 source = "<source>",
         ///                                 questions = new[] {
-        ///                                     "<QnaRecordQuestionsItem>"
+        ///                                     "<String>"
         ///                                 },
         ///                                 metadata = new {
         ///                                     key = "<String>",
         ///                                 },
         ///                                 activeLearningSuggestions = new[] {
         ///                                     new {
-        ///                                         clusterHead = "<SuggestedQuestionsClusterHead>",
+        ///                                         clusterHead = "<clusterHead>",
         ///                                         suggestedQuestions = new[] {
         ///                                             new {
-        ///                                                 question = "<SuggestedQuestion>",
+        ///                                                 question = "<question>",
         ///                                                 userSuggestedCount = 1234,
         ///                                                 autoSuggestedCount = 1234,
         ///                                             }
         ///                                         },
         ///                                     }
         ///                                 },
-        ///                                 lastUpdatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         ///                             },
-        ///                             displayText = "<QnaPromptDisplayText>",
+        ///                             displayText = "<displayText>",
         ///                         }
         ///                     },
         ///                 },
         ///                 activeLearningSuggestions = new[] {
         ///                     new {
-        ///                         clusterHead = "<SuggestedQuestionsClusterHead>",
+        ///                         clusterHead = "<clusterHead>",
         ///                         suggestedQuestions = new[] {
         ///                             new {
-        ///                                 question = "<SuggestedQuestion>",
+        ///                                 question = "<question>",
         ///                                 userSuggestedCount = 1234,
         ///                                 autoSuggestedCount = 1234,
         ///                             }
         ///                         },
         ///                     }
         ///                 },
-        ///                 lastUpdatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         ///             }
         ///         },
         ///     },
-        ///     fileUri = "<ImportJobOptionsFileUri>",
+        ///     fileUri = "<fileUri>",
         /// };
         /// 
         /// var operation = client.Import(WaitUntil.Completed, "<projectName>", RequestContent.Create(data), "<format>", "<assetKind>");
@@ -3481,20 +2943,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3520,7 +2968,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     ], # Optional. Collection of synonyms.
         ///     qnas: [
         ///       {
-        ///         sourceDisplayName: string, # Optional. Friendly name of the Source.
         ///         id: number, # Optional. Unique ID for the QnA.
         ///         answer: string, # Optional. Answer text.
         ///         source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
@@ -3557,7 +3004,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///           ], # Optional. List of prompts associated with the answer.
         ///         }, # Optional. Context of a QnA.
         ///         activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
-        ///         lastUpdatedDateTime: string (ISO 8601 Format), # Optional. Date-time when the QnA was last updated.
         ///       }
         ///     ], # Optional. List of QnA records to import.
         ///   }, # Optional. All assets for this project.
@@ -3569,27 +3015,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3626,7 +3056,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call DeployProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
@@ -3638,20 +3068,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3661,27 +3077,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3719,7 +3119,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call DeployProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
@@ -3731,20 +3131,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3754,27 +3140,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3812,19 +3182,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateSourcesAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
-        ///         op = "<add>",
+        ///         op = "add",
         ///         value = new {
-        ///             displayName = "<QnaSourceMetadataDisplayName>",
-        ///             source = "<QnaSourceMetadataSource>",
-        ///             sourceUri = "<QnaSourceMetadataSourceUri>",
-        ///             sourceKind = "<file>",
-        ///             contentStructureKind = "<unstructured>",
-        ///             refresh = true,
+        ///             displayName = "<displayName>",
+        ///             source = "<source>",
+        ///             sourceUri = "<sourceUri>",
+        ///             sourceKind = "file",
+        ///             contentStructureKind = "unstructured",
         ///         },
         ///     }
         /// };
@@ -3838,20 +3207,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3859,7 +3214,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>UpdateSourcesOptions</c>:
+        /// Schema for <c>UpdateSourceRecord</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -3868,7 +3223,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     sourceUri: string, # Required. URI location for the file or url.
         ///     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
         ///     contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///     refresh: boolean, # Optional. Boolean flag used to refresh data from the Source.
         ///   }, # Required. Update source record.
         /// }
         /// </code>
@@ -3877,27 +3231,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3935,19 +3273,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateSources with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
-        ///         op = "<add>",
+        ///         op = "add",
         ///         value = new {
-        ///             displayName = "<QnaSourceMetadataDisplayName>",
-        ///             source = "<QnaSourceMetadataSource>",
-        ///             sourceUri = "<QnaSourceMetadataSourceUri>",
-        ///             sourceKind = "<file>",
-        ///             contentStructureKind = "<unstructured>",
-        ///             refresh = true,
+        ///             displayName = "<displayName>",
+        ///             source = "<source>",
+        ///             sourceUri = "<sourceUri>",
+        ///             sourceKind = "file",
+        ///             contentStructureKind = "unstructured",
         ///         },
         ///     }
         /// };
@@ -3961,20 +3298,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3982,7 +3305,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>UpdateSourcesOptions</c>:
+        /// Schema for <c>UpdateSourceRecord</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -3991,7 +3314,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///     sourceUri: string, # Required. URI location for the file or url.
         ///     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
         ///     contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
-        ///     refresh: boolean, # Optional. Boolean flag used to refresh data from the Source.
         ///   }, # Required. Update source record.
         /// }
         /// </code>
@@ -4000,27 +3322,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -4058,18 +3364,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateQnasAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
-        ///         op = "<add>",
+        ///         op = "add",
         ///         value = new {
         ///             id = 1234,
-        ///             answer = "<QnaRecordAnswer>",
-        ///             source = "<QnaRecordSource>",
+        ///             answer = "<answer>",
+        ///             source = "<source>",
         ///             questions = new[] {
-        ///                 "<QnaRecordQuestionsItem>"
+        ///                 "<String>"
         ///             },
         ///             metadata = new {
         ///                 key = "<String>",
@@ -4080,23 +3386,22 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                     new {
         ///                         displayOrder = 1234,
         ///                         qnaId = 1234,
-        ///                         displayText = "<QnaPromptDisplayText>",
+        ///                         displayText = "<displayText>",
         ///                     }
         ///                 },
         ///             },
         ///             activeLearningSuggestions = new[] {
         ///                 new {
-        ///                     clusterHead = "<SuggestedQuestionsClusterHead>",
+        ///                     clusterHead = "<clusterHead>",
         ///                     suggestedQuestions = new[] {
         ///                         new {
-        ///                             question = "<SuggestedQuestion>",
+        ///                             question = "<question>",
         ///                             userSuggestedCount = 1234,
         ///                             autoSuggestedCount = 1234,
         ///                         }
         ///                     },
         ///                 }
         ///             },
-        ///             lastUpdatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         ///         },
         ///     }
         /// };
@@ -4110,20 +3415,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4131,7 +3422,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>UpdateQnaOptions</c>:
+        /// Schema for <c>UpdateQnaRecord</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -4171,27 +3462,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>
@@ -4229,18 +3504,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// This sample shows how to call UpdateQnas with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
-        ///         op = "<add>",
+        ///         op = "add",
         ///         value = new {
         ///             id = 1234,
-        ///             answer = "<QnaRecordAnswer>",
-        ///             source = "<QnaRecordSource>",
+        ///             answer = "<answer>",
+        ///             source = "<source>",
         ///             questions = new[] {
-        ///                 "<QnaRecordQuestionsItem>"
+        ///                 "<String>"
         ///             },
         ///             metadata = new {
         ///                 key = "<String>",
@@ -4251,23 +3526,22 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         ///                     new {
         ///                         displayOrder = 1234,
         ///                         qnaId = 1234,
-        ///                         displayText = "<QnaPromptDisplayText>",
+        ///                         displayText = "<displayText>",
         ///                     }
         ///                 },
         ///             },
         ///             activeLearningSuggestions = new[] {
         ///                 new {
-        ///                     clusterHead = "<SuggestedQuestionsClusterHead>",
+        ///                     clusterHead = "<clusterHead>",
         ///                     suggestedQuestions = new[] {
         ///                         new {
-        ///                             question = "<SuggestedQuestion>",
+        ///                             question = "<question>",
         ///                             userSuggestedCount = 1234,
         ///                             autoSuggestedCount = 1234,
         ///                         }
         ///                     },
         ///                 }
         ///             },
-        ///             lastUpdatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
         ///         },
         ///     }
         /// };
@@ -4281,20 +3555,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4302,7 +3562,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>UpdateQnaOptions</c>:
+        /// Schema for <c>UpdateQnaRecord</c>:
         /// <code>{
         ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. Update operation type for assets.
         ///   value: {
@@ -4342,27 +3602,11 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
         /// <code>{
-        ///   resultUrl: string, # Required. URL to download the result of the Export Job.
         ///   createdDateTime: string (ISO 8601 Format), # Required.
         ///   expirationDateTime: string (ISO 8601 Format), # Optional.
         ///   jobId: string, # Required.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
         ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
-        ///   errors: [
-        ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. One of a server-defined set of error codes.
-        ///       message: string, # Required. A human-readable representation of the error.
-        ///       target: string, # Optional. The target of the error.
-        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
-        ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. One of a server-defined set of error codes.
-        ///         message: string, # Required. Error message.
-        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
-        ///         target: string, # Optional. Error target.
-        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
-        ///       }, # Optional. An object containing more specific information than the current object about the error.
-        ///     }
-        ///   ], # Optional.
         /// }
         /// </code>
         /// </details>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> KeyVault configuration when using an encryption KeySource of Microsoft.KeyVault. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
         ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
         ///  The KeyVault has soft-delete and purge protection enabled
         /// </param>
-        internal KeyVaultProperties(string keyIdentifier)
+        internal KeyVaultProperties(Uri keyIdentifier)
         {
             KeyIdentifier = keyIdentifier;
         }
@@ -35,6 +37,6 @@ namespace Azure.ResourceManager.Batch.Models
         ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
         ///  The KeyVault has soft-delete and purge protection enabled
         /// </summary>
-        public string KeyIdentifier { get; set; }
+        public Uri KeyIdentifier { get; set; }
     }
 }

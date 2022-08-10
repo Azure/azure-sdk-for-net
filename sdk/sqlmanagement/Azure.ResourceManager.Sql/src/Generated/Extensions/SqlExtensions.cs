@@ -1569,20 +1569,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region DataWarehouseUserActivitiesResource
+        #region DataWarehouseUserActivityResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataWarehouseUserActivitiesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataWarehouseUserActivitiesResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivitiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataWarehouseUserActivitiesResource" /> object. </returns>
-        public static DataWarehouseUserActivitiesResource GetDataWarehouseUserActivitiesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataWarehouseUserActivityResource" /> object. </returns>
+        public static DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataWarehouseUserActivitiesResource.ValidateResourceId(id);
-                return new DataWarehouseUserActivitiesResource(client, id);
+                DataWarehouseUserActivityResource.ValidateResourceId(id);
+                return new DataWarehouseUserActivityResource(client, id);
             }
             );
         }
@@ -1911,20 +1911,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region MaintenanceWindowOptionsResource
+        #region MaintenanceWindowOptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceWindowOptionsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceWindowOptionsResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptionsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MaintenanceWindowOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptionsResource" /> object. </returns>
-        public static MaintenanceWindowOptionsResource GetMaintenanceWindowOptionsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
+        public static MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindowOptionsResource.ValidateResourceId(id);
-                return new MaintenanceWindowOptionsResource(client, id);
+                MaintenanceWindowOptionResource.ValidateResourceId(id);
+                return new MaintenanceWindowOptionResource(client, id);
             }
             );
         }
@@ -2785,25 +2785,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region SqlDatabaseResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
-        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseResource.ValidateResourceId(id);
-                return new SqlDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region SubscriptionLongTermRetentionBackupResource
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackupResource" /> along with the instance operations that can be performed on it but with no data.
@@ -3051,25 +3032,6 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region SqlServerDatabaseReplicationLinkResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource" /> object. </returns>
-        public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
-                return new SqlServerDatabaseReplicationLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ManagedDatabaseSensitivityLabelResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedDatabaseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
@@ -3179,6 +3141,158 @@ namespace Azure.ResourceManager.Sql
             {
                 ExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
                 return new ExtendedServerBlobAuditingPolicyResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DatabaseAdvancedThreatProtectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseAdvancedThreatProtectionResource" /> object. </returns>
+        public static DatabaseAdvancedThreatProtectionResource GetDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DatabaseAdvancedThreatProtectionResource.ValidateResourceId(id);
+                return new DatabaseAdvancedThreatProtectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ServerAdvancedThreatProtectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ServerAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerAdvancedThreatProtectionResource" /> object. </returns>
+        public static ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ServerAdvancedThreatProtectionResource.ValidateResourceId(id);
+                return new ServerAdvancedThreatProtectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedServerDnsAliasResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServerDnsAliasResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServerDnsAliasResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServerDnsAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServerDnsAliasResource" /> object. </returns>
+        public static ManagedServerDnsAliasResource GetManagedServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedServerDnsAliasResource.ValidateResourceId(id);
+                return new ManagedServerDnsAliasResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlDatabaseResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
+        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlDatabaseResource.ValidateResourceId(id);
+                return new SqlDatabaseResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedInstanceDtcResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDtcResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDtcResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDtcResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedInstanceDtcResource" /> object. </returns>
+        public static ManagedInstanceDtcResource GetManagedInstanceDtcResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedInstanceDtcResource.ValidateResourceId(id);
+                return new ManagedInstanceDtcResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedDatabaseAdvancedThreatProtectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> object. </returns>
+        public static ManagedDatabaseAdvancedThreatProtectionResource GetManagedDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedDatabaseAdvancedThreatProtectionResource.ValidateResourceId(id);
+                return new ManagedDatabaseAdvancedThreatProtectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ManagedInstanceAdvancedThreatProtectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceAdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> object. </returns>
+        public static ManagedInstanceAdvancedThreatProtectionResource GetManagedInstanceAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ManagedInstanceAdvancedThreatProtectionResource.ValidateResourceId(id);
+                return new ManagedInstanceAdvancedThreatProtectionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SqlServerDatabaseReplicationLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource" /> object. </returns>
+        public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
+                return new SqlServerDatabaseReplicationLinkResource(client, id);
             }
             );
         }

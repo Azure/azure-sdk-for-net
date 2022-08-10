@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SearchAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -83,28 +83,28 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SearchRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     offset = 1234,
         ///     limit = 1234,
         ///     filter = new {},
         ///     facets = new[] {
         ///         new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         }
         ///     },
         ///     taxonomySetting = new {
         ///         assetTypes = new[] {
-        ///             "<SearchRequestTaxonomySettingAssetTypesItem>"
+        ///             "<String>"
         ///         },
         ///         facet = new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         },
         ///     },
@@ -229,7 +229,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Search and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -242,28 +242,28 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Search with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SearchRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     offset = 1234,
         ///     limit = 1234,
         ///     filter = new {},
         ///     facets = new[] {
         ///         new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         }
         ///     },
         ///     taxonomySetting = new {
         ///         assetTypes = new[] {
-        ///             "<SearchRequestTaxonomySettingAssetTypesItem>"
+        ///             "<String>"
         ///         },
         ///         facet = new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         },
         ///     },
@@ -388,7 +388,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SuggestAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -401,11 +401,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SuggestAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SuggestRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };
@@ -482,7 +482,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Suggest and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -495,11 +495,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Suggest with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SuggestRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };
@@ -576,7 +576,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call BrowseAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -589,12 +589,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call BrowseAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     entityType = "<BrowseRequestEntityType>",
-        ///     path = "<BrowseRequestPath>",
+        ///     entityType = "<entityType>",
+        ///     path = "<path>",
         ///     limit = 1234,
         ///     offset = 1234,
         /// };
@@ -667,7 +667,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Browse and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -680,12 +680,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Browse with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     entityType = "<BrowseRequestEntityType>",
-        ///     path = "<BrowseRequestPath>",
+        ///     entityType = "<entityType>",
+        ///     path = "<path>",
         ///     limit = 1234,
         ///     offset = 1234,
         /// };
@@ -758,7 +758,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AutoCompleteAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -771,11 +771,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AutoCompleteAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<AutoCompleteRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };
@@ -837,7 +837,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AutoComplete and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -850,11 +850,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AutoComplete with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<AutoCompleteRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };

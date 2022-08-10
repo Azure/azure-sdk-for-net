@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="token"> OAuth access token. </param>
         /// <param name="tokenSecret"> OAuth access token secret. </param>
         /// <param name="refreshToken"> OAuth refresh token. </param>
-        /// <param name="expirationOn"> OAuth token expiration. </param>
+        /// <param name="expireOn"> OAuth token expiration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expirationOn, string kind) : base(id, name, resourceType, systemData)
+        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string token, string tokenSecret, string refreshToken, DateTimeOffset? expireOn, string kind) : base(id, name, resourceType, systemData)
         {
             Token = token;
             TokenSecret = tokenSecret;
             RefreshToken = refreshToken;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             Kind = kind;
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> OAuth refresh token. </summary>
         public string RefreshToken { get; set; }
         /// <summary> OAuth token expiration. </summary>
-        public DateTimeOffset? ExpirationOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

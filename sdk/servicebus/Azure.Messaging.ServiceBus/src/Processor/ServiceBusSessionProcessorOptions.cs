@@ -32,6 +32,9 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
+        /// <inheritdoc cref="ServiceBusProcessorOptions.Identifier"/>
+        public string Identifier { get; set; }
+
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
         /// handler has completed processing. If the message handler triggers an exception,
@@ -184,6 +187,7 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
+                Identifier = Identifier,
             };
     }
 }

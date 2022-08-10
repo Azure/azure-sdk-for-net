@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
-        internal ContainerServiceNetworkProfile(NetworkPlugin? networkPlugin, NetworkPolicy? networkPolicy, NetworkMode? networkMode, string podCidr, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, OutboundType? outboundType, LoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, string podCidr, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies)
         {
             NetworkPlugin = networkPlugin;
             NetworkPolicy = networkPolicy;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Network plugin used for building the Kubernetes network. </summary>
-        public NetworkPlugin? NetworkPlugin { get; set; }
+        public ContainerServiceNetworkPlugin? NetworkPlugin { get; set; }
         /// <summary> Network policy used for building the Kubernetes network. </summary>
-        public NetworkPolicy? NetworkPolicy { get; set; }
+        public ContainerServiceNetworkPolicy? NetworkPolicy { get; set; }
         /// <summary> This cannot be specified if networkPlugin is anything other than &apos;azure&apos;. </summary>
-        public NetworkMode? NetworkMode { get; set; }
+        public ContainerServiceNetworkMode? NetworkMode { get; set; }
         /// <summary> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </summary>
         public string PodCidr { get; set; }
         /// <summary> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </summary>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> A CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the Kubernetes service address range. </summary>
         public string DockerBridgeCidr { get; set; }
         /// <summary> This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype). </summary>
-        public OutboundType? OutboundType { get; set; }
+        public ContainerServiceOutboundType? OutboundType { get; set; }
         /// <summary> The default is &apos;standard&apos;. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </summary>
-        public LoadBalancerSku? LoadBalancerSku { get; set; }
+        public ContainerServiceLoadBalancerSku? LoadBalancerSku { get; set; }
         /// <summary> Profile of the cluster load balancer. </summary>
         public ManagedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
         /// <summary> Profile of the cluster NAT gateway. </summary>

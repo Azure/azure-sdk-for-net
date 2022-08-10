@@ -51,13 +51,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     projectKind = "Conversation",
+        ///     projectName = "<projectName>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
@@ -72,18 +72,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
+        ///     projectKind = "Conversation",
         ///     settings = new {
-        ///         confidenceThreshold = 1234,
+        ///         confidenceThreshold = 123.45f,
         ///     },
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///     projectName = "<projectName>",
         ///     multilingual = true,
-        ///     description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     description = "<description>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
@@ -103,6 +103,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/create-project
         /// 
         /// Request Body:
         /// 
@@ -170,13 +172,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     projectKind = "Conversation",
+        ///     projectName = "<projectName>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
@@ -191,18 +193,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
+        ///     projectKind = "Conversation",
         ///     settings = new {
-        ///         confidenceThreshold = 1234,
+        ///         confidenceThreshold = 123.45f,
         ///     },
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///     projectName = "<projectName>",
         ///     multilingual = true,
-        ///     description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     description = "<description>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
@@ -222,6 +224,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/create-project
         /// 
         /// Request Body:
         /// 
@@ -288,7 +292,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectAsync("<projectName>");
@@ -308,6 +312,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project
         /// 
         /// Response Body:
         /// 
@@ -358,7 +364,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetProject("<projectName>");
@@ -378,6 +384,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project
         /// 
         /// Response Body:
         /// 
@@ -429,7 +437,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
@@ -445,6 +453,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment
         /// 
         /// Response Body:
         /// 
@@ -454,7 +464,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -491,7 +501,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployment("<projectName>", "<deploymentName>");
@@ -507,6 +517,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment
         /// 
         /// Response Body:
         /// 
@@ -516,7 +528,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -554,7 +566,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
@@ -585,6 +597,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-status
         /// 
         /// Response Body:
         /// 
@@ -653,7 +667,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeploymentJobStatus("<projectName>", "<deploymentName>", "<jobId>");
@@ -684,6 +698,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-deployment-status
         /// 
         /// Response Body:
         /// 
@@ -751,7 +767,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSwapDeploymentsJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>");
@@ -782,6 +798,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-swap-deployments-status
         /// 
         /// Response Body:
         /// 
@@ -848,7 +866,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSwapDeploymentsJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetSwapDeploymentsJobStatus("<projectName>", "<jobId>");
@@ -879,6 +897,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-swap-deployments-status
         /// 
         /// Response Body:
         /// 
@@ -945,12 +965,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetExportProjectJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -972,16 +993,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-export-status
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1008,7 +1031,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -1044,12 +1066,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetExportProjectJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1071,16 +1094,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-export-status
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1107,7 +1132,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -1143,7 +1167,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetImportProjectJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>");
@@ -1174,6 +1198,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-import-status
         /// 
         /// Response Body:
         /// 
@@ -1240,7 +1266,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetImportProjectJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetImportProjectJobStatus("<projectName>", "<jobId>");
@@ -1271,6 +1297,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-import-status
         /// 
         /// Response Body:
         /// 
@@ -1337,7 +1365,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModelAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
@@ -1353,6 +1381,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-trained-model
         /// 
         /// Response Body:
         /// 
@@ -1362,7 +1392,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -1399,7 +1429,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModel with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
@@ -1415,6 +1445,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-trained-model
         /// 
         /// Response Body:
         /// 
@@ -1424,7 +1456,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -1461,7 +1493,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteTrainedModelAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
@@ -1499,7 +1531,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteTrainedModel with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
@@ -1537,7 +1569,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationSummaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
@@ -1580,6 +1612,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-summary
         /// 
         /// Response Body:
         /// 
@@ -1645,7 +1679,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationSummary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
@@ -1688,6 +1722,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-summary
         /// 
         /// Response Body:
         /// 
@@ -1753,12 +1789,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1780,27 +1828,30 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-training-status
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1827,19 +1878,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -1875,12 +1913,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1902,27 +1952,30 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-training-status
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1949,19 +2002,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -1996,7 +2036,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectDeletionJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>");
@@ -2027,6 +2067,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project-deletion-status
         /// 
         /// Response Body:
         /// 
@@ -2091,7 +2133,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectDeletionJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjectDeletionJobStatus("<jobId>");
@@ -2122,6 +2164,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-project-deletion-status
         /// 
         /// Response Body:
         /// 
@@ -2183,7 +2227,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetProjectsAsync())
@@ -2204,6 +2248,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-projects
         /// 
         /// Response Body:
         /// 
@@ -2255,7 +2301,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjects and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetProjects())
@@ -2276,6 +2322,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-projects
         /// 
         /// Response Body:
         /// 
@@ -2330,7 +2378,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
@@ -2347,6 +2395,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployments
         /// 
         /// Response Body:
         /// 
@@ -2356,7 +2406,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -2397,7 +2447,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeployments with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDeployments("<projectName>"))
@@ -2414,6 +2464,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-deployments
         /// 
         /// Response Body:
         /// 
@@ -2423,7 +2475,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -2464,7 +2516,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModelsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetTrainedModelsAsync("<projectName>"))
@@ -2481,6 +2533,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-trained-models
         /// 
         /// Response Body:
         /// 
@@ -2490,7 +2544,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -2531,7 +2585,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModels with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetTrainedModels("<projectName>"))
@@ -2548,6 +2602,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-trained-models
         /// 
         /// Response Body:
         /// 
@@ -2557,7 +2613,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -2600,7 +2656,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResultsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
@@ -2621,7 +2677,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResultsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", <Utf16CodeUnit>))
@@ -2642,6 +2698,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-results
         /// 
         /// Response Body:
         /// 
@@ -2706,7 +2764,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResults with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
@@ -2727,7 +2785,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResults with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", <Utf16CodeUnit>))
@@ -2748,6 +2806,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-model-evaluation-results
         /// 
         /// Response Body:
         /// 
@@ -2810,12 +2870,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetTrainingJobsAsync("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("jobId").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -2837,28 +2909,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-jobs
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -2885,19 +2960,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -2937,12 +2999,24 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobs with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetTrainingJobs("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("jobId").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -2964,28 +3038,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-jobs
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -3012,19 +3089,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -3063,7 +3127,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedLanguagesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSupportedLanguagesAsync("<projectKind>"))
@@ -3076,6 +3140,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-languages
         /// 
         /// Response Body:
         /// 
@@ -3121,7 +3187,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedLanguages with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSupportedLanguages("<projectKind>"))
@@ -3134,6 +3200,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-languages
         /// 
         /// Response Body:
         /// 
@@ -3179,7 +3247,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntitiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync())
@@ -3193,7 +3261,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync("<language>", true))
@@ -3207,6 +3275,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-prebuilt-entities
         /// 
         /// Response Body:
         /// 
@@ -3251,7 +3321,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntities and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSupportedPrebuiltEntities())
@@ -3265,7 +3335,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntities with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSupportedPrebuiltEntities("<language>", true))
@@ -3279,6 +3349,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/get-supported-prebuilt-entities
         /// 
         /// Response Body:
         /// 
@@ -3323,7 +3395,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingConfigVersionsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetTrainingConfigVersionsAsync("<projectKind>"))
@@ -3336,13 +3408,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-config-versions
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
         /// <code>{
         ///   trainingConfigVersion: string, # Required. Represents the version of the config.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate, # Required. Represents the training config version expiration date.
+        ///   modelExpirationDate: string (date), # Required. Represents the training config version expiration date.
         /// }
         /// </code>
         /// 
@@ -3381,7 +3455,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingConfigVersions with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetTrainingConfigVersions("<projectKind>"))
@@ -3394,13 +3468,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/list-training-config-versions
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
         /// <code>{
         ///   trainingConfigVersion: string, # Required. Represents the version of the config.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate, # Required. Represents the training config version expiration date.
+        ///   modelExpirationDate: string (date), # Required. Represents the training config version expiration date.
         /// }
         /// </code>
         /// 
@@ -3441,7 +3517,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
@@ -3473,6 +3549,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-project
         /// 
         /// Response Body:
         /// 
@@ -3538,7 +3616,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
@@ -3570,6 +3648,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-project
         /// 
         /// Response Body:
         /// 
@@ -3638,29 +3718,26 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ExportProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ExportProjectAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>);
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3682,16 +3759,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -3718,7 +3797,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -3757,29 +3835,26 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ExportProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ExportProject with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>);
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3801,16 +3876,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/export
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -3837,7 +3914,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -3875,16 +3951,16 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         projectKind = "Conversation",
+        ///         projectName = "<projectName>",
+        ///         language = "<language>",
         ///     },
         /// };
         /// 
@@ -3900,42 +3976,41 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProjectAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
+        ///         projectKind = "Conversation",
         ///         settings = new {
-        ///             confidenceThreshold = 1234,
+        ///             confidenceThreshold = 123.45f,
         ///         },
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///         projectName = "<projectName>",
         ///         multilingual = true,
-        ///         description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         description = "<description>",
+        ///         language = "<language>",
         ///     },
         ///     assets = new {
-        ///         projectKind = "Conversation",
         ///         intents = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedIntentCategory>",
+        ///                 category = "<category>",
         ///             }
         ///         },
         ///         entities = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedEntityCategory>",
-        ///                 compositionSetting = "<returnLongestOverlap>",
+        ///                 category = "<category>",
+        ///                 compositionSetting = "returnLongestOverlap",
         ///                 list = new {
         ///                     sublists = new[] {
         ///                         new {
-        ///                             listKey = "<ConversationalAnalysisAuthoringExportedEntitySublistListKey>",
+        ///                             listKey = "<listKey>",
         ///                             synonyms = new[] {
         ///                                 new {
-        ///                                     language = "<ConversationalAnalysisAuthoringExportedEntityListSynonymLanguage>",
+        ///                                     language = "<language>",
         ///                                     values = new[] {
-        ///                                         "<ConversationalAnalysisAuthoringExportedEntityListSynonymValuesItem>"
+        ///                                         "<String>"
         ///                                     },
         ///                                 }
         ///                             },
@@ -3944,7 +4019,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///                 },
         ///                 prebuilts = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedPrebuiltEntityCategory>",
+        ///                         category = "<category>",
         ///                     }
         ///                 },
         ///             }
@@ -3953,17 +4028,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///             new {
         ///                 entities = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedUtteranceEntityLabelCategory>",
+        ///                         category = "<category>",
         ///                         offset = 1234,
         ///                         length = 1234,
         ///                     }
         ///                 },
-        ///                 text = "<ConversationalAnalysisAuthoringConversationExportedUtteranceText>",
-        ///                 language = "<ConversationalAnalysisAuthoringConversationExportedUtteranceLanguage>",
-        ///                 intent = "<ConversationalAnalysisAuthoringConversationExportedUtteranceIntent>",
-        ///                 dataset = "<ConversationalAnalysisAuthoringConversationExportedUtteranceDataset>",
+        ///                 text = "<text>",
+        ///                 language = "<language>",
+        ///                 intent = "<intent>",
+        ///                 dataset = "<dataset>",
         ///             }
         ///         },
+        ///         projectKind = "Conversation",
         ///     },
         /// };
         /// 
@@ -3996,6 +4072,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/import
         /// 
         /// Request Body:
         /// 
@@ -4086,16 +4164,16 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         projectKind = "Conversation",
+        ///         projectName = "<projectName>",
+        ///         language = "<language>",
         ///     },
         /// };
         /// 
@@ -4111,42 +4189,41 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProject with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
+        ///         projectKind = "Conversation",
         ///         settings = new {
-        ///             confidenceThreshold = 1234,
+        ///             confidenceThreshold = 123.45f,
         ///         },
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///         projectName = "<projectName>",
         ///         multilingual = true,
-        ///         description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         description = "<description>",
+        ///         language = "<language>",
         ///     },
         ///     assets = new {
-        ///         projectKind = "Conversation",
         ///         intents = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedIntentCategory>",
+        ///                 category = "<category>",
         ///             }
         ///         },
         ///         entities = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedEntityCategory>",
-        ///                 compositionSetting = "<returnLongestOverlap>",
+        ///                 category = "<category>",
+        ///                 compositionSetting = "returnLongestOverlap",
         ///                 list = new {
         ///                     sublists = new[] {
         ///                         new {
-        ///                             listKey = "<ConversationalAnalysisAuthoringExportedEntitySublistListKey>",
+        ///                             listKey = "<listKey>",
         ///                             synonyms = new[] {
         ///                                 new {
-        ///                                     language = "<ConversationalAnalysisAuthoringExportedEntityListSynonymLanguage>",
+        ///                                     language = "<language>",
         ///                                     values = new[] {
-        ///                                         "<ConversationalAnalysisAuthoringExportedEntityListSynonymValuesItem>"
+        ///                                         "<String>"
         ///                                     },
         ///                                 }
         ///                             },
@@ -4155,7 +4232,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///                 },
         ///                 prebuilts = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedPrebuiltEntityCategory>",
+        ///                         category = "<category>",
         ///                     }
         ///                 },
         ///             }
@@ -4164,17 +4241,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///             new {
         ///                 entities = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedUtteranceEntityLabelCategory>",
+        ///                         category = "<category>",
         ///                         offset = 1234,
         ///                         length = 1234,
         ///                     }
         ///                 },
-        ///                 text = "<ConversationalAnalysisAuthoringConversationExportedUtteranceText>",
-        ///                 language = "<ConversationalAnalysisAuthoringConversationExportedUtteranceLanguage>",
-        ///                 intent = "<ConversationalAnalysisAuthoringConversationExportedUtteranceIntent>",
-        ///                 dataset = "<ConversationalAnalysisAuthoringConversationExportedUtteranceDataset>",
+        ///                 text = "<text>",
+        ///                 language = "<language>",
+        ///                 intent = "<intent>",
+        ///                 dataset = "<dataset>",
         ///             }
         ///         },
+        ///         projectKind = "Conversation",
         ///     },
         /// };
         /// 
@@ -4207,6 +4285,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/import
         /// 
         /// Request Body:
         /// 
@@ -4296,39 +4376,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call TrainAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingMode = "advanced",
         /// };
         /// 
         /// var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// ]]></code>
         /// This sample shows how to call TrainAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingConfigVersion = "<ConversationalAnalysisAuthoringTrainingJobOptionsTrainingConfigVersion>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingConfigVersion = "<trainingConfigVersion>",
+        ///     trainingMode = "advanced",
         ///     evaluationOptions = new {
-        ///         kind = "<percentage>",
+        ///         kind = "percentage",
         ///         trainingSplitPercentage = 1234,
         ///         testingSplitPercentage = 1234,
         ///     },
@@ -4338,6 +4418,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4359,22 +4451,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/train
         /// 
         /// Request Body:
         /// 
@@ -4395,6 +4477,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -4421,19 +4516,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -4470,39 +4552,39 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call Train with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingMode = "advanced",
         /// };
         /// 
         /// var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// ]]></code>
         /// This sample shows how to call Train with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingConfigVersion = "<ConversationalAnalysisAuthoringTrainingJobOptionsTrainingConfigVersion>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingConfigVersion = "<trainingConfigVersion>",
+        ///     trainingMode = "advanced",
         ///     evaluationOptions = new {
-        ///         kind = "<percentage>",
+        ///         kind = "percentage",
         ///         trainingSplitPercentage = 1234,
         ///         testingSplitPercentage = 1234,
         ///     },
@@ -4512,6 +4594,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4533,22 +4627,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/train
         /// 
         /// Request Body:
         /// 
@@ -4569,6 +4653,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -4595,19 +4692,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -4644,12 +4728,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call SwapDeploymentsAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     firstDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsFirstDeploymentName>",
-        ///     secondDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsSecondDeploymentName>",
+        ///     firstDeploymentName = "<firstDeploymentName>",
+        ///     secondDeploymentName = "<secondDeploymentName>",
         /// };
         /// 
         /// var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
@@ -4681,6 +4765,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/swap-deployments
         /// 
         /// Request Body:
         /// 
@@ -4757,12 +4843,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call SwapDeployments with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     firstDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsFirstDeploymentName>",
-        ///     secondDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsSecondDeploymentName>",
+        ///     firstDeploymentName = "<firstDeploymentName>",
+        ///     secondDeploymentName = "<secondDeploymentName>",
         /// };
         /// 
         /// var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
@@ -4794,6 +4880,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/swap-deployments
         /// 
         /// Request Body:
         /// 
@@ -4871,11 +4959,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeployProjectAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     trainedModelLabel = "<ConversationalAnalysisAuthoringCreateDeploymentOptionsTrainedModelLabel>",
+        ///     trainedModelLabel = "<trainedModelLabel>",
         /// };
         /// 
         /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
@@ -4892,6 +4980,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/deploy-project
         /// 
         /// Request Body:
         /// 
@@ -4909,7 +4999,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -4949,11 +5039,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeployProject with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     trainedModelLabel = "<ConversationalAnalysisAuthoringCreateDeploymentOptionsTrainedModelLabel>",
+        ///     trainedModelLabel = "<trainedModelLabel>",
         /// };
         /// 
         /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
@@ -4970,6 +5060,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/deploy-project
         /// 
         /// Request Body:
         /// 
@@ -4987,7 +5079,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -5026,7 +5118,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
@@ -5058,6 +5150,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment
         /// 
         /// Response Body:
         /// 
@@ -5125,7 +5219,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
@@ -5157,6 +5251,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/delete-deployment
         /// 
         /// Response Body:
         /// 
@@ -5224,13 +5320,25 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CancelTrainingJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -5252,27 +5360,30 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/cancel-training-job
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -5299,19 +5410,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -5348,13 +5446,25 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CancelTrainingJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -5376,27 +5486,30 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/language/conversational-analysis-authoring/cancel-training-job
         /// 
         /// Response Body:
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -5423,19 +5536,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 

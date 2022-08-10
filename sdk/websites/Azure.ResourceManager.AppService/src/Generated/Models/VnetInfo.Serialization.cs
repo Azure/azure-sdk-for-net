@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static VnetInfo DeserializeVnetInfo(JsonElement element)
         {
-            Optional<string> vnetResourceId = default;
+            Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
             Optional<IReadOnlyList<VnetRoute>> routes = default;
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("vnetResourceId"))
                 {
-                    vnetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("certThumbprint"))

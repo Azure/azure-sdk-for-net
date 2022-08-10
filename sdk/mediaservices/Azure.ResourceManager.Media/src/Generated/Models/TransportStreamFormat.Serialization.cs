@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static TransportStreamFormat DeserializeTransportStreamFormat(JsonElement element)
         {
-            Optional<IList<OutputFile>> outputFiles = default;
+            Optional<IList<MultiBitrateOutputFile>> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OutputFile> array = new List<OutputFile>();
+                    List<MultiBitrateOutputFile> array = new List<MultiBitrateOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFile.DeserializeOutputFile(item));
+                        array.Add(MultiBitrateOutputFile.DeserializeMultiBitrateOutputFile(item));
                     }
                     outputFiles = array;
                     continue;

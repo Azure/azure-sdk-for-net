@@ -44,7 +44,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetConstitutionAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetConstitutionAsync();
@@ -93,7 +93,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetConstitution and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetConstitution();
@@ -142,7 +142,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetEnclaveQuotesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetEnclaveQuotesAsync();
@@ -194,7 +194,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetEnclaveQuotes and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetEnclaveQuotes();
@@ -249,11 +249,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call CreateLedgerEntryAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data));
@@ -264,11 +264,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call CreateLedgerEntryAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data), "<collectionId>");
@@ -330,11 +330,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call CreateLedgerEntry with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = client.CreateLedgerEntry(RequestContent.Create(data));
@@ -345,11 +345,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call CreateLedgerEntry with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = client.CreateLedgerEntry(RequestContent.Create(data), "<collectionId>");
@@ -412,7 +412,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerEntryAsync("<transactionId>");
@@ -423,7 +423,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntryAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerEntryAsync("<transactionId>", "<collectionId>");
@@ -484,7 +484,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntry with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerEntry("<transactionId>");
@@ -495,7 +495,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntry with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerEntry("<transactionId>", "<collectionId>");
@@ -555,7 +555,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetReceiptAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetReceiptAsync("<transactionId>");
@@ -637,7 +637,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetReceipt with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetReceipt("<transactionId>");
@@ -719,7 +719,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetTransactionStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTransactionStatusAsync("<transactionId>");
@@ -771,7 +771,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetTransactionStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetTransactionStatus("<transactionId>");
@@ -821,7 +821,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCurrentLedgerEntryAsync();
@@ -832,7 +832,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetCurrentLedgerEntryAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCurrentLedgerEntryAsync("<collectionId>");
@@ -884,7 +884,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetCurrentLedgerEntry and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetCurrentLedgerEntry();
@@ -895,7 +895,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetCurrentLedgerEntry with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetCurrentLedgerEntry("<collectionId>");
@@ -948,7 +948,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call DeleteUserAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteUserAsync("<userId>");
@@ -983,7 +983,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call DeleteUser with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteUser("<userId>");
@@ -1018,7 +1018,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetUserAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUserAsync("<userId>");
@@ -1069,7 +1069,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetUser with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// Response response = client.GetUser("<userId>");
@@ -1121,11 +1121,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call CreateOrUpdateUserAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     assignedRole = "<Administrator>",
+        ///     assignedRole = "Administrator",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
@@ -1189,11 +1189,11 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call CreateOrUpdateUser with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     assignedRole = "<Administrator>",
+        ///     assignedRole = "Administrator",
         /// };
         /// 
         /// Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
@@ -1254,7 +1254,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetConsortiumMembersAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetConsortiumMembersAsync())
@@ -1310,7 +1310,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetConsortiumMembers and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetConsortiumMembers())
@@ -1366,7 +1366,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetCollectionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetCollectionsAsync())
@@ -1420,7 +1420,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetCollections and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetCollections())
@@ -1477,7 +1477,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntriesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetLedgerEntriesAsync())
@@ -1489,7 +1489,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetLedgerEntriesAsync("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
@@ -1550,7 +1550,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntries and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetLedgerEntries())
@@ -1562,7 +1562,7 @@ namespace Azure.Security.ConfidentialLedger
         /// This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetLedgerEntries("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
