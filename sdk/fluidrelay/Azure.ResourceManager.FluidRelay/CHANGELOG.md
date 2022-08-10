@@ -1,15 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (Unreleased)
 
 ### Features Added
-
+    add listKeys method
+    enable user to provide AMI and keyvaultURI for encryption.
 ### Breaking Changes
-
+    deprecate getKeys method
 ### Bugs Fixed
-
+    None
 ### Other Changes
-
+    add createtime and lastModifiedtime
 ## 1.0.0-beta.1 (2022-07-12)
 
 ### Breaking Changes
