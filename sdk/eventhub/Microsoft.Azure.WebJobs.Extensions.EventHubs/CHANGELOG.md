@@ -1,14 +1,10 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.1.2 (2022-08-10)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed a bug in the runtime scale controller that could result in a null reference exception when encountering a null checkpoint. Also, correct the assumption that the beginning sequence number for a partition is always 0.
 
 ## 5.1.1 (2022-06-20)
 
