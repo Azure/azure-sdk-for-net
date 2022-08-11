@@ -42,11 +42,8 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
-            GetTokenOptions tokenOptions = new GetTokenOptions(user, scopes: new[] { CommunicationTokenScope.Chat })
-            {
-                ExpiresInMinutes = new TimeSpan(0, 60, 0),
-            };
-            Response<AccessToken> tokenResponse = await client.GetTokenAsync(tokenOptions);
+            TimeSpan expiresAfter = new TimeSpan(0, 60, 0);
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat }, expiresAfter);
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -108,11 +105,8 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationToken
 
             #region  Snippet:CreateCommunicationTokenWithCustomExpiration
-            GetTokenOptions tokenOptions = new GetTokenOptions(user, scopes: new[] { CommunicationTokenScope.Chat })
-            {
-                ExpiresInMinutes = new TimeSpan(0, 60, 0),
-            };
-            Response<AccessToken> tokenResponse = client.GetToken(tokenOptions);
+            TimeSpan expiresAfter = new TimeSpan(0, 60, 0);
+            Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat }, expiresAfter);
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -161,11 +155,8 @@ namespace Azure.Communication.Identity.Samples
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClientWithConnectionString();
             #region Snippet:CreateCommunicationUserAndTokenWithCustomExpirationAsync
-            CreateUserAndTokenOptions createUserAndTokenOptions = new CreateUserAndTokenOptions(scopes: new[] { CommunicationTokenScope.Chat })
-            {
-                ExpiresInMinutes = new TimeSpan(0, 60, 0)
-            };
-            Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(createUserAndTokenOptions);
+            TimeSpan expiresAfter = new TimeSpan(0, 60, 0);
+            Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, expiresAfter);
             var (user, token) = response.Value;
             Console.WriteLine($"User id: {user.Id}");
             Console.WriteLine($"Token: {token.Token}");
@@ -180,11 +171,8 @@ namespace Azure.Communication.Identity.Samples
             var client = new CommunicationIdentityClient(connectionString);
             client = CreateClientWithConnectionString();
             #region Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
-            CreateUserAndTokenOptions createUserAndTokenOptions = new CreateUserAndTokenOptions(scopes: new[] { CommunicationTokenScope.Chat })
-            {
-                ExpiresInMinutes = new TimeSpan(0, 60, 0)
-            };
-            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(createUserAndTokenOptions);
+            TimeSpan expiresAfter = new TimeSpan(0, 60, 0);
+            Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, expiresAfter);
             var (user, token) = response.Value;
             Console.WriteLine($"User id: {user.Id}");
             Console.WriteLine($"Token: {token.Token}");
