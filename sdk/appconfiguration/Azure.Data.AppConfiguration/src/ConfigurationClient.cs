@@ -257,7 +257,7 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateContext(cancellationToken);
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag($"\"{setting.ETag.ToString()}\"") } : null;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
 
                 using Response response = await PutKeyValueAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
                 return response.Status switch
@@ -298,7 +298,7 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateContext(cancellationToken);
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag($"\"{setting.ETag.ToString()}\"") } : null;
+                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
 
                 using Response response = PutKeyValue(setting.Key, content, contentType, setting.Label, requestOptions, context);
 
@@ -386,10 +386,6 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                if (requestOptions != null)
-                {
-                    requestOptions = ToUpdateOptions(requestOptions);
-                }
                 RequestContext context = CreateContext(cancellationToken);
                 using Response response = await DeleteKeyValueAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
 
@@ -418,10 +414,6 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                if (requestOptions != null)
-                {
-                    requestOptions = ToUpdateOptions(requestOptions);
-                }
                 RequestContext context = CreateContext(cancellationToken);
                 using Response response = DeleteKeyValue(key, label, requestOptions?.IfMatch, context);
 
@@ -547,10 +539,6 @@ namespace Azure.Data.AppConfiguration
             {
                RequestContext context = CreateContext(cancellationToken);
                context.AddClassifier(304, isError: false);
-                if (conditions != null)
-                {
-                    conditions = ToUpdateOptions(conditions);
-                }
                 var dateTime = acceptDateTime.HasValue? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture): null;
                 using Response response = await GetKeyValueAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
 
@@ -587,10 +575,6 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateContext(cancellationToken);
                 context.AddClassifier(304, isError: false);
-                if (conditions != null)
-                {
-                    conditions = ToUpdateOptions(conditions);
-                }
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = GetKeyValue(key, label, dateTime, null, conditions, context);
 
@@ -606,19 +590,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private static MatchConditions ToUpdateOptions(MatchConditions requestOptions)
-        {
-                if (requestOptions.IfMatch.HasValue)
-                {
-                requestOptions.IfMatch = requestOptions.IfMatch.Value == ETag.All ? new ETag(requestOptions.IfMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfMatch.Value.ToString()}\"");
-                }
-                if (requestOptions.IfNoneMatch.HasValue)
-                {
-                requestOptions.IfNoneMatch = requestOptions.IfNoneMatch.Value == ETag.All ? new ETag(requestOptions.IfNoneMatch.Value.ToString()) : new ETag($"\"{requestOptions.IfNoneMatch.Value.ToString()}\"");
-                }
-            return requestOptions;
         }
 
         /// <summary>
@@ -969,10 +940,6 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateContext(cancellationToken);
-                if (requestOptions != null)
-                {
-                    requestOptions = ToUpdateOptions(requestOptions);
-                }
                 using Response response = async ? await ToCreateAsyncResponse(key, label, requestOptions, isReadOnly, context).ConfigureAwait(false) : ToCreateResponse(key, label, requestOptions, isReadOnly, context);
 
                 return response.Status switch
