@@ -573,19 +573,16 @@ namespace Compute.Tests
                         Assert.Equal("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
                         Assert.Equal("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName);
 
-                        OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput()
-                        {
-                            ServiceName = OrchestrationServiceNames.AutomaticRepairs,
-                            Action = OrchestrationServiceStateAction.Suspend
-                        };
+                        OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(OrchestrationServiceStateAction.Suspend);
 
-                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, orchestrationServiceStateInput);
+
+                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, orchestrationServiceStateInput.Action);
 
                         getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                         Assert.Equal(OrchestrationServiceState.Suspended.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState);
 
                         orchestrationServiceStateInput.Action = OrchestrationServiceStateAction.Resume;
-                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, orchestrationServiceStateInput);
+                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, orchestrationServiceStateInput.Action);
                         getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
                         Assert.Equal(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState);
 
