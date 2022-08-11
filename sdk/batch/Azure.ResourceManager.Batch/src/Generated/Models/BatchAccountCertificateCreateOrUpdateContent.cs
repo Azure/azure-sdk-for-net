@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, object data, string password, ETag? etag) : base(id, name, resourceType, systemData)
+        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, BinaryData thumbprint, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             Thumbprint = thumbprint;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </summary>
         public BatchAccountCertificateFormat? Format { get; set; }
         /// <summary> The maximum size is 10KB. </summary>
-        public object Data { get; set; }
+        public BinaryData Data { get; set; }
         /// <summary> This must not be specified if the certificate format is Cer. </summary>
         public string Password { get; set; }
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>

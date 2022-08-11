@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="isEnabled"> Whether the key is enabled or not. </param>
         /// <param name="createdOn"> When the key was created. </param>
         /// <param name="updatedOn"> When the key was updated. </param>
-        internal IntegrationAccountKeyVaultKey(Uri keyId, bool? isEnabled, long? createdOn, long? updatedOn)
+        internal IntegrationAccountKeyVaultKey(Uri keyId, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? updatedOn)
         {
             KeyId = keyId;
             IsEnabled = isEnabled;
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Whether the key is enabled or not. </summary>
         public bool? IsEnabled { get; }
         /// <summary> When the key was created. </summary>
-        public long? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> When the key was updated. </summary>
-        public long? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedOn { get; }
     }
 }
