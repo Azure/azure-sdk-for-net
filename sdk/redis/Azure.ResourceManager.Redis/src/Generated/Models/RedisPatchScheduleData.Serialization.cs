@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            IList<ScheduleEntry> scheduleEntries = default;
+            IList<RedisPatchScheduleSetting> scheduleEntries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Redis
                     {
                         if (property0.NameEquals("scheduleEntries"))
                         {
-                            List<ScheduleEntry> array = new List<ScheduleEntry>();
+                            List<RedisPatchScheduleSetting> array = new List<RedisPatchScheduleSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScheduleEntry.DeserializeScheduleEntry(item));
+                                array.Add(RedisPatchScheduleSetting.DeserializeRedisPatchScheduleSetting(item));
                             }
                             scheduleEntries = array;
                             continue;

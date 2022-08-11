@@ -173,9 +173,6 @@ image.UpdateTagProperties("latest", new ArtifactTagProperties()
 ### Delete images
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
@@ -285,10 +282,6 @@ await image.UpdateTagPropertiesAsync("latest", new ArtifactTagProperties()
 ### Delete images asynchronously
 
 ```C# Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-using System.Linq;
-using Azure.Containers.ContainerRegistry;
-using Azure.Identity;
-
 // Get the service endpoint from the environment
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 

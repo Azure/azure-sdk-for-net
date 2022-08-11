@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Configurations of NoEncryption. </summary>
         internal NoEncryption NoEncryption { get; set; }
         /// <summary> Representing supported protocols. </summary>
-        public EnabledProtocols NoEncryptionEnabledProtocols
+        public MediaEnabledProtocols NoEncryptionEnabledProtocols
         {
             get => NoEncryption is null ? default : NoEncryption.EnabledProtocols;
             set

@@ -8,32 +8,32 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallingServer
 {
-    public class DeleteRecordingTests : CallingServerTestBase
+    public class DeleteRecordingTests : CallAutomationTestBase
     {
         private const string AmsDeleteUrl = "https://dummyurl.com/v1/objects/documentid";
 
         [Test]
         public void DeleteRecording_Returns200Ok()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
-            var response = callingServerClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl));
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
+            var response = callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl));
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [Test]
         public async Task DeleteRecordingAsync_Returns200Ok()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(200);
-            var response = await callingServerClient.GetCallRecording().DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
+            var response = await callAutomationClient.GetCallRecording().DeleteRecordingAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
         }
 
         [Test]
         public void DeleteRecording_Returns404NotFound()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(404);
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -41,8 +41,8 @@ namespace Azure.Communication.CallingServer
         [Test]
         public void DeleteRecording_Returns401Unauthorized()
         {
-            CallingServerClient callingServerClient = CreateMockCallingServerClient(401);
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callingServerClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().DeleteRecording(new Uri(AmsDeleteUrl)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 401);
         }

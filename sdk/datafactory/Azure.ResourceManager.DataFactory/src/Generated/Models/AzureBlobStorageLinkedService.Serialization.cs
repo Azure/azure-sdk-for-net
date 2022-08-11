@@ -129,7 +129,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential");
-                writer.WriteStringValue(EncryptedCredential);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EncryptedCredential);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Credential))
             {
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> connectionString = default;
             Optional<AzureKeyVaultSecretReference> accountKey = default;
@@ -162,12 +166,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<AzureKeyVaultSecretReference> sasToken = default;
             Optional<string> serviceEndpoint = default;
             Optional<BinaryData> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<BinaryData> tenant = default;
             Optional<BinaryData> azureCloudType = default;
             Optional<string> accountKind = default;
-            Optional<string> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
+            Optional<BinaryData> encryptedCredential = default;
+            Optional<FactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,10 +203,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
                     }
                     parameters = dictionary;
                     continue;
@@ -293,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"))
@@ -323,7 +327,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"))
                         {
-                            encryptedCredential = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("credential"))
@@ -333,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property0.Value);
                             continue;
                         }
                     }

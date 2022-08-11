@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The callback url. </summary>
@@ -16,13 +18,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ListOperationCallbackUri. </summary>
-        /// <param name="value"> The URL value. </param>
-        internal ListOperationCallbackUri(string value)
+        /// <param name="uri"> The URL value. </param>
+        internal ListOperationCallbackUri(Uri uri)
         {
-            Value = value;
+            Uri = uri;
         }
 
         /// <summary> The URL value. </summary>
-        public string Value { get; }
+        public Uri Uri { get; }
     }
 }

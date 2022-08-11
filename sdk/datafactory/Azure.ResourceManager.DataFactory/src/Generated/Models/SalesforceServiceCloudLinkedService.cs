@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Salesforce Service Cloud. </summary>
-    public partial class SalesforceServiceCloudLinkedService : LinkedService
+    public partial class SalesforceServiceCloudLinkedService : FactoryLinkedServiceDefinition
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudLinkedService. </summary>
         public SalesforceServiceCloudLinkedService()
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="username"> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
         /// <param name="password">
         /// The password for Basic authentication of the Salesforce instance.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="securityToken">
         /// The security token is optional to remotely access Salesforce instance.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
         /// <param name="extendedProperties"> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData environmentUri, BinaryData username, SecretBase password, SecretBase securityToken, BinaryData apiVersion, BinaryData extendedProperties, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData environmentUri, BinaryData username, FactorySecretBaseDefinition password, FactorySecretBaseDefinition securityToken, BinaryData apiVersion, BinaryData extendedProperties, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             EnvironmentUri = environmentUri;
             Username = username;
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password for Basic authentication of the Salesforce instance.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The security token is optional to remotely access Salesforce instance.
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase SecurityToken { get; set; }
+        public FactorySecretBaseDefinition SecurityToken { get; set; }
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
         public BinaryData ApiVersion { get; set; }
         /// <summary> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </summary>

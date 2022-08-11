@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
         public SqlTempDBSettings()
         {
-            Luns = new ChangeTrackingList<int>();
+            LogicalUnitNumbers = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="dataFileCount"> SQL Server tempdb data file count. </param>
         /// <param name="persistFolder"> SQL Server tempdb persist folder choice. </param>
         /// <param name="persistFolderPath"> SQL Server tempdb persist folder location. </param>
-        /// <param name="luns"> Logical Unit Numbers for the disks. </param>
+        /// <param name="logicalUnitNumbers"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
-        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> luns, string defaultFilePath)
+        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> logicalUnitNumbers, string defaultFilePath)
         {
             DataFileSize = dataFileSize;
             DataGrowth = dataGrowth;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             DataFileCount = dataFileCount;
             PersistFolder = persistFolder;
             PersistFolderPath = persistFolderPath;
-            Luns = luns;
+            LogicalUnitNumbers = logicalUnitNumbers;
             DefaultFilePath = defaultFilePath;
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> SQL Server tempdb persist folder location. </summary>
         public string PersistFolderPath { get; set; }
         /// <summary> Logical Unit Numbers for the disks. </summary>
-        public IList<int> Luns { get; }
+        public IList<int> LogicalUnitNumbers { get; }
         /// <summary> SQL Server default file path. </summary>
         public string DefaultFilePath { get; set; }
     }

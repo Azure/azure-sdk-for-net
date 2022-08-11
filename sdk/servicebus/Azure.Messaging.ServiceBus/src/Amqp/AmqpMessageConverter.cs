@@ -504,7 +504,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // delivery annotations
 
-            if (amqpMessage.DeliveryAnnotations != null)
+            if ((sections & SectionFlag.DeliveryAnnotations) != 0)
             {
                 foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
                 {
@@ -534,6 +534,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             // footer
+
+            if ((sections & SectionFlag.Footer) != 0)
+            {
+                foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.Footer.Map)
+                {
+                    if (TryGetNetObjectFromAmqpObject(kvp.Value, MappingType.ApplicationProperty, out var netObject))
+                    {
+                        annotatedMessage.Footer[kvp.Key.ToString()] = netObject;
+                    }
+                }
+            }
+
+            // lock token
 
             if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {

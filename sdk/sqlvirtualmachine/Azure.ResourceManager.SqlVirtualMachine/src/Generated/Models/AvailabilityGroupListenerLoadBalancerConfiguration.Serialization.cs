@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("probePort");
                 writer.WriteNumberValue(ProbePort.Value);
             }
-            if (Optional.IsCollectionDefined(SqlVirtualMachineInstances))
+            if (Optional.IsCollectionDefined(SqlVmInstances))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstances");
                 writer.WriteStartArray();
-                foreach (var item in SqlVirtualMachineInstances)
+                foreach (var item in SqlVmInstances)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<ResourceIdentifier> publicIPAddressResourceId = default;
             Optional<ResourceIdentifier> loadBalancerResourceId = default;
             Optional<int> probePort = default;
-            Optional<IList<string>> sqlVirtualMachineInstances = default;
+            Optional<IList<ResourceIdentifier>> sqlVmInstances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"))
@@ -105,16 +105,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
-                    sqlVirtualMachineInstances = array;
+                    sqlVmInstances = array;
                     continue;
                 }
             }
-            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVirtualMachineInstances));
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVmInstances));
         }
     }
 }

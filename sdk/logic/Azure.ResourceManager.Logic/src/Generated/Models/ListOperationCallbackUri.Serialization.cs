@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,12 +15,17 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static ListOperationCallbackUri DeserializeListOperationCallbackUri(JsonElement element)
         {
-            Optional<string> value = default;
+            Optional<Uri> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    value = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
+                        continue;
+                    }
+                    value = new Uri(property.Value.GetString());
                     continue;
                 }
             }

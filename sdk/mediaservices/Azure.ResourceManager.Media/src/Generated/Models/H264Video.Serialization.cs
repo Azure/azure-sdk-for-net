@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("rateControlMode");
                 writer.WriteStringValue(RateControlMode.Value.ToString());
             }
-            if (Optional.IsDefined(SceneChangeDetection))
+            if (Optional.IsDefined(UseSceneChangeDetection))
             {
                 writer.WritePropertyName("sceneChangeDetection");
-                writer.WriteBooleanValue(SceneChangeDetection.Value);
+                writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
             if (Optional.IsDefined(KeyFrameInterval))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<H264RateControlMode> rateControlMode = default;
             Optional<bool> sceneChangeDetection = default;
             Optional<TimeSpan> keyFrameInterval = default;
-            Optional<StretchMode> stretchMode = default;
+            Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
             string odataType = default;
             Optional<string> label = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stretchMode = new StretchMode(property.Value.GetString());
+                    stretchMode = new InputVideoStretchMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("syncMode"))

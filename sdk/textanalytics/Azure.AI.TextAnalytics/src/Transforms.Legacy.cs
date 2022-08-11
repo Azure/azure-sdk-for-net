@@ -791,10 +791,6 @@ namespace Azure.AI.TextAnalytics
             IDictionary<int, Legacy.TextAnalyticsError> entitiesPiiRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
             IDictionary<int, Legacy.TextAnalyticsError> entitiesLinkingRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
             IDictionary<int, Legacy.TextAnalyticsError> analyzeSentimentErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
-            IDictionary<int, Legacy.TextAnalyticsError> extractSummaryErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
-            IDictionary<int, Legacy.TextAnalyticsError> customEntitiesRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
-            IDictionary<int, Legacy.TextAnalyticsError> singleLabelClassifyErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
-            IDictionary<int, Legacy.TextAnalyticsError> multiLabelClassifyErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
 
             if (jobState.Errors.Any())
             {

@@ -224,6 +224,23 @@ namespace Azure.AI.TextAnalytics
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Cancels a pending or running <see cref="AnalyzeActionsOperation"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="NotSupportedException">Cancellation not supported by API versions v3.0, v3.1.</exception>
+        public virtual void Cancel(CancellationToken cancellationToken = default) =>
+            _serviceClient.CancelAnalyzeActionsJob(_jobId, cancellationToken);
+
+        /// <summary>
+        /// Cancels a pending or running <see cref="AnalyzeActionsOperation"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        /// <exception cref="NotSupportedException">Cancellation not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
+            await _serviceClient.CancelAnalyzeActionsJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
@@ -281,32 +298,25 @@ namespace Azure.AI.TextAnalytics
 
             Response rawResponse = response.GetRawResponse();
 
-            if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            {
-                if (CheckIfGenericError(response.Value))
-                {
-                    RequestFailedException requestFailedException;
-
-                    if (async)
-                    {
-                        requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(true, _diagnostics, rawResponse, response.Value.Errors).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        requestFailedException = ClientCommon.CreateExceptionForFailedOperationAsync(false, _diagnostics, rawResponse, response.Value.Errors).EnsureCompleted();
-                    }
-
-                    return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
-                }
-            }
-
-            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
-                response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 string nextLink = response.Value.NextLink;
                 _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, nextLink, rawResponse);
 
                 return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
+            }
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            {
+                RequestFailedException requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
+                    .ConfigureAwait(false);
+
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
+            }
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            {
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse,
+                    new RequestFailedException("The operation was canceled so no value is available."));
             }
 
             return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
@@ -328,16 +338,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
-        }
-
-        private static bool CheckIfGenericError(AnalyzeTextJobStatusResult jobState)
-        {
-            foreach (Error error in jobState.Errors)
-            {
-                if (string.IsNullOrEmpty(error.Target))
-                    return true;
-            }
-            return false;
         }
     }
 }

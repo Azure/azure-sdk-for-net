@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class ARecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class CaaRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class CnameRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public static partial class DnsExtensions
     {
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetAResource> GetAllRecordSets(int? top = default(int?), string recordSetNameSuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetAResource> GetAllRecordSetsAsync(int? top = default(int?), string recordSetNameSuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetData> GetAllRecordSets(int? top = default(int?), string recordSetNameSuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetData> GetAllRecordSetsAsync(int? top = default(int?), string recordSetNameSuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetAResource> GetRecordSetA(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetAaaaResource> GetRecordSetAaaa(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource> GetRecordSetMX(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource>> GetRecordSetMXAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.RecordSetMXCollection GetRecordSetMXes() { throw null; }
-        public virtual Azure.ResourceManager.Dns.RecordSetNSCollection GetRecordSetNS() { throw null; }
+        public virtual Azure.ResourceManager.Dns.RecordSetNSCollection GetRecordSetNs() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource> GetRecordSetNS(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource>> GetRecordSetNSAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetPtrResource> GetRecordSetPtr(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetPtrResource>> GetRecordSetPtrAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.RecordSetPtrCollection GetRecordSetPtrs() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetAResource> GetRecordSets(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetAResource> GetRecordSetsAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetData> GetRecordSets(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetData> GetRecordSetsAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetSoaResource> GetRecordSetSoa(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetSoaResource>> GetRecordSetSoaAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.RecordSetSoaCollection GetRecordSetSoas() { throw null; }
@@ -143,6 +143,8 @@ namespace Azure.ResourceManager.Dns
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource> Update(Azure.ResourceManager.Dns.Models.DnsZonePatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> UpdateAsync(Azure.ResourceManager.Dns.Models.DnsZonePatch patch, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MXRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsMXRecord> MXRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class NSRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -164,7 +166,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNSRecord> NSRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class PtrRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -175,7 +177,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsPtrRecord> PtrRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class RecordSetAaaaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetAaaaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetAaaaResource>, System.Collections.IEnumerable
     {
@@ -310,7 +312,7 @@ namespace Azure.ResourceManager.Dns
         public Azure.ResourceManager.Dns.Models.DnsSoaRecord SoaRecord { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecord> SrvRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecord> TxtRecords { get { throw null; } }
     }
     public partial class RecordSetMXCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetMXResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetMXResource>, System.Collections.IEnumerable
@@ -496,7 +498,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dns.Models.DnsSoaRecord SoaRecord { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class SrvRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -507,7 +509,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecord> SrvRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class TxtRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -517,7 +519,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? Ttl { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecord> TxtRecords { get { throw null; } }
     }
 }
@@ -549,12 +551,12 @@ namespace Azure.ResourceManager.Dns.Models
     public partial class DnsNSRecord
     {
         public DnsNSRecord() { }
-        public string NsdName { get { throw null; } set { } }
+        public string DnsNSDomainName { get { throw null; } set { } }
     }
     public partial class DnsPtrRecord
     {
         public DnsPtrRecord() { }
-        public string PtrdName { get { throw null; } set { } }
+        public string DnsPtrDomainName { get { throw null; } set { } }
     }
     public partial class DnsResourceReference
     {
@@ -594,7 +596,7 @@ namespace Azure.ResourceManager.Dns.Models
     public partial class DnsTxtRecord
     {
         public DnsTxtRecord() { }
-        public System.Collections.Generic.IList<string> Value { get { throw null; } }
+        public System.Collections.Generic.IList<string> Values { get { throw null; } }
     }
     public partial class DnsZonePatch
     {

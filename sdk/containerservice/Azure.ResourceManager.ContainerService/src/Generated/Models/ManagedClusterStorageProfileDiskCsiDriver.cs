@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCsiDriver. </summary>
-        /// <param name="enabled"> Whether to enable AzureDisk CSI Driver. The default value is true. </param>
-        internal ManagedClusterStorageProfileDiskCsiDriver(bool? enabled)
+        /// <param name="isEnabled"> Whether to enable AzureDisk CSI Driver. The default value is true. </param>
+        internal ManagedClusterStorageProfileDiskCsiDriver(bool? isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Whether to enable AzureDisk CSI Driver. The default value is true. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

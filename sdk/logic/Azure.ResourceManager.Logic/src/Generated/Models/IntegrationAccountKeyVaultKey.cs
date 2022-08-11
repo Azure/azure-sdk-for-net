@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The key vault key. </summary>
@@ -16,25 +18,25 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKey. </summary>
-        /// <param name="kid"> The key id. </param>
+        /// <param name="keyId"> The key id. </param>
         /// <param name="isEnabled"> Whether the key is enabled or not. </param>
-        /// <param name="createdOn"> When the key was created. </param>
-        /// <param name="updated"> When the key was updated. </param>
-        internal IntegrationAccountKeyVaultKey(string kid, bool? isEnabled, long? createdOn, long? updated)
+        /// <param name="createdOnUnixTimestamp"> When the key was created. </param>
+        /// <param name="updatedOnUnixTimestamp"> When the key was updated. </param>
+        internal IntegrationAccountKeyVaultKey(Uri keyId, bool? isEnabled, long? createdOnUnixTimestamp, long? updatedOnUnixTimestamp)
         {
-            Kid = kid;
+            KeyId = keyId;
             IsEnabled = isEnabled;
-            CreatedOn = createdOn;
-            Updated = updated;
+            CreatedOnUnixTimestamp = createdOnUnixTimestamp;
+            UpdatedOnUnixTimestamp = updatedOnUnixTimestamp;
         }
 
         /// <summary> The key id. </summary>
-        public string Kid { get; }
+        public Uri KeyId { get; }
         /// <summary> Whether the key is enabled or not. </summary>
         public bool? IsEnabled { get; }
         /// <summary> When the key was created. </summary>
-        public long? CreatedOn { get; }
+        public long? CreatedOnUnixTimestamp { get; }
         /// <summary> When the key was updated. </summary>
-        public long? Updated { get; }
+        public long? UpdatedOnUnixTimestamp { get; }
     }
 }
