@@ -26,6 +26,7 @@ This response status indicates a partial success for an indexing operation. Some
 Returned when you pass an invalid API key. Search service uses two types of keys to control access: admin (read-write) and query (read-only). The **admin key** grants full rights to all operations, including the ability to manage the service, create and delete indexes, indexers, and data sources. The **query key** grants read-only access to indexes and documents. Ensure that the key used for an API call provides sufficient privileges for the operation. See [here](https://docs.microsoft.com/azure/search/search-security-api-keys) for details about managing API keys.
 
 ## 404 Not Found
+
 Returned when a resource does not exist on the server. If you are managing or querying an index, check the syntax and verify the index name is specified correctly.
 
 ## 429 too many requests
