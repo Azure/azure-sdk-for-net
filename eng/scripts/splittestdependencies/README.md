@@ -1,12 +1,17 @@
 # Test dependency Splitting Strategy
 ## Problems
-Today, most of the Azure service SDKs implemented in our repo have a dependency on the core library. In order to guarantee the changes on core do not break other SDKs depend on it, our core PR validation pipeline currently runs all tests under `sdk` folder. As the onboarding packages keep growing, the test steps of pipeline usually take nearly an hour to finish. We expect the PR validation to finish as fast as possible, which can unblock the changes checked in to the repo. This is the motivation of the test splitting task.
+Today, most of the Azure SDKs implemented in our repo have a dependency on the core library. In order to guarantee the changes on core do not break the SDKs depend on it, our core PR validation pipeline currently runs all tests under `sdk` folder. As the onboarding packages keep growing, the test steps of pipeline usually take nearly an hour to finish. To achieve the purpose of speeding up the PR validation, we decided to move on to the test splitting task.
 
 ## Existing workflow
-Before we run the tests, we have a step which determine all testing environments (OS image, pool, .NET framework etc.). For each of the testing environment, we check which service triggers the pipeline. If it is service other that core, then we run the tests under the service only. If it is core library, then we will run all tests under `sdk` folder. There are more than 400 packages in total, even we execute them in parallel, it still takes long while to get them done. 
+Before we run the tests, we have a step to determine the testing matrix (OS image, pool, .NET framework etc.). For each of the testing environment, we check which is the service triggers the pipeline. If it is service other that core, then we run the tests under the service only. If it is core library, then we will run all tests under `sdk` folder. There are more than 400 packages in total as of today, so even we execute them in parallel, it still takes long while to get them done. 
 
 ## New workflow
-Previously, it is not necessary to run everything under `sdk`, because we definitely have some packages which do not depend on core. So, for the new design, we add a target in msbuild project which will fetch all `.csproj` files depends on the target package. We introduce this flexibility of taking target package as parameter because not only core has the needs of testing its providers, but also other services (e.g. KeyVault, Storage etc.). By giving the number of tests we want to run on each test job, we evenly distributes the test project files into different chunks and write them into project files. Then we write these newly generated project files back to `platform-matrix.json` as new attribute of the test matrix. After the `PreGeneration` step, then the test step will know how many project files they will execute on. We can also control on the maximum tests on each test job.
+In order to speed up the pipeline, we have to answer two questions here:
+
+1. Is it necessary to run all tests under `sdk`? Can we fetch the tests which have a dependency on core?
+1. Can we split the tests depend on core into different test jobs?
+
+To optimize the existing process, we first use the `MSBuild` to find all test `.csproj` files depend on target service. Then, we split these test projects (exclude the target service) into certain number of chunks (according to the input of how many tests we expect to run on each test job) and write them into separate project files. We will dynamically write the project files back as a new property to the matrix json which will use to determine the test job settings later on. By having the mutate matrix json, the test steps can execute their tests on small number of tests defined in project files respectively. We also have another set of test jobs which run the target service tests only. Though we double the size of test matrix, it saves nearly 80% of the time we spend on test jobs.
 
 Here is the workflow for better understanding:
 ![Workflow](assets/test-split-workflow.png)
@@ -19,7 +24,7 @@ To enable the split on your service, you can add the line below in `ci.yml` unde
 ```
 TestDependsOnDependency: ${service-name}
 ```
-To disable, just remove the above line, and we will run the tests on target service only.
+To disable, just remove the above line, and the corresponding pipeline will run the tests on target service only.
 
 ## Performance
 Here is the comparison:
