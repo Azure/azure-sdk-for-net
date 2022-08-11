@@ -19,18 +19,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
 
         protected SubscriptionResource Subscription { get; private set; }
 
-        // protected static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
-        // {
-        //     { "key1","value1"},
-        //     { "key2","value2"}
-        // };
-        // protected static Dictionary<string, string> DefaultNewTags = new Dictionary<string, string>
-        // {
-        //     { "key2","value2"},
-        //     { "key3","value3"},
-        //     { "key4","value4"}
-        // };
-
         protected static Uri DefaultWebhookServiceUri = new Uri("http://www.microsoft.com");
 
         protected static string DefaultWebhookScope = "hello-world";
