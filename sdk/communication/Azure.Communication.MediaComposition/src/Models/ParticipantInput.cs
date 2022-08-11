@@ -29,6 +29,24 @@ namespace Azure.Communication.MediaComposition.Models
             Id = CommunicationIdentifierSerializer.Deserialize(serviceId);
         }
 
+        // This is a direct copy of the auto-rest generated constructor but we want to make it internal.
+        internal ParticipantInput(CommunicationIdentifierModel serviceId, string call)
+        {
+            if (serviceId == null)
+            {
+                throw new ArgumentNullException(nameof(serviceId));
+            }
+            if (call == null)
+            {
+                throw new ArgumentNullException(nameof(call));
+            }
+
+            ServiceId = serviceId;
+            Call = call;
+            Kind = MediaInputType.Participant;
+            Id = CommunicationIdentifierSerializer.Deserialize(serviceId);
+        }
+
         /// <summary> Initializes a new instance of ParticipantInput. </summary>
         /// <param name="id"> The CommunicationIdentifier of the participant. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>
