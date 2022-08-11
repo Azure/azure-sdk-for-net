@@ -14,7 +14,7 @@
 - Added [Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/TROUBLESHOOTING.md).
 
 ### Note 
-- This GA release includes AAD with multi-cloud support and all the bug fixes since the last GA release. Other preview features and breaking changes from the [11.4.0-beta.1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/CHANGELOG.md#1140-beta1-2021-07-06) to [11.4.0-beta.9](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/CHANGELOG.md#1140-beta9-2022-08-08) releases are not included in this GA release.
+- This GA release includes AAD with multi-cloud support and all the bug fixes since the last [11.3.0](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/CHANGELOG.md#1130-2021-06-08) GA release. Other preview features and breaking changes from the [11.4.0-beta.1](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/CHANGELOG.md#1140-beta1-2021-07-06) to [11.4.0-beta.9](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/CHANGELOG.md#1140-beta9-2022-08-08) releases are not included in this GA release.
 
 ## 11.4.0-beta.9 (2022-08-08)
 
