@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Communication.CallingServer
 {
@@ -24,8 +25,14 @@ namespace Azure.Communication.CallingServer
              * 5. once call is hung up, verify that call connection cannot be found.
             */
 
+            Console.WriteLine("test mode is: " + TestEnvironment.Mode.ToString());
+            Console.WriteLine("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS is true? " + Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE");
+            Console.WriteLine("skipCallingServerBoolean is: " + SkipCallingServerInteractionLiveTests);
+
             if (SkipCallingServerInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
+            Console.WriteLine("executing tests.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             bool wasConnected = false;
