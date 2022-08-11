@@ -55,11 +55,13 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "Snapshots", "2022-03-02"),
                 new Tuple<string, string, string>("Compute", "SshPublicKeys", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "Usage", "2022-08-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineApplications", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineImages", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineImagesEdgeZone", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineRunCommands", "2022-08-01"),
+                new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetApplications", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetExtensions", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetRollingUpgrades", "2022-08-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineScaleSetVMExtensions", "2022-08-01"),
@@ -71,5 +73,16 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/D1v38om83r/azure-rest-api-specs/blob/crp-vmapps/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Github\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "D1v38om83r";
+      public static readonly String GithubBranchName = "crp-vmapps";
+      public static readonly String GithubCommidId = "e2aec455ed1d3c9f8462ee9cbd19c915ae951435";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

@@ -102,6 +102,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetApplicationsOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetApplicationsOperations VirtualMachineScaleSetApplications { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMExtensionsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetVMExtensionsOperations VirtualMachineScaleSetVMExtensions { get; private set; }
@@ -120,6 +125,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachinesOperations.
         /// </summary>
         public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineApplicationsOperations.
+        /// </summary>
+        public virtual IVirtualMachineApplicationsOperations VirtualMachineApplications { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineImagesOperations.
@@ -563,10 +573,12 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
+            VirtualMachineScaleSetApplications = new VirtualMachineScaleSetApplicationsOperations(this);
             VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachines = new VirtualMachinesOperations(this);
+            VirtualMachineApplications = new VirtualMachineApplicationsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
             VirtualMachineImagesEdgeZone = new VirtualMachineImagesEdgeZoneOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
