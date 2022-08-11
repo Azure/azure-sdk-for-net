@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 {
 
     /// <summary>
-    /// Defines values for RoleDisasterRecovery.
+    /// Defines values for PublicNetworkAccess.
     /// </summary>
-    public static class RoleDisasterRecovery
+    public static class PublicNetworkAccess
     {
-        public const string Primary = "Primary";
-        public const string PrimaryNotReplicating = "PrimaryNotReplicating";
-        public const string Secondary = "Secondary";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
+        public const string SecuredByPerimeter = "SecuredByPerimeter";
     }
 }
