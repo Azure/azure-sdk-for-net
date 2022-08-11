@@ -7,6 +7,9 @@
 - Added `AnalyzeActionsOperation.Cancel` and `CancelAsync` to cancel a batch of actions.
 - Added `AnalyzeActionsResult.AnalyzeHealthcareEntitiesResults` to get healthcare entities from a batch of actions.
 - Added `TextAnalyticsActions.AnalyzeHealthcareEntitiesActions` to analyze healthcare entities in a batch of actions.
+- Added `TextAnalyticsClient.StartRecognizeCustomEntities` and `StartRecognizeCustomEntitiesAsync` to recognize custom entities in a collection of documents.
+- Added `TextAnalyticsClient.StartSingleLabelClassify` and `StartSingleLabelClassifyAsync` to classify documents with a single label.
+- Added `TextAnalyticsClient.StartMultiLabelClassify` and `StartMultiLabelClassifyAsync` to classify documents with multiple labels.
 
 ### Breaking Changes
 

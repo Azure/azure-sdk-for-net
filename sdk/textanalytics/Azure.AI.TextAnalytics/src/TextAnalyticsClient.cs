@@ -685,6 +685,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, language, options, cancellationToken);
 
@@ -712,6 +713,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual RecognizeCustomEntitiesOperation StartRecognizeCustomEntities(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.StartRecognizeCustomEntities(documents, projectName, deploymentName, options, cancellationToken);
 
@@ -744,6 +746,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
 
@@ -771,6 +774,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task<RecognizeCustomEntitiesOperation> StartRecognizeCustomEntitiesAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, RecognizeCustomEntitiesOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartRecognizeCustomEntitiesAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
 
@@ -1636,6 +1640,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
 
@@ -1662,6 +1667,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual ClassifyDocumentOperation StartSingleLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.StartSingleLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
 
@@ -1693,6 +1699,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
 
@@ -1719,6 +1726,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task<ClassifyDocumentOperation> StartSingleLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, SingleLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartSingleLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
 
@@ -1754,6 +1762,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, language, options, cancellationToken);
 
@@ -1780,6 +1789,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual ClassifyDocumentOperation StartMultiLabelClassify(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             _serviceClient.StartMultiLabelClassify(documents, projectName, deploymentName, options, cancellationToken);
 
@@ -1811,6 +1821,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<string> documents, string projectName, string deploymentName, string language = default, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, language, options, cancellationToken).ConfigureAwait(false);
 
@@ -1837,6 +1848,7 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
+        /// <exception cref="NotSupportedException">Not supported by API versions v3.0, v3.1.</exception>
         public virtual async Task<ClassifyDocumentOperation> StartMultiLabelClassifyAsync(IEnumerable<TextDocumentInput> documents, string projectName, string deploymentName, MultiLabelClassifyOptions options = default, CancellationToken cancellationToken = default) =>
             await _serviceClient.StartMultiLabelClassifyAsync(documents, projectName, deploymentName, options, cancellationToken).ConfigureAwait(false);
 
