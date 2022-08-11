@@ -30,6 +30,7 @@ Returned when you pass an invalid API key. Search service uses two types of keys
 Returned when a resource does not exist on the server. If you are managing or querying an index, check the syntax and verify the index name is specified correctly.
 
 ## 429 too many requests
+
 If this error occurs while you are trying to create an index, it means you already have the maximum number of indexes allowed for your pricing tier. A count of the indexes stored in Azure Cognitive Search is visible in the search service dashboard on the [Azure portal](https://portal.azure.com/). To view the indexes by name, click the Index tile. Alternatively, you can also get a list of the indexes by name using the [GetIndexNames() method](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexes.searchindexclient.getindexnamesasync).
 
 If this error occurs during document upload, it indicates that you've exceeded your quota on the number of documents per index. You must either create a new index or upgrade for higher capacity limits.
