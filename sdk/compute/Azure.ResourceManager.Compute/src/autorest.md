@@ -18,6 +18,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+update-required-copy:
+  GalleryImage: OSType
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
