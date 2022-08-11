@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Authorization
             );
         }
 
-        /// <summary> Gets a collection of ProviderOperationsResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of ProviderOperationsMetadataResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProviderOperationsResources and their operations over a ProviderOperationsResource. </returns>
-        public static ProviderOperationsCollection GetAllProviderOperations(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ProviderOperationsMetadataResources and their operations over a ProviderOperationsMetadataResource. </returns>
+        public static ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetAllProviderOperations();
+            return GetExtensionClient(tenantResource).GetAllProviderOperationsMetadata();
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProviderOperationsResource>> GetProviderOperationsAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetAllProviderOperations().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAllProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProviderOperationsResource> GetProviderOperations(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetAllProviderOperations().Get(resourceProviderNamespace, expand, cancellationToken);
+            return tenantResource.GetAllProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary>
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzurePermission> GetAzurePermissionsForResourceGroupsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAzurePermissionsForResourceGroupsAsync(cancellationToken);
         }
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzurePermission> GetAzurePermissionsForResourceGroups(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAzurePermissionsForResourceGroups(cancellationToken);
         }
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzurePermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
             Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzurePermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(this ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
             Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
@@ -237,10 +237,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RoleDefinitionResource>> GetRoleDefinitionAsync(this ArmResource armResource, string roleDefinitionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<RoleDefinitionResource>> GetRoleDefinitionAsync(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             return await armResource.GetRoleDefinitions().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
         }
@@ -253,10 +252,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RoleDefinitionResource> GetRoleDefinition(this ArmResource armResource, string roleDefinitionId, CancellationToken cancellationToken = default)
+        public static Response<RoleDefinitionResource> GetRoleDefinition(this ArmResource armResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
         {
             return armResource.GetRoleDefinitions().Get(roleDefinitionId, cancellationToken);
         }
@@ -640,20 +638,20 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region ProviderOperationsResource
+        #region ProviderOperationsMetadataResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderOperationsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderOperationsResource.CreateResourceIdentifier" /> to create a <see cref="ProviderOperationsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderOperationsResource" /> object. </returns>
-        public static ProviderOperationsResource GetProviderOperationsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProviderOperationsMetadataResource" /> object. </returns>
+        public static ProviderOperationsMetadataResource GetProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderOperationsResource.ValidateResourceId(id);
-                return new ProviderOperationsResource(client, id);
+                ProviderOperationsMetadataResource.ValidateResourceId(id);
+                return new ProviderOperationsMetadataResource(client, id);
             }
             );
         }

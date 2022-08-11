@@ -73,7 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthProviderAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = await client.GetOAuthProviderAsync("<oauthProviderId>");
@@ -149,7 +149,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthProvider with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = client.GetOAuthProvider("<oauthProviderId>");
@@ -226,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -239,16 +239,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     appId = "<OAuthProviderAppId>",
-        ///     appSecret = "<OAuthProviderAppSecret>",
-        ///     apiKey = "<OAuthProviderApiKey>",
-        ///     isProductionApp = false,
-        ///     name = "<OAuthProviderName>",
-        ///     description = "<OAuthProviderDescription>",
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -352,7 +352,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -365,16 +365,16 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     appId = "<OAuthProviderAppId>",
-        ///     appSecret = "<OAuthProviderAppSecret>",
-        ///     apiKey = "<OAuthProviderApiKey>",
-        ///     isProductionApp = false,
-        ///     name = "<OAuthProviderName>",
-        ///     description = "<OAuthProviderDescription>",
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -477,7 +477,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<oauthProviderId>");
@@ -513,7 +513,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<oauthProviderId>");
@@ -562,7 +562,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthProvidersAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetOAuthProvidersAsync())
@@ -574,7 +574,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthProvidersAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetOAuthProvidersAsync(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -668,7 +668,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthProviders and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetOAuthProviders())
@@ -680,7 +680,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOAuthProviders with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetOAuthProviders(new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))

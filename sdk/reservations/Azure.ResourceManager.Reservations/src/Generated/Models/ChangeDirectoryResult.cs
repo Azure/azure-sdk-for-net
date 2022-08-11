@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Change directory result for reservation order or reservation. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="name"> Name of the reservation order or reservation. </param>
         /// <param name="isSucceeded"> True if change directory operation succeeded on this reservation order or reservation. </param>
         /// <param name="error"> Error reason if operation failed. Null otherwise. </param>
-        internal ChangeDirectoryResult(string id, string name, bool? isSucceeded, string error)
+        internal ChangeDirectoryResult(Guid? id, string name, bool? isSucceeded, string error)
         {
             Id = id;
             Name = name;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Identifier of the reservation order or reservation. </summary>
-        public string Id { get; }
+        public Guid? Id { get; }
         /// <summary> Name of the reservation order or reservation. </summary>
         public string Name { get; }
         /// <summary> True if change directory operation succeeded on this reservation order or reservation. </summary>

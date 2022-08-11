@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static SupportTopic DeserializeSupportTopic(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> pesId = default;
+            Optional<ResourceIdentifier> pesId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -25,7 +25,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("pesId"))
                 {
-                    pesId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    pesId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

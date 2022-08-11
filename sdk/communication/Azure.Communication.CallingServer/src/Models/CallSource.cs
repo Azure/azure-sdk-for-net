@@ -24,6 +24,6 @@ namespace Azure.Communication.CallingServer
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
         public PhoneNumberIdentifier CallerId { get; set; }
         /// <summary> Gets the identifier. </summary>
-        public CommunicationIdentifier Identifier { get; set; }
+        public CommunicationIdentifier Identifier { get; }
     }
 }

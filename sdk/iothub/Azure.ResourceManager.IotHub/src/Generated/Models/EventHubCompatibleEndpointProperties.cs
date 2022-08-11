@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="retentionTimeInDays"> The retention time for device-to-cloud messages in days. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
         /// <param name="partitionCount"> The number of partitions for receiving device-to-cloud messages in the Event Hub-compatible endpoint. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#device-to-cloud-messages. </param>
         /// <param name="partitionIds"> The partition ids in the Event Hub-compatible endpoint. </param>
-        /// <param name="path"> The Event Hub-compatible name. </param>
+        /// <param name="eventHubCompatibleName"> The Event Hub-compatible name. </param>
         /// <param name="endpoint"> The Event Hub-compatible endpoint. </param>
-        internal EventHubCompatibleEndpointProperties(long? retentionTimeInDays, int? partitionCount, IReadOnlyList<string> partitionIds, string path, string endpoint)
+        internal EventHubCompatibleEndpointProperties(long? retentionTimeInDays, int? partitionCount, IReadOnlyList<string> partitionIds, string eventHubCompatibleName, string endpoint)
         {
             RetentionTimeInDays = retentionTimeInDays;
             PartitionCount = partitionCount;
             PartitionIds = partitionIds;
-            Path = path;
+            EventHubCompatibleName = eventHubCompatibleName;
             Endpoint = endpoint;
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The partition ids in the Event Hub-compatible endpoint. </summary>
         public IReadOnlyList<string> PartitionIds { get; }
         /// <summary> The Event Hub-compatible name. </summary>
-        public string Path { get; }
+        public string EventHubCompatibleName { get; }
         /// <summary> The Event Hub-compatible endpoint. </summary>
         public string Endpoint { get; }
     }

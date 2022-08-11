@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -73,168 +73,168 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
-        ///     referredEntities = new {
-        ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             businessAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             classifications = new[] {
-        ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
-        ///                     removePropagationsOnEntityDelete = true,
-        ///                     validityPeriods = new[] {
-        ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
-        ///                         }
-        ///                     },
-        ///                     source = "<AtlasClassificationSource>",
-        ///                     sourceDetails = new {
-        ///                         key = new {},
-        ///                     },
-        ///                 }
-        ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
-        ///             customAttributes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
-        ///             isIncomplete = true,
-        ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
-        ///             },
-        ///             meanings = new[] {
-        ///                 new {
-        ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
-        ///                 }
-        ///             },
-        ///             provenanceType = 1234,
-        ///             proxy = true,
-        ///             relationshipAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
-        ///             sourceDetails = new {
-        ///                 key = new {},
-        ///             },
-        ///             contacts = new {
-        ///                 key = new[] {
-        ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///         },
-        ///     },
         ///     entity = new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
         ///         businessAttributes = new {
         ///             key = new {},
         ///         },
         ///         classifications = new[] {
         ///             new {
-        ///                 attributes = new {
-        ///                     key = new {},
-        ///                 },
-        ///                 typeName = "<AtlasStructTypeName>",
-        ///                 lastModifiedTS = "<LastModifiedTS>",
-        ///                 entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                 entityStatus = "<ACTIVE>",
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
         ///                 removePropagationsOnEntityDelete = true,
         ///                 validityPeriods = new[] {
         ///                     new {
-        ///                         endTime = "<TimeBoundaryEndTime>",
-        ///                         startTime = "<TimeBoundaryStartTime>",
-        ///                         timeZone = "<TimeBoundaryTimeZone>",
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
         ///                     }
         ///                 },
-        ///                 source = "<AtlasClassificationSource>",
+        ///                 source = "<source>",
         ///                 sourceDetails = new {
         ///                     key = new {},
         ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
         ///             }
         ///         },
-        ///         createTime = 1234,
-        ///         createdBy = "<AtlasEntityCreatedBy>",
+        ///         createTime = 123.45f,
+        ///         createdBy = "<createdBy>",
         ///         customAttributes = new {
         ///             key = "<String>",
         ///         },
-        ///         guid = "<AtlasEntityGuid>",
-        ///         homeId = "<AtlasEntityHomeId>",
+        ///         guid = "<guid>",
+        ///         homeId = "<homeId>",
         ///         isIncomplete = true,
         ///         labels = new[] {
-        ///             "<AtlasEntityLabelsItem>"
+        ///             "<String>"
         ///         },
         ///         meanings = new[] {
         ///             new {
         ///                 confidence = 1234,
-        ///                 createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                 description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                 displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                 expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                 relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                 source = "<AtlasTermAssignmentHeaderSource>",
-        ///                 status = "<DISCOVERED>",
-        ///                 steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                 termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DISCOVERED",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
         ///             }
         ///         },
-        ///         provenanceType = 1234,
+        ///         provenanceType = 123.45f,
         ///         proxy = true,
         ///         relationshipAttributes = new {
         ///             key = new {},
         ///         },
-        ///         status = "<ACTIVE>",
-        ///         updateTime = 1234,
-        ///         updatedBy = "<AtlasEntityUpdatedBy>",
-        ///         version = 1234,
-        ///         source = "<AtlasEntitySource>",
+        ///         status = "ACTIVE",
+        ///         updateTime = 123.45f,
+        ///         updatedBy = "<updatedBy>",
+        ///         version = 123.45f,
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
         ///         contacts = new {
         ///             key = new[] {
         ///                 new {
-        ///                     id = "<ContactBasicId>",
-        ///                     info = "<ContactBasicInfo>",
+        ///                     id = "<id>",
+        ///                     info = "<info>",
         ///                 }
         ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///     },
+        ///     referredEntities = new {
+        ///         key = new {
+        ///             businessAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             customAttributes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
+        ///             isIncomplete = true,
+        ///             labels = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             meanings = new[] {
+        ///                 new {
+        ///                     confidence = 1234,
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             provenanceType = 123.45f,
+        ///             proxy = true,
+        ///             relationshipAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         },
         ///     },
         /// };
@@ -243,13 +243,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -258,6 +252,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -274,13 +271,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -289,6 +283,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -305,6 +302,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -314,17 +314,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -337,6 +330,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -370,7 +366,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -382,15 +382,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -403,6 +397,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -425,6 +422,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdate and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -476,168 +476,168 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
-        ///     referredEntities = new {
-        ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             businessAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             classifications = new[] {
-        ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
-        ///                     removePropagationsOnEntityDelete = true,
-        ///                     validityPeriods = new[] {
-        ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
-        ///                         }
-        ///                     },
-        ///                     source = "<AtlasClassificationSource>",
-        ///                     sourceDetails = new {
-        ///                         key = new {},
-        ///                     },
-        ///                 }
-        ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
-        ///             customAttributes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
-        ///             isIncomplete = true,
-        ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
-        ///             },
-        ///             meanings = new[] {
-        ///                 new {
-        ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
-        ///                 }
-        ///             },
-        ///             provenanceType = 1234,
-        ///             proxy = true,
-        ///             relationshipAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
-        ///             sourceDetails = new {
-        ///                 key = new {},
-        ///             },
-        ///             contacts = new {
-        ///                 key = new[] {
-        ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///         },
-        ///     },
         ///     entity = new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
         ///         businessAttributes = new {
         ///             key = new {},
         ///         },
         ///         classifications = new[] {
         ///             new {
-        ///                 attributes = new {
-        ///                     key = new {},
-        ///                 },
-        ///                 typeName = "<AtlasStructTypeName>",
-        ///                 lastModifiedTS = "<LastModifiedTS>",
-        ///                 entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                 entityStatus = "<ACTIVE>",
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
         ///                 removePropagationsOnEntityDelete = true,
         ///                 validityPeriods = new[] {
         ///                     new {
-        ///                         endTime = "<TimeBoundaryEndTime>",
-        ///                         startTime = "<TimeBoundaryStartTime>",
-        ///                         timeZone = "<TimeBoundaryTimeZone>",
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
         ///                     }
         ///                 },
-        ///                 source = "<AtlasClassificationSource>",
+        ///                 source = "<source>",
         ///                 sourceDetails = new {
         ///                     key = new {},
         ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
         ///             }
         ///         },
-        ///         createTime = 1234,
-        ///         createdBy = "<AtlasEntityCreatedBy>",
+        ///         createTime = 123.45f,
+        ///         createdBy = "<createdBy>",
         ///         customAttributes = new {
         ///             key = "<String>",
         ///         },
-        ///         guid = "<AtlasEntityGuid>",
-        ///         homeId = "<AtlasEntityHomeId>",
+        ///         guid = "<guid>",
+        ///         homeId = "<homeId>",
         ///         isIncomplete = true,
         ///         labels = new[] {
-        ///             "<AtlasEntityLabelsItem>"
+        ///             "<String>"
         ///         },
         ///         meanings = new[] {
         ///             new {
         ///                 confidence = 1234,
-        ///                 createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                 description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                 displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                 expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                 relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                 source = "<AtlasTermAssignmentHeaderSource>",
-        ///                 status = "<DISCOVERED>",
-        ///                 steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                 termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DISCOVERED",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
         ///             }
         ///         },
-        ///         provenanceType = 1234,
+        ///         provenanceType = 123.45f,
         ///         proxy = true,
         ///         relationshipAttributes = new {
         ///             key = new {},
         ///         },
-        ///         status = "<ACTIVE>",
-        ///         updateTime = 1234,
-        ///         updatedBy = "<AtlasEntityUpdatedBy>",
-        ///         version = 1234,
-        ///         source = "<AtlasEntitySource>",
+        ///         status = "ACTIVE",
+        ///         updateTime = 123.45f,
+        ///         updatedBy = "<updatedBy>",
+        ///         version = 123.45f,
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
         ///         contacts = new {
         ///             key = new[] {
         ///                 new {
-        ///                     id = "<ContactBasicId>",
-        ///                     info = "<ContactBasicInfo>",
+        ///                     id = "<id>",
+        ///                     info = "<info>",
         ///                 }
         ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///     },
+        ///     referredEntities = new {
+        ///         key = new {
+        ///             businessAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             customAttributes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
+        ///             isIncomplete = true,
+        ///             labels = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             meanings = new[] {
+        ///                 new {
+        ///                     confidence = 1234,
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             provenanceType = 123.45f,
+        ///             proxy = true,
+        ///             relationshipAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         },
         ///     },
         /// };
@@ -646,13 +646,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -661,6 +655,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -677,13 +674,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -692,6 +686,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -708,6 +705,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -717,17 +717,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -740,6 +733,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -773,7 +769,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -785,15 +785,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -806,6 +800,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -828,6 +825,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -865,7 +865,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidsAsync(new String[]{"<guids>"});
@@ -876,62 +876,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidsAsync(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -940,6 +891,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -968,6 +922,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -977,18 +977,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -1001,6 +994,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       createTime: number, # Optional. The created time of the record.
@@ -1034,8 +1030,12 @@ namespace Azure.Analytics.Purview.Catalog
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entities.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -1071,7 +1071,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuids with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuids(new String[]{"<guids>"});
@@ -1082,62 +1082,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuids with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuids(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1146,6 +1097,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -1174,6 +1128,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1183,18 +1183,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -1207,6 +1200,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       createTime: number, # Optional. The created time of the record.
@@ -1240,8 +1236,12 @@ namespace Azure.Analytics.Purview.Catalog
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entities.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -1278,7 +1278,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntitiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -1291,171 +1291,171 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntitiesAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
-        ///     referredEntities = new {
-        ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             businessAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             classifications = new[] {
-        ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
-        ///                     removePropagationsOnEntityDelete = true,
-        ///                     validityPeriods = new[] {
-        ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
-        ///                         }
-        ///                     },
-        ///                     source = "<AtlasClassificationSource>",
-        ///                     sourceDetails = new {
-        ///                         key = new {},
-        ///                     },
-        ///                 }
-        ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
-        ///             customAttributes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
-        ///             isIncomplete = true,
-        ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
-        ///             },
-        ///             meanings = new[] {
-        ///                 new {
-        ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
-        ///                 }
-        ///             },
-        ///             provenanceType = 1234,
-        ///             proxy = true,
-        ///             relationshipAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
-        ///             sourceDetails = new {
-        ///                 key = new {},
-        ///             },
-        ///             contacts = new {
-        ///                 key = new[] {
-        ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///         },
-        ///     },
         ///     entities = new[] {
         ///         new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             businessAttributes = new {
         ///                 key = new {},
         ///             },
         ///             classifications = new[] {
         ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
         ///                     removePropagationsOnEntityDelete = true,
         ///                     validityPeriods = new[] {
         ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
         ///                         }
         ///                     },
-        ///                     source = "<AtlasClassificationSource>",
+        ///                     source = "<source>",
         ///                     sourceDetails = new {
         ///                         key = new {},
         ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
         ///                 }
         ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             customAttributes = new {
         ///                 key = "<String>",
         ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
         ///             isIncomplete = true,
         ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
+        ///                 "<String>"
         ///             },
         ///             meanings = new[] {
         ///                 new {
         ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
         ///                 }
         ///             },
-        ///             provenanceType = 1234,
+        ///             provenanceType = 123.45f,
         ///             proxy = true,
         ///             relationshipAttributes = new {
         ///                 key = new {},
         ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
         ///             sourceDetails = new {
         ///                 key = new {},
         ///             },
         ///             contacts = new {
         ///                 key = new[] {
         ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
+        ///                         id = "<id>",
+        ///                         info = "<info>",
         ///                     }
         ///                 },
         ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
+        ///     },
+        ///     referredEntities = new {
+        ///         key = new {
+        ///             businessAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             customAttributes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
+        ///             isIncomplete = true,
+        ///             labels = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             meanings = new[] {
+        ///                 new {
+        ///                     confidence = 1234,
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             provenanceType = 123.45f,
+        ///             proxy = true,
+        ///             relationshipAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
         ///     },
         /// };
         /// 
@@ -1463,13 +1463,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1478,6 +1472,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -1494,13 +1491,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1509,6 +1503,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -1525,6 +1522,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1534,18 +1534,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -1558,6 +1551,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       createTime: number, # Optional. The created time of the record.
@@ -1591,8 +1587,12 @@ namespace Azure.Analytics.Purview.Catalog
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entities.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -1604,15 +1604,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -1625,6 +1619,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -1647,6 +1644,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -1685,7 +1685,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntities and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -1698,171 +1698,171 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntities with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
-        ///     referredEntities = new {
-        ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             businessAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             classifications = new[] {
-        ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
-        ///                     removePropagationsOnEntityDelete = true,
-        ///                     validityPeriods = new[] {
-        ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
-        ///                         }
-        ///                     },
-        ///                     source = "<AtlasClassificationSource>",
-        ///                     sourceDetails = new {
-        ///                         key = new {},
-        ///                     },
-        ///                 }
-        ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
-        ///             customAttributes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
-        ///             isIncomplete = true,
-        ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
-        ///             },
-        ///             meanings = new[] {
-        ///                 new {
-        ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
-        ///                 }
-        ///             },
-        ///             provenanceType = 1234,
-        ///             proxy = true,
-        ///             relationshipAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
-        ///             sourceDetails = new {
-        ///                 key = new {},
-        ///             },
-        ///             contacts = new {
-        ///                 key = new[] {
-        ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///         },
-        ///     },
         ///     entities = new[] {
         ///         new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             businessAttributes = new {
         ///                 key = new {},
         ///             },
         ///             classifications = new[] {
         ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
         ///                     removePropagationsOnEntityDelete = true,
         ///                     validityPeriods = new[] {
         ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
         ///                         }
         ///                     },
-        ///                     source = "<AtlasClassificationSource>",
+        ///                     source = "<source>",
         ///                     sourceDetails = new {
         ///                         key = new {},
         ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
         ///                 }
         ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
         ///             customAttributes = new {
         ///                 key = "<String>",
         ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
         ///             isIncomplete = true,
         ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
+        ///                 "<String>"
         ///             },
         ///             meanings = new[] {
         ///                 new {
         ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
         ///                 }
         ///             },
-        ///             provenanceType = 1234,
+        ///             provenanceType = 123.45f,
         ///             proxy = true,
         ///             relationshipAttributes = new {
         ///                 key = new {},
         ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
         ///             sourceDetails = new {
         ///                 key = new {},
         ///             },
         ///             contacts = new {
         ///                 key = new[] {
         ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
+        ///                         id = "<id>",
+        ///                         info = "<info>",
         ///                     }
         ///                 },
         ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         }
+        ///     },
+        ///     referredEntities = new {
+        ///         key = new {
+        ///             businessAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             customAttributes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
+        ///             isIncomplete = true,
+        ///             labels = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             meanings = new[] {
+        ///                 new {
+        ///                     confidence = 1234,
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             provenanceType = 123.45f,
+        ///             proxy = true,
+        ///             relationshipAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
         ///     },
         /// };
         /// 
@@ -1870,13 +1870,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1885,6 +1879,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -1901,13 +1898,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -1916,6 +1910,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -1932,6 +1929,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1941,18 +1941,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -1965,6 +1958,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       createTime: number, # Optional. The created time of the record.
@@ -1998,8 +1994,12 @@ namespace Azure.Analytics.Purview.Catalog
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entities.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -2011,15 +2011,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2032,6 +2026,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -2054,6 +2051,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -2088,20 +2088,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuidsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByGuidsAsync(new String[]{"<guids>"});
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2110,6 +2104,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -2126,13 +2123,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2141,6 +2135,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -2157,6 +2154,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2170,15 +2170,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2191,6 +2185,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -2213,6 +2210,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -2247,20 +2247,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuids with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByGuids(new String[]{"<guids>"});
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2269,6 +2263,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -2285,13 +2282,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2300,6 +2294,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -2316,6 +2313,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2329,15 +2329,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2350,6 +2344,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -2372,6 +2369,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -2406,7 +2406,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -2417,33 +2417,33 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationAsync with all request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
         ///     classification = new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     },
         ///     entityGuids = new[] {
-        ///         "<ClassificationAssociateRequestEntityGuidsItem>"
+        ///         "<String>"
         ///     },
         /// };
         /// 
@@ -2459,9 +2459,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Schema for <c>ClassificationAssociateRequest</c>:
         /// <code>{
         ///   classification: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     entityGuid: string, # Optional. The GUID of the entity.
         ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2474,6 +2471,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ], # Optional. An array of time boundaries indicating validity periods.
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.
         ///   entityGuids: [string], # Optional. The GUID of the entity.
         /// }
@@ -2508,7 +2508,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassification.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -2519,33 +2519,33 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassification with all request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
         ///     classification = new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     },
         ///     entityGuids = new[] {
-        ///         "<ClassificationAssociateRequestEntityGuidsItem>"
+        ///         "<String>"
         ///     },
         /// };
         /// 
@@ -2561,9 +2561,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// Schema for <c>ClassificationAssociateRequest</c>:
         /// <code>{
         ///   classification: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     entityGuid: string, # Optional. The GUID of the entity.
         ///     entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///     removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2576,6 +2573,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ], # Optional. An array of time boundaries indicating validity periods.
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of a classification; it doesn&apos;t have an identity, this object exists only when associated with an entity.
         ///   entityGuids: [string], # Optional. The GUID of the entity.
         /// }
@@ -2613,7 +2613,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidAsync("<guid>");
@@ -2624,62 +2624,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidAsync("<guid>", true, true);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2688,6 +2639,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -2716,6 +2670,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2725,17 +2725,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2748,6 +2741,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -2781,7 +2777,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -2817,7 +2817,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuid("<guid>");
@@ -2828,62 +2828,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuid with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuid("<guid>", true, true);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -2892,6 +2843,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -2920,6 +2874,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -2929,17 +2929,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -2952,6 +2945,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -2985,7 +2981,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -3026,7 +3026,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityAttributeByGuidAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -3035,13 +3035,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3050,6 +3044,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -3066,13 +3063,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3081,6 +3075,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -3097,6 +3094,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3110,15 +3110,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -3131,6 +3125,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -3153,6 +3150,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -3197,7 +3197,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityAttributeByGuid with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -3206,13 +3206,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3221,6 +3215,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -3237,13 +3234,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3252,6 +3246,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -3268,6 +3265,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3281,15 +3281,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -3302,6 +3296,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -3324,6 +3321,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -3361,20 +3361,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByGuidAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3383,6 +3377,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -3399,13 +3396,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3414,6 +3408,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -3430,6 +3427,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3443,15 +3443,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -3464,6 +3458,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -3486,6 +3483,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -3521,20 +3521,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByGuid("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3543,6 +3537,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -3559,13 +3556,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3574,6 +3568,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -3590,6 +3587,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3603,15 +3603,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -3624,6 +3618,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -3646,6 +3643,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -3682,15 +3682,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetClassificationAsync("<guid>", "<classificationName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3699,6 +3696,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3708,9 +3708,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -3723,6 +3720,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -3758,15 +3758,12 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassification with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetClassification("<guid>", "<classificationName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -3775,6 +3772,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3784,9 +3784,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -3799,6 +3796,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -3834,7 +3834,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
@@ -3872,7 +3872,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassification with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteClassification("<guid>", "<classificationName>");
@@ -3909,7 +3909,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetClassificationsAsync("<guid>");
@@ -3969,7 +3969,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassifications with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetClassifications("<guid>");
@@ -4030,30 +4030,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -4066,11 +4066,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4083,6 +4080,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -4118,30 +4118,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassifications with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -4154,11 +4154,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4171,6 +4168,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -4206,30 +4206,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -4242,11 +4242,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4259,6 +4256,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -4294,30 +4294,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassifications with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -4330,11 +4330,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4347,6 +4344,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -4391,7 +4391,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByUniqueAttributesAsync("<typeName>");
@@ -4402,62 +4402,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -4466,6 +4417,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -4494,6 +4448,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4503,17 +4503,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4526,6 +4519,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -4559,7 +4555,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -4603,7 +4603,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByUniqueAttributes("<typeName>");
@@ -4614,62 +4614,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributes with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -4678,6 +4629,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -4706,6 +4660,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entity").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entity").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4715,17 +4715,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4738,6 +4731,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -4771,7 +4767,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -4816,7 +4816,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -4829,168 +4829,168 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
-        ///     referredEntities = new {
-        ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             businessAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             classifications = new[] {
-        ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
-        ///                     removePropagationsOnEntityDelete = true,
-        ///                     validityPeriods = new[] {
-        ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
-        ///                         }
-        ///                     },
-        ///                     source = "<AtlasClassificationSource>",
-        ///                     sourceDetails = new {
-        ///                         key = new {},
-        ///                     },
-        ///                 }
-        ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
-        ///             customAttributes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
-        ///             isIncomplete = true,
-        ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
-        ///             },
-        ///             meanings = new[] {
-        ///                 new {
-        ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
-        ///                 }
-        ///             },
-        ///             provenanceType = 1234,
-        ///             proxy = true,
-        ///             relationshipAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
-        ///             sourceDetails = new {
-        ///                 key = new {},
-        ///             },
-        ///             contacts = new {
-        ///                 key = new[] {
-        ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///         },
-        ///     },
         ///     entity = new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
         ///         businessAttributes = new {
         ///             key = new {},
         ///         },
         ///         classifications = new[] {
         ///             new {
-        ///                 attributes = new {
-        ///                     key = new {},
-        ///                 },
-        ///                 typeName = "<AtlasStructTypeName>",
-        ///                 lastModifiedTS = "<LastModifiedTS>",
-        ///                 entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                 entityStatus = "<ACTIVE>",
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
         ///                 removePropagationsOnEntityDelete = true,
         ///                 validityPeriods = new[] {
         ///                     new {
-        ///                         endTime = "<TimeBoundaryEndTime>",
-        ///                         startTime = "<TimeBoundaryStartTime>",
-        ///                         timeZone = "<TimeBoundaryTimeZone>",
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
         ///                     }
         ///                 },
-        ///                 source = "<AtlasClassificationSource>",
+        ///                 source = "<source>",
         ///                 sourceDetails = new {
         ///                     key = new {},
         ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
         ///             }
         ///         },
-        ///         createTime = 1234,
-        ///         createdBy = "<AtlasEntityCreatedBy>",
+        ///         createTime = 123.45f,
+        ///         createdBy = "<createdBy>",
         ///         customAttributes = new {
         ///             key = "<String>",
         ///         },
-        ///         guid = "<AtlasEntityGuid>",
-        ///         homeId = "<AtlasEntityHomeId>",
+        ///         guid = "<guid>",
+        ///         homeId = "<homeId>",
         ///         isIncomplete = true,
         ///         labels = new[] {
-        ///             "<AtlasEntityLabelsItem>"
+        ///             "<String>"
         ///         },
         ///         meanings = new[] {
         ///             new {
         ///                 confidence = 1234,
-        ///                 createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                 description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                 displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                 expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                 relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                 source = "<AtlasTermAssignmentHeaderSource>",
-        ///                 status = "<DISCOVERED>",
-        ///                 steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                 termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DISCOVERED",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
         ///             }
         ///         },
-        ///         provenanceType = 1234,
+        ///         provenanceType = 123.45f,
         ///         proxy = true,
         ///         relationshipAttributes = new {
         ///             key = new {},
         ///         },
-        ///         status = "<ACTIVE>",
-        ///         updateTime = 1234,
-        ///         updatedBy = "<AtlasEntityUpdatedBy>",
-        ///         version = 1234,
-        ///         source = "<AtlasEntitySource>",
+        ///         status = "ACTIVE",
+        ///         updateTime = 123.45f,
+        ///         updatedBy = "<updatedBy>",
+        ///         version = 123.45f,
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
         ///         contacts = new {
         ///             key = new[] {
         ///                 new {
-        ///                     id = "<ContactBasicId>",
-        ///                     info = "<ContactBasicInfo>",
+        ///                     id = "<id>",
+        ///                     info = "<info>",
         ///                 }
         ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///     },
+        ///     referredEntities = new {
+        ///         key = new {
+        ///             businessAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             customAttributes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
+        ///             isIncomplete = true,
+        ///             labels = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             meanings = new[] {
+        ///                 new {
+        ///                     confidence = 1234,
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             provenanceType = 123.45f,
+        ///             proxy = true,
+        ///             relationshipAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         },
         ///     },
         /// };
@@ -4999,13 +4999,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5014,6 +5008,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -5030,13 +5027,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5045,6 +5039,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -5061,6 +5058,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5070,17 +5070,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5093,6 +5086,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -5126,7 +5122,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -5138,15 +5138,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5159,6 +5153,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -5181,6 +5178,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -5228,7 +5228,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -5241,168 +5241,168 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
-        ///     referredEntities = new {
-        ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
-        ///             businessAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             classifications = new[] {
-        ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
-        ///                     removePropagationsOnEntityDelete = true,
-        ///                     validityPeriods = new[] {
-        ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
-        ///                         }
-        ///                     },
-        ///                     source = "<AtlasClassificationSource>",
-        ///                     sourceDetails = new {
-        ///                         key = new {},
-        ///                     },
-        ///                 }
-        ///             },
-        ///             createTime = 1234,
-        ///             createdBy = "<AtlasEntityCreatedBy>",
-        ///             customAttributes = new {
-        ///                 key = "<String>",
-        ///             },
-        ///             guid = "<AtlasEntityGuid>",
-        ///             homeId = "<AtlasEntityHomeId>",
-        ///             isIncomplete = true,
-        ///             labels = new[] {
-        ///                 "<AtlasEntityLabelsItem>"
-        ///             },
-        ///             meanings = new[] {
-        ///                 new {
-        ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
-        ///                 }
-        ///             },
-        ///             provenanceType = 1234,
-        ///             proxy = true,
-        ///             relationshipAttributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             status = "<ACTIVE>",
-        ///             updateTime = 1234,
-        ///             updatedBy = "<AtlasEntityUpdatedBy>",
-        ///             version = 1234,
-        ///             source = "<AtlasEntitySource>",
-        ///             sourceDetails = new {
-        ///                 key = new {},
-        ///             },
-        ///             contacts = new {
-        ///                 key = new[] {
-        ///                     new {
-        ///                         id = "<ContactBasicId>",
-        ///                         info = "<ContactBasicInfo>",
-        ///                     }
-        ///                 },
-        ///             },
-        ///         },
-        ///     },
         ///     entity = new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
         ///         businessAttributes = new {
         ///             key = new {},
         ///         },
         ///         classifications = new[] {
         ///             new {
-        ///                 attributes = new {
-        ///                     key = new {},
-        ///                 },
-        ///                 typeName = "<AtlasStructTypeName>",
-        ///                 lastModifiedTS = "<LastModifiedTS>",
-        ///                 entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                 entityStatus = "<ACTIVE>",
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
         ///                 removePropagationsOnEntityDelete = true,
         ///                 validityPeriods = new[] {
         ///                     new {
-        ///                         endTime = "<TimeBoundaryEndTime>",
-        ///                         startTime = "<TimeBoundaryStartTime>",
-        ///                         timeZone = "<TimeBoundaryTimeZone>",
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
         ///                     }
         ///                 },
-        ///                 source = "<AtlasClassificationSource>",
+        ///                 source = "<source>",
         ///                 sourceDetails = new {
         ///                     key = new {},
         ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
         ///             }
         ///         },
-        ///         createTime = 1234,
-        ///         createdBy = "<AtlasEntityCreatedBy>",
+        ///         createTime = 123.45f,
+        ///         createdBy = "<createdBy>",
         ///         customAttributes = new {
         ///             key = "<String>",
         ///         },
-        ///         guid = "<AtlasEntityGuid>",
-        ///         homeId = "<AtlasEntityHomeId>",
+        ///         guid = "<guid>",
+        ///         homeId = "<homeId>",
         ///         isIncomplete = true,
         ///         labels = new[] {
-        ///             "<AtlasEntityLabelsItem>"
+        ///             "<String>"
         ///         },
         ///         meanings = new[] {
         ///             new {
         ///                 confidence = 1234,
-        ///                 createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                 description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                 displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                 expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                 relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                 source = "<AtlasTermAssignmentHeaderSource>",
-        ///                 status = "<DISCOVERED>",
-        ///                 steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                 termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                 createdBy = "<createdBy>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DISCOVERED",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
         ///             }
         ///         },
-        ///         provenanceType = 1234,
+        ///         provenanceType = 123.45f,
         ///         proxy = true,
         ///         relationshipAttributes = new {
         ///             key = new {},
         ///         },
-        ///         status = "<ACTIVE>",
-        ///         updateTime = 1234,
-        ///         updatedBy = "<AtlasEntityUpdatedBy>",
-        ///         version = 1234,
-        ///         source = "<AtlasEntitySource>",
+        ///         status = "ACTIVE",
+        ///         updateTime = 123.45f,
+        ///         updatedBy = "<updatedBy>",
+        ///         version = 123.45f,
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
         ///         contacts = new {
         ///             key = new[] {
         ///                 new {
-        ///                     id = "<ContactBasicId>",
-        ///                     info = "<ContactBasicInfo>",
+        ///                     id = "<id>",
+        ///                     info = "<info>",
         ///                 }
         ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///     },
+        ///     referredEntities = new {
+        ///         key = new {
+        ///             businessAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             customAttributes = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             guid = "<guid>",
+        ///             homeId = "<homeId>",
+        ///             isIncomplete = true,
+        ///             labels = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             meanings = new[] {
+        ///                 new {
+        ///                     confidence = 1234,
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             provenanceType = 123.45f,
+        ///             proxy = true,
+        ///             relationshipAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             status = "ACTIVE",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             version = 123.45f,
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         },
         ///     },
         /// };
@@ -5411,13 +5411,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5426,6 +5420,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -5442,13 +5439,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5457,6 +5451,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -5473,6 +5470,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5482,17 +5482,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///     typeName: string, # Optional. The name of the type.
-        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///     classifications: [
         ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///         typeName: string, # Optional. The name of the type.
-        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         entityGuid: string, # Optional. The GUID of the entity.
         ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///         removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5505,6 +5498,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         ], # Optional. An array of time boundaries indicating validity periods.
         ///         source: string, # Optional. indicate the source who create the classification detail
         ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///         typeName: string, # Optional. The name of the type.
+        ///         lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       }
         ///     ], # Optional. An array of classifications.
         ///     createTime: number, # Optional. The created time of the record.
@@ -5538,7 +5534,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     source: string, # Optional. indicate the source who create the classification detail
         ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///     typeName: string, # Optional. The name of the type.
+        ///     lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   }, # Optional. An instance of an entity - like hive_table, hive_database.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -5550,15 +5550,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5571,6 +5565,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -5593,6 +5590,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -5637,7 +5637,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttributeAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByUniqueAttributeAsync("<typeName>");
@@ -5648,20 +5648,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttributeAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5670,6 +5664,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -5686,13 +5683,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5701,6 +5695,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -5717,6 +5714,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5730,15 +5730,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5751,6 +5745,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -5773,6 +5770,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -5816,7 +5816,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttribute with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByUniqueAttribute("<typeName>");
@@ -5827,20 +5827,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttribute with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5849,6 +5843,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("isIncomplete").ToString());
@@ -5865,13 +5862,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("mutatedEntities").GetProperty("<test>")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -5880,6 +5874,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("isIncomplete").ToString());
@@ -5896,6 +5893,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5909,15 +5909,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;, # Optional. The entity headers of mutated entities.
         ///   partialUpdatedEntities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       classificationNames: [string], # Optional. An array of classification names.
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5930,6 +5924,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       displayText: string, # Optional. The display text.
@@ -5952,6 +5949,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///         }
         ///       ], # Optional. An array of term assignment headers.
         ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entity headers that partially updated.
         /// }
@@ -5989,7 +5989,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttributeAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>");
@@ -5998,7 +5998,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttributeAsync with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>");
@@ -6037,7 +6037,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttribute with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>");
@@ -6046,7 +6046,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttribute with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>");
@@ -6085,7 +6085,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6098,30 +6098,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -6134,11 +6134,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -6151,6 +6148,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -6187,7 +6187,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6200,30 +6200,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -6236,11 +6236,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -6253,6 +6250,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -6289,7 +6289,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6302,30 +6302,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -6338,11 +6338,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -6355,6 +6352,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -6391,7 +6391,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6404,30 +6404,30 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
         ///     new {
-        ///         attributes = new {
-        ///             key = new {},
-        ///         },
-        ///         typeName = "<AtlasStructTypeName>",
-        ///         lastModifiedTS = "<LastModifiedTS>",
-        ///         entityGuid = "<AtlasClassificationEntityGuid>",
-        ///         entityStatus = "<ACTIVE>",
+        ///         entityGuid = "<entityGuid>",
+        ///         entityStatus = "ACTIVE",
         ///         removePropagationsOnEntityDelete = true,
         ///         validityPeriods = new[] {
         ///             new {
-        ///                 endTime = "<TimeBoundaryEndTime>",
-        ///                 startTime = "<TimeBoundaryStartTime>",
-        ///                 timeZone = "<TimeBoundaryTimeZone>",
+        ///                 endTime = "<endTime>",
+        ///                 startTime = "<startTime>",
+        ///                 timeZone = "<timeZone>",
         ///             }
         ///         },
-        ///         source = "<AtlasClassificationSource>",
+        ///         source = "<source>",
         ///         sourceDetails = new {
         ///             key = new {},
         ///         },
+        ///         attributes = new {
+        ///             key = new {},
+        ///         },
+        ///         typeName = "<typeName>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
         ///     }
         /// };
         /// 
@@ -6440,11 +6440,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasClassification</c>:
+        /// Schema for <c>AtlasClassification</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   entityGuid: string, # Optional. The GUID of the entity.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -6457,6 +6454,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ], # Optional. An array of time boundaries indicating validity periods.
         ///   source: string, # Optional. indicate the source who create the classification detail
         ///   sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -6490,7 +6490,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassificationsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -6503,67 +6503,67 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassificationsAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
         ///     guidHeaderMap = new {
         ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             classificationNames = new[] {
-        ///                 "<AtlasEntityHeaderClassificationNamesItem>"
+        ///                 "<String>"
         ///             },
         ///             classifications = new[] {
         ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
         ///                     removePropagationsOnEntityDelete = true,
         ///                     validityPeriods = new[] {
         ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
         ///                         }
         ///                     },
-        ///                     source = "<AtlasClassificationSource>",
+        ///                     source = "<source>",
         ///                     sourceDetails = new {
         ///                         key = new {},
         ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
         ///                 }
         ///             },
-        ///             displayText = "<AtlasEntityHeaderDisplayText>",
-        ///             guid = "<AtlasEntityHeaderGuid>",
+        ///             displayText = "<displayText>",
+        ///             guid = "<guid>",
         ///             isIncomplete = true,
         ///             labels = new[] {
-        ///                 "<AtlasEntityHeaderLabelsItem>"
+        ///                 "<String>"
         ///             },
         ///             meaningNames = new[] {
-        ///                 "<AtlasEntityHeaderMeaningNamesItem>"
+        ///                 "<String>"
         ///             },
         ///             meanings = new[] {
         ///                 new {
         ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
         ///                 }
         ///             },
-        ///             status = "<ACTIVE>",
+        ///             status = "ACTIVE",
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         },
         ///     },
         /// };
@@ -6614,7 +6614,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassifications and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -6627,67 +6627,67 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassifications with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
         ///     guidHeaderMap = new {
         ///         key = new {
-        ///             attributes = new {
-        ///                 key = new {},
-        ///             },
-        ///             typeName = "<AtlasStructTypeName>",
-        ///             lastModifiedTS = "<LastModifiedTS>",
         ///             classificationNames = new[] {
-        ///                 "<AtlasEntityHeaderClassificationNamesItem>"
+        ///                 "<String>"
         ///             },
         ///             classifications = new[] {
         ///                 new {
-        ///                     attributes = new {
-        ///                         key = new {},
-        ///                     },
-        ///                     typeName = "<AtlasStructTypeName>",
-        ///                     lastModifiedTS = "<LastModifiedTS>",
-        ///                     entityGuid = "<AtlasClassificationEntityGuid>",
-        ///                     entityStatus = "<ACTIVE>",
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
         ///                     removePropagationsOnEntityDelete = true,
         ///                     validityPeriods = new[] {
         ///                         new {
-        ///                             endTime = "<TimeBoundaryEndTime>",
-        ///                             startTime = "<TimeBoundaryStartTime>",
-        ///                             timeZone = "<TimeBoundaryTimeZone>",
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
         ///                         }
         ///                     },
-        ///                     source = "<AtlasClassificationSource>",
+        ///                     source = "<source>",
         ///                     sourceDetails = new {
         ///                         key = new {},
         ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
         ///                 }
         ///             },
-        ///             displayText = "<AtlasEntityHeaderDisplayText>",
-        ///             guid = "<AtlasEntityHeaderGuid>",
+        ///             displayText = "<displayText>",
+        ///             guid = "<guid>",
         ///             isIncomplete = true,
         ///             labels = new[] {
-        ///                 "<AtlasEntityHeaderLabelsItem>"
+        ///                 "<String>"
         ///             },
         ///             meaningNames = new[] {
-        ///                 "<AtlasEntityHeaderMeaningNamesItem>"
+        ///                 "<String>"
         ///             },
         ///             meanings = new[] {
         ///                 new {
         ///                     confidence = 1234,
-        ///                     createdBy = "<AtlasTermAssignmentHeaderCreatedBy>",
-        ///                     description = "<AtlasTermAssignmentHeaderDescription>",
-        ///                     displayText = "<AtlasTermAssignmentHeaderDisplayText>",
-        ///                     expression = "<AtlasTermAssignmentHeaderExpression>",
-        ///                     relationGuid = "<AtlasTermAssignmentHeaderRelationGuid>",
-        ///                     source = "<AtlasTermAssignmentHeaderSource>",
-        ///                     status = "<DISCOVERED>",
-        ///                     steward = "<AtlasTermAssignmentHeaderSteward>",
-        ///                     termGuid = "<AtlasTermAssignmentHeaderTermGuid>",
+        ///                     createdBy = "<createdBy>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DISCOVERED",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
         ///                 }
         ///             },
-        ///             status = "<ACTIVE>",
+        ///             status = "ACTIVE",
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
         ///         },
         ///     },
         /// };
@@ -6754,7 +6754,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>");
@@ -6765,62 +6765,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -6829,6 +6780,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -6857,6 +6811,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -6866,18 +6866,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -6890,6 +6883,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       createTime: number, # Optional. The created time of the record.
@@ -6923,8 +6919,12 @@ namespace Azure.Analytics.Purview.Catalog
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entities.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -6973,7 +6973,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetEntitiesByUniqueAttributes("<typeName>");
@@ -6984,62 +6984,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributes with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("businessAttributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -7048,6 +6999,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createTime").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("createdBy").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("customAttributes").GetProperty("<test>").ToString());
@@ -7076,6 +7030,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entities")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("businessAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("customAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("homeId").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("isIncomplete").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("labels")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("confidence").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("meanings")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("provenanceType").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("proxy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("relationshipAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("referredEntities").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -7085,18 +7085,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntitiesWithExtInfo</c>:
         /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         ///   entities: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. Business Attributes
         ///       classifications: [
         ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///           typeName: string, # Optional. The name of the type.
-        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///           entityGuid: string, # Optional. The GUID of the entity.
         ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///           removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -7109,6 +7102,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///           ], # Optional. An array of time boundaries indicating validity periods.
         ///           source: string, # Optional. indicate the source who create the classification detail
         ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///           attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///           typeName: string, # Optional. The name of the type.
+        ///           lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///         }
         ///       ], # Optional. An array of classifications.
         ///       createTime: number, # Optional. The created time of the record.
@@ -7142,8 +7138,12 @@ namespace Azure.Analytics.Purview.Catalog
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
         ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. The dictionary of contacts for terms. Key could be Expert or Owner.
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of entities.
+        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;, # Optional. The referred entities.
         /// }
         /// </code>
         /// 
@@ -7177,19 +7177,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetHeaderAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetHeaderAsync("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -7198,6 +7192,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("isIncomplete").ToString());
@@ -7214,6 +7211,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -7223,15 +7223,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityHeader</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   classificationNames: [string], # Optional. An array of classification names.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -7244,6 +7238,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   displayText: string, # Optional. The display text.
@@ -7266,6 +7263,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ], # Optional. An array of term assignment headers.
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -7299,19 +7299,13 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetHeader with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetHeader("<guid>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("classificationNames")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
-        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
@@ -7320,6 +7314,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
         /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
         /// Console.WriteLine(result.GetProperty("displayText").ToString());
         /// Console.WriteLine(result.GetProperty("guid").ToString());
         /// Console.WriteLine(result.GetProperty("isIncomplete").ToString());
@@ -7336,6 +7333,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("steward").ToString());
         /// Console.WriteLine(result.GetProperty("meanings")[0].GetProperty("termGuid").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -7345,15 +7345,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasEntityHeader</c>:
         /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   classificationNames: [string], # Optional. An array of classification names.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -7366,6 +7360,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   displayText: string, # Optional. The display text.
@@ -7388,6 +7385,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ], # Optional. An array of term assignment headers.
         ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///   attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         /// }
         /// </code>
         /// 
@@ -7422,7 +7422,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadataAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7463,7 +7463,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadata with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7505,7 +7505,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7518,7 +7518,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7560,7 +7560,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadata with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7573,7 +7573,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadata with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7615,7 +7615,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadataAttributesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7658,7 +7658,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadataAttributes with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7701,7 +7701,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7744,7 +7744,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAttributes with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7779,14 +7779,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call GetSampleBusinessMetadataTemplateAsync.
+        /// This sample shows how to call GetSampleBusinessMetadataTemplateAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetSampleBusinessMetadataTemplateAsync();
-        /// Console.WriteLine(response.Status);
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
         /// ]]></code>
         /// </example>
         public virtual async Task<Response> GetSampleBusinessMetadataTemplateAsync(RequestContext context = null)
@@ -7810,14 +7816,20 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call GetSampleBusinessMetadataTemplate.
+        /// This sample shows how to call GetSampleBusinessMetadataTemplate and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetSampleBusinessMetadataTemplate();
-        /// Console.WriteLine(response.Status);
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
         /// ]]></code>
         /// </example>
         public virtual Response GetSampleBusinessMetadataTemplate(RequestContext context = null)
@@ -7845,7 +7857,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportBusinessMetadataAsync with required request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -7908,7 +7920,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportBusinessMetadata with required request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -7974,11 +7986,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
-        ///     "<DeleteContentSchemaItem>"
+        ///     "<String>"
         /// };
         /// 
         /// Response response = await client.DeleteLabelsAsync("<guid>", RequestContent.Create(data));
@@ -8015,11 +8027,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabels with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
-        ///     "<DeleteContentSchemaItem>"
+        ///     "<String>"
         /// };
         /// 
         /// Response response = client.DeleteLabels("<guid>", RequestContent.Create(data));
@@ -8056,11 +8068,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
-        ///     "<PostContentSchemaItem>"
+        ///     "<String>"
         /// };
         /// 
         /// Response response = await client.SetLabelsAsync("<guid>", RequestContent.Create(data));
@@ -8097,11 +8109,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabels with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
-        ///     "<PostContentSchemaItem>"
+        ///     "<String>"
         /// };
         /// 
         /// Response response = client.SetLabels("<guid>", RequestContent.Create(data));
@@ -8138,11 +8150,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
-        ///     "<PutContentSchemaItem>"
+        ///     "<String>"
         /// };
         /// 
         /// Response response = await client.AddLabelAsync("<guid>", RequestContent.Create(data));
@@ -8179,11 +8191,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabel with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
-        ///     "<PutContentSchemaItem>"
+        ///     "<String>"
         /// };
         /// 
         /// Response response = client.AddLabel("<guid>", RequestContent.Create(data));
@@ -8221,7 +8233,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8234,7 +8246,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8276,7 +8288,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8289,7 +8301,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8331,7 +8343,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8344,7 +8356,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8386,7 +8398,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8399,7 +8411,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8441,7 +8453,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8454,7 +8466,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8496,7 +8508,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8509,7 +8521,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {

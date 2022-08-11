@@ -73,7 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
@@ -153,7 +153,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
@@ -234,7 +234,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetBoundaryAsync("<farmerId>", "<boundaryId>");
@@ -317,7 +317,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.GetBoundary("<farmerId>", "<boundaryId>");
@@ -401,7 +401,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -414,27 +414,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     parentId = "<BoundaryParentId>",
+        ///     parentId = "<parentId>",
         ///     geometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         ///     isPrimary = true,
-        ///     status = "<BoundaryStatus>",
-        ///     name = "<BoundaryName>",
-        ///     description = "<BoundaryDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -547,7 +538,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -560,27 +551,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     parentId = "<BoundaryParentId>",
+        ///     parentId = "<parentId>",
         ///     geometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         ///     isPrimary = true,
-        ///     status = "<BoundaryStatus>",
-        ///     name = "<BoundaryName>",
-        ///     description = "<BoundaryDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -692,7 +674,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<boundaryId>");
@@ -730,7 +712,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<farmerId>", "<boundaryId>");
@@ -770,7 +752,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOverlapAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetOverlapAsync("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
@@ -830,7 +812,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOverlap with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.GetOverlap("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
@@ -908,7 +890,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>"))
@@ -920,7 +902,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1029,7 +1011,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>"))
@@ -1041,7 +1023,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1130,7 +1112,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1144,46 +1126,37 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerIdAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -1300,7 +1273,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1314,46 +1287,37 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerId with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -1487,7 +1451,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesAsync())
@@ -1499,7 +1463,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1603,7 +1567,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaries and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundaries())
@@ -1615,7 +1579,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaries with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1699,7 +1663,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1713,46 +1677,37 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -1864,7 +1819,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Search and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1878,46 +1833,37 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Search with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -2034,7 +1980,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");
@@ -2120,7 +2066,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");

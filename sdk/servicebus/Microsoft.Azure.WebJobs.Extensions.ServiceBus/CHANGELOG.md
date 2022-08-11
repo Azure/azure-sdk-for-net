@@ -1,14 +1,25 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
+## 5.7.0 (2022-08-09)
 
 ### Features Added
 
-### Breaking Changes
+- Added distributed tracing span when for functions that process a batch of messages.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed issue related to function apps that are bound to multiple namespaces using the same entity names, which caused messages to not be processed from the second namespace.
+
+## 5.6.0 (2022-07-28)
+
+### Features Added
+
+- Added ability to register a callback for ` SessionInitializingAsync` and `SessionClosingAsync` to the `ServiceBusOptions`. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- `SessionIdleTimeout` now will be applied for batch functions in addition to single-message 
+  functions.
 
 ## 5.5.1 (2022-06-07)
 

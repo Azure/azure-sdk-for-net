@@ -29,47 +29,47 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="scopes"> A list of resourceIds that will be used as prefixes. The alert will only apply to activityLogs with resourceIds that fall under one of these prefixes. This list must include at least one item. </param>
-        /// <param name="isEnabled"> Indicates whether this activity log alert is enabled. If an activity log alert is not enabled, then none of its actions will be activated. </param>
+        /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
         /// <param name="condition"> The condition that will cause this alert to activate. </param>
         /// <param name="actions"> The actions that will activate when the condition is met. </param>
-        /// <param name="description"> A description of this activity log alert. </param>
-        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, bool? isEnabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="description"> A description of this Activity Log Alert rule. </param>
+        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, AlertRuleAllOfCondition condition, ActionList actions, bool? isEnabled, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             Scopes = scopes;
-            IsEnabled = isEnabled;
             Condition = condition;
             Actions = actions;
+            IsEnabled = isEnabled;
             Description = description;
         }
 
-        /// <summary> A list of resourceIds that will be used as prefixes. The alert will only apply to activityLogs with resourceIds that fall under one of these prefixes. This list must include at least one item. </summary>
+        /// <summary> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </summary>
         public IList<string> Scopes { get; }
-        /// <summary> Indicates whether this activity log alert is enabled. If an activity log alert is not enabled, then none of its actions will be activated. </summary>
-        public bool? IsEnabled { get; set; }
         /// <summary> The condition that will cause this alert to activate. </summary>
-        internal ActivityLogAlertAllOfCondition Condition { get; set; }
-        /// <summary> The list of activity log alert conditions. </summary>
-        public IList<ActivityLogAlertLeafCondition> ConditionAllOf
+        internal AlertRuleAllOfCondition Condition { get; set; }
+        /// <summary> The list of Activity Log Alert rule conditions. </summary>
+        public IList<ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
         {
             get => Condition is null ? default : Condition.AllOf;
-            set => Condition = new ActivityLogAlertAllOfCondition(value);
+            set => Condition = new AlertRuleAllOfCondition(value);
         }
 
         /// <summary> The actions that will activate when the condition is met. </summary>
-        internal ActivityLogAlertActionList Actions { get; set; }
-        /// <summary> The list of activity log alerts. </summary>
+        internal ActionList Actions { get; set; }
+        /// <summary> The list of the Action Groups. </summary>
         public IList<ActivityLogAlertActionGroup> ActionsActionGroups
         {
             get
             {
                 if (Actions is null)
-                    Actions = new ActivityLogAlertActionList();
+                    Actions = new ActionList();
                 return Actions.ActionGroups;
             }
         }
 
-        /// <summary> A description of this activity log alert. </summary>
+        /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> A description of this Activity Log Alert rule. </summary>
         public string Description { get; set; }
     }
 }

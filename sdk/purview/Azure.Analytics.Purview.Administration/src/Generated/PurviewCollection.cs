@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetCollectionAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = await client.GetCollectionAsync();
@@ -130,7 +130,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetCollection and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = client.GetCollection();
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call CreateOrUpdateCollectionAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {};
@@ -216,14 +216,14 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call CreateOrUpdateCollectionAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "<CollectionDescription>",
-        ///     friendlyName = "<CollectionFriendlyName>",
+        ///     description = "<description>",
+        ///     friendlyName = "<friendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "<CollectionReferenceName>",
+        ///         referenceName = "<referenceName>",
         ///     },
         /// };
         /// 
@@ -322,7 +322,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call CreateOrUpdateCollection and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {};
@@ -335,14 +335,14 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call CreateOrUpdateCollection with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "<CollectionDescription>",
-        ///     friendlyName = "<CollectionFriendlyName>",
+        ///     description = "<description>",
+        ///     friendlyName = "<friendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "<CollectionReferenceName>",
+        ///         referenceName = "<referenceName>",
         ///     },
         /// };
         /// 
@@ -439,7 +439,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call DeleteCollectionAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = await client.DeleteCollectionAsync();
@@ -470,7 +470,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call DeleteCollection.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = client.DeleteCollection();
@@ -501,7 +501,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetCollectionPathAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = await client.GetCollectionPathAsync();
@@ -548,7 +548,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetCollectionPath and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// Response response = client.GetCollectionPath();
@@ -596,7 +596,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetChildCollectionNamesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// await foreach (var data in client.GetChildCollectionNamesAsync())
@@ -608,7 +608,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetChildCollectionNamesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// await foreach (var data in client.GetChildCollectionNamesAsync("<skipToken>"))
@@ -663,7 +663,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetChildCollectionNames and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// foreach (var data in client.GetChildCollectionNames())
@@ -675,7 +675,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetChildCollectionNames with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// foreach (var data in client.GetChildCollectionNames("<skipToken>"))

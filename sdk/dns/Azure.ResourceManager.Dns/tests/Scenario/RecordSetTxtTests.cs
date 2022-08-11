@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "txt";
             var recordSetTxtResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new TxtRecordSetData() { });
             Assert.IsNotNull(recordSetTxtResource);
+            Assert.IsNotNull(recordSetTxtResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetTxtResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetTxtResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/TXT", recordSetTxtResource.Value.Data.ResourceType.Type);
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(name, recordSetTxtResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetTxtResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/TXT", recordSetTxtResource.Value.Data.ResourceType.Type);
+            Assert.AreEqual(300, recordSetTxtResource.Value.Data.TtlInSeconds);
         }
 
         [Test]

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamAnalyticsPrivateEndpointData DeserializeStreamAnalyticsPrivateEndpointData(JsonElement element)
         {
-            Optional<PrivateEndpointProperties> properties = default;
+            Optional<StreamAnalyticsPrivateEndpointProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PrivateEndpointProperties.DeserializePrivateEndpointProperties(property.Value);
+                    properties = StreamAnalyticsPrivateEndpointProperties.DeserializeStreamAnalyticsPrivateEndpointProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

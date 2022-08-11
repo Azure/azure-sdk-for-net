@@ -70,20 +70,20 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccessAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -94,23 +94,23 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccessAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///         groupIds = new[] {
-        ///             "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>"
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
         ///         },
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = await client.CheckPrincipalAccessAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -133,8 +133,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId, # Required. Principal Id
-        ///     groupIds: [SubjectInfoGroupIdsItem], # Optional. List of group Ids that the principalId is part of.
+        ///     principalId: Guid, # Required. Principal Id
+        ///     groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
         ///   }, # Required. Subject details
         ///   actions: [
         ///     {
@@ -156,8 +156,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///       actionId: string, # Optional. Action Id.
         ///       roleAssignment: {
         ///         id: string, # Optional. Role Assignment ID
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///         principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///         roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///         principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///         scope: string, # Optional. Scope at the role assignment is created
         ///         principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///       }, # Optional. Role Assignment response details
@@ -196,20 +196,20 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccess with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -220,23 +220,23 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccess with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     subject = new {
-        ///         principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
         ///         groupIds = new[] {
-        ///             "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>"
+        ///             "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"
         ///         },
         ///     },
         ///     actions = new[] {
         ///         new {
-        ///             id = "<RequiredActionId>",
+        ///             id = "<id>",
         ///             isDataAction = true,
         ///         }
         ///     },
-        ///     scope = "<CheckPrincipalAccessRequestScope>",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = client.CheckPrincipalAccess(RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -259,8 +259,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>CheckPrincipalAccessRequest</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId, # Required. Principal Id
-        ///     groupIds: [SubjectInfoGroupIdsItem], # Optional. List of group Ids that the principalId is part of.
+        ///     principalId: Guid, # Required. Principal Id
+        ///     groupIds: [Guid], # Optional. List of group Ids that the principalId is part of.
         ///   }, # Required. Subject details
         ///   actions: [
         ///     {
@@ -282,8 +282,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///       actionId: string, # Optional. Action Id.
         ///       roleAssignment: {
         ///         id: string, # Optional. Role Assignment ID
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///         principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///         roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///         principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///         scope: string, # Optional. Scope at the role assignment is created
         ///         principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///       }, # Optional. Role Assignment response details
@@ -323,7 +323,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleAssignmentsAsync();
@@ -334,7 +334,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
@@ -359,8 +359,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   value: [
         ///     {
         ///       id: string, # Optional. Role Assignment ID
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///       principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///       roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///       principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///       scope: string, # Optional. Scope at the role assignment is created
         ///       principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///     }
@@ -397,7 +397,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignments and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleAssignments();
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
@@ -433,8 +433,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         ///   value: [
         ///     {
         ///       id: string, # Optional. Role Assignment ID
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///       principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///       roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///       principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///       scope: string, # Optional. Scope at the role assignment is created
         ///       principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         ///     }
@@ -472,13 +472,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignmentAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -489,14 +489,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignmentAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
-        ///     principalType = "<RoleAssignmentRequestPrincipalType>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        ///     principalType = "<principalType>",
         /// };
         /// 
         /// Response response = await client.CreateRoleAssignmentAsync("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -516,8 +516,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId, # Required. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentRequestPrincipalId, # Required. Object ID of the AAD principal or security-group
+        ///   roleId: Guid, # Required. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Required. Object ID of the AAD principal or security-group
         ///   scope: string, # Required. Scope at which the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -528,8 +528,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -568,13 +568,13 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignment with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
         /// };
         /// 
         /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -585,14 +585,14 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignment with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     roleId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     principalId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
-        ///     scope = "<RoleAssignmentRequestScope>",
-        ///     principalType = "<RoleAssignmentRequestPrincipalType>",
+        ///     roleId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     principalId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        ///     scope = "<scope>",
+        ///     principalType = "<principalType>",
         /// };
         /// 
         /// Response response = client.CreateRoleAssignment("<roleAssignmentId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
@@ -612,8 +612,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Schema for <c>RoleAssignmentRequest</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId, # Required. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentRequestPrincipalId, # Required. Object ID of the AAD principal or security-group
+        ///   roleId: Guid, # Required. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Required. Object ID of the AAD principal or security-group
         ///   scope: string, # Required. Scope at which the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -624,8 +624,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -662,7 +662,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentByIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>");
@@ -683,8 +683,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -720,7 +720,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentById with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleAssignmentById("<roleAssignmentId>");
@@ -741,8 +741,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// Schema for <c>RoleAssignmentDetails</c>:
         /// <code>{
         ///   id: string, # Optional. Role Assignment ID
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. Role ID of the Synapse Built-In Role
-        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. Object ID of the AAD principal or security-group
+        ///   roleDefinitionId: Guid, # Optional. Role ID of the Synapse Built-In Role
+        ///   principalId: Guid, # Optional. Object ID of the AAD principal or security-group
         ///   scope: string, # Optional. Scope at the role assignment is created
         ///   principalType: string, # Optional. Type of the principal Id: User, Group or ServicePrincipal
         /// }
@@ -779,7 +779,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentByIdAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
@@ -788,7 +788,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentByIdAsync with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", "<scope>");
@@ -825,7 +825,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentById with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
@@ -834,7 +834,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentById with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", "<scope>");

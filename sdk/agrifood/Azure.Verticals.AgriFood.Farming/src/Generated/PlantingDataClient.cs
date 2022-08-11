@@ -74,7 +74,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetPlantingDataAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// Response response = await client.GetPlantingDataAsync("<farmerId>", "<plantingDataId>");
@@ -190,7 +190,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetPlantingData with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// Response response = client.GetPlantingData("<farmerId>", "<plantingDataId>");
@@ -307,7 +307,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -320,52 +320,52 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     avgPlantingRate = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     plantingProductDetails = new[] {
         ///         new {
-        ///             productName = "<PlantingProductDetailProductName>",
+        ///             productName = "<productName>",
         ///             area = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<PlantingDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<PlantingDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<PlantingDataOperationBoundaryId>",
-        ///     status = "<PlantingDataStatus>",
-        ///     name = "<PlantingDataName>",
-        ///     description = "<PlantingDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -527,7 +527,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -540,52 +540,52 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     avgPlantingRate = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     plantingProductDetails = new[] {
         ///         new {
-        ///             productName = "<PlantingProductDetailProductName>",
+        ///             productName = "<productName>",
         ///             area = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<PlantingDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<PlantingDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<PlantingDataOperationBoundaryId>",
-        ///     status = "<PlantingDataStatus>",
-        ///     name = "<PlantingDataName>",
-        ///     description = "<PlantingDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -746,7 +746,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<plantingDataId>");
@@ -784,7 +784,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<farmerId>", "<plantingDataId>");
@@ -854,7 +854,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingDataByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllPlantingDataByFarmerIdAsync("<farmerId>"))
@@ -866,7 +866,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingDataByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllPlantingDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1020,7 +1020,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingDataByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllPlantingDataByFarmerId("<farmerId>"))
@@ -1032,7 +1032,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingDataByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllPlantingDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1183,7 +1183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingDataAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllPlantingDataAsync())
@@ -1195,7 +1195,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingDataAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAllPlantingDataAsync(1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1344,7 +1344,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingData and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllPlantingData())
@@ -1356,7 +1356,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAllPlantingData with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PlantingDataClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAllPlantingData(1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))

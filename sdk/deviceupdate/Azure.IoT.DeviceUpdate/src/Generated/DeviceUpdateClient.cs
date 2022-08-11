@@ -81,7 +81,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>");
@@ -98,7 +98,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdateAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = await client.GetUpdateAsync("<provider>", "<name>", "<version>", null);
@@ -205,7 +205,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = client.GetUpdate("<provider>", "<name>", "<version>");
@@ -222,7 +222,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdate with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = client.GetUpdate("<provider>", "<name>", "<version>", null);
@@ -330,33 +330,26 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetFileAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
         /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// ]]></code>
         /// This sample shows how to call GetFileAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = await client.GetFileAsync("<provider>", "<name>", "<version>", "<fileId>", null);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("fileName").ToString());
-        /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mimeType").ToString());
-        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
-        /// Console.WriteLine(result.GetProperty("scanDetails").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("relatedFiles")[0].GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("relatedFiles")[0].GetProperty("sizeInBytes").ToString());
@@ -367,6 +360,13 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("relatedFiles")[0].GetProperty("properties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("downloadHandler").GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
+        /// Console.WriteLine(result.GetProperty("fileName").ToString());
+        /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
+        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mimeType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
+        /// Console.WriteLine(result.GetProperty("scanDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -376,13 +376,6 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>UpdateFile</c>:
         /// <code>{
-        ///   fileName: string, # Required. File name.
-        ///   sizeInBytes: number, # Required. File size in number of bytes.
-        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-        ///   mimeType: string, # Optional. File MIME type.
-        ///   scanResult: string, # Optional. Anti-malware scan result.
-        ///   scanDetails: string, # Optional. Anti-malware scan details.
-        ///   properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
         ///   fileId: string, # Required. File identity, generated by server at import time.
         ///   relatedFiles: [
         ///     {
@@ -399,6 +392,13 @@ namespace Azure.IoT.DeviceUpdate
         ///     id: string, # Required. Download handler identifier.
         ///   }, # Optional. Optional download handler for utilizing related files to download payload file.
         ///   etag: string, # Optional. File ETag.
+        ///   fileName: string, # Required. File name.
+        ///   sizeInBytes: number, # Required. File size in number of bytes.
+        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
+        ///   mimeType: string, # Optional. File MIME type.
+        ///   scanResult: string, # Optional. Anti-malware scan result.
+        ///   scanDetails: string, # Optional. Anti-malware scan details.
+        ///   properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
         /// }
         /// </code>
         /// 
@@ -439,33 +439,26 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetFile with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
         /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// ]]></code>
         /// This sample shows how to call GetFile with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = client.GetFile("<provider>", "<name>", "<version>", "<fileId>", null);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("fileName").ToString());
-        /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
-        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("mimeType").ToString());
-        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
-        /// Console.WriteLine(result.GetProperty("scanDetails").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("fileId").ToString());
         /// Console.WriteLine(result.GetProperty("relatedFiles")[0].GetProperty("fileName").ToString());
         /// Console.WriteLine(result.GetProperty("relatedFiles")[0].GetProperty("sizeInBytes").ToString());
@@ -476,6 +469,13 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("relatedFiles")[0].GetProperty("properties").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("downloadHandler").GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("etag").ToString());
+        /// Console.WriteLine(result.GetProperty("fileName").ToString());
+        /// Console.WriteLine(result.GetProperty("sizeInBytes").ToString());
+        /// Console.WriteLine(result.GetProperty("hashes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("mimeType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResult").ToString());
+        /// Console.WriteLine(result.GetProperty("scanDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -485,13 +485,6 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Schema for <c>UpdateFile</c>:
         /// <code>{
-        ///   fileName: string, # Required. File name.
-        ///   sizeInBytes: number, # Required. File size in number of bytes.
-        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
-        ///   mimeType: string, # Optional. File MIME type.
-        ///   scanResult: string, # Optional. Anti-malware scan result.
-        ///   scanDetails: string, # Optional. Anti-malware scan details.
-        ///   properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
         ///   fileId: string, # Required. File identity, generated by server at import time.
         ///   relatedFiles: [
         ///     {
@@ -508,6 +501,13 @@ namespace Azure.IoT.DeviceUpdate
         ///     id: string, # Required. Download handler identifier.
         ///   }, # Optional. Optional download handler for utilizing related files to download payload file.
         ///   etag: string, # Optional. File ETag.
+        ///   fileName: string, # Required. File name.
+        ///   sizeInBytes: number, # Required. File size in number of bytes.
+        ///   hashes: Dictionary&lt;string, string&gt;, # Required. Mapping of hashing algorithm to base64 encoded hash values.
+        ///   mimeType: string, # Optional. File MIME type.
+        ///   scanResult: string, # Optional. Anti-malware scan result.
+        ///   scanDetails: string, # Optional. Anti-malware scan details.
+        ///   properties: Dictionary&lt;string, string&gt;, # Optional. Optional file properties (not consumed by service but pass-through to device).
         /// }
         /// </code>
         /// 
@@ -545,7 +545,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>");
@@ -559,7 +559,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = await client.GetOperationAsync("<operationId>", null);
@@ -656,7 +656,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperation with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = client.GetOperation("<operationId>");
@@ -670,7 +670,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperation with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// Response response = client.GetOperation("<operationId>", null);
@@ -765,7 +765,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdatesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetUpdatesAsync())
@@ -783,7 +783,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdatesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetUpdatesAsync("<search>", "<filter>"))
@@ -889,7 +889,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdates and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetUpdates())
@@ -907,7 +907,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetUpdates with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetUpdates("<search>", "<filter>"))
@@ -1011,7 +1011,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetProvidersAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetProvidersAsync())
@@ -1051,7 +1051,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetProviders and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetProviders())
@@ -1094,7 +1094,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetNamesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetNamesAsync("<provider>"))
@@ -1139,7 +1139,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetNames with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetNames("<provider>"))
@@ -1186,7 +1186,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetVersionsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetVersionsAsync("<provider>", "<name>"))
@@ -1198,7 +1198,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetVersionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetVersionsAsync("<provider>", "<name>", "<filter>"))
@@ -1246,7 +1246,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetVersions with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetVersions("<provider>", "<name>"))
@@ -1258,7 +1258,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetVersions with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetVersions("<provider>", "<name>", "<filter>"))
@@ -1306,7 +1306,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetFilesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetFilesAsync("<provider>", "<name>", "<version>"))
@@ -1355,7 +1355,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetFiles with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetFiles("<provider>", "<name>", "<version>"))
@@ -1401,7 +1401,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetOperationsAsync())
@@ -1416,7 +1416,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperationsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// await foreach (var data in client.GetOperationsAsync("<filter>", 1234))
@@ -1516,7 +1516,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperations and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetOperations())
@@ -1531,7 +1531,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call GetOperations with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// foreach (var data in client.GetOperations("<filter>", 1234))
@@ -1632,23 +1632,23 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call ImportUpdateAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new[] {
         ///     new {
         ///         importManifest = new {
-        ///             url = "<ImportManifestMetadataUrl>",
-        ///             sizeInBytes = 1234,
+        ///             url = "<url>",
+        ///             sizeInBytes = 1234L,
         ///             hashes = new {
         ///                 key = "<String>",
         ///             },
         ///         },
-        ///         friendlyName = "<ImportUpdateInputItemFriendlyName>",
+        ///         friendlyName = "<friendlyName>",
         ///         files = new[] {
         ///             new {
-        ///                 filename = "<FileImportMetadataFilename>",
-        ///                 url = "<FileImportMetadataUrl>",
+        ///                 filename = "<filename>",
+        ///                 url = "<url>",
         ///             }
         ///         },
         ///     }
@@ -1665,7 +1665,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ImportUpdateInput</c>:
+        /// Schema for <c>ImportUpdateInputItem</c>:
         /// <code>{
         ///   importManifest: {
         ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
@@ -1712,23 +1712,23 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call ImportUpdate with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new[] {
         ///     new {
         ///         importManifest = new {
-        ///             url = "<ImportManifestMetadataUrl>",
-        ///             sizeInBytes = 1234,
+        ///             url = "<url>",
+        ///             sizeInBytes = 1234L,
         ///             hashes = new {
         ///                 key = "<String>",
         ///             },
         ///         },
-        ///         friendlyName = "<ImportUpdateInputItemFriendlyName>",
+        ///         friendlyName = "<friendlyName>",
         ///         files = new[] {
         ///             new {
-        ///                 filename = "<FileImportMetadataFilename>",
-        ///                 url = "<FileImportMetadataUrl>",
+        ///                 filename = "<filename>",
+        ///                 url = "<url>",
         ///             }
         ///         },
         ///     }
@@ -1745,7 +1745,7 @@ namespace Azure.IoT.DeviceUpdate
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ImportUpdateInput</c>:
+        /// Schema for <c>ImportUpdateInputItem</c>:
         /// <code>{
         ///   importManifest: {
         ///     url: string, # Required. Azure Blob location from which the import manifest can be downloaded by Device Update for IoT Hub. This is typically a read-only SAS-protected blob URL with an expiration set to at least 4 hours.
@@ -1795,7 +1795,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call DeleteUpdateAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// var operation = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>");
@@ -1838,7 +1838,7 @@ namespace Azure.IoT.DeviceUpdate
         /// This sample shows how to call DeleteUpdate with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
         /// 
         /// var operation = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>");

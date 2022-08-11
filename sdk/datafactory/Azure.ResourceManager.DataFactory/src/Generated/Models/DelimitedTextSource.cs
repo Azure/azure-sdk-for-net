@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity DelimitedText source. </summary>
-    public partial class DelimitedTextSource : CopySource
+    public partial class DelimitedTextSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of DelimitedTextSource. </summary>
         public DelimitedTextSource()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Dynamics source. </summary>
-    public partial class DynamicsSource : CopySource
+    public partial class DynamicsSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of DynamicsSource. </summary>
         public DynamicsSource()

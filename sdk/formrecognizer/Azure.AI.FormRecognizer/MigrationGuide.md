@@ -1,6 +1,6 @@
 # Guide for migrating Azure.AI.FormRecognizer to version 4.0.x from versions 3.1.x and below
 
-This guide is intended to assist in the migration to `Azure.AI.FormRecognizer (4.0.x)` from versions `3.1.x` and below. It will focus on side-by-side comparisons for similar operations between versions. Please note that version `4.0.0-beta.4` will be used for comparison with `3.1.1`.
+This guide is intended to assist in the migration to `Azure.AI.FormRecognizer (4.0.x)` from versions `3.1.x` and below. It will focus on side-by-side comparisons for similar operations between versions. Please note that version `4.0.0-beta.5` will be used for comparison with `3.1.1`.
 
 Familiarity with `Azure.AI.FormRecognizer (3.1.x and below)` package is assumed. For those new to the Azure Form Recognizer client library for .NET please refer to the [README][readme] rather than this guide.
 
@@ -620,7 +620,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
 BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
-DocumentModel model = operation.Value;
+DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))

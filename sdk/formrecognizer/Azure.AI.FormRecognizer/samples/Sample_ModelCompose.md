@@ -33,25 +33,25 @@ Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
 var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
 
 BuildModelOperation suppliesOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
-DocumentModel officeSuppliesModel = suppliesOperation.Value;
+DocumentModelDetails officeSuppliesModel = suppliesOperation.Value;
 
 Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
 var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
 
 BuildModelOperation equipmentOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
-DocumentModel officeEquipmentModel = equipmentOperation.Value;
+DocumentModelDetails officeEquipmentModel = equipmentOperation.Value;
 
 Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
 var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
 
 BuildModelOperation furnitureOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
-DocumentModel furnitureModel = furnitureOperation.Value;
+DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
 var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
 BuildModelOperation cleaningOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
-DocumentModel cleaningSuppliesModel = cleaningOperation.Value;
+DocumentModelDetails cleaningSuppliesModel = cleaningOperation.Value;
 ```
 
 When a purchase order happens, the employee in charge uploads the document to our application. The application then needs to analyze the document to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the document, you can compose a model that aggregates the previous models, and use that model in `AnalyzeDocument` and let the service decide which model fits best according to the document provided.
@@ -65,8 +65,8 @@ List<string> modelIds = new List<string>()
     cleaningSuppliesModel.ModelId
 };
 
-BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
-DocumentModel purchaseOrderModel = operation.Value;
+ComposeModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
+DocumentModelDetails purchaseOrderModel = operation.Value;
 
 Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");
 if (string.IsNullOrEmpty(purchaseOrderModel.Description))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration");
-                writer.WriteStringValue(MaximumDuration);
+                writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             if (Optional.IsDefined(Id))
             {
@@ -43,8 +44,8 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleManagementPolicyExpirationRule DeserializeRoleManagementPolicyExpirationRule(JsonElement element)
         {
             Optional<bool> isExpirationRequired = default;
-            Optional<string> maximumDuration = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<TimeSpan> maximumDuration = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
@@ -61,17 +62,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("maximumDuration"))
                 {
-                    maximumDuration = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    maximumDuration = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ruleType"))
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), maximumDuration.Value);
+            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
         }
     }
 }

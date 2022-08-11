@@ -93,7 +93,7 @@ namespace Azure.Communication.MediaComposition
 
         /// <param name="mediaCompositionId"> The media composition id to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaCompositionBody>> GetAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaComposition>> GetAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.Get");
             scope.Start();
@@ -110,7 +110,7 @@ namespace Azure.Communication.MediaComposition
 
         /// <param name="mediaCompositionId"> The media composition id to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaCompositionBody> Get(string mediaCompositionId, CancellationToken cancellationToken = default)
+        public virtual Response<MediaComposition> Get(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.Get");
             scope.Start();
@@ -130,13 +130,13 @@ namespace Azure.Communication.MediaComposition
         /// <param name="inputs"> The media inputs. </param>
         /// <param name="outputs"> The media outputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaCompositionBody>> CreateAsync(string mediaCompositionId, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaComposition>> CreateAsync(string mediaCompositionId, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.Create");
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -150,13 +150,13 @@ namespace Azure.Communication.MediaComposition
         /// <param name="inputs"> The media inputs. </param>
         /// <param name="outputs"> The media outputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaCompositionBody> Create(string mediaCompositionId, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
+        public virtual Response<MediaComposition> Create(string mediaCompositionId, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.Create");
             scope.Start();
             try
             {
-                return RestClient.Create(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken);
+                return RestClient.Create(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -167,16 +167,14 @@ namespace Azure.Communication.MediaComposition
 
         /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
         /// <param name="layout"> The updated layout to compose media. </param>
-        /// <param name="inputs"> The updated media inputs. </param>
-        /// <param name="outputs"> The updated media outputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaCompositionBody>> UpdateAsync(string mediaCompositionId, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaComposition>> UpdateLayoutAsync(string mediaCompositionId, MediaCompositionLayout layout, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpdateLayout");
             scope.Start();
             try
             {
-                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
+                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, layout, null, null, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -187,16 +185,162 @@ namespace Azure.Communication.MediaComposition
 
         /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
         /// <param name="layout"> The updated layout to compose media. </param>
-        /// <param name="inputs"> The updated media inputs. </param>
-        /// <param name="outputs"> The updated media outputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaCompositionBody> Update(string mediaCompositionId, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CancellationToken cancellationToken = default)
+        public virtual Response<MediaComposition> UpdateLayout(string mediaCompositionId, MediaCompositionLayout layout, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.Update");
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpdateLayout");
             scope.Start();
             try
             {
-                return RestClient.Update(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken);
+                return RestClient.Update(mediaCompositionId, mediaCompositionId, layout, null, null, null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="inputs"> The upserted inputs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MediaComposition>> UpsertInputsAsync(string mediaCompositionId, IDictionary<string, MediaInput> inputs, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertInputs");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, null, inputs, null, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="inputs"> The upserted inputs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MediaComposition> UpsertInputs(string mediaCompositionId, IDictionary<string, MediaInput> inputs, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertInputs");
+            scope.Start();
+            try
+            {
+                return RestClient.Update(mediaCompositionId, mediaCompositionId, null, inputs, null, null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="inputIds"> The removed inputIds. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MediaComposition>> RemoveInputsAsync(string mediaCompositionId, IEnumerable<string> inputIds, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.RemoveInputs");
+            scope.Start();
+            try
+            {
+                var inputs = CreateInputsToRemove(inputIds);
+                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, null, inputs, null, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="inputIds"> The removed inputIds. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MediaComposition> RemoveInputs(string mediaCompositionId, IEnumerable<string> inputIds, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.RemoveInputs");
+            scope.Start();
+            try
+            {
+                var inputs = CreateInputsToRemove(inputIds);
+                return RestClient.Update(mediaCompositionId, mediaCompositionId, null, inputs, null, null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="outputs"> The upserted outputs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MediaComposition>> UpsertOutputsAsync(string mediaCompositionId, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertOutputs");
+            scope.Start();
+            try
+            {
+                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, null, null, outputs, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="outputs"> The upserted outputs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MediaComposition> UpsertOutputs(string mediaCompositionId, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertOutputs");
+            scope.Start();
+            try
+            {
+                return RestClient.Update(mediaCompositionId, mediaCompositionId, null, null, outputs, null, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="outputIds"> The removed outputIds. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MediaComposition>> RemoveOutputsAsync(string mediaCompositionId, IEnumerable<string> outputIds, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.RemoveOutputs");
+            scope.Start();
+            try
+            {
+                var outputs = CreateOutputsToRemove(outputIds);
+                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, null, null, outputs, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
+        /// <param name="outputIds"> The removed outputIds. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MediaComposition> RemoveOutputs(string mediaCompositionId, IEnumerable<string> outputIds, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.RemoveOutputs");
+            scope.Start();
+            try
+            {
+                var outputs = CreateOutputsToRemove(outputIds);
+                return RestClient.Update(mediaCompositionId, mediaCompositionId, null, null, outputs, null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -305,6 +449,26 @@ namespace Azure.Communication.MediaComposition
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static IDictionary<string, MediaInput> CreateInputsToRemove(IEnumerable<string> inputIds)
+        {
+            var inputs = new Dictionary<string, MediaInput>();
+            foreach (var id in inputIds)
+            {
+                inputs.Add(id, null);
+            }
+            return inputs;
+        }
+
+        private static IDictionary<string, MediaOutput> CreateOutputsToRemove(IEnumerable<string> outputIds)
+        {
+            var outputs = new Dictionary<string, MediaOutput>();
+            foreach (var id in outputIds)
+            {
+                outputs.Add(id, null);
+            }
+            return outputs;
         }
     }
 }

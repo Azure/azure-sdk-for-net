@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
             Count = count;
             Names = names.ToList();
-            PartitionScheme = PartitionScheme.Named;
+            PartitionScheme = ApplicationPartitionScheme.Named;
         }
 
         /// <summary> Initializes a new instance of NamedPartitionSchemeDescription. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
-        internal NamedPartitionSchemeDescription(PartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
+        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
         {
             Count = count;
             Names = names;

@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using static Azure.AI.Personalizer.Tests.PersonalizerTestBase;
 
@@ -36,7 +38,7 @@ namespace Azure.AI.Personalizer.Tests
                     features:
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
-            string contextJson = RlObjectConverter.ConvertToContextJson(contextFeatures, actions);
+            string contextJson = RlObjectConverter.ConvertToContextJson(contextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList(), actions);
             string expectedJson =
                 "{\"FromUrl\":[{" +
                     "\"Features\":{" +

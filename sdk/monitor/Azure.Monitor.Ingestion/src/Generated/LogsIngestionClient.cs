@@ -68,7 +68,7 @@ namespace Azure.Monitor.Ingestion
         /// This sample shows how to call UploadAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new LogsIngestionClient(endpoint, credential);
         /// 
         /// var data = new[] {
@@ -81,7 +81,7 @@ namespace Azure.Monitor.Ingestion
         /// This sample shows how to call UploadAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new LogsIngestionClient(endpoint, credential);
         /// 
         /// var data = new[] {
@@ -127,7 +127,7 @@ namespace Azure.Monitor.Ingestion
         /// This sample shows how to call Upload with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new LogsIngestionClient(endpoint, credential);
         /// 
         /// var data = new[] {
@@ -140,7 +140,7 @@ namespace Azure.Monitor.Ingestion
         /// This sample shows how to call Upload with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new LogsIngestionClient(endpoint, credential);
         /// 
         /// var data = new[] {
