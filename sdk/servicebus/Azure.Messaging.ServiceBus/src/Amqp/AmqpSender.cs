@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -44,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool IsClosed => _closed;
+        public bool IsClosed => _closed;
 
         /// <summary>
         /// The identifier of the sender.
