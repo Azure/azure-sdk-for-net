@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             Optional<string> name = default;
             Optional<DateTimeOffset> lastModified = default;
-            Optional<string> eTag = default;
+            Optional<string> etag = default;
             Optional<string> owner = default;
             Optional<string> group = default;
             Optional<string> permissions = default;
@@ -43,9 +43,9 @@ namespace Azure.Storage.Files.DataLake.Models
                     lastModified = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("etag"))
                 {
-                    eTag = property.Value.GetString();
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("owner"))
@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), eTag.Value, owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, contentLength.Value, isDirectory.Value);
+            return new Path(name.Value, Optional.ToNullable(lastModified), etag.Value, owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, contentLength.Value, isDirectory.Value);
         }
     }
 }
