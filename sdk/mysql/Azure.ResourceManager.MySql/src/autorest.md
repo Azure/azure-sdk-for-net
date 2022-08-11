@@ -286,4 +286,5 @@ directive:
       $.Identity['x-ms-client-flatten'] = false;
       $.Identity.properties.userAssignedIdentities.additionalProperties['$ref'] = "#/definitions/UserAssignedIdentity";
       delete $.Identity.properties.userAssignedIdentities.additionalProperties.items;
+
 ```
