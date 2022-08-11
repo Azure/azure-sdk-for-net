@@ -22,6 +22,7 @@ See [this page](https://docs.microsoft.com/rest/api/searchservice/http-status-co
 This response status indicates a partial success for an indexing operation. Some documents were successfully processed, but at least one failed. Details of the failed documents are present in the individual `IndexingResult` objects within the `IndexDocumentsResult` of the `Azure.Response`. If you want the [`IndexDocumentsAsync()`](https://docs.microsoft.com/dotnet/api/azure.search.documents.searchclient.indexdocumentsasync) method call to throw an exception on any failure, set [`IndexDocumentsOptions.ThrowOnAnyError`](https://docs.microsoft.com/dotnet/api/azure.search.documents.indexdocumentsoptions.throwonanyerror) to `true`. Each failure is then recorded in a separate `RequestFailedException` and a single `AggregateException` is thrown by the method.
 
 ## 403 Forbidden
+
 Returned when you pass an invalid api-key. Search service uses two types of keys to control access: admin (read-write) and query (read-only). The **admin key** grants full rights to all operations, including the ability to manage the service, create and delete indexes, indexers, and data sources. The **query key** grants read-only access to indexes and documents. Ensure that the key used for an API call provides sufficient privileges for the operation. See [here](https://docs.microsoft.com/azure/search/search-security-api-keys) for details about managing API keys.
 
 ## 404 Not Found
