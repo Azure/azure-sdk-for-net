@@ -44,7 +44,7 @@ steps:
         -MatrixConfigsFile ${{parameters.MatrixConfigsFile}}
         -ProjectFileConfigName ${{parameters.ProjectListOverrideFilePropertyName}}
         -ExcludeTargetTestProjects: $${{parameters.ExcludeTargetTestProjects}}
-        -ServiceDirectory ${{parameters.ServiceDirectory}}
+        -ServiceDirectoryToExclude ${{parameters.ServiceDirectory}}
       ignoreLASTEXITCODE: true
       pwsh: true
     displayName: Split testing packages into different files

@@ -29,7 +29,7 @@ The config name of the project file name. Hardcoded in "\eng\pipelines\templates
 .PARAMETER ExcludeTargetTestProjects
 The flag to indicate whether exclude target test package or not. 
 
-.PARAMETER ServiceDirectory
+.PARAMETER ServiceDirectoryToExclude
 The service directory which needs to exclude. E.g. "core"
 
 .EXAMPLE
@@ -37,7 +37,7 @@ Run script with default parameters.
 
 Generate-Dependency-Test-References.ps1 -ProjectFilesOutputFolder "$(Build.ArtifactStagingDirectory)/projects" -ProjectListFilePath "eng/projects.txt" `
 -MatrixConfigsFile "eng/pipelines/templates/stages/platform-matrix.json" -ProjectFileConfigName "ProjectListOverrideFile" -ExcludeTargetTestProjects $true `
--ServiceDirectory "core"
+-ServiceDirectoryToExclude "core"
 
 #>
 Param (
@@ -50,7 +50,7 @@ Param (
     [ValidateNotNullOrEmpty()]
     [string] $ProjectFileConfigName,
     [boolean] $ExcludeTargetTestProjects=$false,
-    [string] $ServiceDirectory
+    [string] $ServiceDirectoryToExclude
 )
 
 . (Join-Path $PSScriptRoot generate-dependency-functions.ps1)
@@ -60,7 +60,7 @@ $projGroups = Split-Project-File-To-Groups `
                 -ProjectFile $ProjectListFilePath `
                 -NumberOfTestsPerJob $NumOfTestProjectsPerJob `
                 -ExcludeService $ExcludeTargetTestProjects `
-                -ServiceDir $ServiceDirectory
+                -ServiceDirToExclude $ServiceDirectoryToExclude
 
 $projFiles = Write-Test-Dependency-Group-To-Files `
                 -ProjectGroups $projGroups `

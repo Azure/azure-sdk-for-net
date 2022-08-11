@@ -1,3 +1,9 @@
+<#
+```
+Invoke-Pester -Output Detailed $PSScriptRoot\tests\Generate-Dependency-Test-References-Tests.ps1
+```
+#>
+
 Import-Module Pester
 
 BeforeAll {
@@ -31,7 +37,7 @@ Describe "Split-Project-File-To-Groups" -Tag "UnitTest" {
         @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; excludeTargetService=$true ; NumOfTestProjectsPerJob = 178; length = 1 }
     ) {
         $projGroups = Split-Project-File-To-Groups -ProjectFile $projectFile -NumberOfTestsPerJob $NumOfTestProjectsPerJob `
-            -ExcludeService $excludeTargetService -ServiceDir "core" 
+            -ExcludeService $excludeTargetService -ServiceDirToExclude "core" 
         $projGroups.Length | Should -Be $length
     }
     # Failed cases
@@ -40,7 +46,7 @@ Describe "Split-Project-File-To-Groups" -Tag "UnitTest" {
         @{ projectFile = "$PSScriptRoot/inputs/empty_projects.txt"}
     ) {
         {Split-Project-File-To-Groups -ProjectFile $projectFile -NumberOfTestsPerJob $NumOfTestProjectsPerJob `
-            -ExcludeService $true -ServiceDir "core"} | Should -Throw -ExceptionType ([System.Management.Automation.RuntimeException])
+            -ExcludeService $true -ServiceDirToExclude "core"} | Should -Throw -ExceptionType ([System.Management.Automation.RuntimeException])
     }
 }
 
@@ -95,7 +101,7 @@ Describe "Generate-Dependency-Test-References" -Tag "IntegrationTest" {
     ) {
         Backup-File -targetPath $MatrixInputJsonFile -backupFolder $TestFolderName
         & "$PSScriptRoot/../Generate-Dependency-Test-References.ps1" -ProjectListFilePath $projectFile -NumOfTestProjectsPerJob $NumOfTestProjectsPerJob `
-            -ExcludeTargetTestProjects $true -ServiceDirectory "core" -ProjectFilesOutputFolder $TestFolderName `
+            -ExcludeTargetTestProjects $true -ServiceDirectoryToExclude "core" -ProjectFilesOutputFolder $TestFolderName `
             -MatrixConfigsFile $MatrixInputJsonFile -ProjectFileConfigName "ProjectListOverrideFile"
         $outputFileJson = Get-Content "$TestFolderName/sync-platform-matrix.json" | ConvertFrom-Json
         ($outputFileJson.matrix.OverrideFiles.PSObject.Properties | Measure-Object).Count | Should -Be $ExpectMatrixPropertyLength
@@ -109,7 +115,7 @@ Describe "Generate-Dependency-Test-References" -Tag "IntegrationTest" {
         @{ projectFile = "$PSScriptRoot/projects.txt"; MatrixInputJsonFile = ""; projectFileConfigName = "test"}
     ) {
         { & "$PSScriptRoot/../Generate-Dependency-Test-References.ps1" -ProjectListFilePath $projectFile -NumOfTestProjectsPerJob 20 `
-            -ExcludeTargetTestProjects $true -ServiceDirectory "core" -ProjectFilesOutputFolder "$PSScriptRoot/testFolder4" `
+            -ExcludeTargetTestProjects $true -ServiceDirectoryToExclude "core" -ProjectFilesOutputFolder "$PSScriptRoot/testFolder4" `
             -MatrixConfigsFile $MatrixInputJsonFile -ProjectFileConfigName $projectFileConfigName }
                 | Should -Throw -ExceptionType ([System.Management.Automation.RuntimeException])
     }

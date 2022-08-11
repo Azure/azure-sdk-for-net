@@ -1,10 +1,10 @@
 # Take the input of the project list file. Read all files out and split them into groups, and return the group array. 
 # Give the option of whether exclude the target service project files or not.
 
-function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $ExcludeService, $ServiceDir) {
+function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $ExcludeService, $ServiceDirToExclude) {
     $projects = Get-Content $ProjectFile
     if ($ExcludeService) {
-      $projects = $projects.Where({ $_ -notmatch "sdk[\\/]+${ServiceDir}[\\/]+" })
+      $projects = $projects.Where({ $_ -notmatch "sdk[\\/]+${ServiceDirToExclude}[\\/]+" })
     }
     if (!$projects) {
       throw "The project file is empty. Please check the input file: $ProjectFile"

@@ -33,6 +33,11 @@ Here is the comparison:
 | Num of tests on each job | ~400 | ~20 |
 | Time spent on core | ~ 1 hour as maximum | ~ 13 min as maximum | 
 
+## Downside of the feature
+
+1. The job matrix is determined once generate-job-matrix is done. Rerun any failed step will still run on the same testing environment (OSImage, Pool, Test framework, Test dependency project etc). 
+This is by design. So if a new project is added/deleted, we are not able to pick up the latest test projects in the same build. The case is rare, so it should not be a concern for our current usage.
+
 ## Future work
 1. Onboard to live test pipeline
 1. Leverage the work on other time consuming job.
