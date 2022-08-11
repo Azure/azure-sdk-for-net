@@ -84,10 +84,10 @@ rename-mapping:
   KeyVaultReference: IntegrationAccountKeyVaultNameReference
   KeyVaultKeyCollection: IntegrationAccountKeyVaultKeyList
   KeyVaultKey: IntegrationAccountKeyVaultKey
-  KeyVaultKey.kid: KeyId
+  KeyVaultKey.kid: KeyId|uri
   KeyVaultKey.attributes.enabled: IsEnabled
-  KeyVaultKey.attributes.created: CreatedOn
-  KeyVaultKey.attributes.updated: UpdatedOn
+  KeyVaultKey.attributes.created: CreatedOnUnixTimestamp
+  KeyVaultKey.attributes.updated: UpdatedOnUnixTimestamp
   KeyVaultKeyReference: IntegrationAccountKeyVaultKeyReference
   KeyVaultKeyReference.keyVault.id: ResourceId
   KeyVaultKeyReference.keyVault.name: ResourceName

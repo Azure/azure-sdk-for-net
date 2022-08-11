@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.FluidRelay
             Optional<Guid> frsTenantId = default;
             Optional<Guid> frsContainerId = default;
             Optional<ProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastAccessTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -99,11 +101,31 @@ namespace Azure.ResourceManager.FluidRelay
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("creationTime"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            creationTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("lastAccessTime"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastAccessTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState));
+            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState), Optional.ToNullable(creationTime), Optional.ToNullable(lastAccessTime));
         }
     }
 }
