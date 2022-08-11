@@ -132,7 +132,7 @@ namespace Azure.Communication.Identity
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="expiresAfter">Custom validity period of the Communiction Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
+        /// <param name="expiresAfter">Custom validity period of the Communication Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual Response<CommunicationUserIdentifierAndToken> CreateUserAndToken(IEnumerable<CommunicationTokenScope> scopes, TimeSpan expiresAfter, CancellationToken cancellationToken = default)
         {
@@ -161,7 +161,7 @@ namespace Azure.Communication.Identity
 
         /// <summary>Asynchronously creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="expiresAfter">Custom validity period of the Communiction Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
+        /// <param name="expiresAfter">Custom validity period of the Communication Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<CommunicationUserIdentifierAndToken>> CreateUserAndTokenAsync(IEnumerable<CommunicationTokenScope> scopes, TimeSpan expiresAfter, CancellationToken cancellationToken = default)
         {
@@ -228,7 +228,7 @@ namespace Azure.Communication.Identity
         /// <summary>Gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="expiresAfter">Custom validity period of the Communiction Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
+        /// <param name="expiresAfter">Custom validity period of the Communication Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<AccessToken> GetToken(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan expiresAfter, CancellationToken cancellationToken = default)
@@ -263,7 +263,7 @@ namespace Azure.Communication.Identity
         /// <summary>Asynchronously gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
         /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
         /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
-        /// <param name="expiresAfter">Custom validity period of the Communiction Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
+        /// <param name="expiresAfter">Custom validity period of the Communication Identity access token within &lt;60,1440&gt; minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<AccessToken>> GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, TimeSpan expiresAfter, CancellationToken cancellationToken = default)
         {
